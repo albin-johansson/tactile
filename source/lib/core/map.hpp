@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -29,6 +28,7 @@
 #include "core/layer/layer_type.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/base/container/function.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -56,7 +56,7 @@ TACTILE_FWD_DECLARE_CLASS(TileFormat)
 /// compression along with plain text encoding.
 class Map final : public Context {
  public:
-  using TileLayerVisitorFunc = Func<void(TileLayer&)>;
+  using TileLayerVisitorFunc = Function<void(TileLayer&)>;
 
   /// Maps previous invalid tile identifiers in a collection of layers.
   using FixTilesResult = HashMap<UUID, HashMap<TilePos, TileID>>;

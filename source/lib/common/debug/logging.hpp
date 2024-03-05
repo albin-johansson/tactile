@@ -21,8 +21,8 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/type/func.hpp"
 #include "common/type/string.hpp"
+#include "tactile/base/container/function.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -38,7 +38,7 @@ struct LogFilter final {
 };
 
 using LogLevel = spdlog::level::level_enum;
-using LoggedMessageVisitorFn = Func<void(LogLevel, const String&)>;
+using LoggedMessageVisitorFn = Function<void(LogLevel, const String&)>;
 
 /// Initializes the logger, this must be called before any logging takes place.
 void init_logger();

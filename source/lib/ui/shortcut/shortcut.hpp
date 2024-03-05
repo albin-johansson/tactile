@@ -22,7 +22,7 @@
 #include <centurion/keyboard.hpp>
 #include <entt/signal/fwd.hpp>
 
-#include "common/type/func.hpp"
+#include "tactile/base/container/function.hpp"
 #include "ui/menu/menu.hpp"
 
 namespace tactile {
@@ -31,7 +31,7 @@ struct Shortcut final {
   MenuAction action;
   cen::scan_code key;
   cen::key_mod modifiers {cen::key_mod::none};
-  Func<void(entt::dispatcher&)> activate;
+  Function<void(entt::dispatcher&)> activate;
 };
 
 }  // namespace tactile

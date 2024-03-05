@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/set.hpp"
 #include "common/type/uuid.hpp"
+#include "tactile/base/container/function.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -38,9 +38,9 @@ TACTILE_FWD_DECLARE_CLASS(TilesetBundle)
 /// Responsible for the storage of documents.
 class DocumentManager final {
  public:
-  using DocVisitorFn = Func<void(const Shared<Document>&)>;
-  using IdVisitorFn = Func<void(const UUID&)>;
-  using PredicateFn = Func<bool(const Document&)>;
+  using DocVisitorFn = Function<void(const Shared<Document>&)>;
+  using IdVisitorFn = Function<void(const UUID&)>;
+  using PredicateFn = Function<bool(const Document&)>;
 
   void each(const DocVisitorFn& op) const;
 

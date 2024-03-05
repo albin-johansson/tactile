@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/result.hpp"
@@ -28,6 +27,7 @@
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "core/context/context.hpp"
+#include "tactile/base/container/function.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -36,7 +36,7 @@ namespace tactile {
 /// FIXME bad method names
 class ContextManager final {
   using ContextMap = HashMap<UUID, Shared<Context>>;
-  using ComponentFunc = Func<void(Component&)>;
+  using ComponentFunc = Function<void(Component&)>;
 
  public:
   explicit ContextManager(const UUID& root_ctx_id);

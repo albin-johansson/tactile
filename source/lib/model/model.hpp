@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/func.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
@@ -28,6 +27,7 @@
 #include "core/tile/tile_extent.hpp"
 #include "model/document/document.hpp"
 #include "model/tool/tool_type.hpp"
+#include "tactile/base/container/function.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -47,7 +47,7 @@ class DocumentModel final {
   friend class cmd::RemoveTileset;
 
  public:
-  using VisitorFunc = Func<void(const UUID&)>;
+  using VisitorFunc = Function<void(const UUID&)>;
 
   DocumentModel();
   ~DocumentModel() noexcept;
