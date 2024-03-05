@@ -26,11 +26,11 @@ namespace tactile {
 namespace {
 
 [[nodiscard]] auto open_input_stream_impl(const auto& path, const FileType type)
-    -> Maybe<IfStream>
+    -> Maybe<std::ifstream>
 {
   const auto flags = (type == FileType::Binary) ? std::ios::in | std::ios::binary  //
                                                 : std::ios::in;
-  IfStream stream {path, flags};
+  std::ifstream stream {path, flags};
 
   if (stream.is_open() && stream.good()) {
     return std::move(stream);
@@ -41,12 +41,12 @@ namespace {
 }
 
 [[nodiscard]] auto open_output_stream_impl(const auto& path, const FileType type)
-    -> Maybe<OfStream>
+    -> Maybe<std::ofstream>
 {
   const auto flags = (type == FileType::Binary)
                          ? std::ios::out | std::ios::trunc | std::ios::binary
                          : std::ios::out | std::ios::trunc;
-  OfStream stream {path, flags};
+  std::ofstream stream {path, flags};
 
   if (stream.is_open() && stream.good()) {
     return std::move(stream);
@@ -58,22 +58,22 @@ namespace {
 
 }  // namespace
 
-auto open_input_stream(const char* path, FileType type) -> Maybe<IfStream>
+auto open_input_stream(const char* path, FileType type) -> Maybe<std::ifstream>
 {
   return open_input_stream_impl(path, type);
 }
 
-auto open_input_stream(const Path& path, FileType type) -> Maybe<IfStream>
+auto open_input_stream(const Path& path, FileType type) -> Maybe<std::ifstream>
 {
   return open_input_stream_impl(path, type);
 }
 
-auto open_output_stream(const char* path, FileType type) -> Maybe<OfStream>
+auto open_output_stream(const char* path, FileType type) -> Maybe<std::ofstream>
 {
   return open_output_stream_impl(path, type);
 }
 
-auto open_output_stream(const Path& path, FileType type) -> Maybe<OfStream>
+auto open_output_stream(const Path& path, FileType type) -> Maybe<std::ofstream>
 {
   return open_output_stream_impl(path, type);
 }
