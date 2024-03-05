@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/numeric.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/maybe.hpp"
 #include "core/tile/tile_animation.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
 

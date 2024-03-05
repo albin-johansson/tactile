@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Document)
 

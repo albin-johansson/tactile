@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/numeric.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {
 

@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
@@ -27,6 +26,7 @@
 #include "core/color.hpp"
 #include "io/save_format.hpp"
 #include "lang/language.hpp"
+#include "tactile/base/prelude.hpp"
 #include "ui/style/themes.hpp"
 
 namespace tactile {

@@ -132,6 +132,24 @@
   TACTILE_DELETE_COPY(Name);       \
   TACTILE_DELETE_MOVE(Name)
 
+#define TACTILE_FWD_DECLARE_CLASS(Name) class Name;
+#define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name;
+
+#define TACTILE_FWD_DECLARE_CLASS_NS(Ns, Name) \
+  namespace Ns {                               \
+  class Name;                                  \
+  }
+
+#define TACTILE_FWD_DECLARE_STRUCT_NS(Ns, Name) \
+  namespace Ns {                                \
+  struct Name;                                  \
+  }
+
+#define TACTILE_DECLARE_SPECIAL_MEMBERS(Class) \
+  TACTILE_DECLARE_COPY(Class);                 \
+  TACTILE_DECLARE_MOVE(Class);                 \
+  ~Class()
+
 namespace tactile {
 
 #if TACTILE_DEBUG

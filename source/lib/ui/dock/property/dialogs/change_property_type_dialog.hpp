@@ -21,10 +21,10 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "common/macros.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
+#include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 

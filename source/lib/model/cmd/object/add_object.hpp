@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/layer/object_type.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Object)

@@ -23,7 +23,6 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
-#include "common/macros.hpp"
 #include "common/numeric.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
@@ -42,6 +41,7 @@
 #include "core/layer/tile_format.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 

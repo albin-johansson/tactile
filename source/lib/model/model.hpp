@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/numeric.hpp"
 #include "common/type/func.hpp"
 #include "common/type/math.hpp"
@@ -30,6 +29,7 @@
 #include "core/tile/tile_extent.hpp"
 #include "model/document/document.hpp"
 #include "model/tool/tool_type.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 

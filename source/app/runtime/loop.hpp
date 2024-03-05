@@ -22,7 +22,7 @@
 #include <centurion/event.hpp>
 #include <centurion/keyboard.hpp>
 
-#include "common/macros.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 

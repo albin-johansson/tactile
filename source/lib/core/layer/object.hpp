@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -28,6 +27,7 @@
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/layer/object_type.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 

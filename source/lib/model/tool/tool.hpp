@@ -21,9 +21,9 @@
 
 #include <entt/fwd.hpp>
 
-#include "common/macros.hpp"
 #include "model/tool/tool_type.hpp"
 #include "model/tool/tool_visitor.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
