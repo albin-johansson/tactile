@@ -122,7 +122,7 @@
   TACTILE_DEFAULT_MOVE(Name);         \
                                       \
  public:                              \
-  virtual Name() noexcept
+  virtual ~Name() noexcept = default
 
 #define TACTILE_STATIC_CLASS(Name) \
                                    \
