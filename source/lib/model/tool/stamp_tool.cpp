@@ -25,7 +25,6 @@
 
 #include "common/type/math.hpp"
 #include "common/util/functional.hpp"
-#include "common/util/random.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tile_pos.hpp"
@@ -35,6 +34,7 @@
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/numeric/random.hpp"
 
 namespace tactile {
 
@@ -167,7 +167,7 @@ void StampTool::update_sequence_random(TileLayer& layer,
 
   if (mLastChangedPos != cursor) {
     const auto index =
-        next_random_i32(0, (selection_size.row() * selection_size.col()) - 1);
+        get_random_int(0, (selection_size.row() * selection_size.col()) - 1);
     const auto selection_pos =
         selection.begin + TilePos::from_index(index, selection_size.col());
 
