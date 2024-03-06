@@ -23,7 +23,6 @@
 
 #include <fmt/format.h>
 
-#include "common/debug/profile.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
@@ -36,6 +35,7 @@
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/core/log/logger.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {
@@ -183,7 +183,7 @@ void update_menus(const DocumentModel& model)
 
 void menu_translate(const Strings& strings)
 {
-  spdlog::debug("Translating menus...");
+  TACTILE_LOG_DEBUG("Translating menus...");
 
   // File
   set_label(MenuAction::NewMap, strings.action.create_map);

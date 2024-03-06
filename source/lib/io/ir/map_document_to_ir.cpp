@@ -19,7 +19,6 @@
 
 #include "map_document_to_ir.hpp"
 
-#include "common/debug/profile.hpp"
 #include "core/component/component_index.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
@@ -31,6 +30,7 @@
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/performance.hpp"
 
 namespace tactile {
 namespace {
@@ -262,7 +262,7 @@ void convert_tile_format(const TileFormat& format, TileFormatIR& ir_format)
 
 auto convert_map_document_to_ir(const MapDocument& document) -> MapIR
 {
-  TACTILE_DEBUG_PROFILE_START
+  TACTILE_DEBUG_PROFILE_SCOPE("convert_map_document_to_ir");
   const auto& map = document.get_map();
 
   MapIR ir_map;
@@ -283,7 +283,6 @@ auto convert_map_document_to_ir(const MapDocument& document) -> MapIR
   convert_layers(document, components, ir_map);
   convert_context(map, components, ir_map.context);
 
-  TACTILE_DEBUG_PROFILE_END("Converted document to IR")
   return ir_map;
 }
 

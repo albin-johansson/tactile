@@ -24,20 +24,20 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/profile.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
 #include "io/ir/map_document_to_ir.hpp"
 #include "io/save_format.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/performance.hpp"
 
 namespace tactile {
 
 auto save_map_document_to_disk(const MapDocument& document) -> Result
 {
   try {
-    TACTILE_DEBUG_PROFILE_START
+    TACTILE_DEBUG_PROFILE_SCOPE("save_map_document_to_disk");
 
     if (!document.has_path()) {
       spdlog::error("Tried to save map document with no associated file path");
@@ -61,7 +61,6 @@ auto save_map_document_to_disk(const MapDocument& document) -> Result
       return failure;
     }
 
-    TACTILE_DEBUG_PROFILE_END("Saved map")
     return success;
   }
   catch (const std::exception& e) {
