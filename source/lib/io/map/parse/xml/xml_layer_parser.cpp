@@ -22,7 +22,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/ir/map/map_ir.hpp"
@@ -31,6 +30,7 @@
 #include "io/util/xml.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 namespace {
@@ -259,7 +259,7 @@ namespace {
   }
   else {
     // If we enter this branch, then the layer collection is broken
-    throw TactileError {"Collected invalid layer node!"};
+    throw Exception {"Collected invalid layer node!"};
   }
 
   if (auto props = parse_properties(layer_node)) {

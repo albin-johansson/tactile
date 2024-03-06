@@ -22,7 +22,7 @@
 #include <concepts>     // integral, invocable, predicate
 #include <type_traits>  // is_invocable_r_v
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -61,8 +61,7 @@ constexpr void invoke_mn(const T m,
 template <typename T, std::predicate<const T&> U>
 constexpr auto require_that(T value, U&& predicate) -> T
 {
-  return predicate(value) ? value
-                          : throw TactileError {"Value did not match requirements!"};
+  return predicate(value) ? value : throw Exception {"Value did not match requirements!"};
 }
 
 }  // namespace tactile

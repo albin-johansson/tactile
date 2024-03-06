@@ -25,10 +25,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/stream.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 namespace {
@@ -163,7 +163,7 @@ void to_json(JSON& json, const Attribute& value)
       break;
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Exception {"Invalid attribute type"};
   }
 }
 
@@ -191,7 +191,7 @@ void from_json(const JSON& json, AttributeType& type)
     type = AttributeType::Object;
   }
   else {
-    throw TactileError {"Not a valid JSON property type"};
+    throw Exception {"Not a valid JSON property type"};
   }
 }
 

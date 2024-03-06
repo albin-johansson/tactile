@@ -22,15 +22,15 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
 auto ComponentIndex::define_comp(String name) -> UUID
 {
   if (has_comp(name)) {
-    throw TactileError {"Component definition name is not unique"};
+    throw Exception {"Component definition name is not unique"};
   }
 
   const auto component_id = make_uuid();
@@ -45,7 +45,7 @@ auto ComponentIndex::define_comp(String name) -> UUID
 void ComponentIndex::restore_comp(ComponentDefinition component_def)
 {
   if (has_comp(component_def.get_name())) {
-    throw TactileError {"Component definition name is not unique"};
+    throw Exception {"Component definition name is not unique"};
   }
 
   const auto component_id = component_def.get_uuid();
@@ -94,7 +94,7 @@ auto ComponentIndex::get_comp(StringView name) -> ComponentDefinition&
     }
   }
 
-  throw TactileError {"Invalid component name"};
+  throw Exception {"Invalid component name"};
 }
 
 auto ComponentIndex::has_comp(const UUID& component_id) const -> bool

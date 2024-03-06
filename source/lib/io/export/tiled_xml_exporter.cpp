@@ -25,7 +25,6 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
 #include "io/export/tiled_info.hpp"
@@ -34,6 +33,7 @@
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 namespace {
@@ -241,7 +241,7 @@ void append_base64_tile_layer_data(XmlNode data_node,
       break;
 
     default:
-      throw TactileError {"Invalid compression strategy!"};
+      throw Exception {"Invalid compression strategy!"};
   }
 
   const auto tile_data = base64_encode_tiles(tile_layer.tiles,
@@ -273,7 +273,7 @@ void append_tile_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
       break;
 
     default:
-      throw TactileError {"Invalid tile encoding!"};
+      throw Exception {"Invalid tile encoding!"};
   }
 }
 
@@ -315,7 +315,7 @@ void append_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
       break;
     }
     default:
-      throw TactileError {"Invalid layer type!"};
+      throw Exception {"Invalid layer type!"};
   }
 }
 

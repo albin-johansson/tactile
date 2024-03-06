@@ -22,11 +22,11 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/debug/exception.hpp"
 #include "ui/style/icons.hpp"
 
 namespace tactile {
@@ -42,7 +42,7 @@ void load(const JSON& json, String& string, const char* key)
     if constexpr (kIsDebugBuild) {
       spdlog::critical("Found no translation for '{}'", key);
     }
-    throw TactileError {"Invalid empty translated string!"};
+    throw Exception {"Invalid empty translated string!"};
   }
 }
 
@@ -53,7 +53,7 @@ void load(const JSON& json, String& string, const char* key, const char* icon)
   }
 
   if (string.empty()) {
-    throw TactileError {"Invalid empty translated string!"};
+    throw Exception {"Invalid empty translated string!"};
   }
 }
 

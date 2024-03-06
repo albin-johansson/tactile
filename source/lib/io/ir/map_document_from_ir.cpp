@@ -154,7 +154,7 @@ auto restore_layer(MapDocument& document,
       break;
     }
     default:
-      throw TactileError {"Invalid layer type!"};
+      throw Exception {"Invalid layer type!"};
   }
 
   auto& layer = root_layer.get_layer(layer_id);

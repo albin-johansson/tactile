@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -35,7 +35,7 @@ RenameTile::RenameTile(TilesetDocument* document, const TileIndex tile_index, St
       mNewName {std::move(name)}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null tileset document"};
+    throw Exception {"Invalid null tileset document"};
   }
 }
 

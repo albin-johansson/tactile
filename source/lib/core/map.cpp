@@ -23,7 +23,6 @@
 
 #include <fmt/format.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/functional.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/layer_visitor.hpp"
@@ -32,6 +31,7 @@
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "core/tile/tileset_bundle.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 namespace {
@@ -106,7 +106,7 @@ void Map::remove_row()
     each_tile_layer([](TileLayer& layer) { layer.remove_row(); });
   }
   else {
-    throw TactileError {"Invalid row amount!"};
+    throw Exception {"Invalid row amount!"};
   }
 }
 
@@ -117,7 +117,7 @@ void Map::remove_column()
     each_tile_layer([](TileLayer& layer) { layer.remove_column(); });
   }
   else {
-    throw TactileError {"Invalid column amount!"};
+    throw Exception {"Invalid column amount!"};
   }
 }
 
@@ -187,7 +187,7 @@ auto Map::add_layer(const LayerType type, const Maybe<UUID>& parent_id) -> UUID
       return add_group_layer(parent_id);
 
     default:
-      throw TactileError {"Invalid layer type"};
+      throw Exception {"Invalid layer type"};
   }
 }
 
@@ -263,7 +263,7 @@ void Map::select_layer(const UUID& id)
     mData->active_layer = id;
   }
   else {
-    throw TactileError {"Invalid layer identifier!"};
+    throw Exception {"Invalid layer identifier!"};
   }
 }
 

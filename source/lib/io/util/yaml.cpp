@@ -22,9 +22,9 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/stream.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -96,7 +96,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
       break;
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Exception {"Invalid attribute type"};
   }
 
   return emitter;
@@ -117,7 +117,7 @@ auto operator<<(YAML::Emitter& emitter, const TileEncoding encoding) -> YAML::Em
       return emitter << "base64";
 
     default:
-      throw TactileError {"Did not recognize tile encoding!"};
+      throw Exception {"Did not recognize tile encoding!"};
   }
 }
 
@@ -135,7 +135,7 @@ auto operator<<(YAML::Emitter& emitter, const TileCompression compression)
       return emitter << "zstd";
 
     default:
-      throw TactileError {"Did not recognize tile compression!"};
+      throw Exception {"Did not recognize tile compression!"};
   }
 }
 

@@ -19,11 +19,11 @@
 
 #include "add_layer.hpp"
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -32,7 +32,7 @@ AddLayer::AddLayer(MapDocument* document, const LayerType type)
       mLayerType {type}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null map document!"};
+    throw Exception {"Invalid null map document!"};
   }
 }
 

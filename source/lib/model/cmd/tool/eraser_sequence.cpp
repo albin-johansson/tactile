@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -35,7 +35,7 @@ EraserSequence::EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache 
       mOldState {std::move(old_state)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw Exception {"Invalid null map!"};
   }
 }
 

@@ -19,7 +19,6 @@
 
 #include "remove_object.hpp"
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
@@ -27,6 +26,7 @@
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -37,7 +37,7 @@ RemoveObject::RemoveObject(MapDocument* document,
       mLayerId {layer_id}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null document!"};
+    throw Exception {"Invalid null document!"};
   }
 
   TACTILE_ASSERT(
@@ -46,7 +46,7 @@ RemoveObject::RemoveObject(MapDocument* document,
 
   mObject = document->get_object(object_id);
   if (!mObject) {
-    throw TactileError {"Invalid object identifier!"};
+    throw Exception {"Invalid object identifier!"};
   }
 }
 
@@ -88,7 +88,7 @@ auto RemoveObject::get_name() const -> String
       return lang.cmd.remove_ellipse_object;
 
     default:
-      throw TactileError {"Invalid object type!"};
+      throw Exception {"Invalid object type!"};
   }
 }
 

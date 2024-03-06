@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -33,7 +33,7 @@ FixMapTiles::FixMapTiles(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map"};
+    throw Exception {"Invalid null map"};
   }
 }
 

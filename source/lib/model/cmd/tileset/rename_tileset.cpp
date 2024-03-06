@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tileset.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -33,7 +33,7 @@ RenameTileset::RenameTileset(Shared<Tileset> tileset, String name)
       mNewName {std::move(name)}
 {
   if (!mTileset) {
-    throw TactileError {"Invalid null tileset!"};
+    throw Exception {"Invalid null tileset!"};
   }
 }
 

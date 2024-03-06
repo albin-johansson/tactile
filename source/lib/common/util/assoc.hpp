@@ -22,7 +22,7 @@
 #include <concepts>  // equality_comparable_with
 #include <utility>   // forward
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -34,7 +34,7 @@ template <typename M, std::equality_comparable_with<typename M::key_type> K>
     return iter->second;
   }
   else {
-    throw TactileError {"Invalid key!"};
+    throw Exception {"Invalid key!"};
   }
 }
 
@@ -46,7 +46,7 @@ template <typename M, std::equality_comparable_with<typename M::key_type> K>
     return iter->second;
   }
   else {
-    throw TactileError {"Invalid key!"};
+    throw Exception {"Invalid key!"};
   }
 }
 

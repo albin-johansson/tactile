@@ -21,12 +21,12 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/component/component_index.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -38,10 +38,10 @@ ResetAttachedComponent::ResetAttachedComponent(Shared<ComponentIndex> index,
       mComponentId {component_id}
 {
   if (!mComponentIndex) {
-    throw TactileError {"Invalid null component index!"};
+    throw Exception {"Invalid null component index!"};
   }
   else if (!mContext) {
-    throw TactileError {"Invalid null context!"};
+    throw Exception {"Invalid null context!"};
   }
 }
 

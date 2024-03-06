@@ -21,7 +21,7 @@
 
 #include <zlib.h>
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -42,7 +42,7 @@ void TileFormat::set_compression(const TileCompression compression)
     mCompression = compression;
   }
   else {
-    throw TactileError {"Invalid encoding/compression combination!"};
+    throw Exception {"Invalid encoding/compression combination!"};
   }
 }
 
@@ -52,7 +52,7 @@ void TileFormat::set_zlib_compression_level(const int level)
     mZlibCompressionLevel = level;
   }
   else {
-    throw TactileError {"Invalid Zlib compression level!"};
+    throw Exception {"Invalid Zlib compression level!"};
   }
 }
 
@@ -62,7 +62,7 @@ void TileFormat::set_zstd_compression_level(const int level)
     mZstdCompressionLevel = level;
   }
   else {
-    throw TactileError {"Invalid zstd compression level!"};
+    throw Exception {"Invalid zstd compression level!"};
   }
 }
 

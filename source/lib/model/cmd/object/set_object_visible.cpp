@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -32,7 +32,7 @@ SetObjectVisible::SetObjectVisible(Shared<Object> object, const bool visible)
       mNewVisibility {visible}
 {
   if (!mObject) {
-    throw TactileError {"Invalid null object!"};
+    throw Exception {"Invalid null object!"};
   }
 }
 

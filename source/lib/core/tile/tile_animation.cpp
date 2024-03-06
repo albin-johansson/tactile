@@ -19,8 +19,8 @@
 
 #include "tile_animation.hpp"
 
-#include "common/debug/panic.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -87,7 +87,7 @@ auto TileAnimation::operator[](const usize index) -> Frame&
     return mFrames[index];
   }
   else {
-    throw TactileError {"Invalid frame index"};
+    throw Exception {"Invalid frame index"};
   }
 }
 
@@ -97,7 +97,7 @@ auto TileAnimation::operator[](const usize index) const -> const Frame&
     return mFrames[index];
   }
   else {
-    throw TactileError {"Invalid frame index"};
+    throw Exception {"Invalid frame index"};
   }
 }
 

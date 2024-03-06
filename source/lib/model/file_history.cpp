@@ -21,10 +21,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 namespace {
@@ -72,7 +72,7 @@ auto get_last_closed_file() -> const String&
     return gHistory.last_closed_file.value();
   }
   else {
-    throw TactileError {"Invalid last closed file!"};
+    throw Exception {"Invalid last closed file!"};
   }
 }
 

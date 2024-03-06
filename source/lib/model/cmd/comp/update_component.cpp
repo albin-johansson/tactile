@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/component/component_index.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -38,7 +38,7 @@ UpdateComponent::UpdateComponent(Shared<ComponentIndex> index,
       mUpdatedValue {std::move(value)}
 {
   if (!mIndex) {
-    throw TactileError {"Invalid null component index!"};
+    throw Exception {"Invalid null component index!"};
   }
 }
 

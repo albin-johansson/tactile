@@ -23,8 +23,8 @@
 #include <cstring>    // memset
 #include <iterator>   // distance
 
-#include "common/debug/panic.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -64,7 +64,7 @@ auto create_string_view_from_buffer(Span<const char> buffer) -> StringView
     return StringView {buffer.data(), index};
   }
   else {
-    throw TactileError {"Invalid string buffer!"};
+    throw Exception {"Invalid string buffer!"};
   }
 }
 

@@ -23,8 +23,8 @@
 
 #include <fmt/format.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -39,7 +39,7 @@ void ComponentBase::add_attr(String key, AttributeType type)
     mAttributes[std::move(key)].reset_to_default(type);
   }
   else {
-    throw TactileError {"Attribute key must be unique!"};
+    throw Exception {"Attribute key must be unique!"};
   }
 }
 
@@ -49,7 +49,7 @@ void ComponentBase::add_attr(String key, Attribute value)
     mAttributes[std::move(key)] = std::move(value);
   }
   else {
-    throw TactileError {"Attribute key must be unique!"};
+    throw Exception {"Attribute key must be unique!"};
   }
 }
 

@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -35,7 +35,7 @@ AddProperty::AddProperty(Shared<Context> context, String name, const AttributeTy
       mType {type}
 {
   if (!mContext) {
-    throw TactileError {"Invalid null context!"};
+    throw Exception {"Invalid null context!"};
   }
 }
 

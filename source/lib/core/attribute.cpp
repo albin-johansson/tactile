@@ -21,8 +21,8 @@
 
 #include <fmt/format.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/fmt.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -82,7 +82,7 @@ void Attribute::reset_to_default(const AttributeType type)
       break;
 
     default:
-      throw TactileError {"Invalid attribute type!"};
+      throw Exception {"Invalid attribute type!"};
   }
 }
 
@@ -128,7 +128,7 @@ auto Attribute::has_default_value() const -> bool
     return *color == kBlack;
   }
   else {
-    throw TactileError {"Invalid property type"};
+    throw Exception {"Invalid property type"};
   }
 }
 
@@ -175,7 +175,7 @@ auto Attribute::get_type() const -> AttributeType
       return AttributeType::Object;
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Exception {"Invalid attribute type"};
   }
 }
 
@@ -266,7 +266,7 @@ auto Attribute::as_string() const -> const string_type&
     return *str;
   }
   else {
-    throw TactileError {"Attribute was not a string"};
+    throw Exception {"Attribute was not a string"};
   }
 }
 
@@ -276,7 +276,7 @@ auto Attribute::as_int() const -> int_type
     return *i;
   }
   else {
-    throw TactileError {"Attribute was not an int"};
+    throw Exception {"Attribute was not an int"};
   }
 }
 
@@ -286,7 +286,7 @@ auto Attribute::as_int2() const -> const int2_type&
     return *i2;
   }
   else {
-    throw TactileError {"Attribute was not an int2"};
+    throw Exception {"Attribute was not an int2"};
   }
 }
 
@@ -296,7 +296,7 @@ auto Attribute::as_int3() const -> const int3_type&
     return *i3;
   }
   else {
-    throw TactileError {"Attribute was not an int3"};
+    throw Exception {"Attribute was not an int3"};
   }
 }
 
@@ -306,7 +306,7 @@ auto Attribute::as_int4() const -> const int4_type&
     return *i4;
   }
   else {
-    throw TactileError {"Attribute was not an int4"};
+    throw Exception {"Attribute was not an int4"};
   }
 }
 
@@ -316,7 +316,7 @@ auto Attribute::as_float() const -> float_type
     return *f;
   }
   else {
-    throw TactileError {"Attribute was not a float"};
+    throw Exception {"Attribute was not a float"};
   }
 }
 
@@ -326,7 +326,7 @@ auto Attribute::as_float2() const -> const float2_type&
     return *f2;
   }
   else {
-    throw TactileError {"Attribute was not a float2"};
+    throw Exception {"Attribute was not a float2"};
   }
 }
 
@@ -336,7 +336,7 @@ auto Attribute::as_float3() const -> const float3_type&
     return *f3;
   }
   else {
-    throw TactileError {"Attribute was not a float3"};
+    throw Exception {"Attribute was not a float3"};
   }
 }
 
@@ -346,7 +346,7 @@ auto Attribute::as_float4() const -> const float4_type&
     return *f4;
   }
   else {
-    throw TactileError {"Attribute was not a float4"};
+    throw Exception {"Attribute was not a float4"};
   }
 }
 
@@ -356,7 +356,7 @@ auto Attribute::as_bool() const -> bool
     return *b;
   }
   else {
-    throw TactileError {"Attribute was not a bool"};
+    throw Exception {"Attribute was not a bool"};
   }
 }
 
@@ -366,7 +366,7 @@ auto Attribute::as_path() const -> const path_type&
     return *file;
   }
   else {
-    throw TactileError {"Attribute was not a path"};
+    throw Exception {"Attribute was not a path"};
   }
 }
 
@@ -376,7 +376,7 @@ auto Attribute::as_object() const -> ObjectRef
     return *obj;
   }
   else {
-    throw TactileError {"Attribute was not an object reference"};
+    throw Exception {"Attribute was not an object reference"};
   }
 }
 
@@ -386,7 +386,7 @@ auto Attribute::as_color() const -> const color_type&
     return *color;
   }
   else {
-    throw TactileError {"Attribute was not a color"};
+    throw Exception {"Attribute was not a color"};
   }
 }
 
@@ -479,7 +479,7 @@ auto serialize_to_save_format(const AttributeType type) -> StringView
       return "object";
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Exception {"Invalid attribute type"};
   }
 }
 
@@ -561,7 +561,7 @@ auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
       return stream << "object/" << value.as_object();
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Exception {"Invalid attribute type"};
   }
 }
 

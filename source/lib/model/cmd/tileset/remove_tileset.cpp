@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -29,6 +28,7 @@
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -37,7 +37,7 @@ RemoveTileset::RemoveTileset(DocumentModel* model, const UUID& tileset_id)
       mTilesetId {tileset_id}
 {
   if (!mModel) {
-    throw TactileError {"Invalid null model!"};
+    throw Exception {"Invalid null model!"};
   }
 
   TACTILE_ASSERT(mModel->get_active_document_id().has_value());

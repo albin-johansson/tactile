@@ -21,7 +21,6 @@
 
 #include <utility>  // cmp_less
 
-#include "common/debug/panic.hpp"
 #include "common/type/math.hpp"
 #include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
@@ -29,6 +28,7 @@
 #include "core/tile/tile_pos.hpp"
 #include "tactile/base/container/queue.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -41,10 +41,10 @@ TileLayer::TileLayer(const TileExtent extent)
     : mTiles {make_tile_matrix(extent)}
 {
   if (extent.rows == 0) {
-    throw TactileError {"Invalid row count"};
+    throw Exception {"Invalid row count"};
   }
   else if (extent.cols == 0) {
-    throw TactileError {"Invalid column count"};
+    throw Exception {"Invalid column count"};
   }
 }
 
@@ -148,10 +148,10 @@ auto TileLayer::remove_column() -> Result
 void TileLayer::resize(const TileExtent extent)
 {
   if (extent.rows == 0) {
-    throw TactileError {"Invalid row count"};
+    throw Exception {"Invalid row count"};
   }
   else if (extent.cols == 0) {
-    throw TactileError {"Invalid column count"};
+    throw Exception {"Invalid column count"};
   }
 
   const auto current_rows = row_count();

@@ -21,13 +21,13 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -43,7 +43,7 @@ AddObject::AddObject(MapDocument* document,
       mSize {size}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null map document!"};
+    throw Exception {"Invalid null map document!"};
   }
 }
 
@@ -90,7 +90,7 @@ auto AddObject::get_name() const -> String
       return lang.cmd.add_ellipse_object;
 
     default:
-      throw TactileError {"Invalid object type!"};
+      throw Exception {"Invalid object type!"};
   }
 }
 

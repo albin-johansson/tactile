@@ -23,12 +23,12 @@
 #include <iterator>   // distance
 #include <utility>    // move
 
-#include "common/debug/panic.hpp"
 #include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -126,7 +126,7 @@ auto GroupLayer::duplicate_layer(const UUID& layer_id) -> Shared<Layer>
     return layer;
   }
   else {
-    throw TactileError {"Failed to duplicate layer in group layer!"};
+    throw Exception {"Failed to duplicate layer in group layer!"};
   }
 }
 
@@ -181,7 +181,7 @@ auto GroupLayer::layer_sibling_count(const UUID& layer_id) const -> usize
     return *count;
   }
   else {
-    throw TactileError {"Failed to determine layer sibling count"};
+    throw Exception {"Failed to determine layer sibling count"};
   }
 }
 
@@ -197,7 +197,7 @@ auto GroupLayer::local_layer_index(const UUID& layer_id) const -> usize
     return *index;
   }
   else {
-    throw TactileError {"Failed to determine local layer index"};
+    throw Exception {"Failed to determine local layer index"};
   }
 }
 
@@ -210,7 +210,7 @@ auto GroupLayer::global_layer_index(const UUID& layer_id) const -> usize
     return *index;
   }
   else {
-    throw TactileError {"Failed to determine global layer index"};
+    throw Exception {"Failed to determine global layer index"};
   }
 }
 
@@ -297,7 +297,7 @@ auto GroupLayer::get_layer(const UUID& layer_id) -> Layer&
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find layer in group layer"};
+    throw Exception {"Failed to find layer in group layer"};
   }
 }
 
@@ -307,7 +307,7 @@ auto GroupLayer::get_layer(const UUID& layer_id) const -> const Layer&
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find layer in group layer"};
+    throw Exception {"Failed to find layer in group layer"};
   }
 }
 
@@ -317,7 +317,7 @@ auto GroupLayer::get_tile_layer(const UUID& layer_id) -> TileLayer&
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find tile layer in group layer"};
+    throw Exception {"Failed to find tile layer in group layer"};
   }
 }
 
@@ -327,7 +327,7 @@ auto GroupLayer::get_tile_layer(const UUID& layer_id) const -> const TileLayer&
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find tile layer in group layer"};
+    throw Exception {"Failed to find tile layer in group layer"};
   }
 }
 
@@ -337,7 +337,7 @@ auto GroupLayer::get_object_layer(const UUID& layer_id) -> ObjectLayer&
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find object layer in group layer"};
+    throw Exception {"Failed to find object layer in group layer"};
   }
 }
 
@@ -347,7 +347,7 @@ auto GroupLayer::get_object_layer(const UUID& layer_id) const -> const ObjectLay
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find object layer in group layer"};
+    throw Exception {"Failed to find object layer in group layer"};
   }
 }
 
@@ -357,7 +357,7 @@ auto GroupLayer::get_group_layer(const UUID& layer_id) -> GroupLayer&
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find group layer in group layer"};
+    throw Exception {"Failed to find group layer in group layer"};
   }
 }
 
@@ -367,7 +367,7 @@ auto GroupLayer::get_group_layer(const UUID& layer_id) const -> const GroupLayer
     return *layer;
   }
   else {
-    throw TactileError {"Failed to find group layer in group layer"};
+    throw Exception {"Failed to find group layer in group layer"};
   }
 }
 

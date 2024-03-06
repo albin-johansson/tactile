@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -32,7 +32,7 @@ ResizeMap::ResizeMap(Shared<Map> map, const TileExtent extent)
       mNewExtent {extent}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map"};
+    throw Exception {"Invalid null map"};
   }
 }
 

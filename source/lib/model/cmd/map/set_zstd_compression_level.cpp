@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -34,7 +34,7 @@ SetZstdCompressionLevel::SetZstdCompressionLevel(Shared<Map> map, const int leve
       mNewLevel {level}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw Exception {"Invalid null map!"};
   }
 }
 

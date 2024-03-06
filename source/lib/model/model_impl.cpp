@@ -21,13 +21,13 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/cmd/tileset/all.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -76,21 +76,21 @@ auto DocumentModel::Impl::add_tileset(const TilesetInfo& info) -> UUID
     return tileset_id;
   }
   else {
-    throw TactileError {"No active map to add tileset to!"};
+    throw Exception {"No active map to add tileset to!"};
   }
 }
 
 void DocumentModel::Impl::remove_tileset(const UUID& id)
 {
   if (!mDocuments.is_tileset(id)) {
-    throw TactileError {"Document is not a tileset!"};
+    throw Exception {"Document is not a tileset!"};
   }
 
   if (auto* document = mDocuments.current_map_document()) {
     document->get_history().push<cmd::RemoveTileset>(mParent, id);
   }
   else {
-    throw TactileError {"No active map!"};
+    throw Exception {"No active map!"};
   }
 }
 
@@ -112,7 +112,7 @@ auto DocumentModel::Impl::restore_tileset(const TileID first_tile_id,
     return tileset_id;
   }
   else {
-    throw TactileError {"No active map to restore tileset to!"};
+    throw Exception {"No active map to restore tileset to!"};
   }
 }
 
@@ -144,7 +144,7 @@ auto DocumentModel::Impl::get_id_for_path(const Path& path) const -> UUID
     return *id;
   }
   else {
-    throw TactileError {"Found no document with the specified path!"};
+    throw Exception {"Found no document with the specified path!"};
   }
 }
 
@@ -154,7 +154,7 @@ auto DocumentModel::Impl::require_active_document() const -> const Document&
     return *document;
   }
   else {
-    throw TactileError {"No document was active!"};
+    throw Exception {"No document was active!"};
   }
 }
 
@@ -164,7 +164,7 @@ auto DocumentModel::Impl::require_active_map() -> MapDocument&
     return *document;
   }
   else {
-    throw TactileError {"No map document was active!"};
+    throw Exception {"No map document was active!"};
   }
 }
 
@@ -174,7 +174,7 @@ auto DocumentModel::Impl::require_active_map() const -> const MapDocument&
     return *document;
   }
   else {
-    throw TactileError {"No map document was active!"};
+    throw Exception {"No map document was active!"};
   }
 }
 
@@ -184,7 +184,7 @@ auto DocumentModel::Impl::require_active_tileset() -> TilesetDocument&
     return *document;
   }
   else {
-    throw TactileError {"No tileset document was active!"};
+    throw Exception {"No tileset document was active!"};
   }
 }
 
@@ -194,7 +194,7 @@ auto DocumentModel::Impl::require_active_tileset() const -> const TilesetDocumen
     return *document;
   }
   else {
-    throw TactileError {"No tileset document was active!"};
+    throw Exception {"No tileset document was active!"};
   }
 }
 

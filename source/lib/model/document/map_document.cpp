@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/cmd/command_stack.hpp"
@@ -29,6 +28,7 @@
 #include "model/cmd/map/all.hpp"
 #include "model/cmd/object/all.hpp"
 #include "model/cmd/tool/all.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -202,7 +202,7 @@ auto MapDocument::get_object(const UUID& object_id) -> Shared<Object>
     return object;
   }
   else {
-    throw TactileError {"UUID did not reference an object"};
+    throw Exception {"UUID did not reference an object"};
   }
 }
 

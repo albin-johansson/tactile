@@ -97,7 +97,7 @@ namespace {
       return fmt::format(R"("{}": {})", name, static_cast<int32>(value.as_object()));
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Exception {"Invalid attribute type"};
   }
 }
 

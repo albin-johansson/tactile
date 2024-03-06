@@ -21,12 +21,12 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/component/component_index.hpp"
 #include "core/context/context_manager.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/document.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -38,10 +38,10 @@ RemoveComponentAttr::RemoveComponentAttr(Document* document,
       mAttributeName {std::move(attribute)}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null document!"};
+    throw Exception {"Invalid null document!"};
   }
   else if (!mDocument->get_component_index_ptr()) {
-    throw TactileError {"Invalid null component index!"};
+    throw Exception {"Invalid null component index!"};
   }
 }
 

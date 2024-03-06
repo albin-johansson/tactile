@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -53,7 +53,7 @@ void TilesetBundle::attach_tileset(Shared<Tileset> tileset, const bool embedded)
 void TilesetBundle::detach_tileset(const UUID& id)
 {
   if (!has_tileset(id)) {
-    throw TactileError {"Invalid tileset identifier!"};
+    throw Exception {"Invalid tileset identifier!"};
   }
 
   const auto& ref = lookup_in(mRefs, id);
@@ -80,7 +80,7 @@ void TilesetBundle::select_tileset(const UUID& id)
     mActiveTileset = id;
   }
   else {
-    throw TactileError {"Invalid tileset identifier!"};
+    throw Exception {"Invalid tileset identifier!"};
   }
 }
 
@@ -146,7 +146,7 @@ auto TilesetBundle::to_tile_index(const TileID id) const -> TileIndex
     return ref.to_index(id);
   }
   else {
-    throw TactileError {"Invalid tile identifier!"};
+    throw Exception {"Invalid tile identifier!"};
   }
 }
 

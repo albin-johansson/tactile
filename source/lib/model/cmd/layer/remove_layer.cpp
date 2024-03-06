@@ -19,11 +19,11 @@
 
 #include "remove_layer.hpp"
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::cmd {
 
@@ -31,7 +31,7 @@ RemoveLayer::RemoveLayer(MapDocument* document, const UUID& layer_id)
     : mDocument {document}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null map document!"};
+    throw Exception {"Invalid null map document!"};
   }
 
   mLayer = mDocument->get_map().get_invisible_root().find_shared_layer(layer_id);
