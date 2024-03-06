@@ -21,10 +21,10 @@
 
 #include "common/type/result.hpp"
 #include "common/type/string_map.hpp"
-#include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

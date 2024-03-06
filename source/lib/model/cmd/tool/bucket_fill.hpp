@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/uuid.hpp"
 #include "core/map.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "model/cmd/command.hpp"
@@ -27,6 +26,7 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile::cmd {
 

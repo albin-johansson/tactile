@@ -21,13 +21,13 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/type/uuid.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_ref.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

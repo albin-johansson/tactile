@@ -19,18 +19,18 @@
 
 #pragma once
 
-#include "common/type/uuid.hpp"
 #include "core/component/component.hpp"
 #include "core/component/component_base.hpp"
 #include "core/element.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 
 /// Represents the structure of a component type, providing attributes and default values.
 class ComponentDefinition final : public ComponentBase, public Element {
  public:
-  explicit ComponentDefinition(const UUID& id = make_uuid());
+  explicit ComponentDefinition(const UUID& id = UUID::generate());
 
   /// Sets the unique name of the component definition.
   void set_name(String name);

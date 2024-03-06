@@ -23,7 +23,6 @@
 
 #include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
-#include "common/type/uuid.hpp"
 #include "core/context/context_manager.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/tile_format.hpp"
@@ -40,6 +39,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

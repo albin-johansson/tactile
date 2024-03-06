@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/result.hpp"
-#include "common/type/uuid.hpp"
 #include "core/component/component_definition.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

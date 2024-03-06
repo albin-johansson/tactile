@@ -24,7 +24,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component_index.hpp"
 #include "lang/language.hpp"
@@ -34,6 +33,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/util/uuid.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"

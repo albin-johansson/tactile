@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/uuid.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "model/document/document.hpp"
@@ -29,6 +28,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 
@@ -39,7 +39,7 @@ namespace tactile {
 /// external.
 class TilesetDocument final : public Document {
  public:
-  explicit TilesetDocument(TilesetInfo info, const UUID& id = make_uuid());
+  explicit TilesetDocument(TilesetInfo info, const UUID& id = UUID::generate());
 
   void update() override;
 

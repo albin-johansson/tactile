@@ -68,7 +68,7 @@ auto DocumentModel::Impl::add_tileset(const TilesetInfo& info) -> UUID
 {
   if (auto* document = mDocuments.current_map_document()) {
     auto& map = document->get_map();
-    const auto tileset_id = make_uuid();
+    const auto tileset_id = UUID::generate();
 
     auto& commands = document->get_history();
     commands.push<cmd::CreateTileset>(mParent, map.get_uuid(), tileset_id, info);

@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/tile_cache.hpp"
-#include "common/type/uuid.hpp"
 #include "core/map.hpp"
 #include "model/cmd/command.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile::cmd {
 

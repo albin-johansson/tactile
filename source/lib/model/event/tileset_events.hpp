@@ -20,13 +20,13 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/uuid.hpp"
 #include "core/region.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

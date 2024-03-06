@@ -203,7 +203,7 @@ auto ContextInfo::component_count() const -> usize
 auto ContextInfo::clone() const -> ContextInfo
 {
   ContextInfo other {*this};
-  other.mId = make_uuid();
+  other.mId = UUID::generate();
   return other;
 }
 

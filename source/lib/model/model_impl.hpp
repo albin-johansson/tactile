@@ -20,7 +20,6 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/uuid.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "model/document/document_manager.hpp"
 #include "model/model.hpp"
@@ -28,6 +27,7 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

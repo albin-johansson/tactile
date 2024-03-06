@@ -20,7 +20,6 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/uuid.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/tile/tileset_info.hpp"
@@ -30,6 +29,7 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/util/uuid.hpp"
 #include "tile_pos.hpp"
 
 namespace tactile {
@@ -42,7 +42,7 @@ class Tileset final : public Context {
   using iterator = Tiles::iterator;
 
  public:
-  explicit Tileset(TilesetInfo info, const UUID& id = make_uuid());
+  explicit Tileset(TilesetInfo info, const UUID& id = UUID::generate());
 
   ~Tileset() noexcept override;
 

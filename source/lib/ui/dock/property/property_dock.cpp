@@ -24,7 +24,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/uuid.hpp"
 #include "core/context/context_visitor.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
@@ -44,6 +43,7 @@
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/core/util/uuid.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"

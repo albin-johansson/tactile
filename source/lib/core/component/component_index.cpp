@@ -33,7 +33,7 @@ auto ComponentIndex::define_comp(String name) -> UUID
     throw Exception {"Component definition name is not unique"};
   }
 
-  const auto component_id = make_uuid();
+  const auto component_id = UUID::generate();
 
   ComponentDefinition def {component_id};
   def.set_name(std::move(name));

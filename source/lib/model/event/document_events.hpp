@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/uuid.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

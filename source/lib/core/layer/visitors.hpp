@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/uuid.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "tactile/base/container/function.hpp"
@@ -27,6 +26,7 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

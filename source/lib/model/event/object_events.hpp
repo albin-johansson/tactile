@@ -22,9 +22,9 @@
 #include <entt/entity/entity.hpp>
 
 #include "common/type/math.hpp"
-#include "common/type/uuid.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

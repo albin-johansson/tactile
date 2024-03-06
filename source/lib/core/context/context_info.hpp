@@ -21,7 +21,6 @@
 
 #include "common/type/result.hpp"
 #include "common/type/string_map.hpp"
-#include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "tactile/base/container/function.hpp"
@@ -29,6 +28,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 
@@ -92,7 +92,7 @@ class ContextInfo final {
   [[nodiscard]] auto name() const -> const String& { return mName; }
 
  private:
-  UUID mId {make_uuid()};
+  UUID mId {UUID::generate()};
   String mName;
   StringMap<Attribute> mProperties;
   HashMap<UUID, Component> mComponents;

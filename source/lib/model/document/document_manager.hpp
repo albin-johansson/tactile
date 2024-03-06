@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/uuid.hpp"
 #include "tactile/base/container/function.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
@@ -27,6 +26,7 @@
 #include "tactile/base/container/set.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 

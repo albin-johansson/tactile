@@ -15,6 +15,7 @@ target_include_directories(tactile-core PUBLIC "${PROJECT_SOURCE_DIR}/inc")
 target_compile_definitions(tactile-core
                            PRIVATE
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
+                           BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
                            )
 
 target_link_libraries(tactile-core

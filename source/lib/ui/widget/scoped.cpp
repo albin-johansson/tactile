@@ -86,7 +86,7 @@ Scope::Scope(const char* str)
 
 Scope::Scope(const UUID& id)
 {
-  ImGui::PushID(static_cast<int>(hash(id)));
+  ImGui::PushID(static_cast<int>(id.hash_code()));
 }
 
 Scope::Scope(const int id)

@@ -27,7 +27,6 @@
 #include <fmt/ostream.h>
 
 #include "common/type/math.hpp"
-#include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "tactile/base/container/array.hpp"
@@ -35,6 +34,7 @@
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/stacktrace.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace fmt {
 

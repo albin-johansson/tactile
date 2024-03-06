@@ -25,7 +25,6 @@
 
 #include "common/type/math.hpp"
 #include "common/type/string_map.hpp"
-#include "common/type/uuid.hpp"
 #include "common/util/algorithm.hpp"
 #include "core/attribute.hpp"
 #include "core/layer/layer_type.hpp"
@@ -42,6 +41,7 @@
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 
@@ -120,7 +120,7 @@ struct AnimationFrameIR final {
 };
 
 struct TileIR final {
-  UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
+  UUID uuid {UUID::generate()};  // This is not persistent! Only here for convenience.
 
   Vector<ObjectIR> objects;
   Vector<AnimationFrameIR> frames;
@@ -130,7 +130,7 @@ struct TileIR final {
 struct TilesetIR final {
   using MetaTiles = HashMap<TileIndex, TileIR>;
 
-  UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
+  UUID uuid {UUID::generate()};  // This is not persistent! Only here for convenience.
 
   String name;
   TileID first_tile {};
