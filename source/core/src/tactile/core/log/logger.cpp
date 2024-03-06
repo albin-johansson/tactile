@@ -8,8 +8,6 @@
 
 #include <fmt/chrono.h>
 
-#include "tactile/core/log/logger_sink.hpp"
-
 namespace tactile {
 namespace {
 

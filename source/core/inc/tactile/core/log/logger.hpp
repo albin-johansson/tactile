@@ -11,6 +11,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/log/log_level.hpp"
+#include "tactile/core/log/logger_sink.hpp"
 
 #define TACTILE_LOG(Level, FmtString, ...)                                  \
   {                                                                         \
