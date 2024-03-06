@@ -26,13 +26,13 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/logging.hpp"
-#include "common/debug/stacktrace.hpp"
 #include "common/util/fmt.hpp"
 #include "io/directories.hpp"
 #include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "system/win32.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/core/debug/stacktrace.hpp"
 #include "ui/menu/menu.hpp"
 
 namespace tactile {
@@ -90,8 +90,7 @@ auto AppInitializer::get_window() -> cen::window&
 void on_terminate()
 {
   try {
-    spdlog::critical("Into exile I must go. Failed I have.\n{}",
-                     boost::stacktrace::stacktrace {});
+    spdlog::critical("Into exile I must go. Failed I have.\n{}", get_stacktrace());
   }
   catch (...) {
     // Not much we can do.

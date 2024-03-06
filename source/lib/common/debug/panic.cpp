@@ -22,18 +22,14 @@
 #include <sstream>  // stringstream
 #include <utility>  // move
 
-#include "common/debug/stacktrace.hpp"
+#include "tactile/core/debug/stacktrace.hpp"
 
 namespace tactile {
 
 TactileError::TactileError(String what)
-    : mWhat {std::move(what)}
+    : mWhat {std::move(what)},
+      mTrace {get_stacktrace()}
 {
-  // To avoid odd behavior whilst passing around stacktrace objects, we simply convert
-  // the trace into a string, and log it later.
-  std::stringstream stream;
-  stream << boost::stacktrace::stacktrace {};
-  mTrace = stream.str();
 }
 
 }  // namespace tactile

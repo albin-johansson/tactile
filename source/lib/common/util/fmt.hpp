@@ -26,7 +26,6 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "common/debug/stacktrace.hpp"
 #include "common/type/math.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
@@ -35,16 +34,9 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/debug/stacktrace.hpp"
 
 namespace fmt {
-
-template <>
-struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
-  auto format(const boost::stacktrace::stacktrace& trace, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{}", fmt::streamed(trace));
-  }
-};
 
 template <>
 struct formatter<tactile::UUID> : formatter<std::string_view> {
@@ -126,7 +118,6 @@ struct formatter<tactile::Attribute> : formatter<std::string_view> {
   }
 };
 
-static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
 static_assert(is_formattable<tactile::Int2, char>::value);
 static_assert(is_formattable<tactile::Int3, char>::value);
 static_assert(is_formattable<tactile::Int4, char>::value);
