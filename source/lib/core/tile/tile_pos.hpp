@@ -19,11 +19,13 @@
 
 #pragma once
 
-#include <compare>  // <=>
+#include <compare>     // <=>
+#include <cstddef>     // size_t
+#include <functional>  // hash
 
 #include "common/type/math.hpp"
-#include "common/util/hash.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/util/hash.hpp"
 #include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
@@ -151,4 +153,10 @@ class TilePos final {
 
 }  // namespace tactile
 
-TACTILE_IMPLEMENT_HASH(tactile::TilePos, t.row(), t.col());
+template <>
+struct std::hash<tactile::TilePos> final {
+  [[nodiscard]] auto operator()(const tactile::TilePos& pos) const noexcept -> std::size_t
+  {
+    return tactile::hash_combine(pos.row(), pos.col());
+  }
+};
