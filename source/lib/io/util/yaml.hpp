@@ -23,40 +23,40 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "common/type/result.hpp"
 #include "core/attribute.hpp"
 #include "core/layer/tile_format.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
-auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result;
+auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result<void>;
 
-/// Reads an attribute to a destination variable, returns false on failure.
+/// Reads an attribute to a destination variable.
 template <typename T>
-auto read_attr(const YAML::Node& node, const char* name, T& result) -> Result
+auto read_attr(const YAML::Node& node, const char* name, T& result) -> Result<void>
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();
-    return success;
+    return kOK;
   }
-  else {
-    return failure;
-  }
+
+  return unexpected(make_error(GenericError::kInvalidParam));
 }
 
 template <>
-inline auto read_attr(const YAML::Node& node, const char* name, String& result) -> Result
+inline auto read_attr(const YAML::Node& node, const char* name, String& result)
+    -> Result<void>
 {
   if (auto attr = node[name]) {
     result = attr.as<String>();
-    return success;
+    return kOK;
   }
-  else {
-    return failure;
-  }
+
+  return unexpected(make_error(GenericError::kInvalidParam));
 }
 
 /// Reads an attribute to a destination variable, uses the fallback value on failure.

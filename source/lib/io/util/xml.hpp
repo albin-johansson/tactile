@@ -21,7 +21,7 @@
 
 #include <pugixml.hpp>
 
-#include "common/type/result.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
@@ -35,7 +35,7 @@ using XmlAttr = pugi::xml_attribute;
 /// Parses the XML document at the specified path, returning nothing if an error occurs.
 [[nodiscard]] auto parse_xml_file(const Path& path) -> Maybe<XmlDocument>;
 
-auto save_xml_to_file(const XmlDocument& document, const Path& path) -> Result;
+auto save_xml_to_file(const XmlDocument& document, const Path& path) -> Result<void>;
 
 [[nodiscard]] auto has_attr(XmlNode node, const char* attr_name) -> bool;
 

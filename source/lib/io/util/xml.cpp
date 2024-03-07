@@ -27,6 +27,7 @@
 
 #include "io/stream.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {
@@ -44,17 +45,17 @@ auto parse_xml_file(const Path& path) -> Maybe<XmlDocument>
   }
 }
 
-auto save_xml_to_file(const XmlDocument& document, const Path& path) -> Result
+auto save_xml_to_file(const XmlDocument& document, const Path& path) -> Result<void>
 {
   auto stream = open_output_stream(path, FileType::Text);
-  if (stream) {
-    document.save(*stream, " ");
-    return success;
-  }
-  else {
+
+  if (!stream) {
     spdlog::error("Could not open XML file for writing: {}", path);
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidFile));
   }
+
+  document.save(*stream, " ");
+  return kOK;
 }
 
 auto has_attr(XmlNode node, const char* attr_name) -> bool

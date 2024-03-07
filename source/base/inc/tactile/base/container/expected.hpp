@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include <type_traits>  // decay_t
-#include <utility>      // forward
-#include <version>      // __cpp_lib_expected
+#include <system_error>  // error_code, error_category
+#include <type_traits>   // decay_t
+#include <utility>       // forward
+#include <version>       // __cpp_lib_expected
 
 #if __cpp_lib_expected >= 202211L
   #define TACTILE_HAS_STD_EXPECTED 1
@@ -34,6 +35,8 @@
 #else
   #include <tl/expected.hpp>
 #endif
+
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 
@@ -70,5 +73,13 @@ template <typename T, typename E>
 {
   return unexpected(e.error());
 }
+
+using ErrorCode = std::error_code;
+using ErrorCategory = std::error_category;
+
+template <typename T>
+using Result = Expected<T, ErrorCode>;
+
+inline const Result<void> kOK {};
 
 }  // namespace tactile

@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
 #include "common/type/string_map.hpp"
 #include "core/attribute.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/util/uuid.hpp"
@@ -60,14 +60,14 @@ class ComponentBase {
   ///
   /// \param key the key associated with the attribute.
   /// \return success if an attribute was removed; failure otherwise.
-  auto remove_attr(StringView key) -> Result;
+  auto remove_attr(StringView key) -> Result<void>;
 
   /// Changes the name (key) of an existing attribute.
   ///
   /// \param old_key the current attribute key.
   /// \param new_key the new attribute key.
   /// \return success if an attribute was renamed; failure otherwise.
-  auto rename_attr(StringView old_key, String new_key) -> Result;
+  auto rename_attr(StringView old_key, String new_key) -> Result<void>;
 
   /// Duplicates an existing attribute.
   ///

@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
 #include "common/type/string_map.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/function.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
@@ -49,22 +49,22 @@ class ContextInfo final {
   /// Visits each property of the context.
   void each_property(const PropertyVisitor& visitor) const;
 
-  auto add_property(String name, Attribute value) -> Result;
+  auto add_property(String name, Attribute value) -> Result<void>;
 
-  auto add_property(String name, AttributeType type) -> Result;
+  auto add_property(String name, AttributeType type) -> Result<void>;
 
-  auto update_property(StringView name, Attribute value) -> Result;
+  auto update_property(StringView name, Attribute value) -> Result<void>;
 
   auto remove_property(StringView name) -> Maybe<Attribute>;
 
-  auto rename_property(StringView current_name, String new_name) -> Result;
+  auto rename_property(StringView current_name, String new_name) -> Result<void>;
 
   /// Visits each component attached to the context.
   void each_component(const ComponentVisitor& visitor) const;
 
   /// Attaches a component to the context.
   /// Has no effect if the context already has an attached component of the same type.
-  auto attach_component(Component component) -> Result;
+  auto attach_component(Component component) -> Result<void>;
 
   /// Detaches a component from the context.
   auto detach_component(const UUID& component_id) -> Maybe<Component>;

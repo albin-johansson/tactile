@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
 #include "core/layer/abstract_layer.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
@@ -64,18 +64,18 @@ class TileLayer final : public AbstractLayer {
 
   /// Removes a single row from the layer.
   /// There must be more than one row in the layer when this function is called.
-  auto remove_row() -> Result;
+  auto remove_row() -> Result<void>;
 
   /// Removes a single column from the layer.
   /// There must be more than one column in the layer when this function is called.
-  auto remove_column() -> Result;
+  auto remove_column() -> Result<void>;
 
   /// Changes the size of the layer.
   /// Note, layers must have at least 1 row and 1 column.
   void resize(TileExtent extent);
 
   /// Sets the tile identifier at the specified position.
-  auto set_tile(const TilePos& pos, TileID id) -> Result;
+  auto set_tile(const TilePos& pos, TileID id) -> Result<void>;
 
   /// Returns the tile identifier at a specific position.
   [[nodiscard]] auto tile_at(const TilePos& pos) const -> Maybe<TileID>;

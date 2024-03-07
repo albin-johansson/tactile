@@ -21,6 +21,7 @@
 
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
@@ -47,23 +48,23 @@ void TileAnimation::add_frame(const TileIndex tile, const Milliseconds duration)
 
 auto TileAnimation::insert_frame(const usize index,
                                  const TileIndex tile_index,
-                                 const Milliseconds duration) -> Result
+                                 const Milliseconds duration) -> Result<void>
 {
   if (index == mFrames.size()) {
     add_frame(tile_index, duration);
-    return success;
+    return kOK;
   }
   else if (index < mFrames.size()) {
     mFrames.insert(mFrames.begin() + static_cast<ssize>(index),
                    Frame {tile_index, duration});
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 
-auto TileAnimation::remove_frame(const usize frame_index) -> Result
+auto TileAnimation::remove_frame(const usize frame_index) -> Result<void>
 {
   if (frame_index < mFrames.size()) {
     const auto iter = mFrames.begin() + static_cast<ssize>(frame_index);
@@ -74,10 +75,10 @@ auto TileAnimation::remove_frame(const usize frame_index) -> Result
       mLastUpdate = SystemClock::now();
     }
 
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 

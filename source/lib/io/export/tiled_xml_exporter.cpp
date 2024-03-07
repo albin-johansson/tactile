@@ -403,7 +403,7 @@ void emit_external_tileset_file(const Path& path,
 
   append_common_tileset_attributes(root, tileset, dir);
 
-  if (save_xml_to_file(document, path).failed()) {
+  if (!save_xml_to_file(document, path).has_value()) {
     spdlog::error("Could not save XML tileset file");
   }
 }
@@ -464,7 +464,7 @@ void save_map_as_tiled_xml(const Path& destination, const MapIR& ir_map)
   pugi::xml_document document;
   append_root(document, destination.parent_path(), ir_map);
 
-  if (save_xml_to_file(document, destination).failed()) {
+  if (!save_xml_to_file(document, destination).has_value()) {
     spdlog::error("Could not save XML map file");
   }
 }

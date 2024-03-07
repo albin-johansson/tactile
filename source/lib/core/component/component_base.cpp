@@ -25,6 +25,7 @@
 
 #include "common/util/assoc.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
@@ -59,31 +60,31 @@ void ComponentBase::update_attr(StringView key, Attribute value)
   attribute = std::move(value);
 }
 
-auto ComponentBase::remove_attr(StringView key) -> Result
+auto ComponentBase::remove_attr(StringView key) -> Result<void>
 {
   if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 
-auto ComponentBase::rename_attr(StringView old_key, String new_key) -> Result
+auto ComponentBase::rename_attr(StringView old_key, String new_key) -> Result<void>
 {
   if (has_key(mAttributes, new_key)) {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 
   if (const auto iter = mAttributes.find(old_key); iter != mAttributes.end()) {
     auto value = iter->second;
     mAttributes.erase(iter);
     mAttributes[std::move(new_key)] = std::move(value);
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 

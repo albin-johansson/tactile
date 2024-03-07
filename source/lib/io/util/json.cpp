@@ -29,6 +29,7 @@
 #include "io/stream.hpp"
 #include "model/settings.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 namespace {
@@ -218,12 +219,12 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
   }
 }
 
-auto save_json_to_file(const JSON& json, const Path& path) -> Result
+auto save_json_to_file(const JSON& json, const Path& path) -> Result<void>
 {
   auto stream = open_output_stream(path, FileType::Text);
   if (!stream) {
     spdlog::error("Could not open JSON file for writing: {}", path);
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidFile));
   }
 
   try {
@@ -232,15 +233,15 @@ auto save_json_to_file(const JSON& json, const Path& path) -> Result
     }
 
     *stream << json;
-    return success;
+    return kOK;
   }
   catch (const std::exception& e) {
     spdlog::error("Could not save JSON: {}", e.what());
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidFile));
   }
   catch (...) {
     spdlog::error("Unknown error when saving JSON to {}", path);
-    return failure;
+    return unexpected(make_error(GenericError::kUnknown));
   }
 }
 

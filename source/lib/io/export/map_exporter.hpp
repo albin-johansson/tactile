@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -28,6 +28,6 @@ TACTILE_FWD_DECLARE_CLASS(MapDocument)
 
 /// Saves a map document to disk, inferring the destination from the document path.
 /// The file format is also deduced from the document path.
-auto save_map_document_to_disk(const MapDocument& document) -> Result;
+auto save_map_document_to_disk(const MapDocument& document) -> Result<void>;
 
 }  // namespace tactile

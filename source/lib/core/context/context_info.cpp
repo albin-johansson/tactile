@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "common/util/assoc.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
@@ -49,26 +50,26 @@ void ContextInfo::each_component(const ComponentVisitor& visitor) const
   }
 }
 
-auto ContextInfo::add_property(String name, Attribute value) -> Result
+auto ContextInfo::add_property(String name, Attribute value) -> Result<void>
 {
   auto [iter, did_insert] = mProperties.try_emplace(std::move(name), std::move(value));
-  return did_insert ? success : failure;
+  return did_insert ? kOK : unexpected(make_error(GenericError::kInvalidParam));
 }
 
-auto ContextInfo::add_property(String name, const AttributeType type) -> Result
+auto ContextInfo::add_property(String name, const AttributeType type) -> Result<void>
 {
   auto [iter, did_insert] = mProperties.try_emplace(std::move(name), type);
-  return did_insert ? success : failure;
+  return did_insert ? kOK : unexpected(make_error(GenericError::kInvalidParam));
 }
 
-auto ContextInfo::update_property(StringView name, Attribute value) -> Result
+auto ContextInfo::update_property(StringView name, Attribute value) -> Result<void>
 {
   if (auto* property = find_property(name)) {
     *property = std::move(value);
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 
@@ -84,10 +85,11 @@ auto ContextInfo::remove_property(StringView name) -> Maybe<Attribute>
   }
 }
 
-auto ContextInfo::rename_property(StringView current_name, String new_name) -> Result
+auto ContextInfo::rename_property(StringView current_name, String new_name)
+    -> Result<void>
 {
   if (has_property(new_name)) {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 
   if (const auto iter = mProperties.find(current_name); iter != mProperties.end()) {
@@ -96,17 +98,17 @@ auto ContextInfo::rename_property(StringView current_name, String new_name) -> R
     mProperties.erase(iter);
     mProperties[std::move(new_name)] = std::move(property_value);
 
-    return success;
+    return kOK;
   }
 
-  return failure;
+  return unexpected(make_error(GenericError::kInvalidParam));
 }
 
-auto ContextInfo::attach_component(Component component) -> Result
+auto ContextInfo::attach_component(Component component) -> Result<void>
 {
   const auto component_id = component.definition_id();
   auto [iter, did_insert] = mComponents.try_emplace(component_id, std::move(component));
-  return did_insert ? success : failure;
+  return did_insert ? kOK : unexpected(make_error(GenericError::kInvalidParam));
 }
 
 auto ContextInfo::detach_component(const UUID& component_id) -> Maybe<Component>

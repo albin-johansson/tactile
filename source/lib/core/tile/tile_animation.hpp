@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
@@ -49,8 +49,9 @@ class TileAnimation final {
   /// \param index the index of the frame in the animation.
   /// \param tile_index the index of the tile shown during the frame.
   /// \param duration the duration of the added frame.
-  /// \return success if a frame was added; failure otherwise.
-  auto insert_frame(usize index, TileIndex tile_index, Milliseconds duration) -> Result;
+  /// \return nothing if a frame was added; an error code otherwise.
+  auto insert_frame(usize index, TileIndex tile_index, Milliseconds duration)
+      -> Result<void>;
 
   /// Removes the frame at the specified index.
   ///
@@ -58,8 +59,8 @@ class TileAnimation final {
   /// The animation is reset to the first frame if the current frame is
   ///   1) the removed frame,
   ///   2) or one after the removed frame.
-  /// \return success if a frame was removed; failure otherwise.
-  auto remove_frame(usize frame_index) -> Result;
+  /// \return nothing if a frame was removed; an error code otherwise.
+  auto remove_frame(usize frame_index) -> Result<void>;
 
   /// Returns the frame at a specific index.
   [[nodiscard]] auto operator[](usize index) -> Frame&;

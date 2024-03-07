@@ -21,8 +21,8 @@
 
 #include <nlohmann/json.hpp>
 
-#include "common/type/result.hpp"
 #include "core/attribute.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
@@ -41,7 +41,7 @@ void from_json(const JSON& json, AttributeType& type);
 [[nodiscard]] auto parse_json_file(const Path& path) -> Maybe<JSON>;
 
 /// Saves a JSON file to the specified path, returning failure if an error occurs.
-auto save_json_to_file(const JSON& json, const Path& path) -> Result;
+auto save_json_to_file(const JSON& json, const Path& path) -> Result<void>;
 
 /// Attempts to retrieve an attribute from a JSON object.
 [[nodiscard]] auto try_get(const JSON& json, const char* key) -> const JSON*;

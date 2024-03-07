@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "core/context/context.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/function.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
@@ -43,9 +43,9 @@ class ContextManager final {
 
   void add_context(Shared<Context> context);
 
-  auto remove_context(const UUID& ctx_id) -> Result;
+  auto remove_context(const UUID& ctx_id) -> Result<void>;
 
-  auto select_context(const UUID& ctx_id) -> Result;
+  auto select_context(const UUID& ctx_id) -> Result<void>;
 
   [[nodiscard]] auto get_context_ptr(const UUID& ctx_id) -> const Shared<Context>&;
 

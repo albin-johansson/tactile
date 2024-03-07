@@ -28,16 +28,16 @@
 
 namespace tactile {
 
-auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result
+auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result<void>
 {
   auto stream = open_output_stream(path, FileType::Text);
   if (stream.has_value()) {
     *stream << emitter.c_str();
-    return success;
+    return kOK;
   }
   else {
     spdlog::error("Could not open YAML file for writing: ", path);
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidFile));
   }
 }
 

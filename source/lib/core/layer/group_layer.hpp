@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
 #include "core/layer/abstract_layer.hpp"
 #include "core/layer/visitors.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/function.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/vector.hpp"
@@ -49,8 +49,8 @@ class GroupLayer final : public AbstractLayer {
   /// Adds a layer as an immediate child of the group layer.
   ///
   /// \param layer the layer that will be added.
-  /// \return success if the layer was added; failure otherwise.
-  auto add_layer(Shared<Layer> layer) -> Result;
+  /// \return nothing if the layer was added; an error code otherwise.
+  auto add_layer(Shared<Layer> layer) -> Result<void>;
 
   /// Adds a layer to the hierarchy, with the specified group layer as the parent.
   ///
@@ -59,8 +59,8 @@ class GroupLayer final : public AbstractLayer {
   ///
   /// \param parent_id the ID of a group layer to add the layer to.
   /// \param layer the layer that will be added, cannot be null.
-  /// \return success if the layer was added; failure otherwise.
-  auto add_layer(const UUID& parent_id, const Shared<Layer>& layer) -> Result;
+  /// \return nothing if the layer was added; an error code otherwise.
+  auto add_layer(const UUID& parent_id, const Shared<Layer>& layer) -> Result<void>;
 
   /// Attempts to remove a layer.
   ///

@@ -30,18 +30,19 @@
 #include "io/ir/map_document_to_ir.hpp"
 #include "io/save_format.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/debug/performance.hpp"
 
 namespace tactile {
 
-auto save_map_document_to_disk(const MapDocument& document) -> Result
+auto save_map_document_to_disk(const MapDocument& document) -> Result<void>
 {
   try {
     TACTILE_DEBUG_PROFILE_SCOPE("save_map_document_to_disk");
 
     if (!document.has_path()) {
       spdlog::error("Tried to save map document with no associated file path");
-      return failure;
+      return unexpected(make_error(GenericError::kInvalidState));
     }
 
     const auto path = fs::absolute(document.get_path());
@@ -58,18 +59,18 @@ auto save_map_document_to_disk(const MapDocument& document) -> Result
     }
     else {
       spdlog::error("Unsupported file extension {}", path.extension());
-      return failure;
+      return unexpected(make_error(GenericError::kInvalidParam));
     }
 
-    return success;
+    return kOK;
   }
   catch (const std::exception& e) {
     spdlog::error("Could not save map document to disk: {}", e.what());
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidFile));
   }
   catch (...) {
     spdlog::error("Could not save map document to disk");
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidFile));
   }
 }
 

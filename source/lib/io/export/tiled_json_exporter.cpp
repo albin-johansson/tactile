@@ -327,7 +327,7 @@ void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
   const auto name = fmt::format("{}.json", tileset.name);
   const auto path = dir / name;
 
-  if (save_json_to_file(json, path).failed()) {
+  if (!save_json_to_file(json, path).has_value()) {
     spdlog::error("Could not save JSON tileset file");
   }
 }
@@ -398,7 +398,7 @@ void save_map_as_tiled_json(const Path& destination, const MapIR& ir_map)
     json["properties"] = emit_properties(ir_map.context);
   }
 
-  if (save_json_to_file(json, destination).failed()) {
+  if (!save_json_to_file(json, destination).has_value()) {
     spdlog::error("Could not save JSON map file");
   }
 }

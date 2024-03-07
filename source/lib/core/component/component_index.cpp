@@ -24,6 +24,7 @@
 
 #include "common/util/assoc.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
@@ -52,27 +53,27 @@ void ComponentIndex::restore_comp(ComponentDefinition component_def)
   mDefs[component_id] = std::move(component_def);
 }
 
-auto ComponentIndex::remove_comp(const UUID& component_id) -> Result
+auto ComponentIndex::remove_comp(const UUID& component_id) -> Result<void>
 {
   if (const auto iter = mDefs.find(component_id); iter != mDefs.end()) {
     mDefs.erase(iter);
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 
-auto ComponentIndex::rename_comp(const UUID& component_id, String name) -> Result
+auto ComponentIndex::rename_comp(const UUID& component_id, String name) -> Result<void>
 {
   if (!has_key(mDefs, component_id) || has_comp(name)) {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 
   auto& component_def = lookup_in(mDefs, component_id);
   component_def.set_name(std::move(name));
 
-  return success;
+  return kOK;
 }
 
 auto ComponentIndex::get_comp(const UUID& component_id) -> ComponentDefinition&

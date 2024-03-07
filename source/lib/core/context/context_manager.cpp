@@ -24,6 +24,7 @@
 #include "common/util/assoc.hpp"
 #include "core/context/context_info.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
@@ -38,7 +39,7 @@ void ContextManager::add_context(Shared<Context> context)
   mContexts[ctx_id] = std::move(context);
 }
 
-auto ContextManager::remove_context(const UUID& ctx_id) -> Result
+auto ContextManager::remove_context(const UUID& ctx_id) -> Result<void>
 {
   if (const auto iter = mContexts.find(ctx_id); iter != mContexts.end()) [[likely]] {
     mContexts.erase(iter);
@@ -47,21 +48,21 @@ auto ContextManager::remove_context(const UUID& ctx_id) -> Result
       mActiveContextId = mRootContextId;
     }
 
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 
-auto ContextManager::select_context(const UUID& ctx_id) -> Result
+auto ContextManager::select_context(const UUID& ctx_id) -> Result<void>
 {
   if (has_context(ctx_id)) [[likely]] {
     mActiveContextId = ctx_id;
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 

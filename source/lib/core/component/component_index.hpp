@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/result.hpp"
 #include "core/component/component_definition.hpp"
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/core/util/uuid.hpp"
@@ -45,14 +45,14 @@ class ComponentIndex final {
   ///
   /// \param component_id the ID of the component to remove.
   /// \return success if a component was removed; failure otherwise.
-  auto remove_comp(const UUID& component_id) -> Result;
+  auto remove_comp(const UUID& component_id) -> Result<void>;
 
   /// Changes the name of an existing component.
   ///
   /// \param component_id the ID of the component that will be renamed.
   /// \param name the new component name, must not be used by another component.
   /// \return success if the name was unique and the ID was valid; failure otherwise.
-  auto rename_comp(const UUID& component_id, String name) -> Result;
+  auto rename_comp(const UUID& component_id, String name) -> Result<void>;
 
   /// Returns the component definition with the given ID.
   [[nodiscard]] auto get_comp(const UUID& component_id) -> ComponentDefinition&;

@@ -29,6 +29,7 @@
 #include "core/layer/tile_layer.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
@@ -78,28 +79,29 @@ void GroupLayer::each(const UnaryLayerFunc& func) const
   each(v);
 }
 
-auto GroupLayer::add_layer(Shared<Layer> layer) -> Result
+auto GroupLayer::add_layer(Shared<Layer> layer) -> Result<void>
 {
   if (layer) {
     layer->set_parent(nothing);
     mLayers.push_back(std::move(layer));
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 
-auto GroupLayer::add_layer(const UUID& parent_id, const Shared<Layer>& layer) -> Result
+auto GroupLayer::add_layer(const UUID& parent_id, const Shared<Layer>& layer)
+    -> Result<void>
 {
   if (auto* group = find_group_layer(parent_id)) {
-    if (group->add_layer(layer).succeeded()) {
+    if (group->add_layer(layer).has_value()) {
       layer->set_parent(parent_id);
-      return success;
+      return kOK;
     }
   }
 
-  return failure;
+  return unexpected(make_error(GenericError::kInvalidParam));
 }
 
 auto GroupLayer::remove_layer(const UUID& layer_id) -> Shared<Layer>

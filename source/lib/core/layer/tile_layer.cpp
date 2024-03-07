@@ -29,6 +29,7 @@
 #include "tactile/base/container/queue.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
@@ -118,31 +119,29 @@ void TileLayer::add_column()
   }
 }
 
-auto TileLayer::remove_row() -> Result
+auto TileLayer::remove_row() -> Result<void>
 {
   if (!mTiles.empty()) {
     mTiles.pop_back();
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidState));
   }
 }
 
-auto TileLayer::remove_column() -> Result
+auto TileLayer::remove_column() -> Result<void>
 {
-  Result result = success;
-
   for (auto& row: mTiles) {
     if (!row.empty()) {
       row.pop_back();
     }
     else {
-      result = failure;
+      return unexpected(make_error(GenericError::kInvalidState));
     }
   }
 
-  return result;
+  return kOK;
 }
 
 void TileLayer::resize(const TileExtent extent)
@@ -172,14 +171,14 @@ void TileLayer::resize(const TileExtent extent)
   }
 }
 
-auto TileLayer::set_tile(const TilePos& pos, const TileID id) -> Result
+auto TileLayer::set_tile(const TilePos& pos, const TileID id) -> Result<void>
 {
   if (is_valid(pos)) [[likely]] {
     mTiles[static_cast<usize>(pos.row())][static_cast<usize>(pos.col())] = id;
-    return success;
+    return kOK;
   }
   else {
-    return failure;
+    return unexpected(make_error(GenericError::kInvalidParam));
   }
 }
 
