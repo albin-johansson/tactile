@@ -230,10 +230,10 @@ auto parse_object(const YAML::Node& node, const MapIR& map)
 
   read_attr_or(node, "visible", object.visible, true);
 
-  read_attr_or(node, "x", object.pos.x, 0.0f);
-  read_attr_or(node, "y", object.pos.y, 0.0f);
-  read_attr_or(node, "width", object.size.x, 0.0f);
-  read_attr_or(node, "height", object.size.y, 0.0f);
+  read_attr_or(node, "x", object.pos[0], 0.0f);
+  read_attr_or(node, "y", object.pos[1], 0.0f);
+  read_attr_or(node, "width", object.size[0], 0.0f);
+  read_attr_or(node, "height", object.size[1], 0.0f);
 
   if (auto context = parse_context(node, map)) {
     object.context = std::move(*context);

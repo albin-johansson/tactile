@@ -23,10 +23,10 @@
 #include <cstddef>     // size_t
 #include <functional>  // hash
 
-#include "common/type/math.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/util/hash.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

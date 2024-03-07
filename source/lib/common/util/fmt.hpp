@@ -26,7 +26,6 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "common/type/math.hpp"
 #include "core/attribute.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "tactile/base/container/array.hpp"
@@ -34,6 +33,7 @@
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/stacktrace.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace fmt {
@@ -58,7 +58,7 @@ template <>
 struct formatter<tactile::Float2> : formatter<std::string_view> {
   auto format(const tactile::Float2& vec, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
+    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x(), vec.y());
   }
 };
 
@@ -66,7 +66,7 @@ template <>
 struct formatter<tactile::Int2> : formatter<std::string_view> {
   auto format(const tactile::Int2& vec, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
+    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x(), vec.y());
   }
 };
 
@@ -74,7 +74,7 @@ template <>
 struct formatter<tactile::Float3> : formatter<std::string_view> {
   auto format(const tactile::Float3& vec, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x, vec.y, vec.z);
+    return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x(), vec.y(), vec.z());
   }
 };
 
@@ -82,7 +82,7 @@ template <>
 struct formatter<tactile::Int3> : formatter<std::string_view> {
   auto format(const tactile::Int3& vec, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x, vec.y, vec.z);
+    return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x(), vec.y(), vec.z());
   }
 };
 
@@ -90,7 +90,12 @@ template <>
 struct formatter<tactile::Float4> : formatter<std::string_view> {
   auto format(const tactile::Float4& vec, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x, vec.y, vec.z, vec.w);
+    return fmt::format_to(ctx.out(),
+                          "{{{}, {}, {}, {}}}",
+                          vec.x(),
+                          vec.y(),
+                          vec.z(),
+                          vec.w());
   }
 };
 
@@ -98,7 +103,12 @@ template <>
 struct formatter<tactile::Int4> : formatter<std::string_view> {
   auto format(const tactile::Int4& vec, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x, vec.y, vec.z, vec.w);
+    return fmt::format_to(ctx.out(),
+                          "{{{}, {}, {}, {}}}",
+                          vec.x(),
+                          vec.y(),
+                          vec.z(),
+                          vec.w());
   }
 };
 

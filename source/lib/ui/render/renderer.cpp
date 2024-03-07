@@ -22,7 +22,6 @@
 #include <algorithm>  // min, max
 #include <cmath>      // fmod
 
-#include <glm/common.hpp>
 #include <imgui.h>
 
 #include "core/layer/group_layer.hpp"
@@ -46,7 +45,7 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
   const auto pos = canvas.origin + (canvas.bounds.begin.as_vec2f() * canvas.grid_size);
   const auto size =
       (canvas.bounds.end - canvas.bounds.begin).as_vec2f() * canvas.grid_size;
-  return {pos.x, pos.y, size.x, size.y};
+  return {pos.x(), pos.y(), size.x(), size.y()};
 }
 
 [[nodiscard]] auto determine_canvas_render_bounds(const Float2& tl,
@@ -59,11 +58,11 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
   const auto begin = (tl - origin) / grid_size;
   const auto end = (br - origin) / grid_size;
 
-  const auto begin_row = std::max(0, static_cast<int32>(begin.y));
-  const auto begin_col = std::max(0, static_cast<int32>(begin.x));
+  const auto begin_row = std::max(0, static_cast<int32>(begin.y()));
+  const auto begin_col = std::max(0, static_cast<int32>(begin.x()));
 
-  const auto end_row = static_cast<int32>(std::min(rows, end.y + 1));
-  const auto end_col = static_cast<int32>(std::min(cols, end.x + 1));
+  const auto end_row = static_cast<int32>(std::min(rows, end.y() + 1));
+  const auto end_col = static_cast<int32>(std::min(cols, end.x() + 1));
 
   Region bounds;
 
@@ -90,8 +89,8 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
   canvas.ratio = canvas.grid_size / canvas.tile_size;
 
   const auto tiles_in_viewport = canvas.size / canvas.grid_size;
-  canvas.tiles_in_viewport_x = static_cast<int32>(tiles_in_viewport.x) + 1;
-  canvas.tiles_in_viewport_y = static_cast<int32>(tiles_in_viewport.y) + 1;
+  canvas.tiles_in_viewport_x = static_cast<int32>(tiles_in_viewport.x()) + 1;
+  canvas.tiles_in_viewport_y = static_cast<int32>(tiles_in_viewport.y()) + 1;
 
   canvas.row_count = static_cast<float>(extent.rows);
   canvas.col_count = static_cast<float>(extent.cols);
@@ -109,14 +108,16 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
 
 [[nodiscard]] auto create_canvas_info(const Viewport& viewport, const Map& map)
 {
-  return create_canvas_info(viewport, map.get_tile_size(), map.get_extent());
+  return create_canvas_info(viewport,
+                            vector_cast<float>(map.get_tile_size()),
+                            map.get_extent());
 }
 
 [[nodiscard]] auto create_canvas_info(const Viewport& viewport, const Tileset& tileset)
 {
   const TileExtent extent {static_cast<usize>(tileset.row_count()),
                            static_cast<usize>(tileset.column_count())};
-  return create_canvas_info(viewport, tileset.tile_size(), extent);
+  return create_canvas_info(viewport, vector_cast<float>(tileset.tile_size()), extent);
 }
 
 }  // namespace
@@ -156,9 +157,9 @@ void Renderer::clear(const Color& color) const
 
 void Renderer::render_infinite_grid(const Color& color) const
 {
-  const auto origin_tile_pos = glm::floor(mCanvas.top_left / mCanvas.grid_size);
-  const auto origin_col = static_cast<int32>(origin_tile_pos.x);
-  const auto origin_row = static_cast<int32>(origin_tile_pos.y);
+  const auto origin_tile_pos = floor(mCanvas.top_left / mCanvas.grid_size);
+  const auto origin_col = static_cast<int32>(origin_tile_pos.x());
+  const auto origin_row = static_cast<int32>(origin_tile_pos.y());
 
   const auto begin_row = origin_row - 1;
   const auto begin_col = origin_col - 1;
@@ -166,20 +167,20 @@ void Renderer::render_infinite_grid(const Color& color) const
   const auto end_col = origin_col + mCanvas.tiles_in_viewport_x + 1;
 
   // This offset ensures that the rendered grid is aligned over the underlying grid
-  const ImVec2 offset {std::fmod(mCanvas.origin.x, mCanvas.grid_size.x),
-                       std::fmod(mCanvas.origin.y, mCanvas.grid_size.y)};
+  const ImVec2 offset {std::fmod(mCanvas.origin.x(), mCanvas.grid_size.x()),
+                       std::fmod(mCanvas.origin.y(), mCanvas.grid_size.y())};
 
-  const auto end_x = (static_cast<float>(end_col) * mCanvas.grid_size.x) + offset.x;
-  const auto end_y = (static_cast<float>(end_row) * mCanvas.grid_size.y) + offset.y;
+  const auto end_x = (static_cast<float>(end_col) * mCanvas.grid_size.x()) + offset.x;
+  const auto end_y = (static_cast<float>(end_row) * mCanvas.grid_size.y()) + offset.y;
 
   auto* list = ImGui::GetWindowDrawList();
   for (auto row = begin_row; row < end_row; ++row) {
-    const auto row_y = (static_cast<float>(row) * mCanvas.grid_size.y) + offset.y;
+    const auto row_y = (static_cast<float>(row) * mCanvas.grid_size.y()) + offset.y;
     list->AddLine(ImVec2 {0, row_y}, ImVec2 {end_x, row_y}, to_u32(color));
   }
 
   for (auto col = begin_col; col < end_col; ++col) {
-    const auto col_x = (static_cast<float>(col) * mCanvas.grid_size.x) + offset.x;
+    const auto col_x = (static_cast<float>(col) * mCanvas.grid_size.x()) + offset.x;
     list->AddLine(ImVec2 {col_x, 0}, ImVec2 {col_x, end_y}, to_u32(color));
   }
 }
@@ -322,7 +323,7 @@ void Renderer::render_point_object(const Object& object,
   TACTILE_ASSERT(object.is_point());
 
   const auto translated_position = translate(position);
-  const float radius = std::min(mCanvas.grid_size.x / 4.0f, 6.0f);
+  const float radius = std::min(mCanvas.grid_size.x() / 4.0f, 6.0f);
 
   if (is_within_viewport(translated_position)) {
     draw_shadowed_circle(translated_position, radius, color, 2.0f);
@@ -331,9 +332,9 @@ void Renderer::render_point_object(const Object& object,
     if (!name.empty()) {
       const auto text_size = ImGui::CalcTextSize(name.c_str());
 
-      if (text_size.x <= mCanvas.grid_size.x) {
-        const auto text_x = position.x - (text_size.x / 2.0f);
-        const auto text_y = position.y + radius + 4.0f;
+      if (text_size.x <= mCanvas.grid_size.x()) {
+        const auto text_x = position.x() - (text_size.x / 2.0f);
+        const auto text_y = position.y() + radius + 4.0f;
 
         render_text(name.c_str(), translate(Float2 {text_x, text_y}), kWhite);
       }
@@ -357,11 +358,11 @@ void Renderer::render_rectangle_object(const Object& object,
     if (!name.empty()) {
       const auto text_size = ImGui::CalcTextSize(name.c_str());
 
-      if (text_size.x <= rendered_size.x) {
-        const auto text_x = (rendered_size.x - text_size.x) / 2.0f;
+      if (text_size.x <= rendered_size.x()) {
+        const auto text_x = (rendered_size.x() - text_size.x) / 2.0f;
 
         render_text(name.c_str(),
-                    translate(position + Float2 {text_x, rendered_size.y + 4.0f}),
+                    translate(position + Float2 {text_x, rendered_size.y() + 4.0f}),
                     kWhite);
       }
     }
@@ -385,9 +386,9 @@ void Renderer::render_ellipse_object(const Object& object,
   if (!name.empty()) {
     const auto text_size = ImGui::CalcTextSize(name.c_str());
 
-    if (text_size.x <= radius.x) {
-      const auto text_x = center.x - (text_size.x / 2.0f);
-      const auto text_y = center.y + (text_size.y / 2.0f) + (radius.y);
+    if (text_size.x <= radius.x()) {
+      const auto text_x = center.x() - (text_size.x / 2.0f);
+      const auto text_y = center.y() + (text_size.y / 2.0f) + (radius.y());
 
       render_text(name.c_str(), translate(Float2 {text_x, text_y}), kWhite);
     }
@@ -467,7 +468,7 @@ void Renderer::render_tileset(const Tileset& tileset) const
   const auto& texture = tileset.texture();
 
   const auto rendered_position = translate(Float2 {0, 0});
-  const auto rendered_size = Float2 {texture.get_size()} * mCanvas.ratio;
+  const auto rendered_size = vector_cast<float>(texture.get_size()) * mCanvas.ratio;
 
   render_image(texture, rendered_position, rendered_size);
 
@@ -487,27 +488,27 @@ auto Renderer::from_matrix_to_absolute(const TilePos pos) const -> Float2
 auto Renderer::is_intersecting_viewport(const Float2 position, const Float2 size) const
     -> bool
 {
-  const auto viewport_max_x = mViewportRect.x + mViewportRect.z;
-  const auto viewport_max_y = mViewportRect.y + mViewportRect.w;
+  const auto viewport_max_x = mViewportRect.x() + mViewportRect.z();
+  const auto viewport_max_y = mViewportRect.y() + mViewportRect.w();
 
-  const auto checked_max_x = position.x + size.x;
-  const auto checked_max_y = position.y + size.y;
+  const auto checked_max_x = position.x() + size.x();
+  const auto checked_max_y = position.y() + size.y();
 
-  return mViewportRect.x < checked_max_x &&  //
-         mViewportRect.y < checked_max_y &&  //
-         position.x < viewport_max_x &&      //
-         position.y < viewport_max_y;
+  return mViewportRect.x() < checked_max_x &&  //
+         mViewportRect.y() < checked_max_y &&  //
+         position.x() < viewport_max_x &&      //
+         position.y() < viewport_max_y;
 }
 
 auto Renderer::is_within_viewport(const Float2 position) const -> bool
 {
-  const auto viewport_max_x = mViewportRect.x + mViewportRect.z;
-  const auto viewport_max_y = mViewportRect.y + mViewportRect.w;
+  const auto viewport_max_x = mViewportRect.x() + mViewportRect.z();
+  const auto viewport_max_y = mViewportRect.y() + mViewportRect.w();
 
-  return mViewportRect.x < position.x &&  //
-         mViewportRect.y < position.y &&  //
-         position.x < viewport_max_x &&   //
-         position.y < viewport_max_y;
+  return mViewportRect.x() < position.x() &&  //
+         mViewportRect.y() < position.y() &&  //
+         position.x() < viewport_max_x &&     //
+         position.y() < viewport_max_y;
 }
 
 }  // namespace tactile

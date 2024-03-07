@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/type/math.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/layer/object.hpp"
@@ -30,6 +29,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

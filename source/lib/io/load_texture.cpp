@@ -39,7 +39,7 @@ auto load_texture(const Path& path) -> Shared<Texture>
 {
   Int2 size {};
   const TextureData data {
-      stbi_load(path.string().c_str(), &size.x, &size.y, nullptr, STBI_rgb_alpha)};
+      stbi_load(path.string().c_str(), &size[0], &size[1], nullptr, STBI_rgb_alpha)};
 
   if (!data) {
     return nullptr;
@@ -58,8 +58,8 @@ auto load_texture(const Path& path) -> Shared<Texture>
   glTexImage2D(GL_TEXTURE_2D,
                0,
                GL_RGBA,
-               size.x,
-               size.y,
+               size.x(),
+               size.y(),
                0,
                GL_RGBA,
                GL_UNSIGNED_BYTE,

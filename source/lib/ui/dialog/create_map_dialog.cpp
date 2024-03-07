@@ -22,13 +22,13 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/math.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 
@@ -74,19 +74,19 @@ void show_dialog_contents(const Strings& lang)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tile_width_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileWidth", &gDialogState.tile_size.x);
+    ImGui::InputInt("##TileWidth", &gDialogState.tile_size[0]);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tile_height_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileHeight", &gDialogState.tile_size.y);
+    ImGui::InputInt("##TileHeight", &gDialogState.tile_size[1]);
   }
 }
 
 void on_dialog_accept(entt::dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(gDialogState.tile_size.x > 0);
-  TACTILE_ASSERT(gDialogState.tile_size.y > 0);
+  TACTILE_ASSERT(gDialogState.tile_size.x() > 0);
+  TACTILE_ASSERT(gDialogState.tile_size.y() > 0);
   dispatcher.enqueue<CreateMapEvent>(gDialogState.tile_size,
                                      gDialogState.row_count,
                                      gDialogState.column_count);
@@ -120,7 +120,7 @@ void update_create_map_dialog(entt::dispatcher& dispatcher)
   }
 
   const bool is_input_valid =
-      (gDialogState.tile_size.x > 0) && (gDialogState.tile_size.y > 0);
+      (gDialogState.tile_size.x() > 0) && (gDialogState.tile_size.y() > 0);
   if (is_input_valid) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }

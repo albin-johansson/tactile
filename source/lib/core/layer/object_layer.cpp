@@ -118,10 +118,11 @@ auto ObjectLayer::object_at(const Float2& pos, const Float2& tile_size) const
   for (const auto& [id, object]: mObjects) {
     const auto bounds = get_bounds(*object, tile_size);
 
-    const auto max_x = bounds.x + bounds.z;
-    const auto max_y = bounds.y + bounds.w;
+    const auto max_x = bounds.x() + bounds.z();
+    const auto max_y = bounds.y() + bounds.w();
 
-    if (pos.x >= bounds.x && pos.y >= bounds.y && pos.x <= max_x && pos.y <= max_y) {
+    if (pos.x() >= bounds.x() && pos.y() >= bounds.y() && pos.x() <= max_x &&
+        pos.y() <= max_y) {
       return id;
     }
   }

@@ -288,10 +288,10 @@ auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>
   object.name = object_node.attribute("name").as_string("");
   object.tag = object_node.attribute("type").as_string("");
 
-  object.pos.x = object_node.attribute("x").as_float(0);
-  object.pos.y = object_node.attribute("y").as_float(0);
-  object.size.x = object_node.attribute("width").as_float(0);
-  object.size.y = object_node.attribute("height").as_float(0);
+  object.pos[0] = object_node.attribute("x").as_float(0);
+  object.pos[1] = object_node.attribute("y").as_float(0);
+  object.size[0] = object_node.attribute("width").as_float(0);
+  object.size[1] = object_node.attribute("height").as_float(0);
 
   object.visible = object_node.attribute("visible").as_bool(true);
 

@@ -147,11 +147,11 @@ constexpr int32 kTilesetFormatVersion = 1;
       return unexpected(ParseError::NoTilesetTileCount);
     }
 
-    if (!read_attr(node, "tile-width", tileset.tile_size.x)) {
+    if (!read_attr(node, "tile-width", tileset.tile_size[0])) {
       return unexpected(ParseError::NoTilesetTileWidth);
     }
 
-    if (!read_attr(node, "tile-height", tileset.tile_size.y)) {
+    if (!read_attr(node, "tile-height", tileset.tile_size[1])) {
       return unexpected(ParseError::NoTilesetTileHeight);
     }
 
@@ -172,11 +172,11 @@ constexpr int32 kTilesetFormatVersion = 1;
       return unexpected(ParseError::TilesetImageDoesNotExist);
     }
 
-    if (!read_attr(node, "image-width", tileset.image_size.x)) {
+    if (!read_attr(node, "image-width", tileset.image_size[0])) {
       return unexpected(ParseError::NoTilesetImageWidth);
     }
 
-    if (!read_attr(node, "image-height", tileset.image_size.y)) {
+    if (!read_attr(node, "image-height", tileset.image_size[1])) {
       return unexpected(ParseError::NoTilesetImageHeight);
     }
 

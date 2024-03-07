@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
 #include "core/context/context_manager.hpp"
 #include "core/layer/layer_type.hpp"
@@ -39,6 +38,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

@@ -21,7 +21,6 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
-#include "common/type/math.hpp"
 #include "common/util/fmt.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/viewport.hpp"
@@ -31,6 +30,7 @@
 #include "model/model.hpp"
 #include "runtime/app_context.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "ui/conversions.hpp"
 #include "ui/viewport/map_viewport.hpp"
 #include "ui/viewport/tileset_viewport.hpp"

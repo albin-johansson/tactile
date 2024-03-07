@@ -171,13 +171,13 @@ void update_behavior_tab(const Strings& lang)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_width.c_str());
     ImGui::SameLine();
-    ImGui::DragInt("##PreferredTileWidth", &preferred_tile_size.x, 1.0f, 1, 10'000);
+    ImGui::DragInt("##PreferredTileWidth", &preferred_tile_size[0], 1.0f, 1, 10'000);
     ui_lazy_tooltip("##PreferredTileWidthToolTip", lang.tooltip.pref_tile_width.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_height.c_str());
     ImGui::SameLine();
-    ImGui::DragInt("##PreferredTileHeight", &preferred_tile_size.y, 1.0f, 1, 10'000);
+    ImGui::DragInt("##PreferredTileHeight", &preferred_tile_size[1], 1.0f, 1, 10'000);
     ui_lazy_tooltip("##PreferredTileHeightToolTip",
                     lang.tooltip.pref_tile_height.c_str());
 

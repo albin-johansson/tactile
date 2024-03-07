@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
 #include "model/tool/tool.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

@@ -64,8 +64,8 @@ inline constinit MapViewportState gViewportState;
 {
   MouseInfo info;
 
-  info.pos.x = cursor.raw_position.x;
-  info.pos.y = cursor.raw_position.y;
+  info.pos[0] = cursor.raw_position.x;
+  info.pos[1] = cursor.raw_position.y;
   info.position_in_viewport = cursor.map_position;
   info.is_within_contents = cursor.is_within_map;
 
@@ -102,12 +102,9 @@ void center_viewport(const Viewport& viewport,
   const auto& cell = viewport.tile_size();
   const auto& offset = viewport.get_offset();
 
-  const auto width = canvas_info.col_count * cell.x;
-  const auto height = canvas_info.row_count * cell.y;
-
-  const auto dx = std::round(((canvas_info.size.x - width) / 2.0f) - offset.x);
-  const auto dy = std::round(((canvas_info.size.y - height) / 2.0f) - offset.y);
-  const Float2 delta {dx, dy};
+  const Float2 canvas_size {canvas_info.col_count * cell.x(),
+                            canvas_info.row_count * cell.y()};
+  const auto delta = ((canvas_info.size - canvas_size) * 0.5f) - offset;
 
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }

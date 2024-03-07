@@ -74,8 +74,8 @@ void Settings::print() const
   spdlog::debug("Grid color: {}", get_grid_color().as_rgba());
 
   spdlog::debug("Command capacity: {}", get_command_capacity());
-  spdlog::debug("Preferred tile width: {}", get_preferred_tile_size().x);
-  spdlog::debug("Preferred tile height: {}", get_preferred_tile_size().y);
+  spdlog::debug("Preferred tile width: {}", get_preferred_tile_size().x());
+  spdlog::debug("Preferred tile height: {}", get_preferred_tile_size().y());
 
   spdlog::debug("Preferred format: {}", magic_enum::enum_name(get_preferred_format()));
   spdlog::debug("Viewport overlay pos: {}",

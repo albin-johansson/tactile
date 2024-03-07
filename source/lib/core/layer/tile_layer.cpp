@@ -21,7 +21,6 @@
 
 #include <utility>  // cmp_less
 
-#include "common/type/math.hpp"
 #include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_matrix.hpp"
@@ -30,6 +29,7 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/generic_error.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

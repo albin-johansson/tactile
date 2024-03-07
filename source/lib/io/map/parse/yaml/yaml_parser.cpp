@@ -106,11 +106,11 @@ namespace {
     return ParseError::NoMapWidth;
   }
 
-  if (!read_attr(node, "tile-width", map.tile_size.x)) {
+  if (!read_attr(node, "tile-width", map.tile_size[0])) {
     return ParseError::NoMapTileWidth;
   }
 
-  if (!read_attr(node, "tile-height", map.tile_size.y)) {
+  if (!read_attr(node, "tile-height", map.tile_size[1])) {
     return ParseError::NoMapTileHeight;
   }
 

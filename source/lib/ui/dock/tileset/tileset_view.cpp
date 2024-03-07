@@ -47,7 +47,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                             entt::dispatcher& dispatcher)
 {
   const auto& tileset = tileset_ref.get_tileset();
-  const Float2 texture_size = tileset.texture().get_size();
+  const auto texture_size = vector_cast<float>(tileset.texture().get_size());
 
   const Float2 min_offset = viewport_size - texture_size;
   const Float2 max_offset {};

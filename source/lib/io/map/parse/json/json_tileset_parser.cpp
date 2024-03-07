@@ -137,14 +137,14 @@ namespace {
   }
 
   if (const auto tw = as_int(json, "tilewidth")) {
-    tileset_data.tile_size.x = *tw;
+    tileset_data.tile_size[0] = *tw;
   }
   else {
     return ParseError::NoTilesetTileWidth;
   }
 
   if (const auto th = as_int(json, "tileheight")) {
-    tileset_data.tile_size.y = *th;
+    tileset_data.tile_size[1] = *th;
   }
   else {
     return ParseError::NoTilesetTileHeight;
@@ -165,14 +165,14 @@ namespace {
   }
 
   if (const auto width = as_int(json, "imagewidth")) {
-    tileset_data.image_size.x = *width;
+    tileset_data.image_size[0] = *width;
   }
   else {
     return ParseError::NoTilesetImageWidth;
   }
 
   if (const auto height = as_int(json, "imageheight")) {
-    tileset_data.image_size.y = *height;
+    tileset_data.image_size[1] = *height;
   }
   else {
     return ParseError::NoTilesetImageHeight;

@@ -172,8 +172,8 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
   native_read_only_row(lang.misc.type.c_str(), lang.misc.map.c_str());
   native_read_only_row(lang.misc.name.c_str(), map.get_ctx().name().c_str());
 
-  native_read_only_row(lang.misc.tile_width.c_str(), map.get_tile_size().x);
-  native_read_only_row(lang.misc.tile_height.c_str(), map.get_tile_size().y);
+  native_read_only_row(lang.misc.tile_width.c_str(), map.get_tile_size().x());
+  native_read_only_row(lang.misc.tile_height.c_str(), map.get_tile_size().y());
 
   const auto map_extent = map.get_extent();
   native_read_only_row(lang.misc.row_count.c_str(), map_extent.rows);
@@ -266,8 +266,8 @@ void show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& di
   native_read_only_row(lang.misc.tile_count.c_str(), tileset.tile_count());
   native_read_only_row(lang.misc.column_count.c_str(), tileset.column_count());
 
-  native_read_only_row(lang.misc.tile_width.c_str(), tileset.tile_size().x);
-  native_read_only_row(lang.misc.tile_height.c_str(), tileset.tile_size().y);
+  native_read_only_row(lang.misc.tile_width.c_str(), tileset.tile_size().x());
+  native_read_only_row(lang.misc.tile_height.c_str(), tileset.tile_size().y());
 }
 
 void ui_native_tile_properties(const Tile& tile, entt::dispatcher& dispatcher)
@@ -338,13 +338,13 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
   }
 
   const auto& pos = object.get_pos();
-  native_read_only_row("X", pos.x);
-  native_read_only_row("Y", pos.y);
+  native_read_only_row("X", pos.x());
+  native_read_only_row("Y", pos.y());
 
   if (object.get_type() != ObjectType::Point) {
     const auto& size = object.get_size();
-    native_read_only_row(lang.misc.width.c_str(), size.x);
-    native_read_only_row(lang.misc.height.c_str(), size.y);
+    native_read_only_row(lang.misc.width.c_str(), size.x());
+    native_read_only_row(lang.misc.height.c_str(), size.y());
   }
 
   prepare_table_row(lang.misc.visible.c_str());

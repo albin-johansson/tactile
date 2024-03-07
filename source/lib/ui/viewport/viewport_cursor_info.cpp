@@ -49,8 +49,8 @@ auto get_viewport_cursor_info(const CanvasInfo& canvas_info) -> ViewportCursorIn
     cursor.map_position = {static_cast<int32>(row), static_cast<int32>(col)};
   }
 
-  cursor.clamped_position = {canvas_info.origin.x + (col * canvas_info.grid_size.x),
-                             canvas_info.origin.y + (row * canvas_info.grid_size.y)};
+  cursor.clamped_position = {canvas_info.origin.x() + (col * canvas_info.grid_size.x()),
+                             canvas_info.origin.y() + (row * canvas_info.grid_size.y())};
 
   return cursor;
 }

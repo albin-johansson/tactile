@@ -52,8 +52,8 @@ auto DocumentModel::Impl::add_map(const Int2& tile_size, const TileExtent extent
 {
   // TODO move this to a command
 
-  TACTILE_ASSERT(tile_size.x > 0);
-  TACTILE_ASSERT(tile_size.y > 0);
+  TACTILE_ASSERT(tile_size.x() > 0);
+  TACTILE_ASSERT(tile_size.y() > 0);
 
   auto map_document = std::make_shared<MapDocument>(tile_size, extent);
   map_document->set_component_index(std::make_shared<ComponentIndex>());

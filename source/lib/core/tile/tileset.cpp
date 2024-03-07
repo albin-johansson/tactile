@@ -51,9 +51,9 @@ struct Tileset::Data final {
       : context {id},
         texture {std::move(info.texture)},
         tile_size {info.tile_size},
-        row_count {texture->get_size().y / tile_size.y},
-        column_count {texture->get_size().x / tile_size.x},
-        uv_size {Float2 {tile_size} / Float2 {texture->get_size()}}
+        row_count {texture->get_size().y() / tile_size.y()},
+        column_count {texture->get_size().x() / tile_size.x()},
+        uv_size {vector_cast<float>(tile_size) / vector_cast<float>(texture->get_size())}
   {
   }
 };
@@ -77,7 +77,7 @@ void Tileset::load_tiles()
     auto tile = std::make_shared<Tile>(index);
     const auto tile_id = tile->get_uuid();
 
-    const Int2 pos {col * data.tile_size.x, row * data.tile_size.y};
+    const Int2 pos {col * data.tile_size.x(), row * data.tile_size.y()};
     tile->set_source({pos, data.tile_size});
 
     data.tiles.try_emplace(tile_id, std::move(tile));

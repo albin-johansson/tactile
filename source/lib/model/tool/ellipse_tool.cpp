@@ -20,13 +20,12 @@
 #include "ellipse_tool.hpp"
 
 #include <entt/signal/dispatcher.hpp>
-#include <glm/common.hpp>
 
-#include "common/type/math.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 
@@ -84,22 +83,22 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
     const auto& map = map_document.get_map();
     const auto& viewport = map_document.get_viewport();
 
-    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
+    const auto ratio = viewport.scaling_ratio(vector_cast<float>(map.get_tile_size()));
 
     const auto radius = (mStroke->current - mStroke->start) / ratio;
     auto pos = mStroke->start / ratio;
 
-    if (radius.x < 0) {
-      pos.x += radius.x * 2.0f;
+    if (radius.x() < 0) {
+      pos[0] += radius.x() * 2.0f;
     }
 
-    if (radius.y < 0) {
-      pos.y += radius.y * 2.0f;
+    if (radius.y() < 0) {
+      pos[1] += radius.y() * 2.0f;
     }
 
-    if (radius.x != 0 && radius.y != 0) {
+    if (radius.x() != 0 && radius.y() != 0) {
       const auto layer_id = map.get_active_layer_id().value();
-      const auto diameter = glm::abs(radius) * 2.0f;
+      const auto diameter = abs(radius) * 2.0f;
       dispatcher.enqueue<AddEllipseEvent>(layer_id, pos, diameter);
     }
 

@@ -39,11 +39,11 @@ template <typename T>
   const auto components = split(raw_value, ';');
 
   T vec {};
-  if (components.size() != vec.length()) {
+  if (components.size() != vec.size()) {
     return nothing;
   }
 
-  int index = 0;
+  usize index = 0;
   for (const auto& component_str: components) {
     Maybe<ScalarType> component_value;
 

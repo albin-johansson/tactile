@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_type.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

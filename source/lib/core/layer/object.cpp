@@ -47,8 +47,7 @@ void Object::set_type(const ObjectType type)
 {
   mType = type;
   if (is_point()) {
-    mSize.x = 0;
-    mSize.y = 0;
+    mSize = Float2 {0, 0};
   }
 }
 

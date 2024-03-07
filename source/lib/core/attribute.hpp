@@ -23,7 +23,6 @@
 #include <ostream>
 #include <utility>  // move
 
-#include "common/type/math.hpp"
 #include "core/color.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
@@ -31,6 +30,7 @@
 #include "tactile/base/container/variant.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/meta/attribute_type.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

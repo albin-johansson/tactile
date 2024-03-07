@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/math.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
@@ -30,6 +29,7 @@
 #include "model/event/tileset_events.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -89,7 +89,7 @@ void update_create_tileset_dialog(entt::dispatcher& dispatcher)
   }
 
   if (!gDialogState.image_path.empty() &&  //
-      gDialogState.tile_size.x > 0 && gDialogState.tile_size.y > 0) {
+      gDialogState.tile_size.x() > 0 && gDialogState.tile_size.y() > 0) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -110,12 +110,12 @@ void update_create_tileset_dialog(entt::dispatcher& dispatcher)
                              ImGuiInputTextFlags_ReadOnly);
 
     ImGui::DragInt(lang.misc.tile_width.c_str(),
-                   &gDialogState.tile_size.x,
+                   &gDialogState.tile_size[0],
                    1.0f,
                    1,
                    10'000);
     ImGui::DragInt(lang.misc.tile_height.c_str(),
-                   &gDialogState.tile_size.y,
+                   &gDialogState.tile_size[1],
                    1.0f,
                    1,
                    10'000);

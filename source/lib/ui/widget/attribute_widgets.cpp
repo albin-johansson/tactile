@@ -22,8 +22,6 @@
 #include <concepts>  // invocable
 #include <utility>   // move, to_underlying
 
-#include <glm/gtc/type_ptr.hpp>
-
 #include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
@@ -91,7 +89,7 @@ auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>
   const Scope scope {id};
 
   ImGui::SetNextItemWidth(-kMinFloat);
-  if (ImGui::DragInt2("##Int2", glm::value_ptr(value))) {
+  if (ImGui::DragInt2("##Int2", value.data())) {
     return value;
   }
 
@@ -106,7 +104,7 @@ auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>
   const Scope scope {id};
 
   ImGui::SetNextItemWidth(-kMinFloat);
-  if (ImGui::DragInt3("##Int3", glm::value_ptr(value))) {
+  if (ImGui::DragInt3("##Int3", value.data())) {
     return value;
   }
 
@@ -121,7 +119,7 @@ auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>
   const Scope scope {id};
 
   ImGui::SetNextItemWidth(-kMinFloat);
-  if (ImGui::DragInt4("##Int4", glm::value_ptr(value))) {
+  if (ImGui::DragInt4("##Int4", value.data())) {
     return value;
   }
 
@@ -163,12 +161,12 @@ auto ui_float2_input(const char* id, Float2 value, const float min, const float 
   ImGui::SetNextItemWidth(-kMinFloat);
 
   if (min != 0 || max != 0) {
-    if (ImGui::SliderFloat2("##Float2", glm::value_ptr(value), min, max)) {
+    if (ImGui::SliderFloat2("##Float2", value.data(), min, max)) {
       return value;
     }
   }
   else {
-    if (ImGui::DragFloat2("##Float2", glm::value_ptr(value))) {
+    if (ImGui::DragFloat2("##Float2", value.data())) {
       return value;
     }
   }
@@ -187,12 +185,12 @@ auto ui_float3_input(const char* id, Float3 value, const float min, const float 
   ImGui::SetNextItemWidth(-kMinFloat);
 
   if (min != 0 || max != 0) {
-    if (ImGui::SliderFloat3("##Float3", glm::value_ptr(value), min, max)) {
+    if (ImGui::SliderFloat3("##Float3", value.data(), min, max)) {
       return value;
     }
   }
   else {
-    if (ImGui::DragFloat3("##Float3", glm::value_ptr(value))) {
+    if (ImGui::DragFloat3("##Float3", value.data())) {
       return value;
     }
   }
@@ -211,12 +209,12 @@ auto ui_float4_input(const char* id, Float4 value, const float min, const float 
   ImGui::SetNextItemWidth(-kMinFloat);
 
   if (min != 0 || max != 0) {
-    if (ImGui::SliderFloat4("##Float4", glm::value_ptr(value), min, max)) {
+    if (ImGui::SliderFloat4("##Float4", value.data(), min, max)) {
       return value;
     }
   }
   else {
-    if (ImGui::DragFloat4("##Float4", glm::value_ptr(value))) {
+    if (ImGui::DragFloat4("##Float4", value.data())) {
       return value;
     }
   }

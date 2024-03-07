@@ -48,35 +48,48 @@ namespace {
 
     case AttributeType::kInt2: {
       const auto& vec = value.as_int2();
-      return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
+      return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x(), vec.y());
     }
     case AttributeType::kInt3: {
       const auto& vec = value.as_int3();
-      return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
+      return fmt::format(R"("{}": Vector3( {}, {}, {} ))",
+                         name,
+                         vec.x(),
+                         vec.y(),
+                         vec.z());
     }
     case AttributeType::kInt4: {
       const auto& vec = value.as_int4();
-      return fmt::format(R"("{}": [ {}, {}, {}, {} ])", name, vec.x, vec.y, vec.z, vec.w);
+      return fmt::format(R"("{}": [ {}, {}, {}, {} ])",
+                         name,
+                         vec.x(),
+                         vec.y(),
+                         vec.z(),
+                         vec.w());
     }
     case AttributeType::kFloat:
       return fmt::format(R"("{}": {})", name, value.as_float());
 
     case AttributeType::kFloat2: {
       const auto& vec = value.as_float2();
-      return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
+      return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x(), vec.y());
     }
     case AttributeType::kFloat3: {
       const auto& vec = value.as_float3();
-      return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
+      return fmt::format(R"("{}": Vector3( {}, {}, {} ))",
+                         name,
+                         vec.x(),
+                         vec.y(),
+                         vec.z());
     }
     case AttributeType::kFloat4: {
       const auto& vec = value.as_float4();
       return fmt::format(R"("{}": [ {}, {}, {}, {} ]))",
                          name,
-                         vec.x,
-                         vec.y,
-                         vec.z,
-                         vec.w);
+                         vec.x(),
+                         vec.y(),
+                         vec.z(),
+                         vec.w());
     }
     case AttributeType::kBool:
       return fmt::format(R"("{}": {})", name, value.as_bool() ? "true" : "false");
@@ -215,14 +228,14 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
     stream << prefix << "modulate = Color( 1, 1, 1, 1 )\n";
     stream << prefix
            << fmt::format("region = Rect2( 0, 0, {}, {} )\n",
-                          info.image_size.x,
-                          info.image_size.y);
+                          info.image_size.x(),
+                          info.image_size.y());
     stream << prefix << "tile_mode = 2\n";
     stream << prefix << "autotile/icon_coordinate = Vector2( 0, 0 )\n";
     stream << prefix
            << fmt::format("autotile/tile_size = Vector2( {}, {} )\n",
-                          info.tile_size.x,
-                          info.tile_size.y);
+                          info.tile_size.x(),
+                          info.tile_size.y());
     stream << prefix << "autotile/spacing = 0\n";
     stream << prefix << "autotile/occluder_map = [  ]\n";
     stream << prefix << "autotile/navpoly_map = [  ]\n";
@@ -249,10 +262,10 @@ void write_atlas_textures(std::ostream& stream, const GodotScene& scene)
       stream << fmt::format("[sub_resource type=\"AtlasTexture\" id={}]\n", id);
       stream << fmt::format("atlas = ExtResource( {} )\n", texture.atlas_id);
       stream << fmt::format("region = Rect2( {}, {}, {}, {} )\n",
-                            texture.region.x,
-                            texture.region.y,
-                            texture.region.z,
-                            texture.region.w);
+                            texture.region.x(),
+                            texture.region.y(),
+                            texture.region.z(),
+                            texture.region.w());
     }
   }
 }
@@ -291,8 +304,8 @@ void write_shapes(std::ostream& stream, const GodotScene& scene)
   for (const auto& [id, shape]: scene.rectangle_shapes()) {
     stream << fmt::format("\n[sub_resource type=\"RectangleShape2D\" id={}]\n", id);
     stream << fmt::format("extents = Vector2( {}, {} )\n",
-                          shape.extents.x,
-                          shape.extents.y);
+                          shape.extents.x(),
+                          shape.extents.y());
   }
 }
 
@@ -309,8 +322,8 @@ void write_tile_layer_animation_nodes(std::ostream& stream,
                           animation.parent);
 
     const auto pos = TilePos::from(animation.row, animation.col);
-    const auto x = pos.col_to_x(tile_layer.cell_size.x);
-    const auto y = pos.row_to_y(tile_layer.cell_size.y);
+    const auto x = pos.col_to_x(tile_layer.cell_size.x());
+    const auto y = pos.row_to_y(tile_layer.cell_size.y());
 
     stream << fmt::format("position = Vector2( {}, {} )\n", x, y);
     stream << fmt::format("frames = SubResource( {} )\n", sprite_frames.id);
@@ -352,8 +365,8 @@ void write_tile_layer(std::ostream& stream, const GodotScene& scene, const GdLay
 
   stream << " )\n";
   stream << fmt::format("cell_size = Vector2( {}, {} )\n",
-                        tile_layer.cell_size.x,
-                        tile_layer.cell_size.y);
+                        tile_layer.cell_size.x(),
+                        tile_layer.cell_size.y());
 
   write_metadata(stream, layer.meta);
 
@@ -368,8 +381,8 @@ void write_rectangle_object(std::ostream& stream, const GdObject& object)
                         object.name,
                         object.parent);
   stream << fmt::format("position = Vector2( {:.3f}, {:.3f} )\n",
-                        object.position.x,
-                        object.position.y);
+                        object.position.x(),
+                        object.position.y());
   if (!object.visible) {
     stream << "visible = false\n";
   }
@@ -391,8 +404,8 @@ void write_polygon_object(std::ostream& stream, const GdObject& object)
                         object.name,
                         object.parent);
   stream << fmt::format("position = Vector2( {:.3f}, {:.3f} )\n",
-                        object.position.x,
-                        object.position.y);
+                        object.position.x(),
+                        object.position.y());
   if (!object.visible) {
     stream << "visible = false\n";
   }
@@ -411,7 +424,7 @@ void write_polygon_object(std::ostream& stream, const GdObject& object)
     if (!first_point) {
       stream << ", ";
     }
-    stream << fmt::format("{:.3f}, {:.3f}", point.x, point.y);
+    stream << fmt::format("{:.3f}, {:.3f}", point.x(), point.y());
     first_point = false;
   }
 
@@ -431,8 +444,8 @@ void write_object(std::ostream& stream, const GdObject& object)
                           object.name,
                           object.parent);
     stream << fmt::format("position = Vector2( {:.3f}, {:.3f} )\n",
-                          object.position.x,
-                          object.position.y);
+                          object.position.x(),
+                          object.position.y());
     if (!object.visible) {
       stream << "visible = false\n";
     }

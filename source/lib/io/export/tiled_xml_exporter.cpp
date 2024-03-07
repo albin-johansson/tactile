@@ -141,20 +141,20 @@ void append_object(XmlNode node, const ObjectIR& object)
     object_node.append_attribute("type").set_value(object.tag.c_str());
   }
 
-  if (object.pos.x != 0.0f) {
-    object_node.append_attribute("x").set_value(object.pos.x);
+  if (object.pos.x() != 0.0f) {
+    object_node.append_attribute("x").set_value(object.pos.x());
   }
 
-  if (object.pos.y != 0.0f) {
-    object_node.append_attribute("y").set_value(object.pos.y);
+  if (object.pos.y() != 0.0f) {
+    object_node.append_attribute("y").set_value(object.pos.y());
   }
 
-  if (object.size.x != 0.0f) {
-    object_node.append_attribute("width").set_value(object.size.x);
+  if (object.size.x() != 0.0f) {
+    object_node.append_attribute("width").set_value(object.size.x());
   }
 
-  if (object.size.y != 0.0f) {
-    object_node.append_attribute("height").set_value(object.size.y);
+  if (object.size.y() != 0.0f) {
+    object_node.append_attribute("height").set_value(object.size.y());
   }
 
   if (!object.visible) {
@@ -354,8 +354,8 @@ void append_common_tileset_attributes(XmlNode node,
 {
   node.append_attribute("name").set_value(tileset.name.c_str());
 
-  node.append_attribute("tilewidth").set_value(tileset.tile_size.x);
-  node.append_attribute("tileheight").set_value(tileset.tile_size.y);
+  node.append_attribute("tilewidth").set_value(tileset.tile_size.x());
+  node.append_attribute("tileheight").set_value(tileset.tile_size.y());
 
   node.append_attribute("tilecount").set_value(tileset.tile_count);
   node.append_attribute("columns").set_value(tileset.column_count);
@@ -366,8 +366,8 @@ void append_common_tileset_attributes(XmlNode node,
     const auto source = use_forward_slashes(fs::relative(tileset.image_path, dir));
     image_node.append_attribute("source").set_value(source.c_str());
 
-    image_node.append_attribute("width").set_value(tileset.image_size.x);
-    image_node.append_attribute("height").set_value(tileset.image_size.y);
+    image_node.append_attribute("width").set_value(tileset.image_size.x());
+    image_node.append_attribute("height").set_value(tileset.image_size.y());
   }
 
   append_fancy_tiles(node, tileset);
@@ -433,8 +433,8 @@ void append_root(pugi::xml_document& document, const Path& dir, const MapIR& ir_
   root.append_attribute("renderorder").set_value("right-down");
   root.append_attribute("infinite").set_value(0);
 
-  root.append_attribute("tilewidth").set_value(ir_map.tile_size.x);
-  root.append_attribute("tileheight").set_value(ir_map.tile_size.y);
+  root.append_attribute("tilewidth").set_value(ir_map.tile_size.x());
+  root.append_attribute("tileheight").set_value(ir_map.tile_size.y());
 
   root.append_attribute("width").set_value(ir_map.extent.cols);
   root.append_attribute("height").set_value(ir_map.extent.rows);

@@ -23,7 +23,6 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "common/type/math.hpp"
 #include "common/util/functional.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
@@ -35,6 +34,7 @@
 #include "model/model.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/numeric/random.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

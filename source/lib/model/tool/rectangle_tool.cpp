@@ -20,12 +20,11 @@
 #include "rectangle_tool.hpp"
 
 #include <entt/signal/dispatcher.hpp>
-#include <glm/common.hpp>
 
-#include "common/type/math.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 
@@ -93,11 +92,11 @@ void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dis
     const auto& map = map_document.get_map();
     const auto& viewport = map_document.get_viewport();
 
-    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
-    const auto pos = (glm::min)(mStroke->start, mStroke->current) / ratio;
-    const auto size = glm::abs(mStroke->current - mStroke->start) / ratio;
+    const auto ratio = viewport.scaling_ratio(vector_cast<float>(map.get_tile_size()));
+    const auto pos = min(mStroke->start, mStroke->current) / ratio;
+    const auto size = abs(mStroke->current - mStroke->start) / ratio;
 
-    if (size.x != 0 && size.y != 0) {
+    if (size.x() != 0 && size.y() != 0) {
       const auto layer_id = map.get_active_layer_id().value();
       dispatcher.enqueue<AddRectangleEvent>(layer_id, pos, size);
     }

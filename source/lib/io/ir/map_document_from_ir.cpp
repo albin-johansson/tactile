@@ -24,7 +24,6 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "common/type/math.hpp"
 #include "common/util/functional.hpp"
 #include "core/component/component_index.hpp"
 #include "core/layer/group_layer.hpp"
@@ -43,6 +42,7 @@
 #include "model/model.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

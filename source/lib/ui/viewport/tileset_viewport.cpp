@@ -92,7 +92,7 @@ void ui_highlight_animation_frame_selection_mode(const Strings& lang,
     const char* label = lang.animation_dock.new_animation_frame_selection_hint.c_str();
     const auto label_size = ImGui::CalcTextSize(label);
 
-    const float label_x = (canvas_info.size.x - label_size.x) * 0.5f;
+    const float label_x = (canvas_info.size.x() - label_size.x) * 0.5f;
     const float label_y = 100;
 
     render_shadowed_text(label, Float2 {label_x, label_y}, kWhite, 2.0f);
@@ -104,8 +104,8 @@ void center_viewport(const CanvasInfo& canvas_info,
                      entt::dispatcher& dispatcher)
 {
   const auto raw_delta =
-      ((canvas_info.size - canvas_info.content_size) / 2.0f) - viewport.get_offset();
-  const Float2 delta {std::round(raw_delta.x), std::round(raw_delta.y)};
+      ((canvas_info.size - canvas_info.content_size) * 0.5f) - viewport.get_offset();
+  const auto delta = round(raw_delta);
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 

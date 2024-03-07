@@ -21,8 +21,8 @@
 
 #include <entt/entity/entity.hpp>
 
-#include "common/type/math.hpp"
 #include "model/mouse_info.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

@@ -237,10 +237,10 @@ auto parse_object(const JSON& json, ObjectIR& object) -> ParseError
   object.name = as_string(json, "name").value_or("");
   object.tag = as_string(json, "type").value_or("");
 
-  object.pos.x = as_float(json, "x").value_or(0.0f);
-  object.pos.y = as_float(json, "y").value_or(0.0f);
-  object.size.x = as_float(json, "width").value_or(0.0f);
-  object.size.y = as_float(json, "height").value_or(0.0f);
+  object.pos[0] = as_float(json, "x").value_or(0.0f);
+  object.pos[1] = as_float(json, "y").value_or(0.0f);
+  object.size[0] = as_float(json, "width").value_or(0.0f);
+  object.size[1] = as_float(json, "height").value_or(0.0f);
 
   object.visible = as_bool(json, "visible").value_or(true);
 

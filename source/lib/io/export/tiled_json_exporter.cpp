@@ -58,10 +58,10 @@ namespace {
 
   json["id"] = object.id;
   json["name"] = object.name;
-  json["x"] = object.pos.x;
-  json["y"] = object.pos.y;
-  json["width"] = object.size.x;
-  json["height"] = object.size.y;
+  json["x"] = object.pos.x();
+  json["y"] = object.pos.y();
+  json["width"] = object.size.x();
+  json["height"] = object.size.y();
   json["visible"] = object.visible;
   json["type"] = object.tag;
   json["rotation"] = 0;
@@ -272,15 +272,15 @@ void add_common_tileset_attributes(JSON& json, const Path& dir, const TilesetIR&
   json["name"] = tileset.name;
   json["columns"] = tileset.column_count;
 
-  json["tilewidth"] = tileset.tile_size.x;
-  json["tileheight"] = tileset.tile_size.y;
+  json["tilewidth"] = tileset.tile_size.x();
+  json["tileheight"] = tileset.tile_size.y();
   json["tilecount"] = tileset.tile_count;
 
   const auto image_path = fs::relative(tileset.image_path, dir);
   json["image"] = use_forward_slashes(image_path);
 
-  json["imagewidth"] = tileset.image_size.x;
-  json["imageheight"] = tileset.image_size.y;
+  json["imagewidth"] = tileset.image_size.x();
+  json["imageheight"] = tileset.image_size.y();
 
   json["margin"] = 0;
   json["spacing"] = 0;
@@ -368,8 +368,8 @@ void save_map_as_tiled_json(const Path& destination, const MapIR& ir_map)
   json["width"] = ir_map.extent.cols;
   json["height"] = ir_map.extent.rows;
 
-  json["tilewidth"] = ir_map.tile_size.x;
-  json["tileheight"] = ir_map.tile_size.y;
+  json["tilewidth"] = ir_map.tile_size.x();
+  json["tileheight"] = ir_map.tile_size.y();
 
   json["nextlayerid"] = ir_map.next_layer_id;
   json["nextobjectid"] = ir_map.next_object_id;

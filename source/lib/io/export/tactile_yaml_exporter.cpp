@@ -117,20 +117,20 @@ void emit_object_data(YAML::Emitter& emitter, const ObjectIR& data)
     emitter << YAML::Key << "visible" << YAML::Value << data.visible;
   }
 
-  if (data.pos.x != 0.0f) {
-    emitter << YAML::Key << "x" << YAML::Value << data.pos.x;
+  if (data.pos.x() != 0.0f) {
+    emitter << YAML::Key << "x" << YAML::Value << data.pos.x();
   }
 
-  if (data.pos.y != 0.0f) {
-    emitter << YAML::Key << "y" << YAML::Value << data.pos.y;
+  if (data.pos.y() != 0.0f) {
+    emitter << YAML::Key << "y" << YAML::Value << data.pos.y();
   }
 
-  if (data.size.x != 0.0f) {
-    emitter << YAML::Key << "width" << YAML::Value << data.size.x;
+  if (data.size.x() != 0.0f) {
+    emitter << YAML::Key << "width" << YAML::Value << data.size.x();
   }
 
-  if (data.size.y != 0.0f) {
-    emitter << YAML::Key << "height" << YAML::Value << data.size.y;
+  if (data.size.y() != 0.0f) {
+    emitter << YAML::Key << "height" << YAML::Value << data.size.y();
   }
 
   emit_properties(emitter, data.context);
@@ -315,16 +315,16 @@ void emit_tileset_file(const Path& dir, const String& filename, const TilesetIR&
   emitter << YAML::Key << "version" << YAML::Value << kTilesetNodeVersion;
   emitter << YAML::Key << "name" << YAML::Value << tileset.name;
 
-  emitter << YAML::Key << "tile-width" << YAML::Value << tileset.tile_size.x;
-  emitter << YAML::Key << "tile-height" << YAML::Value << tileset.tile_size.y;
+  emitter << YAML::Key << "tile-width" << YAML::Value << tileset.tile_size.x();
+  emitter << YAML::Key << "tile-height" << YAML::Value << tileset.tile_size.y();
 
   emitter << YAML::Key << "tile-count" << YAML::Value << tileset.tile_count;
   emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
 
   const auto image_path = fs::relative(tileset.image_path, dir);
   emitter << YAML::Key << "image-path" << YAML::Value << use_forward_slashes(image_path);
-  emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_size.x;
-  emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_size.y;
+  emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_size.x();
+  emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_size.y();
 
   if (!tileset.fancy_tiles.empty()) {
     emit_tileset_tiles(emitter, tileset);
@@ -447,8 +447,8 @@ void save_map_as_tactile_yaml(const Path& destination, const MapIR& ir_map)
   emitter << YAML::Key << "row-count" << YAML::Value << ir_map.extent.rows;
   emitter << YAML::Key << "column-count" << YAML::Value << ir_map.extent.cols;
 
-  emitter << YAML::Key << "tile-width" << YAML::Value << ir_map.tile_size.x;
-  emitter << YAML::Key << "tile-height" << YAML::Value << ir_map.tile_size.y;
+  emitter << YAML::Key << "tile-width" << YAML::Value << ir_map.tile_size.x();
+  emitter << YAML::Key << "tile-height" << YAML::Value << ir_map.tile_size.y();
 
   emitter << YAML::Key << "next-layer-id" << YAML::Value << ir_map.next_layer_id;
   emitter << YAML::Key << "next-object-id" << YAML::Value << ir_map.next_object_id;

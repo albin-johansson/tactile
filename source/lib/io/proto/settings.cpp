@@ -109,13 +109,13 @@ void to_proto(const Color& color, proto::Color* out)
 
     if (cfg.has_preferred_tile_width()) {
       auto tile_size = settings.get_preferred_tile_size();
-      tile_size.x = cfg.preferred_tile_width();
+      tile_size[0] = cfg.preferred_tile_width();
       settings.set_preferred_tile_size(tile_size);
     }
 
     if (cfg.has_preferred_tile_height()) {
       auto tile_size = settings.get_preferred_tile_size();
-      tile_size.y = cfg.preferred_tile_height();
+      tile_size[1] = cfg.preferred_tile_height();
       settings.set_preferred_tile_size(tile_size);
     }
 
@@ -224,8 +224,8 @@ void save_settings_to_disk(const Settings& settings)
 
   cfg.set_command_capacity(settings.get_command_capacity());
   cfg.set_restore_last_session(settings.test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT));
-  cfg.set_preferred_tile_width(settings.get_preferred_tile_size().x);
-  cfg.set_preferred_tile_height(settings.get_preferred_tile_size().y);
+  cfg.set_preferred_tile_width(settings.get_preferred_tile_size().x());
+  cfg.set_preferred_tile_height(settings.get_preferred_tile_size().y());
 
   cfg.set_preferred_format(
       static_cast<proto::SaveFormat>(settings.get_preferred_format()));

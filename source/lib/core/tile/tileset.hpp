@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/tile/tileset_info.hpp"
@@ -29,6 +28,7 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 #include "tile_pos.hpp"
 

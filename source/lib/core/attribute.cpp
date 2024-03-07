@@ -485,32 +485,32 @@ auto serialize_to_save_format(const AttributeType type) -> StringView
 
 auto serialize_to_save_format(const Int2& vec) -> String
 {
-  return fmt::format("{};{}", vec.x, vec.y);
+  return fmt::format("{};{}", vec.x(), vec.y());
 }
 
 auto serialize_to_save_format(const Float2& vec) -> String
 {
-  return fmt::format("{};{}", vec.x, vec.y);
+  return fmt::format("{};{}", vec.x(), vec.y());
 }
 
 auto serialize_to_save_format(const Int3& vec) -> String
 {
-  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+  return fmt::format("{};{};{}", vec.x(), vec.y(), vec.z());
 }
 
 auto serialize_to_save_format(const Float3& vec) -> String
 {
-  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+  return fmt::format("{};{};{}", vec.x(), vec.y(), vec.z());
 }
 
 auto serialize_to_save_format(const Int4& vec) -> String
 {
-  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+  return fmt::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
 auto serialize_to_save_format(const Float4& vec) -> String
 {
-  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+  return fmt::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
 auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&

@@ -129,10 +129,10 @@ void add_animation(const TilesetIR& tileset,
 
     GdAtlasTexture texture;
     texture.atlas_id = texture_id;
-    texture.region = {pos.col_to_x(tileset.tile_size.x),
-                      pos.row_to_y(tileset.tile_size.y),
-                      tileset.tile_size.x,
-                      tileset.tile_size.y};
+    texture.region = {pos.col_to_x(tileset.tile_size.x()),
+                      pos.row_to_y(tileset.tile_size.y()),
+                      tileset.tile_size.x(),
+                      tileset.tile_size.y()};
 
     animation.frames.push_back(file.add_atlas_texture(texture));
   }
@@ -164,12 +164,12 @@ void add_animations(const MapIR& map,
   points.reserve(point_count);
 
   const auto n = static_cast<double>(point_count);
-  const auto radius = object.size / 2.0f;
+  const auto radius = object.size * 0.5f;
 
   for (usize i = 0; i < point_count; ++i) {
     const auto theta = static_cast<double>(i) / n * kTau;
-    const auto x = radius.x * std::cos(theta);
-    const auto y = radius.y * std::sin(theta);
+    const auto x = radius.x() * std::cos(theta);
+    const auto y = radius.y() * std::sin(theta);
     points.emplace_back(x, y);
   }
 
@@ -189,13 +189,13 @@ void add_animations(const MapIR& map,
   GdObject gd_object;
   gd_object.name = std::move(object_name);
   gd_object.parent = std::move(parent);
-  gd_object.position = object.pos + (object.size / 2.0f);
+  gd_object.position = object.pos + (object.size * 0.5f);
   gd_object.visible = object.visible;
   gd_object.meta = copy_meta(object.context);
 
   if (object.type == ObjectType::Rect) {
     GdRectShape shape;
-    shape.extents = object.size / 2.0f;
+    shape.extents = object.size * 0.5f;
 
     const auto shape_id = file.add_shape(shape);
 

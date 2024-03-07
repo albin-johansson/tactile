@@ -60,8 +60,8 @@ void ui_tileset_tile_image(const Tileset& tileset,
 {
   const auto& texture = tileset.texture();
 
-  const Float2 tile_size = tileset.tile_size();
-  const Float2 texture_size = texture.get_size();
+  const auto tile_size = vector_cast<float>(tileset.tile_size());
+  const auto texture_size = vector_cast<float>(texture.get_size());
 
   const auto tile_pos = TilePos::from_index(tile_index, tileset.column_count());
 
@@ -253,10 +253,10 @@ void ui_tile_animation_preview_section(const Strings& lang,
   if (const Child child {"##PreviewChild", {0, 0}, true}; child.is_open()) {
     ui_centered_label(lang.misc.preview.c_str());
 
-    const Float2 texture_size = tileset.texture().get_size();
+    const auto texture_size = vector_cast<float>(tileset.texture().get_size());
 
     const auto image_width = ImGui::GetWindowSize().x * gDockState.preview_animation_size;
-    const auto image_height = image_width * (texture_size.y / texture_size.x);
+    const auto image_height = image_width * (texture_size.y() / texture_size.x());
     const ImVec2 image_size {image_width, image_height};
 
     center_next_item_horizontally(image_width);

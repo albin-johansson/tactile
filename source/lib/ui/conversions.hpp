@@ -23,11 +23,11 @@
 
 #include <imgui.h>
 
-#include "common/type/math.hpp"
 #include "common/util/bit.hpp"
 #include "core/color.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 
@@ -43,12 +43,12 @@ namespace tactile {
 
 [[nodiscard]] constexpr auto as_imvec2(const Float2 vec) noexcept -> ImVec2
 {
-  return {vec.x, vec.y};
+  return {vec.x(), vec.y()};
 }
 
 [[nodiscard]] constexpr auto as_imvec2(const Int2 vec) noexcept -> ImVec2
 {
-  return {static_cast<float>(vec.x), static_cast<float>(vec.y)};
+  return {static_cast<float>(vec.x()), static_cast<float>(vec.y())};
 }
 
 [[nodiscard]] constexpr auto as_float2(const ImVec2 vec) noexcept -> Float2
