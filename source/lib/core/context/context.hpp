@@ -20,18 +20,23 @@
 #pragma once
 
 #include "core/context/context_visitor.hpp"
-#include "core/element.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(ContextInfo)
+class ContextInfo;
 
 /// Interface for all objects that may feature properties and components.
 /// Remember to update the context visitor when adding a new context implementation.
-class Context : public Element {
+class Context {
  public:
+  TACTILE_INTERFACE_CLASS(Context);
+
   virtual void accept(ContextVisitor& visitor) const = 0;
+
+  /// Returns the unique identifier associated with the element.
+  [[nodiscard]] virtual auto get_uuid() const -> const UUID& = 0;
 
   [[nodiscard]] virtual auto get_ctx() -> ContextInfo& = 0;
   [[nodiscard]] virtual auto get_ctx() const -> const ContextInfo& = 0;
