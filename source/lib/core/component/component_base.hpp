@@ -39,7 +39,7 @@ class ComponentBase {
   ///
   /// \param key the key to associate with the attribute.
   /// \param type the initial type of the attribute.
-  void add_attr(String key, AttributeType type = AttributeType::String);
+  void add_attr(String key, AttributeType type = AttributeType::kStr);
 
   /// Creates a new attribute.
   ///

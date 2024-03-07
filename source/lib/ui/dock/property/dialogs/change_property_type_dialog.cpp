@@ -38,7 +38,7 @@ namespace {
 
 struct ChangePropertyTypeDialogState final {
   Maybe<UUID> context_id;
-  AttributeType current_type {AttributeType::String};
+  AttributeType current_type {AttributeType::kStr};
   Maybe<String> property_name;
   Maybe<AttributeType> previous_type;
   bool open_dialog {};

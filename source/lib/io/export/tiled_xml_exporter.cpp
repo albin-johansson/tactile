@@ -53,7 +53,7 @@ void append_properties(XmlNode node, const ContextIR& context)
     const auto type = property_value.get_type();
 
     // Properties with no type attribute are assumed to be string properties
-    if (type != AttributeType::String && !property_value.is_any_vector()) {
+    if (type != AttributeType::kStr && !property_value.is_any_vector()) {
       property_node.append_attribute("type").set_value(
           serialize_to_save_format(type).data());
     }
@@ -61,62 +61,62 @@ void append_properties(XmlNode node, const ContextIR& context)
     auto value_attr = property_node.append_attribute("value");
 
     switch (type) {
-      case AttributeType::String:
+      case AttributeType::kStr:
         value_attr.set_value(property_value.as_string().c_str());
         break;
 
-      case AttributeType::Int:
+      case AttributeType::kInt:
         value_attr.set_value(property_value.as_int());
         break;
 
-      case AttributeType::Int2: {
+      case AttributeType::kInt2: {
         const auto str = serialize_to_save_format(property_value.as_int2());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Int3: {
+      case AttributeType::kInt3: {
         const auto str = serialize_to_save_format(property_value.as_int3());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Int4: {
+      case AttributeType::kInt4: {
         const auto str = serialize_to_save_format(property_value.as_int4());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Float:
+      case AttributeType::kFloat:
         value_attr.set_value(property_value.as_float());
         break;
 
-      case AttributeType::Float2: {
+      case AttributeType::kFloat2: {
         const auto str = serialize_to_save_format(property_value.as_float2());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Float3: {
+      case AttributeType::kFloat3: {
         const auto str = serialize_to_save_format(property_value.as_float3());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Float4: {
+      case AttributeType::kFloat4: {
         const auto str = serialize_to_save_format(property_value.as_float4());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Bool:
+      case AttributeType::kBool:
         value_attr.set_value(property_value.as_bool());
         break;
 
-      case AttributeType::Path: {
+      case AttributeType::kPath: {
         const auto str = use_forward_slashes(property_value.as_path());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Color:
+      case AttributeType::kColor:
         value_attr.set_value(property_value.as_color().as_argb().c_str());
         break;
 
-      case AttributeType::Object:
+      case AttributeType::kObject:
         value_attr.set_value(property_value.as_object());
         break;
 

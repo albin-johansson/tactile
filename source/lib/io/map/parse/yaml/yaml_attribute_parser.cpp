@@ -71,40 +71,40 @@ template <typename T>
                                          const AttributeType type) -> Maybe<Attribute>
 {
   switch (type) {
-    case AttributeType::String:
+    case AttributeType::kStr:
       return value.as<String>();
 
-    case AttributeType::Int:
+    case AttributeType::kInt:
       return value.as<int32>();
 
-    case AttributeType::Int2:
+    case AttributeType::kInt2:
       return parse_vector<Int2>(value);
 
-    case AttributeType::Int3:
+    case AttributeType::kInt3:
       return parse_vector<Int3>(value);
 
-    case AttributeType::Int4:
+    case AttributeType::kInt4:
       return parse_vector<Int4>(value);
 
-    case AttributeType::Float:
+    case AttributeType::kFloat:
       return value.as<float>();
 
-    case AttributeType::Float2:
+    case AttributeType::kFloat2:
       return parse_vector<Float2>(value);
 
-    case AttributeType::Float3:
+    case AttributeType::kFloat3:
       return parse_vector<Float3>(value);
 
-    case AttributeType::Float4:
+    case AttributeType::kFloat4:
       return parse_vector<Float4>(value);
 
-    case AttributeType::Bool:
+    case AttributeType::kBool:
       return value.as<bool>();
 
-    case AttributeType::Path:
+    case AttributeType::kPath:
       return Path {value.as<String>()};
 
-    case AttributeType::Color: {
+    case AttributeType::kColor: {
       const auto hex = value.as<String>();
       if (const auto color = Color::from_rgba(hex)) {
         return *color;
@@ -113,7 +113,7 @@ template <typename T>
         return nothing;
       }
     }
-    case AttributeType::Object:
+    case AttributeType::kObject:
       return ObjectRef {value.as<int32>()};
 
     default:
@@ -147,15 +147,15 @@ template <typename T>
 
   if (auto default_value = node["default"]) {
     switch (type) {
-      case AttributeType::String:
+      case AttributeType::kStr:
         value = default_value.as<String>();
         break;
 
-      case AttributeType::Int:
+      case AttributeType::kInt:
         value = default_value.as<int32>();
         break;
 
-      case AttributeType::Int2:
+      case AttributeType::kInt2:
         if (const auto vec = parse_vector<Int2>(default_value)) {
           value = *vec;
         }
@@ -164,7 +164,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Int3:
+      case AttributeType::kInt3:
         if (const auto vec = parse_vector<Int3>(default_value)) {
           value = *vec;
         }
@@ -173,7 +173,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Int4:
+      case AttributeType::kInt4:
         if (const auto vec = parse_vector<Int4>(default_value)) {
           value = *vec;
         }
@@ -182,11 +182,11 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Float:
+      case AttributeType::kFloat:
         value = default_value.as<float>();
         break;
 
-      case AttributeType::Float2:
+      case AttributeType::kFloat2:
         if (const auto vec = parse_vector<Float2>(default_value)) {
           value = *vec;
         }
@@ -195,7 +195,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Float3:
+      case AttributeType::kFloat3:
         if (const auto vec = parse_vector<Float3>(default_value)) {
           value = *vec;
         }
@@ -204,7 +204,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Float4:
+      case AttributeType::kFloat4:
         if (const auto vec = parse_vector<Float4>(default_value)) {
           value = *vec;
         }
@@ -213,16 +213,16 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Bool:
+      case AttributeType::kBool:
         value = default_value.as<bool>();
         break;
 
-      case AttributeType::Path: {
+      case AttributeType::kPath: {
         Path path = default_value.as<String>();
         value = std::move(path);
         break;
       }
-      case AttributeType::Color: {
+      case AttributeType::kColor: {
         if (const auto color = Color::from_rgba(default_value.as<String>())) {
           value = *color;
         }
@@ -231,7 +231,7 @@ template <typename T>
         }
         break;
       }
-      case AttributeType::Object:
+      case AttributeType::kObject:
         value = ObjectRef {default_value.as<int32>()};
         break;
     }

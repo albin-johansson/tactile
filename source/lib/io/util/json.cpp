@@ -71,38 +71,38 @@ template <>
 void to_json(JSON& json, const AttributeType type)
 {
   switch (type) {
-    case AttributeType::String:
-    case AttributeType::Int2:
-    case AttributeType::Int3:
-    case AttributeType::Int4:
-    case AttributeType::Float2:
-    case AttributeType::Float3:
-    case AttributeType::Float4:
+    case AttributeType::kStr:
+    case AttributeType::kInt2:
+    case AttributeType::kInt3:
+    case AttributeType::kInt4:
+    case AttributeType::kFloat2:
+    case AttributeType::kFloat3:
+    case AttributeType::kFloat4:
       // We store vector properties as strings, instead of just ignoring them.
       json = kStringAttrName;
       break;
 
-    case AttributeType::Int:
+    case AttributeType::kInt:
       json = kIntAttrName;
       break;
 
-    case AttributeType::Float:
+    case AttributeType::kFloat:
       json = kFloatAttrName;
       break;
 
-    case AttributeType::Bool:
+    case AttributeType::kBool:
       json = kBoolAttrName;
       break;
 
-    case AttributeType::Path:
+    case AttributeType::kPath:
       json = kFileAttrName;
       break;
 
-    case AttributeType::Color:
+    case AttributeType::kColor:
       json = kColorAttrName;
       break;
 
-    case AttributeType::Object:
+    case AttributeType::kObject:
       json = kObjectAttrName;
       break;
   }
@@ -111,55 +111,55 @@ void to_json(JSON& json, const AttributeType type)
 void to_json(JSON& json, const Attribute& value)
 {
   switch (value.get_type()) {
-    case AttributeType::String:
+    case AttributeType::kStr:
       json = value.as_string();
       break;
 
-    case AttributeType::Int:
+    case AttributeType::kInt:
       json = value.as_int();
       break;
 
-    case AttributeType::Int2:
+    case AttributeType::kInt2:
       json = serialize_to_save_format(value.as_int2());
       break;
 
-    case AttributeType::Int3:
+    case AttributeType::kInt3:
       json = serialize_to_save_format(value.as_int3());
       break;
 
-    case AttributeType::Int4:
+    case AttributeType::kInt4:
       json = serialize_to_save_format(value.as_int4());
       break;
 
-    case AttributeType::Float:
+    case AttributeType::kFloat:
       json = value.as_float();
       break;
 
-    case AttributeType::Float2:
+    case AttributeType::kFloat2:
       json = serialize_to_save_format(value.as_float2());
       break;
 
-    case AttributeType::Float3:
+    case AttributeType::kFloat3:
       json = serialize_to_save_format(value.as_float3());
       break;
 
-    case AttributeType::Float4:
+    case AttributeType::kFloat4:
       json = serialize_to_save_format(value.as_float4());
       break;
 
-    case AttributeType::Bool:
+    case AttributeType::kBool:
       json = value.as_bool();
       break;
 
-    case AttributeType::Path:
+    case AttributeType::kPath:
       json = use_forward_slashes(value.as_path());
       break;
 
-    case AttributeType::Color:
+    case AttributeType::kColor:
       json = value.as_color().as_argb();
       break;
 
-    case AttributeType::Object:
+    case AttributeType::kObject:
       json = value.as_object();
       break;
 
@@ -171,25 +171,25 @@ void to_json(JSON& json, const Attribute& value)
 void from_json(const JSON& json, AttributeType& type)
 {
   if (json == kStringAttrName.data()) {
-    type = AttributeType::String;
+    type = AttributeType::kStr;
   }
   else if (json == kIntAttrName.data()) {
-    type = AttributeType::Int;
+    type = AttributeType::kInt;
   }
   else if (json == kFloatAttrName.data()) {
-    type = AttributeType::Float;
+    type = AttributeType::kFloat;
   }
   else if (json == kBoolAttrName.data()) {
-    type = AttributeType::Bool;
+    type = AttributeType::kBool;
   }
   else if (json == kColorAttrName.data()) {
-    type = AttributeType::Color;
+    type = AttributeType::kColor;
   }
   else if (json == kFileAttrName.data()) {
-    type = AttributeType::Path;
+    type = AttributeType::kPath;
   }
   else if (json == kObjectAttrName.data()) {
-    type = AttributeType::Object;
+    type = AttributeType::kObject;
   }
   else {
     throw Exception {"Not a valid JSON property type"};

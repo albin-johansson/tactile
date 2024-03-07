@@ -41,7 +41,7 @@ namespace {
 struct AddPropertyDialogState final {
   Maybe<UUID> context_id;
   StringBuffer name_buffer {};
-  AttributeType property_type {AttributeType::String};
+  AttributeType property_type {AttributeType::kStr};
   bool open_dialog {};
 };
 
@@ -53,7 +53,7 @@ void open_add_property_dialog(const UUID& context_id)
 {
   gDialogState.context_id = context_id;
   gDialogState.name_buffer.clear();
-  gDialogState.property_type = AttributeType::String;
+  gDialogState.property_type = AttributeType::kStr;
   gDialogState.open_dialog = true;
 }
 

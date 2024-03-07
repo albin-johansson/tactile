@@ -336,7 +336,7 @@ auto ui_directory_path_input(const char* id, const Path& value) -> Maybe<Path>
 auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribute>
 {
   switch (value.get_type()) {
-    case AttributeType::String: {
+    case AttributeType::kStr: {
       const auto& lang = get_current_language();
       if (auto updated =
               ui_string_input_with_hint(id, lang.misc.empty.c_str(), value.as_string())) {
@@ -344,73 +344,73 @@ auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribu
       }
       break;
     }
-    case AttributeType::Int: {
+    case AttributeType::kInt: {
       if (const auto updated = ui_int_input(id, value.as_int())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Int2: {
+    case AttributeType::kInt2: {
       if (const auto updated = ui_int2_input(id, value.as_int2())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Int3: {
+    case AttributeType::kInt3: {
       if (const auto updated = ui_int3_input(id, value.as_int3())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Int4: {
+    case AttributeType::kInt4: {
       if (const auto updated = ui_int4_input(id, value.as_int4())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float: {
+    case AttributeType::kFloat: {
       if (const auto updated = ui_float_input(id, value.as_float())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float2: {
+    case AttributeType::kFloat2: {
       if (const auto updated = ui_float2_input(id, value.as_float2())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float3: {
+    case AttributeType::kFloat3: {
       if (const auto updated = ui_float3_input(id, value.as_float3())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float4: {
+    case AttributeType::kFloat4: {
       if (const auto updated = ui_float4_input(id, value.as_float4())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Bool: {
+    case AttributeType::kBool: {
       if (const auto updated = ui_bool_input(id, value.as_bool())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Path: {
+    case AttributeType::kPath: {
       if (auto updated = ui_file_path_input(id, value.as_path())) {
         return std::move(updated);
       }
       break;
     }
-    case AttributeType::Color: {
+    case AttributeType::kColor: {
       if (const auto updated = ui_color_input(id, value.as_color())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Object: {
+    case AttributeType::kObject: {
       if (const auto updated = ui_object_input(id, value.as_object())) {
         return updated;
       }
@@ -428,33 +428,33 @@ auto ui_attribute_type_combo(const AttributeType current_type,
   const auto& lang = get_current_language();
 
   Array<StringView, 13> type_names;
-  type_names[std::to_underlying(AttributeType::String)] = lang.misc.type_string.c_str();
-  type_names[std::to_underlying(AttributeType::Int)] = lang.misc.type_int.c_str();
-  type_names[std::to_underlying(AttributeType::Int2)] = lang.misc.type_int2.c_str();
-  type_names[std::to_underlying(AttributeType::Int3)] = lang.misc.type_int3.c_str();
-  type_names[std::to_underlying(AttributeType::Int4)] = lang.misc.type_int4.c_str();
-  type_names[std::to_underlying(AttributeType::Float)] = lang.misc.type_float.c_str();
-  type_names[std::to_underlying(AttributeType::Float2)] = lang.misc.type_float2.c_str();
-  type_names[std::to_underlying(AttributeType::Float3)] = lang.misc.type_float3.c_str();
-  type_names[std::to_underlying(AttributeType::Float4)] = lang.misc.type_float4.c_str();
-  type_names[std::to_underlying(AttributeType::Bool)] = lang.misc.type_bool.c_str();
-  type_names[std::to_underlying(AttributeType::Color)] = lang.misc.type_color.c_str();
-  type_names[std::to_underlying(AttributeType::Object)] = lang.misc.type_object.c_str();
-  type_names[std::to_underlying(AttributeType::Path)] = lang.misc.type_path.c_str();
+  type_names[std::to_underlying(AttributeType::kStr)] = lang.misc.type_string.c_str();
+  type_names[std::to_underlying(AttributeType::kInt)] = lang.misc.type_int.c_str();
+  type_names[std::to_underlying(AttributeType::kInt2)] = lang.misc.type_int2.c_str();
+  type_names[std::to_underlying(AttributeType::kInt3)] = lang.misc.type_int3.c_str();
+  type_names[std::to_underlying(AttributeType::kInt4)] = lang.misc.type_int4.c_str();
+  type_names[std::to_underlying(AttributeType::kFloat)] = lang.misc.type_float.c_str();
+  type_names[std::to_underlying(AttributeType::kFloat2)] = lang.misc.type_float2.c_str();
+  type_names[std::to_underlying(AttributeType::kFloat3)] = lang.misc.type_float3.c_str();
+  type_names[std::to_underlying(AttributeType::kFloat4)] = lang.misc.type_float4.c_str();
+  type_names[std::to_underlying(AttributeType::kBool)] = lang.misc.type_bool.c_str();
+  type_names[std::to_underlying(AttributeType::kColor)] = lang.misc.type_color.c_str();
+  type_names[std::to_underlying(AttributeType::kObject)] = lang.misc.type_object.c_str();
+  type_names[std::to_underlying(AttributeType::kPath)] = lang.misc.type_path.c_str();
 
-  const auto all_types = {AttributeType::String,
-                          AttributeType::Int,
-                          AttributeType::Int2,
-                          AttributeType::Int3,
-                          AttributeType::Int4,
-                          AttributeType::Float,
-                          AttributeType::Float2,
-                          AttributeType::Float3,
-                          AttributeType::Float4,
-                          AttributeType::Bool,
-                          AttributeType::Color,
-                          AttributeType::Object,
-                          AttributeType::Path};
+  const auto all_types = {AttributeType::kStr,
+                          AttributeType::kInt,
+                          AttributeType::kInt2,
+                          AttributeType::kInt3,
+                          AttributeType::kInt4,
+                          AttributeType::kFloat,
+                          AttributeType::kFloat2,
+                          AttributeType::kFloat3,
+                          AttributeType::kFloat4,
+                          AttributeType::kBool,
+                          AttributeType::kColor,
+                          AttributeType::kObject,
+                          AttributeType::kPath};
 
   const auto current_type_index = static_cast<usize>(std::to_underlying(current_type));
   const auto& current_type_name = type_names.at(current_type_index);

@@ -44,54 +44,54 @@ auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&
 {
   switch (value.get_type()) {
-    case AttributeType::String:
+    case AttributeType::kStr:
       return emitter << value.as_string();
 
-    case AttributeType::Int:
+    case AttributeType::kInt:
       emitter << value.as_int();
       break;
 
-    case AttributeType::Int2:
+    case AttributeType::kInt2:
       emitter << serialize_to_save_format(value.as_int2());
       break;
 
-    case AttributeType::Int3:
+    case AttributeType::kInt3:
       emitter << serialize_to_save_format(value.as_int3());
       break;
 
-    case AttributeType::Int4:
+    case AttributeType::kInt4:
       emitter << serialize_to_save_format(value.as_int4());
       break;
 
-    case AttributeType::Float:
+    case AttributeType::kFloat:
       emitter << value.as_float();
       break;
 
-    case AttributeType::Float2:
+    case AttributeType::kFloat2:
       emitter << serialize_to_save_format(value.as_float2());
       break;
 
-    case AttributeType::Float3:
+    case AttributeType::kFloat3:
       emitter << serialize_to_save_format(value.as_float3());
       break;
 
-    case AttributeType::Float4:
+    case AttributeType::kFloat4:
       emitter << serialize_to_save_format(value.as_float4());
       break;
 
-    case AttributeType::Bool:
+    case AttributeType::kBool:
       emitter << value.as_bool();
       break;
 
-    case AttributeType::Path:
+    case AttributeType::kPath:
       emitter << use_forward_slashes(value.as_path());
       break;
 
-    case AttributeType::Color:
+    case AttributeType::kColor:
       emitter << value.as_color().as_rgba();
       break;
 
-    case AttributeType::Object:
+    case AttributeType::kObject:
       emitter << value.as_object();
       break;
 

@@ -40,36 +40,36 @@ namespace {
 [[nodiscard]] auto write_attribute(StringView name, const Attribute& value) -> String
 {
   switch (value.get_type()) {
-    case AttributeType::String:
+    case AttributeType::kStr:
       return fmt::format(R"("{}": "{}")", name, value.as_string());
 
-    case AttributeType::Int:
+    case AttributeType::kInt:
       return fmt::format(R"("{}": {})", name, value.as_int());
 
-    case AttributeType::Int2: {
+    case AttributeType::kInt2: {
       const auto& vec = value.as_int2();
       return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
     }
-    case AttributeType::Int3: {
+    case AttributeType::kInt3: {
       const auto& vec = value.as_int3();
       return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
     }
-    case AttributeType::Int4: {
+    case AttributeType::kInt4: {
       const auto& vec = value.as_int4();
       return fmt::format(R"("{}": [ {}, {}, {}, {} ])", name, vec.x, vec.y, vec.z, vec.w);
     }
-    case AttributeType::Float:
+    case AttributeType::kFloat:
       return fmt::format(R"("{}": {})", name, value.as_float());
 
-    case AttributeType::Float2: {
+    case AttributeType::kFloat2: {
       const auto& vec = value.as_float2();
       return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
     }
-    case AttributeType::Float3: {
+    case AttributeType::kFloat3: {
       const auto& vec = value.as_float3();
       return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
     }
-    case AttributeType::Float4: {
+    case AttributeType::kFloat4: {
       const auto& vec = value.as_float4();
       return fmt::format(R"("{}": [ {}, {}, {}, {} ]))",
                          name,
@@ -78,13 +78,13 @@ namespace {
                          vec.z,
                          vec.w);
     }
-    case AttributeType::Bool:
+    case AttributeType::kBool:
       return fmt::format(R"("{}": {})", name, value.as_bool() ? "true" : "false");
 
-    case AttributeType::Path:
+    case AttributeType::kPath:
       return fmt::format(R"("{}": "{}")", name, use_forward_slashes(value.as_path()));
 
-    case AttributeType::Color: {
+    case AttributeType::kColor: {
       const auto& color = value.as_color();
       return fmt::format(R"("{}": Color( {}, {}, {}, {} ))",
                          name,
@@ -93,7 +93,7 @@ namespace {
                          color.norm_blue(),
                          color.norm_alpha());
     }
-    case AttributeType::Object:
+    case AttributeType::kObject:
       return fmt::format(R"("{}": {})", name, static_cast<int32>(value.as_object()));
 
     default:

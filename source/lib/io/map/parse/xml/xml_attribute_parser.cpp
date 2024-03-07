@@ -41,33 +41,33 @@ namespace {
 
   Attribute value;
   switch (*attr_type) {
-    case AttributeType::String: {
+    case AttributeType::kStr: {
       value = get_string_attr(node, "value").value();
       break;
     }
-    case AttributeType::Int: {
+    case AttributeType::kInt: {
       value = get_int_attr(node, "value").value();
       break;
     }
-    case AttributeType::Float: {
+    case AttributeType::kFloat: {
       value = get_float_attr(node, "value").value();
       break;
     }
-    case AttributeType::Bool: {
+    case AttributeType::kBool: {
       value = get_bool_attr(node, "value").value();
       break;
     }
-    case AttributeType::Path: {
+    case AttributeType::kPath: {
       Path path = get_string_attr(node, "value").value();
       value = std::move(path);
       break;
     }
-    case AttributeType::Color: {
+    case AttributeType::kColor: {
       const auto hex = get_string_attr(node, "value").value();
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {
-        value.reset_to_default(AttributeType::Color);
+        value.reset_to_default(AttributeType::kColor);
       }
       else {
         if (const auto color =
@@ -81,17 +81,17 @@ namespace {
 
       break;
     }
-    case AttributeType::Object: {
+    case AttributeType::kObject: {
       value = ObjectRef {get_int_attr(node, "value").value()};
       break;
     }
-    case AttributeType::Float2:
-    case AttributeType::Float3:
-    case AttributeType::Float4:
-    case AttributeType::Int2:
-    case AttributeType::Int3:
+    case AttributeType::kFloat2:
+    case AttributeType::kFloat3:
+    case AttributeType::kFloat4:
+    case AttributeType::kInt2:
+    case AttributeType::kInt3:
       [[fallthrough]];
-    case AttributeType::Int4:
+    case AttributeType::kInt4:
       return unexpected(ParseError::UnsupportedPropertyType);
   }
 
