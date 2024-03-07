@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/string_map.hpp"
 #include "core/attribute.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/container/tree_map.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"

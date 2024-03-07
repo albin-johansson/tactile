@@ -24,7 +24,6 @@
 #include <variant>   // get
 
 #include "common/type/math.hpp"
-#include "common/type/string_map.hpp"
 #include "common/util/algorithm.hpp"
 #include "core/attribute.hpp"
 #include "core/layer/layer_type.hpp"
@@ -37,6 +36,7 @@
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/container/variant.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
