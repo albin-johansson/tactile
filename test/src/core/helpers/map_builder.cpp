@@ -34,7 +34,7 @@
 namespace tactile::test {
 
 MapBuilder::MapBuilder()
-    : mDocument {std::make_unique<MapDocument>(Float2 {32, 32}, TileExtent {5, 5})}
+    : mDocument {std::make_unique<MapDocument>(Int2 {32, 32}, TileExtent {5, 5})}
 {
   mDocument->set_component_index(std::make_shared<ComponentIndex>());
 }

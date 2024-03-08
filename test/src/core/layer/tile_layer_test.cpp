@@ -23,9 +23,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -144,18 +144,18 @@ TEST_SUITE("TileLayer")
   {
     TileLayer layer;
 
-    REQUIRE(layer.set_tile({0, -1}, 42).failed());
-    REQUIRE(layer.set_tile({-1, 0}, 42).failed());
+    REQUIRE(!layer.set_tile({0, -1}, 42).has_value());
+    REQUIRE(!layer.set_tile({-1, 0}, 42).has_value());
 
-    REQUIRE(layer.set_tile(TilePos::from(layer.row_count(), 0), 42).failed());
-    REQUIRE(layer.set_tile(TilePos::from(0, layer.column_count()), 42).failed());
+    REQUIRE(!layer.set_tile(TilePos::from(layer.row_count(), 0), 42).has_value());
+    REQUIRE(!layer.set_tile(TilePos::from(0, layer.column_count()), 42).has_value());
 
-    REQUIRE(layer.set_tile({1, 2}, 42).succeeded());
+    REQUIRE(layer.set_tile({1, 2}, 42).has_value());
     REQUIRE(42 == layer.tile_at({1, 2}));
 
     const auto bottom_right =
         TilePos::from(layer.row_count() - 1, layer.column_count() - 1);
-    REQUIRE(layer.set_tile(bottom_right, 7).succeeded());
+    REQUIRE(layer.set_tile(bottom_right, 7).has_value());
     REQUIRE(7 == layer.tile_at(bottom_right));
   }
 
@@ -208,7 +208,7 @@ TEST_SUITE("TileLayer")
     REQUIRE(3u == layer.row_count());
     REQUIRE(4u == layer.column_count());
 
-    REQUIRE(layer.remove_row().succeeded());
+    REQUIRE(layer.remove_row().has_value());
 
     REQUIRE(2u == layer.row_count());
     REQUIRE(4u == layer.column_count());
@@ -221,7 +221,7 @@ TEST_SUITE("TileLayer")
     REQUIRE(6u == layer.row_count());
     REQUIRE(8u == layer.column_count());
 
-    REQUIRE(layer.remove_column().succeeded());
+    REQUIRE(layer.remove_column().has_value());
 
     REQUIRE(6u == layer.row_count());
     REQUIRE(7u == layer.column_count());

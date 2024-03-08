@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 using namespace std::string_literals;
 
@@ -31,7 +31,7 @@ TEST_SUITE("ComponentBase")
 {
   TEST_CASE("Defaults")
   {
-    const ComponentBase component {make_uuid()};
+    const ComponentBase component {UUID::generate()};
     REQUIRE(component.empty());
     REQUIRE(0u == component.attr_count());
 
@@ -45,21 +45,21 @@ TEST_SUITE("ComponentBase")
 
   TEST_CASE("add_attr[type]")
   {
-    ComponentBase component {make_uuid()};
+    ComponentBase component {UUID::generate()};
 
     component.add_attr("str");
     REQUIRE(""s == component.get_attr("str"));
 
-    component.add_attr("int", AttributeType::Int);
+    component.add_attr("int", AttributeType::kInt);
     REQUIRE(0 == component.get_attr("int"));
 
-    component.add_attr("bool", AttributeType::Bool);
+    component.add_attr("bool", AttributeType::kBool);
     REQUIRE(false == component.get_attr("bool"));
   }
 
   TEST_CASE("add_attr[value]")
   {
-    ComponentBase component {make_uuid()};
+    ComponentBase component {UUID::generate()};
 
     component.add_attr("A", 10);
     REQUIRE(10 == component.get_attr("A"));
@@ -69,13 +69,13 @@ TEST_SUITE("ComponentBase")
 
     REQUIRE(1u == component.attr_count());
 
-    REQUIRE_THROWS_AS(component.add_attr("A"), TactileError);
+    REQUIRE_THROWS_AS(component.add_attr("A"), Exception);
   }
 
   TEST_CASE("update_attr")
   {
-    ComponentBase component {make_uuid()};
-    REQUIRE_THROWS_AS(component.update_attr("foo", 10), TactileError);
+    ComponentBase component {UUID::generate()};
+    REQUIRE_THROWS_AS(component.update_attr("foo", 10), Exception);
 
     component.add_attr("foo");
     REQUIRE(""s == component.get_attr("foo"));
@@ -88,33 +88,33 @@ TEST_SUITE("ComponentBase")
 
   TEST_CASE("remove_attr")
   {
-    ComponentBase component {make_uuid()};
-    REQUIRE(component.remove_attr("foo").failed());
+    ComponentBase component {UUID::generate()};
+    REQUIRE(!component.remove_attr("foo").has_value());
 
     component.add_attr("foo", Color {0xFF, 0, 0});
     REQUIRE(Color {0xFF, 0, 0} == component.get_attr("foo"));
     REQUIRE(!component.empty());
 
-    REQUIRE(component.remove_attr("foo").succeeded());
+    REQUIRE(component.remove_attr("foo").has_value());
     REQUIRE(component.empty());
   }
 
   TEST_CASE("rename_attr")
   {
-    ComponentBase component {make_uuid()};
-    REQUIRE(component.rename_attr("foo", "bar").failed());
+    ComponentBase component {UUID::generate()};
+    REQUIRE(!component.rename_attr("foo", "bar").has_value());
 
     component.add_attr("foo", 123);
-    REQUIRE(component.rename_attr("foo", "bar").succeeded());
-    REQUIRE(component.rename_attr("abc", "def").failed());
+    REQUIRE(component.rename_attr("foo", "bar").has_value());
+    REQUIRE(!component.rename_attr("abc", "def").has_value());
 
-    REQUIRE(component.rename_attr("", "bar").failed());
+    REQUIRE(!component.rename_attr("", "bar").has_value());
   }
 
   TEST_CASE("duplicate_attr")
   {
-    ComponentBase component {make_uuid()};
-    REQUIRE_THROWS_AS(component.duplicate_attr("abc"), TactileError);
+    ComponentBase component {UUID::generate()};
+    REQUIRE_THROWS_AS(component.duplicate_attr("abc"), Exception);
 
     component.add_attr("abc", 3.5f);
     REQUIRE(component.has_attr("abc"));

@@ -21,10 +21,10 @@
 
 #include <doctest/doctest.h>
 
-#include "common/type/string_map.hpp"
 #include "core/attribute.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/container/tree_map.hpp"
 
 using namespace std::string_literals;
@@ -39,7 +39,7 @@ TEST_SUITE("Assoc")
     const StringMap<int> map;
 
     REQUIRE(!has_key(map, "foo"));
-    REQUIRE_THROWS_AS(lookup_in(map, "foo"), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, "foo"), Exception);
   }
 
   TEST_CASE("Empty TreeMap")
@@ -47,7 +47,7 @@ TEST_SUITE("Assoc")
     const TreeMap<String, int> map;
 
     REQUIRE(!has_key(map, "foo"));
-    REQUIRE_THROWS_AS(lookup_in(map, "foo"), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, "foo"), Exception);
   }
 
   TEST_CASE("lookup_in[HashMap]")
@@ -56,9 +56,9 @@ TEST_SUITE("Assoc")
     map["foo"] = 3.5f;
     map["bar"] = true;
 
-    REQUIRE_THROWS_AS(lookup_in(map, ""), TactileError);
-    REQUIRE_THROWS_AS(lookup_in(map, "foO"), TactileError);
-    REQUIRE_THROWS_AS(lookup_in(map, "BAR"), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, ""), Exception);
+    REQUIRE_THROWS_AS(lookup_in(map, "foO"), Exception);
+    REQUIRE_THROWS_AS(lookup_in(map, "BAR"), Exception);
 
     REQUIRE(3.5f == lookup_in(map, "foo"));
     REQUIRE(true == lookup_in(map, "bar"));
@@ -70,8 +70,8 @@ TEST_SUITE("Assoc")
     map[10] = "hello"s;
     map[11] = Color {0xFF, 0, 0};
 
-    REQUIRE_THROWS_AS(lookup_in(map, 9), TactileError);
-    REQUIRE_THROWS_AS(lookup_in(map, 12), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, 9), Exception);
+    REQUIRE_THROWS_AS(lookup_in(map, 12), Exception);
 
     REQUIRE("hello"s == lookup_in(map, 10));
     REQUIRE(Color {0xFF, 0, 0} == lookup_in(map, 11));

@@ -23,7 +23,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/numeric.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile::test {
 namespace {

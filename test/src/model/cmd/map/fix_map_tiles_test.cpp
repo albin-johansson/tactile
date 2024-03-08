@@ -21,11 +21,11 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -33,7 +33,7 @@ TEST_SUITE("cmd::FixMapTiles")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::FixMapTiles {nullptr}, TactileError);
+    REQUIRE_THROWS_AS(cmd::FixMapTiles {nullptr}, Exception);
   }
 
   TEST_CASE("redo/undo")

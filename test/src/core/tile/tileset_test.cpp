@@ -21,10 +21,10 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "io/load_texture.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 namespace {
@@ -57,8 +57,8 @@ TEST_SUITE("Tileset")
   {
     auto tileset = make_tileset();
 
-    REQUIRE_THROWS_AS(tileset[-1], TactileError);
-    REQUIRE_THROWS_AS(tileset[tileset.tile_count()], TactileError);
+    REQUIRE_THROWS_AS(tileset[-1], Exception);
+    REQUIRE_THROWS_AS(tileset[tileset.tile_count()], Exception);
 
     const auto& tile = tileset[42];
     REQUIRE(42 == tile.get_index());
@@ -73,8 +73,8 @@ TEST_SUITE("Tileset")
     tileset.select_tile(42);
     REQUIRE(42 == tileset.get_selected_tile());
 
-    REQUIRE_THROWS_AS(tileset.select_tile(-1), TactileError);
-    REQUIRE_THROWS_AS(tileset.select_tile(tileset.tile_count()), TactileError);
+    REQUIRE_THROWS_AS(tileset.select_tile(-1), Exception);
+    REQUIRE_THROWS_AS(tileset.select_tile(tileset.tile_count()), Exception);
     REQUIRE_NOTHROW(tileset.select_tile(tileset.tile_count() - 1));
   }
 
@@ -82,9 +82,9 @@ TEST_SUITE("Tileset")
   {
     auto tileset = make_tileset();
 
-    REQUIRE_THROWS_AS(tileset.index_of({-1, -1}), TactileError);
+    REQUIRE_THROWS_AS(tileset.index_of({-1, -1}), Exception);
     REQUIRE_THROWS_AS(tileset.index_of({tileset.row_count(), tileset.column_count()}),
-                      TactileError);
+                      Exception);
 
     REQUIRE(0 == tileset.index_of({0, 0}));
     REQUIRE(tileset.tile_count() - 1 ==

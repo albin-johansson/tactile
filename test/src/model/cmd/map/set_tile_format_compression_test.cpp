@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -31,7 +31,7 @@ TEST_SUITE("cmd::SetTileFormatCompression")
   TEST_CASE("constructor")
   {
     REQUIRE_THROWS_AS(SetTileFormatCompression(nullptr, TileCompression::None),
-                      TactileError);
+                      Exception);
   }
 
   TEST_CASE("redo/undo")

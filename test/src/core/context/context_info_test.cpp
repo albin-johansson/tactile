@@ -31,7 +31,7 @@ TEST_SUITE("ContextInfo")
   TEST_CASE("defaults")
   {
     const ContextInfo ctx;
-    REQUIRE(!ctx.get_uuid().is_nil());
+    REQUIRE(!ctx.get_uuid().is_null());
     REQUIRE(ctx.name().empty());
     REQUIRE(ctx.property_count() == 0u);
     REQUIRE(ctx.component_count() == 0u);
@@ -39,7 +39,7 @@ TEST_SUITE("ContextInfo")
 
   TEST_CASE("ID constructor")
   {
-    const auto id = make_uuid();
+    const auto id = UUID::generate();
     const ContextInfo ctx {id};
     REQUIRE(ctx.get_uuid() == id);
   }
@@ -56,15 +56,15 @@ TEST_SUITE("ContextInfo")
     ContextInfo ctx;
     const String property_name {"foo"};
 
-    REQUIRE(ctx.add_property(property_name, AttributeType::Int).succeeded());
+    REQUIRE(ctx.add_property(property_name, AttributeType::kInt).has_value());
     REQUIRE(ctx.property_count() == 1u);
     REQUIRE(ctx.has_property(property_name));
     REQUIRE(ctx.get_property(property_name).as_int() == 0);
 
-    REQUIRE(ctx.add_property(property_name, AttributeType::Float).failed());
+    REQUIRE(!ctx.add_property(property_name, AttributeType::kFloat).has_value());
     REQUIRE(ctx.property_count() == 1u);
     REQUIRE(ctx.has_property(property_name));
-    REQUIRE(ctx.get_property(property_name).get_type() == AttributeType::Int);
+    REQUIRE(ctx.get_property(property_name).get_type() == AttributeType::kInt);
   }
 
   TEST_CASE("add_property (with value)")
@@ -73,11 +73,11 @@ TEST_SUITE("ContextInfo")
     const String property_name {"foo"};
     const String property_value {"bar"};
 
-    REQUIRE(ctx.add_property(property_name, property_value).succeeded());
+    REQUIRE(ctx.add_property(property_name, property_value).has_value());
     REQUIRE(ctx.has_property(property_name));
     REQUIRE(ctx.get_property(property_name) == property_value);
 
-    REQUIRE(ctx.add_property(property_name, 42).failed());
+    REQUIRE(!ctx.add_property(property_name, 42).has_value());
     REQUIRE(ctx.property_count() == 1u);
   }
 
@@ -86,16 +86,16 @@ TEST_SUITE("ContextInfo")
     ContextInfo ctx;
     const String property_name {"A"};
 
-    REQUIRE(ctx.update_property(property_name, 10).failed());
+    REQUIRE(!ctx.update_property(property_name, 10).has_value());
 
-    REQUIRE(ctx.add_property(property_name, 10).succeeded());
+    REQUIRE(ctx.add_property(property_name, 10).has_value());
     REQUIRE(ctx.property_count() == 1u);
 
-    REQUIRE(ctx.update_property(property_name, true).succeeded());
+    REQUIRE(ctx.update_property(property_name, true).has_value());
     REQUIRE(ctx.get_property(property_name) == true);
     REQUIRE(ctx.property_count() == 1u);
 
-    REQUIRE(ctx.update_property(property_name, 4.5f).succeeded());
+    REQUIRE(ctx.update_property(property_name, 4.5f).has_value());
     REQUIRE(ctx.get_property(property_name) == 4.5f);
     REQUIRE(ctx.property_count() == 1u);
   }
@@ -107,7 +107,7 @@ TEST_SUITE("ContextInfo")
 
     REQUIRE(!ctx.remove_property(property_name).has_value());
 
-    REQUIRE(ctx.add_property(property_name, 123).succeeded());
+    REQUIRE(ctx.add_property(property_name, 123).has_value());
     REQUIRE(ctx.has_property(property_name));
 
     REQUIRE(ctx.remove_property(property_name) == 123);
@@ -120,13 +120,13 @@ TEST_SUITE("ContextInfo")
     const String old_property_name {"foo"};
     const String new_property_name {"bar"};
 
-    REQUIRE(ctx.rename_property(old_property_name, new_property_name).failed());
+    REQUIRE(!ctx.rename_property(old_property_name, new_property_name).has_value());
 
-    REQUIRE(ctx.add_property(old_property_name, 42).succeeded());
+    REQUIRE(ctx.add_property(old_property_name, 42).has_value());
     REQUIRE(ctx.has_property(old_property_name));
     REQUIRE(!ctx.has_property(new_property_name));
 
-    REQUIRE(ctx.rename_property(old_property_name, new_property_name).succeeded());
+    REQUIRE(ctx.rename_property(old_property_name, new_property_name).has_value());
     REQUIRE(!ctx.has_property(old_property_name));
     REQUIRE(ctx.has_property(new_property_name));
 
@@ -138,7 +138,7 @@ TEST_SUITE("ContextInfo")
     ContextInfo ctx;
     const ComponentDefinition component_def;
 
-    REQUIRE(ctx.attach_component(component_def.instantiate()).succeeded());
+    REQUIRE(ctx.attach_component(component_def.instantiate()).has_value());
     REQUIRE(ctx.has_component(component_def.get_uuid()));
     REQUIRE(ctx.component_count() == 1u);
   }
@@ -152,7 +152,7 @@ TEST_SUITE("ContextInfo")
     component_def.add_attr("B", 2);
 
     const auto component_id = component_def.get_uuid();
-    REQUIRE(ctx.attach_component(component_def.instantiate()).succeeded());
+    REQUIRE(ctx.attach_component(component_def.instantiate()).has_value());
     REQUIRE(ctx.has_component(component_id));
 
     const auto removed_component = ctx.detach_component(component_id);
@@ -169,7 +169,7 @@ TEST_SUITE("ContextInfo")
     ContextInfo ctx;
     const ComponentDefinition component_def;
 
-    REQUIRE(ctx.attach_component(component_def.instantiate()).succeeded());
+    REQUIRE(ctx.attach_component(component_def.instantiate()).has_value());
 
     const auto& component = ctx.get_component(component_def.get_uuid());
     REQUIRE_NOTHROW(component.definition_id() == component_def.get_uuid());
@@ -181,7 +181,7 @@ TEST_SUITE("ContextInfo")
     const ComponentDefinition component_def;
 
     REQUIRE(ctx.find_component(component_def.get_uuid()) == nullptr);
-    REQUIRE(ctx.attach_component(component_def.instantiate()).succeeded());
+    REQUIRE(ctx.attach_component(component_def.instantiate()).has_value());
     REQUIRE(ctx.find_component(component_def.get_uuid()) != nullptr);
   }
 
@@ -191,7 +191,7 @@ TEST_SUITE("ContextInfo")
     const ComponentDefinition component_def;
 
     REQUIRE(!ctx.has_component(component_def.get_uuid()));
-    REQUIRE(ctx.attach_component(component_def.instantiate()).succeeded());
+    REQUIRE(ctx.attach_component(component_def.instantiate()).has_value());
     REQUIRE(ctx.has_component(component_def.get_uuid()));
   }
 }

@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/layer/group_layer.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -31,7 +31,7 @@ TEST_SUITE("cmd::RenameLayer")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::RenameLayer(nullptr, make_uuid(), ""), TactileError);
+    REQUIRE_THROWS_AS(cmd::RenameLayer(nullptr, UUID::generate(), ""), Exception);
   }
 
   TEST_CASE("redo/undo")

@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -31,7 +31,7 @@ TEST_SUITE("cmd::RemoveComponentAttr")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::RemoveComponentAttr(nullptr, make_uuid(), ""), TactileError);
+    REQUIRE_THROWS_AS(cmd::RemoveComponentAttr(nullptr, UUID::generate(), ""), Exception);
   }
 
   TEST_CASE("redo/undo")

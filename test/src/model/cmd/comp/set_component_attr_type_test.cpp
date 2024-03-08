@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -32,8 +32,8 @@ TEST_SUITE("cmd::SetComponentAttrType")
   TEST_CASE("constructor")
   {
     REQUIRE_THROWS_AS(
-        cmd::SetComponentAttrType(nullptr, make_uuid(), "", AttributeType::Int),
-        TactileError);
+        cmd::SetComponentAttrType(nullptr, UUID::generate(), "", AttributeType::kInt),
+        Exception);
   }
 
   TEST_CASE("redo/undo")
@@ -44,8 +44,8 @@ TEST_SUITE("cmd::SetComponentAttrType")
     const String attr_name {"Attr1"};
     const bool old_attr_value = true;
 
-    const auto old_attr_type = AttributeType::Bool;
-    const auto new_attr_type = AttributeType::Int;
+    const auto old_attr_type = AttributeType::kBool;
+    const auto new_attr_type = AttributeType::kInt;
 
     const auto component_id = ComponentBuilder {component_index, "Demo"}  //
                                   .with_attr(attr_name, old_attr_value)

@@ -21,7 +21,6 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -32,6 +31,7 @@
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 namespace {
@@ -86,8 +86,8 @@ TEST_SUITE("Map")
     REQUIRE(1 == map.next_object_layer_suffix());
     REQUIRE(1 == map.next_group_layer_suffix());
 
-    REQUIRE(32 == map.get_tile_size().x);
-    REQUIRE(32 == map.get_tile_size().y);
+    REQUIRE(32 == map.get_tile_size().x());
+    REQUIRE(32 == map.get_tile_size().y());
 
     REQUIRE(map.get_tileset_bundle().empty());
   }
@@ -139,7 +139,7 @@ TEST_SUITE("Map")
     REQUIRE(1u == map.get_extent().rows);
     REQUIRE(5u == map.get_extent().cols);
 
-    REQUIRE_THROWS_AS(map.remove_row(), TactileError);
+    REQUIRE_THROWS_AS(map.remove_row(), Exception);
   }
 
   TEST_CASE("remove_column")
@@ -157,7 +157,7 @@ TEST_SUITE("Map")
     REQUIRE(5u == map.get_extent().rows);
     REQUIRE(1u == map.get_extent().cols);
 
-    REQUIRE_THROWS_AS(map.remove_column(), TactileError);
+    REQUIRE_THROWS_AS(map.remove_column(), Exception);
   }
 
   TEST_CASE("resize")
@@ -182,8 +182,8 @@ TEST_SUITE("Map")
     REQUIRE(1u == layer.row_count());
     REQUIRE(1u == layer.column_count());
 
-    REQUIRE_THROWS_AS(preset.map.resize(TileExtent {0, 1}), TactileError);
-    REQUIRE_THROWS_AS(preset.map.resize(TileExtent {1, 0}), TactileError);
+    REQUIRE_THROWS_AS(preset.map.resize(TileExtent {0, 1}), Exception);
+    REQUIRE_THROWS_AS(preset.map.resize(TileExtent {1, 0}), Exception);
   }
 
   TEST_CASE("fix_tiles")
@@ -235,8 +235,8 @@ TEST_SUITE("Map")
   {
     Map map;
     map.set_tile_size({28, 45});
-    REQUIRE(28 == map.get_tile_size().x);
-    REQUIRE(45 == map.get_tile_size().y);
+    REQUIRE(28 == map.get_tile_size().x());
+    REQUIRE(45 == map.get_tile_size().y());
   }
 
   TEST_CASE("is_valid_position")
@@ -339,7 +339,7 @@ TEST_SUITE("Map")
     MapLayerPreset preset;
     auto& root = preset.map.get_invisible_root();
 
-    REQUIRE_NOTHROW(preset.map.remove_layer(make_uuid()));
+    REQUIRE_NOTHROW(preset.map.remove_layer(UUID::generate()));
 
     REQUIRE(nullptr != root.find_object_layer(preset.a));
     REQUIRE(7u == root.layer_count());
@@ -368,7 +368,7 @@ TEST_SUITE("Map")
     MapLayerPreset preset;
     auto& root = preset.map.get_invisible_root();
 
-    REQUIRE_THROWS_AS(preset.map.duplicate_layer(make_uuid()), TactileError);
+    REQUIRE_THROWS_AS(preset.map.duplicate_layer(UUID::generate()), Exception);
 
     REQUIRE(7u == root.layer_count());
     REQUIRE(5u == root.find_group_layer(preset.b)->layer_count());
@@ -386,7 +386,7 @@ TEST_SUITE("Map")
   {
     MapLayerPreset preset;
     REQUIRE(preset.map.get_active_layer_id().has_value());
-    REQUIRE_THROWS_AS(preset.map.select_layer(make_uuid()), TactileError);
+    REQUIRE_THROWS_AS(preset.map.select_layer(UUID::generate()), Exception);
 
     preset.map.select_layer(preset.e);
     REQUIRE(preset.e == preset.map.get_active_layer_id());

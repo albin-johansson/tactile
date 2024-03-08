@@ -31,7 +31,7 @@ TEST_SUITE("Layer")
   {
     const T layer;
     REQUIRE(layer.is_visible());
-    REQUIRE(!layer.get_uuid().is_nil());
+    REQUIRE(!layer.get_uuid().is_null());
     REQUIRE(!layer.get_parent().has_value());
     REQUIRE(!layer.get_meta_id().has_value());
     REQUIRE(1.0f == layer.get_opacity());
@@ -66,7 +66,7 @@ TEST_SUITE("Layer")
   {
     T source;
     source.set_opacity(0.7f);
-    source.set_parent(make_uuid());
+    source.set_parent(UUID::generate());
     source.set_visible(false);
 
     const auto clone = source.clone();

@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -31,7 +31,7 @@ TEST_SUITE("cmd::AddComponentAttr")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::AddComponentAttr(nullptr, make_uuid(), ""), TactileError);
+    REQUIRE_THROWS_AS(cmd::AddComponentAttr(nullptr, UUID::generate(), ""), Exception);
   }
 
   TEST_CASE("redo/undo")
@@ -46,7 +46,7 @@ TEST_SUITE("cmd::AddComponentAttr")
     auto& map = map_document->get_map();
     auto& map_ctx = map.get_ctx();
 
-    REQUIRE(map_ctx.attach_component(component_def.instantiate()).succeeded());
+    REQUIRE(map_ctx.attach_component(component_def.instantiate()).has_value());
     REQUIRE(map_ctx.has_component(component_id));
     REQUIRE(map_ctx.get_component(component_id).empty());
 
@@ -63,7 +63,7 @@ TEST_SUITE("cmd::AddComponentAttr")
     cmd.undo();
     REQUIRE(component_def.empty());
     REQUIRE(!component_def.has_attr(attr_name));
-    REQUIRE_THROWS_AS(component.get_attr(attr_name), TactileError);
+    REQUIRE_THROWS_AS(component.get_attr(attr_name), Exception);
   }
 }
 

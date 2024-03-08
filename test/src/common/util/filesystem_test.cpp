@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/predef.hpp"
 #include "common/util/env.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile::test {
 

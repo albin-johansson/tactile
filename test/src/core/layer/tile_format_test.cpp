@@ -23,7 +23,7 @@
 #include <zlib.h>
 #include <zstd.h>
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -50,9 +50,9 @@ TEST_SUITE("TileFormat")
     format.set_zlib_compression_level(7);
     REQUIRE(7 == format.zlib_compression_level());
 
-    REQUIRE_THROWS_AS(format.set_zlib_compression_level(-2), TactileError);
-    REQUIRE_THROWS_AS(format.set_zlib_compression_level(0), TactileError);
-    REQUIRE_THROWS_AS(format.set_zlib_compression_level(10), TactileError);
+    REQUIRE_THROWS_AS(format.set_zlib_compression_level(-2), Exception);
+    REQUIRE_THROWS_AS(format.set_zlib_compression_level(0), Exception);
+    REQUIRE_THROWS_AS(format.set_zlib_compression_level(10), Exception);
   }
 
   TEST_CASE("can_use_compression_strategy (with plain encoding)")

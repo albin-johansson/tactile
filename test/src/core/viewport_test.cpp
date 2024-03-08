@@ -34,11 +34,11 @@ TEST_SUITE("Viewport")
     const Viewport viewport;
     REQUIRE(!viewport.limits().has_value());
 
-    REQUIRE(0 == viewport.get_offset().x);
-    REQUIRE(0 == viewport.get_offset().y);
+    REQUIRE(0 == viewport.get_offset().x());
+    REQUIRE(0 == viewport.get_offset().y());
 
-    REQUIRE(32 == viewport.tile_size().x);
-    REQUIRE(32 == viewport.tile_size().y);
+    REQUIRE(32 == viewport.tile_size().x());
+    REQUIRE(32 == viewport.tile_size().y());
   }
 
   TEST_CASE("reset_limits")
@@ -57,8 +57,8 @@ TEST_SUITE("Viewport")
     Viewport viewport;
 
     viewport.offset({42, -12});
-    REQUIRE(42 == viewport.get_offset().x);
-    REQUIRE(-12 == viewport.get_offset().y);
+    REQUIRE(42 == viewport.get_offset().x());
+    REQUIRE(-12 == viewport.get_offset().y());
   }
 
   TEST_CASE("pan_left")
@@ -66,8 +66,8 @@ TEST_SUITE("Viewport")
     Viewport viewport;
 
     viewport.pan_left();
-    REQUIRE(viewport.tile_size().x == viewport.get_offset().x);
-    REQUIRE(0 == viewport.get_offset().y);
+    REQUIRE(viewport.tile_size().x() == viewport.get_offset().x());
+    REQUIRE(0 == viewport.get_offset().y());
   }
 
   TEST_CASE("pan_right")
@@ -75,8 +75,8 @@ TEST_SUITE("Viewport")
     Viewport viewport;
 
     viewport.pan_right();
-    REQUIRE(-viewport.tile_size().x == viewport.get_offset().x);
-    REQUIRE(0 == viewport.get_offset().y);
+    REQUIRE(-viewport.tile_size().x() == viewport.get_offset().x());
+    REQUIRE(0 == viewport.get_offset().y());
   }
 
   TEST_CASE("pan_up")
@@ -84,8 +84,8 @@ TEST_SUITE("Viewport")
     Viewport viewport;
 
     viewport.pan_up();
-    REQUIRE(0 == viewport.get_offset().x);
-    REQUIRE(viewport.tile_size().y == viewport.get_offset().y);
+    REQUIRE(0 == viewport.get_offset().x());
+    REQUIRE(viewport.tile_size().y() == viewport.get_offset().y());
   }
 
   TEST_CASE("pan_down")
@@ -93,8 +93,8 @@ TEST_SUITE("Viewport")
     Viewport viewport;
 
     viewport.pan_down();
-    REQUIRE(0 == viewport.get_offset().x);
-    REQUIRE(-viewport.tile_size().y == viewport.get_offset().y);
+    REQUIRE(0 == viewport.get_offset().x());
+    REQUIRE(-viewport.tile_size().y() == viewport.get_offset().y());
   }
 
   TEST_CASE("panning in opposite directions should cancel out")
@@ -103,13 +103,13 @@ TEST_SUITE("Viewport")
 
     viewport.pan_left();
     viewport.pan_right();
-    REQUIRE(0 == viewport.get_offset().x);
-    REQUIRE(0 == viewport.get_offset().y);
+    REQUIRE(0 == viewport.get_offset().x());
+    REQUIRE(0 == viewport.get_offset().y());
 
     viewport.pan_up();
     viewport.pan_down();
-    REQUIRE(0 == viewport.get_offset().x);
-    REQUIRE(0 == viewport.get_offset().y);
+    REQUIRE(0 == viewport.get_offset().x());
+    REQUIRE(0 == viewport.get_offset().y());
   }
 
   TEST_CASE("set_tile_size")
@@ -117,8 +117,8 @@ TEST_SUITE("Viewport")
     Viewport viewport;
 
     viewport.set_tile_size({93, 24});
-    REQUIRE(93 == viewport.tile_size().x);
-    REQUIRE(24 == viewport.tile_size().y);
+    REQUIRE(93 == viewport.tile_size().x());
+    REQUIRE(24 == viewport.tile_size().y());
   }
 
   TEST_CASE("set_limits")
@@ -132,20 +132,20 @@ TEST_SUITE("Viewport")
     viewport.set_limits({.min_offset = {min_x, min_y}, .max_offset = {max_x, max_y}});
 
     viewport.offset({min_x - 1, 0});
-    REQUIRE(min_x == viewport.get_offset().x);
-    REQUIRE(0 == viewport.get_offset().y);
+    REQUIRE(min_x == viewport.get_offset().x());
+    REQUIRE(0 == viewport.get_offset().y());
 
     viewport.offset({0, min_y - 1});
-    REQUIRE(min_x == viewport.get_offset().x);
-    REQUIRE(min_y == viewport.get_offset().y);
+    REQUIRE(min_x == viewport.get_offset().x());
+    REQUIRE(min_y == viewport.get_offset().y());
 
     viewport.offset({max_x + 100, 0});
-    REQUIRE(max_x == viewport.get_offset().x);
-    REQUIRE(min_y == viewport.get_offset().y);
+    REQUIRE(max_x == viewport.get_offset().x());
+    REQUIRE(min_y == viewport.get_offset().y());
 
     viewport.offset({0, max_y + 100});
-    REQUIRE(max_x == viewport.get_offset().x);
-    REQUIRE(max_y == viewport.get_offset().y);
+    REQUIRE(max_x == viewport.get_offset().x());
+    REQUIRE(max_y == viewport.get_offset().y());
   }
 }
 

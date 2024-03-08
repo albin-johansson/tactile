@@ -168,8 +168,8 @@ TEST_SUITE("TilePos")
     const TilePos pos {832, 234};
     const auto vec = pos.as_vec2();
 
-    REQUIRE(pos.row() == vec.y);
-    REQUIRE(pos.col() == vec.x);
+    REQUIRE(pos.row() == vec.y());
+    REQUIRE(pos.col() == vec.x());
   }
 
   TEST_CASE("as_vec2f")
@@ -177,8 +177,8 @@ TEST_SUITE("TilePos")
     const TilePos pos {-325, 834};
     const auto vec = pos.as_vec2f();
 
-    REQUIRE(static_cast<float>(pos.row()) == vec.y);
-    REQUIRE(static_cast<float>(pos.col()) == vec.x);
+    REQUIRE(static_cast<float>(pos.row()) == vec.y());
+    REQUIRE(static_cast<float>(pos.col()) == vec.x());
   }
 
   TEST_CASE("operator==")

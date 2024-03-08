@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 using namespace std::string_literals;
 
@@ -32,7 +32,7 @@ TEST_SUITE("Attribute")
   TEST_CASE("Defaults")
   {
     const Attribute value;
-    REQUIRE(AttributeType::String == value.get_type());
+    REQUIRE(AttributeType::kStr == value.get_type());
 
     REQUIRE(value.is_string());
     REQUIRE(!value.is_int());
@@ -49,18 +49,18 @@ TEST_SUITE("Attribute")
     REQUIRE(!value.is_object());
 
     REQUIRE("" == value.as_string());
-    REQUIRE_THROWS_AS(value.as_int(), TactileError);
-    REQUIRE_THROWS_AS(value.as_int2(), TactileError);
-    REQUIRE_THROWS_AS(value.as_int3(), TactileError);
-    REQUIRE_THROWS_AS(value.as_int4(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float2(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float3(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float4(), TactileError);
-    REQUIRE_THROWS_AS(value.as_bool(), TactileError);
-    REQUIRE_THROWS_AS(value.as_color(), TactileError);
-    REQUIRE_THROWS_AS(value.as_path(), TactileError);
-    REQUIRE_THROWS_AS(value.as_object(), TactileError);
+    REQUIRE_THROWS_AS(value.as_int(), Exception);
+    REQUIRE_THROWS_AS(value.as_int2(), Exception);
+    REQUIRE_THROWS_AS(value.as_int3(), Exception);
+    REQUIRE_THROWS_AS(value.as_int4(), Exception);
+    REQUIRE_THROWS_AS(value.as_float(), Exception);
+    REQUIRE_THROWS_AS(value.as_float2(), Exception);
+    REQUIRE_THROWS_AS(value.as_float3(), Exception);
+    REQUIRE_THROWS_AS(value.as_float4(), Exception);
+    REQUIRE_THROWS_AS(value.as_bool(), Exception);
+    REQUIRE_THROWS_AS(value.as_color(), Exception);
+    REQUIRE_THROWS_AS(value.as_path(), Exception);
+    REQUIRE_THROWS_AS(value.as_object(), Exception);
   }
 
   TEST_CASE("Int attribute")

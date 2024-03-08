@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -30,7 +30,7 @@ TEST_SUITE("cmd::ResizeMap")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::ResizeMap(nullptr, TileExtent {1, 1}), TactileError);
+    REQUIRE_THROWS_AS(cmd::ResizeMap(nullptr, TileExtent {1, 1}), Exception);
   }
 
   TEST_CASE("redo/undo")

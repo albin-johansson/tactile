@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 using namespace std::chrono_literals;
 
@@ -57,39 +57,39 @@ TEST_SUITE("TileAnimation")
     REQUIRE(42 == frame.tile);
     REQUIRE(14ms == frame.duration);
 
-    REQUIRE_THROWS_AS(animation[1], TactileError);
+    REQUIRE_THROWS_AS(animation[1], Exception);
   }
 
   TEST_CASE("insert_frame")
   {
     TileAnimation animation;
 
-    REQUIRE(success == animation.insert_frame(0, 5, 100ms));
+    REQUIRE(animation.insert_frame(0, 5, 100ms).has_value());
     REQUIRE(1u == animation.size());
 
-    REQUIRE(success == animation.insert_frame(0, 20, 100ms));
+    REQUIRE(animation.insert_frame(0, 20, 100ms).has_value());
     REQUIRE(2u == animation.size());
 
-    REQUIRE(success == animation.insert_frame(animation.size(), 30, 100ms));
+    REQUIRE(animation.insert_frame(animation.size(), 30, 100ms).has_value());
     REQUIRE(3u == animation.size());
 
-    REQUIRE(failure == animation.insert_frame(animation.size() + 1, 40, 100ms));
+    REQUIRE(!animation.insert_frame(animation.size() + 1, 40, 100ms).has_value());
     REQUIRE(3u == animation.size());
   }
 
   TEST_CASE("remove_frame")
   {
     TileAnimation animation;
-    REQUIRE(failure == animation.remove_frame(0));
+    REQUIRE(!animation.remove_frame(0).has_value());
 
     animation.add_frame(12, 42ms);
     REQUIRE(1u == animation.size());
 
-    REQUIRE(failure == animation.remove_frame(1));
+    REQUIRE(!animation.remove_frame(1).has_value());
     REQUIRE(1u == animation.size());
 
-    REQUIRE(success == animation.remove_frame(0));
-    REQUIRE(failure == animation.remove_frame(0));
+    REQUIRE(animation.remove_frame(0).has_value());
+    REQUIRE(!animation.remove_frame(0).has_value());
     REQUIRE(0u == animation.size());
   }
 }

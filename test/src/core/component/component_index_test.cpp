@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/component/component_definition.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -48,19 +48,19 @@ TEST_SUITE("ComponentIndex")
     REQUIRE(index.has_comp("position"));
     REQUIRE(index.comp_count() == 1u);
 
-    REQUIRE_THROWS_AS(index.define_comp("position"), TactileError);
+    REQUIRE_THROWS_AS(index.define_comp("position"), Exception);
   }
 
   TEST_CASE("remove")
   {
     ComponentIndex index;
-    REQUIRE(index.remove_comp(make_uuid()).failed());
+    REQUIRE(!index.remove_comp(UUID::generate()).has_value());
 
     const auto component_id = index.define_comp("foo");
     REQUIRE(index.comp_count() == 1u);
     REQUIRE(index.has_comp("foo"));
 
-    REQUIRE(index.remove_comp(component_id).succeeded());
+    REQUIRE(index.remove_comp(component_id).has_value());
 
     REQUIRE(0u == index.comp_count());
     REQUIRE(!index.has_comp("foo"));
@@ -69,7 +69,7 @@ TEST_SUITE("ComponentIndex")
   TEST_CASE("rename")
   {
     ComponentIndex index;
-    REQUIRE(index.rename_comp(make_uuid(), "foo").failed());
+    REQUIRE(!index.rename_comp(UUID::generate(), "foo").has_value());
 
     const auto component_id = index.define_comp("foo");
 
@@ -82,7 +82,7 @@ TEST_SUITE("ComponentIndex")
     REQUIRE(index.has_comp("zoo"));
 
     index.define_comp("woo");
-    REQUIRE(index.rename_comp(component_id, "woo").failed());
+    REQUIRE(!index.rename_comp(component_id, "woo").has_value());
   }
 }
 

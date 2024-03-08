@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -30,7 +30,7 @@ TEST_SUITE("cmd::SetLayerOpacity")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::SetLayerOpacity(nullptr, 1.0f), TactileError);
+    REQUIRE_THROWS_AS(cmd::SetLayerOpacity(nullptr, 1.0f), Exception);
   }
 
   TEST_CASE("redo/undo")

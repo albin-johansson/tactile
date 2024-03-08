@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/util/random.hpp"
+#include "tactile/core/numeric/random.hpp"
 
 namespace tactile::test {
 namespace {
@@ -13,7 +13,7 @@ namespace {
   bytes.reserve(42'000);
 
   for (usize i = 0, capacity = bytes.capacity(); i < capacity; ++i) {
-    bytes.push_back(static_cast<uint8>(next_random_u32(+'a', +'z')));
+    bytes.push_back(static_cast<uint8>(get_random_uint(+'a', +'z')));
   }
 
   return bytes;

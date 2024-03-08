@@ -21,10 +21,10 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/helpers/map_test_helpers.hpp"
 #include "core/layer/group_layer.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -32,7 +32,7 @@ TEST_SUITE("cmd::RemoveColumn")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::RemoveColumn {nullptr}, TactileError);
+    REQUIRE_THROWS_AS(cmd::RemoveColumn {nullptr}, Exception);
   }
 
   TEST_CASE("redo/undo")

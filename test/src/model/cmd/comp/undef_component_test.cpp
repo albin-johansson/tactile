@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 using namespace std::string_literals;
 
@@ -33,7 +33,7 @@ TEST_SUITE("cmd::UndefComponent")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::UndefComponent(nullptr, make_uuid()), TactileError);
+    REQUIRE_THROWS_AS(cmd::UndefComponent(nullptr, UUID::generate()), Exception);
   }
 
   TEST_CASE("redo/undo")

@@ -315,8 +315,8 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   point.name = "Point";
   point.type = ObjectType::Point;
   point.id = 34;
-  point.pos.x = 453;
-  point.pos.y = 328;
+  point.pos[0] = 453;
+  point.pos[1] = 328;
   point.tag = "point-tag";
   point.visible = true;
 
@@ -328,10 +328,10 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   rect.name = "Rectangle";
   rect.type = ObjectType::Rect;
   rect.id = 26;
-  rect.pos.x = 854;
-  rect.pos.y = 654;
-  rect.size.x = 123;
-  rect.size.y = 68;
+  rect.pos[0] = 854;
+  rect.pos[1] = 654;
+  rect.size[0] = 123;
+  rect.size[1] = 68;
   rect.tag = "rect-tag";
   rect.visible = true;
 
@@ -346,10 +346,10 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   ellipse.name = "Ellipse";
   ellipse.type = ObjectType::Ellipse;
   ellipse.id = 54;
-  ellipse.pos.x = 193;
-  ellipse.pos.y = 587;
-  ellipse.size.x = 34;
-  ellipse.size.y = 39;
+  ellipse.pos[0] = 193;
+  ellipse.pos[1] = 587;
+  ellipse.size[0] = 34;
+  ellipse.size[1] = 39;
   ellipse.visible = true;
 
   return data;
@@ -363,15 +363,15 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
 
   data.first_tile = 1;
 
-  data.tile_size.x = 33;
-  data.tile_size.y = 32;
+  data.tile_size[0] = 33;
+  data.tile_size[1] = 32;
 
   data.tile_count = 768;
   data.column_count = 28;
 
   data.image_path = "resources/terrain.png";
-  data.image_size.x = 1'024;
-  data.image_size.y = 1'023;
+  data.image_size[0] = 1'024;
+  data.image_size[1] = 1'023;
 
   data.fancy_tiles[155].frames = {{.tile_index = 155, .duration_ms = 150},
                                   {.tile_index = 156, .duration_ms = 120},
@@ -381,8 +381,8 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   object_data.name = "Fancy Object";
   object_data.type = ObjectType::Point;
   object_data.id = 99;
-  object_data.pos.x = 23;
-  object_data.pos.y = 47;
+  object_data.pos[0] = 23;
+  object_data.pos[1] = 47;
   object_data.visible = false;
 
   data.fancy_tiles[27].context.properties["tile-float"] = 45.3f;
@@ -401,8 +401,8 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
 {
   MapIR data;
 
-  data.tile_size.x = 32;
-  data.tile_size.y = 28;
+  data.tile_size[0] = 32;
+  data.tile_size[1] = 28;
 
   data.next_layer_id = 5;
   data.next_object_id = 8;

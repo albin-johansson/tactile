@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
 #include "core/layer/object.hpp"
 #include "core/map.hpp"
 #include "model/document/map_document.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/base/int.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile::test {
 

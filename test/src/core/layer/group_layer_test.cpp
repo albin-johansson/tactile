@@ -23,10 +23,10 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -134,7 +134,7 @@ TEST_SUITE("GroupLayer")
     root.add_layer(group->get_uuid(), std::make_shared<TileLayer>());
     REQUIRE(2u == root.layer_count());
 
-    REQUIRE_NOTHROW(root.add_layer(make_uuid(), std::make_shared<ObjectLayer>()));
+    REQUIRE_NOTHROW(root.add_layer(UUID::generate(), std::make_shared<ObjectLayer>()));
     REQUIRE(2u == root.layer_count());
   }
 
@@ -354,7 +354,7 @@ TEST_SUITE("GroupLayer")
   TEST_CASE("layer_sibling_count")
   {
     GroupLayer root;
-    REQUIRE_THROWS_AS(root.layer_sibling_count(root.get_uuid()), TactileError);
+    REQUIRE_THROWS_AS(root.layer_sibling_count(root.get_uuid()), Exception);
 
     auto t1 = std::make_shared<TileLayer>();
     auto t2 = std::make_shared<TileLayer>();
@@ -383,7 +383,7 @@ TEST_SUITE("GroupLayer")
   TEST_CASE("local_layer_index")
   {
     GroupLayer root;
-    REQUIRE_THROWS_AS(root.local_layer_index(root.get_uuid()), TactileError);
+    REQUIRE_THROWS_AS(root.local_layer_index(root.get_uuid()), Exception);
 
     auto layer1 = std::make_shared<TileLayer>();
     auto layer2 = std::make_shared<TileLayer>();
@@ -403,7 +403,7 @@ TEST_SUITE("GroupLayer")
   TEST_CASE("global_layer_index")
   {
     GroupLayer root;
-    REQUIRE_THROWS_AS(root.global_layer_index(root.get_uuid()), TactileError);
+    REQUIRE_THROWS_AS(root.global_layer_index(root.get_uuid()), Exception);
 
     auto t1 = std::make_shared<TileLayer>();
     auto t2 = std::make_shared<TileLayer>();
@@ -433,7 +433,7 @@ TEST_SUITE("GroupLayer")
   TEST_CASE("can_move_layer_up")
   {
     GroupLayer root;
-    REQUIRE_THROWS_AS(root.can_move_layer_up(root.get_uuid()), TactileError);
+    REQUIRE_THROWS_AS(root.can_move_layer_up(root.get_uuid()), Exception);
 
     auto t1 = std::make_shared<TileLayer>();
     auto t2 = std::make_shared<TileLayer>();
@@ -454,7 +454,7 @@ TEST_SUITE("GroupLayer")
   TEST_CASE("can_move_layer_down")
   {
     GroupLayer root;
-    REQUIRE_THROWS_AS(root.can_move_layer_down(root.get_uuid()), TactileError);
+    REQUIRE_THROWS_AS(root.can_move_layer_down(root.get_uuid()), Exception);
 
     auto t1 = std::make_shared<TileLayer>();
     auto t2 = std::make_shared<TileLayer>();

@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -30,7 +30,7 @@ TEST_SUITE("cmd::AddProperty")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::AddProperty(nullptr, "", AttributeType::String), TactileError);
+    REQUIRE_THROWS_AS(cmd::AddProperty(nullptr, "", AttributeType::kStr), Exception);
   }
 
   TEST_CASE("redo/undo")
@@ -42,7 +42,7 @@ TEST_SUITE("cmd::AddProperty")
     REQUIRE(map_ctx.property_count() == 0u);
 
     const String property_name {"Foo"};
-    cmd::AddProperty cmd {map, property_name, AttributeType::Int};
+    cmd::AddProperty cmd {map, property_name, AttributeType::kInt};
 
     cmd.redo();
     REQUIRE(map_ctx.has_property(property_name));

@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -30,7 +30,7 @@ TEST_SUITE("cmd::SetObjectTag")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::SetObjectTag(nullptr, ""), TactileError);
+    REQUIRE_THROWS_AS(cmd::SetObjectTag(nullptr, ""), Exception);
   }
 
   TEST_CASE("redo/undo")

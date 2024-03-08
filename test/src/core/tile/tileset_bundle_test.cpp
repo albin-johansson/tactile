@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "io/load_texture.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 namespace {
@@ -123,7 +123,7 @@ TEST_SUITE("TilesetBundle")
     REQUIRE(!bundle.is_valid_tile(1));
     REQUIRE(!bundle.is_valid_tile(42));
 
-    REQUIRE_THROWS_AS(bundle.detach_tileset(tileset_id), TactileError);
+    REQUIRE_THROWS_AS(bundle.detach_tileset(tileset_id), Exception);
   }
 
   TEST_CASE("select_tileset")
@@ -213,8 +213,8 @@ TEST_SUITE("TilesetBundle")
     REQUIRE(0 == bundle.to_tile_index(ref_b.get_first_tile()));
     REQUIRE(b->tile_count() == bundle.to_tile_index(ref_b.get_last_tile()));
 
-    REQUIRE_THROWS_AS(bundle.to_tile_index(ref_a.get_first_tile() - 1), TactileError);
-    REQUIRE_THROWS_AS(bundle.to_tile_index(ref_b.get_last_tile() + 1), TactileError);
+    REQUIRE_THROWS_AS(bundle.to_tile_index(ref_a.get_first_tile() - 1), Exception);
+    REQUIRE_THROWS_AS(bundle.to_tile_index(ref_b.get_last_tile() + 1), Exception);
   }
 }
 

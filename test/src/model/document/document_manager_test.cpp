@@ -21,12 +21,12 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "io/load_texture.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 namespace {
@@ -57,7 +57,7 @@ TEST_SUITE("DocumentManager")
   TEST_CASE("add_map_document")
   {
     DocumentManager manager;
-    REQUIRE_THROWS_AS(manager.add_map_document(nullptr), TactileError);
+    REQUIRE_THROWS_AS(manager.add_map_document(nullptr), Exception);
 
     auto document = make_map();
     const auto id = document->get_map().get_uuid();
@@ -85,7 +85,7 @@ TEST_SUITE("DocumentManager")
   TEST_CASE("add_tileset_document")
   {
     DocumentManager manager;
-    REQUIRE_THROWS_AS(manager.add_tileset_document(nullptr), TactileError);
+    REQUIRE_THROWS_AS(manager.add_tileset_document(nullptr), Exception);
 
     auto document = make_tileset();
     const auto id = document->get_tileset_ptr()->get_uuid();

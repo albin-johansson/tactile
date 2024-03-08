@@ -47,12 +47,12 @@ TEST_SUITE("Object")
     Object object;
 
     object.set_pos({12, 83});
-    REQUIRE(12 == object.get_pos().x);
-    REQUIRE(83 == object.get_pos().y);
+    REQUIRE(12 == object.get_pos().x());
+    REQUIRE(83 == object.get_pos().y());
 
     object.set_pos({-23, -254});
-    REQUIRE(-23 == object.get_pos().x);
-    REQUIRE(-254 == object.get_pos().y);
+    REQUIRE(-23 == object.get_pos().x());
+    REQUIRE(-254 == object.get_pos().y());
   }
 
   TEST_CASE("set_size")
@@ -60,8 +60,8 @@ TEST_SUITE("Object")
     Object object;
 
     object.set_size({391, 34});
-    REQUIRE(391 == object.get_size().x);
-    REQUIRE(34 == object.get_size().y);
+    REQUIRE(391 == object.get_size().x());
+    REQUIRE(34 == object.get_size().y());
 
     REQUIRE_NOTHROW(object.set_size({-54, -78}));
   }
@@ -98,8 +98,8 @@ TEST_SUITE("Object")
     object.set_size({123, 456});
 
     object.set_type(ObjectType::Point);
-    REQUIRE(0 == object.get_size().x);
-    REQUIRE(0 == object.get_size().y);
+    REQUIRE(0 == object.get_size().x());
+    REQUIRE(0 == object.get_size().y());
   }
 
   TEST_CASE("set_meta_id")

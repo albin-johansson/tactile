@@ -21,10 +21,10 @@
 
 #include <doctest/doctest.h>
 
-#include "common/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
+#include "tactile/core/debug/exception.hpp"
 
 namespace tactile::test {
 
@@ -32,7 +32,8 @@ TEST_SUITE("cmd::RemoveObject")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::RemoveObject(nullptr, make_uuid(), make_uuid()), TactileError);
+    REQUIRE_THROWS_AS(cmd::RemoveObject(nullptr, UUID::generate(), UUID::generate()),
+                      Exception);
   }
 
   TEST_CASE("redo/undo")
