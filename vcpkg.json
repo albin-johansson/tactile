@@ -14,6 +14,7 @@
     "entt",
     "cppcodec",
     "doctest",
+    "fast-float",
     "fmt",
     "glew",
     "glm",

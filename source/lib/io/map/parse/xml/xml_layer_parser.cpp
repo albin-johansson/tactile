@@ -22,7 +22,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
@@ -31,6 +30,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
 namespace tactile {
@@ -59,7 +59,7 @@ namespace {
   usize index {};
 
   const auto split_ok = split_string(csv, ',', [&](const StringView token) {
-    if (const auto id = parse_i32(token)) {
+    if (const auto id = parse_int(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
 

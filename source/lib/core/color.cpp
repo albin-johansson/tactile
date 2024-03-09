@@ -24,8 +24,8 @@
 
 #include <fmt/format.h>
 
-#include "common/util/str.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/util/string_conv.hpp"
 
 namespace tactile {
 namespace {
@@ -72,9 +72,9 @@ auto Color::from_rgb(StringView rgb) -> Maybe<Color>
   const auto gg = no_hash.substr(2, 2);
   const auto bb = no_hash.substr(4, 2);
 
-  const auto red = parse_u32(rr, 16);
-  const auto green = parse_u32(gg, 16);
-  const auto blue = parse_u32(bb, 16);
+  const auto red = parse_uint(rr, 16);
+  const auto green = parse_uint(gg, 16);
+  const auto blue = parse_uint(bb, 16);
 
   if (red && green && blue) {
     return Color {static_cast<uint8>(*red),
@@ -100,10 +100,10 @@ auto Color::from_rgba(StringView rgba) -> Maybe<Color>
   const auto bb = no_hash.substr(4, 2);
   const auto aa = no_hash.substr(6, 2);
 
-  const auto red = parse_u32(rr, 16);
-  const auto green = parse_u32(gg, 16);
-  const auto blue = parse_u32(bb, 16);
-  const auto alpha = parse_u32(aa, 16);
+  const auto red = parse_uint(rr, 16);
+  const auto green = parse_uint(gg, 16);
+  const auto blue = parse_uint(bb, 16);
+  const auto alpha = parse_uint(aa, 16);
 
   if (red && green && blue && alpha) {
     return Color {static_cast<uint8>(*red),
@@ -129,10 +129,10 @@ auto Color::from_argb(StringView argb) -> Maybe<Color>
   const auto gg = no_hash.substr(4, 2);
   const auto bb = no_hash.substr(6, 2);
 
-  const auto alpha = parse_u32(aa, 16);
-  const auto red = parse_u32(rr, 16);
-  const auto green = parse_u32(gg, 16);
-  const auto blue = parse_u32(bb, 16);
+  const auto alpha = parse_uint(aa, 16);
+  const auto red = parse_uint(rr, 16);
+  const auto green = parse_uint(gg, 16);
+  const auto blue = parse_uint(bb, 16);
 
   if (alpha && red && green && blue) {
     return Color {static_cast<uint8>(*red),

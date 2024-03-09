@@ -20,12 +20,12 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "common/util/str.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
 namespace tactile {
@@ -56,13 +56,13 @@ template <typename T>
   }
 
   for (usize index = 0; const auto token: tokens) {
-    Maybe<ScalarType> component_value {};
+    Result<ScalarType> component_value {};
 
     if constexpr (std::same_as<ScalarType, float>) {
-      component_value = parse_f32(token);
+      component_value = parse_float(token);
     }
     else {
-      component_value = parse_i32(token);
+      component_value = parse_int(token);
     }
 
     if (component_value.has_value()) {

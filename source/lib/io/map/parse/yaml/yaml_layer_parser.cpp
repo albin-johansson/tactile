@@ -20,7 +20,6 @@
 #include <algorithm>  // replace
 #include <utility>    // move
 
-#include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
@@ -28,6 +27,7 @@
 #include "io/util/yaml.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
 using namespace std::string_literals;
@@ -46,7 +46,7 @@ namespace {
 
   usize index = 0;
   const auto split_ok = split_string(tile_data, ' ', [&](const StringView token) {
-    if (const auto id = parse_i32(token)) {
+    if (const auto id = parse_int(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
 
