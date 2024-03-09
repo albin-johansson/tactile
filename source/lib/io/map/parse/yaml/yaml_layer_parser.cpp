@@ -28,6 +28,7 @@
 #include "io/util/yaml.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/util/string_ops.hpp"
 
 using namespace std::string_literals;
 
@@ -44,15 +45,20 @@ namespace {
   auto tiles = make_tile_matrix(extent);
 
   usize index = 0;
-  for (const auto& token: split(tile_data, ' ')) {
+  const auto split_ok = split_string(tile_data, ' ', [&](const StringView token) {
     if (const auto id = parse_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
+
       ++index;
+      return true;
     }
-    else {
-      return unexpected(ParseError::CorruptTileLayerData);
-    }
+
+    return false;
+  });
+
+  if (!split_ok) {
+    return unexpected(ParseError::CorruptTileLayerData);
   }
 
   return tiles;

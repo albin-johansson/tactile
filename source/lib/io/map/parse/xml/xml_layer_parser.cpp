@@ -31,6 +31,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/string_ops.hpp"
 
 namespace tactile {
 namespace {
@@ -56,16 +57,21 @@ namespace {
   auto tiles = make_tile_matrix(extent);
 
   usize index {};
-  for (const auto& token: split(csv, ',')) {
+
+  const auto split_ok = split_string(csv, ',', [&](const StringView token) {
     if (const auto id = parse_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
 
       ++index;
+      return true;
     }
-    else {
-      return unexpected(ParseError::CorruptTileLayerData);
-    }
+
+    return false;
+  });
+
+  if (!split_ok) {
+    return unexpected(ParseError::CorruptTileLayerData);
   }
 
   return tiles;

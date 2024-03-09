@@ -26,6 +26,7 @@
 #include "io/util/yaml.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/util/string_ops.hpp"
 
 namespace tactile {
 namespace {
@@ -35,23 +36,33 @@ template <typename T>
 {
   using ScalarType = typename T::value_type;
 
-  const auto raw_value = value.as<String>();
-  const auto components = split(raw_value, ';');
+  const auto string_value = value.as<String>();
+
+  Array<StringView, 4> tokens {};
+  usize token_index {};
+
+  split_string(string_value, ';', [&](const StringView token) {
+    if (token_index < tokens.size()) {
+      tokens[token_index] = token;  // NOLINT(*-pro-bounds-constant-array-index)
+    }
+
+    ++token_index;
+    return true;
+  });
 
   T vec {};
-  if (components.size() != vec.size()) {
+  if (token_index != vec.size() - 1) {
     return nothing;
   }
 
-  usize index = 0;
-  for (const auto& component_str: components) {
-    Maybe<ScalarType> component_value;
+  for (usize index = 0; const auto token: tokens) {
+    Maybe<ScalarType> component_value {};
 
     if constexpr (std::same_as<ScalarType, float>) {
-      component_value = parse_f32(component_str);
+      component_value = parse_f32(token);
     }
     else {
-      component_value = parse_i32(component_str);
+      component_value = parse_i32(token);
     }
 
     if (component_value.has_value()) {

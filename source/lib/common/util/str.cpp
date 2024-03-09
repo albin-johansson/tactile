@@ -22,9 +22,7 @@
 #include <charconv>      // from_chars
 #include <concepts>      // integral
 #include <sstream>       // stringstream
-#include <string>        // getline
 #include <system_error>  // errc
-#include <utility>       // move
 
 namespace tactile {
 namespace {
@@ -48,23 +46,6 @@ template <std::integral T>
 }
 
 }  // namespace
-
-auto split(StringView str, const char sep) -> Vector<String>
-{
-  std::stringstream stream;
-  stream << str;
-
-  Vector<String> tokens;
-
-  String token;
-  while (std::getline(stream, token, sep)) {
-    std::erase(token, '\n');
-    tokens.push_back(std::move(token));
-    token.clear();
-  }
-
-  return tokens;
-}
 
 auto parse_i32(StringView str, const int base) -> Maybe<int32>
 {
