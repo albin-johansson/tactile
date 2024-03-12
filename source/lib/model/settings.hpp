@@ -20,12 +20,12 @@
 #pragma once
 
 #include "core/color.hpp"
-#include "io/save_format.hpp"
 #include "lang/language.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/io/save/save_format_id.hpp"
 #include "tactile/core/numeric/vec.hpp"
 #include "ui/style/themes.hpp"
 
@@ -94,7 +94,7 @@ class Settings final {
   void set_font_size(int32 size);
   void set_viewport_bg_color(Color color);
   void set_grid_color(Color color);
-  void set_preferred_format(SaveFormat format);
+  void set_preferred_format(SaveFormatId format);
 
   void set_flags(SettingsFlagBits flags);
   void set_flag(SettingsFlagBits flag, bool value = true);
@@ -109,7 +109,7 @@ class Settings final {
   [[nodiscard]] auto get_font_size() const -> int32;
   [[nodiscard]] auto get_viewport_bg_color() const -> const Color&;
   [[nodiscard]] auto get_grid_color() const -> const Color&;
-  [[nodiscard]] auto get_preferred_format() const -> const SaveFormat&;
+  [[nodiscard]] auto get_preferred_format() const -> const SaveFormatId&;
 
   [[nodiscard]] auto get_flags() const -> SettingsFlagBits;
   [[nodiscard]] auto test_flag(SettingsFlagBits flag) const -> bool;

@@ -46,6 +46,7 @@ enum SaveFormat {
   SAVE_FORMAT_TACTILE_YAML = 0;
   SAVE_FORMAT_TILED_JSON = 1;
   SAVE_FORMAT_TILED_XML = 2;
+  SAVE_FORMAT_GODOT_SCENE = 3;
 }
 
 message Color {

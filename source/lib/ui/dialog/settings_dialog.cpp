@@ -102,18 +102,18 @@ void ui_theme_combo()
 void ui_map_format_combo()
 {
   const auto preferred_format = gDialogState.ui_settings.get_preferred_format();
-  if (const Combo format("##PreferredFormat", get_human_readable_name(preferred_format));
+  if (const Combo format("##PreferredFormat", to_string(preferred_format).data());
       format.is_open()) {
-    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TactileYaml))) {
-      gDialogState.ui_settings.set_preferred_format(SaveFormat::TactileYaml);
+    if (ImGui::MenuItem(to_string(SaveFormatId::kTactileYaml).data())) {
+      gDialogState.ui_settings.set_preferred_format(SaveFormatId::kTactileYaml);
     }
 
-    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledJson))) {
-      gDialogState.ui_settings.set_preferred_format(SaveFormat::TiledJson);
+    if (ImGui::MenuItem(to_string(SaveFormatId::kTiledJson).data())) {
+      gDialogState.ui_settings.set_preferred_format(SaveFormatId::kTiledJson);
     }
 
-    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledXml))) {
-      gDialogState.ui_settings.set_preferred_format(SaveFormat::TiledXml);
+    if (ImGui::MenuItem(to_string(SaveFormatId::kTiledXml).data())) {
+      gDialogState.ui_settings.set_preferred_format(SaveFormatId::kTiledXml);
     }
   }
 }

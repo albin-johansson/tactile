@@ -43,7 +43,7 @@ struct SettingsState final {
   Color viewport_bg {0x3C, 0x3C, 0x3C};
   Color grid_color {0xFF, 0xFF, 0xFF, 0x05};
 
-  SaveFormat preferred_format {SaveFormat::TactileYaml};
+  SaveFormatId preferred_format {SaveFormatId::kTactileYaml};
 
   SettingsFlagBits flags {
       SETTINGS_INDENT_OUTPUT_BIT | SETTINGS_SHOW_GRID_BIT | SETTINGS_SHOW_LAYER_DOCK_BIT |
@@ -202,7 +202,7 @@ void Settings::set_grid_color(const Color color)
   mState->grid_color = color;
 }
 
-void Settings::set_preferred_format(const SaveFormat format)
+void Settings::set_preferred_format(const SaveFormatId format)
 {
   mState->preferred_format = format;
 }
@@ -257,7 +257,7 @@ auto Settings::get_grid_color() const -> const Color&
   return mState->grid_color;
 }
 
-auto Settings::get_preferred_format() const -> const SaveFormat&
+auto Settings::get_preferred_format() const -> const SaveFormatId&
 {
   return mState->preferred_format;
 }

@@ -28,10 +28,10 @@
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
 #include "io/ir/map_document_to_ir.hpp"
-#include "io/save_format.hpp"
 #include "model/document/map_document.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/debug/performance.hpp"
+#include "tactile/core/io/save/save_format_id.hpp"
 
 namespace tactile {
 
@@ -48,13 +48,13 @@ auto save_map_document_to_disk(const MapDocument& document) -> Result<void>
     const auto path = fs::absolute(document.get_path());
     spdlog::info("Trying to save map to {}", path);
 
-    if (has_supported_tactile_yaml_extension(path)) {
+    if (has_valid_tactile_yaml_extension(path)) {
       save_map_as_tactile_yaml(path, convert_map_document_to_ir(document));
     }
-    else if (has_supported_tiled_json_extension(path)) {
+    else if (has_valid_tiled_json_extension(path)) {
       save_map_as_tiled_json(path, convert_map_document_to_ir(document));
     }
-    else if (has_supported_tiled_xml_extension(path)) {
+    else if (has_valid_tiled_xml_extension(path)) {
       save_map_as_tiled_xml(path, convert_map_document_to_ir(document));
     }
     else {

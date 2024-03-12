@@ -120,7 +120,7 @@ void to_proto(const Color& color, proto::Color* out)
     }
 
     if (cfg.has_preferred_format()) {
-      settings.set_preferred_format(SaveFormat {cfg.preferred_format()});
+      settings.set_preferred_format(static_cast<SaveFormatId>(cfg.preferred_format()));
     }
 
     if (cfg.has_embed_tilesets()) {
