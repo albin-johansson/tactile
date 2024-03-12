@@ -36,6 +36,7 @@ void Logger::_log(const LogLevel level,
       const LogMessage msg {
           .level = level,
           .prefix = StringView {prefix_buffer.data(), prefix_buffer.size()},
+          .scope = mScope,
           .text = text,
           .instant = log_instant,
       };
@@ -79,6 +80,16 @@ void Logger::add_sink(Unique<ILoggerSink> sink)
 void Logger::set_reference_instant(const Maybe<SteadyClockInstant> instant)
 {
   mReferenceInstant = instant;
+}
+
+void Logger::set_scope(const StringView scope) noexcept
+{
+  mScope = scope;
+}
+
+auto Logger::get_scope() const noexcept -> StringView
+{
+  return mScope;
 }
 
 auto Logger::would_log(const LogLevel level) const noexcept -> bool

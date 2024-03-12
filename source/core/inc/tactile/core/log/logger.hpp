@@ -98,6 +98,22 @@ class Logger final {
   void set_reference_instant(Maybe<SteadyClockInstant> instant);
 
   /**
+   * Sets a custom scope identifier to use.
+   *
+   * \param scope An arbitrary scope identifier.
+   */
+  void set_scope(StringView scope) noexcept;
+
+  /**
+   * Returns the current scope identifier.
+   *
+   * \return
+   *    An arbitrary string.
+   */
+  [[nodiscard]]
+  auto get_scope() const noexcept -> StringView;
+
+  /**
    * Indicates whether a message with a specific severity will be logged.
    *
    * \param level The log level to consider.
@@ -135,6 +151,7 @@ class Logger final {
   LogLevel mFlushLevel {LogLevel::kError};
   Vector<Unique<ILoggerSink>> mSinks {};
   Maybe<SteadyClockInstant> mReferenceInstant {};
+  StringView mScope {""};
 
   void _log(LogLevel level, StringView fmt_string, fmt::format_args args) noexcept;
 
