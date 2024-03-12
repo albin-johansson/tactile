@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <ranges>  // contiguous_range
+
 #include "tactile/base/container/span.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
@@ -9,9 +11,26 @@
 namespace tactile {
 
 /** A contiguous sequence of arbitrary bytes. */
-using ByteSpan = Span<uint8>;
+using ByteSpan = Span<const uint8>;
 
 /** A contiguous stream of arbitrary bytes. */
 using ByteStream = Vector<uint8>;
+
+/**
+ * Creates a byte span from a container.
+ *
+ * \tparam T Any contiguous container type.
+ *
+ * \param container A contiguous container.
+ *
+ * \return
+ *    A byte span.
+ */
+template <std::ranges::contiguous_range T>
+[[nodiscard]] constexpr auto make_byte_span(const T& container) -> ByteSpan
+{
+  return {static_cast<const uint8*>(static_cast<const void*>(container.data())),
+          container.size() * sizeof(typename T::value_type)};
+}
 
 }  // namespace tactile

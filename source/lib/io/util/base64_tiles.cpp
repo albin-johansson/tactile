@@ -28,8 +28,9 @@
 #include "common/util/bit.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_matrix.hpp"
-#include "io/compression.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/io/compress/zlib_compression_provider.hpp"
+#include "tactile/core/io/compress/zstd_compression_provider.hpp"
 
 using Base64 = cppcodec::base64_rfc4648;
 
@@ -94,11 +95,13 @@ auto base64_encode_tiles(const TileMatrix& tiles,
       return encode_bytes(byte_stream);
     }
     case TileCompression::Zlib: {
-      const auto compressed_bytes = zlib_compress(ByteSpan {byte_stream}).value();
+      const auto compressed_bytes =
+          ZlibCompressionProvider {}.compress(byte_stream).value();
       return encode_bytes(compressed_bytes);
     }
     case TileCompression::Zstd: {
-      const auto compressed_bytes = zstd_compress(ByteSpan {byte_stream}).value();
+      const auto compressed_bytes =
+          ZstdCompressionProvider {}.compress(byte_stream).value();
       return encode_bytes(compressed_bytes);
     }
     default:
@@ -117,11 +120,13 @@ auto base64_decode_tiles(StringView tiles,
       return restore_tiles(decoded_bytes, extent);
 
     case TileCompression::Zlib: {
-      const auto decompressed_bytes = zlib_decompress(ByteSpan {decoded_bytes}).value();
+      const auto decompressed_bytes =
+          ZlibCompressionProvider {}.decompress(decoded_bytes).value();
       return restore_tiles(decompressed_bytes, extent);
     }
     case TileCompression::Zstd: {
-      const auto decompressed_bytes = zstd_decompress(ByteSpan {decoded_bytes}).value();
+      const auto decompressed_bytes =
+          ZstdCompressionProvider {}.decompress(decoded_bytes).value();
       return restore_tiles(decompressed_bytes, extent);
     }
     default:
