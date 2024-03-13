@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/util/strong_type.hpp"
 
 namespace tactile {
 
@@ -15,6 +16,9 @@ using TileIndex = int32;
 
 /** Represents global tile identifiers. */
 using TileID = int32;
+
+/** Strong type for object reference identifiers. */
+TACTILE_STRONG_TYPE(ObjectRef, int32);
 
 /** The identifier used by empty tiles. */
 inline constexpr TileID kEmptyTile = 0;
