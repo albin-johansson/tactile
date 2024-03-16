@@ -17,7 +17,7 @@ target_include_directories(${TACTILE_EXE}
 
 target_link_libraries(${TACTILE_EXE}
                       PRIVATE
-                      ${TACTILE_LIB}
+                      tactile::lib
                       SDL2::SDL2main
                       )
 

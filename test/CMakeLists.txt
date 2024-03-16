@@ -33,12 +33,12 @@ message(DEBUG "TACTILE_TEST_EXTRA_COMPILE_OPTIONS: ${TACTILE_TEST_EXTRA_COMPILE_
 target_include_directories(${TACTILE_TEST}
                            PRIVATE
                            ${PROJECT_SOURCE_DIR}/src
-                           ${TACTILE_APP_DIR}
+                           "${TACTILE_ROOT_DIR}/source/app"
                            )
 
 target_link_libraries(${TACTILE_TEST}
                       PRIVATE
-                      ${TACTILE_LIB}
+                      tactile::lib
                       SDL2::SDL2main
                       doctest::doctest
                       )
