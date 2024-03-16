@@ -13,14 +13,13 @@
 namespace tactile {
 
 ComponentBase::ComponentBase(const UUID& type)
-    : mTypeId {type}
-{
-}
+  : mTypeId {type}
+{}
 
 void ComponentBase::add_attr(String key, AttributeType type)
 {
   if (!has_key(mAttributes, key)) {
-    mAttributes[std::move(key)].reset_to_default(type);
+    mAttributes[std::move(key)].reset(type);
   }
   else {
     throw Exception {"Attribute key must be unique!"};

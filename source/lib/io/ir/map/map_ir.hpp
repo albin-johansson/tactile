@@ -7,7 +7,6 @@
 #include <variant>   // get
 
 #include "common/util/algorithm.hpp"
-#include "core/attribute.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
@@ -23,6 +22,7 @@
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
@@ -161,7 +161,7 @@ struct MapIR final {
 template <typename T, std::invocable<const ObjectLayerIR&> U>
 void each_object_layer(const T& root, U&& callable)
 {
-  for (const auto& layer: root.children) {
+  for (const auto& layer : root.children) {
     const auto* layer_ptr = std::addressof(layer);
     if (layer_ptr->type == LayerType::GroupLayer) {
       const auto& group_layer = layer_ptr->as_group_layer();

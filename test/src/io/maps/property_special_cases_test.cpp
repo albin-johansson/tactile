@@ -33,15 +33,15 @@ void check_parsed_properties(const char* path)
   REQUIRE(3u == ir_map.context.properties.size());
 
   const auto& color = ir_map.context.properties.at("empty-color");
-  REQUIRE(color.is_color());
+  REQUIRE(color.get_type() == AttributeType::kColor);
   REQUIRE(color.has_default_value());
 
   const auto& file = ir_map.context.properties.at("empty-file");
-  REQUIRE(file.is_path());
+  REQUIRE(file.get_type() == AttributeType::kPath);
   REQUIRE(file.has_default_value());
 
   const auto& obj = ir_map.context.properties.at("empty-object");
-  REQUIRE(obj.is_object());
+  REQUIRE(obj.get_type() == AttributeType::kObject);
   REQUIRE(obj.has_default_value());
 }
 

@@ -6,7 +6,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/color.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_ref.hpp"
 #include "io/proto/settings.hpp"
@@ -15,6 +14,7 @@
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
+#include "tactile/core/meta/color.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/primitives.hpp"
 #include "ui/render/renderer.hpp"

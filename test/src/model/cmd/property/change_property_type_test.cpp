@@ -47,12 +47,12 @@ TEST_SUITE("cmd::ChangePropertyType")
 
     cmd.redo();
     REQUIRE(map_ctx.has_property(property_name));
-    REQUIRE(map_ctx.get_property(property_name).is_bool());
+    REQUIRE(map_ctx.get_property(property_name).get_type() == AttributeType::kBool);
     REQUIRE(!map_ctx.get_property(property_name).as_bool());
 
     cmd.undo();
     REQUIRE(map_ctx.has_property(property_name));
-    REQUIRE(map_ctx.get_property(property_name).is_int());
+    REQUIRE(map_ctx.get_property(property_name).get_type() == AttributeType::kInt);
     REQUIRE(map_ctx.get_property(property_name).as_int() == 123);
   }
 }

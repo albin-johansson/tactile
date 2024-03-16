@@ -12,7 +12,7 @@ namespace {
 [[nodiscard]] auto parse_value(const JSON& json, StringView type, Attribute& value)
     -> ParseError
 {
-  const auto attr_type = parse_attr_type(type);
+  const auto attr_type = parse_attribute_type(type);
   if (!attr_type) {
     return ParseError::UnsupportedPropertyType;
   }
@@ -44,11 +44,11 @@ namespace {
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {
-        value.reset_to_default(AttributeType::kColor);
+        value.reset(AttributeType::kColor);
       }
       else {
         if (const auto color =
-                (hex.size() == 9) ? Color::from_argb(hex) : Color::from_rgb(hex)) {
+                (hex.size() == 9) ? Color::parse_argb(hex) : Color::parse_rgb(hex)) {
           value = *color;
         }
         else {
@@ -66,10 +66,8 @@ namespace {
     case AttributeType::kFloat3:
     case AttributeType::kFloat4:
     case AttributeType::kInt2:
-    case AttributeType::kInt3:
-      [[fallthrough]];
-    case AttributeType::kInt4:
-      return ParseError::UnsupportedPropertyType;
+    case AttributeType::kInt3: [[fallthrough]];
+    case AttributeType::kInt4: return ParseError::UnsupportedPropertyType;
   }
 
   return ParseError::None;
@@ -105,7 +103,7 @@ namespace {
 auto parse_properties(const JSON& json, ContextIR& context_data) -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
-    for (const auto& [_, value]: it->items()) {
+    for (const auto& [_, value] : it->items()) {
       if (const auto err = parse_property(value, context_data); err != ParseError::None) {
         return err;
       }

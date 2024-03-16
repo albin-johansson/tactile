@@ -4,12 +4,12 @@
 
 #include <nlohmann/json.hpp>
 
-#include "core/attribute.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/meta/attribute.hpp"
 
 namespace tactile {
 

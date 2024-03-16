@@ -64,7 +64,7 @@ void ui_lang_combo()
 void ui_theme_combo()
 {
   auto show_themes = [](auto& themes) {
-    for (const auto theme: themes) {
+    for (const auto theme : themes) {
       if (Selectable::property(human_readable_name(theme).data())) {
         gDialogState.ui_settings.set_theme(theme);
         apply_theme(ImGui::GetStyle(),
@@ -215,8 +215,8 @@ void update_appearance_tab(const Strings& lang)
 
     {
       const Disable no_saturation_for_default_themes {
-          gDialogState.ui_settings.get_theme() == EditorTheme::DearDark ||
-          gDialogState.ui_settings.get_theme() == EditorTheme::DearLight};
+        gDialogState.ui_settings.get_theme() == EditorTheme::DearDark ||
+        gDialogState.ui_settings.get_theme() == EditorTheme::DearLight};
 
       ImGui::AlignTextToFramePadding();
       ImGui::TextUnformatted(lang.setting.saturation.c_str());
@@ -237,20 +237,20 @@ void update_appearance_tab(const Strings& lang)
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (auto rgba = gDialogState.ui_settings.get_viewport_bg_color().as_float_array();
+    if (auto rgba = gDialogState.ui_settings.get_viewport_bg_color().normalized();
         ImGui::ColorEdit3(lang.setting.viewport_bg_color.c_str(),
                           rgba.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
-      const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2));
+      const auto color = Color::from(rgba);
       gDialogState.ui_settings.set_viewport_bg_color(color);
     }
 
-    if (auto rgba = gDialogState.ui_settings.get_grid_color().as_float_array();
+    if (auto rgba = gDialogState.ui_settings.get_grid_color().normalized();
         ImGui::ColorEdit4(lang.setting.grid_color.c_str(),
                           rgba.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar |
                               ImGuiColorEditFlags_AlphaPreviewHalf)) {
-      const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
+      const auto color = Color::from(rgba);
       gDialogState.ui_settings.set_grid_color(color);
     }
 
@@ -274,7 +274,7 @@ void update_appearance_tab(const Strings& lang)
 
     {
       const Disable when_using_default_font {
-          gDialogState.ui_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)};
+        gDialogState.ui_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)};
 
       int32 font_size = gDialogState.ui_settings.get_font_size();
 
@@ -343,11 +343,11 @@ void update_settings_dialog(entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
 
   DialogOptions options {
-      .title = lang.window.settings_dialog.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.ok.c_str(),
-      .apply_label = lang.misc.apply.c_str(),
-      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+    .title = lang.window.settings_dialog.c_str(),
+    .close_label = lang.misc.cancel.c_str(),
+    .accept_label = lang.misc.ok.c_str(),
+    .apply_label = lang.misc.apply.c_str(),
+    .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
   if (gDialogState.open_dialog) {

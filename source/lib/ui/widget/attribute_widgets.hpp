@@ -4,11 +4,11 @@
 
 #include <imgui.h>
 
-#include "core/attribute.hpp"
-#include "core/color.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/meta/attribute.hpp"
+#include "tactile/core/meta/color.hpp"
 
 namespace tactile::ui {
 

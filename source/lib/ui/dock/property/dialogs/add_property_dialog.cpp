@@ -6,7 +6,6 @@
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "core/attribute.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
@@ -15,6 +14,7 @@
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/core/meta/attribute.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
@@ -54,9 +54,9 @@ void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& di
   }
 
   DialogOptions options {
-      .title = lang.window.add_property.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.add.c_str(),
+    .title = lang.window.add_property.c_str(),
+    .close_label = lang.misc.cancel.c_str(),
+    .accept_label = lang.misc.add.c_str(),
   };
 
   if (gDialogState.open_dialog) {

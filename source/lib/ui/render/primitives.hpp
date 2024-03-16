@@ -7,11 +7,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/color.hpp"
 #include "core/texture.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/meta/color.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile {
@@ -32,7 +32,7 @@ inline void render_shadowed_text(const char* text,
                                  const Color& color,
                                  const float shadow_offset = 1.0f)
 {
-  render_text(text, position + ImVec2 {shadow_offset, shadow_offset}, kBlack);
+  render_text(text, position + ImVec2 {shadow_offset, shadow_offset}, kColorBlack);
   render_text(text, position, color);
 }
 
@@ -66,7 +66,7 @@ inline void draw_shadowed_rect(const ImVec2& position,
                                const Color& color,
                                const float thickness = 1.0f)
 {
-  draw_rect(position + ImVec2 {thickness, thickness}, size, kBlack, thickness);
+  draw_rect(position + ImVec2 {thickness, thickness}, size, kColorBlack, thickness);
   draw_rect(position, size, color, thickness);
 }
 
@@ -75,7 +75,7 @@ inline void draw_shadowed_rect(const Float2& position,
                                const Color& color,
                                const float thickness = 1.0f)
 {
-  draw_rect(position + Float2 {thickness, thickness}, size, kBlack, thickness);
+  draw_rect(position + Float2 {thickness, thickness}, size, kColorBlack, thickness);
   draw_rect(position, size, color, thickness);
 }
 
@@ -110,7 +110,7 @@ inline void draw_shadowed_circle(const ImVec2& center,
                                  const Color& color,
                                  const float thickness = 1.0f)
 {
-  draw_circle(center + ImVec2 {0, thickness}, radius, kBlack, thickness);
+  draw_circle(center + ImVec2 {0, thickness}, radius, kColorBlack, thickness);
   draw_circle(center, radius, color, thickness);
 }
 
@@ -119,7 +119,7 @@ inline void draw_shadowed_circle(const Float2& center,
                                  const Color& color,
                                  const float thickness = 1.0f)
 {
-  draw_circle(center + Float2 {0, thickness}, radius, kBlack, thickness);
+  draw_circle(center + Float2 {0, thickness}, radius, kColorBlack, thickness);
   draw_circle(center, radius, color, thickness);
 }
 
@@ -145,7 +145,7 @@ inline void draw_shadowed_ellipse(const ImVec2& center,
     draw_shadowed_circle(center, radius.x, color, thickness);
   }
   else {
-    draw_ellipse(center + ImVec2 {0, thickness}, radius, kBlack, thickness);
+    draw_ellipse(center + ImVec2 {0, thickness}, radius, kColorBlack, thickness);
     draw_ellipse(center, radius, color, thickness);
   }
 }

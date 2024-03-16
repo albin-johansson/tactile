@@ -38,7 +38,7 @@ template <typename T>
     return nothing;
   }
 
-  for (usize index = 0; const auto token: tokens) {
+  for (usize index = 0; const auto token : tokens) {
     Result<ScalarType> component_value {};
 
     if constexpr (std::same_as<ScalarType, float>) {
@@ -65,53 +65,40 @@ template <typename T>
                                          const AttributeType type) -> Maybe<Attribute>
 {
   switch (type) {
-    case AttributeType::kStr:
-      return value.as<String>();
+    case AttributeType::kStr: return value.as<String>();
 
-    case AttributeType::kInt:
-      return value.as<int32>();
+    case AttributeType::kInt: return value.as<int32>();
 
-    case AttributeType::kInt2:
-      return parse_vector<Int2>(value);
+    case AttributeType::kInt2: return parse_vector<Int2>(value);
 
-    case AttributeType::kInt3:
-      return parse_vector<Int3>(value);
+    case AttributeType::kInt3: return parse_vector<Int3>(value);
 
-    case AttributeType::kInt4:
-      return parse_vector<Int4>(value);
+    case AttributeType::kInt4: return parse_vector<Int4>(value);
 
-    case AttributeType::kFloat:
-      return value.as<float>();
+    case AttributeType::kFloat: return value.as<float>();
 
-    case AttributeType::kFloat2:
-      return parse_vector<Float2>(value);
+    case AttributeType::kFloat2: return parse_vector<Float2>(value);
 
-    case AttributeType::kFloat3:
-      return parse_vector<Float3>(value);
+    case AttributeType::kFloat3: return parse_vector<Float3>(value);
 
-    case AttributeType::kFloat4:
-      return parse_vector<Float4>(value);
+    case AttributeType::kFloat4: return parse_vector<Float4>(value);
 
-    case AttributeType::kBool:
-      return value.as<bool>();
+    case AttributeType::kBool: return value.as<bool>();
 
-    case AttributeType::kPath:
-      return Path {value.as<String>()};
+    case AttributeType::kPath: return Path {value.as<String>()};
 
     case AttributeType::kColor: {
       const auto hex = value.as<String>();
-      if (const auto color = Color::from_rgba(hex)) {
+      if (const auto color = Color::parse_rgba(hex)) {
         return *color;
       }
       else {
         return nothing;
       }
     }
-    case AttributeType::kObject:
-      return ObjectRef {value.as<int32>()};
+    case AttributeType::kObject: return ObjectRef {value.as<int32>()};
 
-    default:
-      return nothing;
+    default: return nothing;
   }
 }
 
@@ -129,7 +116,7 @@ template <typename T>
   }
 
   AttributeType type {};
-  if (const auto parsed_type = parse_attr_type(type_name)) {
+  if (const auto parsed_type = parse_attribute_type(type_name)) {
     type = *parsed_type;
   }
   else {
@@ -137,17 +124,13 @@ template <typename T>
   }
 
   Attribute value;
-  value.reset_to_default(type);
+  value.reset(type);
 
   if (auto default_value = node["default"]) {
     switch (type) {
-      case AttributeType::kStr:
-        value = default_value.as<String>();
-        break;
+      case AttributeType::kStr: value = default_value.as<String>(); break;
 
-      case AttributeType::kInt:
-        value = default_value.as<int32>();
-        break;
+      case AttributeType::kInt: value = default_value.as<int32>(); break;
 
       case AttributeType::kInt2:
         if (const auto vec = parse_vector<Int2>(default_value)) {
@@ -176,9 +159,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::kFloat:
-        value = default_value.as<float>();
-        break;
+      case AttributeType::kFloat: value = default_value.as<float>(); break;
 
       case AttributeType::kFloat2:
         if (const auto vec = parse_vector<Float2>(default_value)) {
@@ -207,9 +188,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::kBool:
-        value = default_value.as<bool>();
-        break;
+      case AttributeType::kBool: value = default_value.as<bool>(); break;
 
       case AttributeType::kPath: {
         Path path = default_value.as<String>();
@@ -217,7 +196,7 @@ template <typename T>
         break;
       }
       case AttributeType::kColor: {
-        if (const auto color = Color::from_rgba(default_value.as<String>())) {
+        if (const auto color = Color::parse_rgba(default_value.as<String>())) {
           value = *color;
         }
         else {
@@ -225,9 +204,7 @@ template <typename T>
         }
         break;
       }
-      case AttributeType::kObject:
-        value = ObjectRef {default_value.as<int32>()};
-        break;
+      case AttributeType::kObject: value = ObjectRef {default_value.as<int32>()}; break;
     }
   }
 
@@ -240,7 +217,7 @@ template <typename T>
   AttributeMap def;
 
   if (auto attribute_seq = node["attributes"]) {
-    for (auto attribute_node: attribute_seq) {
+    for (auto attribute_node : attribute_seq) {
       String attribute_name;
       if (!read_attr(attribute_node, "name", attribute_name)) {
         return unexpected(ParseError::NoComponentDefAttributeName);
@@ -268,7 +245,7 @@ template <typename T>
   AttributeMap comp;
 
   if (auto sequence = node["values"]) {
-    for (const auto& value_node: sequence) {
+    for (const auto& value_node : sequence) {
       String attr_name;
       if (!read_attr(value_node, "name", attr_name)) {
         return unexpected(ParseError::NoComponentAttributeName);
@@ -300,7 +277,7 @@ auto parse_component_definitions(const YAML::Node& node)
   ComponentMap defs;
 
   if (auto sequence = node["component-definitions"]) {
-    for (const auto& def_node: sequence) {
+    for (const auto& def_node : sequence) {
       String type;
       if (!read_attr(def_node, "name", type)) {
         return unexpected(ParseError::NoComponentDefName);
@@ -324,7 +301,7 @@ auto parse_components(const YAML::Node& node, const MapIR& map)
   ComponentMap comps;
 
   if (auto sequence = node["components"]) {
-    for (const auto& component_node: sequence) {
+    for (const auto& component_node : sequence) {
       String type;
       if (!read_attr(component_node, "type", type)) {
         return unexpected(ParseError::NoComponentType);
@@ -347,7 +324,7 @@ auto parse_properties(const YAML::Node& node) -> Expected<AttributeMap, ParseErr
   AttributeMap props;
 
   if (auto sequence = node["properties"]) {
-    for (const auto& property_node: sequence) {
+    for (const auto& property_node : sequence) {
       String property_name;
       if (!read_attr(property_node, "name", property_name)) {
         return unexpected(ParseError::NoPropertyName);
@@ -359,7 +336,7 @@ auto parse_properties(const YAML::Node& node) -> Expected<AttributeMap, ParseErr
       }
 
       AttributeType property_type {};
-      if (auto parsed_type = parse_attr_type(type)) {
+      if (auto parsed_type = parse_attribute_type(type)) {
         property_type = *parsed_type;
       }
       else {

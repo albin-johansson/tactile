@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "core/attribute.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

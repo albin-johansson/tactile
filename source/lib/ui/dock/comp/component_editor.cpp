@@ -7,7 +7,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/attribute.hpp"
 #include "core/component/component_index.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -16,6 +15,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
@@ -72,7 +72,7 @@ void ui_component_combo(const ComponentIndex* component_index)
 
   if (const Combo combo {"##ComponentCombo", active_component_name.c_str()};
       combo.is_open()) {
-    for (const auto& [component_id, component_def]: *component_index) {
+    for (const auto& [component_id, component_def] : *component_index) {
       const auto& component_name = component_def.get_name();
       if (Selectable::property(component_name.c_str())) {
         gEditorState.active_component_id = component_def.get_uuid();
@@ -181,7 +181,7 @@ void ui_component_attribute_table(const Strings& lang,
 
       ImGui::TableHeadersRow();
 
-      for (const auto& [attribute_name, attribute]: component_def) {
+      for (const auto& [attribute_name, attribute] : component_def) {
         ui_component_attribute_row(lang,
                                    component_def.get_uuid(),
                                    attribute_name,
@@ -214,9 +214,9 @@ void update_component_editor_dialog(const DocumentModel& model,
   const auto& lang = get_current_language();
 
   DialogOptions options {
-      .title = lang.window.component_editor.c_str(),
-      .close_label = lang.misc.close.c_str(),
-      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+    .title = lang.window.component_editor.c_str(),
+    .close_label = lang.misc.close.c_str(),
+    .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
   if (gEditorState.open_dialog) {

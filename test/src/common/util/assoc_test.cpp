@@ -21,11 +21,11 @@
 
 #include <doctest/doctest.h>
 
-#include "core/attribute.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/container/tree_map.hpp"
+#include "tactile/core/meta/attribute.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

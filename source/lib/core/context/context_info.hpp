@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/function.hpp"
@@ -11,6 +10,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

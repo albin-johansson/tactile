@@ -29,20 +29,19 @@ struct SettingsState final {
   SaveFormatId preferred_format {SaveFormatId::kTactileYaml};
 
   SettingsFlagBits flags {
-      SETTINGS_INDENT_OUTPUT_BIT | SETTINGS_SHOW_GRID_BIT | SETTINGS_SHOW_LAYER_DOCK_BIT |
-      SETTINGS_SHOW_TILESET_DOCK_BIT | SETTINGS_SHOW_PROPERTY_DOCK_BIT |
-      SETTINGS_SHOW_COMPONENT_DOCK_BIT | SETTINGS_SHOW_ANIMATION_DOCK_BIT |
-      SETTINGS_RESTORE_LAYOUT_BIT | SETTINGS_RESTORE_LAST_SESSION_BIT |
-      SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT | SETTINGS_USE_DEFAULT_FONT_BIT};
+    SETTINGS_INDENT_OUTPUT_BIT | SETTINGS_SHOW_GRID_BIT | SETTINGS_SHOW_LAYER_DOCK_BIT |
+    SETTINGS_SHOW_TILESET_DOCK_BIT | SETTINGS_SHOW_PROPERTY_DOCK_BIT |
+    SETTINGS_SHOW_COMPONENT_DOCK_BIT | SETTINGS_SHOW_ANIMATION_DOCK_BIT |
+    SETTINGS_RESTORE_LAYOUT_BIT | SETTINGS_RESTORE_LAST_SESSION_BIT |
+    SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT | SETTINGS_USE_DEFAULT_FONT_BIT};
 };
 
 // Used to be able to easily reset settings.
 inline static const SettingsState kDefaultSettings = SettingsState {};
 
 Settings::Settings()
-    : mState {std::make_unique<SettingsState>()}
-{
-}
+  : mState {std::make_unique<SettingsState>()}
+{}
 
 Settings::~Settings() = default;
 
@@ -53,8 +52,8 @@ void Settings::print() const
   spdlog::debug("Language: {}", magic_enum::enum_name(get_language()));
   spdlog::debug("Theme: {}", magic_enum::enum_name(get_theme()));
   spdlog::debug("Theme saturation: {}", get_theme_saturation());
-  spdlog::debug("Viewport background: {}", get_viewport_bg_color().as_rgb());
-  spdlog::debug("Grid color: {}", get_grid_color().as_rgba());
+  spdlog::debug("Viewport background: {}", get_viewport_bg_color().to_string_rgb());
+  spdlog::debug("Grid color: {}", get_grid_color().to_string_rgba());
 
   spdlog::debug("Command capacity: {}", get_command_capacity());
   spdlog::debug("Preferred tile width: {}", get_preferred_tile_size().x());

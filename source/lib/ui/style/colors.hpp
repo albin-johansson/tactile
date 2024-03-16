@@ -4,8 +4,8 @@
 
 #include <imgui.h>
 
-#include "core/color.hpp"
 #include "tactile/base/container/array.hpp"
+#include "tactile/core/meta/color.hpp"
 
 namespace tactile::ui {
 

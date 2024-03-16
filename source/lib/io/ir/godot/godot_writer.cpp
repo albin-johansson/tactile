@@ -26,8 +26,7 @@ namespace {
     case AttributeType::kStr:
       return fmt::format(R"("{}": "{}")", name, value.as_string());
 
-    case AttributeType::kInt:
-      return fmt::format(R"("{}": {})", name, value.as_int());
+    case AttributeType::kInt: return fmt::format(R"("{}": {})", name, value.as_int());
 
     case AttributeType::kInt2: {
       const auto& vec = value.as_int2();
@@ -50,8 +49,7 @@ namespace {
                          vec.z(),
                          vec.w());
     }
-    case AttributeType::kFloat:
-      return fmt::format(R"("{}": {})", name, value.as_float());
+    case AttributeType::kFloat: return fmt::format(R"("{}": {})", name, value.as_float());
 
     case AttributeType::kFloat2: {
       const auto& vec = value.as_float2();
@@ -81,19 +79,18 @@ namespace {
       return fmt::format(R"("{}": "{}")", name, use_forward_slashes(value.as_path()));
 
     case AttributeType::kColor: {
-      const auto& color = value.as_color();
+      const auto color = value.as_color().normalized();
       return fmt::format(R"("{}": Color( {}, {}, {}, {} ))",
                          name,
-                         color.norm_red(),
-                         color.norm_green(),
-                         color.norm_blue(),
-                         color.norm_alpha());
+                         color[0],
+                         color[1],
+                         color[2],
+                         color[3]);
     }
     case AttributeType::kObject:
-      return fmt::format(R"("{}": {})", name, static_cast<int32>(value.as_object()));
+      return fmt::format(R"("{}": {})", name, value.as_object().value);
 
-    default:
-      throw Exception {"Invalid attribute type"};
+    default: throw Exception {"Invalid attribute type"};
   }
 }
 
@@ -102,7 +99,7 @@ void write_attributes(std::ostream& stream, const GdAttributes& attrs, StringVie
   const auto count = attrs.size();
 
   usize index = 0;
-  for (const auto& [name, value]: attrs) {
+  for (const auto& [name, value] : attrs) {
     stream << prefix << write_attribute(name, value);
 
     if (index < count - 1) {
@@ -120,7 +117,7 @@ void write_components(std::ostream& stream, const GdMetaData& meta)
   stream << "  \"components\": {\n";
 
   bool first_comp = true;
-  for (const auto& [comp_name, comp_attrs]: meta.comps) {
+  for (const auto& [comp_name, comp_attrs] : meta.comps) {
     if (!first_comp) {
       stream << ",\n";
     }
@@ -175,7 +172,7 @@ void write_ext_resources(std::ostream& stream, const GodotFile::ExtResources& re
 {
   if (!resources.empty()) {
     stream << '\n';
-    for (const auto& [id, resource]: resources) {
+    for (const auto& [id, resource] : resources) {
       stream << fmt::format("[ext_resource path=\"{}\" type=\"{}\" id={}]\n",
                             resource.path,
                             resource.type,
@@ -194,7 +191,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
 
   write_ext_resources(stream, tileset.ext_resources());
 
-  for (const auto& [source, filename]: tileset.texture_paths()) {
+  for (const auto& [source, filename] : tileset.texture_paths()) {
     const auto relpath = options.project_image_dir / filename;
     const auto dest = options.root_dir / relpath;
     fs::copy(source, dest, fs::copy_options::overwrite_existing);
@@ -202,7 +199,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
 
   stream << "\n[resource]\n";
 
-  for (usize index = 0; const auto& info: tileset.tilesets()) {
+  for (usize index = 0; const auto& info : tileset.tilesets()) {
     const auto prefix = fmt::format("{}/", index + 1);
 
     stream << prefix << fmt::format("name = \"{}\"\n", info.name);
@@ -240,7 +237,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
 void write_atlas_textures(std::ostream& stream, const GodotScene& scene)
 {
   if (!scene.atlas_textures().empty()) {
-    for (const auto& [id, texture]: scene.atlas_textures()) {
+    for (const auto& [id, texture] : scene.atlas_textures()) {
       stream << '\n';
       stream << fmt::format("[sub_resource type=\"AtlasTexture\" id={}]\n", id);
       stream << fmt::format("atlas = ExtResource( {} )\n", texture.atlas_id);
@@ -259,12 +256,12 @@ void write_sprite_frames(std::ostream& stream, const GdSpriteFrames& sprite_fram
                         sprite_frames.id);
   stream << "animations = [\n";
 
-  for (const auto& animation: sprite_frames.animations) {
+  for (const auto& animation : sprite_frames.animations) {
     stream << "  {\n";
 
     stream << "    \"frames\": [ ";
     bool first_frame = true;
-    for (const auto& frame: animation.frames) {
+    for (const auto& frame : animation.frames) {
       if (!first_frame) {
         stream << ", ";
       }
@@ -284,7 +281,7 @@ void write_sprite_frames(std::ostream& stream, const GdSpriteFrames& sprite_fram
 
 void write_shapes(std::ostream& stream, const GodotScene& scene)
 {
-  for (const auto& [id, shape]: scene.rectangle_shapes()) {
+  for (const auto& [id, shape] : scene.rectangle_shapes()) {
     stream << fmt::format("\n[sub_resource type=\"RectangleShape2D\" id={}]\n", id);
     stream << fmt::format("extents = Vector2( {}, {} )\n",
                           shape.extents.x(),
@@ -298,7 +295,7 @@ void write_tile_layer_animation_nodes(std::ostream& stream,
 {
   const auto& sprite_frames = scene.sprite_frames();
 
-  for (const auto& animation: tile_layer.animations) {
+  for (const auto& animation : tile_layer.animations) {
     const auto name = fmt::format("Tile ({}, {})", animation.row, animation.col);
     stream << fmt::format("\n[node name=\"{}\" type=\"AnimatedSprite\" parent=\"{}\"]\n",
                           name,
@@ -333,7 +330,7 @@ void write_tile_layer(std::ostream& stream, const GodotScene& scene, const GdLay
   stream << "tile_data = PoolIntArray( ";
 
   bool first_tile = true;
-  for (const auto& encoded_tile: tile_layer.data) {
+  for (const auto& encoded_tile : tile_layer.data) {
     if (!first_tile) {
       stream << ", ";
     }
@@ -403,7 +400,7 @@ void write_polygon_object(std::ostream& stream, const GdObject& object)
   stream << "polygon = PoolVector2Array( ";
 
   bool first_point = true;
-  for (const auto& point: polygon.points) {
+  for (const auto& point : polygon.points) {
     if (!first_point) {
       stream << ", ";
     }
@@ -450,14 +447,14 @@ void write_object_layer(std::ostream& stream, const GdLayer& layer)
 
   write_metadata(stream, layer.meta);
 
-  for (const auto& object: object_layer.objects) {
+  for (const auto& object : object_layer.objects) {
     write_object(stream, object);
   }
 }
 
 void write_layers(std::ostream& stream, const GodotScene& scene)
 {
-  for (const auto& layer: scene.layers()) {
+  for (const auto& layer : scene.layers()) {
     if (std::holds_alternative<GdTileLayer>(layer.value)) {
       write_tile_layer(stream, scene, layer);
     }

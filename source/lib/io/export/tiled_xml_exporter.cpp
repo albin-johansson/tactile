@@ -17,6 +17,7 @@
 #include "io/util/xml.hpp"
 #include "model/settings.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/io/save/vec_serialization.hpp"
 
 namespace tactile {
 namespace {
@@ -29,16 +30,15 @@ void append_properties(XmlNode node, const ContextIR& context)
 
   auto collection = node.append_child("properties");
 
-  for (const auto& [property_name, property_value]: context.properties) {
+  for (const auto& [property_name, property_value] : context.properties) {
     auto property_node = collection.append_child("property");
     property_node.append_attribute("name").set_value(property_name.c_str());
 
     const auto type = property_value.get_type();
 
     // Properties with no type attribute are assumed to be string properties
-    if (type != AttributeType::kStr && !property_value.is_any_vector()) {
-      property_node.append_attribute("type").set_value(
-          serialize_to_save_format(type).data());
+    if (type != AttributeType::kStr && !property_value.is_vector()) {
+      property_node.append_attribute("type").set_value(serialize(type).data());
     }
 
     auto value_attr = property_node.append_attribute("value");
@@ -48,47 +48,41 @@ void append_properties(XmlNode node, const ContextIR& context)
         value_attr.set_value(property_value.as_string().c_str());
         break;
 
-      case AttributeType::kInt:
-        value_attr.set_value(property_value.as_int());
-        break;
+      case AttributeType::kInt: value_attr.set_value(property_value.as_int()); break;
 
       case AttributeType::kInt2: {
-        const auto str = serialize_to_save_format(property_value.as_int2());
+        const auto str = serialize(property_value.as_int2());
         value_attr.set_value(str.c_str());
         break;
       }
       case AttributeType::kInt3: {
-        const auto str = serialize_to_save_format(property_value.as_int3());
+        const auto str = serialize(property_value.as_int3());
         value_attr.set_value(str.c_str());
         break;
       }
       case AttributeType::kInt4: {
-        const auto str = serialize_to_save_format(property_value.as_int4());
+        const auto str = serialize(property_value.as_int4());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::kFloat:
-        value_attr.set_value(property_value.as_float());
-        break;
+      case AttributeType::kFloat: value_attr.set_value(property_value.as_float()); break;
 
       case AttributeType::kFloat2: {
-        const auto str = serialize_to_save_format(property_value.as_float2());
+        const auto str = serialize(property_value.as_float2());
         value_attr.set_value(str.c_str());
         break;
       }
       case AttributeType::kFloat3: {
-        const auto str = serialize_to_save_format(property_value.as_float3());
+        const auto str = serialize(property_value.as_float3());
         value_attr.set_value(str.c_str());
         break;
       }
       case AttributeType::kFloat4: {
-        const auto str = serialize_to_save_format(property_value.as_float4());
+        const auto str = serialize(property_value.as_float4());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::kBool:
-        value_attr.set_value(property_value.as_bool());
-        break;
+      case AttributeType::kBool: value_attr.set_value(property_value.as_bool()); break;
 
       case AttributeType::kPath: {
         const auto str = use_forward_slashes(property_value.as_path());
@@ -96,11 +90,11 @@ void append_properties(XmlNode node, const ContextIR& context)
         break;
       }
       case AttributeType::kColor:
-        value_attr.set_value(property_value.as_color().as_argb().c_str());
+        value_attr.set_value(property_value.as_color().to_string_argb().c_str());
         break;
 
       case AttributeType::kObject:
-        value_attr.set_value(property_value.as_object());
+        value_attr.set_value(property_value.as_object().value);
         break;
 
       default:
@@ -223,8 +217,7 @@ void append_base64_tile_layer_data(XmlNode data_node,
       data_node.append_attribute("compression").set_value("zstd");
       break;
 
-    default:
-      throw Exception {"Invalid compression strategy!"};
+    default: throw Exception {"Invalid compression strategy!"};
   }
 
   const auto tile_data = base64_encode_tiles(tile_layer.tiles,
@@ -255,8 +248,7 @@ void append_tile_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
       append_base64_tile_layer_data(data_node, map, tile_layer);
       break;
 
-    default:
-      throw Exception {"Invalid tile encoding!"};
+    default: throw Exception {"Invalid tile encoding!"};
   }
 }
 
@@ -268,7 +260,7 @@ void append_object_layer(XmlNode root, const LayerIR& layer)
   append_common_layer_attributes(node, layer);
   append_properties(node, layer.context);
 
-  for (const auto& object: object_layer.objects) {
+  for (const auto& object : object_layer.objects) {
     append_object(node, object);
   }
 }
@@ -276,13 +268,9 @@ void append_object_layer(XmlNode root, const LayerIR& layer)
 void append_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
 {
   switch (layer.type) {
-    case LayerType::TileLayer:
-      append_tile_layer(root, map, layer);
-      break;
+    case LayerType::TileLayer: append_tile_layer(root, map, layer); break;
 
-    case LayerType::ObjectLayer:
-      append_object_layer(root, layer);
-      break;
+    case LayerType::ObjectLayer: append_object_layer(root, layer); break;
 
     case LayerType::GroupLayer: {
       const auto& group_layer = layer.as_group_layer();
@@ -291,27 +279,26 @@ void append_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
       append_common_layer_attributes(collection, layer);
       append_properties(collection, layer.context);
 
-      for (const auto& child_layer: group_layer.children) {
+      for (const auto& child_layer : group_layer.children) {
         append_layer(collection, map, *child_layer);
       }
 
       break;
     }
-    default:
-      throw Exception {"Invalid layer type!"};
+    default: throw Exception {"Invalid layer type!"};
   }
 }
 
 void append_fancy_tiles(XmlNode node, const TilesetIR& tileset)
 {
-  for (const auto& [id, tile]: tileset.fancy_tiles) {
+  for (const auto& [id, tile] : tileset.fancy_tiles) {
     auto tile_node = node.append_child("tile");
     tile_node.append_attribute("id").set_value(id);
 
     if (!tile.frames.empty()) {
       auto animation_node = tile_node.append_child("animation");
 
-      for (const auto& frame: tile.frames) {
+      for (const auto& frame : tile.frames) {
         auto frame_node = animation_node.append_child("frame");
         frame_node.append_attribute("tileid").set_value(frame.tile_index);
         frame_node.append_attribute("duration").set_value(frame.duration_ms);
@@ -322,7 +309,7 @@ void append_fancy_tiles(XmlNode node, const TilesetIR& tileset)
       auto object_layer_node = tile_node.append_child("objectgroup");
       object_layer_node.append_attribute("draworder").set_value("index");
 
-      for (const auto& object: tile.objects) {
+      for (const auto& object : tile.objects) {
         append_object(object_layer_node, object);
       }
     }
@@ -427,11 +414,11 @@ void append_root(pugi::xml_document& document, const Path& dir, const MapIR& ir_
 
   append_properties(root, ir_map.context);
 
-  for (const auto& ir_tileset: ir_map.tilesets) {
+  for (const auto& ir_tileset : ir_map.tilesets) {
     append_tileset(root, dir, ir_tileset);
   }
 
-  for (const auto& layer: ir_map.layers) {
+  for (const auto& layer : ir_map.layers) {
     append_layer(root, ir_map, layer);
   }
 }

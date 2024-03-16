@@ -8,7 +8,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/color.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -16,6 +15,7 @@
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/meta/color.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/primitives.hpp"
 #include "ui/render/renderer.hpp"
@@ -32,7 +32,7 @@ inline constexpr Color kAnimationFrameSelectionColor {0xFF, 0x45, 0x00, 200};
 
 struct DockState final {
   UUID tileset_id {};
-  bool center_viewport                : 1 {false};
+  bool center_viewport : 1 {false};
   bool animation_frame_selection_mode : 1 {false};
 };
 
@@ -78,7 +78,7 @@ void ui_highlight_animation_frame_selection_mode(const Strings& lang,
     const float label_x = (canvas_info.size.x() - label_size.x) * 0.5f;
     const float label_y = 100;
 
-    render_shadowed_text(label, Float2 {label_x, label_y}, kWhite, 2.0f);
+    render_shadowed_text(label, Float2 {label_x, label_y}, kColorWhite, 2.0f);
   }
 }
 

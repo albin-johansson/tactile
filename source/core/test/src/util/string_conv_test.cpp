@@ -80,15 +80,15 @@ TEST(StringConv, ParseFloat)
   EXPECT_FALSE(parse_float("+4.5").has_value());
 
   // Valid inputs
-  EXPECT_EQ(parse_float("0"), 0.0f);
-  EXPECT_EQ(parse_float("42"), 42.0f);
-  EXPECT_EQ(parse_float("5."), 5.0f);
-  EXPECT_EQ(parse_float(".1"), 0.1f);
-  EXPECT_EQ(parse_float("1.0"), 1.0f);
-  EXPECT_EQ(parse_float("3.2"), 3.2f);
-  EXPECT_EQ(parse_float("-1.0"), -1.0f);
-  EXPECT_EQ(parse_float(StringView {"1234"}.substr(0, 2)), 12.0f);
-  EXPECT_EQ(parse_float(StringView {"1234"}.substr(2, 2)), 34.0f);
+  EXPECT_EQ(parse_float("0"), 0.0);
+  EXPECT_EQ(parse_float("42"), 42.0);
+  EXPECT_EQ(parse_float("5."), 5.0);
+  EXPECT_EQ(parse_float(".1"), 0.1);
+  EXPECT_EQ(parse_float("1.0"), 1.0);
+  EXPECT_EQ(parse_float("3.2"), 3.2);
+  EXPECT_EQ(parse_float("-1.0"), -1.0);
+  EXPECT_EQ(parse_float(StringView {"1234"}.substr(0, 2)), 12.0);
+  EXPECT_EQ(parse_float(StringView {"1234"}.substr(2, 2)), 34.0);
 }
 
 }  // namespace tactile

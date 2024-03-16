@@ -17,7 +17,7 @@ namespace {
 {
   TACTILE_ASSERT(type);
 
-  const auto attr_type = parse_attr_type(type);
+  const auto attr_type = parse_attribute_type(type);
   if (!attr_type) {
     return unexpected(ParseError::UnsupportedPropertyType);
   }
@@ -50,11 +50,12 @@ namespace {
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {
-        value.reset_to_default(AttributeType::kColor);
+        value.reset(AttributeType::kColor);
       }
       else {
-        if (const auto color =
-                (hex.size() == 9) ? Color::from_argb(hex) : Color::from_rgb(hex)) {
+        const auto color = (hex.size() == 9) ? Color::parse_argb(hex)  //
+                                             : Color::parse_rgb(hex);
+        if (color) {
           value = *color;
         }
         else {
@@ -72,10 +73,8 @@ namespace {
     case AttributeType::kFloat3:
     case AttributeType::kFloat4:
     case AttributeType::kInt2:
-    case AttributeType::kInt3:
-      [[fallthrough]];
-    case AttributeType::kInt4:
-      return unexpected(ParseError::UnsupportedPropertyType);
+    case AttributeType::kInt3: [[fallthrough]];
+    case AttributeType::kInt4: return unexpected(ParseError::UnsupportedPropertyType);
   }
 
   return value;
@@ -100,7 +99,7 @@ auto parse_properties(XmlNode node) -> Expected<AttributeMap, ParseError>
 {
   AttributeMap props;
 
-  for (const auto property_node: node.child("properties").children("property")) {
+  for (const auto property_node : node.child("properties").children("property")) {
     String property_name;
     if (auto name = get_string_attr(property_node, "name")) {
       property_name = std::move(*name);

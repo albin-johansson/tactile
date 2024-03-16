@@ -106,20 +106,17 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
 }  // namespace
 
 Renderer::Renderer(const CanvasInfo& canvas_info)
-    : mCanvas {canvas_info},
-      mViewportRect {convert_bounds_to_rect(mCanvas)}
-{
-}
+  : mCanvas {canvas_info},
+    mViewportRect {convert_bounds_to_rect(mCanvas)}
+{}
 
 Renderer::Renderer(const Viewport& viewport, const Map& map)
-    : Renderer {create_canvas_info(viewport, map)}
-{
-}
+  : Renderer {create_canvas_info(viewport, map)}
+{}
 
 Renderer::Renderer(const Viewport& viewport, const Tileset& tileset)
-    : Renderer {create_canvas_info(viewport, tileset)}
-{
-}
+  : Renderer {create_canvas_info(viewport, tileset)}
+{}
 
 void Renderer::push_clip() const
 {
@@ -275,7 +272,7 @@ void Renderer::render_object_layer(const ObjectLayer& layer,
   const auto opacity = parent_opacity * layer.get_opacity();
   const Color object_color {0xFF, 0, 0, opacity_cast(opacity)};
 
-  for (const auto& [id, object]: layer) {
+  for (const auto& [id, object] : layer) {
     render_object(*object, object_color);
   }
 }
@@ -285,9 +282,7 @@ void Renderer::render_object(const Object& object, const Color& color) const
   const auto rendered_position = object.get_pos() * mCanvas.ratio;
 
   switch (object.get_type()) {
-    case ObjectType::Point:
-      render_point_object(object, rendered_position, color);
-      break;
+    case ObjectType::Point: render_point_object(object, rendered_position, color); break;
 
     case ObjectType::Ellipse:
       render_ellipse_object(object, rendered_position, color);
@@ -319,7 +314,7 @@ void Renderer::render_point_object(const Object& object,
         const auto text_x = position.x() - (text_size.x / 2.0f);
         const auto text_y = position.y() + radius + 4.0f;
 
-        render_text(name.c_str(), translate(Float2 {text_x, text_y}), kWhite);
+        render_text(name.c_str(), translate(Float2 {text_x, text_y}), kColorWhite);
       }
     }
   }
@@ -346,7 +341,7 @@ void Renderer::render_rectangle_object(const Object& object,
 
         render_text(name.c_str(),
                     translate(position + Float2 {text_x, rendered_size.y() + 4.0f}),
-                    kWhite);
+                    kColorWhite);
       }
     }
   }
@@ -373,7 +368,7 @@ void Renderer::render_ellipse_object(const Object& object,
       const auto text_x = center.x() - (text_size.x / 2.0f);
       const auto text_y = center.y() + (text_size.y / 2.0f) + (radius.y());
 
-      render_text(name.c_str(), translate(Float2 {text_x, text_y}), kWhite);
+      render_text(name.c_str(), translate(Float2 {text_x, text_y}), kColorWhite);
     }
   }
 }

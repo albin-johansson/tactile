@@ -288,9 +288,9 @@ auto ui_color_input(const char* id, const Color value) -> Maybe<Color>
 
   const Scope scope {id};
 
-  auto rgba = value.as_float_array();
+  auto rgba = value.normalized();
   if (ImGui::ColorEdit4("##Color", rgba.data(), flags)) {
-    return Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
+    return Color::from(rgba);
   }
 
   return nothing;
@@ -444,7 +444,7 @@ auto ui_attribute_type_combo(const AttributeType current_type,
 
   if (const Combo combo {"##AttributeTypeCombo", current_type_name.data()};
       combo.is_open()) {
-    for (const auto type: all_types) {
+    for (const auto type : all_types) {
       const Disable disable_if_excluded {type == excluded_type};
 
       const auto type_index = static_cast<usize>(std::to_underlying(type));

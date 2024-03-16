@@ -13,6 +13,7 @@
 #include "model/settings.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/generic_error.hpp"
+#include "tactile/core/io/save/vec_serialization.hpp"
 
 namespace tactile {
 namespace {
@@ -65,89 +66,50 @@ void to_json(JSON& json, const AttributeType type)
       json = kStringAttrName;
       break;
 
-    case AttributeType::kInt:
-      json = kIntAttrName;
-      break;
+    case AttributeType::kInt: json = kIntAttrName; break;
 
-    case AttributeType::kFloat:
-      json = kFloatAttrName;
-      break;
+    case AttributeType::kFloat: json = kFloatAttrName; break;
 
-    case AttributeType::kBool:
-      json = kBoolAttrName;
-      break;
+    case AttributeType::kBool: json = kBoolAttrName; break;
 
-    case AttributeType::kPath:
-      json = kFileAttrName;
-      break;
+    case AttributeType::kPath: json = kFileAttrName; break;
 
-    case AttributeType::kColor:
-      json = kColorAttrName;
-      break;
+    case AttributeType::kColor: json = kColorAttrName; break;
 
-    case AttributeType::kObject:
-      json = kObjectAttrName;
-      break;
+    case AttributeType::kObject: json = kObjectAttrName; break;
   }
 }
 
 void to_json(JSON& json, const Attribute& value)
 {
   switch (value.get_type()) {
-    case AttributeType::kStr:
-      json = value.as_string();
-      break;
+    case AttributeType::kStr: json = value.as_string(); break;
 
-    case AttributeType::kInt:
-      json = value.as_int();
-      break;
+    case AttributeType::kInt: json = value.as_int(); break;
 
-    case AttributeType::kInt2:
-      json = serialize_to_save_format(value.as_int2());
-      break;
+    case AttributeType::kInt2: json = serialize(value.as_int2()); break;
 
-    case AttributeType::kInt3:
-      json = serialize_to_save_format(value.as_int3());
-      break;
+    case AttributeType::kInt3: json = serialize(value.as_int3()); break;
 
-    case AttributeType::kInt4:
-      json = serialize_to_save_format(value.as_int4());
-      break;
+    case AttributeType::kInt4: json = serialize(value.as_int4()); break;
 
-    case AttributeType::kFloat:
-      json = value.as_float();
-      break;
+    case AttributeType::kFloat: json = value.as_float(); break;
 
-    case AttributeType::kFloat2:
-      json = serialize_to_save_format(value.as_float2());
-      break;
+    case AttributeType::kFloat2: json = serialize(value.as_float2()); break;
 
-    case AttributeType::kFloat3:
-      json = serialize_to_save_format(value.as_float3());
-      break;
+    case AttributeType::kFloat3: json = serialize(value.as_float3()); break;
 
-    case AttributeType::kFloat4:
-      json = serialize_to_save_format(value.as_float4());
-      break;
+    case AttributeType::kFloat4: json = serialize(value.as_float4()); break;
 
-    case AttributeType::kBool:
-      json = value.as_bool();
-      break;
+    case AttributeType::kBool: json = value.as_bool(); break;
 
-    case AttributeType::kPath:
-      json = use_forward_slashes(value.as_path());
-      break;
+    case AttributeType::kPath: json = use_forward_slashes(value.as_path()); break;
 
-    case AttributeType::kColor:
-      json = value.as_color().as_argb();
-      break;
+    case AttributeType::kColor: json = value.as_color().to_string_argb(); break;
 
-    case AttributeType::kObject:
-      json = value.as_object();
-      break;
+    case AttributeType::kObject: json = value.as_object(); break;
 
-    default:
-      throw Exception {"Invalid attribute type"};
+    default: throw Exception {"Invalid attribute type"};
   }
 }
 

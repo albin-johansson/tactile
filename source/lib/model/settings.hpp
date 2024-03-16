@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "core/color.hpp"
 #include "lang/language.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/io/save/save_format_id.hpp"
+#include "tactile/core/meta/color.hpp"
 #include "tactile/core/numeric/vec.hpp"
 #include "ui/style/themes.hpp"
 

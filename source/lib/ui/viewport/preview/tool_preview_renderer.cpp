@@ -26,11 +26,10 @@ inline constexpr float kStampPreviewOpacity = 0.58f;
 ToolPreviewRenderer::ToolPreviewRenderer(const DocumentModel& model,
                                          const Renderer& renderer,
                                          const MouseInfo& mouse)
-    : mModel {model},
-      mRenderer {renderer},
-      mMouseInfo {mouse}
-{
-}
+  : mModel {model},
+    mRenderer {renderer},
+    mMouseInfo {mouse}
+{}
 
 void ToolPreviewRenderer::visit(const StampTool& tool)
 {
@@ -99,7 +98,7 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
     const auto pos = renderer.get_canvas_info().origin + stroke->start;
     const auto size = stroke->current - stroke->start;
 
-    draw_shadowed_rect(pos, size, kYellow);
+    draw_shadowed_rect(pos, size, kColorYellow);
   }
 }
 
@@ -111,7 +110,7 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
     const auto center = stroke->start + radius;
 
     const auto& renderer = mRenderer.get();
-    draw_shadowed_ellipse(renderer.translate(center), radius, kYellow);
+    draw_shadowed_ellipse(renderer.translate(center), radius, kColorYellow);
   }
 }
 

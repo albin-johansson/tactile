@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "core/attribute.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/container/tree_map.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {

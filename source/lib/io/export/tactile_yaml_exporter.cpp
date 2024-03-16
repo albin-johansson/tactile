@@ -10,7 +10,6 @@
 #include <yaml-cpp/yaml.h>
 
 #include "common/util/filesystem.hpp"
-#include "core/attribute.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
@@ -18,6 +17,7 @@
 #include "model/settings.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/core/meta/attribute.hpp"
 
 namespace tactile {
 namespace {
@@ -29,7 +29,7 @@ void emit_properties(YAML::Emitter& emitter, const ContextIR& context)
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
 
-    for (const auto& [name, value]: context.properties) {
+    for (const auto& [name, value] : context.properties) {
       emitter << YAML::BeginMap;
       emitter << YAML::Key << "name" << YAML::Value << name;
       emitter << YAML::Key << "type" << YAML::Value << value.get_type();
@@ -46,13 +46,13 @@ void emit_components(YAML::Emitter& emitter, const ContextIR& context)
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;
 
-    for (const auto& [type, values]: context.components) {
+    for (const auto& [type, values] : context.components) {
       emitter << YAML::BeginMap;
 
       emitter << YAML::Key << "type" << YAML::Value << type;
       emitter << YAML::Key << "values" << YAML::BeginSeq;
 
-      for (const auto& [attr_name, attr_value]: values) {
+      for (const auto& [attr_name, attr_value] : values) {
         emitter << YAML::BeginMap;
         emitter << YAML::Key << "name" << YAML::Value << attr_name;
         emitter << YAML::Key << "value" << YAML::Value << attr_value;
@@ -74,17 +74,11 @@ void emit_object_data(YAML::Emitter& emitter, const ObjectIR& data)
 
   emitter << YAML::Key << "type";
   switch (data.type) {
-    case ObjectType::Point:
-      emitter << YAML::Value << "point";
-      break;
+    case ObjectType::Point: emitter << YAML::Value << "point"; break;
 
-    case ObjectType::Rect:
-      emitter << YAML::Value << "rect";
-      break;
+    case ObjectType::Rect: emitter << YAML::Value << "rect"; break;
 
-    case ObjectType::Ellipse:
-      emitter << YAML::Value << "ellipse";
-      break;
+    case ObjectType::Ellipse: emitter << YAML::Value << "ellipse"; break;
   }
 
   if (!data.name.empty()) {
@@ -129,7 +123,7 @@ void emit_object_layer_data(YAML::Emitter& emitter, const ObjectLayerIR& data)
 
   emitter << YAML::Key << "objects" << YAML::BeginSeq;
 
-  for (const auto& object_data: data.objects) {
+  for (const auto& object_data : data.objects) {
     emit_object_data(emitter, object_data);
   }
 
@@ -215,7 +209,7 @@ void emit_layer(YAML::Emitter& emitter, const MapIR& map, const LayerIR& layer)
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
       const auto& group_layer = layer.as_group_layer();
-      for (const auto& child_layer_data: group_layer.children) {
+      for (const auto& child_layer_data : group_layer.children) {
         emit_layer(emitter, map, *child_layer_data);
       }
 
@@ -238,7 +232,7 @@ void emit_layers(YAML::Emitter& emitter, const MapIR& map)
 
   emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-  for (const auto& layer_data: map.layers) {
+  for (const auto& layer_data : map.layers) {
     emit_layer(emitter, map, layer_data);
   }
 
@@ -249,7 +243,7 @@ void emit_tileset_tile_animation(YAML::Emitter& emitter, const TileIR& data)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
-  for (const auto& frame_data: data.frames) {
+  for (const auto& frame_data : data.frames) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "tile" << YAML::Value << frame_data.tile_index;
     emitter << YAML::Key << "duration" << YAML::Value << frame_data.duration_ms;
@@ -263,7 +257,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const TilesetIR& tileset)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
-  for (const auto& [id, tile]: tileset.fancy_tiles) {
+  for (const auto& [id, tile] : tileset.fancy_tiles) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "id" << YAML::Value << id;
 
@@ -273,7 +267,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const TilesetIR& tileset)
 
     if (!tile.objects.empty()) {
       emitter << YAML::Key << "objects" << YAML::BeginSeq;
-      for (const auto& object_data: tile.objects) {
+      for (const auto& object_data : tile.objects) {
         emit_object_data(emitter, object_data);
       }
       emitter << YAML::EndSeq;
@@ -333,7 +327,7 @@ void emit_tilesets(YAML::Emitter& emitter, const Path& dir, const MapIR& ir_map)
 
   emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
-  for (const auto& ir_tileset: ir_map.tilesets) {
+  for (const auto& ir_tileset : ir_map.tilesets) {
     const auto source = fmt::format("{}.yaml", ir_tileset.name);
     emit_tileset_file(dir, source, ir_tileset);
 
@@ -369,14 +363,14 @@ void emit_component_definitions(YAML::Emitter& emitter, const MapIR& ir_map)
 
   emitter << YAML::Key << "component-definitions" << YAML::BeginSeq;
 
-  for (const auto& [name, attributes]: ir_map.component_definitions) {
+  for (const auto& [name, attributes] : ir_map.component_definitions) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "name" << YAML::Value << name;
 
     if (!attributes.empty()) {
       emitter << YAML::Key << "attributes" << YAML::BeginSeq;
 
-      for (const auto& [attr_name, attr_value]: attributes) {
+      for (const auto& [attr_name, attr_value] : attributes) {
         emit_component_definition_attribute(emitter, attr_name, attr_value);
       }
 

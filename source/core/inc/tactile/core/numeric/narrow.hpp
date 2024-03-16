@@ -2,12 +2,10 @@
 
 #pragma once
 
-#include <concepts>  // integral
-
 namespace tactile {
 
 /**
- * Performs a narrowing conversion of an integral value.
+ * Performs a narrowing conversion of an arbitrary value.
  *
  * \note
  *    This function is simply equivalent to a \c static_cast. The
@@ -23,7 +21,7 @@ namespace tactile {
  * \return
  *    The casted value.
  */
-template <std::integral To, std::integral From>
+template <typename To, typename From>
   requires(sizeof(To) <= sizeof(From))
 [[nodiscard]] constexpr auto narrow_cast(const From& from) noexcept -> To
 {

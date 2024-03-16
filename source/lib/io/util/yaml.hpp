@@ -6,13 +6,13 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "core/attribute.hpp"
 #include "core/layer/tile_format.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/core/debug/generic_error.hpp"
+#include "tactile/core/meta/attribute.hpp"
 
 namespace tactile {
 

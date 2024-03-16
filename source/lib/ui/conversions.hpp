@@ -7,9 +7,9 @@
 #include <imgui.h>
 
 #include "common/util/bit.hpp"
-#include "core/color.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/meta/color.hpp"
 #include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
@@ -21,7 +21,7 @@ namespace tactile {
 
 [[nodiscard]] inline auto to_color(const ImVec4& vec) -> Color
 {
-  return Color::from_norm(vec.x, vec.y, vec.z, vec.w);
+  return Color::from(vec.x, vec.y, vec.z, vec.w);
 }
 
 [[nodiscard]] constexpr auto as_imvec2(const Float2 vec) noexcept -> ImVec2

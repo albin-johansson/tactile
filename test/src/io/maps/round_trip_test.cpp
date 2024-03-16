@@ -53,7 +53,7 @@ void validate_contexts(const ContextIR& source, const ContextIR& restored)
 
   REQUIRE(source.properties == restored.properties);
 
-  for (const auto& [name, attributes]: source.components) {
+  for (const auto& [name, attributes] : source.components) {
     REQUIRE(has_key(restored.components, name));
     REQUIRE(attributes == restored.components.at(name));
   }
@@ -175,7 +175,7 @@ void validate_tilesets(const MapIR& source, const MapIR& restored)
     REQUIRE(source_tileset.image_size == restored_tileset.image_size);
 
     REQUIRE(source_tileset.fancy_tiles.size() == restored_tileset.fancy_tiles.size());
-    for (const auto& [id, sourceTile]: source_tileset.fancy_tiles) {
+    for (const auto& [id, sourceTile] : source_tileset.fancy_tiles) {
       const auto& restored_tile = restored_tileset.fancy_tiles.at(id);
       validate_fancy_tiles(sourceTile, restored_tile);
     }
@@ -249,7 +249,7 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   data.opacity = 1.0f;
   data.visible = false;
 
-  data.context.properties["tint"] = Color::from_rgba("#1DBC748F").value();
+  data.context.properties["tint"] = Color::parse_rgba("#1DBC748F").value();
 
   auto& group = data.data.emplace<GroupLayerIR>();
 
@@ -434,7 +434,7 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
     data.component_definitions["long-component"]["path"] = fs::path {};
     data.component_definitions["long-component"]["path-v"] = fs::path {"../foo.txt"};
 
-    data.component_definitions["long-component"]["col"] = kBlack;
+    data.component_definitions["long-component"]["col"] = kColorBlack;
     data.component_definitions["long-component"]["col-v"] = Color {0x12, 0xF3, 0xCA};
   }
 

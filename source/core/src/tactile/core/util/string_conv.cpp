@@ -57,9 +57,9 @@ auto parse_uint(const StringView str, const int base) -> Result<uint64>
   return _parse_number<uint64>(str, base);
 }
 
-auto parse_float(const StringView str) -> Result<float>
+auto parse_float(const StringView str) -> Result<double>
 {
-  return _parse_number<float>(str);
+  return _parse_number<double>(str);
 }
 
 }  // namespace tactile
