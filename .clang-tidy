@@ -1,30 +1,28 @@
 FormatStyle: google
 Checks: "-*,
-         bugprone-*,
          clang-analyzer-*,
-         cppcoreguidelines-*,
          performance-*,
          portability-*,
-         readability-*,
-         modernize-*,
-         misc-*,
 
+         bugprone-*,
          -bugprone-easily-swappable-parameters,
-         -bugprone-narrowing-conversions,
+         -bugprone-switch-missing-default-case,
 
+         readability-*,
          -readability-identifier-length,
          -readability-uppercase-literal-suffix,
          -readability-magic-numbers,
          -readability-implicit-bool-conversion,
-         -readability-else-after-return,
          -readability-named-parameter,
-         -readability-function-cognitive-complexity,
 
+         modernize-*,
          -modernize-avoid-c-arrays,
 
+         misc-*,
          -misc-no-recursion,
          -misc-non-private-member-variables-in-classes,
 
+         cppcoreguidelines-*,
          -cppcoreguidelines-avoid-magic-numbers,
          -cppcoreguidelines-pro-bounds-pointer-arithmetic,
          -cppcoreguidelines-pro-type-vararg,
@@ -33,6 +31,7 @@ Checks: "-*,
          -cppcoreguidelines-avoid-goto,
          -cppcoreguidelines-narrowing-conversions,
          -cppcoreguidelines-non-private-member-variables-in-classes,
+         -cppcoreguidelines-avoid-do-while,
          "
 CheckOptions:
   - { key: readability-identifier-naming.ClassCase, value: CamelCase }
