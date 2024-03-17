@@ -13,11 +13,12 @@
     "boost-uuid",
     "entt",
     "cppcodec",
-    "doctest",
     "fast-float",
     "fmt",
+    "doctest",
     "glew",
     "glm",
+    "gtest",
     {
       "name": "imgui",
       "features": [
