@@ -5,11 +5,11 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/util/filesystem.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
 #include "model/file_history.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -27,7 +27,7 @@ void update_recent_files_menu(const Strings& lang, entt::dispatcher& dispatcher)
       ImGui::Separator();
     }
 
-    for (const auto& path: history.entries) {
+    for (const auto& path : history.entries) {
       if (ImGui::MenuItem(path.c_str())) {
         // It's fine if the file doesn't exist anymore, the parser handles that.
         dispatcher.enqueue<OpenMapEvent>(Path {path});

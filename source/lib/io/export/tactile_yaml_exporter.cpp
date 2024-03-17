@@ -9,7 +9,6 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
@@ -18,6 +17,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/meta/attribute.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -298,7 +298,7 @@ void emit_tileset_file(const Path& dir, const String& filename, const TilesetIR&
   emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
 
   const auto image_path = fs::relative(tileset.image_path, dir);
-  emitter << YAML::Key << "image-path" << YAML::Value << use_forward_slashes(image_path);
+  emitter << YAML::Key << "image-path" << YAML::Value << normalize_path(image_path);
   emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_size.x();
   emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_size.y();
 

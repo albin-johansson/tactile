@@ -4,7 +4,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/directories.hpp"
 #include "io/ir/map_document_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
@@ -12,6 +11,7 @@
 #include "io/stream.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -37,7 +37,7 @@ void load_session_from_disk(DocumentModel& model)
   }
 
   if (session.ParseFromIstream(&stream.value())) {
-    for (const auto& file_path: session.files()) {
+    for (const auto& file_path : session.files()) {
       const auto ir_map = parse_map(file_path);
       if (ir_map.has_value()) {
         create_map_document_from_ir(*ir_map, file_path, model);
@@ -60,7 +60,7 @@ void save_session_to_disk(const DocumentModel& model)
       const auto& map_doc = model.get_map_document(document_id);
       if (map_doc.has_path()) {
         const auto document_path = fs::absolute(map_doc.get_path());
-        session.add_files(use_forward_slashes(document_path));
+        session.add_files(normalize_path(document_path));
       }
     }
   });

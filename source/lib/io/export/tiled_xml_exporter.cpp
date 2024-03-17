@@ -8,7 +8,6 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
 #include "io/export/tiled_info.hpp"
 #include "io/ir/map/map_ir.hpp"
@@ -18,6 +17,7 @@
 #include "model/settings.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/io/save/vec_serialization.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -85,7 +85,7 @@ void append_properties(XmlNode node, const ContextIR& context)
       case AttributeType::kBool: value_attr.set_value(property_value.as_bool()); break;
 
       case AttributeType::kPath: {
-        const auto str = use_forward_slashes(property_value.as_path());
+        const auto str = normalize_path(property_value.as_path());
         value_attr.set_value(str.c_str());
         break;
       }
@@ -333,7 +333,7 @@ void append_common_tileset_attributes(XmlNode node,
   {
     auto image_node = node.append_child("image");
 
-    const auto source = use_forward_slashes(fs::relative(tileset.image_path, dir));
+    const auto source = normalize_path(fs::relative(tileset.image_path, dir));
     image_node.append_attribute("source").set_value(source.c_str());
 
     image_node.append_attribute("width").set_value(tileset.image_size.x());

@@ -6,14 +6,13 @@
 
 #include <fmt/format.h>
 
-#include "common/util/filesystem.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 
 void GodotScene::set_tileset(GodotTileset tileset, const Path& dest)
 {
-  mTilesetId =
-      add_ext_resource(fmt::format("res://{}", use_forward_slashes(dest)), "TileSet");
+  mTilesetId = add_ext_resource(fmt::format("res://{}", normalize_path(dest)), "TileSet");
   mTileset = std::move(tileset);
 }
 

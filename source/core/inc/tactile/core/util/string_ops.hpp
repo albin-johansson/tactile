@@ -2,11 +2,39 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/prelude.hpp"
 #include "tactile/core/util/concepts.hpp"
 
 namespace tactile {
+
+/**
+ * Creates a string using the native filesystem character type.
+ *
+ * \param str The source string, may be null.
+ *
+ * \return
+ *    A corresponding native string; or an error code if something went wrong.
+ */
+[[nodiscard]]
+auto make_native_string(const char* str) -> Result<NativeString>;
+
+/**
+ * Removes leading and trailing spaces from a given string.
+ *
+ * \note
+ *    This function will only modify strings that have at least
+ *    one non-space character.
+ *
+ * \param str The string to trim.
+ *
+ * \return
+ *    A trimmed string.
+ */
+[[nodiscard]]
+auto trim_string(String str) -> String;
 
 /**
  * Splits a string into a collection of tokens separated by a given character.
@@ -51,20 +79,5 @@ auto split_string(const StringView str, const char separator, const T& callback)
 
   return true;
 }
-
-/**
- * Removes leading and trailing spaces from a given string.
- *
- * \note
- *    This function will only modify strings that have at least
- *    one non-space character.
- *
- * \param str The string to trim.
- *
- * \return
- *    A trimmed string.
- */
-[[nodiscard]]
-auto trim_string(String str) -> String;
 
 }  // namespace tactile

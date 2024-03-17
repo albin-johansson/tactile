@@ -6,15 +6,15 @@
 
 #include <fmt/format.h>
 
-#include "common/util/filesystem.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 
 auto GodotTileset::add_texture(const Path& dest, Path source) -> GdExtRes
 {
   const auto id =
-      add_ext_resource(fmt::format("res://{}", use_forward_slashes(dest)), "Texture");
+      add_ext_resource(fmt::format("res://{}", normalize_path(dest)), "Texture");
   mSourceTexturePaths.emplace_back(std::move(source), dest.filename().string());
   return id;
 }
@@ -28,7 +28,7 @@ auto GodotTileset::index_of(const UUID& tileset_id) const -> int32
 {
   int32 index {};
 
-  for (const auto& info: mTilesetInfos) {
+  for (const auto& info : mTilesetInfos) {
     if (info.uuid == tileset_id) {
       return index;
     }

@@ -7,13 +7,13 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
 #include "io/export/tiled_info.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/json.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -22,7 +22,7 @@ namespace {
 {
   auto array = JSON::array();
 
-  for (const auto& [name, value]: context.properties) {
+  for (const auto& [name, value] : context.properties) {
     auto json = JSON::object();
 
     json["name"] = name;
@@ -126,7 +126,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
 
   auto objects = JSON::array();
 
-  for (const auto& object: object_layer.objects) {
+  for (const auto& object : object_layer.objects) {
     objects += emit_object(object);
   }
 
@@ -145,13 +145,9 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
   json["y"] = 0;
 
   switch (layer.type) {
-    case LayerType::TileLayer:
-      emit_tile_layer(json, map, layer);
-      break;
+    case LayerType::TileLayer: emit_tile_layer(json, map, layer); break;
 
-    case LayerType::ObjectLayer:
-      emit_object_layer(json, layer);
-      break;
+    case LayerType::ObjectLayer: emit_object_layer(json, layer); break;
 
     case LayerType::GroupLayer: {
       const auto& group_layer = layer.as_group_layer();
@@ -160,7 +156,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
 
       auto layers = JSON::array();
 
-      for (const auto& child_layer: group_layer.children) {
+      for (const auto& child_layer : group_layer.children) {
         layers += emit_layer(map, *child_layer);
       }
 
@@ -180,7 +176,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
 {
   auto array = JSON::array();
 
-  for (const auto& layer: map.layers) {
+  for (const auto& layer : map.layers) {
     array += emit_layer(map, layer);
   }
 
@@ -191,7 +187,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
 {
   auto array = JSON::array();
 
-  for (const auto& frame: tile.frames) {
+  for (const auto& frame : tile.frames) {
     auto json = JSON::object();
 
     json["tileid"] = frame.tile_index;
@@ -224,7 +220,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
     dummy["y"] = 0;
 
     auto objects = JSON::array();
-    for (const auto& object: tile.objects) {
+    for (const auto& object : tile.objects) {
       objects += emit_object(object);
     }
 
@@ -243,7 +239,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
 {
   auto json = JSON::array();
 
-  for (const auto& [id, tile_data]: tileset.fancy_tiles) {
+  for (const auto& [id, tile_data] : tileset.fancy_tiles) {
     json += emit_fancy_tile(id, tile_data);
   }
 
@@ -260,7 +256,7 @@ void add_common_tileset_attributes(JSON& json, const Path& dir, const TilesetIR&
   json["tilecount"] = tileset.tile_count;
 
   const auto image_path = fs::relative(tileset.image_path, dir);
-  json["image"] = use_forward_slashes(image_path);
+  json["image"] = normalize_path(image_path);
 
   json["imagewidth"] = tileset.image_size.x();
   json["imageheight"] = tileset.image_size.y();
@@ -330,7 +326,7 @@ void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
 {
   auto json = JSON::array();
 
-  for (const auto& ir_tileset: ir_map.tilesets) {
+  for (const auto& ir_tileset : ir_map.tilesets) {
     json += emit_tileset(dir, ir_tileset);
   }
 

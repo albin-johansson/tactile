@@ -5,12 +5,12 @@
 #include <concepts>  // invocable
 #include <utility>   // move, to_underlying
 
-#include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "tactile/base/container/array.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/icons.hpp"
@@ -28,7 +28,7 @@ template <std::invocable T>
 
   if (ui_button(TAC_ICON_THREE_DOTS)) {
     if (auto result = callback()) {
-      return std::move(*result);
+      return result;
     }
   }
 
@@ -306,12 +306,14 @@ auto ui_file_path_input(const char* id, const Path& value) -> Maybe<Path>
 
 auto ui_directory_path_input(const char* id, const Path& value) -> Maybe<Path>
 {
-  return input_file_path(id,
-                         use_short_home_prefix(value).value_or(value.string()),
-                         []() -> Maybe<Path> {
-                           auto dialog = FileDialog::open_folder();
-                           return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
-                         });
+  static const auto home_dir = get_user_home_directory().value();
+  return input_file_path(
+      id,
+      strip_home_directory_prefix(value, home_dir).value_or(value.string()),
+      []() -> Maybe<Path> {
+        auto dialog = FileDialog::open_folder();
+        return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
+      });
 }
 
 auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribute>

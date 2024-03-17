@@ -4,10 +4,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -26,7 +26,7 @@ void clear_file_history()
 
 void add_to_file_history(const Path& path)
 {
-  auto converted = use_forward_slashes(path);
+  auto converted = normalize_path(path);
   if (std::find(gHistory.entries.begin(), gHistory.entries.end(), converted) ==
       gHistory.entries.end()) {
     spdlog::debug("Adding '{}' to history...", converted);
@@ -43,7 +43,7 @@ void add_to_file_history(const Path& path)
 
 void set_last_closed_file(const Path& path)
 {
-  gHistory.last_closed_file = use_forward_slashes(path);
+  gHistory.last_closed_file = normalize_path(path);
   spdlog::debug("Last closed file is now '{}'", *gHistory.last_closed_file);
 
   add_to_file_history(path);

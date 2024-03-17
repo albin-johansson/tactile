@@ -5,10 +5,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/stream.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/io/save/vec_serialization.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 
@@ -48,7 +48,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
 
     case AttributeType::kBool: emitter << value.as_bool(); break;
 
-    case AttributeType::kPath: emitter << use_forward_slashes(value.as_path()); break;
+    case AttributeType::kPath: emitter << normalize_path(value.as_path()); break;
 
     case AttributeType::kColor: emitter << value.as_color().to_string_rgba(); break;
 

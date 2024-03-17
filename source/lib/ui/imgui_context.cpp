@@ -16,7 +16,7 @@ namespace tactile {
 namespace {
 
 constexpr auto kFontRobotoPath = "assets/fonts/roboto/Roboto-Regular.ttf";
-constexpr auto kFontFaPath = "assets/fonts/fa/fa-solid-900.otf";
+constexpr auto kFontFaPath = "assets/fonts/fa/fa-solid-900.ttf";
 constexpr ImWchar kFontIconRange[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 }  // namespace

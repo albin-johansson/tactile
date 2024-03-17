@@ -5,13 +5,13 @@
 #include <centurion/system.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "common/util/filesystem.hpp"
 #include "handlers/event_handlers.hpp"
 #include "model/event/all.hpp"
 #include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "runtime/app_context.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
@@ -30,29 +30,19 @@ void dispatch_menu_action(const MenuAction action)
   auto& settings = get_settings();
 
   switch (action) {
-    case MenuAction::NewMap:
-      dispatcher.enqueue<ShowNewMapDialogEvent>();
-      break;
+    case MenuAction::NewMap: dispatcher.enqueue<ShowNewMapDialogEvent>(); break;
 
-    case MenuAction::OpenMap:
-      dispatcher.enqueue<ShowOpenMapDialogEvent>();
-      break;
+    case MenuAction::OpenMap: dispatcher.enqueue<ShowOpenMapDialogEvent>(); break;
 
-    case MenuAction::Save:
-      dispatcher.enqueue<SaveEvent>();
-      break;
+    case MenuAction::Save: dispatcher.enqueue<SaveEvent>(); break;
 
-    case MenuAction::SaveAs:
-      dispatcher.enqueue<OpenSaveAsDialogEvent>();
-      break;
+    case MenuAction::SaveAs: dispatcher.enqueue<OpenSaveAsDialogEvent>(); break;
 
     case MenuAction::CloseDocument:
       dispatcher.enqueue<CloseDocumentEvent>(model.get_active_document_id().value());
       break;
 
-    case MenuAction::Quit:
-      dispatcher.enqueue<QuitEvent>();
-      break;
+    case MenuAction::Quit: dispatcher.enqueue<QuitEvent>(); break;
 
     case MenuAction::ReopenLastClosedFile: {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
@@ -60,17 +50,11 @@ void dispatch_menu_action(const MenuAction action)
       dispatcher.enqueue<OpenMapEvent>(std::move(file_path));
       break;
     }
-    case MenuAction::ClearFileHistory:
-      clear_file_history();
-      break;
+    case MenuAction::ClearFileHistory: clear_file_history(); break;
 
-    case MenuAction::Undo:
-      dispatcher.enqueue<UndoEvent>();
-      break;
+    case MenuAction::Undo: dispatcher.enqueue<UndoEvent>(); break;
 
-    case MenuAction::Redo:
-      dispatcher.enqueue<RedoEvent>();
-      break;
+    case MenuAction::Redo: dispatcher.enqueue<RedoEvent>(); break;
 
     case MenuAction::StampTool:
       dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
@@ -100,131 +84,75 @@ void dispatch_menu_action(const MenuAction action)
       dispatcher.enqueue<SelectToolEvent>(ToolType::Point);
       break;
 
-    case MenuAction::ComponentEditor:
-      ui::open_component_editor_dialog(model);
-      break;
+    case MenuAction::ComponentEditor: ui::open_component_editor_dialog(model); break;
 
-    case MenuAction::OpenSettings:
-      ui::open_settings_dialog();
-      break;
+    case MenuAction::OpenSettings: ui::open_settings_dialog(); break;
 
-    case MenuAction::CenterViewport:
-      dispatcher.enqueue<CenterViewportEvent>();
-      break;
+    case MenuAction::CenterViewport: dispatcher.enqueue<CenterViewportEvent>(); break;
 
-    case MenuAction::ToggleGrid:
-      dispatcher.enqueue<ToggleGridEvent>();
-      break;
+    case MenuAction::ToggleGrid: dispatcher.enqueue<ToggleGridEvent>(); break;
 
-    case MenuAction::IncreaseZoom:
-      dispatcher.enqueue<IncreaseZoomEvent>();
-      break;
+    case MenuAction::IncreaseZoom: dispatcher.enqueue<IncreaseZoomEvent>(); break;
 
-    case MenuAction::DecreaseZoom:
-      dispatcher.enqueue<DecreaseZoomEvent>();
-      break;
+    case MenuAction::DecreaseZoom: dispatcher.enqueue<DecreaseZoomEvent>(); break;
 
-    case MenuAction::ResetZoom:
-      dispatcher.enqueue<ResetZoomEvent>();
-      break;
+    case MenuAction::ResetZoom: dispatcher.enqueue<ResetZoomEvent>(); break;
 
-    case MenuAction::IncreaseFontSize:
-      dispatcher.enqueue<IncreaseFontSizeEvent>();
-      break;
+    case MenuAction::IncreaseFontSize: dispatcher.enqueue<IncreaseFontSizeEvent>(); break;
 
-    case MenuAction::DecreaseFontSize:
-      dispatcher.enqueue<DecreaseFontSizeEvent>();
-      break;
+    case MenuAction::DecreaseFontSize: dispatcher.enqueue<DecreaseFontSizeEvent>(); break;
 
-    case MenuAction::ResetFontSize:
-      dispatcher.enqueue<ResetFontSizeEvent>();
-      break;
+    case MenuAction::ResetFontSize: dispatcher.enqueue<ResetFontSizeEvent>(); break;
 
-    case MenuAction::PanUp:
-      dispatcher.enqueue<PanUpEvent>();
-      break;
+    case MenuAction::PanUp: dispatcher.enqueue<PanUpEvent>(); break;
 
-    case MenuAction::PanDown:
-      dispatcher.enqueue<PanDownEvent>();
-      break;
+    case MenuAction::PanDown: dispatcher.enqueue<PanDownEvent>(); break;
 
-    case MenuAction::PanRight:
-      dispatcher.enqueue<PanRightEvent>();
-      break;
+    case MenuAction::PanRight: dispatcher.enqueue<PanRightEvent>(); break;
 
-    case MenuAction::PanLeft:
-      dispatcher.enqueue<PanLeftEvent>();
-      break;
+    case MenuAction::PanLeft: dispatcher.enqueue<PanLeftEvent>(); break;
 
     case MenuAction::HighlightLayer:
       settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
       break;
 
-    case MenuAction::ToggleUi:
-      dispatcher.enqueue<ToggleUiEvent>();
-      break;
+    case MenuAction::ToggleUi: dispatcher.enqueue<ToggleUiEvent>(); break;
 
-    case MenuAction::InspectMap:
-      dispatcher.enqueue<InspectMapEvent>();
-      break;
+    case MenuAction::InspectMap: dispatcher.enqueue<InspectMapEvent>(); break;
 
     case MenuAction::AddTileset:
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
       break;
 
-    case MenuAction::AddRow:
-      dispatcher.enqueue<AddRowEvent>();
-      break;
+    case MenuAction::AddRow: dispatcher.enqueue<AddRowEvent>(); break;
 
-    case MenuAction::AddColumn:
-      dispatcher.enqueue<AddColumnEvent>();
-      break;
+    case MenuAction::AddColumn: dispatcher.enqueue<AddColumnEvent>(); break;
 
-    case MenuAction::RemoveRow:
-      dispatcher.enqueue<RemoveRowEvent>();
-      break;
+    case MenuAction::RemoveRow: dispatcher.enqueue<RemoveRowEvent>(); break;
 
-    case MenuAction::RemoveColumn:
-      dispatcher.enqueue<RemoveColumnEvent>();
-      break;
+    case MenuAction::RemoveColumn: dispatcher.enqueue<RemoveColumnEvent>(); break;
 
-    case MenuAction::FixInvalidTiles:
-      dispatcher.enqueue<FixTilesInMapEvent>();
-      break;
+    case MenuAction::FixInvalidTiles: dispatcher.enqueue<FixTilesInMapEvent>(); break;
 
-    case MenuAction::ResizeMap:
-      dispatcher.enqueue<OpenResizeMapDialogEvent>();
-      break;
+    case MenuAction::ResizeMap: dispatcher.enqueue<OpenResizeMapDialogEvent>(); break;
 
-    case MenuAction::ExportGodotScene:
-      ui::open_godot_export_dialog();
-      break;
+    case MenuAction::ExportGodotScene: ui::open_godot_export_dialog(); break;
 
-    case MenuAction::InspectTileset:
-      dispatcher.enqueue<InspectTilesetEvent>();
-      break;
+    case MenuAction::InspectTileset: dispatcher.enqueue<InspectTilesetEvent>(); break;
 
-    case MenuAction::DemoWindow:
-      break;
+    case MenuAction::DemoWindow: break;
 
-    case MenuAction::StyleEditor:
-      break;
+    case MenuAction::StyleEditor: break;
 
-    case MenuAction::AboutTactile:
-      ui::open_about_dialog();
-      break;
+    case MenuAction::AboutTactile: ui::open_about_dialog(); break;
 
-    case MenuAction::AboutDearImGui:
-      ui::open_about_dear_imgui_dialog();
-      break;
+    case MenuAction::AboutDearImGui: ui::open_about_dear_imgui_dialog(); break;
 
     case MenuAction::ReportIssue:
       cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
       break;
 
-    case MenuAction::Credits:
-      ui::open_credits_dialog();
-      break;
+    case MenuAction::Credits: ui::open_credits_dialog(); break;
   }
 }
 

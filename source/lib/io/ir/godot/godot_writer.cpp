@@ -9,13 +9,13 @@
 
 #include <fmt/format.h>
 
-#include "common/util/filesystem.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
 #include "io/ir/godot/godot_scene.hpp"
 #include "io/stream.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -76,7 +76,7 @@ namespace {
       return fmt::format(R"("{}": {})", name, value.as_bool() ? "true" : "false");
 
     case AttributeType::kPath:
-      return fmt::format(R"("{}": "{}")", name, use_forward_slashes(value.as_path()));
+      return fmt::format(R"("{}": "{}")", name, normalize_path(value.as_path()));
 
     case AttributeType::kColor: {
       const auto color = value.as_color().normalized();
