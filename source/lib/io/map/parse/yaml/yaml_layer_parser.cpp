@@ -10,6 +10,7 @@
 #include "io/util/yaml.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
@@ -31,7 +32,7 @@ namespace {
   const auto split_ok = split_string(tile_data, ' ', [&](const StringView token) {
     if (const auto id = parse_int(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
-      tiles[row][col] = *id;
+      tiles[row][col] = narrow_cast<TileID>(*id);
 
       ++index;
       return true;
@@ -87,7 +88,7 @@ namespace {
   if (auto sequence = node["objects"]) {
     object_layer.objects.reserve(sequence.size());
 
-    for (const auto& object_node: sequence) {
+    for (const auto& object_node : sequence) {
       if (auto object = parse_object(object_node, map)) {
         object_layer.objects.push_back(std::move(*object));
       }
@@ -109,7 +110,7 @@ namespace {
     group.children.reserve(sequence.size());
 
     usize index = 0;
-    for (const auto& layer_node: sequence) {
+    for (const auto& layer_node : sequence) {
       if (auto child = parse_layer(layer_node, map, index)) {
         group.children.push_back(std::make_unique<LayerIR>(std::move(*child)));
       }
@@ -241,7 +242,7 @@ auto parse_layers(const YAML::Node& sequence, const MapIR& map)
   layers.reserve(sequence.size());
 
   usize index = 0;
-  for (const auto& layer_node: sequence) {
+  for (const auto& layer_node : sequence) {
     if (auto layer = parse_layer(layer_node, map, index)) {
       layers.push_back(std::move(*layer));
     }

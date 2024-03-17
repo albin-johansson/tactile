@@ -13,6 +13,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
@@ -23,7 +24,7 @@ namespace {
 {
   Vector<XmlNode> nodes;
 
-  for (auto node: map_node.children()) {
+  for (auto node : map_node.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
         std::strcmp(node.name(), "objectgroup") == 0 ||
         std::strcmp(node.name(), "group") == 0) {
@@ -44,7 +45,7 @@ namespace {
   const auto split_ok = split_string(csv, ',', [&](const StringView token) {
     if (const auto id = parse_int(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
-      tiles[row][col] = *id;
+      tiles[row][col] = narrow_cast<TileID>(*id);
 
       ++index;
       return true;
@@ -66,7 +67,7 @@ namespace {
   auto tiles = make_tile_matrix(extent);
 
   usize index = 0;
-  for (const auto tile_node: data_node.children("tile")) {
+  for (const auto tile_node : data_node.children("tile")) {
     const auto [row, col] = to_matrix_coords(index, extent.cols);
     tiles[row][col] = tile_node.attribute("gid").as_int(kEmptyTile);
 
@@ -181,7 +182,7 @@ namespace {
 {
   ObjectLayerIR object_layer;
 
-  for (const auto object_node: layer_node.children("object")) {
+  for (const auto object_node : layer_node.children("object")) {
     if (auto object = parse_object(object_node)) {
       object_layer.objects.push_back(std::move(*object));
     }
@@ -235,7 +236,7 @@ namespace {
     auto& group = layer.data.emplace<GroupLayerIR>();
 
     usize child_index = 0;
-    for (auto child_node: collect_layer_nodes(layer_node)) {
+    for (auto child_node : collect_layer_nodes(layer_node)) {
       if (auto child_layer = parse_layer(child_node, map, child_index)) {
         group.children.push_back(std::make_unique<LayerIR>(std::move(*child_layer)));
       }
@@ -309,7 +310,7 @@ auto parse_layers(XmlNode map_node, MapIR& map) -> Expected<Vector<LayerIR>, Par
   Vector<LayerIR> layers;
 
   usize index = 0;
-  for (const auto layer_node: collect_layer_nodes(map_node)) {
+  for (const auto layer_node : collect_layer_nodes(map_node)) {
     if (auto layer = parse_layer(layer_node, map, index)) {
       layers.push_back(std::move(*layer));
     }
