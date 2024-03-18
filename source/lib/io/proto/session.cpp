@@ -4,7 +4,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "io/directories.hpp"
 #include "io/ir/map_document_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/proto.hpp"
@@ -20,7 +19,7 @@ constexpr int kSessionFormatVersion [[maybe_unused]] = 1;
 
 [[nodiscard]] auto get_file_path() -> const Path&
 {
-  static const auto path = get_persistent_file_dir() / "session.bin";
+  static const auto path = get_persistent_storage_directory().value() / "session.bin";
   return path;
 }
 

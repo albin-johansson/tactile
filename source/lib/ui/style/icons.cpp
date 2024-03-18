@@ -3,7 +3,6 @@
 #include "icons.hpp"
 
 #include "core/texture.hpp"
-#include "io/directories.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
@@ -17,7 +16,7 @@ inline Shared<Texture> gTactileIcon;
 
 void load_icons()
 {
-  gTactileIcon = load_texture(find_resource("assets/icon.png"));
+  gTactileIcon = load_texture("assets/icon.png");
 }
 
 void unload_icons() noexcept
@@ -28,34 +27,26 @@ void unload_icons() noexcept
 auto get_icon(const LayerType type) -> const char*
 {
   switch (type) {
-    case LayerType::TileLayer:
-      return TAC_ICON_TILE_LAYER;
+    case LayerType::TileLayer: return TAC_ICON_TILE_LAYER;
 
-    case LayerType::ObjectLayer:
-      return TAC_ICON_OBJECT_LAYER;
+    case LayerType::ObjectLayer: return TAC_ICON_OBJECT_LAYER;
 
-    case LayerType::GroupLayer:
-      return TAC_ICON_GROUP_LAYER;
+    case LayerType::GroupLayer: return TAC_ICON_GROUP_LAYER;
 
-    default:
-      throw Exception {"Invalid layer type!"};
+    default: throw Exception {"Invalid layer type!"};
   }
 }
 
 auto get_icon(const ObjectType type) -> const char*
 {
   switch (type) {
-    case ObjectType::Rect:
-      return TAC_ICON_RECTANGLE;
+    case ObjectType::Rect: return TAC_ICON_RECTANGLE;
 
-    case ObjectType::Ellipse:
-      return TAC_ICON_ELLIPSE;
+    case ObjectType::Ellipse: return TAC_ICON_ELLIPSE;
 
-    case ObjectType::Point:
-      return TAC_ICON_POINT;
+    case ObjectType::Point: return TAC_ICON_POINT;
 
-    default:
-      throw Exception {"Invalid object type!"};
+    default: throw Exception {"Invalid object type!"};
   }
 }
 

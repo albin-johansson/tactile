@@ -4,10 +4,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "io/directories.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
 #include "model/file_history.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -16,7 +16,7 @@ constexpr int kHistoryFormatVersion [[maybe_unused]] = 1;
 
 [[nodiscard]] auto get_file_path() -> const Path&
 {
-  static const auto path = get_persistent_file_dir() / "history.bin";
+  static const auto path = get_persistent_storage_directory().value() / "history.bin";
   return path;
 }
 
@@ -40,7 +40,7 @@ auto load_file_history_from_disk() -> Maybe<FileHistory>
       file_history.last_closed_file = h.last_opened_file();
     }
 
-    for (const auto& file: h.files()) {
+    for (const auto& file : h.files()) {
       if (fs::exists(file)) {
         spdlog::debug("Loaded '{}' from file history", file);
         file_history.entries.push_back(file);
@@ -62,7 +62,7 @@ void save_file_history_to_disk(const FileHistory& history)
     h.set_last_opened_file(*history.last_closed_file);
   }
 
-  for (const auto& path: history.entries) {
+  for (const auto& path : history.entries) {
     spdlog::debug("Saving '{}' to file history", path);
     h.add_files(path);
   }

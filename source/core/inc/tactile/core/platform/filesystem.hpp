@@ -10,6 +10,16 @@
 namespace tactile {
 
 /**
+ * Attempts to open a directory in the operating system file explorer.
+ *
+ * \param dir The directory to open.
+ *
+ * \return
+ *    Nothing if the function tried to open the directory; an error code otherwise.
+ */
+auto open_directory_in_finder(const Path& dir) -> Result<void>;
+
+/**
  * Returns the file path to the persistent storage directory associated with the app.
  *
  * \return
@@ -26,6 +36,15 @@ auto get_persistent_storage_directory() -> Result<Path>;
  */
 [[nodiscard]]
 auto get_user_home_directory() -> Result<NativeString>;
+
+/**
+ * Returns the path to the associated \c imgui.ini file.
+ *
+ * \return
+ *    A file path.
+ */
+[[nodiscard]]
+auto get_imgui_ini_file_path() -> Path;
 
 /**
  * Converts a path to a string that is guaranteed to use forward slash characters.

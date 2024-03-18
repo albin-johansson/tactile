@@ -5,7 +5,6 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "io/directories.hpp"
 #include "io/util/json.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
@@ -573,8 +572,7 @@ void load_animation_dock_strings(const JSON& json, AnimationDockStrings& dock)
 
 auto parse_language(const char* path, const Strings& fallback) -> Strings
 {
-  const auto resource = find_resource(path);
-  const auto json = parse_json_file(resource).value();
+  const auto json = parse_json_file(path).value();
 
   auto strings = fallback;
 

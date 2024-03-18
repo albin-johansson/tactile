@@ -3,8 +3,10 @@
 #include "tactile/core/platform/filesystem.hpp"
 
 #include <algorithm>  // replace
+#include <cstdlib>    // system
 
 #include <SDL2/SDL.h>
+#include <fmt/format.h>
 
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -12,6 +14,32 @@
 #include "tactile/core/util/string_ops.hpp"
 
 namespace tactile {
+
+auto open_directory_in_finder(const Path& dir) -> Result<void>
+{
+  if (!fs::is_directory(dir)) {
+    return unexpected(make_error(GenericError::kInvalidParam));
+  }
+
+  if constexpr (kOnMacos) {
+    const auto cmd = fmt::format("open \"{}\"", dir.string());
+    std::system(cmd.c_str());
+  }
+  else if constexpr (kOnWindows) {
+    const auto cmd = fmt::format("explorer \"{}\"", dir.string());
+    std::system(cmd.c_str());
+  }
+  else if constexpr (kOnLinux) {
+    const auto cmd = fmt::format("xdg-open \"{}\"", dir.string());
+    std::system(cmd.c_str());
+  }
+  else {
+    TACTILE_LOG_ERROR("Cannot open finder on this platform");
+    return unexpected(make_error(GenericError::kUnsupported));
+  }
+
+  return kOK;
+}
 
 auto get_persistent_storage_directory() -> Result<Path>
 {
@@ -32,6 +60,11 @@ auto get_user_home_directory() -> Result<NativeString>
   return get_env(var_name).and_then([](const String& home_dir) {  //
     return make_native_string(home_dir.c_str());
   });
+}
+
+auto get_imgui_ini_file_path() -> Path
+{
+  return "imgui.ini";
 }
 
 auto normalize_path(const Path& path) -> String

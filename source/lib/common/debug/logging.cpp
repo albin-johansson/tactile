@@ -11,12 +11,12 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "io/directories.hpp"
 #include "tactile/base/container/deque.hpp"
 #include "tactile/base/container/set.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -80,7 +80,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   {
     usize count = 0;
 
-    for (const auto& [level, str]: mHistory) {
+    for (const auto& [level, str] : mHistory) {
       if (set.contains(level)) {
         ++count;
       }
@@ -96,7 +96,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
                                   const LoggedMessageVisitorFn& fn) const
   {
     usize filtered_index = 0;
-    for (const auto& [level, msg]: mHistory) {
+    for (const auto& [level, msg] : mHistory) {
       if (filtered_index >= filtered_end_index) {
         break;
       }
@@ -120,7 +120,8 @@ inline Shared<HistorySink> gHistorySink;
 
 void init_logger()
 {
-  const auto path = get_persistent_file_dir() / "logs" / "tactile_log.txt";
+  const auto path =
+      get_persistent_storage_directory().value() / "logs" / "tactile_log.txt";
 
   auto cs = std::make_shared<spdlog::sinks::stdout_color_sink_st>();
   auto fs = std::make_shared<spdlog::sinks::basic_file_sink_st>(path.string(), true);

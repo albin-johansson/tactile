@@ -10,11 +10,11 @@
 
 #include "common/debug/logging.hpp"
 #include "common/util/fmt.hpp"
-#include "io/directories.hpp"
 #include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/core/debug/stacktrace.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 #include "tactile/core/platform/win32.hpp"
 #include "ui/menu/menu.hpp"
 
@@ -24,10 +24,7 @@ namespace {
 void load_window_icon(cen::window& window)
 {
   try {
-    // This is necessary to allow macOS builds in different flavours
-    const auto icon_path = find_resource(kIsAppBundle ? "Tactile.icns"  //
-                                                      : "assets/icon.png");
-    window.set_icon(cen::surface {icon_path.string()});
+    window.set_icon(cen::surface {"assets/icon.png"});
   }
   catch (const std::exception& e) {
     spdlog::error("Failed to load window icon: {}", e.what() ? e.what() : "N/A");
@@ -62,7 +59,8 @@ AppInitializer::AppInitializer()
   mImGui.emplace(window, sdl.get_gl_context());
   init_menus();
 
-  spdlog::debug("Using persistent file directory {}", tactile::get_persistent_file_dir());
+  spdlog::debug("Using persistent file directory {}",
+                get_persistent_storage_directory().value());
 }
 
 auto AppInitializer::get_window() -> cen::window&

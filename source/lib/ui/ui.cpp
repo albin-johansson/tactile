@@ -6,11 +6,11 @@
 #include <spdlog/spdlog.h>
 #include <ui/style/alignment.hpp>
 
-#include "io/directories.hpp"
 #include "io/file_dialog.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
@@ -40,7 +40,7 @@ inline constinit bool gOpenAboutImGuiDialog = false;
 
 void check_for_missing_ini_file()
 {
-  const auto& ini = get_widget_ini_path();
+  const auto& ini = get_imgui_ini_file_path();
   if (!fs::exists(ini)) {
     spdlog::warn("Resetting layout because 'imgui.ini' is missing...");
     reset_layout();

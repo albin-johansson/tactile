@@ -4,12 +4,12 @@
 
 #include <imgui_internal.h>
 
-#include "io/directories.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -29,7 +29,7 @@ void update_dock_space()
       const auto& settings = get_settings();
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
-          !fs::exists(get_widget_ini_path())) {
+          !fs::exists(get_imgui_ini_file_path())) {
         load_default_layout(gDockRootId.value(), false);
       }
 

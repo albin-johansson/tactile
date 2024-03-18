@@ -8,8 +8,8 @@
 #include <imgui_impl_sdl2.h>
 #include <spdlog/spdlog.h>
 
-#include "io/directories.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 #include "ui/style/themes.hpp"
 
 namespace tactile {
@@ -30,7 +30,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= static_cast<ImGuiConfigFlags>(ImGuiConfigFlags_DockingEnable);
   io.WantCaptureKeyboard = true;
 
-  static const auto ini = get_widget_ini_path().string();
+  static const auto ini = get_imgui_ini_file_path().string();
   io.IniFilename = ini.c_str();
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
@@ -60,9 +60,6 @@ ImGuiContext::~ImGuiContext()
 
 void ImGuiContext::reload_fonts()
 {
-  static const auto roboto = find_resource(kFontRobotoPath).string();
-  static const auto fa = find_resource(kFontFaPath).string();
-
   spdlog::debug("Reloading fonts...");
 
   auto& io = ImGui::GetIO();
@@ -81,7 +78,7 @@ void ImGuiContext::reload_fonts()
     io.Fonts->AddFontDefault(&config);
   }
   else {
-    io.Fonts->AddFontFromFileTTF(roboto.c_str(), size * scale.x);
+    io.Fonts->AddFontFromFileTTF(kFontRobotoPath, size * scale.x);
   }
 
   // The global scale is 1 on most platforms, and 0.5 on macOS
@@ -92,7 +89,7 @@ void ImGuiContext::reload_fonts()
   config.GlyphMinAdvanceX = size * scale.x;
   config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
   config.GlyphOffset = {0, 2};
-  io.Fonts->AddFontFromFileTTF(fa.c_str(), size * scale.x, &config, kFontIconRange);
+  io.Fonts->AddFontFromFileTTF(kFontFaPath, size * scale.x, &config, kFontIconRange);
 
   io.Fonts->Build();
 

@@ -4,10 +4,10 @@
 
 #include <imgui.h>
 
-#include "io/directories.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -40,7 +40,7 @@ void update_debug_menu()
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.open_persistent_file_dir.c_str())) {
-      open_directory(get_persistent_file_dir());
+      (void) open_directory_in_finder(get_persistent_storage_directory().value());
     }
   }
 

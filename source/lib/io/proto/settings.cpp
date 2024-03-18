@@ -6,17 +6,17 @@
 
 #include <spdlog/spdlog.h>
 
-#include "io/directories.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/core/platform/filesystem.hpp"
 
 namespace tactile {
 namespace {
 
 [[nodiscard]] auto get_settings_file_path() -> const Path&
 {
-  static const auto path = get_persistent_file_dir() / "settings.bin";
+  static const auto path = get_persistent_storage_directory().value() / "settings.bin";
   return path;
 }
 
