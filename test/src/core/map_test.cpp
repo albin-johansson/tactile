@@ -21,7 +21,6 @@
 
 #include <doctest/doctest.h>
 
-#include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/layer/group_layer.hpp"
@@ -32,6 +31,7 @@
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile::test {
 namespace {
@@ -54,15 +54,14 @@ struct MapLayerPreset final {
   UUID g;
 
   MapLayerPreset()
-      : a {map.add_object_layer()},
-        b {map.add_group_layer()},
-        c {map.add_tile_layer(b)},
-        d {map.add_group_layer(b)},
-        e {map.add_object_layer(d)},
-        f {map.add_tile_layer(d)},
-        g {map.add_tile_layer(b)}
-  {
-  }
+    : a {map.add_object_layer()},
+      b {map.add_group_layer()},
+      c {map.add_tile_layer(b)},
+      d {map.add_group_layer(b)},
+      e {map.add_object_layer(d)},
+      f {map.add_tile_layer(d)},
+      g {map.add_tile_layer(b)}
+  {}
 };
 
 }  // namespace

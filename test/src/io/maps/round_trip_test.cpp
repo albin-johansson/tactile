@@ -28,13 +28,13 @@
 
 #include <doctest/doctest.h>
 
-#include "common/util/assoc.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 using namespace std::string_literals;
 
@@ -54,7 +54,7 @@ void validate_contexts(const ContextIR& source, const ContextIR& restored)
   REQUIRE(source.properties == restored.properties);
 
   for (const auto& [name, attributes] : source.components) {
-    REQUIRE(has_key(restored.components, name));
+    REQUIRE(exists_in(restored.components, name));
     REQUIRE(attributes == restored.components.at(name));
   }
 }

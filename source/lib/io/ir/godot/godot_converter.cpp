@@ -9,13 +9,13 @@
 
 #include <fmt/format.h>
 
-#include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 namespace {
@@ -36,13 +36,13 @@ inline constexpr int32 kTileOffset = 65'536;
 {
   GdMetaData meta;
 
-  for (const auto& [name, value]: context.properties) {
+  for (const auto& [name, value] : context.properties) {
     meta.props[name] = value;
   }
 
-  for (const auto& [name, attrs]: context.components) {
+  for (const auto& [name, attrs] : context.components) {
     auto& comp = meta.comps[name];
-    for (const auto& [attr_name, attr_value]: attrs) {
+    for (const auto& [attr_name, attr_value] : attrs) {
       comp[attr_name] = attr_value;
     }
   }
@@ -55,18 +55,18 @@ inline constexpr int32 kTileOffset = 65'536;
 {
   GodotTileset result;
 
-  for (const auto& tileset: map.tilesets) {
+  for (const auto& tileset : map.tilesets) {
     const auto image_name = tileset.image_path.filename().string();
     const auto texture_id =
         result.add_texture(options.project_image_dir / image_name, tileset.image_path);
 
     GdTilesetInfo ts_info = {
-        .uuid = tileset.uuid,
-        .name = tileset.name,
-        .texture_ref = texture_id,
-        .first_tile = tileset.first_tile,
-        .tile_size = tileset.tile_size,
-        .image_size = tileset.image_size,
+      .uuid = tileset.uuid,
+      .name = tileset.name,
+      .texture_ref = texture_id,
+      .first_tile = tileset.first_tile,
+      .tile_size = tileset.tile_size,
+      .image_size = tileset.image_size,
     };
 
     result.add_tileset(std::move(ts_info));
@@ -80,7 +80,7 @@ void add_tileset_textures(const MapIR& map,
                           GodotFile& file,
                           HashMap<UUID, GdExtRes>& tileset_textures)
 {
-  for (const auto& tileset: map.tilesets) {
+  for (const auto& tileset : map.tilesets) {
     const auto filename = tileset.name + tileset.image_path.extension().string();
     const auto relpath = options.project_image_dir / filename;
     const auto id =
@@ -107,7 +107,7 @@ void add_animation(const TilesetIR& tileset,
   // Godot only supports a single speed for animations, so we just use the first frame
   animation.speed = 1'000.0f / static_cast<float>(tile.frames.front().duration_ms);
 
-  for (const auto& frame: tile.frames) {
+  for (const auto& frame : tile.frames) {
     const auto pos = TilePos::from_index(frame.tile_index, tileset.column_count);
 
     GdAtlasTexture texture;
@@ -127,8 +127,8 @@ void add_animations(const MapIR& map,
                     const TilesetTextures& tileset_textures,
                     GodotFile& file)
 {
-  for (const auto& tileset: map.tilesets) {
-    for (const auto& [tile_index, tile]: tileset.fancy_tiles) {
+  for (const auto& tileset : map.tilesets) {
+    for (const auto& [tile_index, tile] : tileset.fancy_tiles) {
       if (!tile.frames.empty()) {
         const auto texture_id = lookup_in(tileset_textures, tileset.uuid);
         add_animation(tileset, texture_id, tile_index, tile, file);
@@ -207,10 +207,10 @@ void add_object_layer(const GodotEmitOptions& options,
   const auto& object_layer = layer.as_object_layer();
 
   GdLayer gd_layer = {
-      .name = to_godot_name(layer.name),
-      .parent = std::move(parent),
-      .meta = copy_meta(layer.context),
-      .visible = layer.visible,
+    .name = to_godot_name(layer.name),
+    .parent = std::move(parent),
+    .meta = copy_meta(layer.context),
+    .visible = layer.visible,
   };
 
   auto& gd_object_layer = gd_layer.value.emplace<GdObjectLayer>();
@@ -220,7 +220,7 @@ void add_object_layer(const GodotEmitOptions& options,
       (gd_layer.parent == ".") ? to_godot_name(layer.name)
                                : fmt::format("{}/{}", parent, to_godot_name(layer.name));
 
-  for (const auto& object: object_layer.objects) {
+  for (const auto& object : object_layer.objects) {
     gd_object_layer.objects.push_back(
         create_object(options, object, object_parent, scene));
   }
@@ -236,10 +236,10 @@ void add_tile_layer(const MapIR& map,
   const auto& tile_layer = layer.as_tile_layer();
 
   GdLayer gd_layer = {
-      .name = to_godot_name(layer.name),
-      .parent = std::move(parent),
-      .meta = copy_meta(layer.context),
-      .visible = layer.visible,
+    .name = to_godot_name(layer.name),
+    .parent = std::move(parent),
+    .meta = copy_meta(layer.context),
+    .visible = layer.visible,
   };
 
   auto& gd_tile_layer = gd_layer.value.emplace<GdTileLayer>();
@@ -301,17 +301,17 @@ void add_layer(const GodotEmitOptions& options,
       const auto layer_name = to_godot_name(layer.name);
 
       scene.add_layer({
-          .name = layer_name,
-          .parent = parent,
-          .meta = copy_meta(layer.context),
-          .visible = layer.visible,
+        .name = layer_name,
+        .parent = parent,
+        .meta = copy_meta(layer.context),
+        .visible = layer.visible,
       });
 
       const auto child_parent_path =
           (parent == ".") ? layer_name : fmt::format("{}/{}", parent, layer_name);
 
       const auto& group_layer = layer.as_group_layer();
-      for (const auto& child_layer: group_layer.children) {
+      for (const auto& child_layer : group_layer.children) {
         add_layer(options, map, *child_layer, child_parent_path, scene);
       }
 
@@ -337,7 +337,7 @@ auto convert_to_godot(const MapIR& map, const GodotEmitOptions& options) -> Godo
   add_tileset_textures(map, options, scene, tileset_textures);
   add_animations(map, tileset_textures, scene);
 
-  for (const auto& layer: map.layers) {
+  for (const auto& layer : map.layers) {
     add_layer(options, map, layer, ".", scene);
   }
 

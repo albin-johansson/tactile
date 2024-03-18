@@ -4,15 +4,14 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
 #include "tactile/core/debug/generic_error.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 
 ContextInfo::ContextInfo(const UUID& id)
-    : mId {id}
-{
-}
+  : mId {id}
+{}
 
 void ContextInfo::set_name(String name)
 {
@@ -21,14 +20,14 @@ void ContextInfo::set_name(String name)
 
 void ContextInfo::each_property(const PropertyVisitor& visitor) const
 {
-  for (const auto& [property_name, property_value]: mProperties) {
+  for (const auto& [property_name, property_value] : mProperties) {
     visitor(property_name, property_value);
   }
 }
 
 void ContextInfo::each_component(const ComponentVisitor& visitor) const
 {
-  for (const auto& [component_id, component]: mComponents) {
+  for (const auto& [component_id, component] : mComponents) {
     visitor(component_id, component);
   }
 }

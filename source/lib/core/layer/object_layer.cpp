@@ -4,8 +4,8 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 namespace {
@@ -98,7 +98,7 @@ auto ObjectLayer::get_object(const UUID& id) const -> const Object&
 auto ObjectLayer::object_at(const Float2& pos, const Float2& tile_size) const
     -> Maybe<UUID>
 {
-  for (const auto& [id, object]: mObjects) {
+  for (const auto& [id, object] : mObjects) {
     const auto bounds = get_bounds(*object, tile_size);
 
     const auto max_x = bounds.x() + bounds.z();

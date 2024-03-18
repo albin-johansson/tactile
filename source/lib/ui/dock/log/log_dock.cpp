@@ -5,12 +5,12 @@
 #include <imgui.h>
 
 #include "common/debug/logging.hpp"
-#include "common/util/assoc.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/lookup.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -18,12 +18,12 @@ namespace tactile::ui {
 namespace {
 
 const HashMap<LogLevel, ImVec4> kLogLevelColors = {
-    {LogLevel::trace, ImVec4 {0.93f, 0.51f, 0.93f, 1.00f}},
-    {LogLevel::debug, ImVec4 {0.50f, 1.00f, 0.70f, 1.00f}},
-    {LogLevel::info, ImVec4 {1.00f, 1.00f, 1.00f, 1.00f}},
-    {LogLevel::warn, ImVec4 {1.00f, 1.00f, 0.00f, 1.00f}},
-    {LogLevel::err, ImVec4 {1.00f, 0.40f, 0.40f, 1.00f}},
-    {LogLevel::critical, ImVec4 {1.00f, 0.00f, 0.00f, 1.00f}},
+  {LogLevel::trace, ImVec4 {0.93f, 0.51f, 0.93f, 1.00f}},
+  {LogLevel::debug, ImVec4 {0.50f, 1.00f, 0.70f, 1.00f}},
+  {LogLevel::info, ImVec4 {1.00f, 1.00f, 1.00f, 1.00f}},
+  {LogLevel::warn, ImVec4 {1.00f, 1.00f, 0.00f, 1.00f}},
+  {LogLevel::err, ImVec4 {1.00f, 0.40f, 0.40f, 1.00f}},
+  {LogLevel::critical, ImVec4 {1.00f, 0.00f, 0.00f, 1.00f}},
 };
 
 struct LogDockState final {

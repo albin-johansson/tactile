@@ -4,17 +4,16 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
 #include "core/context/context_info.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/generic_error.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 
 ContextManager::ContextManager(const UUID& root_ctx_id)
-    : mRootContextId {root_ctx_id}
-{
-}
+  : mRootContextId {root_ctx_id}
+{}
 
 void ContextManager::add_context(Shared<Context> context)
 {
@@ -88,7 +87,7 @@ auto ContextManager::on_undef_comp(const UUID& component_id) -> HashMap<UUID, Co
 {
   HashMap<UUID, Component> removed;
 
-  for (auto& [ctx_id, context]: mContexts) {
+  for (auto& [ctx_id, context] : mContexts) {
     auto& ctx = context->get_ctx();
     if (ctx.has_component(component_id)) {
       removed.try_emplace(ctx_id, ctx.detach_component(component_id).value());
@@ -128,7 +127,7 @@ auto ContextManager::on_changed_component_attr_type(const UUID& component_id,
 {
   HashMap<UUID, Attribute> attributes;
 
-  for (auto& [ctx_id, context]: mContexts) {
+  for (auto& [ctx_id, context] : mContexts) {
     if (auto* component = context->get_ctx().find_component(component_id)) {
       attributes[ctx_id] = component->get_attr(name);
 
@@ -143,7 +142,7 @@ auto ContextManager::on_changed_component_attr_type(const UUID& component_id,
 void ContextManager::on_component_update(const UUID& component_id,
                                          const ComponentFunc& func)
 {
-  for (auto& [contextId, context]: mContexts) {
+  for (auto& [contextId, context] : mContexts) {
     if (auto* component = context->get_ctx().find_component(component_id)) {
       func(*component);
     }

@@ -6,9 +6,9 @@
 
 #include <fmt/format.h>
 
-#include "common/util/assoc.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/generic_error.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 
@@ -18,7 +18,7 @@ ComponentBase::ComponentBase(const UUID& type)
 
 void ComponentBase::add_attr(String key, AttributeType type)
 {
-  if (!has_key(mAttributes, key)) {
+  if (!exists_in(mAttributes, key)) {
     mAttributes[std::move(key)].reset(type);
   }
   else {
@@ -28,7 +28,7 @@ void ComponentBase::add_attr(String key, AttributeType type)
 
 void ComponentBase::add_attr(String key, Attribute value)
 {
-  if (!has_key(mAttributes, key)) {
+  if (!exists_in(mAttributes, key)) {
     mAttributes[std::move(key)] = std::move(value);
   }
   else {
@@ -55,7 +55,7 @@ auto ComponentBase::remove_attr(StringView key) -> Result<void>
 
 auto ComponentBase::rename_attr(StringView old_key, String new_key) -> Result<void>
 {
-  if (has_key(mAttributes, new_key)) {
+  if (exists_in(mAttributes, new_key)) {
     return unexpected(make_error(GenericError::kInvalidParam));
   }
 
@@ -79,7 +79,7 @@ auto ComponentBase::duplicate_attr(StringView key) -> String
   do {
     new_key = fmt::format("{} ({})", key, suffix);
     ++suffix;
-  } while (has_key(mAttributes, new_key));
+  } while (exists_in(mAttributes, new_key));
 
   mAttributes[new_key] = std::move(value);
   return new_key;
@@ -92,7 +92,7 @@ auto ComponentBase::get_attr(StringView key) const -> const Attribute&
 
 auto ComponentBase::has_attr(StringView key) const -> bool
 {
-  return has_key(mAttributes, key);
+  return exists_in(mAttributes, key);
 }
 
 auto ComponentBase::attr_count() const -> usize

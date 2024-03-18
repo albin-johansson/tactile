@@ -4,11 +4,11 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/lookup.hpp"
 #include "tile_matrix.hpp"
 
 namespace tactile {
@@ -31,18 +31,17 @@ struct Tileset::Data final {
   mutable HashMap<TileIndex, TileIndex> appearance_cache;
 
   Data(TilesetInfo info, const UUID& id)
-      : context {id},
-        texture {std::move(info.texture)},
-        tile_size {info.tile_size},
-        row_count {texture->get_size().y() / tile_size.y()},
-        column_count {texture->get_size().x() / tile_size.x()},
-        uv_size {vector_cast<float>(tile_size) / vector_cast<float>(texture->get_size())}
-  {
-  }
+    : context {id},
+      texture {std::move(info.texture)},
+      tile_size {info.tile_size},
+      row_count {texture->get_size().y() / tile_size.y()},
+      column_count {texture->get_size().x() / tile_size.x()},
+      uv_size {vector_cast<float>(tile_size) / vector_cast<float>(texture->get_size())}
+  {}
 };
 
 Tileset::Tileset(TilesetInfo info, const UUID& id)
-    : mData {std::make_unique<Data>(std::move(info), id)}
+  : mData {std::make_unique<Data>(std::move(info), id)}
 {
   load_tiles();
 }
@@ -84,7 +83,7 @@ void Tileset::update()
   //    tile->update();
   //  }
 
-  for (auto& [id, tile]: data.tiles) {
+  for (auto& [id, tile] : data.tiles) {
     tile->update();
   }
 }

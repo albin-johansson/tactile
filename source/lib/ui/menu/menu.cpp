@@ -6,7 +6,6 @@
 
 #include <fmt/format.h>
 
-#include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -19,6 +18,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/log/logger.hpp"
+#include "tactile/core/util/lookup.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {

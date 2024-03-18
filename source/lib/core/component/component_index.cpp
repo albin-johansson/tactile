@@ -5,9 +5,9 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "common/util/assoc.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/generic_error.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 
@@ -49,7 +49,7 @@ auto ComponentIndex::remove_comp(const UUID& component_id) -> Result<void>
 
 auto ComponentIndex::rename_comp(const UUID& component_id, String name) -> Result<void>
 {
-  if (!has_key(mDefs, component_id) || has_comp(name)) {
+  if (!exists_in(mDefs, component_id) || has_comp(name)) {
     return unexpected(make_error(GenericError::kInvalidParam));
   }
 
@@ -72,7 +72,7 @@ auto ComponentIndex::get_comp(const UUID& component_id) const
 
 auto ComponentIndex::get_comp(StringView name) -> ComponentDefinition&
 {
-  for (auto& [id, component_def]: mDefs) {
+  for (auto& [id, component_def] : mDefs) {
     if (component_def.get_name() == name) {
       return component_def;
     }

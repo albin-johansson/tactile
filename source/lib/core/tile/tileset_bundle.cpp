@@ -4,9 +4,9 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 

@@ -6,12 +6,12 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/util/assoc.hpp"
 #include "io/lang/language_parser.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
 namespace {
@@ -45,17 +45,13 @@ auto get_current_language() -> const Strings&
 auto get_language_name(const Lang lang) -> const char*
 {
   switch (lang) {
-    case Lang::EN:
-      return "English (US)";
+    case Lang::EN: return "English (US)";
 
-    case Lang::EN_GB:
-      return "English (GB)";
+    case Lang::EN_GB: return "English (GB)";
 
-    case Lang::SV:
-      return "Svenska";
+    case Lang::SV: return "Svenska";
 
-    default:
-      throw Exception {"Invalid language!"};
+    default: throw Exception {"Invalid language!"};
   }
 }
 
