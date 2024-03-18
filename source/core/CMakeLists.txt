@@ -27,6 +27,7 @@ target_link_libraries(tactile-core
                       PRIVATE
                       Boost::boost
                       FastFloat::fast_float
+                      tinyfiledialogs::tinyfiledialogs
                       ZLIB::ZLIB
                       $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
                       )

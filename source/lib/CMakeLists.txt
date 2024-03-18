@@ -40,7 +40,6 @@ target_link_libraries(${TACTILE_LIB}
                       yaml-cpp::yaml-cpp
                       nlohmann_json::nlohmann_json
                       pugixml::pugixml
-                      tinyfiledialogs::tinyfiledialogs
                       tl::expected
                       ZLIB::ZLIB
                       GLEW::GLEW

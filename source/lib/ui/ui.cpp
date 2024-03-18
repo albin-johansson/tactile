@@ -2,14 +2,16 @@
 
 #include "ui.hpp"
 
+#include <utility>  // move
+
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 #include <ui/style/alignment.hpp>
 
-#include "io/file_dialog.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/core/platform/file_dialog.hpp"
 #include "tactile/core/platform/filesystem.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
@@ -52,10 +54,10 @@ void check_for_missing_ini_file()
 
 void update_map_file_dialog(entt::dispatcher& dispatcher)
 {
-  auto dialog = FileDialog::open_map();
+  auto path = FileDialog::open_map();
 
-  if (dialog.is_okay()) {
-    dispatcher.enqueue<OpenMapEvent>(dialog.path());
+  if (path.has_value()) {
+    dispatcher.enqueue<OpenMapEvent>(std::move(*path));
   }
 
   gOpenMapFileDialog = false;

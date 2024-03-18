@@ -6,10 +6,10 @@
 #include <utility>   // move, to_underlying
 
 #include "common/util/string_buffer.hpp"
-#include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "tactile/base/container/array.hpp"
+#include "tactile/core/platform/file_dialog.hpp"
 #include "tactile/core/platform/filesystem.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
@@ -299,8 +299,8 @@ auto ui_color_input(const char* id, const Color value) -> Maybe<Color>
 auto ui_file_path_input(const char* id, const Path& value) -> Maybe<Path>
 {
   return input_file_path(id, value.filename().string(), []() -> Maybe<Path> {
-    auto dialog = FileDialog::open_file();
-    return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
+    auto path = FileDialog::open_file();
+    return path.has_value() ? std::move(*path) : Maybe<Path> {};
   });
 }
 
@@ -311,8 +311,8 @@ auto ui_directory_path_input(const char* id, const Path& value) -> Maybe<Path>
       id,
       strip_home_directory_prefix(value, home_dir).value_or(value.string()),
       []() -> Maybe<Path> {
-        auto dialog = FileDialog::open_folder();
-        return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
+        auto path = FileDialog::open_folder();
+        return path.has_value() ? std::move(*path) : Maybe<Path> {};
       });
 }
 

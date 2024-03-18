@@ -2,17 +2,19 @@
 
 #include "create_tileset_dialog.hpp"
 
+#include <utility>  // move
+
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/core/numeric/vec.hpp"
+#include "tactile/core/platform/file_dialog.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -30,12 +32,12 @@ inline CreateTilesetDialogState gDialogState;
 
 void select_image_file()
 {
-  auto dialog = FileDialog::open_image();
-  if (!dialog.is_okay()) {
+  auto image_path = FileDialog::open_image();
+  if (!image_path.has_value()) {
     return;
   }
 
-  gDialogState.image_path = dialog.path();
+  gDialogState.image_path = std::move(*image_path);
   const auto image_path_str = gDialogState.image_path.string();
 
   if (image_path_str.size() > gDialogState.image_path_preview_buffer.size()) {
@@ -61,9 +63,9 @@ void update_create_tileset_dialog(entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
 
   DialogOptions options {
-      .title = lang.window.create_tileset.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.create.c_str(),
+    .title = lang.window.create_tileset.c_str(),
+    .close_label = lang.misc.cancel.c_str(),
+    .accept_label = lang.misc.create.c_str(),
   };
 
   if (gDialogState.open_dialog) {
