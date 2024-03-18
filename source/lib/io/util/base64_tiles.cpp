@@ -2,18 +2,18 @@
 
 #include "base64_tiles.hpp"
 
-#include <bit>       // endian
+#include <bit>       // byteswap, endian
 #include <concepts>  // same_as
 #include <cstring>   // memcpy
 
 #include <cppcodec/base64_rfc4648.hpp>
 
-#include "common/util/bit.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/io/compress/zlib_compression_provider.hpp"
 #include "tactile/core/io/compress/zstd_compression_provider.hpp"
+#include "tactile/core/platform/bits.hpp"
 
 using Base64 = cppcodec::base64_rfc4648;
 
@@ -50,7 +50,7 @@ static_assert(std::same_as<TileID, int32>);
     std::memcpy(&tile, &data[index], sizeof(TileID));
 
     if constexpr (std::endian::native == std::endian::big) {
-      tile = byteswap(tile);
+      tile = std::byteswap(tile);
     }
 
     const auto [row, col] = to_matrix_coords(i, extent.cols);
@@ -87,8 +87,7 @@ auto base64_encode_tiles(const TileMatrix& tiles,
           ZstdCompressionProvider {}.compress(byte_stream).value();
       return encode_bytes(compressed_bytes);
     }
-    default:
-      throw Exception {"Invalid compression strategy"};
+    default: throw Exception {"Invalid compression strategy"};
   }
 }
 
@@ -99,8 +98,7 @@ auto base64_decode_tiles(StringView tiles,
   const auto decoded_bytes = Base64::decode(tiles.data(), tiles.size());
 
   switch (compression) {
-    case TileCompression::None:
-      return restore_tiles(decoded_bytes, extent);
+    case TileCompression::None: return restore_tiles(decoded_bytes, extent);
 
     case TileCompression::Zlib: {
       const auto decompressed_bytes =
@@ -112,8 +110,7 @@ auto base64_decode_tiles(StringView tiles,
           ZstdCompressionProvider {}.decompress(decoded_bytes).value();
       return restore_tiles(decompressed_bytes, extent);
     }
-    default:
-      throw Exception {"Invalid compression strategy"};
+    default: throw Exception {"Invalid compression strategy"};
   }
 }
 

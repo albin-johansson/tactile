@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include <bit>      // bit_cast
 #include <cstdint>  // uintptr_t
 
 #include <imgui.h>
 
-#include "common/util/bit.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/meta/color.hpp"
@@ -51,7 +51,7 @@ namespace tactile {
 [[nodiscard]] inline auto to_imgui_texture_id(const uint texture_id) noexcept
     -> ImTextureID
 {
-  return bitcast<ImTextureID>(static_cast<std::uintptr_t>(texture_id));
+  return std::bit_cast<ImTextureID>(static_cast<std::uintptr_t>(texture_id));
 }
 
 }  // namespace tactile
