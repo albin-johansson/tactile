@@ -13,9 +13,9 @@
 #include "io/directories.hpp"
 #include "io/proto/settings.hpp"
 #include "lang/language.hpp"
-#include "system/win32.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/core/debug/stacktrace.hpp"
+#include "tactile/core/platform/win32.hpp"
 #include "ui/menu/menu.hpp"
 
 namespace tactile {
@@ -49,7 +49,7 @@ AppInitializer::AppInitializer()
   // Initialize SDL and the application window
   auto& sdl = mSDL.emplace();
   auto& window = sdl.get_window();
-  win32_use_immersive_dark_mode(window);
+  win32_use_immersive_dark_mode(window.get());
   load_window_icon(window);
 
   // Configure settings and load the language files

@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "win32.hpp"
+#include "tactile/core/platform/win32.hpp"
 
 #include "tactile/base/prelude.hpp"
 
@@ -14,7 +14,7 @@
 
 namespace tactile {
 
-void win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
+void win32_use_immersive_dark_mode([[maybe_unused]] SDL_Window* window)
 {
 #if TACTILE_OS_WINDOWS
   SDL_SysWMinfo wm_info {};
