@@ -4,10 +4,10 @@
 
 #include <centurion/window.hpp>
 
-#include "init/protobuf_context.hpp"
 #include "init/sdl_context.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/persist/protobuf_context.hpp"
 #include "ui/imgui_context.hpp"
 
 namespace tactile {

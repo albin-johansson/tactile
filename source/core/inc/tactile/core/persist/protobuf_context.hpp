@@ -6,15 +6,20 @@
 
 namespace tactile {
 
-/// Handles the loading and unloading of the Protobuf library.
+/**
+ * RAII type that handles the initialization of the Protobuf library.
+ */
 class ProtobufContext final {
  public:
   TACTILE_DELETE_COPY(ProtobufContext);
   TACTILE_DELETE_MOVE(ProtobufContext);
 
-  [[nodiscard]] ProtobufContext();
+  /** Prepares the Protobuf context. */
+  [[nodiscard]]
+  ProtobufContext();
 
-  ~ProtobufContext();
+  /** Cleans up Protobuf resources. */
+  ~ProtobufContext() noexcept;
 };
 
 }  // namespace tactile
