@@ -10,6 +10,7 @@ namespace tactile {
 
 ProtobufContext::ProtobufContext()
 {
+  TACTILE_LOG_TRACE("Initializing Protobuf library");
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 }
 

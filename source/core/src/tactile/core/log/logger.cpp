@@ -34,16 +34,16 @@ void Logger::_log(const LogLevel level,
                      elapsed_time);
 
       const LogMessage msg {
-          .level = level,
-          .prefix = StringView {prefix_buffer.data(), prefix_buffer.size()},
-          .scope = mScope,
-          .text = text,
-          .instant = log_instant,
+        .level = level,
+        .prefix = StringView {prefix_buffer.data(), prefix_buffer.size()},
+        .scope = mScope,
+        .text = text,
+        .instant = log_instant,
       };
 
       const auto will_flush = would_flush(level);
 
-      for (const auto& sink: mSinks) {
+      for (const auto& sink : mSinks) {
         sink->log(msg);
 
         if (will_flush) {
@@ -70,7 +70,7 @@ void Logger::flush_on(const LogLevel level) noexcept
   mFlushLevel = level;
 }
 
-void Logger::add_sink(Unique<ILoggerSink> sink)
+void Logger::add_sink(Unique<ILogSink> sink)
 {
   if (sink) {
     mSinks.push_back(std::move(sink));
@@ -105,18 +105,12 @@ auto Logger::would_flush(const LogLevel level) const noexcept -> bool
 auto Logger::get_acronym(const LogLevel level) noexcept -> StringView
 {
   switch (level) {
-    case LogLevel::kTrace:
-      return "TRC";
-    case LogLevel::kDebug:
-      return "DBG";
-    case LogLevel::kInfo:
-      return "INF";
-    case LogLevel::kWarn:
-      return "WRN";
-    case LogLevel::kError:
-      return "ERR";
-    case LogLevel::kFatal:
-      return "FTL";
+    case LogLevel::kTrace: return "TRC";
+    case LogLevel::kDebug: return "DBG";
+    case LogLevel::kInfo: return "INF";
+    case LogLevel::kWarn: return "WRN";
+    case LogLevel::kError: return "ERR";
+    case LogLevel::kFatal: return "FTL";
   }
 
   return "";

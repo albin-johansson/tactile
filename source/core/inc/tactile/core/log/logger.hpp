@@ -11,7 +11,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/log/log_level.hpp"
-#include "tactile/core/log/logger_sink.hpp"
+#include "tactile/core/log/log_sink.hpp"
 
 #define TACTILE_LOG(Level, FmtString, ...)                                  \
   {                                                                         \
@@ -42,7 +42,7 @@
 
 namespace tactile {
 
-class ILoggerSink;
+class ILogSink;
 
 /**
  * A simple sink-based logger implementation.
@@ -88,7 +88,7 @@ class Logger final {
    *
    * \param sink A logger sink implementation.
    */
-  void add_sink(Unique<ILoggerSink> sink);
+  void add_sink(Unique<ILogSink> sink);
 
   /**
    * Sets a reference time point to use as a relative baseline for timestamps.
@@ -149,7 +149,7 @@ class Logger final {
  private:
   LogLevel mMinLevel {LogLevel::kInfo};
   LogLevel mFlushLevel {LogLevel::kError};
-  Vector<Unique<ILoggerSink>> mSinks {};
+  Vector<Unique<ILogSink>> mSinks {};
   Maybe<SteadyClockInstant> mReferenceInstant {};
   StringView mScope {""};
 
