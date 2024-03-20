@@ -58,6 +58,15 @@ add_subdirectory("source/base")
 add_subdirectory("source/render")
 add_subdirectory("source/core")
 add_subdirectory("source/main")
+
+if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
+  add_subdirectory("source/opengl")
+
+  if (TACTILE_BUILD_TESTS MATCHES "ON")
+    add_subdirectory("source/opengl/test")
+  endif ()
+endif ()
+
 add_subdirectory("source/lib")
 add_subdirectory("source/app")
 
