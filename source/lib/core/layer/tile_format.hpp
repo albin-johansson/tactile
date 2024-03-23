@@ -2,31 +2,22 @@
 
 #pragma once
 
+#include "tactile/core/io/compress/compression_type.hpp"
+#include "tactile/core/tile/tile_encoding.hpp"
+
 namespace tactile {
-
-/// Represents the different supported tile layer data encodings.
-enum class TileEncoding {
-  Plain,  ///< Encode the tile layer data in ordinary plain text.
-  Base64  ///< Use Base64 encoding.
-};
-
-/// Represents the different supported tile data compression methods.
-enum class TileCompression {
-  None,  ///< Apply no compression to tile layer data.
-  Zlib,  ///< Use the Zlib compression library.
-  Zstd   ///< Use the zstd compression library.
-};
 
 /// Describes the tile layer data format used by a map.
 ///
 /// An instance of this class is guaranteed to be in a valid state,
 /// and will as such raise exceptions if you try to specify an invalid
 /// tile format.
-class TileFormat final {
+class TileFormat final
+{
  public:
   void set_encoding(TileEncoding encoding);
 
-  void set_compression(TileCompression compression);
+  void set_compression(CompressionType compression);
 
   void set_zlib_compression_level(int level);
 
@@ -34,7 +25,7 @@ class TileFormat final {
 
   [[nodiscard]] auto encoding() const -> TileEncoding;
 
-  [[nodiscard]] auto compression() const -> TileCompression;
+  [[nodiscard]] auto compression() const -> CompressionType;
 
   [[nodiscard]] auto zlib_compression_level() const -> int;
 
@@ -43,7 +34,7 @@ class TileFormat final {
   /// Does the current encoding support tile compression?
   [[nodiscard]] auto supports_any_compression() const -> bool;
 
-  [[nodiscard]] auto can_use_compression_strategy(TileCompression compression) const
+  [[nodiscard]] auto can_use_compression_strategy(CompressionType compression) const
       -> bool;
 
   [[nodiscard]] static auto is_valid_zlib_compression_level(int level) -> bool;
@@ -57,8 +48,8 @@ class TileFormat final {
   [[nodiscard]] static auto max_zstd_compression_level() -> int;
 
  private:
-  TileEncoding mEncoding {TileEncoding::Plain};
-  TileCompression mCompression {TileCompression::None};
+  TileEncoding mEncoding {TileEncoding::kPlainText};
+  CompressionType mCompression {CompressionType::kNone};
   int mZlibCompressionLevel {-1};
   int mZstdCompressionLevel {3};
 };

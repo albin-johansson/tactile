@@ -33,12 +33,14 @@ TACTILE_FWD_DECLARE_STRUCT(LayerIR)
 using AttributeMap = StringMap<Attribute>;
 using ComponentMap = StringMap<AttributeMap>;
 
-struct ContextIR final {
+struct ContextIR final
+{
   AttributeMap properties;
   ComponentMap components;
 };
 
-struct ObjectIR final {
+struct ObjectIR final
+{
   ObjectID id {};
   ObjectType type {};
   Float2 pos {};
@@ -49,17 +51,20 @@ struct ObjectIR final {
   bool visible {};
 };
 
-struct TileLayerIR final {
+struct TileLayerIR final
+{
   // The extent is provided for convenience, it should mirror the map extent.
   TileExtent extent;
   TileMatrix tiles;
 };
 
-struct ObjectLayerIR final {
+struct ObjectLayerIR final
+{
   Vector<ObjectIR> objects;
 };
 
-struct GroupLayerIR final {
+struct GroupLayerIR final
+{
   GroupLayerIR() = default;
   ~GroupLayerIR() noexcept = default;
 
@@ -69,7 +74,8 @@ struct GroupLayerIR final {
   Vector<Unique<LayerIR>> children;
 };
 
-struct LayerIR final {
+struct LayerIR final
+{
   using Data = Variant<TileLayerIR, ObjectLayerIR, GroupLayerIR>;
 
   LayerID id {};
@@ -97,12 +103,14 @@ struct LayerIR final {
   }
 };
 
-struct AnimationFrameIR final {
+struct AnimationFrameIR final
+{
   TileIndex tile_index {};
   uint64 duration_ms {};
 };
 
-struct TileIR final {
+struct TileIR final
+{
   UUID uuid {UUID::generate()};  // This is not persistent! Only here for convenience.
 
   Vector<ObjectIR> objects;
@@ -110,7 +118,8 @@ struct TileIR final {
   ContextIR context;
 };
 
-struct TilesetIR final {
+struct TilesetIR final
+{
   using MetaTiles = HashMap<TileIndex, TileIR>;
 
   UUID uuid {UUID::generate()};  // This is not persistent! Only here for convenience.
@@ -132,14 +141,16 @@ struct TilesetIR final {
   }
 };
 
-struct TileFormatIR final {
-  TileEncoding encoding {TileEncoding::Plain};
-  TileCompression compression {TileCompression::None};
+struct TileFormatIR final
+{
+  TileEncoding encoding {TileEncoding::kPlainText};
+  CompressionType compression {CompressionType::kNone};
   Maybe<int32> zlib_compression_level;
   Maybe<int32> zstd_compression_level;
 };
 
-struct MapIR final {
+struct MapIR final
+{
   TileExtent extent;
   Int2 tile_size {};
   int32 next_layer_id {};

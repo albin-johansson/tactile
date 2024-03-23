@@ -205,15 +205,15 @@ void append_base64_tile_layer_data(XmlNode data_node,
   data_node.append_attribute("encoding").set_value("base64");
 
   switch (map.tile_format.compression) {
-    case TileCompression::None:
+    case CompressionType::kNone:
       // Do nothing
       break;
 
-    case TileCompression::Zlib:
+    case CompressionType::kZlib:
       data_node.append_attribute("compression").set_value("zlib");
       break;
 
-    case TileCompression::Zstd:
+    case CompressionType::kZstd:
       data_node.append_attribute("compression").set_value("zstd");
       break;
 
@@ -240,11 +240,11 @@ void append_tile_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
 
   auto data_node = node.append_child("data");
   switch (map.tile_format.encoding) {
-    case TileEncoding::Plain:
+    case TileEncoding::kPlainText:
       append_csv_tile_layer_data(data_node, map, tile_layer);
       break;
 
-    case TileEncoding::Base64:
+    case TileEncoding::kBase64:
       append_base64_tile_layer_data(data_node, map, tile_layer);
       break;
 

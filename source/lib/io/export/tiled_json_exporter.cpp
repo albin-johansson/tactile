@@ -80,7 +80,7 @@ void emit_tile_layer(JSON& json, const MapIR& map, const LayerIR& layer)
   json["height"] = map.extent.rows;
 
   switch (map.tile_format.encoding) {
-    case TileEncoding::Base64: {
+    case TileEncoding::kBase64: {
       json["encoding"] = "base64";
       break;
     }
@@ -90,11 +90,11 @@ void emit_tile_layer(JSON& json, const MapIR& map, const LayerIR& layer)
   }
 
   switch (map.tile_format.compression) {
-    case TileCompression::Zlib: {
+    case CompressionType::kZlib: {
       json["compression"] = "zlib";
       break;
     }
-    case TileCompression::Zstd: {
+    case CompressionType::kZstd: {
       json["compression"] = "zstd";
       break;
     }
@@ -103,7 +103,7 @@ void emit_tile_layer(JSON& json, const MapIR& map, const LayerIR& layer)
       break;
   }
 
-  if (map.tile_format.encoding == TileEncoding::Base64) {
+  if (map.tile_format.encoding == TileEncoding::kBase64) {
     json["data"] =
         base64_encode_tiles(tile_layer.tiles, map.extent, map.tile_format.compression);
   }

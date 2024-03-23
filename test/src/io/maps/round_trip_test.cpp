@@ -410,8 +410,8 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   data.extent.rows = kRowCount;
   data.extent.cols = kColCount;
 
-  data.tile_format.encoding = TileEncoding::Base64;
-  data.tile_format.compression = TileCompression::Zlib;
+  data.tile_format.encoding = TileEncoding::kBase64;
+  data.tile_format.compression = CompressionType::kZlib;
   data.tile_format.zlib_compression_level = 6;
 
   if (use_components) {

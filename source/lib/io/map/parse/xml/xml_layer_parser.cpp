@@ -88,8 +88,8 @@ namespace {
 
   if (const auto* encoding = data.attribute("encoding").as_string(nullptr)) {
     if (std::strcmp(encoding, "csv") == 0) {
-      map.tile_format.encoding = TileEncoding::Plain;
-      map.tile_format.compression = TileCompression::None;
+      map.tile_format.encoding = TileEncoding::kPlainText;
+      map.tile_format.compression = CompressionType::kNone;
 
       const auto text = data.text();
       if (auto tiles = parse_csv_tiles(text.get(), map.extent)) {
@@ -100,17 +100,17 @@ namespace {
       }
     }
     else if (std::strcmp(encoding, "base64") == 0) {
-      map.tile_format.encoding = TileEncoding::Base64;
+      map.tile_format.encoding = TileEncoding::kBase64;
 
       if (const auto* compression = data.attribute("compression").as_string(nullptr);
           !compression || std::strcmp(compression, "") == 0) {
-        map.tile_format.compression = TileCompression::None;
+        map.tile_format.compression = CompressionType::kNone;
       }
       else if (std::strcmp(compression, "zlib") == 0) {
-        map.tile_format.compression = TileCompression::Zlib;
+        map.tile_format.compression = CompressionType::kZlib;
       }
       else if (std::strcmp(compression, "zstd") == 0) {
-        map.tile_format.compression = TileCompression::Zstd;
+        map.tile_format.compression = CompressionType::kZstd;
       }
 
       return base64_decode_tiles(data.text().get(),
@@ -122,8 +122,8 @@ namespace {
     }
   }
   else {
-    map.tile_format.encoding = TileEncoding::Plain;
-    map.tile_format.compression = TileCompression::None;
+    map.tile_format.encoding = TileEncoding::kPlainText;
+    map.tile_format.compression = CompressionType::kNone;
 
     if (auto tiles = parse_tile_nodes(data, map.extent)) {
       return std::move(*tiles);

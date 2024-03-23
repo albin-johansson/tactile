@@ -27,7 +27,8 @@
 namespace tactile {
 
 /// Represents a loaded map.
-class MapDocument final : public Document {
+class MapDocument final : public Document
+{
  public:
   MapDocument(const Int2& tile_size, TileExtent extent);
 
@@ -117,7 +118,7 @@ class MapDocument final : public Document {
   void set_tile_format_encoding(TileEncoding encoding);
 
   /// Executes a command that sets the tile format compression strategy.
-  void set_tile_format_compression(TileCompression compression);
+  void set_tile_format_compression(CompressionType compression);
 
   /// Executes a command that sets the Zlib compression level.
   void set_zlib_compression_level(int level);

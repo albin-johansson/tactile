@@ -16,8 +16,8 @@
 namespace tactile {
 
 MapDocument::MapDocument(const Int2& tile_size, const TileExtent extent)
-    : mMap {std::make_shared<Map>()},
-      mDelegate {mMap->get_uuid()}
+  : mMap {std::make_shared<Map>()},
+    mDelegate {mMap->get_uuid()}
 {
   mMap->resize(extent);
   mMap->set_tile_size(tile_size);
@@ -29,7 +29,7 @@ MapDocument::MapDocument(const Int2& tile_size, const TileExtent extent)
 
 void MapDocument::update()
 {
-  for (auto& [tileset_id, tileset_ref]: mMap->get_tileset_bundle()) {
+  for (auto& [tileset_id, tileset_ref] : mMap->get_tileset_bundle()) {
     tileset_ref.update();
   }
 }
@@ -194,7 +194,7 @@ void MapDocument::set_tile_format_encoding(const TileEncoding encoding)
   get_history().push<SetTileFormatEncoding>(mMap, encoding);
 }
 
-void MapDocument::set_tile_format_compression(const TileCompression compression)
+void MapDocument::set_tile_format_compression(const CompressionType compression)
 {
   get_history().push<SetTileFormatCompression>(mMap, compression);
 }

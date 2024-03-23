@@ -184,7 +184,7 @@ void emit_layer(YAML::Emitter& emitter, const MapIR& map, const LayerIR& layer)
 
       const auto& tile_layer = layer.as_tile_layer();
 
-      if (map.tile_format.encoding == TileEncoding::Plain) {
+      if (map.tile_format.encoding == TileEncoding::kPlainText) {
         emit_plain_tile_layer_data(emitter, tile_layer, map.extent);
       }
       else {
@@ -385,22 +385,22 @@ void emit_component_definitions(YAML::Emitter& emitter, const MapIR& ir_map)
 
 void emit_tile_format(YAML::Emitter& emitter, const TileFormatIR& format)
 {
-  if (format.encoding != TileEncoding::Plain) {
+  if (format.encoding != TileEncoding::kPlainText) {
     emitter << YAML::Key << "tile-format" << YAML::BeginMap;
     emitter << YAML::Key << "encoding" << YAML::Value << format.encoding;
 
-    if (format.compression != TileCompression::None) {
+    if (format.compression != CompressionType::kNone) {
       emitter << YAML::Key << "compression" << YAML::Value << format.compression;
     }
 
-    if (format.compression == TileCompression::Zlib &&
+    if (format.compression == CompressionType::kZlib &&
         format.zlib_compression_level.has_value() &&
         format.zlib_compression_level != -1) {
       emitter << YAML::Key << "zlib-compression-level" << YAML::Value
               << *format.zlib_compression_level;
     }
 
-    if (format.compression == TileCompression::Zstd &&
+    if (format.compression == CompressionType::kZstd &&
         format.zstd_compression_level.has_value()) {
       emitter << YAML::Key << "zstd-compression-level" << YAML::Value
               << *format.zstd_compression_level;

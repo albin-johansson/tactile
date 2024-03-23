@@ -14,12 +14,12 @@ void TileFormat::set_encoding(const TileEncoding encoding)
 {
   mEncoding = encoding;
 
-  if (mEncoding == TileEncoding::Plain) {
-    mCompression = TileCompression::None;
+  if (mEncoding == TileEncoding::kPlainText) {
+    mCompression = CompressionType::kNone;
   }
 }
 
-void TileFormat::set_compression(const TileCompression compression)
+void TileFormat::set_compression(const CompressionType compression)
 {
   if (can_use_compression_strategy(compression)) {
     mCompression = compression;
@@ -54,7 +54,7 @@ auto TileFormat::encoding() const -> TileEncoding
   return mEncoding;
 }
 
-auto TileFormat::compression() const -> TileCompression
+auto TileFormat::compression() const -> CompressionType
 {
   return mCompression;
 }
@@ -71,13 +71,13 @@ auto TileFormat::zstd_compression_level() const -> int
 
 auto TileFormat::supports_any_compression() const -> bool
 {
-  return mEncoding != TileEncoding::Plain;
+  return mEncoding != TileEncoding::kPlainText;
 }
 
-auto TileFormat::can_use_compression_strategy(const TileCompression compression) const
+auto TileFormat::can_use_compression_strategy(const CompressionType compression) const
     -> bool
 {
-  return compression == TileCompression::None || mEncoding != TileEncoding::Plain;
+  return compression == CompressionType::kNone || mEncoding != TileEncoding::kPlainText;
 }
 
 auto TileFormat::is_valid_zlib_compression_level(const int level) -> bool

@@ -31,11 +31,11 @@ namespace tactile::test {
 namespace {
 
 inline const TileMatrix test_tiles {
-    {123, 8324, 4123, 68, 0},
-    {7483, 32, 12944, 123, 8},
-    {8, 284, 221, 435, 2123},
-    {939, 842, 993, 759, 435},
-    {57, 348, 118, 12, 136},
+  {123, 8324, 4123, 68, 0},
+  {7483, 32, 12944, 123, 8},
+  {8, 284, 221, 435, 2123},
+  {939, 842, 993, 759, 435},
+  {57, 348, 118, 12, 136},
 };
 
 [[nodiscard]] auto create_test_map() -> MapIR
@@ -68,18 +68,18 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
 [[nodiscard]] auto create_zlib_tile_format() -> TileFormatIR
 {
   return {
-      .encoding = TileEncoding::Base64,
-      .compression = TileCompression::Zlib,
-      .zlib_compression_level = 6,
+    .encoding = TileEncoding::kBase64,
+    .compression = CompressionType::kZlib,
+    .zlib_compression_level = 6,
   };
 }
 
 [[nodiscard]] auto create_zstd_tile_format() -> TileFormatIR
 {
   return {
-      .encoding = TileEncoding::Base64,
-      .compression = TileCompression::Zstd,
-      .zstd_compression_level = 19,
+    .encoding = TileEncoding::kBase64,
+    .compression = CompressionType::kZstd,
+    .zstd_compression_level = 19,
   };
 }
 

@@ -30,8 +30,8 @@ TEST_SUITE("Base64 tiles")
     const TileExtent extent {3, 3};
     const TileMatrix source {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
 
-    const auto encoded = base64_encode_tiles(source, extent, TileCompression::Zlib);
-    const auto decoded = base64_decode_tiles(encoded, extent, TileCompression::Zlib);
+    const auto encoded = base64_encode_tiles(source, extent, CompressionType::kZlib);
+    const auto decoded = base64_decode_tiles(encoded, extent, CompressionType::kZlib);
 
     REQUIRE(source == decoded);
   }

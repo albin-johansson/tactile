@@ -24,7 +24,7 @@ namespace tactile {
 /// \return the encoded (and potentially compressed) tile data.
 [[nodiscard]] auto base64_encode_tiles(const TileMatrix& tiles,
                                        TileExtent extent,
-                                       TileCompression compression) -> String;
+                                       CompressionType compression) -> String;
 
 /// Decodes tile data using Base64 and turns it into a tile matrix.
 ///
@@ -37,6 +37,6 @@ namespace tactile {
 /// \return the decoded tile data.
 [[nodiscard]] auto base64_decode_tiles(StringView tiles,
                                        TileExtent extent,
-                                       TileCompression compression) -> TileMatrix;
+                                       CompressionType compression) -> TileMatrix;
 
 }  // namespace tactile

@@ -69,20 +69,20 @@ static_assert(std::same_as<TileID, int32>);
 
 auto base64_encode_tiles(const TileMatrix& tiles,
                          const TileExtent extent,
-                         const TileCompression compression) -> String
+                         const CompressionType compression) -> String
 {
   const auto byte_stream = convert_tile_matrix_to_sequence(tiles, extent);
 
   switch (compression) {
-    case TileCompression::None: {
+    case CompressionType::kNone: {
       return encode_bytes(byte_stream);
     }
-    case TileCompression::Zlib: {
+    case CompressionType::kZlib: {
       const auto compressed_bytes =
           ZlibCompressionProvider {}.compress(byte_stream).value();
       return encode_bytes(compressed_bytes);
     }
-    case TileCompression::Zstd: {
+    case CompressionType::kZstd: {
       const auto compressed_bytes =
           ZstdCompressionProvider {}.compress(byte_stream).value();
       return encode_bytes(compressed_bytes);
@@ -93,19 +93,19 @@ auto base64_encode_tiles(const TileMatrix& tiles,
 
 auto base64_decode_tiles(StringView tiles,
                          const TileExtent extent,
-                         const TileCompression compression) -> TileMatrix
+                         const CompressionType compression) -> TileMatrix
 {
   const auto decoded_bytes = Base64::decode(tiles.data(), tiles.size());
 
   switch (compression) {
-    case TileCompression::None: return restore_tiles(decoded_bytes, extent);
+    case CompressionType::kNone: return restore_tiles(decoded_bytes, extent);
 
-    case TileCompression::Zlib: {
+    case CompressionType::kZlib: {
       const auto decompressed_bytes =
           ZlibCompressionProvider {}.decompress(decoded_bytes).value();
       return restore_tiles(decompressed_bytes, extent);
     }
-    case TileCompression::Zstd: {
+    case CompressionType::kZstd: {
       const auto decompressed_bytes =
           ZstdCompressionProvider {}.decompress(decoded_bytes).value();
       return restore_tiles(decompressed_bytes, extent);

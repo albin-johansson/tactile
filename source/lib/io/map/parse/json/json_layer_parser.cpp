@@ -10,11 +10,11 @@
 
 namespace tactile {
 
-NLOHMANN_JSON_SERIALIZE_ENUM(TileCompression,
+NLOHMANN_JSON_SERIALIZE_ENUM(CompressionType,
                              {
-                                 {TileCompression::None, ""},
-                                 {TileCompression::Zlib, "zlib"},
-                                 {TileCompression::Zstd, "zstd"},
+                               {CompressionType::kNone, ""},
+                               {CompressionType::kZlib, "zlib"},
+                               {CompressionType::kZstd, "zstd"},
                              })
 
 }  // namespace tactile
@@ -29,7 +29,7 @@ namespace {
   if (const auto iter = json.find("objects"); iter != json.end()) {
     object_layer_data.objects.reserve(iter->size());
 
-    for (const auto& [_, value]: iter->items()) {
+    for (const auto& [_, value] : iter->items()) {
       auto& object_data = object_layer_data.objects.emplace_back();
       if (const auto err = parse_object(value, object_data); err != ParseError::None) {
         return err;
@@ -48,7 +48,7 @@ namespace {
   }
 
   usize index = 0;
-  for (const auto& [_, value]: json.items()) {
+  for (const auto& [_, value] : json.items()) {
     if (value.is_number_integer()) {
       const auto [row, col] = to_matrix_coords(index, tile_layer.extent.cols);
       tile_layer.tiles[row][col] = value.get<TileID>();
@@ -74,8 +74,8 @@ namespace {
   const auto encoding = as_string(json, "encoding").value_or("csv");
 
   if (encoding == "csv") {
-    map.tile_format.encoding = TileEncoding::Plain;
-    map.tile_format.compression = TileCompression::None;
+    map.tile_format.encoding = TileEncoding::kPlainText;
+    map.tile_format.compression = CompressionType::kNone;
 
     if (const auto err = parse_tile_layer_csv_data(data, tile_layer);
         err != ParseError::None) {
@@ -83,9 +83,9 @@ namespace {
     }
   }
   else if (encoding == "base64") {
-    const auto compression = json.at("compression").get<TileCompression>();
+    const auto compression = json.at("compression").get<CompressionType>();
 
-    map.tile_format.encoding = TileEncoding::Base64;
+    map.tile_format.encoding = TileEncoding::kBase64;
     map.tile_format.compression = compression;
 
     const auto data_str = data.get<std::string>();
@@ -179,7 +179,7 @@ namespace {
       auto& group_layer = layer.data.emplace<GroupLayerIR>();
 
       usize child_index = 0;
-      for (const auto& [_, value]: json.at("layers").items()) {
+      for (const auto& [_, value] : json.at("layers").items()) {
         auto& child_layer =
             group_layer.children.emplace_back(std::make_unique<LayerIR>());
 
@@ -256,7 +256,7 @@ auto parse_layers(const JSON& json, MapIR& map) -> ParseError
   map.layers.reserve(iter->size());
 
   usize index = 0;
-  for (const auto& [key, value]: iter->items()) {
+  for (const auto& [key, value] : iter->items()) {
     auto& layer_data = map.layers.emplace_back();
 
     if (const auto err = parse_layer(value, map, layer_data, index);

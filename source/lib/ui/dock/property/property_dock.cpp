@@ -37,13 +37,15 @@
 namespace tactile::ui {
 namespace {
 
-struct PropertyItemContextMenuState final {
-  bool show_add_dialog         : 1 {};
-  bool show_rename_dialog      : 1 {};
+struct PropertyItemContextMenuState final
+{
+  bool show_add_dialog : 1 {};
+  bool show_rename_dialog : 1 {};
   bool show_change_type_dialog : 1 {};
 };
 
-struct PropertyDockState final {
+struct PropertyDockState final
+{
   Maybe<String> rename_target;
   Maybe<String> change_type_target;
   PropertyItemContextMenuState context_state;
@@ -167,16 +169,16 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
 
   const auto& format = map.get_tile_format();
 
-  const auto* encoding = format.encoding() == TileEncoding::Plain
+  const auto* encoding = format.encoding() == TileEncoding::kPlainText
                              ? lang.misc.plain_encoding.c_str()
                              : "Base64";
   if (const Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
     if (Selectable::property(lang.misc.plain_encoding.c_str())) {
-      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Plain);
+      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::kPlainText);
     }
 
     if (Selectable::property("Base64")) {
-      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Base64);
+      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::kBase64);
     }
   }
 
@@ -187,28 +189,28 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
     const Disable disable_if_cannot_compress {!format.supports_any_compression()};
 
     auto compression = lang.misc.none;
-    if (format.compression() == TileCompression::Zlib) {
+    if (format.compression() == CompressionType::kZlib) {
       compression = "Zlib";
     }
-    else if (format.compression() == TileCompression::Zstd) {
+    else if (format.compression() == CompressionType::kZstd) {
       compression = "Zstd";
     }
 
-    if (const Combo combo {"##TileCompression", compression.c_str()}; combo.is_open()) {
+    if (const Combo combo {"##CompressionType", compression.c_str()}; combo.is_open()) {
       if (Selectable::property(lang.misc.none.c_str())) {
-        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::None);
+        dispatcher.enqueue<SetTileFormatCompressionEvent>(CompressionType::kNone);
       }
 
       if (Selectable::property("Zlib")) {
-        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zlib);
+        dispatcher.enqueue<SetTileFormatCompressionEvent>(CompressionType::kZlib);
       }
 
       if (Selectable::property("Zstd")) {
-        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zstd);
+        dispatcher.enqueue<SetTileFormatCompressionEvent>(CompressionType::kZstd);
       }
     }
 
-    if (format.compression() == TileCompression::Zlib) {
+    if (format.compression() == CompressionType::kZlib) {
       prepare_table_row(lang.misc.compression_level.c_str());
       ImGui::TableNextColumn();
 
@@ -220,7 +222,7 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
         dispatcher.enqueue<SetZlibCompressionLevelEvent>(level);
       }
     }
-    else if (format.compression() == TileCompression::Zstd) {
+    else if (format.compression() == CompressionType::kZstd) {
       prepare_table_row(lang.misc.compression_level.c_str());
       ImGui::TableNextColumn();
 
@@ -396,13 +398,13 @@ void show_custom_properties(const Context& context,
   });
 }
 
-struct ContextPropertyVisitor final : ContextVisitor {
+struct ContextPropertyVisitor final : ContextVisitor
+{
   entt::dispatcher* dispatcher {};
 
   explicit ContextPropertyVisitor(entt::dispatcher& dispatcher)
-      : dispatcher {&dispatcher}
-  {
-  }
+    : dispatcher {&dispatcher}
+  {}
 
   void visit(const Map& map) override { show_native_map_properties(map, *dispatcher); }
 

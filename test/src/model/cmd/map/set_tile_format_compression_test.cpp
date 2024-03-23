@@ -30,7 +30,7 @@ TEST_SUITE("cmd::SetTileFormatCompression")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(SetTileFormatCompression(nullptr, TileCompression::None),
+    REQUIRE_THROWS_AS(SetTileFormatCompression(nullptr, CompressionType::kNone),
                       Exception);
   }
 
@@ -39,9 +39,9 @@ TEST_SUITE("cmd::SetTileFormatCompression")
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
 
-    const auto encoding = TileEncoding::Base64;
-    const auto old_compression = TileCompression::None;
-    const auto new_compression = TileCompression::Zlib;
+    const auto encoding = TileEncoding::kBase64;
+    const auto old_compression = CompressionType::kNone;
+    const auto new_compression = CompressionType::kZlib;
 
     auto& format = map->get_tile_format();
     format.set_encoding(encoding);

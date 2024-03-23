@@ -30,7 +30,8 @@ TEST_SUITE("cmd::SetTileFormatEncoding")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(SetTileFormatEncoding(nullptr, TileEncoding::Plain), Exception);
+    REQUIRE_THROWS_AS(SetTileFormatEncoding(nullptr, TileEncoding::kPlainText),
+                      Exception);
   }
 
   TEST_CASE("redo/undo")
@@ -40,8 +41,8 @@ TEST_SUITE("cmd::SetTileFormatEncoding")
 
     auto& format = map->get_tile_format();
 
-    const auto old_encoding = TileEncoding::Plain;
-    const auto new_encoding = TileEncoding::Base64;
+    const auto old_encoding = TileEncoding::kPlainText;
+    const auto new_encoding = TileEncoding::kBase64;
     REQUIRE(format.encoding() == old_encoding);
 
     SetTileFormatEncoding cmd {map, new_encoding};

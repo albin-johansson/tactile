@@ -10,7 +10,8 @@
 
 namespace tactile {
 
-class SetTileFormatEncoding final : public Command {
+class SetTileFormatEncoding final : public Command
+{
  public:
   SetTileFormatEncoding(Shared<Map> map, TileEncoding encoding);
 
@@ -24,7 +25,7 @@ class SetTileFormatEncoding final : public Command {
   Shared<Map> mMap;
   TileEncoding mNewEncoding;
   Maybe<TileEncoding> mOldEncoding;
-  Maybe<TileCompression> mOldCompression;
+  Maybe<CompressionType> mOldCompression;
 };
 
 }  // namespace tactile

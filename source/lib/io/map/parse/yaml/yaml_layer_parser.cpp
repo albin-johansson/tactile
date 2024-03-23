@@ -61,7 +61,7 @@ namespace {
     return unexpected(ParseError::NoTileLayerData);
   }
 
-  if (map.tile_format.encoding == TileEncoding::Plain) {
+  if (map.tile_format.encoding == TileEncoding::kPlainText) {
     std::replace(str_data.begin(), str_data.end(), '\n', ' ');
     if (auto matrix = parse_plain_tile_layer_data(str_data, extent)) {
       tile_layer.tiles = std::move(*matrix);
@@ -70,7 +70,7 @@ namespace {
       return propagate_unexpected(matrix);
     }
   }
-  else if (map.tile_format.encoding == TileEncoding::Base64) {
+  else if (map.tile_format.encoding == TileEncoding::kBase64) {
     tile_layer.tiles = base64_decode_tiles(str_data, extent, map.tile_format.compression);
   }
   else {

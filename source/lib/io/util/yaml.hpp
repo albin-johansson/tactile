@@ -93,7 +93,7 @@ inline void read_attr_or(const YAML::Node& node,
 }
 
 auto operator<<(YAML::Emitter& emitter, TileEncoding encoding) -> YAML::Emitter&;
-auto operator<<(YAML::Emitter& emitter, TileCompression compression) -> YAML::Emitter&;
+auto operator<<(YAML::Emitter& emitter, CompressionType compression) -> YAML::Emitter&;
 auto operator<<(YAML::Emitter& emitter, AttributeType type) -> YAML::Emitter&;
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&;
 

@@ -10,9 +10,10 @@
 
 namespace tactile {
 
-class SetTileFormatCompression final : public Command {
+class SetTileFormatCompression final : public Command
+{
  public:
-  SetTileFormatCompression(Shared<Map> map, TileCompression compression);
+  SetTileFormatCompression(Shared<Map> map, CompressionType compression);
 
   void undo() override;
 
@@ -22,8 +23,8 @@ class SetTileFormatCompression final : public Command {
 
  private:
   Shared<Map> mMap;
-  TileCompression mNewCompression;
-  Maybe<TileCompression> mOldCompression;
+  CompressionType mNewCompression;
+  Maybe<CompressionType> mOldCompression;
 };
 
 }  // namespace tactile

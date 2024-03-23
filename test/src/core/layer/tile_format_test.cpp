@@ -33,8 +33,8 @@ TEST_SUITE("TileFormat")
   {
     const TileFormat format;
 
-    REQUIRE(TileEncoding::Plain == format.encoding());
-    REQUIRE(TileCompression::None == format.compression());
+    REQUIRE(TileEncoding::kPlainText == format.encoding());
+    REQUIRE(CompressionType::kNone == format.compression());
 
     REQUIRE(-1 == Z_DEFAULT_COMPRESSION);
     REQUIRE(-1 == format.zlib_compression_level());
@@ -58,21 +58,21 @@ TEST_SUITE("TileFormat")
   TEST_CASE("can_use_compression_strategy (with plain encoding)")
   {
     TileFormat format;
-    format.set_encoding(TileEncoding::Plain);
+    format.set_encoding(TileEncoding::kPlainText);
 
-    REQUIRE(format.can_use_compression_strategy(TileCompression::None));
-    REQUIRE(!format.can_use_compression_strategy(TileCompression::Zlib));
-    REQUIRE(!format.can_use_compression_strategy(TileCompression::Zstd));
+    REQUIRE(format.can_use_compression_strategy(CompressionType::kNone));
+    REQUIRE(!format.can_use_compression_strategy(CompressionType::kZlib));
+    REQUIRE(!format.can_use_compression_strategy(CompressionType::kZstd));
   }
 
   TEST_CASE("can_use_compression_strategy (ith Base64 encoding)")
   {
     TileFormat format;
-    format.set_encoding(TileEncoding::Base64);
+    format.set_encoding(TileEncoding::kBase64);
 
-    REQUIRE(format.can_use_compression_strategy(TileCompression::None));
-    REQUIRE(format.can_use_compression_strategy(TileCompression::Zlib));
-    REQUIRE(format.can_use_compression_strategy(TileCompression::Zstd));
+    REQUIRE(format.can_use_compression_strategy(CompressionType::kNone));
+    REQUIRE(format.can_use_compression_strategy(CompressionType::kZlib));
+    REQUIRE(format.can_use_compression_strategy(CompressionType::kZstd));
   }
 
   TEST_CASE("is_valid_zlib_compression_level")

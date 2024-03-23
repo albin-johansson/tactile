@@ -21,43 +21,43 @@ namespace {
   if (auto encoding = node["encoding"]) {
     const auto encoding_str = encoding.as<std::string>();
     if (encoding_str == "plain") {
-      format.encoding = TileEncoding::Plain;
+      format.encoding = TileEncoding::kPlainText;
     }
     else if (encoding_str == "base64") {
-      format.encoding = TileEncoding::Base64;
+      format.encoding = TileEncoding::kBase64;
     }
     else {
       return unexpected(ParseError::BadTileFormatEncoding);
     }
   }
   else {
-    format.encoding = TileEncoding::Plain;
+    format.encoding = TileEncoding::kPlainText;
   }
 
   if (auto compression = node["compression"]) {
     const auto compression_str = compression.as<std::string>();
     if (compression_str == "none") {
-      format.compression = TileCompression::None;
+      format.compression = CompressionType::kNone;
     }
     else if (compression_str == "zlib") {
-      format.compression = TileCompression::Zlib;
+      format.compression = CompressionType::kZlib;
     }
     else if (compression_str == "zstd") {
-      format.compression = TileCompression::Zstd;
+      format.compression = CompressionType::kZstd;
     }
     else {
       return unexpected(ParseError::BadTileFormatCompression);
     }
   }
   else {
-    format.compression = TileCompression::None;
+    format.compression = CompressionType::kNone;
   }
 
   read_attr_or(node, "zlib-compression-level", format.zlib_compression_level, -1);
   read_attr_or(node, "zstd-compression-level", format.zstd_compression_level, 3);
 
-  if (format.encoding == TileEncoding::Plain &&
-      format.compression != TileCompression::None) {
+  if (format.encoding == TileEncoding::kPlainText &&
+      format.compression != CompressionType::kNone) {
     return unexpected(ParseError::PlainEncodingWithCompression);
   }
 

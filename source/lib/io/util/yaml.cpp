@@ -68,23 +68,23 @@ auto operator<<(YAML::Emitter& emitter, const AttributeType type) -> YAML::Emitt
 auto operator<<(YAML::Emitter& emitter, const TileEncoding encoding) -> YAML::Emitter&
 {
   switch (encoding) {
-    case TileEncoding::Plain: return emitter << "plain";
+    case TileEncoding::kPlainText: return emitter << "plain";
 
-    case TileEncoding::Base64: return emitter << "base64";
+    case TileEncoding::kBase64: return emitter << "base64";
 
     default: throw Exception {"Did not recognize tile encoding!"};
   }
 }
 
-auto operator<<(YAML::Emitter& emitter, const TileCompression compression)
+auto operator<<(YAML::Emitter& emitter, const CompressionType compression)
     -> YAML::Emitter&
 {
   switch (compression) {
-    case TileCompression::None: return emitter << "none";
+    case CompressionType::kNone: return emitter << "none";
 
-    case TileCompression::Zlib: return emitter << "zlib";
+    case CompressionType::kZlib: return emitter << "zlib";
 
-    case TileCompression::Zstd: return emitter << "zstd";
+    case CompressionType::kZstd: return emitter << "zstd";
 
     default: throw Exception {"Did not recognize tile compression!"};
   }
