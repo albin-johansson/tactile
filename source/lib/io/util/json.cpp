@@ -107,7 +107,7 @@ void to_json(JSON& json, const Attribute& value)
 
     case AttributeType::kColor: json = value.as_color().to_string_argb(); break;
 
-    case AttributeType::kObject: json = value.as_object(); break;
+    case AttributeType::kObject: json = value.as_object().value; break;
 
     default: throw Exception {"Invalid attribute type"};
   }

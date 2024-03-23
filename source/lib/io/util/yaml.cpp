@@ -52,7 +52,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
 
     case AttributeType::kColor: emitter << value.as_color().to_string_rgba(); break;
 
-    case AttributeType::kObject: emitter << value.as_object(); break;
+    case AttributeType::kObject: emitter << value.as_object().value; break;
 
     default: throw Exception {"Invalid attribute type"};
   }
