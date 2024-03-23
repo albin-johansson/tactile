@@ -42,16 +42,18 @@ namespace {
 
   usize index {};
 
-  const auto split_ok = split_string(csv, ',', [&](const StringView token) {
-    if (const auto id = parse_int(token)) {
-      const auto [row, col] = to_matrix_coords(index, extent.cols);
-      tiles[row][col] = narrow_cast<TileID>(*id);
+  const auto split_ok = split_string(csv, '\n', [&](const StringView csv_row) {
+    return split_string(csv_row, ',', [&](const StringView token) {
+      if (const auto id = parse_int(token)) {
+        const auto [row, col] = to_matrix_coords(index, extent.cols);
+        tiles[row][col] = narrow_cast<TileID>(*id);
 
-      ++index;
-      return true;
-    }
+        ++index;
+        return true;
+      }
 
-    return false;
+      return false;
+    });
   });
 
   if (!split_ok) {
