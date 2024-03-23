@@ -1,5 +1,7 @@
 project(tactile-lib CXX)
 
+set(TACTILE_LIB libtactile)
+
 file(GLOB_RECURSE SOURCE_FILES
      CONFIGURE_DEPENDS
      ${PROJECT_SOURCE_DIR}/**/*.cpp
@@ -7,6 +9,7 @@ file(GLOB_RECURSE SOURCE_FILES
      )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
+add_library(tactile::lib ALIAS "${TACTILE_LIB}")
 
 tactile_prepare_target(${TACTILE_LIB})
 
@@ -27,7 +30,10 @@ target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       tactile::proto
                       tactile::base
+                      tactile::render
                       tactile::core
+                      tactile::opengl
+
                       Boost::boost
                       argparse::argparse
                       SDL2::SDL2
@@ -41,9 +47,8 @@ target_link_libraries(${TACTILE_LIB}
                       nlohmann_json::nlohmann_json
                       pugixml::pugixml
                       tl::expected
+                      glad::glad
                       ZLIB::ZLIB
-                      GLEW::GLEW
-                      OpenGL::GL
                       spdlog::spdlog
                       zstd::libzstd_static
                       )
@@ -52,7 +57,6 @@ target_compile_definitions(${TACTILE_LIB}
                            PUBLIC
                            CENTURION_NO_SDL_MIXER
                            CENTURION_NO_SDL_TTF
-                           IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS
                            GLEW_NO_GLU
                            BOOST_ENABLE_ASSERT_DEBUG_HANDLER

@@ -19,19 +19,6 @@
 #include "ui/menu/menu.hpp"
 
 namespace tactile {
-namespace {
-
-void load_window_icon(cen::window& window)
-{
-  try {
-    window.set_icon(cen::surface {"assets/icon.png"});
-  }
-  catch (const std::exception& e) {
-    spdlog::error("Failed to load window icon: {}", e.what() ? e.what() : "N/A");
-  }
-}
-
-}  // namespace
 
 AppInitializer::AppInitializer()
 {
@@ -44,10 +31,10 @@ AppInitializer::AppInitializer()
   mProtobuf.emplace();
 
   // Initialize SDL and the application window
-  auto& sdl = mSDL.emplace();
-  auto& window = sdl.get_window();
-  win32_use_immersive_dark_mode(window.get());
-  load_window_icon(window);
+  mSDL.emplace();
+  mRenderer.emplace(OpenGLRenderer::make().value());
+
+  // win32_use_immersive_dark_mode(window.get());
 
   // Configure settings and load the language files
   get_settings().copy_values_from(load_settings_from_disk());
@@ -56,16 +43,16 @@ AppInitializer::AppInitializer()
   load_languages();
 
   // Initialize Dear ImGui and other UI-related state
-  mImGui.emplace(window, sdl.get_gl_context());
+  mImGui.emplace();
   init_menus();
 
   spdlog::debug("Using persistent file directory {}",
                 get_persistent_storage_directory().value());
 }
 
-auto AppInitializer::get_window() -> cen::window&
+auto AppInitializer::get_window() -> IWindow*
 {
-  return mSDL.value().get_window();
+  return mRenderer->get_window();
 }
 
 void on_terminate()

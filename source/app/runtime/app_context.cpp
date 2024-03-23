@@ -11,8 +11,9 @@
 namespace tactile {
 namespace {
 
-struct AppState final {
-  cen::window* window {};
+struct AppState final
+{
+  IWindow* window {};
   entt::dispatcher dispatcher;
   DocumentModel model;
   WidgetShowState widget_show_state;
@@ -23,9 +24,9 @@ inline AppState gAppState;
 
 }  // namespace
 
-void init_app_context(cen::window& window)
+void init_app_context(IWindow* window)
 {
-  gAppState.window = &window;
+  gAppState.window = window;
 }
 
 void request_font_reload()
@@ -38,10 +39,10 @@ void handled_font_reload()
   gAppState.font_reload_scheduled = false;
 }
 
-auto get_window() -> cen::window&
+auto get_window() -> IWindow*
 {
   TACTILE_ASSERT(gAppState.window != nullptr);
-  return *gAppState.window;
+  return gAppState.window;
 }
 
 auto get_dispatcher() -> entt::dispatcher&

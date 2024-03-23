@@ -24,6 +24,7 @@
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "runtime/app_context.hpp"
+#include "tactile/render/window.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
@@ -36,7 +37,7 @@
 
 namespace tactile {
 
-App::App(cen::window& window)
+App::App(IWindow* window)
 {
   init_app_context(window);
 
@@ -44,7 +45,7 @@ App::App(cen::window& window)
   init_default_shortcuts();
   ui::load_icons();
 
-  window.maximize();
+  window->maximize();
 }
 
 App::~App() noexcept
@@ -63,7 +64,7 @@ void App::on_startup()
     load_session_from_disk(model);
   }
 
-  get_window().show();
+  get_window()->show();
 }
 
 void App::on_shutdown()
@@ -74,7 +75,7 @@ void App::on_shutdown()
   save_session_to_disk(get_model());
   save_file_history_to_disk(get_file_history());
 
-  get_window().hide();
+  get_window()->hide();
 }
 
 void App::on_pre_update()
@@ -104,8 +105,7 @@ void App::on_event(const cen::event_handler& handler)
   }
 
   switch (handler.type().value()) {
-    case cen::event_type::key_up:
-      [[fallthrough]];
+    case cen::event_type::key_up: [[fallthrough]];
     case cen::event_type::key_down:
       on_keyboard_event(handler.get<cen::keyboard_event>());
       break;
@@ -114,8 +114,7 @@ void App::on_event(const cen::event_handler& handler)
       on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
       break;
 
-    default:
-      break;
+    default: break;
   }
 }
 

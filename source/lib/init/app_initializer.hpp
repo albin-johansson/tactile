@@ -2,28 +2,29 @@
 
 #pragma once
 
-#include <centurion/window.hpp>
-
-#include "init/sdl_context.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/persist/protobuf_context.hpp"
+#include "tactile/core/platform/sdl_context.hpp"
+#include "tactile/opengl/opengl_renderer.hpp"
 #include "ui/imgui_context.hpp"
 
 namespace tactile {
 
-class AppInitializer final {
+class AppInitializer final
+{
  public:
   TACTILE_DELETE_COPY(AppInitializer);
   TACTILE_DELETE_MOVE(AppInitializer);
 
   [[nodiscard]] AppInitializer();
 
-  [[nodiscard]] auto get_window() -> cen::window&;
+  [[nodiscard]] auto get_window() -> IWindow*;
 
  private:
   Maybe<ProtobufContext> mProtobuf;
   Maybe<SDLContext> mSDL;
+  Maybe<OpenGLRenderer> mRenderer;
   Maybe<ImGuiContext> mImGui;
 };
 

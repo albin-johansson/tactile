@@ -2,22 +2,18 @@
 
 #pragma once
 
-#include <centurion/opengl.hpp>
-#include <centurion/window.hpp>
-
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
 /// Handles the configuration of the Dear ImGui context.
-class ImGuiContext final {
+class ImGuiContext final
+{
  public:
   TACTILE_DEFAULT_COPY(ImGuiContext);
   TACTILE_DEFAULT_MOVE(ImGuiContext);
 
-  ImGuiContext(cen::window& window, cen::gl_context& context);
-
-  ~ImGuiContext();
+  ImGuiContext();
 
   /// Reloads the main and icon fonts.
   ///

@@ -4,16 +4,15 @@
 
 #include <utility>  // move
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 namespace tactile {
 
 Texture::Texture(const uint id, const Int2 size, Path path)
-    : mId {id},
-      mSize {size},
-      mPath {std::move(path)}
-{
-}
+  : mId {id},
+    mSize {size},
+    mPath {std::move(path)}
+{}
 
 Texture::~Texture() noexcept
 {
@@ -28,9 +27,9 @@ void Texture::destroy() noexcept
 }
 
 Texture::Texture(Texture&& other) noexcept
-    : mId {other.mId},
-      mSize {other.mSize},
-      mPath {std::move(other.mPath)}
+  : mId {other.mId},
+    mSize {other.mSize},
+    mPath {std::move(other.mPath)}
 {
   other.mId = 0;
 }

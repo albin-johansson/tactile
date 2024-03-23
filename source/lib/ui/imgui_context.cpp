@@ -21,20 +21,14 @@ constexpr ImWchar kFontIconRange[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 }  // namespace
 
-ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
+ImGuiContext::ImGuiContext()
 {
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-
   auto& io = ImGui::GetIO();
   io.ConfigFlags |= static_cast<ImGuiConfigFlags>(ImGuiConfigFlags_DockingEnable);
   io.WantCaptureKeyboard = true;
 
   static const auto ini = get_imgui_ini_file_path().string();
   io.IniFilename = ini.c_str();
-
-  ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
-  mInitializedBackend = ImGui_ImplOpenGL3_Init();
 
   ImGui::StyleColorsDark();
 
@@ -47,15 +41,6 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   style.WindowBorderSize = settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
 
   spdlog::debug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
-}
-
-ImGuiContext::~ImGuiContext()
-{
-  if (mInitializedBackend) {
-    ImGui_ImplOpenGL3_Shutdown();
-  }
-  ImGui_ImplSDL2_Shutdown();
-  ImGui::DestroyContext();
 }
 
 void ImGuiContext::reload_fonts()

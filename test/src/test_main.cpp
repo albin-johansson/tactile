@@ -21,11 +21,12 @@
 #include <doctest/doctest.h>
 
 #include "init/app_initializer.hpp"
+#include "tactile/render/window.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {
   tactile::AppInitializer initializer;
-  initializer.get_window().show();
+  initializer.get_window()->show();
 
   doctest::Context context {argc, argv};
   const auto res = context.run();

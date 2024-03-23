@@ -9,10 +9,13 @@
 
 namespace tactile {
 
+class IWindow;
+
 /// The heart of the Tactile map editor.
-class App final : EventLoop {
+class App final : EventLoop
+{
  public:
-  explicit App(cen::window& window);
+  explicit App(IWindow* window);
 
   ~App() noexcept override;
 

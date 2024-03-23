@@ -4,13 +4,14 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <stb_image.h>
 
 namespace tactile {
 namespace {
 
-struct TextureDataDeleter final {
+struct TextureDataDeleter final
+{
   void operator()(uchar* data) noexcept { stbi_image_free(data); }
 };
 
@@ -22,7 +23,7 @@ auto load_texture(const Path& path) -> Shared<Texture>
 {
   Int2 size {};
   const TextureData data {
-      stbi_load(path.string().c_str(), &size[0], &size[1], nullptr, STBI_rgb_alpha)};
+    stbi_load(path.string().c_str(), &size[0], &size[1], nullptr, STBI_rgb_alpha)};
 
   if (!data) {
     return nullptr;
