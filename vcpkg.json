@@ -16,15 +16,13 @@
     "fast-float",
     "fmt",
     "doctest",
-    "glew",
     "glm",
     "gtest",
     {
       "name": "imgui",
       "features": [
         "docking-experimental",
-        "sdl2-binding",
-        "opengl3-binding"
+        "sdl2-binding"
       ]
     },
     "magic-enum",
@@ -40,5 +38,41 @@
     "yaml-cpp",
     "zlib",
     "zstd"
-  ]
+  ],
+  "features": {
+    "opengl": {
+      "description": "Add OpenGL support",
+      "dependencies": [
+        {
+          "name": "glad",
+          "features": [
+            "extensions"
+          ]
+        },
+        {
+          "name": "imgui",
+          "features": [
+            "opengl3-binding"
+          ]
+        }
+      ]
+    },
+    "vulkan": {
+      "description": "Add Vulkan support",
+      "dependencies": [
+        {
+          "name": "sdl2",
+          "features": [
+            "vulkan"
+          ]
+        },
+        {
+          "name": "imgui",
+          "features": [
+            "vulkan-binding"
+          ]
+        }
+      ]
+    }
+  }
 }

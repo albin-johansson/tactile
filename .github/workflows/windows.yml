@@ -56,8 +56,10 @@ jobs:
           cmake .. -GNinja `
                    -DCMAKE_BUILD_TYPE=Debug `
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
-                   -DTACTILE_USE_SANITIZERS=OFF `
                    -DTACTILE_BUILD_TESTS=ON `
+                   -DTACTILE_BUILD_OPENGL_RENDERER=ON `
+                   -DTACTILE_BUILD_VULKAN_RENDERER=OFF `
+                   -DTACTILE_USE_LTO=OFF `
                    -DTACTILE_UNITY_BUILD=OFF `
                    --log-level=DEBUG
 

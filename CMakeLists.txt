@@ -19,6 +19,14 @@ if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 endif ()
 
+if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
+  list(APPEND VCPKG_MANIFEST_FEATURES "opengl")
+endif ()
+
+if (TACTILE_BUILD_VULKAN_RENDERER MATCHES "ON")
+  list(APPEND VCPKG_MANIFEST_FEATURES "vulkan")
+endif ()
+
 message(DEBUG "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
 message(DEBUG "VCPKG_TARGET_TRIPLET: ${VCPKG_TARGET_TRIPLET}")
 message(DEBUG "VCPKG_MANIFEST_FEATURES: ${VCPKG_MANIFEST_FEATURES}")
@@ -48,8 +56,8 @@ message(DEBUG "TACTILE_ASSET_DIR: ${TACTILE_ASSET_DIR}")
 
 install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
-include("${TACTILE_ROOT_DIR}/cmake/tactile.cmake")
 include("${TACTILE_ROOT_DIR}/cmake/dependencies.cmake")
+include("${TACTILE_ROOT_DIR}/cmake/tactile.cmake")
 
 tactile_find_dependencies()
 

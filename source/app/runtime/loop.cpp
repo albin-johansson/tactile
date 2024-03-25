@@ -2,7 +2,7 @@
 
 #include "loop.hpp"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
@@ -50,8 +50,7 @@ void EventLoop::start()
 
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    cen::gl::swap(get_window());
+    SDL_GL_SwapWindow(SDL_GL_GetCurrentWindow());
   }
 
   on_shutdown();
