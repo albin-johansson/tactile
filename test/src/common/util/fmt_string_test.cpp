@@ -51,7 +51,7 @@ TEST_SUITE("FmtString")
   {
     const std::filesystem::path path = "foo/bar.txt";
     const FmtString str {"The answer is {}, here's a path: {}", 42, path};
-    REQUIRE("The answer is 42, here's a path: \"foo/bar.txt\"" == str.view());
+    REQUIRE("The answer is 42, here's a path: foo/bar.txt" == str.view());
   }
 
   TEST_CASE("Spare capacity")
