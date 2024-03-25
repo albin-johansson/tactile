@@ -13,7 +13,8 @@ namespace tactile {
 /**
  * Represents a location in a two-dimensional matrix.
  */
-struct MatrixIndex final {
+struct MatrixIndex final
+{
   usize row;  ///< The row index.
   usize col;  ///< The column index.
 
@@ -34,7 +35,8 @@ auto operator<<(std::ostream& stream, const MatrixIndex& index) -> std::ostream&
 /**
  * Represents the size of a two-dimensional matrix.
  */
-struct MatrixExtent final {
+struct MatrixExtent final
+{
   usize rows;  ///< The number of rows.
   usize cols;  ///< The number of columns.
 
@@ -55,7 +57,8 @@ auto operator<<(std::ostream& stream, const MatrixExtent& extent) -> std::ostrea
 /**
  * Represents a two-dimensional grid of tile identifiers.
  */
-class TileMatrix final {
+class TileMatrix final
+{
  public:
   /**
    * Creates an empty tile matrix with extent (0, 0).
@@ -154,6 +157,8 @@ class TileMatrix final {
    */
   [[nodiscard]]
   auto get_extent() const noexcept -> const MatrixExtent&;
+
+  [[nodiscard]] auto operator==(const TileMatrix&) const -> bool = default;
 
  private:
   MatrixExtent mExtent {0, 0};
