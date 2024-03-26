@@ -22,6 +22,7 @@ target_link_libraries(tactile-core
                       PUBLIC
                       tactile::base
                       tactile::render
+                      EnTT::EnTT
                       fmt::fmt
 
                       PRIVATE
