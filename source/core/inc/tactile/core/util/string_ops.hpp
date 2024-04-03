@@ -34,7 +34,7 @@ auto make_native_string(const char* str) -> Result<NativeString>;
  *    A trimmed string.
  */
 [[nodiscard]]
-auto trim_string(String str) -> String;
+auto trim_string(StringView str) -> String;
 
 /**
  * Splits a string into a collection of tokens separated by a given character.

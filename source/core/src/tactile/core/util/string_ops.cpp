@@ -49,25 +49,27 @@ auto make_native_string(const char* str) -> Result<NativeString>
 #endif  // TACTILE_OS_WINDOWS
 }
 
-auto trim_string(String str) -> String
+auto trim_string(const StringView str) -> String
 {
+  String copy {str};
+
   const auto find_first_non_space = [](const auto begin, const auto end) {
     return std::find_if(begin, end, [](const char ch) {
       return !std::isspace(ch, std::locale::classic());
     });
   };
 
-  const auto left_iter = find_first_non_space(str.begin(), str.end());
-  if (left_iter != str.end()) {
-    str.erase(str.begin(), left_iter);
+  const auto left_iter = find_first_non_space(copy.begin(), copy.end());
+  if (left_iter != copy.end()) {
+    copy.erase(copy.begin(), left_iter);
   }
 
-  const auto right_iter = find_first_non_space(str.rbegin(), str.rend());
-  if (right_iter != str.rend()) {
-    str.erase(right_iter.base(), str.end());
+  const auto right_iter = find_first_non_space(copy.rbegin(), copy.rend());
+  if (right_iter != copy.rend()) {
+    copy.erase(right_iter.base(), copy.end());
   }
 
-  return str;
+  return copy;
 }
 
 }  // namespace tactile
