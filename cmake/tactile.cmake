@@ -21,6 +21,7 @@ else ()
        "-Wconversion"
        "-Wsign-conversion"
        "-Wswitch-enum"
+       "-Wold-style-cast"
        )
 
   if (TACTILE_BUILD_TYPE STREQUAL "asan")
