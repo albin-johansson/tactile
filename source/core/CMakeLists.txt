@@ -10,12 +10,21 @@ add_library(tactile::core ALIAS tactile-core)
 
 tactile_prepare_target(tactile-core)
 
-target_include_directories(tactile-core PUBLIC "${PROJECT_SOURCE_DIR}/inc")
+target_include_directories(tactile-core
+                           PUBLIC
+                           "${PROJECT_SOURCE_DIR}/inc"
+
+                           SYSTEM PRIVATE
+                           "${TACTILE_VENDOR_DIR}/fontawesome"
+                           )
 
 target_compile_definitions(tactile-core
+                           PUBLIC
+                           "IMGUI_DEFINE_MATH_OPERATORS"
+
                            PRIVATE
-                           BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
-                           BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
+                           "BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED"
+                           "BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT"
                            )
 
 target_link_libraries(tactile-core
@@ -24,6 +33,7 @@ target_link_libraries(tactile-core
                       tactile::render
                       EnTT::EnTT
                       fmt::fmt
+                      imgui::imgui
 
                       PRIVATE
                       Boost::boost
