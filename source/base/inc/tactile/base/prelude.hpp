@@ -114,6 +114,12 @@
   Name::Name(Name&&) noexcept = default; \
   auto Name::operator=(Name&&) noexcept -> Name& = default
 
+#define TACTILE_DEFAULT_ALL(Name) \
+  Name() = default;               \
+  TACTILE_DEFAULT_COPY(Name);     \
+  TACTILE_DEFAULT_MOVE(Name);     \
+  ~Name() noexcept = default
+
 #define TACTILE_INTERFACE_CLASS(Name) \
                                       \
  protected:                           \
