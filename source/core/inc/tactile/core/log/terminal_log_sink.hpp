@@ -11,7 +11,8 @@ namespace tactile {
 /**
  * A log sink that simply forwards messages to the terminal.
  */
-class TerminalLogSink final : public ILogSink {
+class TerminalLogSink final : public ILogSink
+{
  public:
   inline static constexpr StringView kAnsiColorReset = "\x1B[0m";
   inline static constexpr StringView kAnsiColorBold = "\x1B[1m";

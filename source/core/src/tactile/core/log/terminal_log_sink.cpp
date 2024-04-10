@@ -13,7 +13,13 @@ void TerminalLogSink::log(const LogMessage& msg)
     std::cout << fg_color;
   }
 
-  std::cout << msg.prefix << ' ' << msg.text;
+  std::cout << msg.prefix;
+
+  if (!msg.scope.empty()) {
+    std::cout << '[' << msg.scope << ']';
+  }
+
+  std::cout << ' ' << msg.text;
 
   if (mUseAnsiColors) {
     std::cout << kAnsiColorReset;
