@@ -25,7 +25,7 @@ class Registry final
    * Creates a new entity.
    *
    * \return
-   *    The assigned entity identifier.
+   * The assigned entity identifier.
    */
   [[nodiscard]] auto make_entity() -> EntityID;
 
@@ -35,7 +35,7 @@ class Registry final
    * \param entity_id The target entity.
    *
    * \return
-   *    True if the entity was valid; false otherwise.
+   * True if the entity was valid; false otherwise.
    */
   auto destroy(EntityID entity_id) -> bool;
 
@@ -46,10 +46,10 @@ class Registry final
    * \tparam Args The types of arguments that will be forwarded.
    *
    * \param entity The target entity.
-   * \param args   The arguments that will be forwarded to a component constructor.
+   * \param args   The arguments that will be forwarded to a constructor.
    *
    * \return
-   *    The attached component.
+   * The attached component.
    */
   template <typename T, typename... Args>
   auto add(const EntityID entity, Args&&... args) -> T&
@@ -76,18 +76,18 @@ class Registry final
    * Removes a component from an entity and returns it (if it exists).
    *
    * \note
-   *    Consider using the \c erase function instead if the returned component
-   *    is ignored, for improved efficiency.
+   * Consider using the \c erase function instead if the returned component is
+   * ignored, for improved efficiency.
    *
    * \tparam T A component type.
    *
    * \param entity The target entity.
    *
    * \return
-   *    The removed component; nothing if the entity didn't feature the component.
+   * The removed component; nothing if the entity didn't feature the component.
    */
   template <typename T>
-  auto detach(const EntityID entity) -> Maybe<T>
+  [[nodiscard]] auto detach(const EntityID entity) -> Maybe<T>
   {
     if (has<T>(entity)) {
       auto component = get<T>(entity);
@@ -106,7 +106,7 @@ class Registry final
    * \param entity The target entity.
    *
    * \return
-   *    A component.
+   * A component.
    */
   template <typename T>
   [[nodiscard]] auto get(const EntityID entity) -> T&
@@ -139,7 +139,7 @@ class Registry final
    * \param entity The target entity.
    *
    * \return
-   *    A component if found; a null pointer otherwise.
+   * A component if found; a null pointer otherwise.
    */
   template <typename T>
   [[nodiscard]] auto find(const EntityID entity) -> T*
@@ -164,7 +164,7 @@ class Registry final
    * \param entity The entity to check.
    *
    * \return
-   *    True if the entity has the component; false otherwise.
+   * True if the entity has the component; false otherwise.
    */
   template <typename T>
   [[nodiscard]] auto has(const EntityID entity) const -> bool
@@ -173,12 +173,35 @@ class Registry final
   }
 
   /**
+   * Returns an iterable object for each entity with the specified components.
+   *
+   * \tparam Ts The component types.
+   *
+   * \return
+   * An iterable object.
+   */
+  template <typename... Ts>
+  [[nodiscard]] auto each()
+  {
+    return mRegistry.view<Ts...>().each();
+  }
+
+  /**
+   * \copydoc each
+   */
+  template <typename... Ts>
+  [[nodiscard]] auto each() const
+  {
+    return mRegistry.view<Ts...>().each();
+  }
+
+  /**
    * Returns the number of instances of a given component.
    *
    * \tparam T A component type.
    *
    * \return
-   *    The number of component instances.
+   * The number of component instances.
    */
   template <typename T>
   [[nodiscard]] auto count() const -> usize
@@ -194,10 +217,10 @@ class Registry final
    * Returns the total number of components in the registry.
    *
    * \note
-   *    This function is mainly intended for debugging/testing purposes.
+   * This function is mainly intended for debugging/testing purposes.
    *
    * \return
-   *    The number of components.
+   * The number of components.
    */
   [[nodiscard]] auto count() const -> usize;
 
@@ -207,7 +230,7 @@ class Registry final
    * \param entity The entity to check.
    *
    * \return
-   *    True if the entity is valid; false otherwise.
+   * True if the entity is valid; false otherwise.
    */
   [[nodiscard]] auto is_valid(EntityID entity) const -> bool;
 

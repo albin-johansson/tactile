@@ -4,9 +4,14 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/base/container/array.hpp"
+#include "tactile/base/container/hash_map.hpp"
+
 namespace tactile {
 
-/** \trace tactile::Registry::make_entity */
+/**
+ * \trace tactile::Registry::make_entity
+ */
 TEST(Registry, MakeEntity)
 {
   Registry registry {};
@@ -59,7 +64,9 @@ TEST(Registry, Add)
   EXPECT_FALSE(registry.has<int>(b));
 }
 
-/** \trace tactile::Registry::erase */
+/**
+ * \trace tactile::Registry::erase
+ */
 TEST(Registry, Erase)
 {
   Registry registry {};
@@ -75,7 +82,9 @@ TEST(Registry, Erase)
   EXPECT_TRUE(registry.is_valid(entity));
 }
 
-/** \trace tactile::Registry::detach */
+/**
+ * \trace tactile::Registry::detach
+ */
 TEST(Registry, Detach)
 {
   Registry registry {};
@@ -90,7 +99,9 @@ TEST(Registry, Detach)
   EXPECT_EQ(registry.detach<float>(entity), nothing);
 }
 
-/** \trace tactile::Registry::get */
+/**
+ * \trace tactile::Registry::get
+ */
 TEST(Registry, Get)
 {
   Registry registry {};
@@ -111,7 +122,9 @@ TEST(Registry, Get)
   EXPECT_THROW((void) const_registry.get<float>(b), Exception);
 }
 
-/** \trace tactile::Registry::find */
+/**
+ * \trace tactile::Registry::find
+ */
 TEST(Registry, Find)
 {
   Registry registry {};
@@ -132,7 +145,58 @@ TEST(Registry, Find)
   EXPECT_EQ(const_registry.find<bool>(b), nullptr);
 }
 
-/** \trace tactile::Registry::count [T] */
+/**
+ * \trace tactile::Registry::each
+ */
+TEST(Registry, Each)
+{
+  Registry registry {};
+
+  const Array<EntityID, 4> entities = {
+    registry.make_entity(),
+    registry.make_entity(),
+    registry.make_entity(),
+    registry.make_entity(),
+  };
+
+  registry.add<int>(entities[0], 1);
+  registry.add<int>(entities[1], 2);
+  registry.add<int>(entities[2], 3);
+  registry.add<float>(entities[3], 4.0f);
+
+  HashMap<EntityID, int> observed_ints {};
+
+  for (auto [entity, value] : registry.each<int>()) {
+    observed_ints[entity] = value;
+  }
+
+  ASSERT_TRUE(observed_ints.contains(entities[0]));
+  ASSERT_TRUE(observed_ints.contains(entities[1]));
+  ASSERT_TRUE(observed_ints.contains(entities[2]));
+  ASSERT_FALSE(observed_ints.contains(entities[3]));
+  EXPECT_EQ(observed_ints.at(entities[0]), 1);
+  EXPECT_EQ(observed_ints.at(entities[1]), 2);
+  EXPECT_EQ(observed_ints.at(entities[2]), 3);
+
+  const auto& const_registry = registry;
+  observed_ints.clear();
+
+  for (auto [entity, value] : const_registry.each<int>()) {
+    observed_ints[entity] = value;
+  }
+
+  ASSERT_TRUE(observed_ints.contains(entities[0]));
+  ASSERT_TRUE(observed_ints.contains(entities[1]));
+  ASSERT_TRUE(observed_ints.contains(entities[2]));
+  ASSERT_FALSE(observed_ints.contains(entities[3]));
+  EXPECT_EQ(observed_ints.at(entities[0]), 1);
+  EXPECT_EQ(observed_ints.at(entities[1]), 2);
+  EXPECT_EQ(observed_ints.at(entities[2]), 3);
+}
+
+/**
+ * \trace tactile::Registry::count [T]
+ */
 TEST(Registry, CountForSpecificComponent)
 {
   Registry registry {};
@@ -145,7 +209,9 @@ TEST(Registry, CountForSpecificComponent)
   EXPECT_EQ(registry.count<float>(), 0);
 }
 
-/** \trace tactile::Registry::count */
+/**
+ * \trace tactile::Registry::count
+ */
 TEST(Registry, Count)
 {
   Registry registry {};
