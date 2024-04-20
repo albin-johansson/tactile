@@ -9,11 +9,15 @@
 #include "tactile/base/container/span.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
-/** Represents an 8-bit RGBA color. */
-class Color final {
+/**
+ * Represents an 8-bit RGBA color.
+ */
+class Color final
+{
  public:
   uint8 red {};
   uint8 green {};
@@ -24,8 +28,8 @@ class Color final {
    * Creates a color from floating-point components.
    *
    * \details
-   *    The provided intensities are clamped to be within [0, 1],
-   *    and subsequently mapped to values in the [0, 255] interval.
+   * The provided intensities are clamped to be within [0, 1], and subsequently
+   * mapped to values in the [0, 255] interval.
    *
    * \param r The red channel intensity.
    * \param g The green channel intensity.
@@ -33,7 +37,7 @@ class Color final {
    * \param a The alpha channel intensity.
    *
    * \return
-   *    A color.
+   * A color.
    */
   [[nodiscard]]
   static auto from(float r, float g, float b, float a) -> Color;
@@ -47,7 +51,7 @@ class Color final {
    * \param rgb An RGB color string, on the form \c "#RRGGBB".
    *
    * \return
-   *    A color if successful; an error code otherwise.
+   * A color if successful; an error code otherwise.
    */
   [[nodiscard]]
   static auto parse_rgb(StringView rgb) -> Result<Color>;
@@ -58,7 +62,7 @@ class Color final {
    * \param rgba An RGBA color string, on the form \c "#RRGGBBAA".
    *
    * \return
-   *    A color if successful; an error code otherwise.
+   * A color if successful; an error code otherwise.
    */
   [[nodiscard]]
   static auto parse_rgba(StringView rgba) -> Result<Color>;
@@ -69,7 +73,7 @@ class Color final {
    * \param argb An ARGB color string, on the form \c "#AARRGGBB".
    *
    * \return
-   *    A color if successful; an error code otherwise.
+   * A color if successful; an error code otherwise.
    */
   [[nodiscard]]
   static auto parse_argb(StringView argb) -> Result<Color>;
@@ -78,7 +82,7 @@ class Color final {
    * Converts the color to a hexadecimal RGB color code.
    *
    * \return
-   *    An RGB color code.
+   * An RGB color code.
    */
   [[nodiscard]]
   auto to_string_rgb() const -> String;
@@ -87,7 +91,7 @@ class Color final {
    * Converts the color to a hexadecimal RGBA color code.
    *
    * \return
-   *    An RGBA color code.
+   * An RGBA color code.
    */
   [[nodiscard]]
   auto to_string_rgba() const -> String;
@@ -96,10 +100,19 @@ class Color final {
    * Converts the color to a hexadecimal ARGB color code.
    *
    * \return
-   *    An ARGB color code.
+   * An ARGB color code.
    */
   [[nodiscard]]
   auto to_string_argb() const -> String;
+
+  /**
+   * Encodes the color as an ABGR color packed into a 32-bit integer.
+   *
+   * \return
+   * An 32-bit integer, where each octet represents a different color channel.
+   */
+  [[nodiscard]]
+  auto to_uint32_abgr() const -> uint32;
 
   [[nodiscard]]
   auto normalized() const -> Array<float, 4>;
@@ -108,7 +121,7 @@ class Color final {
    * Returns the relative luminance of the color.
    *
    * \return
-   *    A luminance value in the interval [0, 1].
+   * A luminance value in the interval [0, 1].
    *
    * \see https://en.wikipedia.org/wiki/Relative_luminance
    */
@@ -119,12 +132,13 @@ class Color final {
    * Indicates whether the color is considered dark.
    *
    * \return
-   *    True if the color is dark; false otherwise.
+   * True if the color is dark; false otherwise.
    */
   [[nodiscard]]
   auto is_dark() const -> bool;
 
-  [[nodiscard]] constexpr auto operator==(const Color&) const noexcept -> bool = default;
+  [[nodiscard]]
+  constexpr auto operator==(const Color&) const noexcept -> bool = default;
 };
 
 inline constexpr Color kColorBlack {0x00, 0x00, 0x00, 0xFF};

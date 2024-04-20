@@ -13,7 +13,10 @@
 
 namespace tactile {
 
-auto Color::from(const float r, const float g, const float b, const float a) -> Color
+auto Color::from(const float r,
+                 const float g,
+                 const float b,
+                 const float a) -> Color
 {
   const auto to_u8 = [](const float val) {
     return static_cast<uint8>(std::clamp(val, 0.0f, 1.0f) * 255.0f);
@@ -104,9 +107,20 @@ auto Color::to_string_argb() const -> String
   return fmt::format("#{:02X}{:02X}{:02X}{:02X}", alpha, red, green, blue);
 }
 
+auto Color::to_uint32_abgr() const -> uint32
+{
+  const auto a = static_cast<uint32>(alpha) << uint32 {24};
+  const auto b = static_cast<uint32>(blue) << uint32 {16};
+  const auto g = static_cast<uint32>(green) << uint32 {8};
+  const auto r = static_cast<uint32>(red) << uint32 {0};
+  return a | b | g | r;
+}
+
 auto Color::normalized() const -> Array<float, 4>
 {
-  const auto to_f = [](const uint8 val) { return static_cast<float>(val) / 255.0f; };
+  const auto to_f = [](const uint8 val) {
+    return static_cast<float>(val) / 255.0f;
+  };
   return {to_f(red), to_f(green), to_f(blue), to_f(alpha)};
 }
 
