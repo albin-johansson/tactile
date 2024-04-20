@@ -12,4 +12,12 @@ using EntityID = entt::entity;
 
 inline constexpr EntityID kInvalidEntity = entt::null;
 
+/**
+ * Helper type intended to be inherited by tag component types.
+ */
+struct CTag
+{
+  char unused [[maybe_unused]];
+};
+
 }  // namespace tactile
