@@ -10,16 +10,23 @@
 namespace tactile {
 namespace {
 
-constexpr const char* kMapPatternDescriptor = "Map files";
-constexpr const char* kImagePatternDescriptor = "Image files";
+inline constexpr const char* kMapPatternDescriptor = "Map files";
+inline constexpr const char* kImagePatternDescriptor = "Image files";
 
-constexpr Array<const char*, 6> kMapPatterns {"*.yaml",
-                                              "*.yml",
-                                              "*.json",
-                                              "*.tmj",
-                                              "*.tmx",
-                                              "*.xml"};
-constexpr Array<const char*, 3> kImagePatterns {"*.png", "*.jpg", "*.jpeg"};
+inline constexpr Array<const char*, 6> kMapPatterns {
+  "*.yaml",
+  "*.yml",
+  "*.json",
+  "*.tmj",
+  "*.tmx",
+  "*.xml",
+};
+
+inline constexpr Array<const char*, 3> kImagePatterns {
+  "*.png",
+  "*.jpg",
+  "*.jpeg",
+};
 
 }  // namespace
 
@@ -34,8 +41,12 @@ auto FileDialog::open_folder() -> Result<Path>
 
 auto FileDialog::open_file() -> Result<Path>
 {
-  if (const auto* path =
-          tinyfd_openFileDialog("Open File", nullptr, 0, nullptr, "Any file", 0)) {
+  if (const auto* path = tinyfd_openFileDialog("Open File",
+                                               nullptr,
+                                               0,
+                                               nullptr,
+                                               "Any file",
+                                               0)) {
     return path;
   }
 
