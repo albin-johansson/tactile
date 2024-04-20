@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/layer/tile_matrix.hpp"
+#include "tactile/core/layer/dense_tile_matrix.hpp"
 
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
@@ -46,32 +46,20 @@ void _remove_columns(Vector<Vector<TileID>>& rows, const usize n)
 
 }  // namespace
 
-auto operator<<(std::ostream& stream, const MatrixIndex& index) -> std::ostream&
-{
-  stream << '(' << index.row << ';' << index.col << ')';
-  return stream;
-}
-
-auto operator<<(std::ostream& stream, const MatrixExtent& extent) -> std::ostream&
-{
-  stream << '(' << extent.rows << ';' << extent.cols << ')';
-  return stream;
-}
-
-TileMatrix::TileMatrix(const MatrixExtent& extent)
+DenseTileMatrix::DenseTileMatrix(const MatrixExtent& extent)
   : mExtent {extent}
 {
   mRows.reserve(mExtent.rows);
   mRows.assign(mExtent.rows, Vector<TileID>(mExtent.cols, kEmptyTile));
 }
 
-void TileMatrix::resize(const MatrixExtent& new_extent)
+void DenseTileMatrix::resize(const MatrixExtent& new_extent)
 {
-  set_column_count(new_extent.cols);
-  set_row_count(new_extent.rows);
+  _set_column_count(new_extent.cols);
+  _set_row_count(new_extent.rows);
 }
 
-void TileMatrix::set_row_count(const usize rows)
+void DenseTileMatrix::_set_row_count(const usize rows)
 {
   if (rows != mExtent.rows) {
     if (rows > mExtent.rows) {
@@ -85,7 +73,7 @@ void TileMatrix::set_row_count(const usize rows)
   }
 }
 
-void TileMatrix::set_column_count(const usize cols)
+void DenseTileMatrix::_set_column_count(const usize cols)
 {
   if (cols != mExtent.cols) {
     if (cols > mExtent.cols) {
@@ -99,44 +87,37 @@ void TileMatrix::set_column_count(const usize cols)
   }
 }
 
-auto TileMatrix::at(const MatrixIndex index) -> TileID&
+auto DenseTileMatrix::at(const MatrixIndex index) -> TileID
 {
   if (is_valid(index)) [[likely]] {
-    return operator[](index);
+    return mRows[index.row][index.col];
   }
 
   throw Exception {"bad matrix index"};
 }
 
-auto TileMatrix::at(const MatrixIndex index) const -> TileID
+auto DenseTileMatrix::at(const MatrixIndex index) const -> const TileID&
 {
   if (is_valid(index)) [[likely]] {
-    return operator[](index);
+    return mRows[index.row][index.col];
   }
 
   throw Exception {"bad matrix index"};
 }
 
-auto TileMatrix::operator[](const MatrixIndex index) noexcept -> TileID&
+auto DenseTileMatrix::operator[](const MatrixIndex index) noexcept -> TileID&
 {
   TACTILE_ASSERT_MSG(index.row < mExtent.rows, "bad row index");
   TACTILE_ASSERT_MSG(index.col < mExtent.cols, "bad column index");
   return mRows[index.row][index.col];
 }
 
-auto TileMatrix::operator[](const MatrixIndex index) const noexcept -> TileID
-{
-  TACTILE_ASSERT_MSG(index.row < mExtent.rows, "bad row index");
-  TACTILE_ASSERT_MSG(index.col < mExtent.cols, "bad column index");
-  return mRows[index.row][index.col];
-}
-
-auto TileMatrix::is_valid(const MatrixIndex& index) const noexcept -> bool
+auto DenseTileMatrix::is_valid(const MatrixIndex& index) const noexcept -> bool
 {
   return (index.row < mExtent.rows) && (index.col < mExtent.cols);
 }
 
-auto TileMatrix::get_extent() const noexcept -> const MatrixExtent&
+auto DenseTileMatrix::get_extent() const noexcept -> const MatrixExtent&
 {
   return mExtent;
 }

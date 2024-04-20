@@ -1,51 +1,65 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/layer/tile_matrix.hpp"
-
 #include <gtest/gtest.h>
 
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/layer/dense_tile_matrix.hpp"
+#include "tactile/core/layer/sparse_tile_matrix.hpp"
 
 namespace tactile {
+namespace {
 
-class TileMatrixTest : public testing::Test {
- protected:
-  static void validate_tiles(const TileMatrix& tile_matrix,
-                             const MatrixExtent& expected_extent)
-  {
-    EXPECT_EQ(tile_matrix.get_extent(), expected_extent);
+template <typename MatrixType>
+void _validate_tiles(const MatrixType& tile_matrix,
+                     const MatrixExtent& expected_extent)
+{
+  EXPECT_EQ(tile_matrix.get_extent(), expected_extent);
 
-    for (usize row = 0; row < expected_extent.rows; ++row) {
-      for (usize col = 0; col < expected_extent.cols; ++col) {
-        const MatrixIndex index {row, col};
-        EXPECT_TRUE(tile_matrix.is_valid(index)) << "index is " << index;
-      }
+  for (usize row = 0; row < expected_extent.rows; ++row) {
+    for (usize col = 0; col < expected_extent.cols; ++col) {
+      const MatrixIndex index {row, col};
+      EXPECT_TRUE(tile_matrix.is_valid(index)) << "index is " << index;
     }
   }
-};
-
-/** \trace tactile::TileMatrix::TileMatrix */
-TEST_F(TileMatrixTest, DefaultConstructor)
-{
-  const TileMatrix tile_matrix {};
-  validate_tiles(tile_matrix, MatrixExtent {0, 0});
 }
 
-/** \trace tactile::TileMatrix::TileMatrix [MatrixExtent] */
-TEST_F(TileMatrixTest, ExtentConstructor)
+}  // namespace
+
+template <typename MatrixType>
+class TileMatrixTest : public testing::Test
+{};
+
+using TileMatrixTypes = testing::Types<DenseTileMatrix, SparseTileMatrix>;
+
+TYPED_TEST_SUITE(TileMatrixTest, TileMatrixTypes);
+
+/// \trace tactile::DenseTileMatrix::DenseTileMatrix
+/// \trace tactile::SparseTileMatrix::SparseTileMatrix
+TYPED_TEST(TileMatrixTest, DefaultConstructor)
 {
-  const TileMatrix tile_matrix {MatrixExtent {12, 24}};
-  validate_tiles(tile_matrix, MatrixExtent {12, 24});
+  const TypeParam tile_matrix {};
+  _validate_tiles(tile_matrix, MatrixExtent {0, 0});
 }
 
-/** \trace tactile::TileMatrix::resize */
-TEST_F(TileMatrixTest, Resize)
+/// \trace tactile::DenseTileMatrix::DenseTileMatrix [MatrixExtent]
+/// \trace tactile::SparseTileMatrix::SparseTileMatrix [MatrixExtent]
+TYPED_TEST(TileMatrixTest, ExtentConstructor)
 {
-  TileMatrix tile_matrix {};
+  const TypeParam tile_matrix {
+    MatrixExtent {12, 24}
+  };
+  _validate_tiles(tile_matrix, MatrixExtent {12, 24});
+}
+
+/// \trace tactile::DenseTileMatrix::resize
+/// \trace tactile::SparseTileMatrix::resize
+TYPED_TEST(TileMatrixTest, Resize)
+{
+  TypeParam tile_matrix {};
 
   const auto resize_and_validate = [&](const MatrixExtent& extent) {
     tile_matrix.resize(extent);
-    validate_tiles(tile_matrix, extent);
+    _validate_tiles(tile_matrix, extent);
   };
 
   // Increase row count.
@@ -85,46 +99,13 @@ TEST_F(TileMatrixTest, Resize)
   resize_and_validate(MatrixExtent {18, 31});
 }
 
-/** \trace tactile::TileMatrix::set_row_count */
-TEST_F(TileMatrixTest, SetRowCount)
+/// \trace tactile::DenseTileMatrix::at
+/// \trace tactile::SparseTileMatrix::at
+TYPED_TEST(TileMatrixTest, At)
 {
-  TileMatrix tile_matrix {MatrixExtent {8, 10}};
-
-  tile_matrix.set_row_count(12);
-  validate_tiles(tile_matrix, MatrixExtent {12, 10});
-
-  tile_matrix.set_row_count(6);
-  validate_tiles(tile_matrix, MatrixExtent {6, 10});
-
-  tile_matrix.set_row_count(0);
-  validate_tiles(tile_matrix, MatrixExtent {0, 10});
-
-  tile_matrix.set_row_count(5);
-  validate_tiles(tile_matrix, MatrixExtent {5, 10});
-}
-
-/** \trace tactile::TileMatrix::set_column_count */
-TEST_F(TileMatrixTest, SetColumnCount)
-{
-  TileMatrix tile_matrix {MatrixExtent {16, 12}};
-
-  tile_matrix.set_column_count(9);
-  validate_tiles(tile_matrix, MatrixExtent {16, 9});
-
-  tile_matrix.set_column_count(20);
-  validate_tiles(tile_matrix, MatrixExtent {16, 20});
-
-  tile_matrix.set_column_count(0);
-  validate_tiles(tile_matrix, MatrixExtent {16, 0});
-
-  tile_matrix.set_column_count(5);
-  validate_tiles(tile_matrix, MatrixExtent {16, 5});
-}
-
-/** \trace tactile::TileMatrix::at */
-TEST_F(TileMatrixTest, At)
-{
-  TileMatrix tile_matrix {{2, 2}};
+  TypeParam tile_matrix {
+    MatrixExtent {2, 2}
+  };
   tile_matrix[{0, 0}] = TileID {42};
   tile_matrix[{0, 1}] = TileID {99};
   tile_matrix[{1, 1}] = TileID {123};
@@ -145,17 +126,18 @@ TEST_F(TileMatrixTest, At)
   EXPECT_THROW((void) const_tile_matrix.at({1, 2}), Exception);
 }
 
-/** \trace tactile::TileMatrix::operator[] */
-TEST_F(TileMatrixTest, SubscriptOperator)
+/// \trace tactile::DenseTileMatrix::operator[]
+/// \trace tactile::SparseTileMatrix::operator[]
+TYPED_TEST(TileMatrixTest, SubscriptOperator)
 {
-  TileMatrix tile_matrix {MatrixExtent {3, 4}};
+  TypeParam tile_matrix {
+    MatrixExtent {3, 4}
+  };
 
-  const auto assign_and_check = [&](const MatrixIndex& index, const TileID tile_id) {
+  const auto assign_and_check = [&](const MatrixIndex& index,
+                                    const TileID tile_id) {
     tile_matrix[index] = tile_id;
-    const auto& const_tile_matrix = tile_matrix;
-
     EXPECT_EQ(tile_matrix[index], tile_id) << "index is " << index;
-    EXPECT_EQ(const_tile_matrix[index], tile_id) << "index is " << index;
   };
 
   assign_and_check({0, 0}, TileID {0});
@@ -174,13 +156,14 @@ TEST_F(TileMatrixTest, SubscriptOperator)
   assign_and_check({2, 3}, TileID {11});
 }
 
-/** \trace tactile::TileMatrix::is_valid */
-TEST_F(TileMatrixTest, IsValid)
+/// \trace tactile::DenseTileMatrix::is_valid
+/// \trace tactile::SparseTileMatrix::is_valid
+TYPED_TEST(TileMatrixTest, IsValid)
 {
   const MatrixExtent extent {6, 5};
-  const TileMatrix tile_matrix {extent};
+  const TypeParam tile_matrix {extent};
 
-  validate_tiles(tile_matrix, extent);
+  _validate_tiles(tile_matrix, extent);
 
   EXPECT_TRUE(tile_matrix.is_valid({5, 4}));
   EXPECT_FALSE(tile_matrix.is_valid({6, 4}));
