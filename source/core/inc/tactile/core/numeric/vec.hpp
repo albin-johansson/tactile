@@ -679,6 +679,47 @@ template <NumericType T, usize N>
   return vec * scalar;
 }
 
+template <NumericType T, usize N>
+constexpr auto operator*=(Vec<T, N>& vec, const T scalar) noexcept -> Vec<T, N>&
+{
+  vec = vec * scalar;
+  return vec;
+}
+
+/**
+ * Divides a vector by a scalar value.
+ *
+ * \tparam T The element type used by both vectors.
+ * \tparam N The number of elements in both vectors.
+ *
+ * \param vec    The original vector.
+ * \param scalar The divisor used in the component-wise division.
+ *
+ * \return
+ * The scaled vector.
+ */
+template <NumericType T, usize N>
+[[nodiscard]] constexpr auto operator/(const Vec<T, N>& vec,
+                                       const T scalar) noexcept -> Vec<T, N>
+{
+  return apply(vec, [=](const T value) -> T { return value / scalar; });
+}
+
+template <NumericType T, usize N>
+[[nodiscard]] constexpr auto operator/(const T scalar,
+                                       const Vec<T, N>& vec) noexcept
+    -> Vec<T, N>
+{
+  return vec / scalar;
+}
+
+template <NumericType T, usize N>
+constexpr auto operator/=(Vec<T, N>& vec, const T scalar) noexcept -> Vec<T, N>&
+{
+  vec = vec / scalar;
+  return vec;
+}
+
 /// \}
 
 }  // namespace tactile
