@@ -1,19 +1,17 @@
 project(tactile-lib CXX)
 
-set(TACTILE_LIB libtactile)
-
 file(GLOB_RECURSE SOURCE_FILES
      CONFIGURE_DEPENDS
      ${PROJECT_SOURCE_DIR}/**/*.cpp
      ${PROJECT_SOURCE_DIR}/**/*.hpp
      )
 
-add_library(${TACTILE_LIB} ${SOURCE_FILES})
-add_library(tactile::lib ALIAS "${TACTILE_LIB}")
+add_library(libtactile ${SOURCE_FILES})
+add_library(tactile::lib ALIAS libtactile)
 
-tactile_prepare_target(${TACTILE_LIB})
+tactile_prepare_target(libtactile)
 
-target_include_directories(${TACTILE_LIB}
+target_include_directories(libtactile
                            PUBLIC
                            ${PROJECT_SOURCE_DIR}
 
@@ -26,7 +24,7 @@ target_include_directories(${TACTILE_LIB}
                            ${CPPCODEC_INCLUDE_DIRS}
                            )
 
-target_link_libraries(${TACTILE_LIB}
+target_link_libraries(libtactile
                       PUBLIC
                       tactile::proto
                       tactile::base
@@ -53,7 +51,7 @@ target_link_libraries(${TACTILE_LIB}
                       zstd::libzstd_static
                       )
 
-target_compile_definitions(${TACTILE_LIB}
+target_compile_definitions(libtactile
                            PUBLIC
                            CENTURION_NO_SDL_MIXER
                            CENTURION_NO_SDL_TTF
@@ -68,7 +66,7 @@ target_compile_definitions(${TACTILE_LIB}
                            )
 
 if (MSVC)
-  target_compile_definitions(${TACTILE_LIB}
+  target_compile_definitions(libtactile
                              PUBLIC
                              WIN32_LEAN_AND_MEAN
                              NOMINMAX
@@ -76,5 +74,5 @@ if (MSVC)
 endif ()
 
 if (TACTILE_BUILD_APP_BUNDLE MATCHES ON)
-  target_compile_definitions(${TACTILE_LIB} PUBLIC TACTILE_BUILD_APP_BUNDLE)
+  target_compile_definitions(libtactile PUBLIC TACTILE_BUILD_APP_BUNDLE)
 endif ()

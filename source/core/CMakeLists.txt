@@ -5,8 +5,10 @@ file(GLOB_RECURSE TACTILE_CORE_SOURCE_FILES CONFIGURE_DEPENDS
      "${PROJECT_SOURCE_DIR}/src/**/*.cpp"
      )
 
-add_library(tactile-core STATIC "${TACTILE_CORE_SOURCE_FILES}")
+add_library(tactile-core STATIC)
 add_library(tactile::core ALIAS tactile-core)
+
+target_sources(tactile-core PRIVATE "${TACTILE_CORE_SOURCE_FILES}")
 
 tactile_prepare_target(tactile-core)
 
