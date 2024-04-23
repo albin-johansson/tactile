@@ -41,9 +41,8 @@ auto make_native_string(const char* str) -> Result<NativeString>
     wide_str.pop_back();
     return wide_str;
   }
-  else {
-    return kNone;
-  }
+
+  return unexpected(make_error(GenericError::kUnknown));
 #else
   return NativeString {str};
 #endif  // TACTILE_OS_WINDOWS

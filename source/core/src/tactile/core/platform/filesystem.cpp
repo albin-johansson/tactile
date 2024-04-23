@@ -52,14 +52,12 @@ auto get_persistent_storage_directory() -> Result<Path>
   return unexpected(make_error(GenericError::kInvalidState));
 }
 
-auto get_user_home_directory() -> Result<NativeString>
+auto get_user_home_directory() -> Result<String>
 {
   // On Unix platforms, HOME is something like '/Users/username'.
   // On Windows, USERPROFILE is something like 'C:\Users\username'.
   const auto* var_name = kOnWindows ? "USERPROFILE" : "HOME";
-  return get_env(var_name).and_then([](const String& home_dir) {  //
-    return make_native_string(home_dir.c_str());
-  });
+  return get_env(var_name);
 }
 
 auto get_imgui_ini_file_path() -> Path
@@ -74,14 +72,23 @@ auto normalize_path(const Path& path) -> String
   return str;
 }
 
-auto strip_home_directory_prefix(const Path& path, const NativeString& home_dir)
-    -> Result<NativeString>
+auto has_prefix(const Path& path, const StringView prefix) -> bool
 {
-  if (NativeStringView {path.c_str()}.starts_with(home_dir)) {
+#if TACTILE_OS_WINDOWS
+  return StringView {path.string().c_str()}.starts_with(prefix);
+#else
+  return StringView {path.c_str()}.starts_with(home_dir);
+#endif
+}
+
+auto strip_home_directory_prefix(const Path& path,
+                                 const StringView home_dir) -> Result<String>
+{
+  if (has_prefix(path, home_dir)) {
     const NativeStringView path_view {path.c_str()};
     const auto path_without_home_dir = path_view.substr(home_dir.size());
 
-    NativeString str {};
+    String str {};
     str.reserve(1 + path_without_home_dir.size());
     str.push_back('~');
     str.insert_range(str.end(), path_without_home_dir);

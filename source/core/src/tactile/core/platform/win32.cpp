@@ -20,7 +20,7 @@ void win32_use_immersive_dark_mode([[maybe_unused]] SDL_Window* window)
   SDL_SysWMinfo wm_info {};
   SDL_VERSION(&wm_info.version);
 
-  if (SDL_GetWindowWMInfo(window.get(), &wm_info)) {
+  if (SDL_GetWindowWMInfo(window, &wm_info)) {
     const cen::shared_object dwmapi {"dwmapi.dll"};
 
     using DwmSetWindowAttributeFn = HRESULT(HWND, DWORD, LPCVOID, DWORD);
