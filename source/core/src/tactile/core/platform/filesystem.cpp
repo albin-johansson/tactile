@@ -77,7 +77,7 @@ auto has_prefix(const Path& path, const StringView prefix) -> bool
 #if TACTILE_OS_WINDOWS
   return StringView {path.string().c_str()}.starts_with(prefix);
 #else
-  return StringView {path.c_str()}.starts_with(home_dir);
+  return StringView {path.c_str()}.starts_with(prefix);
 #endif
 }
 
