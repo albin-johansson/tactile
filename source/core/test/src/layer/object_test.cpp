@@ -9,40 +9,38 @@
 
 namespace tactile {
 
-/**
- * \trace tactile::is_object
- */
-TEST(Object, IsObject)
+class ObjectTest : public testing::Test
 {
-  Registry registry {};
+ protected:
+  Registry mRegistry {};
+};
 
-  EXPECT_FALSE(is_object(registry, kInvalidEntity));
-  EXPECT_FALSE(is_object(registry, registry.make_entity()));
+/// \trace tactile::is_object
+TEST_F(ObjectTest, IsObject)
+{
+  EXPECT_FALSE(is_object(mRegistry, kInvalidEntity));
+  EXPECT_FALSE(is_object(mRegistry, mRegistry.make_entity()));
 
-  const auto entity = registry.make_entity();
-  registry.add<CMeta>(entity);
-  registry.add<CObject>(entity);
+  const auto entity = mRegistry.make_entity();
+  mRegistry.add<CMeta>(entity);
+  mRegistry.add<CObject>(entity);
 
-  EXPECT_TRUE(is_object(registry, entity));
+  EXPECT_TRUE(is_object(mRegistry, entity));
 }
 
-/**
- * \trace tactile::make_object
- */
-TEST(Object, MakeObject)
+/// \trace tactile::make_object
+TEST_F(ObjectTest, MakeObject)
 {
-  Registry registry {};
-
   const ObjectID object_id {42};
   const auto object_type = ObjectType::kRect;
-  const auto object_entity = make_object(registry, object_id, object_type);
+  const auto object_entity = make_object(mRegistry, object_id, object_type);
 
-  ASSERT_TRUE(is_object(registry, object_entity));
-  ASSERT_TRUE(registry.has<CMeta>(object_entity));
-  ASSERT_TRUE(registry.has<CObject>(object_entity));
+  ASSERT_TRUE(is_object(mRegistry, object_entity));
+  ASSERT_TRUE(mRegistry.has<CMeta>(object_entity));
+  ASSERT_TRUE(mRegistry.has<CObject>(object_entity));
 
-  const auto& meta = registry.get<CMeta>(object_entity);
-  const auto& object = registry.get<CObject>(object_entity);
+  const auto& meta = mRegistry.get<CMeta>(object_entity);
+  const auto& object = mRegistry.get<CObject>(object_entity);
 
   EXPECT_EQ(meta.name, "");
   EXPECT_EQ(meta.properties.size(), 0);
@@ -55,6 +53,40 @@ TEST(Object, MakeObject)
   EXPECT_EQ(object.size.y(), 0.0f);
   EXPECT_EQ(object.tag, "");
   EXPECT_EQ(object.is_visible, true);
+}
+
+/// \trace tactile::copy_object
+TEST_F(ObjectTest, CopyObject)
+{
+  const auto e1 = make_object(mRegistry, ObjectID {1}, ObjectType::kEllipse);
+
+  auto& meta1 = mRegistry.get<CMeta>(e1);
+  meta1.name = "foobar";
+  meta1.properties["1"] = 123;
+  meta1.properties["2"] = "deadbeef";
+
+  auto& object1 = mRegistry.get<CObject>(e1);
+  object1.tag = "tag";
+  object1.position = Float2 {12, 34};
+  object1.size = Float2 {56, 78};
+  object1.is_visible = true;
+
+  const auto e2 = copy_object(mRegistry, e1);
+  EXPECT_TRUE(is_object(mRegistry, e1));
+  EXPECT_TRUE(is_object(mRegistry, e2));
+
+  const auto& meta2 = mRegistry.get<CMeta>(e2);
+  EXPECT_EQ(meta1.name, meta2.name);
+  EXPECT_EQ(meta1.properties, meta2.properties);
+  EXPECT_EQ(meta1.components, meta2.components);
+
+  const auto& object2 = mRegistry.get<CObject>(e2);
+  EXPECT_EQ(object1.id, object2.id);
+  EXPECT_EQ(object1.position, object2.position);
+  EXPECT_EQ(object1.size, object2.size);
+  EXPECT_EQ(object1.type, object2.type);
+  EXPECT_EQ(object1.tag, object2.tag);
+  EXPECT_EQ(object1.is_visible, object2.is_visible);
 }
 
 }  // namespace tactile

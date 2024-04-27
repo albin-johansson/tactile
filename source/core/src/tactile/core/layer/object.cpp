@@ -38,4 +38,16 @@ void destroy_object(Registry& registry, const EntityID object_entity)
   registry.destroy(object_entity);
 }
 
+auto copy_object(Registry& registry, const EntityID object_entity) -> EntityID
+{
+  TACTILE_ASSERT(is_object(registry, object_entity));
+
+  const auto copy_entity = registry.make_entity();
+  registry.add<CMeta>(copy_entity, registry.get<CMeta>(object_entity));
+  registry.add<CObject>(copy_entity, registry.get<CObject>(object_entity));
+
+  TACTILE_ASSERT(is_object(registry, copy_entity));
+  return copy_entity;
+}
+
 }  // namespace tactile

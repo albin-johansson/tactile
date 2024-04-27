@@ -80,6 +80,20 @@ auto make_object(Registry& registry, ObjectID id, ObjectType type) -> EntityID;
  */
 void destroy_object(Registry& registry, EntityID object_entity);
 
+/**
+ * Creates a deep copy of an object.
+ *
+ * \pre The specified entity must be an object.
+ *
+ * \param registry      The associated registry.
+ * \param object_entity The object that will be copied.
+ *
+ * \return
+ * An object entity.
+ */
+[[nodiscard]]
+auto copy_object(Registry& registry, EntityID object_entity) -> EntityID;
+
 /// \}
 
 }  // namespace tactile
