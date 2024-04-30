@@ -10,21 +10,24 @@
 
 namespace tactile {
 
-/**
- * \trace tactile::make_tile
- * \trace tactile::is_tile
- */
-TEST(Tile, MakeTile)
+class TileTest : public testing::Test
 {
-  Registry registry {};
-  const auto tile_entity = make_tile(registry, TileIndex {42});
+ protected:
+  Registry mRegistry {};
+};
 
-  EXPECT_TRUE(is_tile(registry, tile_entity));
-  ASSERT_TRUE(registry.has<CMeta>(tile_entity));
-  ASSERT_TRUE(registry.has<CTile>(tile_entity));
+/// \trace tactile::make_tile
+/// \trace tactile::is_tile
+TEST_F(TileTest, MakeTile)
+{
+  const auto tile_entity = make_tile(mRegistry, TileIndex {42});
 
-  const auto& meta = registry.get<CMeta>(tile_entity);
-  const auto& tile = registry.get<CTile>(tile_entity);
+  EXPECT_TRUE(is_tile(mRegistry, tile_entity));
+  ASSERT_TRUE(mRegistry.has<CMeta>(tile_entity));
+  ASSERT_TRUE(mRegistry.has<CTile>(tile_entity));
+
+  const auto& meta = mRegistry.get<CMeta>(tile_entity);
+  const auto& tile = mRegistry.get<CTile>(tile_entity);
 
   EXPECT_EQ(meta.name, "");
   EXPECT_EQ(meta.properties.size(), 0);
@@ -34,40 +37,68 @@ TEST(Tile, MakeTile)
   EXPECT_EQ(tile.objects.size(), 0);
 }
 
-/**
- * \trace tactile::destroy_tile
- */
-TEST(Tile, DestroyTile)
+/// \trace tactile::destroy_tile
+TEST_F(TileTest, DestroyTile)
 {
-  Registry registry {};
-
-  const auto tile_entity = make_tile(registry, TileIndex {10});
-  ASSERT_TRUE(registry.is_valid(tile_entity));
+  const auto tile_entity = make_tile(mRegistry, TileIndex {10});
+  ASSERT_TRUE(mRegistry.is_valid(tile_entity));
 
   {
-    auto& tile = registry.get<CTile>(tile_entity);
+    auto& tile = mRegistry.get<CTile>(tile_entity);
     tile.objects.push_back(
-        make_object(registry, ObjectID {1}, ObjectType::kRect));
+        make_object(mRegistry, ObjectID {1}, ObjectType::kRect));
     tile.objects.push_back(
-        make_object(registry, ObjectID {2}, ObjectType::kEllipse));
+        make_object(mRegistry, ObjectID {2}, ObjectType::kEllipse));
     tile.objects.push_back(
-        make_object(registry, ObjectID {3}, ObjectType::kPoint));
+        make_object(mRegistry, ObjectID {3}, ObjectType::kPoint));
   }
 
   //   Tiles: 1 * (1 CMeta + 1 CTile)
   // Objects: 3 * (1 CMeta + 1 CObject)
-  EXPECT_EQ(registry.count(), 8);
-  EXPECT_EQ(registry.count<CTile>(), 1);
-  EXPECT_EQ(registry.count<CMeta>(), 4);
-  EXPECT_EQ(registry.count<CObject>(), 3);
+  EXPECT_EQ(mRegistry.count(), 8);
+  EXPECT_EQ(mRegistry.count<CTile>(), 1);
+  EXPECT_EQ(mRegistry.count<CMeta>(), 4);
+  EXPECT_EQ(mRegistry.count<CObject>(), 3);
 
-  destroy_tile(registry, tile_entity);
+  destroy_tile(mRegistry, tile_entity);
 
-  EXPECT_FALSE(registry.is_valid(tile_entity));
-  EXPECT_FALSE(is_tile(registry, tile_entity));
-  EXPECT_EQ(registry.count(), 0);
-  EXPECT_EQ(registry.count<CTile>(), 0);
-  EXPECT_EQ(registry.count<CObject>(), 0);
+  EXPECT_FALSE(mRegistry.is_valid(tile_entity));
+  EXPECT_FALSE(is_tile(mRegistry, tile_entity));
+  EXPECT_EQ(mRegistry.count(), 0);
+  EXPECT_EQ(mRegistry.count<CTile>(), 0);
+  EXPECT_EQ(mRegistry.count<CObject>(), 0);
+}
+
+/// \trace tactile::copy_tile
+TEST_F(TileTest, CopyTile)
+{
+  const auto e1 = make_tile(mRegistry, TileIndex {35});
+
+  auto& meta1 = mRegistry.get<CMeta>(e1);
+  meta1.name = "abcdef";
+  meta1.properties["x"] = "y";
+  meta1.components[UUID::generate()];
+
+  auto& tile1 = mRegistry.get<CTile>(e1);
+  tile1.objects.push_back(
+      make_object(mRegistry, ObjectID {1}, ObjectType::kPoint));
+  tile1.objects.push_back(
+      make_object(mRegistry, ObjectID {2}, ObjectType::kRect));
+  tile1.objects.push_back(
+      make_object(mRegistry, ObjectID {3}, ObjectType::kEllipse));
+
+  const auto e2 = copy_tile(mRegistry, e1);
+  EXPECT_TRUE(is_tile(mRegistry, e2));
+
+  const auto& meta2 = mRegistry.get<CMeta>(e2);
+  EXPECT_EQ(meta2.name, meta1.name);
+  EXPECT_EQ(meta2.properties, meta1.properties);
+  EXPECT_EQ(meta2.components, meta1.components);
+
+  const auto& tile2 = mRegistry.get<CTile>(e2);
+  EXPECT_EQ(tile2.index, tile1.index);
+  EXPECT_EQ(tile2.objects.size(), tile1.objects.size());
+  EXPECT_NE(tile2.objects, tile1.objects);
 }
 
 }  // namespace tactile

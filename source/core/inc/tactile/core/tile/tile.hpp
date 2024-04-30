@@ -11,7 +11,7 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup tile
+/// \addtogroup Tile
 /// \{
 
 /**
@@ -65,6 +65,20 @@ auto make_tile(Registry& registry, TileIndex index) -> EntityID;
  * \param tile_entity The target tile entity.
  */
 void destroy_tile(Registry& registry, EntityID tile_entity);
+
+/**
+ * Creates a deep copy of a tile.
+ *
+ * \pre The specified entity must be a tile.
+ *
+ * \param registry    The associated registry.
+ * \param tile_entity The tile that will be copied.
+ *
+ * \return
+ * A tile entity.
+ */
+[[nodiscard]]
+auto copy_tile(Registry& registry, EntityID tile_entity) -> EntityID;
 
 /// \}
 

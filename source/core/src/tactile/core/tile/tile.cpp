@@ -38,4 +38,25 @@ void destroy_tile(Registry& registry, const EntityID tile_entity)
   registry.destroy(tile_entity);
 }
 
+auto copy_tile(Registry& registry, const EntityID tile_entity) -> EntityID
+{
+  TACTILE_ASSERT(is_tile(registry, tile_entity));
+  const auto& meta = registry.get<CMeta>(tile_entity);
+  const auto& tile = registry.get<CTile>(tile_entity);
+
+  const auto copy_entity = registry.make_entity();
+  registry.add<CMeta>(copy_entity, meta);
+
+  auto& tile_copy = registry.add<CTile>(copy_entity);
+  tile_copy.index = tile.index;
+
+  tile_copy.objects.reserve(tile_copy.objects.size());
+  for (const auto object_entity : tile.objects) {
+    tile_copy.objects.push_back(copy_object(registry, object_entity));
+  }
+
+  TACTILE_ASSERT(is_tile(registry, copy_entity));
+  return copy_entity;
+}
+
 }  // namespace tactile
