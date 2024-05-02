@@ -40,6 +40,23 @@ class Registry final
   auto destroy(EntityID entity_id) -> bool;
 
   /**
+   * Adds a component to the registry itself.
+   *
+   * \tparam T    The component type.
+   * \tparam Args The types of arguments that will be forwarded.
+   *
+   * \param args The arguments that will be forwarded to a constructor.
+   *
+   * \return
+   * The attached component.
+   */
+  template <typename T, typename... Args>
+  auto add(Args&&... args) -> T&
+  {
+    return mRegistry.ctx().insert_or_assign(T {std::forward<Args>(args)...});
+  }
+
+  /**
    * Adds a component to an entity.
    *
    * \tparam T    The component type.
@@ -99,6 +116,37 @@ class Registry final
   }
 
   /**
+   * Returns a component attached to registry, aka a "context" component.
+   *
+   * \tparam T A component type.
+   *
+   * \return
+   * A component.
+   */
+  template <typename T>
+  [[nodiscard]] auto get() -> T&
+  {
+    if (auto* component = find<T>()) {
+      return *component;
+    }
+
+    throw Exception {"missing context component"};
+  }
+
+  /**
+   * \copydoc get()
+   */
+  template <typename T>
+  [[nodiscard]] auto get() const -> const T&
+  {
+    if (const auto* component = find<T>()) {
+      return *component;
+    }
+
+    throw Exception {"missing context component"};
+  }
+
+  /**
    * Returns a component attached to an entity.
    *
    * \tparam T A component type.
@@ -119,7 +167,7 @@ class Registry final
   }
 
   /**
-   * \copydoc get
+   * \copydoc get(EntityID)
    */
   template <typename T>
   [[nodiscard]] auto get(const EntityID entity) const -> const T&
@@ -129,6 +177,29 @@ class Registry final
     }
 
     throw Exception {"bad entity"};
+  }
+
+  /**
+   * Attempts to return a given context component.
+   *
+   * \tparam T The context component type.
+   *
+   * \return
+   * A pointer to the context component if found; a null pointer otherwise.
+   */
+  template <typename T>
+  [[nodiscard]] auto find() -> T*
+  {
+    return mRegistry.ctx().find<T>();
+  }
+
+  /**
+   * \copydoc find()
+   */
+  template <typename T>
+  [[nodiscard]] auto find() const -> const T*
+  {
+    return mRegistry.ctx().find<T>();
   }
 
   /**
@@ -148,12 +219,26 @@ class Registry final
   }
 
   /**
-   * \copydoc find
+   * \copydoc find(EntityID)
    */
   template <typename T>
   [[nodiscard]] auto find(const EntityID entity) const -> const T*
   {
     return mRegistry.try_get<T>(entity);
+  }
+
+  /**
+   * Indicates whether the registry features a given context component.
+   *
+   * \tparam T The component type to look for.
+   *
+   * \return
+   * True if the registry has the specified context component; false otherwise.
+   */
+  template <typename T>
+  [[nodiscard]] auto has() const -> bool
+  {
+    return find<T>() != nullptr;
   }
 
   /**
