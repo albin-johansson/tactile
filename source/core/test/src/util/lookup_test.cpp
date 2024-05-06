@@ -12,11 +12,9 @@
 
 namespace tactile {
 
-/**
- * \trace tactile::exists_in
- * \trace tactile::find_in
- * \trace tactile::lookup_in
- */
+/// \trace tactile::exists_in
+/// \trace tactile::find_in
+/// \trace tactile::lookup_in
 TEST(Lookup, EmptyMap)
 {
   const StringMap<int> hash_map {};
@@ -32,7 +30,7 @@ TEST(Lookup, EmptyMap)
   EXPECT_THROW((void) lookup_in(tree_map, "foo"), Exception);
 }
 
-/** \trace tactile::find_in */
+/// \trace tactile::find_in
 TEST(Lookup, FindIn)
 {
   TreeMap<int, String> map {};
@@ -49,7 +47,7 @@ TEST(Lookup, FindIn)
   EXPECT_EQ(find_in(const_map, 2), nullptr);
 }
 
-/** \trace tactile::lookup_in */
+/// \trace tactile::lookup_in
 TEST(Lookup, LookupIn)
 {
   StringMap<String> map {};
@@ -69,21 +67,43 @@ TEST(Lookup, LookupIn)
   EXPECT_THROW((void) lookup_in(const_map, "a"), Exception);
 }
 
-/** \trace tactile::erase_from */
+/// \trace tactile::erase_from
 TEST(Lookup, EraseFrom)
 {
   StringMap<int> map {};
   map["A"] = 0xA;
   map["B"] = 0xB;
 
-  EXPECT_EQ(erase_from(map, "A"), 0xA);
-  EXPECT_EQ(erase_from(map, "A"), nothing);
+  EXPECT_EQ(map.size(), 2);
 
-  EXPECT_EQ(erase_from(map, "B"), 0xB);
-  EXPECT_EQ(erase_from(map, "B"), nothing);
+  erase_from(map, "A");
+  erase_from(map, "A");
+
+  EXPECT_EQ(map.size(), 1);
+
+  erase_from(map, "B");
+  erase_from(map, "B");
+
+  EXPECT_EQ(map.size(), 0);
 }
 
-/** \trace tactile::exists_in */
+/// \trace tactile::take_from
+TEST(Lookup, TakeFrom)
+{
+  StringMap<int> map {};
+  map["A"] = 0xA;
+  map["B"] = 0xB;
+
+  EXPECT_EQ(take_from(map, "A"), 0xA);
+  EXPECT_EQ(take_from(map, "A"), nothing);
+
+  EXPECT_EQ(take_from(map, "B"), 0xB);
+  EXPECT_EQ(take_from(map, "B"), nothing);
+
+  EXPECT_EQ(map.size(), 0);
+}
+
+/// \trace tactile::exists_in
 TEST(Lookup, ExistsIn)
 {
   StringMap<int> map {};

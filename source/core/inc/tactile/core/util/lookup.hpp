@@ -27,16 +27,19 @@ concept MapLikeType = requires {
  * \param key The key associated with the desired element.
  *
  * \return
- *    The found element; or a null pointer if none was found.
+ * The found element; or a null pointer if none was found.
  */
 template <MapLikeType T>
-[[nodiscard]] constexpr auto find_in(T& map, const auto& key) -> typename T::mapped_type*
+[[nodiscard]] constexpr auto find_in(T& map, const auto& key) ->
+    typename T::mapped_type*
 {
   const auto iter = map.find(key);
   return (iter != map.end()) ? &iter->second : nullptr;
 }
 
-/** \copydoc find_in() */
+/**
+ * \copydoc find_in()
+ */
 template <MapLikeType T>
 [[nodiscard]] constexpr auto find_in(const T& map, const auto& key) -> const
     typename T::mapped_type*
@@ -54,7 +57,7 @@ template <MapLikeType T>
  * \param key The key associated with the desired element.
  *
  * \return
- *    The found element.
+ * The found element.
  *
  * \throw Exception if no element is found.
  */
@@ -69,7 +72,9 @@ template <MapLikeType T>
   throw Exception {"bad key"};
 }
 
-/** \copydoc lookup_in() */
+/**
+ * \copydoc lookup_in()
+ */
 template <MapLikeType T>
 [[nodiscard]] constexpr auto lookup_in(const T& map, const auto& key) -> const
     typename T::mapped_type&
@@ -88,12 +93,29 @@ template <MapLikeType T>
  *
  * \param map The source map container.
  * \param key The key associated with the element to remove.
- *
- * \return
- *    The removed element, or nothing if the element wasn't found.
  */
 template <MapLikeType T>
-constexpr auto erase_from(T& map, const auto& key) -> Maybe<typename T::mapped_type>
+constexpr void erase_from(T& map, const auto& key)
+{
+  if (const auto iter = map.find(key); iter != map.end()) {
+    map.erase(iter);
+  }
+}
+
+/**
+ * Removes and returns an element from a map.
+ *
+ * \tparam T A map-like type.
+ *
+ * \param map The source map container.
+ * \param key The key associated with the element to remove.
+ *
+ * \return
+ * The removed element if successful; nothing if the element wasn't found.
+ */
+template <MapLikeType T>
+constexpr auto take_from(T& map,
+                         const auto& key) -> Maybe<typename T::mapped_type>
 {
   if (const auto iter = map.find(key); iter != map.end()) {
     auto elem = std::move(iter->second);
@@ -113,7 +135,7 @@ constexpr auto erase_from(T& map, const auto& key) -> Maybe<typename T::mapped_t
  * \param key The key associated with the element to look for.
  *
  * \return
- *    True if the element was found; false otherwise.
+ * True if the element was found; false otherwise.
  */
 template <MapLikeType T>
 [[nodiscard]] constexpr auto exists_in(const T& map, const auto& key) -> bool
