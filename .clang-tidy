@@ -1,6 +1,5 @@
 FormatStyle: google
 Checks: "-*,
-         clang-analyzer-*,
          performance-*,
          portability-*,
 
@@ -9,6 +8,9 @@ Checks: "-*,
          -bugprone-switch-missing-default-case,
          -bugprone-unchecked-optional-access,
 
+         clang-analyzer-*,
+         -clang-analyzer-optin.core.EnumCastOutOfRange,
+         
          readability-*,
          -readability-identifier-length,
          -readability-uppercase-literal-suffix,
