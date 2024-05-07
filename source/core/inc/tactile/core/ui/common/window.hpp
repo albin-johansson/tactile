@@ -4,7 +4,9 @@
 
 #include <imgui.h>
 
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile::ui {
 
@@ -95,9 +97,39 @@ class Window final
   [[nodiscard]]
   auto is_open() const -> bool;
 
+  /**
+   * Returns the position of the top-left corner of the window.
+   *
+   * \return
+   * A window position using absolute coordinates.
+   */
+  [[nodiscard]]
+  auto get_pos() const -> Float2;
+
+  /**
+   * Returns the size of the window.
+   *
+   * \return
+   * A window size.
+   */
+  [[nodiscard]]
+  auto get_size() const -> Float2;
+
+  /**
+   * Returns the position of the mouse pointer in the window.
+   *
+   * \return
+   * The relative position of the mouse if the mouse is within the window;
+   * nothing otherwise.
+   */
+  [[nodiscard]]
+  auto get_local_mouse_pos() const -> Maybe<Float2>;
+
  private:
   const char* mName;
   bool mIsOpen {false};
+  ImVec2 mPos {};
+  ImVec2 mSize {};
 };
 
 /// \}

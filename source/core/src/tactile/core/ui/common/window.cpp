@@ -4,6 +4,7 @@
 
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/util/lookup.hpp"
 
 namespace tactile::ui {
@@ -21,14 +22,16 @@ struct WindowData final
   bool has_mouse_now : 1;
 };
 
-// TODO language changes will cause issues here, force single language per run?
+// We only allow a single language per editor session, so this is fine.
 inline HashMap<const char*, WindowData> gWindowData {};
 
 }  // namespace window
 
 Window::Window(const char* name, const ImGuiWindowFlags flags, bool* is_open)
   : mName {require_not_null(name, "null name")},
-    mIsOpen {ImGui::Begin(name, is_open, flags)}
+    mIsOpen {ImGui::Begin(name, is_open, flags)},
+    mPos {ImGui::GetWindowPos()},
+    mSize {ImGui::GetWindowSize()}
 {
   auto& window_data = gWindowData[name];
   window_data.had_mouse_then = window_data.has_mouse_now;
@@ -42,10 +45,7 @@ Window::~Window() noexcept
 
 auto Window::has_mouse() const -> bool
 {
-  const auto window_pos = ImGui::GetWindowPos();
-  const auto window_size = ImGui::GetWindowSize();
-  return mIsOpen &&
-         ImGui::IsMouseHoveringRect(window_pos, window_pos + window_size);
+  return mIsOpen && ImGui::IsMouseHoveringRect(mPos, mPos + mSize);
 }
 
 auto Window::did_mouse_enter() const -> bool
@@ -73,6 +73,25 @@ auto Window::is_docked() const -> bool
 auto Window::is_open() const -> bool
 {
   return mIsOpen;
+}
+
+auto Window::get_pos() const -> Float2
+{
+  return to_float2(mPos);
+}
+
+auto Window::get_size() const -> Float2
+{
+  return to_float2(mSize);
+}
+
+auto Window::get_local_mouse_pos() const -> Maybe<Float2>
+{
+  if (has_mouse()) {
+    return to_float2(ImGui::GetMousePos() - mPos);
+  }
+
+  return kNone;
 }
 
 }  // namespace tactile::ui
