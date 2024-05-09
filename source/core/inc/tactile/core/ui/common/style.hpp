@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include <algorithm>    // max
+#include <type_traits>  // is_same_v
+
 #include <imgui.h>
 
 #include "tactile/base/int.hpp"
@@ -57,6 +60,25 @@ class StyleColorScope final
  private:
   bool mPopped {false};
 };
+
+/**
+ * Returns the minimum offset required to align labeled widgets.
+ *
+ * \tparam Args The string pack types.
+ *
+ * \param strings The strings that will be measured.
+ *
+ * \return
+ * The offset required to align widgets placed after the provided strings.
+ */
+template <typename... Args>
+  requires((std::is_same_v<Args, const char*> && ... && true))
+[[nodiscard]] auto get_alignment_offset(Args... strings) -> float
+{
+  const auto& style = ImGui::GetStyle();
+  const auto spacing = style.ItemSpacing.x * 2.0f;
+  return spacing + std::max({ImGui::CalcTextSize(strings).x...});
+}
 
 /// \}
 
