@@ -2,8 +2,6 @@
 
 #include "tactile/core/platform/win32.hpp"
 
-#include "tactile/base/prelude.hpp"
-
 #if TACTILE_OS_WINDOWS
 
   #include <SDL_syswm.h>
@@ -24,8 +22,8 @@ void win32_use_immersive_dark_mode([[maybe_unused]] SDL_Window* window)
     const cen::shared_object dwmapi {"dwmapi.dll"};
 
     using DwmSetWindowAttributeFn = HRESULT(HWND, DWORD, LPCVOID, DWORD);
-    if (auto* set_attribute =
-            dwmapi.load_function<DwmSetWindowAttributeFn>("DwmSetWindowAttribute")) {
+    if (auto* set_attribute = dwmapi.load_function<DwmSetWindowAttributeFn>(
+            "DwmSetWindowAttribute")) {
       HWND hwnd = wm_info.info.win.window;
       BOOL mode = 1;
       set_attribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &mode, sizeof mode);

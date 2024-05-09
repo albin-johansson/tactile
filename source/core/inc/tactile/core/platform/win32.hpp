@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "tactile/base/prelude.hpp"
+
 struct SDL_Window;
 
 namespace tactile {

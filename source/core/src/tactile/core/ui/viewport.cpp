@@ -4,6 +4,7 @@
 
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
+#include "tactile/core/numeric/vec_common.hpp"
 
 namespace tactile {
 inline namespace viewport {
