@@ -76,7 +76,7 @@ TEST_F(TileTest, CopyTile)
 
   auto& meta1 = mRegistry.get<CMeta>(e1);
   meta1.name = "abcdef";
-  meta1.properties["x"] = "y";
+  meta1.properties["x"] = Attribute {"y"};
   meta1.components[UUID::generate()];
 
   auto& tile1 = mRegistry.get<CTile>(e1);

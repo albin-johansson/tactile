@@ -62,8 +62,8 @@ TEST_F(ObjectTest, CopyObject)
 
   auto& meta1 = mRegistry.get<CMeta>(e1);
   meta1.name = "foobar";
-  meta1.properties["1"] = 123;
-  meta1.properties["2"] = "deadbeef";
+  meta1.properties["1"] = Attribute {123};
+  meta1.properties["2"] = Attribute {"deadbeef"};
 
   auto& object1 = mRegistry.get<CObject>(e1);
   object1.tag = "tag";
