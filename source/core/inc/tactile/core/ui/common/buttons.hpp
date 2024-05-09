@@ -30,6 +30,25 @@ auto push_button(const char* label,
                  float height = 0.0f) -> bool;
 
 /**
+ * Adds a horizontally centered button to the widget stack.
+ *
+ * \param label   The text label to use.
+ * \param tooltip An optional tooltip.
+ * \param enabled Controls whether the button is pressable.
+ * \param width   The width of the button. Pass \c 0 to use automatic width.
+ * \param height  The height of the button. Pass \c 0 to use automatic height.
+ *
+ * \return
+ * True if the button was pressed; false otherwise.
+ */
+[[nodiscard]]
+auto push_horizontally_centered_button(const char* label,
+                                       const char* tooltip = nullptr,
+                                       bool enabled = true,
+                                       float width = 0.0f,
+                                       float height = 0.0f) -> bool;
+
+/**
  * Adds an icon button to the widget stack.
  *
  * \param icon    The icon to use.

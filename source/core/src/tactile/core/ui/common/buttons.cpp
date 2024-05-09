@@ -29,6 +29,17 @@ auto push_button(const char* label,
   return was_pressed;
 }
 
+auto push_horizontally_centered_button(const char* label,
+                                       const char* tooltip,
+                                       const bool enabled,
+                                       const float width,
+                                       const float height) -> bool
+{
+  const auto button_size = get_widget_size(label);
+  center_next_widget_horizontally(button_size.x());
+  return push_button(label, tooltip, enabled, width, height);
+}
+
 auto push_icon_button(const Icon icon,
                       const char* tooltip,
                       const bool enabled) -> bool
