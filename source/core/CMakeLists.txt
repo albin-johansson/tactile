@@ -16,7 +16,8 @@ target_include_directories(tactile-core
                            PUBLIC
                            "${PROJECT_SOURCE_DIR}/inc"
 
-                           SYSTEM PRIVATE
+                           SYSTEM PUBLIC
+                           "${TACTILE_VENDOR_DIR}/centurion"
                            "${TACTILE_VENDOR_DIR}/fontawesome"
                            )
 
