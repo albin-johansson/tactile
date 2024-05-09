@@ -7,6 +7,7 @@
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile::ui {
 
@@ -96,6 +97,45 @@ class TooltipScope final
 
   ~TooltipScope() noexcept;
 };
+
+/**
+ * Calculates the size of a standard widget (e.g., a button) with a given label.
+ *
+ * \param text The widget label.
+ *
+ * \return
+ * The computed widget size.
+ */
+[[nodiscard]]
+auto get_widget_size(const char* text) -> Float2;
+
+/**
+ * Centers the next widget horizontally.
+ *
+ * \param width The next widget width.
+ */
+void center_next_widget_horizontally(float width);
+
+/**
+ * Centers the next widget vertically.
+ *
+ * \param height The next widget height.
+ */
+void center_next_widget_vertically(float height);
+
+/**
+ * Centers the next widget both horizontally and vertically.
+ *
+ * \param size The next widget size.
+ */
+void center_next_widget(const Float2& size);
+
+/**
+ * Prepares the widget cursor for a given number of vertically centered widgets.
+ *
+ * \param count The number of widgets to accommodate for.
+ */
+void prepare_for_vertically_centered_widgets(float count);
 
 /// \}
 
