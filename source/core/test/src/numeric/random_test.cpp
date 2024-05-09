@@ -3,15 +3,15 @@
 #include "tactile/core/numeric/random.hpp"
 
 #include <algorithm>  // generate, count
-#include <iostream>   // cout
 
 #include <gtest/gtest.h>
 
 #include "tactile/base/container/array.hpp"
+#include "tactile/core/log/logger.hpp"
 
 using namespace tactile;
 
-/** \trace tactile::get_random_int */
+/// \trace tactile::get_random_int
 TEST(Random, GetRandomInt)
 {
   EXPECT_EQ(get_random_int(0, 0), 0);
@@ -23,7 +23,7 @@ TEST(Random, GetRandomInt)
   EXPECT_LE(value, 10);
 }
 
-/** \trace tactile::get_random_uint */
+/// \trace tactile::get_random_uint
 TEST(Random, GetRandomUInt)
 {
   EXPECT_EQ(get_random_uint(0u, 0u), 0u);
@@ -35,7 +35,7 @@ TEST(Random, GetRandomUInt)
   EXPECT_LE(value, 10u);
 }
 
-/** \trace tactile::get_random_float */
+/// \trace tactile::get_random_float
 TEST(Random, GetRandomFloat)
 {
   const auto value = get_random_float(-4.2f, 83.1f);
@@ -43,7 +43,7 @@ TEST(Random, GetRandomFloat)
   EXPECT_LE(value, 83.1f);
 }
 
-/** \trace tactile::get_random_float_normalized */
+/// \trace tactile::get_random_float_normalized
 TEST(Random, GetRandomFloatNormalized)
 {
   const auto value = get_random_float_normalized();
@@ -51,7 +51,7 @@ TEST(Random, GetRandomFloatNormalized)
   EXPECT_LT(value, 1.0f);
 }
 
-/** \trace tactile::get_random_bool */
+/// \trace tactile::get_random_bool
 TEST(Random, GetRandomBool)
 {
   Array<bool, 2'000> values;
@@ -59,11 +59,14 @@ TEST(Random, GetRandomBool)
 
   const auto true_count = std::ranges::count(values, true);
   const auto false_count = std::ssize(values) - true_count;
-  std::cout << "Called get_random_bool " << values.size() << " times: ";
-  std::cout << true_count << " true, " << false_count << " false\n";
+  TACTILE_LOG_DEBUG("Called get_random_bool {} times: {} true, {} false",
+                    values.size(),
+                    true_count,
+                    false_count);
 
   // This is far from perfect, but detects suspicious (unlikely) ratios.
-  const auto ratio = static_cast<double>(true_count) / static_cast<double>(false_count);
+  const auto ratio =
+      static_cast<double>(true_count) / static_cast<double>(false_count);
   EXPECT_GT(ratio, 0.80);
   EXPECT_LT(ratio, 1.20);
 }
