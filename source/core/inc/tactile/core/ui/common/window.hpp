@@ -132,6 +132,13 @@ class Window final
   ImVec2 mSize {};
 };
 
+/**
+ * Centers the next submitted window vertically and horizontally.
+ *
+ * \param condition The condition that dictates when the window is centered.
+ */
+void center_next_window(ImGuiCond condition);
+
 /// \}
 
 }  // namespace tactile::ui

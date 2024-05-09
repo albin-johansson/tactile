@@ -94,4 +94,14 @@ auto Window::get_local_mouse_pos() const -> Maybe<Float2>
   return kNone;
 }
 
+void center_next_window(const ImGuiCond condition)
+{
+  const auto* viewport = ImGui::GetMainViewport();
+
+  const auto next_pos = viewport->WorkPos + (viewport->WorkSize * 0.5f);
+  const auto next_pivot = ImVec2 {0.5f, 0.5f};
+
+  ImGui::SetNextWindowPos(next_pos, condition, next_pivot);
+}
+
 }  // namespace tactile::ui
