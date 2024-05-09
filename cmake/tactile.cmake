@@ -40,9 +40,6 @@ else ()
   endif ()
 endif ()
 
-message(DEBUG "TACTILE_COMPILE_OPTIONS: ${TACTILE_COMPILE_OPTIONS}")
-message(DEBUG "TACTILE_LINK_OPTIONS: ${TACTILE_LINK_OPTIONS}")
-
 list(APPEND TACTILE_PRECOMPILED_HEADERS
      "<algorithm>"
      "<array>"
@@ -83,33 +80,49 @@ list(APPEND TACTILE_PRECOMPILED_HEADERS
      "<vector>"
      )
 
+message(DEBUG "TACTILE_CXX_STANDARD: ${TACTILE_CXX_STANDARD}")
+message(DEBUG "TACTILE_COMPILE_OPTIONS: ${TACTILE_COMPILE_OPTIONS}")
+message(DEBUG "TACTILE_LINK_OPTIONS: ${TACTILE_LINK_OPTIONS}")
 message(DEBUG "TACTILE_PRECOMPILED_HEADERS: ${TACTILE_PRECOMPILED_HEADERS}")
 
-function(tactile_prepare_target target)
-  set_target_properties("${target}"
-                        PROPERTIES
-                        CXX_STANDARD "${TACTILE_CXX_STANDARD}"
-                        CXX_EXTENSIONS "OFF"
-                        CXX_STANDARD_REQUIRED "ON"
-                        POSITION_INDEPENDENT_CODE "ON"
-                        INTERPROCEDURAL_OPTIMIZATION "${TACTILE_USE_LTO}"
-                        RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                        ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                        LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                        UNITY_BUILD "${TACTILE_UNITY_BUILD}"
-                        )
+function(tactile_find_dependencies)
+  find_package(Boost REQUIRED)
+  find_package(argparse CONFIG REQUIRED)
+  find_package(EnTT CONFIG REQUIRED)
+  find_package(FastFloat CONFIG REQUIRED)
+  find_package(fmt CONFIG REQUIRED)
+  find_package(glm CONFIG REQUIRED)
+  find_package(imgui CONFIG REQUIRED)
+  find_package(magic_enum CONFIG REQUIRED)
+  find_package(nlohmann_json CONFIG REQUIRED)
+  find_package(Protobuf CONFIG REQUIRED)
+  find_package(pugixml CONFIG REQUIRED)
+  find_package(SDL2 CONFIG REQUIRED)
+  find_package(SDL2_image CONFIG REQUIRED)
+  find_package(spdlog CONFIG REQUIRED)
+  find_package(tinyfiledialogs CONFIG REQUIRED)
+  find_package(tl-expected CONFIG REQUIRED)
+  find_package(yaml-cpp CONFIG REQUIRED)
+  find_package(zstd CONFIG REQUIRED)
+  find_package(ZLIB REQUIRED)
+  find_package(Stb REQUIRED)
+  find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
-  target_compile_options("${target}" PRIVATE "${TACTILE_COMPILE_OPTIONS}")
-  target_link_options("${target}" PRIVATE "${TACTILE_LINK_OPTIONS}")
+  if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
+    find_package(OpenGL REQUIRED)
+    find_package(glad CONFIG REQUIRED)
+  endif ()
 
-  target_precompile_headers("${target}" PRIVATE "${TACTILE_PRECOMPILED_HEADERS}")
+  if (TACTILE_BUILD_VULKAN_RENDERER MATCHES "ON")
+    find_package(Vulkan REQUIRED)
+  endif ()
 
-  if (TACTILE_BUILD_TYPE STREQUAL "asan" AND NOT MSVC)
-    target_link_libraries("${target}" PRIVATE "-fsanitize=address")
+  if (TACTILE_BUILD_TESTS MATCHES "ON")
+    find_package(GTest CONFIG REQUIRED)
   endif ()
 endfunction()
 
-function(tactile_set_output_dir target directory)
+function(tactile_set_output_directory target directory)
   set_target_properties("${target}"
                         PROPERTIES
                         RUNTIME_OUTPUT_DIRECTORY "${directory}"
@@ -118,10 +131,33 @@ function(tactile_set_output_dir target directory)
                         )
 endfunction()
 
-function(tactile_copy_directory_post_build target from to)
-  add_custom_command(TARGET "${target}" POST_BUILD
-                     COMMAND "${CMAKE_COMMAND}" -E copy_directory
-                     "${from}"
-                     "${to}"
-                     )
+function(tactile_set_properties target)
+  set_target_properties(${target}
+                        PROPERTIES
+                        CXX_STANDARD "${TACTILE_CXX_STANDARD}"
+                        CXX_EXTENSIONS "OFF"
+                        CXX_STANDARD_REQUIRED "ON"
+                        POSITION_INDEPENDENT_CODE "ON"
+                        UNITY_BUILD "${TACTILE_UNITY_BUILD}"
+                        INTERPROCEDURAL_OPTIMIZATION "${TACTILE_USE_LTO}"
+                        )
+endfunction()
+
+function(tactile_set_compiler_options target)
+  target_compile_options(${target} PRIVATE "${TACTILE_COMPILE_OPTIONS}")
+  target_link_options(${target} PRIVATE "${TACTILE_LINK_OPTIONS}")
+endfunction()
+
+function(tactile_prepare_target target)
+  tactile_set_compiler_options(${target})
+  tactile_set_properties(${target})
+  tactile_set_output_directory(${target} "${TACTILE_BUILD_DIR}")
+
+  if (TACTILE_USE_PRECOMPILED_HEADERS MATCHES "ON")
+    target_precompile_headers(${target} PRIVATE "${TACTILE_PRECOMPILED_HEADERS}")
+  endif ()
+
+  if (TACTILE_BUILD_TYPE STREQUAL "asan" AND NOT MSVC)
+    target_link_libraries(${target} PRIVATE "-fsanitize=address")
+  endif ()
 endfunction()

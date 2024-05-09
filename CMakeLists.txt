@@ -1,18 +1,22 @@
 cmake_minimum_required(VERSION 3.16)
 
+option(TACTILE_BUILD_LEGACY "Build the legacy targets" OFF)
 option(TACTILE_BUILD_TESTS "Build the tests" OFF)
 option(TACTILE_BUILD_OPENGL_RENDERER "Build the OpenGL renderer" OFF)
 option(TACTILE_BUILD_VULKAN_RENDERER "Build the Vulkan renderer" OFF)
 option(TACTILE_MACOS_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_UNITY_BUILD "Enable unity builds" OFF)
 option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
+option(TACTILE_USE_PRECOMPILED_HEADERS "Enable precompiled standard headers" ON)
 
+message(DEBUG "TACTILE_BUILD_LEGACY: ${TACTILE_BUILD_LEGACY}")
 message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
 message(DEBUG "TACTILE_BUILD_OPENGL_RENDERER: ${TACTILE_BUILD_OPENGL_RENDERER}")
 message(DEBUG "TACTILE_BUILD_VULKAN_RENDERER: ${TACTILE_BUILD_VULKAN_RENDERER}")
 message(DEBUG "TACTILE_MACOS_APP_BUNDLE: ${TACTILE_MACOS_APP_BUNDLE}")
 message(DEBUG "TACTILE_UNITY_BUILD: ${TACTILE_UNITY_BUILD}")
 message(DEBUG "TACTILE_USE_LTO: ${TACTILE_USE_LTO}")
+message(DEBUG "TACTILE_USE_PRECOMPILED_HEADERS: ${TACTILE_USE_PRECOMPILED_HEADERS}")
 
 if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   cmake_path(SET VCPKG_ROOT NORMALIZE "$ENV{VCPKG_ROOT}")
@@ -37,7 +41,7 @@ project(tactile
         LANGUAGES CXX)
 
 # Determine build type, e.g. "debug" or "release".
-string(TOLOWER ${CMAKE_BUILD_TYPE} TACTILE_BUILD_TYPE)
+string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)
 if (NOT (TACTILE_BUILD_TYPE MATCHES "debug|release|asan"))
   message(FATAL_ERROR "Unsupported build type")
 else ()
@@ -56,9 +60,7 @@ message(DEBUG "TACTILE_ASSET_DIR: ${TACTILE_ASSET_DIR}")
 
 install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
-include("${TACTILE_ROOT_DIR}/cmake/dependencies.cmake")
 include("${TACTILE_ROOT_DIR}/cmake/tactile.cmake")
-
 tactile_find_dependencies()
 
 add_subdirectory("source/proto")
@@ -75,10 +77,15 @@ if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
   endif ()
 endif ()
 
-add_subdirectory("source/lib")
-add_subdirectory("source/app")
+if (TACTILE_BUILD_LEGACY MATCHES "ON")
+  add_subdirectory("source/lib")
+  add_subdirectory("source/app")
+endif ()
 
 if (TACTILE_BUILD_TESTS MATCHES "ON")
-  add_subdirectory("test")
+  if (TACTILE_BUILD_LEGACY MATCHES "ON")
+    add_subdirectory("test")
+  endif ()
+
   add_subdirectory("source/core/test")
 endif ()
