@@ -27,7 +27,7 @@ BracedInitializerIndentWidth: 2
 Cpp11BracedListStyle: true
 SpaceBeforeCpp11BracedList: true
 AllowShortBlocksOnASingleLine: Never
-AlignArrayOfStructures: Right
+AlignArrayOfStructures: None
 BreakBeforeBraces: Custom
 BraceWrapping:
   IndentBraces: false
