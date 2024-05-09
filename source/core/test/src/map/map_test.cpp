@@ -1,0 +1,167 @@
+// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
+
+#include "tactile/core/map/map.hpp"
+
+#include <gtest/gtest.h>
+
+#include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/layer/layer.hpp"
+#include "tactile/core/meta/meta.hpp"
+#include "tactile/core/tile/tileset.hpp"
+#include "tactile/core/tile/tileset_spec.hpp"
+#include "tactile/core/ui/viewport.hpp"
+
+namespace tactile {
+
+class MapTest : public testing::Test
+{
+ public:
+  MapTest()
+  {
+    mRegistry.add<CTileCache>();
+  }
+
+ protected:
+  Registry mRegistry {};
+};
+
+/// \trace tactile::is_map
+TEST_F(MapTest, IsMap)
+{
+  const auto map_entity = make_map(mRegistry,
+                                   MapOrientation::kOrthogonal,
+                                   MatrixExtent {5, 5},
+                                   Int2 {16, 16});
+
+  EXPECT_FALSE(is_map(mRegistry, kInvalidEntity));
+  EXPECT_FALSE(is_map(mRegistry, mRegistry.make_entity()));
+  EXPECT_TRUE(is_map(mRegistry, map_entity));
+}
+
+/// \trace tactile::make_map
+TEST_F(MapTest, MakeMap)
+{
+  const auto orientation = MapOrientation::kOrthogonal;
+  const MatrixExtent map_extent {10, 8};
+  const Int2 tile_size {32, 36};
+
+  const auto map_entity =
+      make_map(mRegistry, orientation, map_extent, tile_size);
+  ASSERT_TRUE(is_map(mRegistry, map_entity));
+
+  ASSERT_TRUE(mRegistry.has<CMeta>(map_entity));
+  ASSERT_TRUE(mRegistry.has<CMap>(map_entity));
+  ASSERT_TRUE(mRegistry.has<CTileFormat>(map_entity));
+  ASSERT_TRUE(mRegistry.has<CMapIdCache>(map_entity));
+  ASSERT_TRUE(mRegistry.has<CLayerSuffixes>(map_entity));
+  ASSERT_TRUE(mRegistry.has<CViewport>(map_entity));
+
+  const auto& meta = mRegistry.get<CMeta>(map_entity);
+  const auto& map = mRegistry.get<CMap>(map_entity);
+  const auto& format = mRegistry.get<CTileFormat>(map_entity);
+  const auto& id_cache = mRegistry.get<CMapIdCache>(map_entity);
+  const auto& suffixes = mRegistry.get<CLayerSuffixes>(map_entity);
+  const auto& viewport = mRegistry.get<CViewport>(map_entity);
+
+  EXPECT_EQ(meta.name, "");
+  EXPECT_EQ(meta.properties.size(), 0);
+  EXPECT_EQ(meta.components.size(), 0);
+
+  EXPECT_EQ(map.orientation, orientation);
+  EXPECT_EQ(map.extent, map_extent);
+  EXPECT_EQ(map.tile_size, tile_size);
+  EXPECT_NE(map.root_layer, kInvalidEntity);
+  EXPECT_EQ(map.active_layer, kInvalidEntity);
+  EXPECT_EQ(map.active_tileset, kInvalidEntity);
+  EXPECT_TRUE(is_group_layer(mRegistry, map.root_layer));
+
+  EXPECT_EQ(format.encoding, TileEncoding::kPlainText);
+  EXPECT_EQ(format.compression, CompressionType::kNone);
+  EXPECT_EQ(format.comp_level, kNone);
+
+  EXPECT_EQ(id_cache.next_tile_id, TileID {1});
+  EXPECT_EQ(id_cache.next_layer_id, 1);
+  EXPECT_EQ(id_cache.next_object_id, 1);
+
+  EXPECT_EQ(suffixes.tile_layer_suffix, 1);
+  EXPECT_EQ(suffixes.object_layer_suffix, 1);
+  EXPECT_EQ(suffixes.group_layer_suffix, 1);
+
+  EXPECT_EQ(viewport.pos, Float2 {});
+  EXPECT_EQ(viewport.size, Float2 {});
+  EXPECT_EQ(viewport.scale, 1.0f);
+}
+
+/// \trace tactile::destroy_map
+TEST_F(MapTest, DestroyMap)
+{
+  const auto map_entity = make_map(mRegistry,
+                                   MapOrientation::kOrthogonal,
+                                   MatrixExtent {5, 5},
+                                   Int2 {32, 32});
+
+  EXPECT_EQ(mRegistry.count<CMeta>(), 2);
+  EXPECT_EQ(mRegistry.count<CMap>(), 1);
+  EXPECT_EQ(mRegistry.count<CTileFormat>(), 1);
+  EXPECT_EQ(mRegistry.count<CMapIdCache>(), 1);
+  EXPECT_EQ(mRegistry.count<CLayerSuffixes>(), 1);
+  EXPECT_EQ(mRegistry.count<CViewport>(), 1);
+  EXPECT_EQ(mRegistry.count<CGroupLayer>(), 1);
+  EXPECT_EQ(mRegistry.count<CLayer>(), 1);
+  EXPECT_EQ(mRegistry.count(), 9);
+
+  destroy_map(mRegistry, map_entity);
+
+  EXPECT_EQ(mRegistry.count<CMeta>(), 0);
+  EXPECT_EQ(mRegistry.count<CMap>(), 0);
+  EXPECT_EQ(mRegistry.count<CTileFormat>(), 0);
+  EXPECT_EQ(mRegistry.count<CMapIdCache>(), 0);
+  EXPECT_EQ(mRegistry.count<CLayerSuffixes>(), 0);
+  EXPECT_EQ(mRegistry.count<CViewport>(), 0);
+  EXPECT_EQ(mRegistry.count<CGroupLayer>(), 0);
+  EXPECT_EQ(mRegistry.count<CLayer>(), 0);
+  EXPECT_EQ(mRegistry.count(), 0);
+}
+
+/// \trace tactile::add_tileset_to_map
+TEST_F(MapTest, AddTilesetToMap)
+{
+  const auto map_entity = make_map(mRegistry,
+                                   MapOrientation::kOrthogonal,
+                                   MatrixExtent {10, 10},
+                                   Int2 {32, 32});
+
+  const auto& map = mRegistry.get<CMap>(map_entity);
+  const auto& id_cache = mRegistry.get<CMapIdCache>(map_entity);
+
+  const TilesetSpec tileset_spec {
+    .tile_size = Int2 {50, 50},
+    .texture =
+        CTexture {
+          .texture_uuid = UUID::generate(),
+          .size = Int2 {500, 500},
+          .path = "foo/bar.png",
+        },
+  };
+
+  EXPECT_EQ(map.active_tileset, kInvalidEntity);
+  EXPECT_EQ(map.attached_tilesets.size(), 0);
+  EXPECT_EQ(id_cache.next_tile_id, TileID {1});
+  EXPECT_EQ(id_cache.next_layer_id, 1);
+  EXPECT_EQ(id_cache.next_object_id, 1);
+  EXPECT_EQ(mRegistry.count<CTileset>(), 0);
+  EXPECT_EQ(mRegistry.count<CTilesetInstance>(), 0);
+
+  EXPECT_EQ(add_tileset_to_map(mRegistry, map_entity, tileset_spec), kOK);
+
+  EXPECT_NE(map.active_tileset, kInvalidEntity);
+  EXPECT_EQ(map.attached_tilesets.size(), 1);
+  EXPECT_EQ(id_cache.next_tile_id, TileID {101});
+  EXPECT_EQ(id_cache.next_layer_id, 1);
+  EXPECT_EQ(id_cache.next_object_id, 1);
+  EXPECT_EQ(mRegistry.count<CTileset>(), 1);
+  EXPECT_EQ(mRegistry.count<CTilesetInstance>(), 1);
+}
+
+}  // namespace tactile
