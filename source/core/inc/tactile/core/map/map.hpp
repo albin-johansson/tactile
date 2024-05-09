@@ -5,6 +5,7 @@
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
+#include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -16,6 +17,7 @@
 
 namespace tactile {
 
+struct MapSpec;
 struct TilesetSpec;
 class Registry;
 
@@ -118,19 +120,14 @@ auto is_map(const Registry& registry, EntityID entity) -> bool;
 /**
  * Creates an empty map.
  *
- * \param registry    The associated registry.
- * \param orientation The orientation to use.
- * \param extent      The initial map size.
- * \param tile_size   The logical tile size.
+ * \param registry The associated registry.
+ * \param sec      The map specification.
  *
  * \return
- * A map entity.
+ * A map entity if successful; an invalid entity otherwise.
  */
 [[nodiscard]]
-auto make_map(Registry& registry,
-              MapOrientation orientation,
-              const MatrixExtent& extent,
-              const Int2& tile_size) -> EntityID;
+auto make_map(Registry& registry, const MapSpec& spec) -> EntityID;
 
 /**
  * Destroys a map.

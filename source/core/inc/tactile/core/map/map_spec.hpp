@@ -24,4 +24,15 @@ struct MapSpec final
   Int2 tile_size;
 };
 
+/**
+ * Indicates whether a map specification is valid.
+ *
+ * \param spec The specification to check.
+ *
+ * \return
+ * True if the specification is valid; false otherwise.
+ */
+[[nodiscard]]
+auto is_valid(const MapSpec& spec) -> bool;
+
 }  // namespace tactile

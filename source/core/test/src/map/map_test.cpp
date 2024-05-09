@@ -7,6 +7,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/layer.hpp"
+#include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
@@ -29,10 +30,13 @@ class MapTest : public testing::Test
 /// \trace tactile::is_map
 TEST_F(MapTest, IsMap)
 {
-  const auto map_entity = make_map(mRegistry,
-                                   MapOrientation::kOrthogonal,
-                                   MatrixExtent {5, 5},
-                                   Int2 {16, 16});
+  const MapSpec spec {
+    .orientation = MapOrientation::kOrthogonal,
+    .extent = MatrixExtent {5, 5},
+    .tile_size = Int2 {16, 16},
+  };
+
+  const auto map_entity = make_map(mRegistry, spec);
 
   EXPECT_FALSE(is_map(mRegistry, kInvalidEntity));
   EXPECT_FALSE(is_map(mRegistry, mRegistry.make_entity()));
@@ -42,12 +46,13 @@ TEST_F(MapTest, IsMap)
 /// \trace tactile::make_map
 TEST_F(MapTest, MakeMap)
 {
-  const auto orientation = MapOrientation::kOrthogonal;
-  const MatrixExtent map_extent {10, 8};
-  const Int2 tile_size {32, 36};
+  const MapSpec spec {
+    .orientation = MapOrientation::kOrthogonal,
+    .extent = MatrixExtent {10, 8},
+    .tile_size = Int2 {32, 36},
+  };
 
-  const auto map_entity =
-      make_map(mRegistry, orientation, map_extent, tile_size);
+  const auto map_entity = make_map(mRegistry, spec);
   ASSERT_TRUE(is_map(mRegistry, map_entity));
 
   ASSERT_TRUE(mRegistry.has<CMeta>(map_entity));
@@ -68,9 +73,9 @@ TEST_F(MapTest, MakeMap)
   EXPECT_EQ(meta.properties.size(), 0);
   EXPECT_EQ(meta.components.size(), 0);
 
-  EXPECT_EQ(map.orientation, orientation);
-  EXPECT_EQ(map.extent, map_extent);
-  EXPECT_EQ(map.tile_size, tile_size);
+  EXPECT_EQ(map.orientation, spec.orientation);
+  EXPECT_EQ(map.extent, spec.extent);
+  EXPECT_EQ(map.tile_size, spec.tile_size);
   EXPECT_NE(map.root_layer, kInvalidEntity);
   EXPECT_EQ(map.active_layer, kInvalidEntity);
   EXPECT_EQ(map.active_tileset, kInvalidEntity);
@@ -93,13 +98,35 @@ TEST_F(MapTest, MakeMap)
   EXPECT_EQ(viewport.scale, 1.0f);
 }
 
+/// \trace tactile::make_map
+TEST_F(MapTest, MakeMapWithInvalidSpec)
+{
+  const MapSpec bad_extent {
+    .orientation = MapOrientation::kOrthogonal,
+    .extent = MatrixExtent {0, 0},
+    .tile_size = Int2 {32, 32},
+  };
+
+  const MapSpec bad_tile_size {
+    .orientation = MapOrientation::kOrthogonal,
+    .extent = MatrixExtent {10, 10},
+    .tile_size = Int2 {0, 0},
+  };
+
+  EXPECT_EQ(make_map(mRegistry, bad_extent), kInvalidEntity);
+  EXPECT_EQ(make_map(mRegistry, bad_tile_size), kInvalidEntity);
+}
+
 /// \trace tactile::destroy_map
 TEST_F(MapTest, DestroyMap)
 {
-  const auto map_entity = make_map(mRegistry,
-                                   MapOrientation::kOrthogonal,
-                                   MatrixExtent {5, 5},
-                                   Int2 {32, 32});
+  const MapSpec spec {
+    .orientation = MapOrientation::kOrthogonal,
+    .extent = MatrixExtent {5, 5},
+    .tile_size = Int2 {32, 32},
+  };
+
+  const auto map_entity = make_map(mRegistry, spec);
 
   EXPECT_EQ(mRegistry.count<CMeta>(), 2);
   EXPECT_EQ(mRegistry.count<CMap>(), 1);
@@ -127,10 +154,13 @@ TEST_F(MapTest, DestroyMap)
 /// \trace tactile::add_tileset_to_map
 TEST_F(MapTest, AddTilesetToMap)
 {
-  const auto map_entity = make_map(mRegistry,
-                                   MapOrientation::kOrthogonal,
-                                   MatrixExtent {10, 10},
-                                   Int2 {32, 32});
+  const MapSpec spec {
+    .orientation = MapOrientation::kOrthogonal,
+    .extent = MatrixExtent {10, 10},
+    .tile_size = Int2 {32, 32},
+  };
+
+  const auto map_entity = make_map(mRegistry, spec);
 
   const auto& map = mRegistry.get<CMap>(map_entity);
   const auto& id_cache = mRegistry.get<CMapIdCache>(map_entity);

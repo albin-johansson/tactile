@@ -10,6 +10,7 @@
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
+#include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/tile/tileset.hpp"
@@ -28,19 +29,23 @@ auto is_map(const Registry& registry, const EntityID entity) -> bool
          registry.has<CViewport>(entity);
 }
 
-auto make_map(Registry& registry,
-              const MapOrientation orientation,
-              const MatrixExtent& extent,
-              const Int2& tile_size) -> EntityID
+auto make_map(Registry& registry, const MapSpec& spec) -> EntityID
 {
+  const SetLogScope log_scope {"Map"};
+
+  if (!is_valid(spec)) {
+    TACTILE_LOG_ERROR("Tried to create map from invalid map specification");
+    return kInvalidEntity;
+  }
+
   const auto map_entity = registry.make_entity();
 
   registry.add<CMeta>(map_entity);
 
   auto& map = registry.add<CMap>(map_entity);
-  map.orientation = orientation;
-  map.extent = extent;
-  map.tile_size = tile_size;
+  map.orientation = spec.orientation;
+  map.extent = spec.extent;
+  map.tile_size = spec.tile_size;
   map.root_layer = make_group_layer(registry);
   map.active_layer = kInvalidEntity;
   map.active_tileset = kInvalidEntity;
