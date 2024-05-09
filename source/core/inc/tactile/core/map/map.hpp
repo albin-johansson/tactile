@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/container/expected.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
