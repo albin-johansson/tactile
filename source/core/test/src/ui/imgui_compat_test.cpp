@@ -50,4 +50,21 @@ TEST(ImGuiCompat, ToInt4)
   EXPECT_EQ(output.w(), static_cast<Int4::value_type>(input.w));
 }
 
+/// \trace tactile::to_imgui_data_type
+TEST(ImGuiCompat, ToImGuiDataType)
+{
+  EXPECT_EQ(to_imgui_data_type<float>(), ImGuiDataType_Float);
+  EXPECT_EQ(to_imgui_data_type<double>(), ImGuiDataType_Double);
+
+  EXPECT_EQ(to_imgui_data_type<uint8>(), ImGuiDataType_U8);
+  EXPECT_EQ(to_imgui_data_type<uint16>(), ImGuiDataType_U16);
+  EXPECT_EQ(to_imgui_data_type<uint32>(), ImGuiDataType_U32);
+  EXPECT_EQ(to_imgui_data_type<uint64>(), ImGuiDataType_U64);
+
+  EXPECT_EQ(to_imgui_data_type<int8>(), ImGuiDataType_S8);
+  EXPECT_EQ(to_imgui_data_type<int16>(), ImGuiDataType_S16);
+  EXPECT_EQ(to_imgui_data_type<int32>(), ImGuiDataType_S32);
+  EXPECT_EQ(to_imgui_data_type<int64>(), ImGuiDataType_S64);
+}
+
 }  // namespace tactile

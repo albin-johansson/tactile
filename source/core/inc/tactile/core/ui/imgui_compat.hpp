@@ -2,9 +2,13 @@
 
 #pragma once
 
+#include <concepts>  // signed_integral, unsigned_integral, floating_point
+
 #include <imgui.h>
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/debug/exception.hpp"
+#include "tactile/core/numeric/arithmetic_type.hpp"
 #include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
@@ -96,6 +100,64 @@ constexpr auto to_imvec4(const Int4& vec) noexcept -> ImVec4
                  static_cast<float>(vec.y()),
                  static_cast<float>(vec.z()),
                  static_cast<float>(vec.w())};
+}
+
+/**
+ * Returns the ImGui data type identifier for a given type.
+ *
+ * \tparam T A signed integer type.
+ *
+ * \return
+ * An ImGui data type identifier.
+ */
+template <std::signed_integral T>
+[[nodiscard]] consteval auto to_imgui_data_type() -> ImGuiDataType
+{
+  switch (sizeof(T)) {
+    case sizeof(uint8):  return ImGuiDataType_S8;
+    case sizeof(uint16): return ImGuiDataType_S16;
+    case sizeof(uint32): return ImGuiDataType_S32;
+    case sizeof(uint64): return ImGuiDataType_S64;
+    default:             throw Exception {"unsupported signed integer size"};
+  }
+}
+
+/**
+ * Returns the ImGui data type identifier for a given type.
+ *
+ * \tparam T An unsigned integer type.
+ *
+ * \return
+ * An ImGui data type identifier.
+ */
+template <std::unsigned_integral T>
+[[nodiscard]] consteval auto to_imgui_data_type() -> ImGuiDataType
+{
+  switch (sizeof(T)) {
+    case sizeof(uint8):  return ImGuiDataType_U8;
+    case sizeof(uint16): return ImGuiDataType_U16;
+    case sizeof(uint32): return ImGuiDataType_U32;
+    case sizeof(uint64): return ImGuiDataType_U64;
+    default:             throw Exception {"unsupported unsigned integer size"};
+  }
+}
+
+/**
+ * Returns the ImGui data type identifier for a given type.
+ *
+ * \tparam T A floating-point type.
+ *
+ * \return
+ * An ImGui data type identifier.
+ */
+template <std::floating_point T>
+[[nodiscard]] consteval auto to_imgui_data_type() -> ImGuiDataType
+{
+  switch (sizeof(T)) {
+    case sizeof(float):  return ImGuiDataType_Float;
+    case sizeof(double): return ImGuiDataType_Double;
+    default:             throw Exception {"unsupported float size"};
+  }
 }
 
 }  // namespace tactile
