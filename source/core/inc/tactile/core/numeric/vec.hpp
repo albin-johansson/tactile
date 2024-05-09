@@ -2,16 +2,14 @@
 
 #pragma once
 
-#include <algorithm>    // min, max
-#include <cmath>        // abs, floor, round
 #include <compare>      // partial_ordering
-#include <concepts>     // same_as, integral, floating_point, invocable
-#include <ostream>      // ostream
-#include <type_traits>  // invoke_result_t
+#include <concepts>     // invocable
+#include <type_traits>  // invoke_result_t, is_same_v
 
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/numeric/arithmetic_type.hpp"
 
 namespace tactile {
 
@@ -19,27 +17,23 @@ namespace tactile {
 /// \{
 
 /**
- * Describes numeric types, i.e., types that primarily represent numeric values.
- *
- * \tparam T The type to check.
- */
-template <typename T>
-concept NumericType =
-    !std::same_as<T, bool> && (std::integral<T> || std::floating_point<T>);
-
-/**
  * Represents a generic mathematical vector.
  *
  * \tparam T The type of the vector elements.
  * \tparam N The number of elements in the vector.
  */
-template <NumericType T, usize N>
+template <ArithmeticType T, usize N>
   requires(N >= 2 && N <= 4)
 class Vec final
 {
  public:
   using value_type = T;
   using size_type = usize;
+
+  /**
+   * The number of elements in the vector.
+   */
+  static constexpr usize kSize = N;
 
   /**
    * Creates a zero vector.
@@ -344,7 +338,7 @@ using Int4 = Vec<int, 4>;
  * \return
  * A vector.
  */
-template <NumericType T, usize N, std::invocable<T> M>
+template <ArithmeticType T, usize N, std::invocable<T> M>
 [[nodiscard]] constexpr auto apply(const Vec<T, N>& vec,
                                    const M& modifier) noexcept
     -> Vec<std::invoke_result_t<M, T>, N>
@@ -380,7 +374,7 @@ template <NumericType T, usize N, std::invocable<T> M>
  * \return
  * A vector.
  */
-template <NumericType T, usize N, std::invocable<T, T> C>
+template <ArithmeticType T, usize N, std::invocable<T, T> C>
 [[nodiscard]] constexpr auto apply2(const Vec<T, N>& lhs,
                                     const Vec<T, N>& rhs,
                                     const C& combiner) noexcept
@@ -405,320 +399,76 @@ template <NumericType T, usize N, std::invocable<T, T> C>
 /**
  * Converts a vector to a vector using a different element type.
  *
- * \tparam T The element type used by the new vector.
- * \tparam U The element type used by the provided vector.
- * \tparam N The number of elements in the vector.
+ * \tparam ToVec   The target vector type.
+ * \tparam FromVec The source vector type.
  *
- * \param vec The vector to convert.
- *
- * \return
- * A vector obtained by casting each element in the provided vector to the
- * specified type.
- */
-template <NumericType T, NumericType U, usize N>
-[[nodiscard]] constexpr auto vector_cast(const Vec<U, N>& vec) noexcept
-    -> Vec<T, N>
-{
-  return apply(vec, [](const U value) { return static_cast<T>(value); });
-}
-
-/**
- * Creates a vector that features the absolute values of a given vector.
- *
- * \tparam T The element type used by the vector.
- * \tparam N The number of elements in the vector.
- *
- * \param vec The original vector.
+ * \param from The vector to convert.
  *
  * \return
- * A vector with absolute elements.
+ * A new vector.
  */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto abs(const Vec<T, N>& vec) noexcept -> Vec<T, N>
+template <typename VecType, ArithmeticType T, usize N>
+  requires(VecType::kSize == N && !std::is_same_v<VecType, Vec<T, N>>)
+[[nodiscard]] constexpr auto vec_cast(const Vec<T, N>& from) noexcept -> VecType
 {
-  return apply(vec, [](const T value) { return std::abs(value); });
+  return apply(from, [](const T value) {
+    return static_cast<VecType::value_type>(value);
+  });
 }
 
-/**
- * Creates a vector that features the rounded values of a given vector.
- *
- * \tparam T The element type used by the vector.
- * \tparam N The number of elements in the vector.
- *
- * \param vec The original vector.
- *
- * \return
- * A vector with rounded elements.
- */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto round(const Vec<T, N>& vec) noexcept -> Vec<T, N>
-{
-  return apply(vec, [](const T value) { return std::round(value); });
-}
-
-/**
- * Creates a vector that features the floored coordinates of a given vector.
- *
- * \tparam T The element type used by the vector.
- * \tparam N The number of elements in the vector.
- *
- * \param vec The original vector.
- *
- * \return
- * A vector with floored elements.
- */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto floor(const Vec<T, N>& vec) noexcept -> Vec<T, N>
-{
-  return apply(vec, [](const T value) { return std::floor(value); });
-}
-
-/**
- * Creates a vector that features the smallest elements from two given vectors.
- *
- * \tparam T The element type used by the vectors.
- * \tparam N The number of elements in the vectors.
- *
- * \param lhs The left-hand side vector.
- * \param rhs The right-hand side vector.
- *
- * \return
- * A vector with the smallest elements from the respective vectors.
- */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto min(const Vec<T, N>& lhs,
-                                 const Vec<T, N>& rhs) noexcept -> Vec<T, N>
-{
-  return apply2(lhs, rhs, [](const T a, const T b) { return std::min(a, b); });
-}
-
-/**
- * Creates a vector that features the largest elements from two given vectors.
- *
- * \tparam T The element type used by the vectors.
- * \tparam N The number of elements in the vectors.
- *
- * \param lhs The left-hand side vector.
- * \param rhs The right-hand side vector.
- *
- * \return
- * A vector with the largest elements from the respective vectors.
- */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto max(const Vec<T, N>& lhs,
-                                 const Vec<T, N>& rhs) noexcept -> Vec<T, N>
-{
-  return apply2(lhs, rhs, [](const T a, const T b) { return std::max(a, b); });
-}
-
-/** Represents the result from an element-wise vector comparison. */
-struct VecComparisonResult final
-{
-  bool same_x : 1 {};
-  bool same_y : 1 {};
-  bool same_z : 1 {};
-  bool same_w : 1 {};
-};
-
-/**
- * Performs an element-wise comparison of two vectors.
- *
- * \tparam T The element type used by both vectors.
- * \tparam N The number of elements in both vectors.
- *
- * \param lhs The left-hand side vector.
- * \param rhs The right-hand side vector.
- *
- * \return
- * The element-wise comparison result.
- */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto compare_elements(const Vec<T, N>& lhs,
-                                              const Vec<T, N>& rhs) noexcept
-    -> VecComparisonResult
-{
-  VecComparisonResult result {};
-  result.same_x = lhs[0] == rhs[0];
-  result.same_y = lhs[1] == rhs[1];
-
-  if constexpr (N > 2) {
-    result.same_z = lhs[2] == rhs[2];
-  }
-
-  if constexpr (N > 3) {
-    result.same_w = lhs[3] == rhs[3];
-  }
-
-  return result;
-}
-
-/**
- * Outputs a vector to a stream (for debugging purposes).
- *
- * \tparam T The element type used by the vector.
- * \tparam N The number of elements in the vector.
- *
- * \param stream The output stream.
- * \param vec    The vector to output.
- *
- * \return
- * The output stream.
- */
-template <NumericType T, usize N>
-auto operator<<(std::ostream& stream, const Vec<T, N>& vec) -> std::ostream&
-{
-  stream << vec[0] << ';' << vec[1];
-
-  if constexpr (N > 2) {
-    stream << ';' << vec[2];
-  }
-
-  if constexpr (N > 3) {
-    stream << ';' << vec[3];
-  }
-
-  return stream;
-}
-
-#define TACTILE_IMPLEMENT_VECTOR2_ARITHMETIC_OP(Op)                          \
-  template <NumericType T>                                                   \
+#define TACTILE_VEC_IMPL_ARITHMETIC_OP(Op)                                   \
+  template <ArithmeticType T, usize N>                                       \
   [[nodiscard]] constexpr auto operator Op(                                  \
-      const Vec<T, 2>& lhs,                                                  \
-      const Vec<T, 2>& rhs) noexcept -> Vec<T, 2>                            \
+      const Vec<T, N>& lhs,                                                  \
+      const Vec<T, N>& rhs) noexcept -> Vec<T, N>                            \
   {                                                                          \
-    return {lhs.x() Op rhs.x(), lhs.y() Op rhs.y()};                         \
+    return apply2(lhs, rhs, [=](const T a, const T b) -> T {                 \
+      return a Op b;                                                         \
+    });                                                                      \
   }                                                                          \
                                                                              \
-  template <NumericType T>                                                   \
-  constexpr auto operator Op##=(Vec<T, 2>& lhs,                              \
-                                const Vec<T, 2>& rhs) noexcept -> Vec<T, 2>& \
+  template <ArithmeticType T, usize N>                                       \
+  constexpr auto operator Op##=(Vec<T, N>& lhs,                              \
+                                const Vec<T, N>& rhs) noexcept -> Vec<T, N>& \
   {                                                                          \
     lhs = lhs Op rhs;                                                        \
     return lhs;                                                              \
   }                                                                          \
   static_assert(true)
 
-#define TACTILE_IMPLEMENT_VECTOR3_ARITHMETIC_OP(Op)                          \
-  template <NumericType T>                                                   \
-  [[nodiscard]] constexpr auto operator Op(                                  \
-      const Vec<T, 3>& lhs,                                                  \
-      const Vec<T, 3>& rhs) noexcept -> Vec<T, 3>                            \
-  {                                                                          \
-    return {lhs.x() Op rhs.x(), lhs.y() Op rhs.y(), lhs.z() Op rhs.z()};     \
-  }                                                                          \
-                                                                             \
-  template <NumericType T>                                                   \
-  constexpr auto operator Op##=(Vec<T, 3>& lhs,                              \
-                                const Vec<T, 3>& rhs) noexcept -> Vec<T, 3>& \
-  {                                                                          \
-    lhs = lhs Op rhs;                                                        \
-    return lhs;                                                              \
-  }                                                                          \
+#define TACTILE_VEC_IMPL_SCALAR_OP(Op)                                      \
+  template <ArithmeticType T, usize N>                                      \
+  [[nodiscard]] constexpr auto operator Op(                                 \
+      const Vec<T, N>& vec,                                                 \
+      const T scalar) noexcept -> Vec<T, N>                                 \
+  {                                                                         \
+    return apply(vec, [=](const T value) -> T { return value Op scalar; }); \
+  }                                                                         \
+                                                                            \
+  template <ArithmeticType T, usize N>                                      \
+  [[nodiscard]] constexpr auto operator Op(                                 \
+      const T scalar,                                                       \
+      const Vec<T, N>& vec) noexcept -> Vec<T, N>                           \
+  {                                                                         \
+    return vec * scalar;                                                    \
+  }                                                                         \
+                                                                            \
+  template <ArithmeticType T, usize N>                                      \
+  constexpr auto operator Op##=(Vec<T, N>& vec,                             \
+                                const T scalar) noexcept -> Vec<T, N>&      \
+  {                                                                         \
+    vec = vec Op scalar;                                                    \
+    return vec;                                                             \
+  }                                                                         \
   static_assert(true)
 
-#define TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(Op)                          \
-  template <NumericType T>                                                   \
-  [[nodiscard]] constexpr auto operator Op(                                  \
-      const Vec<T, 4>& lhs,                                                  \
-      const Vec<T, 4>& rhs) noexcept -> Vec<T, 4>                            \
-  {                                                                          \
-    return {lhs.x() Op rhs.x(),                                              \
-            lhs.y() Op rhs.y(),                                              \
-            lhs.z() Op rhs.z(),                                              \
-            lhs.w() Op rhs.w()};                                             \
-  }                                                                          \
-                                                                             \
-  template <NumericType T>                                                   \
-  constexpr auto operator Op##=(Vec<T, 4>& lhs,                              \
-                                const Vec<T, 4>& rhs) noexcept -> Vec<T, 4>& \
-  {                                                                          \
-    lhs = lhs Op rhs;                                                        \
-    return lhs;                                                              \
-  }                                                                          \
-  static_assert(true)
+TACTILE_VEC_IMPL_ARITHMETIC_OP(+);
+TACTILE_VEC_IMPL_ARITHMETIC_OP(-);
+TACTILE_VEC_IMPL_ARITHMETIC_OP(*);
+TACTILE_VEC_IMPL_ARITHMETIC_OP(/);
 
-TACTILE_IMPLEMENT_VECTOR2_ARITHMETIC_OP(+);
-TACTILE_IMPLEMENT_VECTOR2_ARITHMETIC_OP(-);
-TACTILE_IMPLEMENT_VECTOR2_ARITHMETIC_OP(*);
-TACTILE_IMPLEMENT_VECTOR2_ARITHMETIC_OP(/);
-
-TACTILE_IMPLEMENT_VECTOR3_ARITHMETIC_OP(+);
-TACTILE_IMPLEMENT_VECTOR3_ARITHMETIC_OP(-);
-TACTILE_IMPLEMENT_VECTOR3_ARITHMETIC_OP(*);
-TACTILE_IMPLEMENT_VECTOR3_ARITHMETIC_OP(/);
-
-TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(+);
-TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(-);
-TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(*);
-TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(/);
-
-/**
- * Multiplies a vector with a scalar value.
- *
- * \tparam T The element type used by both vectors.
- * \tparam N The number of elements in both vectors.
- *
- * \param vec    The original vector.
- * \param scalar The scalar value that will be multiplied with each element.
- *
- * \return
- * The scaled vector.
- */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto operator*(const Vec<T, N>& vec,
-                                       const T scalar) noexcept -> Vec<T, N>
-{
-  return apply(vec, [=](const T value) -> T { return value * scalar; });
-}
-
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto operator*(const T scalar,
-                                       const Vec<T, N>& vec) noexcept
-    -> Vec<T, N>
-{
-  return vec * scalar;
-}
-
-template <NumericType T, usize N>
-constexpr auto operator*=(Vec<T, N>& vec, const T scalar) noexcept -> Vec<T, N>&
-{
-  vec = vec * scalar;
-  return vec;
-}
-
-/**
- * Divides a vector by a scalar value.
- *
- * \tparam T The element type used by both vectors.
- * \tparam N The number of elements in both vectors.
- *
- * \param vec    The original vector.
- * \param scalar The divisor used in the component-wise division.
- *
- * \return
- * The scaled vector.
- */
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto operator/(const Vec<T, N>& vec,
-                                       const T scalar) noexcept -> Vec<T, N>
-{
-  return apply(vec, [=](const T value) -> T { return value / scalar; });
-}
-
-template <NumericType T, usize N>
-[[nodiscard]] constexpr auto operator/(const T scalar,
-                                       const Vec<T, N>& vec) noexcept
-    -> Vec<T, N>
-{
-  return vec / scalar;
-}
-
-template <NumericType T, usize N>
-constexpr auto operator/=(Vec<T, N>& vec, const T scalar) noexcept -> Vec<T, N>&
-{
-  vec = vec / scalar;
-  return vec;
-}
+TACTILE_VEC_IMPL_SCALAR_OP(*);
+TACTILE_VEC_IMPL_SCALAR_OP(/);
 
 /// \}
 

@@ -73,7 +73,7 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID
 
   auto& viewport = registry.add<CViewport>(tileset_entity);
   viewport.pos = Float2 {0.0f, 0.0f};
-  viewport.size = vector_cast<Float2::value_type>(spec.texture.size) * 0.5f;
+  viewport.size = vec_cast<Float2>(spec.texture.size) * 0.5f;
   viewport.scale = 1.0f;
 
   registry.add<CMeta>(tileset_entity);

@@ -7,6 +7,9 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/numeric/vec_common.hpp"
+#include "tactile/core/numeric/vec_stream.hpp"
+
 namespace tactile {
 
 /// \trace tactile::Vec
@@ -493,11 +496,11 @@ TEST(Vec, Apply2)
   EXPECT_EQ(c.w(), 12);
 }
 
-/// \trace tactile::vector_cast
-TEST(Vec, VectorCast)
+/// \trace tactile::vec_cast
+TEST(Vec, VecCast)
 {
   const Int4 ivec {10, 20, 30, 40};
-  const auto fvec = vector_cast<float>(ivec);
+  const auto fvec = vec_cast<Float4>(ivec);
 
   EXPECT_EQ(fvec.x(), static_cast<float>(ivec.x()));
   EXPECT_EQ(fvec.y(), static_cast<float>(ivec.y()));
@@ -573,60 +576,60 @@ TEST(Vec, CompareElements)
   {
     const Int4 vec {1, 2, 3, 4};
     const auto result = compare_elements(vec, vec);
-    EXPECT_TRUE(result.same_x);
-    EXPECT_TRUE(result.same_y);
-    EXPECT_TRUE(result.same_z);
-    EXPECT_TRUE(result.same_w);
+    EXPECT_TRUE(result.x());
+    EXPECT_TRUE(result.y());
+    EXPECT_TRUE(result.z());
+    EXPECT_TRUE(result.w());
   }
 
   {
     const Int4 a {1, 2, 3, 4};
     const Int4 b {1, 5, 6, 7};
     const auto result = compare_elements(a, b);
-    EXPECT_TRUE(result.same_x);
-    EXPECT_FALSE(result.same_y);
-    EXPECT_FALSE(result.same_z);
-    EXPECT_FALSE(result.same_w);
+    EXPECT_TRUE(result.x());
+    EXPECT_FALSE(result.y());
+    EXPECT_FALSE(result.z());
+    EXPECT_FALSE(result.w());
   }
 
   {
     const Int4 a {2, 1, 4, 6};
     const Int4 b {3, 1, 5, 7};
     const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.same_x);
-    EXPECT_TRUE(result.same_y);
-    EXPECT_FALSE(result.same_z);
-    EXPECT_FALSE(result.same_w);
+    EXPECT_FALSE(result.x());
+    EXPECT_TRUE(result.y());
+    EXPECT_FALSE(result.z());
+    EXPECT_FALSE(result.w());
   }
 
   {
     const Int4 a {2, 4, 1, 6};
     const Int4 b {3, 5, 1, 7};
     const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.same_x);
-    EXPECT_FALSE(result.same_y);
-    EXPECT_TRUE(result.same_z);
-    EXPECT_FALSE(result.same_w);
+    EXPECT_FALSE(result.x());
+    EXPECT_FALSE(result.y());
+    EXPECT_TRUE(result.z());
+    EXPECT_FALSE(result.w());
   }
 
   {
     const Int4 a {2, 4, 6, 1};
     const Int4 b {3, 5, 7, 1};
     const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.same_x);
-    EXPECT_FALSE(result.same_y);
-    EXPECT_FALSE(result.same_z);
-    EXPECT_TRUE(result.same_w);
+    EXPECT_FALSE(result.x());
+    EXPECT_FALSE(result.y());
+    EXPECT_FALSE(result.z());
+    EXPECT_TRUE(result.w());
   }
 
   {
     const Int4 a {1, 2, 3, 4};
     const Int4 b {5, 6, 7, 8};
     const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.same_x);
-    EXPECT_FALSE(result.same_y);
-    EXPECT_FALSE(result.same_z);
-    EXPECT_FALSE(result.same_w);
+    EXPECT_FALSE(result.x());
+    EXPECT_FALSE(result.y());
+    EXPECT_FALSE(result.z());
+    EXPECT_FALSE(result.w());
   }
 }
 
@@ -638,7 +641,7 @@ TEST(Vec, StreamOperator)
   std::stringstream stream {};
   stream << vec;
 
-  EXPECT_EQ(stream.str(), "1;2;3;4");
+  EXPECT_EQ(stream.str(), "{1, 2, 3, 4}");
 }
 
 }  // namespace tactile
