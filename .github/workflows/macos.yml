@@ -71,5 +71,4 @@ jobs:
 
       - name: Run core tests
         working-directory: ./build/debug
-        shell: cmd
         run: ./tactile-core-test
