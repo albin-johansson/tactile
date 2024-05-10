@@ -2,23 +2,43 @@
 
 #include "tactile/core/tactile_editor.hpp"
 
+#include <cstdlib>  // malloc, free
+
+#include <imgui.h>
+
+#include "tactile/base/int.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/render/renderer.hpp"
 #include "tactile/render/window.hpp"
 
 namespace tactile {
 
-TactileEditor::TactileEditor(IWindow* window)
-  : m_window {require_not_null(window, "null window")}
-{}
+TactileEditor::TactileEditor(IWindow* window, IRenderer* renderer)
+  : mWindow {require_not_null(window, "null window")},
+    mRenderer {require_not_null(renderer, "null renderer")}
+{
+  // NOLINTBEGIN(*-no-malloc)
+  ImGui::SetAllocatorFunctions(
+      [](const usize size, void*) { return std::malloc(size); },
+      [](void* ptr, void*) { std::free(ptr); });
+  ImGui::SetCurrentContext(mRenderer->get_imgui_context());
+  // NOLINTEND(*-no-malloc)
+}
 
 void TactileEditor::on_startup()
 {
-  m_window->show();
+  auto& io = ImGui::GetIO();
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+  mWindow->show();
+  mWindow->maximize();
 }
 
 void TactileEditor::on_shutdown()
 {
-  m_window->hide();
+  mWindow->hide();
+  ImGui::SetCurrentContext(nullptr);
 }
 
 void TactileEditor::on_update()
