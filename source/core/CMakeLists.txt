@@ -44,6 +44,7 @@ target_link_libraries(tactile-core
                       imgui::imgui
 
                       PRIVATE
+                      SDL2::SDL2
                       Boost::boost
                       FastFloat::fast_float
                       protobuf::libprotobuf
