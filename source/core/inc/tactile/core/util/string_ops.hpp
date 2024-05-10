@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -11,27 +10,16 @@
 namespace tactile {
 
 /**
- * Creates a string using the native filesystem character type.
- *
- * \param str The source string, may be null.
- *
- * \return
- *    A corresponding native string; or an error code if something went wrong.
- */
-[[nodiscard]]
-auto make_native_string(const char* str) -> Result<NativeString>;
-
-/**
  * Removes leading and trailing spaces from a given string.
  *
  * \note
- *    This function will only modify strings that have at least
- *    one non-space character.
+ * This function will only modify strings that have at least one non-space
+ * character.
  *
  * \param str The string to trim.
  *
  * \return
- *    A trimmed string.
+ * A trimmed string.
  */
 [[nodiscard]]
 auto trim_string(StringView str) -> String;
@@ -43,13 +31,17 @@ auto trim_string(StringView str) -> String;
  *
  * \param str       The full string.
  * \param separator The character to use as the separator.
- * \param callback  A callback invoked for each token in the string. The function will
- *                  return immediately if the callback returns false.
+ * \param callback  A callback invoked for each token in the string. The
+ *                  function will return immediately if the callback returns
+ *                  false.
  *
- * \return True if the function completed without returning early; false otherwise.
+ * \return
+ * True if the function completed without returning early; false otherwise.
  */
 template <InvocableType<bool, StringView> T>
-auto split_string(const StringView str, const char separator, const T& callback) -> bool
+auto split_string(const StringView str,
+                  const char separator,
+                  const T& callback) -> bool
 {
   usize pos = 0;
   const auto str_length = str.size();

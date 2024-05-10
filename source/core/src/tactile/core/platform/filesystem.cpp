@@ -11,7 +11,7 @@
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/platform/environment.hpp"
-#include "tactile/core/util/string_ops.hpp"
+#include "tactile/core/util/string_conv.hpp"
 
 namespace tactile {
 
@@ -88,14 +88,16 @@ auto strip_home_directory_prefix(const Path& path,
     const NativeStringView path_view {path.c_str()};
     const auto path_without_home_dir = path_view.substr(home_dir.size());
 
-    String str {};
+    NativeString str {};
     str.reserve(1 + path_without_home_dir.size());
-    str.push_back('~');
-    str.insert(str.end(),
-               path_without_home_dir.begin(),
-               path_without_home_dir.end());
+    str.push_back(TACTILE_NATIVE_CHAR('~'));
+    str.insert_range(str.end(), path_without_home_dir);
 
+#if TACTILE_OS_WINDOWS
+    return from_native_string(str);
+#else
     return str;
+#endif
   }
 
   return unexpected(make_error(GenericError::kInvalidParam));

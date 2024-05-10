@@ -8,21 +8,7 @@
 
 namespace tactile {
 
-/** \trace tactile::make_native_string */
-TEST(StringOps, MakeNativeString)
-{
-  EXPECT_FALSE(make_native_string(nullptr).has_value());
-
-  EXPECT_EQ(make_native_string(""), TACTILE_NATIVE_STR(""));
-  EXPECT_EQ(make_native_string("1"), TACTILE_NATIVE_STR("1"));
-  EXPECT_EQ(make_native_string("foo"), TACTILE_NATIVE_STR("foo"));
-  EXPECT_EQ(make_native_string("bar.txt"), TACTILE_NATIVE_STR("bar.txt"));
-  EXPECT_EQ(make_native_string("foo/bar"), TACTILE_NATIVE_STR("foo/bar"));
-  EXPECT_EQ(make_native_string("foo/bar.txt"), TACTILE_NATIVE_STR("foo/bar.txt"));
-  EXPECT_EQ(make_native_string("\0"), TACTILE_NATIVE_STR("\0"));
-}
-
-/** \trace tactile::split_string */
+/// \trace tactile::split_string
 TEST(StringOps, SplitStringEmpty)
 {
   Vector<String> tokens {};
@@ -34,7 +20,7 @@ TEST(StringOps, SplitStringEmpty)
   EXPECT_EQ(tokens.size(), 0);
 }
 
-/** \trace tactile::split_string */
+/// \trace tactile::split_string
 TEST(StringOps, SplitStringLetters)
 {
   Vector<String> tokens {};
@@ -50,7 +36,7 @@ TEST(StringOps, SplitStringLetters)
   EXPECT_EQ(tokens.at(3), "d");
 }
 
-/** \trace tactile::split_string */
+/// \trace tactile::split_string
 TEST(StringOps, SplitStringNumbers)
 {
   Vector<String> tokens {};
@@ -66,7 +52,7 @@ TEST(StringOps, SplitStringNumbers)
   EXPECT_EQ(tokens.at(3), "4000");
 }
 
-/** \trace tactile::split_string */
+/// \trace tactile::split_string
 TEST(StringOps, SplitStringWithLeadingSeparator)
 {
   Vector<String> tokens {};
@@ -80,7 +66,7 @@ TEST(StringOps, SplitStringWithLeadingSeparator)
   EXPECT_EQ(tokens.at(1), "woah");
 }
 
-/** \trace tactile::split_string */
+/// \trace tactile::split_string
 TEST(StringOps, SplitStringWithTrailingSeparator)
 {
   Vector<String> tokens {};
@@ -93,7 +79,7 @@ TEST(StringOps, SplitStringWithTrailingSeparator)
   EXPECT_EQ(tokens.at(0), "foobar");
 }
 
-/** \trace tactile::split_string */
+/// \trace tactile::split_string
 TEST(StringOps, SplitStringWithEmptyTokens)
 {
   Vector<String> tokens {};
@@ -111,7 +97,7 @@ TEST(StringOps, SplitStringWithEmptyTokens)
   EXPECT_EQ(tokens.at(5), "c");
 }
 
-/** \trace tactile::trim_string */
+/// \trace tactile::trim_string
 TEST(StringOps, TrimString)
 {
   EXPECT_EQ(trim_string(" "), " ");

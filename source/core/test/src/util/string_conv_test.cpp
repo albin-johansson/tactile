@@ -8,7 +8,40 @@
 
 namespace tactile {
 
-/** \trace tactile::parse_int */
+/// \trace tactile::to_native_string
+TEST(StringConv, ToNativeString)
+{
+  EXPECT_EQ(to_native_string(""), TACTILE_NATIVE_STR(""));
+  EXPECT_EQ(to_native_string("1"), TACTILE_NATIVE_STR("1"));
+  EXPECT_EQ(to_native_string("foo"), TACTILE_NATIVE_STR("foo"));
+  EXPECT_EQ(to_native_string("foo\0"), TACTILE_NATIVE_STR("foo\0"));
+  EXPECT_EQ(to_native_string("bar.txt"), TACTILE_NATIVE_STR("bar.txt"));
+  EXPECT_EQ(to_native_string("foo/bar"), TACTILE_NATIVE_STR("foo/bar"));
+  EXPECT_EQ(to_native_string("foo/bar.txt"), TACTILE_NATIVE_STR("foo/bar.txt"));
+  EXPECT_EQ(to_native_string("\0"), TACTILE_NATIVE_STR("\0"));
+
+  const StringView foo {"foobar", 3};
+  EXPECT_EQ(to_native_string(foo), TACTILE_NATIVE_STR("foo"));
+}
+
+/// \trace tactile::from_native_string
+TEST(StringConv, FromNativeString)
+{
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("")), "");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("1")), "1");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo")), "foo");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo\0")), "foo");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("bar.txt")), "bar.txt");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo/bar")), "foo/bar");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo/bar.txt")),
+            "foo/bar.txt");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("\0")), "\0");
+
+  const NativeStringView foo {TACTILE_NATIVE_STR("foobar"), 3};
+  EXPECT_EQ(from_native_string(foo), "foo");
+}
+
+/// \trace tactile::parse_int
 TEST(StringConv, ParseInt)
 {
   // Invalid inputs
@@ -33,12 +66,13 @@ TEST(StringConv, ParseInt)
   EXPECT_EQ(parse_int("A", 16), int64 {0xA});
   EXPECT_EQ(parse_int("F", 16), int64 {0xF});
   EXPECT_EQ(parse_int("10", 8), int64 {010});
-  EXPECT_EQ(parse_int("7FFFFFFFFFFFFFFF", 16), std::numeric_limits<int64>::max());
+  EXPECT_EQ(parse_int("7FFFFFFFFFFFFFFF", 16),
+            std::numeric_limits<int64>::max());
   EXPECT_EQ(parse_int(StringView {"1234"}.substr(0, 2)), int64 {12});
   EXPECT_EQ(parse_int(StringView {"1234"}.substr(2, 2)), int64 {34});
 }
 
-/** \trace tactile::parse_uint */
+/// \trace tactile::parse_uint
 TEST(StringConv, ParseUint)
 {
   // Invalid inputs
@@ -62,12 +96,13 @@ TEST(StringConv, ParseUint)
   EXPECT_EQ(parse_uint("A", 16), uint64 {0xA});
   EXPECT_EQ(parse_uint("F", 16), uint64 {0xF});
   EXPECT_EQ(parse_uint("10", 8), uint64 {010});
-  EXPECT_EQ(parse_uint("FFFFFFFFFFFFFFFF", 16), std::numeric_limits<uint64>::max());
+  EXPECT_EQ(parse_uint("FFFFFFFFFFFFFFFF", 16),
+            std::numeric_limits<uint64>::max());
   EXPECT_EQ(parse_uint(StringView {"1234"}.substr(0, 2)), uint64 {12});
   EXPECT_EQ(parse_uint(StringView {"1234"}.substr(2, 2)), uint64 {34});
 }
 
-/** \trace tactile::parse_float */
+/// \trace tactile::parse_float
 TEST(StringConv, ParseFloat)
 {
   // Invalid inputs

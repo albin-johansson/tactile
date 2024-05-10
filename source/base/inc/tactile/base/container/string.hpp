@@ -15,6 +15,8 @@
   #define TACTILE_NATIVE_STR(Str) Str
 #endif
 
+#define TACTILE_NATIVE_CHAR(Ch) TACTILE_NATIVE_STR(Ch)
+
 namespace tactile {
 
 using String = std::string;
