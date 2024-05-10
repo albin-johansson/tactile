@@ -22,15 +22,10 @@ namespace tactile::ui {
  */
 enum class StringID : usize  // NOLINT(*-enum-size)
 {
-  // Plain words.
+  // Miscellaneous.
   kOK,
-  kCancel,
-  kApply,
-  kClose,
-  kCreate,
-  kUndo,
-  kRedo,
-  kSave,
+
+  // Generic nouns.
   kInt,
   kInt2,
   kInt3,
@@ -44,6 +39,27 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kObject,
   kPath,
   kBool,
+  kRow,
+  kRows,
+  kColumn,
+  kColumns,
+  kOrientation,
+  kTileWidth,
+  kTileHeight,
+
+  // Generic verbs.
+  kCancel,
+  kApply,
+  kClose,
+  kCreate,
+  kUndo,
+  kRedo,
+  kSave,
+  kQuit,
+
+  // Generic adjectives.
+  kOrthogonal,
+  kHexagonal,
 
   // Window names.
   kLayerDock,
@@ -66,10 +82,12 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kWidgetsMenu,
   kExportAsMenu,
 
-  // Actions.
+  // "Action" strings. These often have embedded leading icons.
   kCreateMap,
   kOpenMap,
   kOpenTileset,
+  kOpenComponentEditor,
+  kOpenSettings,
   kSaveAs,
   kCenterViewport,
   kIncreaseZoom,
@@ -83,6 +101,13 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kPanDown,
   kPanLeft,
   kPanRight,
+  kStampTool,
+  kEraserTool,
+  kBucketTool,
+  kObjectSelectorTool,
+  kRectangleTool,
+  kEllipseTool,
+  kPointTool,
   kReportBug,
   kOpenDemoWindow,
   kOpenStyleEditor,
