@@ -91,7 +91,9 @@ auto strip_home_directory_prefix(const Path& path,
     NativeString str {};
     str.reserve(1 + path_without_home_dir.size());
     str.push_back(TACTILE_NATIVE_CHAR('~'));
-    str.insert_range(str.end(), path_without_home_dir);
+    str.insert(str.end(),
+               path_without_home_dir.begin(),
+               path_without_home_dir.end());
 
 #if TACTILE_OS_WINDOWS
     return from_native_string(str);
