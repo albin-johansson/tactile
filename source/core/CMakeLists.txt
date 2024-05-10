@@ -28,6 +28,9 @@ target_compile_definitions(tactile-core
                            PRIVATE
                            "BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED"
                            "BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT"
+                           "CENTURION_NO_SDL_IMAGE"
+                           "CENTURION_NO_SDL_MIXER"
+                           "CENTURION_NO_SDL_TTF"
                            "WIN32_LEAN_AND_MEAN"
                            "NOMINMAX"
                            )
