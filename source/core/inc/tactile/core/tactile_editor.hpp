@@ -8,13 +8,15 @@
 namespace tactile {
 
 class IWindow;
+class IRenderer;
 
 /**
  * Represents the Tactile editor application.
  */
-class TactileEditor final : public IEngineApp {
+class TactileEditor final : public IEngineApp
+{
  public:
-  explicit TactileEditor(IWindow* window);
+  TactileEditor(IWindow* window, IRenderer* renderer);
 
   void on_startup() override;
 
@@ -25,7 +27,8 @@ class TactileEditor final : public IEngineApp {
   void on_framebuffer_scale_changed(float framebuffer_scale) override;
 
  private:
-  IWindow* m_window;
+  IWindow* mWindow;
+  IRenderer* mRenderer;
 };
 
 }  // namespace tactile

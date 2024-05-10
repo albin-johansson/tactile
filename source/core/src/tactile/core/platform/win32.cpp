@@ -32,4 +32,26 @@ void win32_use_immersive_dark_mode([[maybe_unused]] SDL_Window* window)
 #endif  // TACTILE_OS_WINDOWS
 }
 
+void win32_enable_virtual_terminal_processing()
+{
+#if TACTILE_OS_WINDOWS
+  const auto enable_virtual_term_processing = [](const DWORD handle_id) {
+    HANDLE handle = GetStdHandle(handle_id);
+    if (handle != INVALID_HANDLE_VALUE) {  // NOLINT
+      DWORD modes = 0;
+      if (GetConsoleMode(handle, &modes)) {
+        if (!SetConsoleMode(handle,
+                            modes | ENABLE_VIRTUAL_TERMINAL_PROCESSING |
+                                DISABLE_NEWLINE_AUTO_RETURN)) {
+          SetConsoleMode(handle, modes | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+        }
+      }
+    }
+  };
+
+  enable_virtual_term_processing(STD_OUTPUT_HANDLE);
+  enable_virtual_term_processing(STD_ERROR_HANDLE);
+#endif
+}
+
 }  // namespace tactile
