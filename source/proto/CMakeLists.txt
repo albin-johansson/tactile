@@ -8,21 +8,15 @@ file(GLOB_RECURSE TACTILE_PROTO_FILES CONFIGURE_DEPENDS
 
 protobuf_generate_cpp(TACTILE_PROTO_GEN_SOURCE_FILES TACTILE_PROTO_GEN_HEADER_FILES "${TACTILE_PROTO_FILES}")
 
-add_library("${TACTILE_PROTO}" STATIC "${TACTILE_PROTO_GEN_HEADER_FILES}" "${TACTILE_PROTO_GEN_SOURCE_FILES}")
-add_library(tactile::proto ALIAS "${TACTILE_PROTO}")
+add_library(${TACTILE_PROTO} STATIC)
+add_library(tactile::proto ALIAS ${TACTILE_PROTO})
 
-set_target_properties("${TACTILE_PROTO}"
-                      PROPERTIES
-                      CXX_STANDARD "${TACTILE_CXX_STANDARD}"
-                      CXX_EXTENSIONS "OFF"
-                      CXX_STANDARD_REQUIRED "ON"
-                      POSITION_INDEPENDENT_CODE "ON"
-                      UNITY_BUILD "OFF"
-                      RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                      ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                      LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                      )
+target_sources(${TACTILE_PROTO} PRIVATE "${TACTILE_PROTO_GEN_HEADER_FILES}" "${TACTILE_PROTO_GEN_SOURCE_FILES}")
 
-target_include_directories("${TACTILE_PROTO}" SYSTEM PUBLIC "${PROJECT_BINARY_DIR}")
+tactile_prepare_target(${TACTILE_PROTO})
 
-target_link_libraries("${TACTILE_PROTO}" PRIVATE protobuf::libprotobuf)
+set_target_properties(${TACTILE_PROTO} PROPERTIES UNITY_BUILD "OFF")
+
+target_include_directories(${TACTILE_PROTO} SYSTEM PUBLIC "${PROJECT_BINARY_DIR}")
+
+target_link_libraries(${TACTILE_PROTO} PRIVATE protobuf::libprotobuf)

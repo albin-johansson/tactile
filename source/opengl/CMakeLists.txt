@@ -5,8 +5,10 @@ file(GLOB_RECURSE TACTILE_OPENGL_SOURCE_FILES CONFIGURE_DEPENDS
      "${PROJECT_SOURCE_DIR}/src/**/*.cpp"
      )
 
-add_library(tactile-opengl SHARED "${TACTILE_OPENGL_SOURCE_FILES}")
+add_library(tactile-opengl SHARED EXCLUDE_FROM_ALL)
 add_library(tactile::opengl ALIAS tactile-opengl)
+
+target_sources(tactile-opengl PRIVATE "${TACTILE_OPENGL_SOURCE_FILES}")
 
 tactile_prepare_target(tactile-opengl)
 
