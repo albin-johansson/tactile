@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/ui/i18n/language_id.hpp"
 
 namespace tactile {
 
@@ -14,7 +15,14 @@ namespace tactile {
  */
 struct Settings final
 {
+  /** The language that will be loaded at startup. */
+  LanguageID language;
+
+  /** The UI font size. */
   float font_size;
+
+  /** Whether verbose events (e.g., some mouse events) should be logged. */
+  bool log_verbose_events : 1;
 };
 
 /**
