@@ -2,8 +2,13 @@
 
 #pragma once
 
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/engine/engine_app.hpp"
+#include "tactile/core/event/event_dispatcher.hpp"
+#include "tactile/core/model/model.hpp"
+#include "tactile/core/model/settings.hpp"
+#include "tactile/core/ui/i18n/language.hpp"
 
 namespace tactile {
 
@@ -34,6 +39,10 @@ class TactileEditor final : public IEngineApp
  private:
   IWindow* mWindow;
   IRenderer* mRenderer;
+  Settings mSettings {};
+  Maybe<ui::Language> mLanguage {};
+  Maybe<Model> mModel {};
+  EventDispatcher mEventDispatcher {};
 };
 
 }  // namespace tactile

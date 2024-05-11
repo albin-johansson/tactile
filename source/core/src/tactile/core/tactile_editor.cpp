@@ -3,11 +3,13 @@
 #include "tactile/core/tactile_editor.hpp"
 
 #include <cstdlib>  // malloc, free
+#include <utility>  // move, to_underlying
 
 #include <imgui.h>
 
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/ui/i18n/language_parser.hpp"
 #include "tactile/core/ui/shortcuts.hpp"
 #include "tactile/render/renderer.hpp"
 #include "tactile/render/window.hpp"
@@ -38,6 +40,20 @@ void TactileEditor::on_startup()
 
   mWindow->show();
   mWindow->maximize();
+
+  mSettings = get_default_settings();
+
+  if (auto language = ui::parse_language_from_disk(mSettings.language)) {
+    language->add_icons();
+    mLanguage.emplace(std::move(*language));
+  }
+  else {
+    TACTILE_LOG_ERROR("Could not parse language file: {}",
+                      language.error().message());
+    throw Exception {"could not parse language file"};
+  }
+
+  mModel.emplace(&mSettings, &mLanguage.value());
 }
 
 void TactileEditor::on_shutdown()
@@ -47,6 +63,8 @@ void TactileEditor::on_shutdown()
 
 void TactileEditor::on_update()
 {
+  mEventDispatcher.update();
+
   const auto& model = *mModel;
 
   ui::push_global_shortcuts(model, mEventDispatcher);
