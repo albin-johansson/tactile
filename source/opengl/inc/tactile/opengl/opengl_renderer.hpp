@@ -21,11 +21,13 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   /**
    * Creates an OpenGL renderer, along with an associated window.
    *
+   * \param context The associated ImGui context.
+   *
    * \return
-   *    An OpenGL renderer if successful; an error code otherwise.
+   * An OpenGL renderer if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make() -> Result<OpenGLRenderer>;
+  static auto make(ImGuiContext* context) -> Result<OpenGLRenderer>;
 
   OpenGLRenderer(OpenGLRenderer&& other) noexcept;
 
@@ -64,9 +66,11 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 
 extern "C"
 {
-  TACTILE_OPENGL_API auto tactile_make_renderer() -> IRenderer*;
+  TACTILE_OPENGL_API
+  auto tactile_make_renderer(ImGuiContext* context) -> IRenderer*;
 
-  TACTILE_OPENGL_API void tactile_free_renderer(IRenderer* renderer);
+  TACTILE_OPENGL_API
+  void tactile_free_renderer(IRenderer* renderer);
 }
 
 }  // namespace tactile

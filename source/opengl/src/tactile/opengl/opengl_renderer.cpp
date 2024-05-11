@@ -2,6 +2,7 @@
 
 #include "tactile/opengl/opengl_renderer.hpp"
 
+#include <cstdlib>  // malloc, free
 #include <list>     // list
 #include <memory>   // nothrow
 #include <utility>  // move
@@ -12,7 +13,6 @@
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/opengl/opengl_error.hpp"
-#include "tactile/opengl/opengl_imgui_context.hpp"
 #include "tactile/opengl/opengl_imgui_impl_opengl3.hpp"
 #include "tactile/opengl/opengl_imgui_impl_sdl2.hpp"
 #include "tactile/opengl/opengl_texture.hpp"
@@ -24,7 +24,8 @@ namespace {
 void _prepare_sdl_opengl_hints()
 {
   if constexpr (kOnMacos) {
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
+                        SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   }
 
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -39,15 +40,16 @@ void _prepare_sdl_opengl_hints()
 
 }  // namespace
 
-struct OpenGLRenderer::Data final {
+struct OpenGLRenderer::Data final
+{
+  ImGuiContext* context;
   Maybe<OpenGLWindow> window;
-  Maybe<OpenGLImGuiContext> imgui_context;
   Maybe<OpenGLImGuiImplSDL2> imgui_sdl2;
   Maybe<OpenGLImGuiImplOpenGL3> imgui_opengl3;
-  std::list<OpenGLTexture> textures {};  // NB: allocated textures must be stable.
+  std::list<OpenGLTexture> textures {};
 };
 
-auto OpenGLRenderer::make() -> Result<OpenGLRenderer>
+auto OpenGLRenderer::make(ImGuiContext* context) -> Result<OpenGLRenderer>
 {
   if (SDL_WasInit(SDL_INIT_VIDEO) != SDL_INIT_VIDEO) {
     return unexpected(make_error(OpenGLError::kNotReady));
@@ -56,6 +58,14 @@ auto OpenGLRenderer::make() -> Result<OpenGLRenderer>
   _prepare_sdl_opengl_hints();
 
   OpenGLRenderer renderer {};
+  renderer.mData->context = context;
+
+  // NOLINTBEGIN(*-no-malloc)
+  ImGui::SetAllocatorFunctions(
+      [](const usize size, void*) { return std::malloc(size); },
+      [](void* ptr, void*) { std::free(ptr); });
+  // NOLINTEND(*-no-malloc)
+  ImGui::SetCurrentContext(context);
 
   if (auto window = OpenGLWindow::make()) {
     renderer.mData->window.emplace(std::move(*window));
@@ -66,13 +76,6 @@ auto OpenGLRenderer::make() -> Result<OpenGLRenderer>
 
   if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
     return unexpected(make_error(OpenGLError::kLoaderError));
-  }
-
-  if (auto imgui_context = OpenGLImGuiContext::make()) {
-    renderer.mData->imgui_context.emplace(std::move(*imgui_context));
-  }
-  else {
-    return propagate_unexpected(imgui_context);
   }
 
   if (auto impl_sdl2 = OpenGLImGuiImplSDL2::init(*renderer.mData->window)) {
@@ -164,12 +167,12 @@ auto OpenGLRenderer::get_window() const -> const IWindow*
 
 auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
 {
-  return mData->imgui_context->get();
+  return mData->context;
 }
 
-auto tactile_make_renderer() -> IRenderer*
+auto tactile_make_renderer(ImGuiContext* context) -> IRenderer*
 {
-  if (auto renderer = OpenGLRenderer::make()) {
+  if (auto renderer = OpenGLRenderer::make(context)) {
     return new (std::nothrow) OpenGLRenderer {std::move(*renderer)};
   }
 

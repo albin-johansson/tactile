@@ -5,6 +5,8 @@
 #include <memory>     // make_unique
 #include <utility>    // move
 
+#include <imgui.h>
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/debug/exception.hpp"
@@ -19,6 +21,7 @@
 #include "tactile/core/platform/sdl_context.hpp"
 #include "tactile/core/platform/win32.hpp"
 #include "tactile/core/tactile_editor.hpp"
+#include "tactile/core/ui/imgui_context.hpp"
 #include "tactile/core/util/scope_guard.hpp"
 #include "tactile/render/renderer.hpp"
 
@@ -26,7 +29,7 @@ namespace tactile {
 
 struct RendererFunctions final
 {
-  using make_renderer_t = IRenderer*();
+  using make_renderer_t = IRenderer*(ImGuiContext*);
   using free_renderer_t = void(IRenderer*);
 
   Unique<IDynamicLibrary> lib;
@@ -96,14 +99,17 @@ auto _run() -> int
   const ProtobufContext protobuf_context {};
   const SDLContext sdl_context {};
 
+  ui::UniqueImGuiContext imgui_context {ImGui::CreateContext()};
+
   const auto renderer_functions =
       _load_renderer_functions("tactile-opengl" TACTILE_DLL_EXT);
   if (!renderer_functions.has_value()) {
     return EXIT_FAILURE;
   }
 
-  UniqueRenderer renderer {renderer_functions->make_renderer(),
-                           renderer_functions->free_renderer};
+  UniqueRenderer renderer {
+    renderer_functions->make_renderer(imgui_context.get()),
+    renderer_functions->free_renderer};
   if (!renderer) {
     TACTILE_LOG_ERROR("Could not create renderer");
     return EXIT_FAILURE;

@@ -5,19 +5,23 @@
 #include <utility>  // move
 
 #include <gtest/gtest.h>
+#include <imgui.h>
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/platform/sdl_context.hpp"
+#include "tactile/core/ui/imgui_context.hpp"
 #include "tactile/opengl/opengl_renderer.hpp"
 
 namespace tactile {
 
-class OpenGLTextureTest : public testing::Test {
+class OpenGLTextureTest : public testing::Test
+{
  protected:
   void SetUp() override
   {
     mSDL.emplace();
-    if (auto renderer = OpenGLRenderer::make()) {
+    mImGuiCtx.reset(ImGui::CreateContext());
+    if (auto renderer = OpenGLRenderer::make(mImGuiCtx.get())) {
       mRenderer.emplace(std::move(*renderer));
     }
     else {
@@ -26,10 +30,11 @@ class OpenGLTextureTest : public testing::Test {
   }
 
   Maybe<SDLContext> mSDL {};
+  ui::UniqueImGuiContext mImGuiCtx {};
   Maybe<OpenGLRenderer> mRenderer {};
 };
 
-/** \trace tactile::OpenGLTexture::load */
+/// \trace tactile::OpenGLTexture::load
 TEST_F(OpenGLTextureTest, Load)
 {
   const auto texture = OpenGLTexture::load("assets/images/dummy.png");
