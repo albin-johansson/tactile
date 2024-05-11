@@ -3,6 +3,7 @@
 #include "tactile/opengl/opengl_renderer.hpp"
 
 #include <list>     // list
+#include <memory>   // nothrow
 #include <utility>  // move
 
 #include <SDL2/SDL.h>
@@ -164,6 +165,20 @@ auto OpenGLRenderer::get_window() const -> const IWindow*
 auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
 {
   return mData->imgui_context->get();
+}
+
+auto tactile_make_renderer() -> IRenderer*
+{
+  if (auto renderer = OpenGLRenderer::make()) {
+    return new (std::nothrow) OpenGLRenderer {std::move(*renderer)};
+  }
+
+  return nullptr;
+}
+
+void tactile_free_renderer(IRenderer* renderer)
+{
+  delete renderer;
 }
 
 }  // namespace tactile

@@ -13,7 +13,8 @@ namespace tactile {
 /**
  * Represents an OpenGL 4.1.0 renderer.
  */
-class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer {
+class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
+{
  public:
   TACTILE_DELETE_COPY(OpenGLRenderer);
 
@@ -60,5 +61,12 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer {
 
   OpenGLRenderer();
 };
+
+extern "C"
+{
+  TACTILE_OPENGL_API auto tactile_make_renderer() -> IRenderer*;
+
+  TACTILE_OPENGL_API void tactile_free_renderer(IRenderer* renderer);
+}
 
 }  // namespace tactile
