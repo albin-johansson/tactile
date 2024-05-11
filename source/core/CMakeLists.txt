@@ -48,6 +48,7 @@ target_link_libraries(tactile-core
                       Boost::boost
                       FastFloat::fast_float
                       magic_enum::magic_enum
+                      SDL2::SDL2
                       protobuf::libprotobuf
                       tinyfiledialogs::tinyfiledialogs
                       ZLIB::ZLIB
