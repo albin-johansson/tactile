@@ -42,7 +42,6 @@ void TactileEditor::on_startup()
 void TactileEditor::on_shutdown()
 {
   mWindow->hide();
-  ImGui::SetCurrentContext(nullptr);
 }
 
 void TactileEditor::on_update()
