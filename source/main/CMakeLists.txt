@@ -24,8 +24,3 @@ target_link_libraries(tactile
                       SDL2::SDL2
                       SDL2::SDL2main
                       )
-
-if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
-  target_compile_definitions(tactile PRIVATE "TACTILE_HAS_OPENGL_RENDERER")
-  target_link_libraries(tactile PRIVATE tactile::opengl)
-endif ()

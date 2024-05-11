@@ -15,63 +15,114 @@
 #include "tactile/core/log/terminal_log_sink.hpp"
 #include "tactile/core/numeric/random.hpp"
 #include "tactile/core/persist/protobuf_context.hpp"
+#include "tactile/core/platform/dynamic_library.hpp"
 #include "tactile/core/platform/sdl_context.hpp"
 #include "tactile/core/platform/win32.hpp"
 #include "tactile/core/tactile_editor.hpp"
 #include "tactile/core/util/scope_guard.hpp"
+#include "tactile/render/renderer.hpp"
 
-#ifdef TACTILE_HAS_OPENGL_RENDERER
-  #include "tactile/opengl/opengl_renderer.hpp"
-#endif
+namespace tactile {
+
+struct RendererFunctions final
+{
+  using make_renderer_t = IRenderer*();
+  using free_renderer_t = void(IRenderer*);
+
+  Unique<IDynamicLibrary> lib;
+  make_renderer_t* make_renderer;
+  free_renderer_t* free_renderer;
+};
+
+using UniqueRenderer = Unique<IRenderer, RendererFunctions::free_renderer_t*>;
+
+[[nodiscard]]
+auto _load_renderer_functions(const Path& libpath) -> Maybe<RendererFunctions>
+{
+  RendererFunctions functions {};
+
+  functions.lib = load_library(libpath);
+  if (!functions.lib) {
+    TACTILE_LOG_ERROR("Could not load renderer library");
+    return kNone;
+  }
+
+  functions.make_renderer =
+      find_symbol<RendererFunctions::make_renderer_t>(*functions.lib,
+                                                      "tactile_make_renderer");
+  functions.free_renderer =
+      find_symbol<RendererFunctions::free_renderer_t>(*functions.lib,
+                                                      "tactile_free_renderer");
+
+  if (!functions.make_renderer || !functions.free_renderer) {
+    TACTILE_LOG_ERROR("Could not load renderer functions");
+    return kNone;
+  }
+
+  return functions;
+}
+
+[[nodiscard]]
+auto _make_logger() -> Logger
+{
+  win32_enable_virtual_terminal_processing();
+
+  auto terminal_sink = std::make_unique<TerminalLogSink>();
+  terminal_sink->use_ansi_colors(true);
+
+  Logger logger {};
+
+  logger.set_reference_instant(SteadyClock::now());
+  logger.set_min_level(LogLevel::kTrace);
+  logger.add_sink(std::move(terminal_sink));
+
+  return logger;
+}
+
+[[nodiscard]]
+auto _run() -> int
+{
+  std::set_terminate(&on_terminate);
+
+  auto logger = _make_logger();
+  set_default_logger(&logger);
+  const ScopeGuard logger_guard {[] { set_default_logger(nullptr); }};
+  const SetLogScope log_scope {"General"};
+
+  TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
+
+  init_random_number_generator();
+
+  const ProtobufContext protobuf_context {};
+  const SDLContext sdl_context {};
+
+  const auto renderer_functions =
+      _load_renderer_functions("tactile-opengl" TACTILE_DLL_EXT);
+  if (!renderer_functions.has_value()) {
+    return EXIT_FAILURE;
+  }
+
+  UniqueRenderer renderer {renderer_functions->make_renderer(),
+                           renderer_functions->free_renderer};
+  if (!renderer) {
+    TACTILE_LOG_ERROR("Could not create renderer");
+    return EXIT_FAILURE;
+  }
+
+  TactileEditor editor {renderer->get_window(), renderer.get()};
+
+  Engine engine {&editor, renderer.get()};
+  engine.run();
+
+  return EXIT_SUCCESS;
+}
+
+}  // namespace tactile
 
 auto main(const int, char*[]) -> int
 {
   try {
-    const auto startup_time = tactile::SteadyClock::now();
-    std::set_terminate(&tactile::on_terminate);
-
-    tactile::win32_enable_virtual_terminal_processing();
-
-    auto terminal_sink = std::make_unique<tactile::TerminalLogSink>();
-    terminal_sink->use_ansi_colors(true);
-
-    tactile::Logger logger {};
-    logger.set_reference_instant(startup_time);
-    logger.set_min_level(tactile::LogLevel::kTrace);
-    logger.add_sink(std::move(terminal_sink));
-
-    tactile::set_default_logger(&logger);
-    const tactile::ScopeGuard logger_guard {
-      [] { tactile::set_default_logger(nullptr); }};
-
-    const tactile::SetLogScope log_scope {"General"};
-
-    TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
-
-    tactile::init_random_number_generator();
-
-    const tactile::ProtobufContext protobuf_context {};
-    const tactile::SDLContext sdl_context {};
-
-#ifdef TACTILE_HAS_OPENGL_RENDERER
-    TACTILE_LOG_TRACE("Initializing OpenGL renderer");
-    auto renderer = tactile::OpenGLRenderer::make();
-#else
-  #error "No renderer is available"
-#endif
-
-    if (!renderer.has_value()) {
-      TACTILE_LOG_FATAL("Could not create renderer: {}",
-                        renderer.error().message());
-      return EXIT_FAILURE;
-    }
-
-    tactile::TactileEditor editor {renderer->get_window(), &renderer.value()};
-    tactile::Engine engine {&editor, &renderer.value()};
-
-    engine.run();
-
-    return EXIT_SUCCESS;
+    return tactile::_run();
   }
   catch (const tactile::Exception& exception) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}",
