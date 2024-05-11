@@ -14,11 +14,13 @@ namespace tactile {
  */
 struct MatrixExtent final
 {
+  using value_type = usize;
+
   /** The number of rows. */
-  usize rows;
+  value_type rows;
 
   /** The number of columns. */
-  usize cols;
+  value_type cols;
 
   [[nodiscard]]
   auto operator==(const MatrixExtent&) const noexcept -> bool = default;
