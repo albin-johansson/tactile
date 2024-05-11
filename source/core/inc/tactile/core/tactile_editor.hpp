@@ -16,7 +16,12 @@ class IRenderer;
 class TactileEditor final : public IEngineApp
 {
  public:
+  TACTILE_DELETE_COPY(TactileEditor);
+  TACTILE_DECLARE_MOVE(TactileEditor);
+
   TactileEditor(IWindow* window, IRenderer* renderer);
+
+  ~TactileEditor() noexcept override;
 
   void on_startup() override;
 

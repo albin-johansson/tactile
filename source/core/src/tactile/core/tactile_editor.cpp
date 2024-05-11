@@ -13,6 +13,8 @@
 
 namespace tactile {
 
+TACTILE_DEFINE_MOVE(TactileEditor);
+
 TactileEditor::TactileEditor(IWindow* window, IRenderer* renderer)
   : mWindow {require_not_null(window, "null window")},
     mRenderer {require_not_null(renderer, "null renderer")}
@@ -24,6 +26,8 @@ TactileEditor::TactileEditor(IWindow* window, IRenderer* renderer)
   ImGui::SetCurrentContext(mRenderer->get_imgui_context());
   // NOLINTEND(*-no-malloc)
 }
+
+TactileEditor::~TactileEditor() noexcept = default;
 
 void TactileEditor::on_startup()
 {
