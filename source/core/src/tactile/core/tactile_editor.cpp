@@ -8,6 +8,7 @@
 
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/ui/shortcuts.hpp"
 #include "tactile/render/renderer.hpp"
 #include "tactile/render/window.hpp"
 
@@ -46,6 +47,9 @@ void TactileEditor::on_shutdown()
 
 void TactileEditor::on_update()
 {
+  const auto& model = *mModel;
+
+  ui::push_global_shortcuts(model, mEventDispatcher);
 }
 
 void TactileEditor::on_framebuffer_scale_changed(const float framebuffer_scale)
