@@ -5,9 +5,11 @@
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 
+class UUID;
 class Registry;
 
 /// \addtogroup Document
@@ -72,6 +74,24 @@ class IDocument
    */
   [[nodiscard]]
   virtual auto get_root_entity() const -> EntityID = 0;
+
+  /**
+   * Returns the graphical size of the associated content.
+   *
+   * \return
+   * The content size.
+   */
+  [[nodiscard]]
+  virtual auto get_content_size() const -> Float2 = 0;
+
+  /**
+   * Returns the UUID associated with the document.
+   *
+   * \return
+   * The associated UUID.
+   */
+  [[nodiscard]]
+  virtual auto get_uuid() const -> const UUID& = 0;
 };
 
 /// \}
