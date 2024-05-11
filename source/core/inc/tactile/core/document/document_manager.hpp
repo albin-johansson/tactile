@@ -24,6 +24,21 @@ class DocumentManager final
 {
  public:
   /**
+   * Creates a new map document and opens it.
+   *
+   * \details
+   * In addition to being opened, the created document will be made the active
+   * document by this function.
+   *
+   * \param spec The map specification to use.
+   *
+   * \return
+   * The UUID of the map document if successful; an error code otherwise.
+   */
+  [[nodiscard]]
+  auto create_and_open_map(const MapSpec& spec) -> Result<UUID>;
+
+  /**
    * Returns the document associated with a given UUID.
    *
    * \param uuid The UUID of the desired document.
