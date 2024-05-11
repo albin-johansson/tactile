@@ -81,7 +81,7 @@ class Win32DynamicLibrary final : public IDynamicLibrary
   }
 
   [[nodiscard]]
-  static auto load(const Path& path) -> Unique<UnixDynamicLibrary>
+  static auto load(const Path& path) -> Unique<Win32DynamicLibrary>
   {
     const auto handle = LoadLibraryA(path.string().c_str());
 

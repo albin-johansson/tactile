@@ -5,6 +5,7 @@
 #include <memory>     // make_unique
 #include <utility>    // move
 
+#include <SDL2/SDL_main.h>
 #include <imgui.h>
 
 #include "tactile/base/prelude.hpp"

@@ -9,6 +9,7 @@
 
 #include "tactile/base/int.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/log/logger.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
 #include "tactile/core/ui/shortcuts.hpp"
 #include "tactile/render/renderer.hpp"
