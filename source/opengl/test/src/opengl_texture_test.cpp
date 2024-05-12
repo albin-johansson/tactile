@@ -4,11 +4,13 @@
 
 #include <utility>  // move
 
+#include <SDL2/SDL.h>
 #include <gtest/gtest.h>
 #include <imgui.h>
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/platform/sdl_context.hpp"
+#include "tactile/core/platform/window.hpp"
 #include "tactile/core/ui/imgui_context.hpp"
 #include "tactile/opengl/opengl_renderer.hpp"
 
@@ -20,8 +22,18 @@ class OpenGLTextureTest : public testing::Test
   void SetUp() override
   {
     mSDL.emplace();
+
+    if (auto window = Window::create(SDL_WINDOW_OPENGL)) {
+      mWindow.emplace(std::move(*window));
+    }
+    else {
+      FAIL();
+    }
+
     mImGuiCtx.reset(ImGui::CreateContext());
-    if (auto renderer = OpenGLRenderer::make(mImGuiCtx.get())) {
+
+    if (auto renderer =
+            OpenGLRenderer::make(&mWindow.value(), mImGuiCtx.get())) {
       mRenderer.emplace(std::move(*renderer));
     }
     else {
@@ -30,6 +42,7 @@ class OpenGLTextureTest : public testing::Test
   }
 
   Maybe<SDLContext> mSDL {};
+  Maybe<Window> mWindow {};
   ui::UniqueImGuiContext mImGuiCtx {};
   Maybe<OpenGLRenderer> mRenderer {};
 };

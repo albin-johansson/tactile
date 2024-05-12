@@ -19,4 +19,6 @@ target_link_libraries(tactile-opengl-test
 
                       PRIVATE
                       glad::glad
+                      SDL2::SDL2
+                      imgui::imgui
                       )
