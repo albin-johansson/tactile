@@ -2,12 +2,8 @@
 
 #include "tactile/core/tactile_editor.hpp"
 
-#include <cstdlib>  // malloc, free
 #include <utility>  // move, to_underlying
 
-#include <imgui.h>
-
-#include "tactile/base/int.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
@@ -22,23 +18,12 @@ TACTILE_DEFINE_MOVE(TactileEditor);
 TactileEditor::TactileEditor(IWindow* window, IRenderer* renderer)
   : mWindow {require_not_null(window, "null window")},
     mRenderer {require_not_null(renderer, "null renderer")}
-{
-  // NOLINTBEGIN(*-no-malloc)
-  ImGui::SetAllocatorFunctions(
-      [](const usize size, void*) { return std::malloc(size); },
-      [](void* ptr, void*) { std::free(ptr); });
-  ImGui::SetCurrentContext(mRenderer->get_imgui_context());
-  // NOLINTEND(*-no-malloc)
-}
+{}
 
 TactileEditor::~TactileEditor() noexcept = default;
 
 void TactileEditor::on_startup()
 {
-  auto& io = ImGui::GetIO();
-  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
   mWindow->show();
   mWindow->maximize();
 

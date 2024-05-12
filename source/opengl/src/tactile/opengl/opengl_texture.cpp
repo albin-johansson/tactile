@@ -17,32 +17,14 @@ namespace tactile {
 auto OpenGLTexture::load(const Path& image_path) -> Result<OpenGLTexture>
 {
   uint texture_id {};
+
   glGenTextures(1, &texture_id);
-  if (const auto err = glGetError(); err != GL_NONE) {
-    return unexpected(make_error(map_opengl_error_code(err)));
-  }
-
   glBindTexture(GL_TEXTURE_2D, texture_id);
-  if (const auto err = glGetError(); err != GL_NONE) {
-    return unexpected(make_error(map_opengl_error_code(err)));
-  }
-
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  if (const auto err = glGetError(); err != GL_NONE) {
-    return unexpected(make_error(map_opengl_error_code(err)));
-  }
-
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  if (const auto err = glGetError(); err != GL_NONE) {
-    return unexpected(make_error(map_opengl_error_code(err)));
-  }
-
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  if (const auto err = glGetError(); err != GL_NONE) {
-    return unexpected(make_error(map_opengl_error_code(err)));
-  }
-
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
   if (const auto err = glGetError(); err != GL_NONE) {
     return unexpected(make_error(map_opengl_error_code(err)));
   }
@@ -75,7 +57,9 @@ auto OpenGLTexture::load(const Path& image_path) -> Result<OpenGLTexture>
   return OpenGLTexture {texture_id, texture_size, image_path};
 }
 
-OpenGLTexture::OpenGLTexture(const id_type id, const TextureSize size, Path path)
+OpenGLTexture::OpenGLTexture(const id_type id,
+                             const TextureSize size,
+                             Path path)
   : mID {id},
     mSize {size},
     mPath {std::move(path)}

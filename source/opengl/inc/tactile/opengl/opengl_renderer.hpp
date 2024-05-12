@@ -43,7 +43,12 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   void end_frame() override;
 
   [[nodiscard]]
-  auto load_texture(const char* image_path) -> ITexture* override;
+  auto load_texture(const char* image_path) -> Result<TextureID> override;
+
+  void unload_texture(TextureID id) override;
+
+  [[nodiscard]]
+  auto find_texture(TextureID id) const -> const ITexture* override;
 
   void try_reload_fonts() override;
 
@@ -55,9 +60,6 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 
   [[nodiscard]]
   auto get_window() const -> const IWindow* override;
-
-  [[nodiscard]]
-  auto get_imgui_context() -> ImGuiContext* override;
 
  private:
   struct Data;

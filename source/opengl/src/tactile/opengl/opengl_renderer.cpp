@@ -13,6 +13,7 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/opengl/opengl_error.hpp"
@@ -37,7 +38,8 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
   Unique<void, GLContextDeleter> gl_context;
   Maybe<GLImGuiBackendWrapper> imgui_backend;
   Maybe<GLImGuiRendererWrapper> imgui_renderer;
-  std::list<OpenGLTexture> textures;
+  HashMap<TextureID, OpenGLTexture> textures;
+  TextureID next_texture_id;
 };
 
 auto OpenGLRenderer::make(IWindow* window,
@@ -54,6 +56,7 @@ auto OpenGLRenderer::make(IWindow* window,
   OpenGLRenderer renderer {};
   renderer.mData->window = window;
   renderer.mData->context = context;
+  renderer.mData->next_texture_id = TextureID {1};
 
   renderer.mData->gl_context.reset(SDL_GL_CreateContext(window->get_handle()));
   if (!renderer.mData->gl_context) {
@@ -131,15 +134,36 @@ void OpenGLRenderer::end_frame()
   SDL_GL_SwapWindow(mData->window->get_handle());
 }
 
-auto OpenGLRenderer::load_texture(const char* image_path) -> ITexture*
+auto OpenGLRenderer::load_texture(const char* image_path) -> Result<TextureID>
 {
   if (image_path == nullptr) {
-    return nullptr;
+    return unexpected(make_error(OpenGLError::kInvalidParam));
   }
 
-  if (auto texture = OpenGLTexture::load(image_path)) {
-    auto& texture_ref = mData->textures.emplace_back(std::move(*texture));
-    return &texture_ref;
+  auto texture = OpenGLTexture::load(image_path);
+  if (!texture.has_value()) {
+    return propagate_unexpected(texture);
+  }
+
+  auto& data = *mData;
+
+  const auto texture_id = data.next_texture_id;
+  ++data.next_texture_id.value;
+
+  mData->textures.try_emplace(texture_id, std::move(*texture));
+  return texture_id;
+}
+
+void OpenGLRenderer::unload_texture(const TextureID id)
+{
+  mData->textures.erase(id);
+}
+
+auto OpenGLRenderer::find_texture(const TextureID id) const -> const ITexture*
+{
+  if (const auto iter = mData->textures.find(id);
+      iter != mData->textures.end()) {
+    return &iter->second;
   }
 
   return nullptr;
@@ -164,11 +188,6 @@ auto OpenGLRenderer::get_window() -> IWindow*
 auto OpenGLRenderer::get_window() const -> const IWindow*
 {
   return mData->window;
-}
-
-auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
-{
-  return mData->context;
 }
 
 void tactile_prepare_renderer(uint32* window_flags)

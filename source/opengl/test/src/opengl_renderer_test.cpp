@@ -41,8 +41,8 @@ TEST_F(OpenGLRendererTest, LoadTexture)
   auto renderer = OpenGLRenderer::make(&mWindow.value(), mImGuiContext.get());
   ASSERT_TRUE(renderer.has_value());
 
-  EXPECT_NE(renderer->load_texture("assets/images/dummy.png"), nullptr);
-  EXPECT_EQ(renderer->load_texture("a/b/c.png"), nullptr);
+  EXPECT_EQ(renderer->load_texture("assets/images/dummy.png"), TextureID {1});
+  EXPECT_FALSE(renderer->load_texture("a/b/c.png").has_value());
 }
 
 }  // namespace tactile

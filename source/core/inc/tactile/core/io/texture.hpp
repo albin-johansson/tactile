@@ -3,9 +3,9 @@
 #pragma once
 
 #include "tactile/base/container/path.hpp"
+#include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/numeric/vec.hpp"
-#include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 
@@ -17,8 +17,8 @@ namespace tactile {
  */
 struct CTexture final
 {
-  /** The UUID of the associated texture. */
-  UUID texture_uuid;
+  /** The ID of the associated texture. */
+  TextureID texture_id;
 
   /** The size of the texture. */
   Int2 size;

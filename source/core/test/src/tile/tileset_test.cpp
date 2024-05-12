@@ -28,7 +28,7 @@ class TilesetTest : public testing::Test
   {
     CTexture texture {};
 
-    texture.texture_uuid = UUID::generate();
+    texture.texture_id = TextureID {10};
     texture.size = size;
     texture.path = "foo/bar.png";
 
@@ -55,10 +55,8 @@ class TilesetTest : public testing::Test
 /// \trace tactile::make_tileset
 TEST_F(TilesetTest, MakeTileset)
 {
-  const TilesetSpec spec {
-    .tile_size = Int2 {50, 30},
-    .texture = make_dummy_texture(Int2(600, 330))
-  };
+  const TilesetSpec spec {.tile_size = Int2 {50, 30},
+                          .texture = make_dummy_texture(Int2(600, 330))};
 
   const auto ts_entity = make_tileset(mRegistry, spec);
 
@@ -85,7 +83,7 @@ TEST_F(TilesetTest, MakeTileset)
     EXPECT_TRUE(is_tile(mRegistry, tile_entity));
   }
 
-  EXPECT_EQ(texture.texture_uuid, spec.texture.texture_uuid);
+  EXPECT_EQ(texture.texture_id, spec.texture.texture_id);
   EXPECT_EQ(texture.size, spec.texture.size);
   EXPECT_EQ(texture.path, spec.texture.path);
 

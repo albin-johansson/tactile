@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include <cstdlib>    // EXIT_SUCCESS, EXIT_FAILURE
+#include <cstdlib>    // EXIT_SUCCESS, EXIT_FAILURE, malloc, free
 #include <exception>  // exception, set_terminate
 #include <memory>     // make_unique
 #include <utility>    // move
@@ -8,6 +8,7 @@
 #include <SDL2/SDL_main.h>
 #include <imgui.h>
 
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/debug/exception.hpp"
@@ -110,6 +111,17 @@ auto _run() -> int
 
   ui::UniqueImGuiContext imgui_context {ImGui::CreateContext()};
 
+  // NOLINTBEGIN(*-no-malloc)
+  ImGui::SetAllocatorFunctions(
+      [](const usize size, void*) { return std::malloc(size); },
+      [](void* ptr, void*) { std::free(ptr); });
+  ImGui::SetCurrentContext(imgui_context.get());
+  // NOLINTEND(*-no-malloc)
+
+  auto& io = ImGui::GetIO();
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
   const auto renderer_functions =
       _load_renderer_functions("tactile-opengl" TACTILE_DLL_EXT);
   if (!renderer_functions.has_value()) {
@@ -132,7 +144,7 @@ auto _run() -> int
     return EXIT_FAILURE;
   }
 
-  TactileEditor editor {renderer->get_window(), renderer.get()};
+  TactileEditor editor {&window.value(), renderer.get()};
 
   Engine engine {&editor, renderer.get()};
   engine.run();

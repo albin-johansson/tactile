@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
+#include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 
 struct ImGuiContext;
@@ -14,7 +16,8 @@ class ITexture;
 /**
  * Provides the high level renderer backend API.
  */
-class IRenderer {
+class IRenderer
+{
  public:
   TACTILE_INTERFACE_CLASS(IRenderer);
 
@@ -22,7 +25,7 @@ class IRenderer {
    * Attempts to begin a new render frame.
    *
    * \return
-   *    True if successful; false if something went wrong.
+   * True if successful; false if something went wrong.
    */
   [[nodiscard]]
   virtual auto begin_frame() -> bool = 0;
@@ -30,7 +33,7 @@ class IRenderer {
   /**
    * Ends the current render frame.
    *
-   * \pre The \c begin_frame function must be successfully called before this function.
+   * \pre The \c begin_frame function must've been called before this function.
    */
   virtual void end_frame() = 0;
 
@@ -40,10 +43,28 @@ class IRenderer {
    * \param image_path The path to the image.
    *
    * \return
-   *    A non-owning pointer to the loaded texture (may be null).
+   * The identifier assigned to the loaded texture.
    */
   [[nodiscard]]
-  virtual auto load_texture(const char* image_path) -> ITexture* = 0;
+  virtual auto load_texture(const char* image_path) -> Result<TextureID> = 0;
+
+  /**
+   * Unloads a previously loaded texture.
+   *
+   * \param id The identifier of the texture to remove.
+   */
+  virtual void unload_texture(TextureID id) = 0;
+
+  /**
+   * Attempts to find the texture associated with a given identifier.
+   *
+   * \param id The identifier of the desired texture.
+   *
+   * \return
+   * A pointer to the texture if found; a null pointer otherwise.
+   */
+  [[nodiscard]]
+  virtual auto find_texture(TextureID id) const -> const ITexture* = 0;
 
   /**
    * Reloads the fonts texture, if possible.
@@ -54,7 +75,7 @@ class IRenderer {
    * Indicates whether the renderer supports reloading the fonts texture.
    *
    * \return
-   *    True if the fonts texture can be reloaded; false otherwise.
+   * True if the fonts texture can be reloaded; false otherwise.
    */
   [[nodiscard]]
   virtual auto can_reload_fonts() const -> bool = 0;
@@ -63,29 +84,16 @@ class IRenderer {
    * Returns the associated window.
    *
    * \return
-   *    A window.
+   * A window.
    */
   [[nodiscard]]
   virtual auto get_window() -> IWindow* = 0;
 
-  /** \copydoc get_window() */
-  [[nodiscard]]
-  virtual auto get_window() const -> const IWindow* = 0;
-
   /**
-   * Returns the associated Dear ImGui context.
-   *
-   * \details
-   *    Users of the renderer must explicitly install the associated Dear ImGui
-   *    context and memory management functions before issuing other Dear ImGui
-   *    commands. Use \c ImGui::SetCurrentContext and \c ImGui::SetAllocatorFunctions
-   *    to accomplish this.
-   *
-   * \return
-   *    A Dear ImGui context.
+   * \copydoc get_window()
    */
   [[nodiscard]]
-  virtual auto get_imgui_context() -> ImGuiContext* = 0;
+  virtual auto get_window() const -> const IWindow* = 0;
 };
 
 }  // namespace tactile
