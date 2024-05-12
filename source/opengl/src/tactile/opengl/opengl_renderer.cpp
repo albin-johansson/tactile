@@ -10,12 +10,13 @@
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl2.h>
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/opengl/opengl_error.hpp"
-#include "tactile/opengl/opengl_imgui_impl_opengl3.hpp"
-#include "tactile/opengl/opengl_imgui_impl_sdl2.hpp"
+#include "tactile/opengl/opengl_imgui.hpp"
 #include "tactile/opengl/opengl_texture.hpp"
 #include "tactile/render/window.hpp"
 
@@ -34,8 +35,8 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
   ImGuiContext* context;
   IWindow* window;
   Unique<void, GLContextDeleter> gl_context;
-  Maybe<OpenGLImGuiImplSDL2> imgui_sdl2;
-  Maybe<OpenGLImGuiImplOpenGL3> imgui_opengl3;
+  Maybe<GLImGuiBackendWrapper> imgui_backend;
+  Maybe<GLImGuiRendererWrapper> imgui_renderer;
   std::list<OpenGLTexture> textures;
 };
 
@@ -70,18 +71,19 @@ auto OpenGLRenderer::make(IWindow* window,
     return unexpected(make_error(OpenGLError::kLoaderError));
   }
 
-  if (auto impl_sdl2 = OpenGLImGuiImplSDL2::init(*window, context)) {
-    renderer.mData->imgui_sdl2.emplace(std::move(*impl_sdl2));
+  if (auto imgui_backend =
+          GLImGuiBackendWrapper::init(window->get_handle(), context)) {
+    renderer.mData->imgui_backend.emplace(std::move(*imgui_backend));
   }
   else {
-    return propagate_unexpected(impl_sdl2);
+    return propagate_unexpected(imgui_backend);
   }
 
-  if (auto impl_opengl3 = OpenGLImGuiImplOpenGL3::init()) {
-    renderer.mData->imgui_opengl3.emplace(std::move(*impl_opengl3));
+  if (auto imgui_renderer = GLImGuiRendererWrapper::init()) {
+    renderer.mData->imgui_renderer.emplace(std::move(*imgui_renderer));
   }
   else {
-    return propagate_unexpected(impl_opengl3);
+    return propagate_unexpected(imgui_renderer);
   }
 
   SDL_GL_SetSwapInterval(1);
@@ -102,8 +104,8 @@ OpenGLRenderer::~OpenGLRenderer() noexcept = default;
 
 auto OpenGLRenderer::begin_frame() -> bool
 {
-  mData->imgui_sdl2->begin_frame();
-  mData->imgui_opengl3->begin_frame();
+  ImGui_ImplSDL2_NewFrame(mData->window->get_handle());
+  ImGui_ImplOpenGL3_NewFrame();
   ImGui::NewFrame();
 
   const auto& io = ImGui::GetIO();
@@ -121,7 +123,7 @@ auto OpenGLRenderer::begin_frame() -> bool
 void OpenGLRenderer::end_frame()
 {
   ImGui::Render();
-  mData->imgui_opengl3->render(ImGui::GetDrawData());
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
   if constexpr (kOnMacos) {
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
@@ -145,7 +147,8 @@ auto OpenGLRenderer::load_texture(const char* image_path) -> ITexture*
 
 void OpenGLRenderer::try_reload_fonts()
 {
-  mData->imgui_opengl3->reload_fonts_texture();
+  ImGui_ImplOpenGL3_DestroyFontsTexture();
+  ImGui_ImplOpenGL3_CreateFontsTexture();
 }
 
 auto OpenGLRenderer::can_reload_fonts() const -> bool
