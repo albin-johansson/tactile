@@ -7,13 +7,14 @@
 #include <imgui_impl_sdl2.h>
 
 #include "tactile/opengl/opengl_error.hpp"
-#include "tactile/opengl/opengl_window.hpp"
+#include "tactile/render/window.hpp"
 
 namespace tactile {
 
-auto OpenGLImGuiImplSDL2::init(OpenGLWindow& window) -> Result<OpenGLImGuiImplSDL2>
+auto OpenGLImGuiImplSDL2::init(IWindow& window, ImGuiContext* context)
+    -> Result<OpenGLImGuiImplSDL2>
 {
-  if (!ImGui_ImplSDL2_InitForOpenGL(window.get_handle(), window.get_context())) {
+  if (!ImGui_ImplSDL2_InitForOpenGL(window.get_handle(), context)) {
     return unexpected(make_error(OpenGLError::kImGuiError));
   }
 

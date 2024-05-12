@@ -12,53 +12,52 @@
 #include <imgui.h>
 
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/opengl/opengl_error.hpp"
 #include "tactile/opengl/opengl_imgui_impl_opengl3.hpp"
 #include "tactile/opengl/opengl_imgui_impl_sdl2.hpp"
 #include "tactile/opengl/opengl_texture.hpp"
-#include "tactile/opengl/opengl_window.hpp"
+#include "tactile/render/window.hpp"
 
 namespace tactile {
-namespace {
 
-void _prepare_sdl_opengl_hints()
+struct GLContextDeleter final
 {
-  if constexpr (kOnMacos) {
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
-                        SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+  void operator()(void* context) noexcept
+  {
+    SDL_GL_DeleteContext(context);
   }
-
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-  SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, SDL_TRUE);
-}
-
-}  // namespace
-
-struct OpenGLRenderer::Data final
-{
-  ImGuiContext* context;
-  Maybe<OpenGLWindow> window;
-  Maybe<OpenGLImGuiImplSDL2> imgui_sdl2;
-  Maybe<OpenGLImGuiImplOpenGL3> imgui_opengl3;
-  std::list<OpenGLTexture> textures {};
 };
 
-auto OpenGLRenderer::make(ImGuiContext* context) -> Result<OpenGLRenderer>
+struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
+{
+  ImGuiContext* context;
+  IWindow* window;
+  Unique<void, GLContextDeleter> gl_context;
+  Maybe<OpenGLImGuiImplSDL2> imgui_sdl2;
+  Maybe<OpenGLImGuiImplOpenGL3> imgui_opengl3;
+  std::list<OpenGLTexture> textures;
+};
+
+auto OpenGLRenderer::make(IWindow* window,
+                          ImGuiContext* context) -> Result<OpenGLRenderer>
 {
   if (SDL_WasInit(SDL_INIT_VIDEO) != SDL_INIT_VIDEO) {
     return unexpected(make_error(OpenGLError::kNotReady));
   }
 
-  _prepare_sdl_opengl_hints();
+  if (window == nullptr || context == nullptr) {
+    return unexpected(make_error(OpenGLError::kInvalidParam));
+  }
 
   OpenGLRenderer renderer {};
+  renderer.mData->window = window;
   renderer.mData->context = context;
+
+  renderer.mData->gl_context.reset(SDL_GL_CreateContext(window->get_handle()));
+  if (!renderer.mData->gl_context) {
+    return unexpected(make_error(OpenGLError::kContextError));
+  }
 
   // NOLINTBEGIN(*-no-malloc)
   ImGui::SetAllocatorFunctions(
@@ -67,18 +66,11 @@ auto OpenGLRenderer::make(ImGuiContext* context) -> Result<OpenGLRenderer>
   // NOLINTEND(*-no-malloc)
   ImGui::SetCurrentContext(context);
 
-  if (auto window = OpenGLWindow::make()) {
-    renderer.mData->window.emplace(std::move(*window));
-  }
-  else {
-    return propagate_unexpected(window);
-  }
-
   if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
     return unexpected(make_error(OpenGLError::kLoaderError));
   }
 
-  if (auto impl_sdl2 = OpenGLImGuiImplSDL2::init(*renderer.mData->window)) {
+  if (auto impl_sdl2 = OpenGLImGuiImplSDL2::init(*window, context)) {
     renderer.mData->imgui_sdl2.emplace(std::move(*impl_sdl2));
   }
   else {
@@ -91,6 +83,8 @@ auto OpenGLRenderer::make(ImGuiContext* context) -> Result<OpenGLRenderer>
   else {
     return propagate_unexpected(impl_opengl3);
   }
+
+  SDL_GL_SetSwapInterval(1);
 
   return renderer;
 }
@@ -128,7 +122,11 @@ void OpenGLRenderer::end_frame()
 {
   ImGui::Render();
   mData->imgui_opengl3->render(ImGui::GetDrawData());
-  mData->window->swap_buffers();
+
+  if constexpr (kOnMacos) {
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+  }
+  SDL_GL_SwapWindow(mData->window->get_handle());
 }
 
 auto OpenGLRenderer::load_texture(const char* image_path) -> ITexture*
@@ -157,12 +155,12 @@ auto OpenGLRenderer::can_reload_fonts() const -> bool
 
 auto OpenGLRenderer::get_window() -> IWindow*
 {
-  return &mData->window.value();
+  return mData->window;
 }
 
 auto OpenGLRenderer::get_window() const -> const IWindow*
 {
-  return &mData->window.value();
+  return mData->window;
 }
 
 auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
@@ -170,9 +168,30 @@ auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
   return mData->context;
 }
 
-auto tactile_make_renderer(ImGuiContext* context) -> IRenderer*
+void tactile_prepare_renderer(uint32* window_flags)
 {
-  if (auto renderer = OpenGLRenderer::make(context)) {
+  if (window_flags != nullptr) {
+    *window_flags = SDL_WINDOW_OPENGL;
+  }
+
+  if constexpr (kOnMacos) {
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
+                        SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+  }
+
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+  SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, SDL_TRUE);
+}
+
+auto tactile_make_renderer(IWindow* window, ImGuiContext* context) -> IRenderer*
+{
+  if (auto renderer = OpenGLRenderer::make(window, context)) {
     return new (std::nothrow) OpenGLRenderer {std::move(*renderer)};
   }
 

@@ -21,6 +21,7 @@
 #include "tactile/core/platform/dynamic_library.hpp"
 #include "tactile/core/platform/sdl_context.hpp"
 #include "tactile/core/platform/win32.hpp"
+#include "tactile/core/platform/window.hpp"
 #include "tactile/core/tactile_editor.hpp"
 #include "tactile/core/ui/imgui_context.hpp"
 #include "tactile/core/util/scope_guard.hpp"
@@ -30,10 +31,12 @@ namespace tactile {
 
 struct RendererFunctions final
 {
-  using make_renderer_t = IRenderer*(ImGuiContext*);
+  using prepare_renderer_t = void(uint32*);
+  using make_renderer_t = IRenderer*(IWindow*, ImGuiContext*);
   using free_renderer_t = void(IRenderer*);
 
   Unique<IDynamicLibrary> lib;
+  prepare_renderer_t* prepare_renderer;
   make_renderer_t* make_renderer;
   free_renderer_t* free_renderer;
 };
@@ -51,6 +54,10 @@ auto _load_renderer_functions(const Path& libpath) -> Maybe<RendererFunctions>
     return kNone;
   }
 
+  functions.prepare_renderer =
+      find_symbol<RendererFunctions::prepare_renderer_t>(
+          *functions.lib,
+          "tactile_prepare_renderer");
   functions.make_renderer =
       find_symbol<RendererFunctions::make_renderer_t>(*functions.lib,
                                                       "tactile_make_renderer");
@@ -58,7 +65,8 @@ auto _load_renderer_functions(const Path& libpath) -> Maybe<RendererFunctions>
       find_symbol<RendererFunctions::free_renderer_t>(*functions.lib,
                                                       "tactile_free_renderer");
 
-  if (!functions.make_renderer || !functions.free_renderer) {
+  if (!functions.prepare_renderer || !functions.make_renderer ||
+      !functions.free_renderer) {
     TACTILE_LOG_ERROR("Could not load renderer functions");
     return kNone;
   }
@@ -108,8 +116,16 @@ auto _run() -> int
     return EXIT_FAILURE;
   }
 
+  uint32 window_flags = 0;
+  renderer_functions->prepare_renderer(&window_flags);
+
+  auto window = Window::create(window_flags);
+  if (!window.has_value()) {
+    return EXIT_FAILURE;
+  }
+
   UniqueRenderer renderer {
-    renderer_functions->make_renderer(imgui_context.get()),
+    renderer_functions->make_renderer(&window.value(), imgui_context.get()),
     renderer_functions->free_renderer};
   if (!renderer) {
     TACTILE_LOG_ERROR("Could not create renderer");

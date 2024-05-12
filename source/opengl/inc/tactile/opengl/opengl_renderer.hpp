@@ -19,15 +19,17 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   TACTILE_DELETE_COPY(OpenGLRenderer);
 
   /**
-   * Creates an OpenGL renderer, along with an associated window.
+   * Creates an OpenGL renderer.
    *
+   * \param window  The associated window.
    * \param context The associated ImGui context.
    *
    * \return
    * An OpenGL renderer if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(ImGuiContext* context) -> Result<OpenGLRenderer>;
+  static auto make(IWindow* window,
+                   ImGuiContext* context) -> Result<OpenGLRenderer>;
 
   OpenGLRenderer(OpenGLRenderer&& other) noexcept;
 
@@ -67,7 +69,11 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 extern "C"
 {
   TACTILE_OPENGL_API
-  auto tactile_make_renderer(ImGuiContext* context) -> IRenderer*;
+  void tactile_prepare_renderer(uint32* window_flags);
+
+  TACTILE_OPENGL_API
+  auto tactile_make_renderer(IWindow* window,
+                             ImGuiContext* context) -> IRenderer*;
 
   TACTILE_OPENGL_API
   void tactile_free_renderer(IRenderer* renderer);
