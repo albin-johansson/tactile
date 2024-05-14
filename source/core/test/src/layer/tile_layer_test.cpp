@@ -56,8 +56,8 @@ TEST_F(TileLayerTest, MakeTileLayer)
   EXPECT_TRUE(layer.visible);
 
   EXPECT_EQ(dense_tile_layer.tiles.get_extent(), extent);
-  for (usize row = 0; row < extent.rows; ++row) {
-    for (usize col = 0; col < extent.cols; ++col) {
+  for (MatrixExtent::value_type row = 0; row < extent.rows; ++row) {
+    for (MatrixExtent::value_type col = 0; col < extent.cols; ++col) {
       const MatrixIndex index {row, col};
       EXPECT_EQ(dense_tile_layer.tiles.at(index), kEmptyTile);
     }

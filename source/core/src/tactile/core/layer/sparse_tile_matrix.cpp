@@ -21,28 +21,28 @@ void SparseTileMatrix::resize(const MatrixExtent& new_extent)
 
 auto SparseTileMatrix::at(const MatrixIndex index) -> TileID
 {
-  if (is_valid(index)) [[likely]] {
-    if (const auto* tile_id = find_in(mTiles, index)) {
-      return *tile_id;
-    }
-
-    return kEmptyTile;
+  if (is_valid(index)) [[unlikely]] {
+    throw Exception {"bad matrix index"};
   }
 
-  throw Exception {"bad matrix index"};
+  if (const auto* tile_id = find_in(mTiles, index)) {
+    return *tile_id;
+  }
+
+  return kEmptyTile;
 }
 
 auto SparseTileMatrix::at(const MatrixIndex index) const -> TileID
 {
-  if (is_valid(index)) [[likely]] {
-    if (const auto* tile_id = find_in(mTiles, index)) {
-      return *tile_id;
-    }
-
-    return kEmptyTile;
+  if (is_valid(index)) [[unlikely]] {
+    throw Exception {"bad matrix index"};
   }
 
-  throw Exception {"bad matrix index"};
+  if (const auto* tile_id = find_in(mTiles, index)) {
+    return *tile_id;
+  }
+
+  return kEmptyTile;
 }
 
 auto SparseTileMatrix::operator[](const MatrixIndex index) -> TileID&
@@ -53,7 +53,10 @@ auto SparseTileMatrix::operator[](const MatrixIndex index) -> TileID&
 
 auto SparseTileMatrix::is_valid(const MatrixIndex& index) const noexcept -> bool
 {
-  return index.row < mExtent.rows && index.col < mExtent.cols;
+  return (index.row >= 0) &&            //
+         (index.col >= 0) &&            //
+         (index.row < mExtent.rows) &&  //
+         (index.col < mExtent.cols);
 }
 
 auto SparseTileMatrix::get_extent() const noexcept -> const MatrixExtent&

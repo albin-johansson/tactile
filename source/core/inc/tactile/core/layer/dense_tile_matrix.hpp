@@ -102,9 +102,9 @@ class DenseTileMatrix final
   MatrixExtent mExtent {0, 0};
   Vector<Vector<TileID>> mRows {};
 
-  void _set_row_count(usize rows);
+  void _set_row_count(MatrixExtent::value_type rows);
 
-  void _set_column_count(usize cols);
+  void _set_column_count(MatrixExtent::value_type cols);
 };
 
 }  // namespace tactile

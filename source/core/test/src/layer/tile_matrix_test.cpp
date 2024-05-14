@@ -15,8 +15,8 @@ void _validate_tiles(const MatrixType& tile_matrix,
 {
   EXPECT_EQ(tile_matrix.get_extent(), expected_extent);
 
-  for (usize row = 0; row < expected_extent.rows; ++row) {
-    for (usize col = 0; col < expected_extent.cols; ++col) {
+  for (MatrixExtent::value_type row = 0; row < expected_extent.rows; ++row) {
+    for (MatrixExtent::value_type col = 0; col < expected_extent.cols; ++col) {
       const MatrixIndex index {row, col};
       EXPECT_TRUE(tile_matrix.is_valid(index)) << "index is " << index;
     }
@@ -45,9 +45,7 @@ TYPED_TEST(TileMatrixTest, DefaultConstructor)
 /// \trace tactile::SparseTileMatrix::SparseTileMatrix [MatrixExtent]
 TYPED_TEST(TileMatrixTest, ExtentConstructor)
 {
-  const TypeParam tile_matrix {
-    MatrixExtent {12, 24}
-  };
+  const TypeParam tile_matrix {MatrixExtent {12, 24}};
   _validate_tiles(tile_matrix, MatrixExtent {12, 24});
 }
 
@@ -103,9 +101,7 @@ TYPED_TEST(TileMatrixTest, Resize)
 /// \trace tactile::SparseTileMatrix::at
 TYPED_TEST(TileMatrixTest, At)
 {
-  TypeParam tile_matrix {
-    MatrixExtent {2, 2}
-  };
+  TypeParam tile_matrix {MatrixExtent {2, 2}};
   tile_matrix[{0, 0}] = TileID {42};
   tile_matrix[{0, 1}] = TileID {99};
   tile_matrix[{1, 1}] = TileID {123};
@@ -130,9 +126,7 @@ TYPED_TEST(TileMatrixTest, At)
 /// \trace tactile::SparseTileMatrix::operator[]
 TYPED_TEST(TileMatrixTest, SubscriptOperator)
 {
-  TypeParam tile_matrix {
-    MatrixExtent {3, 4}
-  };
+  TypeParam tile_matrix {MatrixExtent {3, 4}};
 
   const auto assign_and_check = [&](const MatrixIndex& index,
                                     const TileID tile_id) {

@@ -56,8 +56,10 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID
   }
 
   const MatrixExtent extent {
-    .rows = static_cast<usize>(spec.texture.size.y() / spec.tile_size.y()),
-    .cols = static_cast<usize>(spec.texture.size.x() / spec.tile_size.x()),
+    .rows = static_cast<MatrixExtent::value_type>(spec.texture.size.y() /
+                                                  spec.tile_size.y()),
+    .cols = static_cast<MatrixExtent::value_type>(spec.texture.size.x() /
+                                                  spec.tile_size.x()),
   };
 
   if (extent.rows <= 0 || extent.cols <= 0) {

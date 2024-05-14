@@ -16,8 +16,8 @@ void _copy_tile_matrix(const TileMatrix1& from, TileMatrix2& to)
   const auto extent = from.get_extent();
   to.resize(extent);
 
-  for (usize row = 0; row < extent.rows; ++row) {
-    for (usize col = 0; col < extent.cols; ++col) {
+  for (MatrixExtent::value_type row = 0; row < extent.rows; ++row) {
+    for (MatrixExtent::value_type col = 0; col < extent.cols; ++col) {
       const MatrixIndex index {row, col};
       const auto tile_id = from.at(index);
 
@@ -58,33 +58,6 @@ void destroy_tile_layer(Registry& registry, const EntityID layer_entity)
   TACTILE_ASSERT(is_tile_layer(registry, layer_entity));
   registry.destroy(layer_entity);
 }
-
-#if 0
-
-template <typename From, typename To>
-void convert_tile_matrix_types(Registry& registry, const EntityID layer_entity)
-{
-  const auto from = registry.detach<From>(layer_entity);
-
-  if (from.has_value()) {
-    const auto extent = from->tiles.get_extent();
-
-    auto& to = registry.add<To>(layer_entity);
-    to.tiles.resize(from->tiles.get_extent());
-
-    for (usize row = 0; row < extent.rows; ++row) {
-      for (usize col = 0; col < extent.cols; ++col) {
-        const MatrixIndex index {row, col};
-        const auto tile_id = from->tiles.at(index);
-
-        if (tile_id != kEmptyTile) {
-          to.tiles[index] = tile_id;
-        }
-      }
-    }
-  }
-}
-#endif
 
 void to_dense_tile_layer(Registry& registry, const EntityID layer_entity)
 {
