@@ -3,7 +3,7 @@
 #pragma once
 
 #include <algorithm>    // min, max
-#include <cmath>        // round, floor
+#include <cmath>        // round, floor, ceil
 #include <concepts>     // invocable
 #include <type_traits>  // invoke_result_t
 
@@ -65,6 +65,23 @@ template <ArithmeticType T, usize N>
 [[nodiscard]] constexpr auto floor(const Vec<T, N>& vec) noexcept -> Vec<T, N>
 {
   return apply(vec, [](const T value) { return std::floor(value); });
+}
+
+/**
+ * Creates a vector with coordinates rounded upwards to the closest integer.
+ *
+ * \tparam T The element type used by the vector.
+ * \tparam N The number of elements in the vector.
+ *
+ * \param vec The original vector.
+ *
+ * \return
+ * A new vector.
+ */
+template <ArithmeticType T, usize N>
+[[nodiscard]] constexpr auto ceil(const Vec<T, N>& vec) noexcept -> Vec<T, N>
+{
+  return apply(vec, [](const T value) { return std::ceil(value); });
 }
 
 /**

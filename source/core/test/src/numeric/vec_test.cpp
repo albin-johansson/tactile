@@ -544,6 +544,18 @@ TEST(Vec, Floor)
   EXPECT_EQ(b.w(), 1.0f);
 }
 
+/// \trace tactile::ceil [Vec]
+TEST(Vec, Ceil)
+{
+  const Float4 a {0.1f, -0.1f, 1.4f, 1.5f};
+  const Float4 b = ceil(a);
+
+  EXPECT_EQ(b.x(), 1.0f);
+  EXPECT_EQ(b.y(), 0.0f);
+  EXPECT_EQ(b.z(), 2.0f);
+  EXPECT_EQ(b.w(), 2.0f);
+}
+
 /// \trace tactile::min [Vec]
 TEST(Vec, Min)
 {
