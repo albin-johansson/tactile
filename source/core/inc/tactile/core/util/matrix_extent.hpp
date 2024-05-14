@@ -14,7 +14,7 @@ namespace tactile {
  */
 struct MatrixExtent final
 {
-  using value_type = usize;
+  using value_type = ssize;
 
   /** The number of rows. */
   value_type rows;

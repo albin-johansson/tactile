@@ -13,15 +13,17 @@
 namespace tactile {
 
 /**
- * Represents a valid location in a two-dimensional matrix.
+ * Represents a location in a two-dimensional matrix.
  */
 struct MatrixIndex final
 {
+  using value_type = ssize;
+
   /** The row index. */
-  usize row;
+  value_type row;
 
   /** The column index. */
-  usize col;
+  value_type col;
 
   [[nodiscard]] auto operator==(const MatrixIndex&) const noexcept
       -> bool = default;
