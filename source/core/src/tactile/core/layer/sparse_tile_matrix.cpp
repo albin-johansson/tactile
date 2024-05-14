@@ -21,7 +21,7 @@ void SparseTileMatrix::resize(const MatrixExtent& new_extent)
 
 auto SparseTileMatrix::at(const MatrixIndex index) -> TileID
 {
-  if (is_valid(index)) [[unlikely]] {
+  if (!is_valid(index)) [[unlikely]] {
     throw Exception {"bad matrix index"};
   }
 
@@ -34,7 +34,7 @@ auto SparseTileMatrix::at(const MatrixIndex index) -> TileID
 
 auto SparseTileMatrix::at(const MatrixIndex index) const -> TileID
 {
-  if (is_valid(index)) [[unlikely]] {
+  if (!is_valid(index)) [[unlikely]] {
     throw Exception {"bad matrix index"};
   }
 
