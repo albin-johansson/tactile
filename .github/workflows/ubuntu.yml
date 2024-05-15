@@ -30,6 +30,7 @@ jobs:
                            libxmu-dev \
                            libxi-dev \
                            libtool \
+                           libltdl-dev \
                            xvfb \
                            pkg-config \
                            automake \
