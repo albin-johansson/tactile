@@ -12,7 +12,7 @@ env:
 
 jobs:
   ubuntu-latest-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +20,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt update
-          sudo apt install g++-12 \
-                           ninja-build \
+          sudo apt install ninja-build \
                            libegl1-mesa-dev \
                            libgles2-mesa-dev \
                            libgl-dev \
@@ -40,8 +39,8 @@ jobs:
                            gperf \
                            python3-jinja2
 
-      - name: Use GCC 12
-        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 12
+      - name: Use GCC 14
+        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
