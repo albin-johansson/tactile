@@ -33,7 +33,6 @@
     "spdlog",
     "stb",
     "tinyfiledialogs",
-    "tl-expected",
     "yaml-cpp",
     "zlib",
     "zstd"
