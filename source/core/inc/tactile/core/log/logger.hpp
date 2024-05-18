@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <format>   // format_string, make_format_args, format_args
-#include <utility>  // forward
+#include <format>  // format_string, make_format_args, format_args
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
@@ -70,9 +69,9 @@ class Logger final
   template <typename... Args>
   void log(const LogLevel level,
            const std::format_string<Args...> fmt,
-           Args&&... args) noexcept
+           const Args&... args) noexcept
   {
-    _log(level, fmt.get(), std::make_format_args(std::forward<Args>(args)...));
+    _log(level, fmt.get(), std::make_format_args(args...));
   }
 
   /**
@@ -157,7 +156,7 @@ class Logger final
   LogLevel mFlushLevel {LogLevel::kError};
   Vector<Unique<ILogSink>> mSinks {};
   Maybe<SteadyClockInstant> mReferenceInstant {};
-  StringView mScope {""};
+  StringView mScope {};
 
   void _log(LogLevel level,
             StringView fmt_string,
