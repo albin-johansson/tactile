@@ -10,7 +10,7 @@
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/numeric/narrow.hpp"
-#include "tactile/core/numeric/vec_stream.hpp"
+#include "tactile/core/numeric/vec_format.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
