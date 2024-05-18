@@ -12,15 +12,19 @@
 #include "tactile/core/log/set_log_scope.hpp"
 
 namespace tactile {
-namespace {
+inline namespace zstd_compression_provider {
 
-struct DStreamDeleter final {
-  void operator()(ZSTD_DStream* stream) noexcept { ZSTD_freeDStream(stream); }
+struct DStreamDeleter final
+{
+  void operator()(ZSTD_DStream* stream) noexcept
+  {
+    ZSTD_freeDStream(stream);
+  }
 };
 
 using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
 
-}  // namespace
+}  // namespace zstd_compression_provider
 
 auto ZstdCompressionProvider::compress(const ByteSpan input_data) const
     -> Result<ByteStream>

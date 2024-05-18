@@ -10,7 +10,7 @@
 #include "tactile/core/log/logger.hpp"
 
 namespace tactile {
-namespace {
+inline namespace random {
 
 using RandomEngine = std::mt19937;
 
@@ -55,7 +55,7 @@ template <typename T>
   }
 }
 
-}  // namespace
+}  // namespace random
 
 void init_random_number_generator()
 {

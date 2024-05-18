@@ -15,7 +15,7 @@
 #include "tactile/core/numeric/narrow.hpp"
 
 namespace tactile {
-namespace {
+inline namespace zlib_compression_provider {
 
 // Zlib has inconsistently named typedefs, we use these instead.
 using z_byte = ::Bytef;
@@ -136,7 +136,7 @@ auto _end_stream(const ZlibCallbacks& callbacks, z_stream& stream) -> Result<voi
   return kOK;
 }
 
-}  // namespace
+}  // namespace zlib_compression_provider
 
 auto ZlibCompressionProvider::compress(const ByteSpan input_data) const
     -> Result<ByteStream>

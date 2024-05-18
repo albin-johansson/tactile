@@ -3,7 +3,7 @@
 #include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
-namespace {
+inline namespace generic_error {
 
 class GenericErrorCategory final : public ErrorCategory
 {
@@ -31,7 +31,7 @@ class GenericErrorCategory final : public ErrorCategory
   }
 };
 
-}  // namespace
+}  // namespace generic_error
 
 auto get_generic_error_category() noexcept -> const ErrorCategory&
 {

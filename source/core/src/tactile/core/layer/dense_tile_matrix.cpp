@@ -7,7 +7,7 @@
 #include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
-namespace {
+inline namespace dense_tile_matrix {
 
 void _add_rows(Vector<Vector<TileID>>& rows,
                const MatrixExtent::value_type n,
@@ -50,7 +50,7 @@ void _remove_columns(Vector<Vector<TileID>>& rows,
   }
 }
 
-}  // namespace
+}  // namespace dense_tile_matrix
 
 DenseTileMatrix::DenseTileMatrix(const MatrixExtent& extent)
   : mExtent {extent}

@@ -8,7 +8,7 @@
 #include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
-namespace {
+inline namespace file_dialog {
 
 inline constexpr const char* kMapPatternDescriptor = "Map files";
 inline constexpr const char* kImagePatternDescriptor = "Image files";
@@ -28,7 +28,7 @@ inline constexpr Array<const char*, 3> kImagePatterns {
   "*.jpeg",
 };
 
-}  // namespace
+}  // namespace file_dialog
 
 auto FileDialog::open_folder() -> Result<Path>
 {

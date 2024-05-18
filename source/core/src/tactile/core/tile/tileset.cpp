@@ -18,7 +18,7 @@
 #include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
-namespace {
+inline namespace tileset {
 
 void _create_tiles(Registry& registry, CTileset& tileset)
 {
@@ -33,7 +33,7 @@ void _create_tiles(Registry& registry, CTileset& tileset)
   }
 }
 
-}  // namespace
+}  // namespace tileset
 
 auto is_tileset(const Registry& registry, const EntityID entity) -> bool
 {

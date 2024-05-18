@@ -9,7 +9,7 @@
 #include "tactile/core/tile/tile.hpp"
 
 namespace tactile {
-namespace {
+inline namespace animation {
 
 void _reset_animation(CAnimation& animation)
 {
@@ -17,7 +17,7 @@ void _reset_animation(CAnimation& animation)
   animation.frame_index = 0;
 }
 
-}  // namespace
+}  // namespace animation
 
 void update_animations(Registry& registry)
 {

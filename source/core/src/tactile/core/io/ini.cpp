@@ -15,7 +15,7 @@
 #include "tactile/core/util/string_ops.hpp"
 
 namespace tactile {
-namespace {
+inline namespace ini {
 
 inline constexpr char kCommentToken = ';';
 inline constexpr char kAssignmentToken = '=';
@@ -72,7 +72,7 @@ auto _parse_key_value_pair(const StringView current_line,
   return kOK;
 }
 
-}  // namespace
+}  // namespace ini
 
 auto parse_ini(const Path& path) -> Result<IniData>
 {

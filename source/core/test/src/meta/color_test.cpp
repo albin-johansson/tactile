@@ -7,13 +7,13 @@
 #include "tactile/base/container/array.hpp"
 
 namespace tactile {
-namespace {
+inline namespace color_test {
 
 inline constexpr Color kLimeGreen {0x32, 0xCD, 0x32, 0xFF};
 inline constexpr Color kDarkBlue {0x00, 0x00, 0x8B, 0xFF};
 inline constexpr Color kHotPink {0xFF, 0x69, 0xB4, 0xFF};
 
-}  // namespace
+}  // namespace color_test
 
 /// \trace tactile::Color::from
 TEST(Color, From)

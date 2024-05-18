@@ -9,7 +9,7 @@
 #include "tactile/core/util/string_ops.hpp"
 
 namespace tactile {
-namespace {
+inline namespace vec_serialization {
 
 template <typename VecType>
 [[nodiscard]] auto _deserialize_vec(const StringView str) -> Result<VecType>
@@ -40,7 +40,7 @@ template <typename VecType>
   return vec;
 }
 
-}  // namespace
+}  // namespace vec_serialization
 
 auto serialize(const Int2& vec) -> String
 {

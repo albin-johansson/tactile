@@ -10,11 +10,11 @@
 #include "tactile/render/renderer.hpp"
 
 namespace tactile {
-namespace {
+inline namespace fonts {
 
 inline constexpr Array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
 
-}  // namespace
+}  // namespace fonts
 
 void reload_fonts(IRenderer& renderer,
                   const float font_size,

@@ -7,7 +7,7 @@
 #include "tactile/core/layer/sparse_tile_matrix.hpp"
 
 namespace tactile {
-namespace {
+inline namespace tile_matrix_test {
 
 template <typename MatrixType>
 void _validate_tiles(const MatrixType& tile_matrix,
@@ -23,7 +23,7 @@ void _validate_tiles(const MatrixType& tile_matrix,
   }
 }
 
-}  // namespace
+}  // namespace tile_matrix_test
 
 template <typename MatrixType>
 class TileMatrixTest : public testing::Test

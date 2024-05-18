@@ -8,7 +8,7 @@
 #include "tactile/core/meta/meta.hpp"
 
 namespace tactile {
-namespace {
+inline namespace tile_layer {
 
 template <typename TileMatrix1, typename TileMatrix2>
 void _copy_tile_matrix(const TileMatrix1& from, TileMatrix2& to)
@@ -29,7 +29,7 @@ void _copy_tile_matrix(const TileMatrix1& from, TileMatrix2& to)
   }
 }
 
-}  // namespace
+}  // namespace tile_layer
 
 auto is_tile_layer(const Registry& registry, const EntityID entity) -> bool
 {
