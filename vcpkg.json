@@ -14,8 +14,6 @@
     "entt",
     "cppcodec",
     "fast-float",
-    "doctest",
-    "glm",
     "gtest",
     {
       "name": "imgui",
@@ -30,7 +28,6 @@
     "pugixml",
     "sdl2",
     "sdl2-image",
-    "spdlog",
     "stb",
     "tinyfiledialogs",
     "yaml-cpp",
