@@ -114,11 +114,11 @@ template <std::signed_integral T>
 [[nodiscard]] consteval auto to_imgui_data_type() -> ImGuiDataType
 {
   switch (sizeof(T)) {
-    case sizeof(uint8):  return ImGuiDataType_S8;
-    case sizeof(uint16): return ImGuiDataType_S16;
-    case sizeof(uint32): return ImGuiDataType_S32;
-    case sizeof(uint64): return ImGuiDataType_S64;
-    default:             throw Exception {"unsupported signed integer size"};
+    case sizeof(int8):  return ImGuiDataType_S8;
+    case sizeof(int16): return ImGuiDataType_S16;
+    case sizeof(int32): return ImGuiDataType_S32;
+    case sizeof(int64): return ImGuiDataType_S64;
+    default:            throw Exception {"unsupported signed integer size"};
   }
 }
 
