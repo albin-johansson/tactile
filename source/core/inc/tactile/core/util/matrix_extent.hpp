@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <format>   // formatter, format_to, formattable
 #include <ostream>  // ostream
 
 #include "tactile/base/int.hpp"
@@ -39,3 +40,21 @@ auto operator<<(std::ostream& stream,
                 const MatrixExtent& extent) -> std::ostream&;
 
 }  // namespace tactile
+
+template <>
+struct std::formatter<tactile::MatrixExtent> final
+{
+  template <typename FormatParseContext>
+  constexpr auto parse(FormatParseContext& ctx)
+  {
+    return ctx.begin();
+  }
+
+  template <typename FormatContext>
+  auto format(const tactile::MatrixExtent& extent, FormatContext& ctx) const
+  {
+    return std::format_to(ctx.out(), "({}, {})", extent.rows, extent.cols);
+  }
+};
+
+static_assert(std::formattable<tactile::MatrixExtent, char>);

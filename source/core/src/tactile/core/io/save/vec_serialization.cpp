@@ -2,7 +2,7 @@
 
 #include "tactile/core/io/save/vec_serialization.hpp"
 
-#include <fmt/format.h>
+#include <format>  // format
 
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/util/string_conv.hpp"
@@ -44,32 +44,32 @@ template <typename VecType>
 
 auto serialize(const Int2& vec) -> String
 {
-  return fmt::format("{};{}", vec.x(), vec.y());
+  return std::format("{};{}", vec.x(), vec.y());
 }
 
 auto serialize(const Float2& vec) -> String
 {
-  return fmt::format("{};{}", vec.x(), vec.y());
+  return std::format("{};{}", vec.x(), vec.y());
 }
 
 auto serialize(const Int3& vec) -> String
 {
-  return fmt::format("{};{};{}", vec.x(), vec.y(), vec.z());
+  return std::format("{};{};{}", vec.x(), vec.y(), vec.z());
 }
 
 auto serialize(const Float3& vec) -> String
 {
-  return fmt::format("{};{};{}", vec.x(), vec.y(), vec.z());
+  return std::format("{};{};{}", vec.x(), vec.y(), vec.z());
 }
 
 auto serialize(const Int4& vec) -> String
 {
-  return fmt::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
+  return std::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
 auto serialize(const Float4& vec) -> String
 {
-  return fmt::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
+  return std::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
 auto deserialize_int2(const StringView str) -> Result<Int2>

@@ -6,8 +6,6 @@
 #include <random>  // mt19937, random_device, uniform_real_distribution, uniform_int_distribution
 #include <thread>  // this_thread
 
-#include <fmt/ostream.h>
-
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/log/logger.hpp"
 
@@ -24,7 +22,7 @@ auto _make_random_engine() -> RandomEngine
   const auto seed = entropy_source();
 
   TACTILE_LOG_DEBUG("Thread {} uses RNG seed {}",
-                    fmt::streamed(std::this_thread::get_id()),
+                    std::this_thread::get_id(),
                     seed);
 
   return RandomEngine {seed};

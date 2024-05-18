@@ -3,10 +3,10 @@
 #include "tactile/core/util/uuid.hpp"
 
 #include <algorithm>  // copy, all_of
+#include <format>     // format
 
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_hash.hpp>
-#include <fmt/format.h>
 
 #include "tactile/base/util/hash.hpp"
 
@@ -27,7 +27,7 @@ auto UUID::hash_code() const noexcept -> usize
 {
   usize hash {};
 
-  for (const uint8 byte: mData) {
+  for (const uint8 byte : mData) {
     hash_combine(hash, byte);
   }
 
@@ -41,9 +41,8 @@ auto UUID::is_null() const -> bool
 
 auto to_string(const UUID& uuid) -> String
 {
-  return fmt::format(
-      "{:02X}{:02X}{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}{:02X}"
-      "{:02X}{:02X}{:02X}",
+  return std::format(
+      "{:02X}{:02X}{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
       uuid.mData[0],
       uuid.mData[1],
       uuid.mData[2],

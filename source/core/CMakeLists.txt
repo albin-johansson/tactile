@@ -40,7 +40,6 @@ target_link_libraries(tactile-core
                       tactile::base
                       tactile::render
                       EnTT::EnTT
-                      fmt::fmt
                       imgui::imgui
 
                       PRIVATE

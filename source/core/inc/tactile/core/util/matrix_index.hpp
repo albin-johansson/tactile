@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstddef>     // size_t
+#include <format>      // formatter, format_to, formattable
 #include <functional>  // hash
 #include <ostream>     // ostream
 
@@ -53,3 +54,21 @@ struct std::hash<tactile::MatrixIndex> final
     return tactile::hash_combine(index.row, index.col);
   }
 };
+
+template <>
+struct std::formatter<tactile::MatrixIndex> final
+{
+  template <typename FormatParseContext>
+  constexpr auto parse(FormatParseContext& ctx)
+  {
+    return ctx.begin();
+  }
+
+  template <typename FormatContext>
+  auto format(const tactile::MatrixIndex& index, FormatContext& ctx) const
+  {
+    return std::format_to(ctx.out(), "({}, {})", index.row, index.col);
+  }
+};
+
+static_assert(std::formattable<tactile::MatrixIndex, char>);

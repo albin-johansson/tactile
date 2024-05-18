@@ -2,12 +2,14 @@
 
 #include "tactile/core/numeric/vec.hpp"
 
+#include <format>       // format
 #include <sstream>      // stringstream
 #include <type_traits>  // is_nothrow_{}_v
 
 #include <gtest/gtest.h>
 
 #include "tactile/core/numeric/vec_common.hpp"
+#include "tactile/core/numeric/vec_format.hpp"
 #include "tactile/core/numeric/vec_stream.hpp"
 
 namespace tactile {
@@ -654,6 +656,13 @@ TEST(Vec, StreamOperator)
   stream << vec;
 
   EXPECT_EQ(stream.str(), "{1, 2, 3, 4}");
+}
+
+TEST(Vec, Format)
+{
+  EXPECT_EQ(std::format("{}", Int2 {1, 2}), "{1, 2}");
+  EXPECT_EQ(std::format("{}", Int3 {1, 2, 3}), "{1, 2, 3}");
+  EXPECT_EQ(std::format("{}", Int4 {1, 2, 3, 4}), "{1, 2, 3, 4}");
 }
 
 }  // namespace tactile

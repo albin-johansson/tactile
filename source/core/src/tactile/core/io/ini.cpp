@@ -8,8 +8,6 @@
 #include <string>     // getline
 #include <utility>    // move
 
-#include <fmt/ostream.h>
-
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -79,7 +77,7 @@ auto _parse_key_value_pair(const StringView current_line,
 auto parse_ini(const Path& path) -> Result<IniData>
 {
   const SetLogScope log_scope {"INI"};
-  TACTILE_LOG_DEBUG("Parsing INI from {}", fmt::streamed(path));
+  TACTILE_LOG_DEBUG("Parsing INI from {}", path.string());
 
   IniData ini_data {};
 

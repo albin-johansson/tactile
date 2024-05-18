@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include <fmt/core.h>
+#include <format>   // format_string, make_format_args, format_args
+#include <utility>  // forward
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
@@ -47,7 +48,8 @@ class ILogSink;
 /**
  * A simple sink-based logger implementation.
  */
-class Logger final {
+class Logger final
+{
  public:
   Logger() = default;
 
@@ -59,14 +61,18 @@ class Logger final {
   /**
    * Logs an arbitrary message.
    *
-   * \param level      The severity of the message.
-   * \param fmt_string The format string.
-   * \param args       The format arguments.
+   * \tparam Args The format argument types.
+   *
+   * \param level The severity of the message.
+   * \param fmt   The format string.
+   * \param args  The format arguments.
    */
   template <typename... Args>
-  void log(const LogLevel level, const StringView fmt_string, Args&&... args) noexcept
+  void log(const LogLevel level,
+           const std::format_string<Args...> fmt,
+           Args&&... args) noexcept
   {
-    _log(level, fmt_string, fmt::make_format_args(args...));
+    _log(level, fmt.get(), std::make_format_args(std::forward<Args>(args)...));
   }
 
   /**
@@ -108,7 +114,7 @@ class Logger final {
    * Returns the current scope identifier.
    *
    * \return
-   *    An arbitrary string.
+   * An arbitrary string.
    */
   [[nodiscard]]
   auto get_scope() const noexcept -> StringView;
@@ -119,7 +125,7 @@ class Logger final {
    * \param level The log level to consider.
    *
    * \return
-   *    True if the message would be logged; false otherwise.
+   * True if the message would be logged; false otherwise.
    */
   [[nodiscard]]
   auto would_log(LogLevel level) const noexcept -> bool;
@@ -130,7 +136,7 @@ class Logger final {
    * \param level The log level to consider.
    *
    * \return
-   *    True if the message would cause a flush; false otherwise.
+   * True if the message would cause a flush; false otherwise.
    */
   [[nodiscard]]
   auto would_flush(LogLevel level) const noexcept -> bool;
@@ -141,7 +147,7 @@ class Logger final {
    * \param level The log level to consider.
    *
    * \return
-   *    A log level acronym.
+   * A log level acronym.
    */
   [[nodiscard]]
   static auto get_acronym(LogLevel level) noexcept -> StringView;
@@ -153,7 +159,9 @@ class Logger final {
   Maybe<SteadyClockInstant> mReferenceInstant {};
   StringView mScope {""};
 
-  void _log(LogLevel level, StringView fmt_string, fmt::format_args args) noexcept;
+  void _log(LogLevel level,
+            StringView fmt_string,
+            std::format_args args) noexcept;
 
   [[nodiscard]]
   auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;
@@ -177,7 +185,7 @@ void set_default_logger(Logger* logger) noexcept;
  * Returns the logger instance used by the logging macros.
  *
  * \return
- *    The current default logger.
+ * The current default logger.
  */
 [[nodiscard]]
 auto get_default_logger() noexcept -> Logger*;

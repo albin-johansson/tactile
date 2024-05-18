@@ -2,8 +2,6 @@
 
 #include "tactile/core/tile/tileset.hpp"
 
-#include <fmt/ostream.h>
-
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -51,7 +49,7 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID
 
   if (spec.tile_size.x() <= 0 || spec.tile_size.y() <= 0) {
     TACTILE_LOG_ERROR("Tried to create tileset with invalid tile size: {}",
-                      fmt::streamed(spec.tile_size));
+                      spec.tile_size);
     return kInvalidEntity;
   }
 
@@ -64,7 +62,7 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID
 
   if (extent.rows <= 0 || extent.cols <= 0) {
     TACTILE_LOG_ERROR("Tried to create tileset with invalid extent: {}",
-                      fmt::streamed(extent));
+                      extent);
     return kInvalidEntity;
   }
 

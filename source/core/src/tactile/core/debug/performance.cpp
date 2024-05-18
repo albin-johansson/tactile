@@ -4,8 +4,6 @@
 
 #include <exception>  // exception
 
-#include <fmt/chrono.h>
-
 #include "tactile/core/log/logger.hpp"
 
 namespace tactile {

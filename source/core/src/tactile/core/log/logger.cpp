@@ -4,9 +4,9 @@
 
 #include <cstdio>     // fprintf, stderr
 #include <exception>  // exception
-#include <iterator>   // back_inserter
 
-#include <fmt/chrono.h>
+#include "tactile/core/util/format.hpp"
+#include "tactile/core/util/memory_buffer.hpp"
 
 namespace tactile {
 namespace {
@@ -17,21 +17,21 @@ constinit Logger* gDefaultLogger = nullptr;  // NOLINT
 
 void Logger::_log(const LogLevel level,
                   const StringView fmt_string,
-                  const fmt::format_args args) noexcept
+                  const std::format_args args) noexcept
 {
   try {
     if (!mSinks.empty() && would_log(level)) {
       const auto log_instant = SteadyClock::now();
-      const auto text = fmt::vformat(fmt_string, args);
+      const auto text = std::vformat(fmt_string, args);
 
       const auto level_acronym = get_acronym(level);
       const auto elapsed_time = _to_elapsed_time(log_instant);
 
-      fmt::memory_buffer prefix_buffer;
-      fmt::format_to(std::back_inserter(prefix_buffer),
-                     "[{} {:.>12%Q}]",
-                     level_acronym,
-                     elapsed_time);
+      MemoryBuffer<char, 64> prefix_buffer;  // NOLINT default-initialization
+      format_to_buffer(prefix_buffer,
+                       "[{} {:.>12%Q}]",
+                       level_acronym,
+                       elapsed_time);
 
       const LogMessage msg {
         .level = level,
@@ -107,8 +107,8 @@ auto Logger::get_acronym(const LogLevel level) noexcept -> StringView
   switch (level) {
     case LogLevel::kTrace: return "TRC";
     case LogLevel::kDebug: return "DBG";
-    case LogLevel::kInfo: return "INF";
-    case LogLevel::kWarn: return "WRN";
+    case LogLevel::kInfo:  return "INF";
+    case LogLevel::kWarn:  return "WRN";
     case LogLevel::kError: return "ERR";
     case LogLevel::kFatal: return "FTL";
   }
@@ -116,7 +116,8 @@ auto Logger::get_acronym(const LogLevel level) noexcept -> StringView
   return "";
 }
 
-auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const -> Microseconds
+auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const
+    -> Microseconds
 {
   if (mReferenceInstant.has_value()) {
     return duration_cast<Microseconds>(instant - *mReferenceInstant);

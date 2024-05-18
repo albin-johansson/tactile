@@ -4,9 +4,9 @@
 
 #include <algorithm>  // replace
 #include <cstdlib>    // system
+#include <format>     // format
 
 #include <SDL2/SDL.h>
-#include <fmt/format.h>
 
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -22,15 +22,15 @@ auto open_directory_in_finder(const Path& dir) -> Result<void>
   }
 
   if constexpr (kOnMacos) {
-    const auto cmd = fmt::format("open \"{}\"", dir.string());
+    const auto cmd = std::format("open \"{}\"", dir.string());
     std::system(cmd.c_str());
   }
   else if constexpr (kOnWindows) {
-    const auto cmd = fmt::format("explorer \"{}\"", dir.string());
+    const auto cmd = std::format("explorer \"{}\"", dir.string());
     std::system(cmd.c_str());
   }
   else if constexpr (kOnLinux) {
-    const auto cmd = fmt::format("xdg-open \"{}\"", dir.string());
+    const auto cmd = std::format("xdg-open \"{}\"", dir.string());
     std::system(cmd.c_str());
   }
   else {

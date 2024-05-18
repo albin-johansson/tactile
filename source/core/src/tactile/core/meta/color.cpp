@@ -4,8 +4,7 @@
 
 #include <algorithm>  // clamp
 #include <cmath>      // pow
-
-#include <fmt/format.h>
+#include <format>     // format
 
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/numeric/narrow.hpp"
@@ -94,17 +93,17 @@ auto Color::parse_argb(const StringView argb) -> Result<Color>
 
 auto Color::to_string_rgb() const -> String
 {
-  return fmt::format("#{:02X}{:02X}{:02X}", red, green, blue);
+  return std::format("#{:02X}{:02X}{:02X}", red, green, blue);
 }
 
 auto Color::to_string_rgba() const -> String
 {
-  return fmt::format("#{:02X}{:02X}{:02X}{:02X}", red, green, blue, alpha);
+  return std::format("#{:02X}{:02X}{:02X}{:02X}", red, green, blue, alpha);
 }
 
 auto Color::to_string_argb() const -> String
 {
-  return fmt::format("#{:02X}{:02X}{:02X}{:02X}", alpha, red, green, blue);
+  return std::format("#{:02X}{:02X}{:02X}{:02X}", alpha, red, green, blue);
 }
 
 auto Color::to_uint32_abgr() const -> uint32
