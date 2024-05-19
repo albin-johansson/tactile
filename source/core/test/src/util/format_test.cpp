@@ -14,14 +14,13 @@ TEST(Format, FormatToBuffer)
   MemoryBuffer<char, 32> buffer;
   format_to_buffer(buffer, "{}", "foobar");
 
-  ASSERT_EQ(buffer.size(), 7);
+  ASSERT_EQ(buffer.size(), 6);
   EXPECT_EQ(buffer[0], 'f');
   EXPECT_EQ(buffer[1], 'o');
   EXPECT_EQ(buffer[2], 'o');
   EXPECT_EQ(buffer[3], 'b');
   EXPECT_EQ(buffer[4], 'a');
   EXPECT_EQ(buffer[5], 'r');
-  EXPECT_EQ(buffer[6], '\0');
 }
 
 /// \trace tactile::format_to_buffer
@@ -65,7 +64,7 @@ TEST(Format, FormatToBufferWithOverflow)
   EXPECT_EQ(buffer[buffer.size() - 4], '?');
   EXPECT_EQ(buffer[buffer.size() - 3], 'f');
   EXPECT_EQ(buffer[buffer.size() - 2], 'o');
-  EXPECT_EQ(buffer[buffer.size() - 1], '\0');
+  EXPECT_EQ(buffer[buffer.size() - 1], 'o');
 }
 
 }  // namespace tactile

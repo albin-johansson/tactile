@@ -17,8 +17,7 @@ namespace tactile {
  * Formats a string into a given memory buffer.
  *
  * \details
- * The formatted string will be truncated if it doesn't fit in the memory
- * buffer, and a NUL-terminator is automatically included.
+ * The formatted string will be truncated if it doesn't fit in the buffer.
  *
  * \tparam N    The maximum number of elements in the buffer.
  * \tparam Args The format argument types.
@@ -37,12 +36,10 @@ void format_to_buffer(MemoryBuffer<char, N>& buffer,
     return;
   }
 
-  const auto char_limit = remaining_chars - 1;
   std::format_to_n(std::back_inserter(buffer),
-                   to_signed(char_limit),
+                   to_signed(remaining_chars),
                    fmt,
                    std::forward<Args>(args)...);
-  buffer.push_back('\0');
 }
 
 }  // namespace tactile
