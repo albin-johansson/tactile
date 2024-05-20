@@ -92,5 +92,6 @@ if (TACTILE_BUILD_TESTS MATCHES "ON")
     add_subdirectory("test")
   endif ()
 
+  add_subdirectory("source/base/test")
   add_subdirectory("source/core/test")
 endif ()

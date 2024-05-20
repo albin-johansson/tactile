@@ -9,6 +9,7 @@
 
 #include "tactile/base/container/array.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/sign_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
@@ -250,7 +251,7 @@ class MemoryBuffer
   [[nodiscard]]
   constexpr auto size() const noexcept -> size_type
   {
-    return to_unsigned(std::distance(mBegin, mEnd));
+    return saturate_cast<size_type>(std::distance(mBegin, mEnd));
   }
 
   /**

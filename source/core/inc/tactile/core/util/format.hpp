@@ -7,8 +7,8 @@
 #include <utility>   // forward
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/sign_cast.hpp"
 #include "tactile/core/util/memory_buffer.hpp"
 
 namespace tactile {
@@ -37,7 +37,7 @@ void format_to_buffer(MemoryBuffer<char, N>& buffer,
   }
 
   std::format_to_n(std::back_inserter(buffer),
-                   to_signed(remaining_chars),
+                   saturate_cast<ssize>(remaining_chars),
                    fmt,
                    std::forward<Args>(args)...);
 }

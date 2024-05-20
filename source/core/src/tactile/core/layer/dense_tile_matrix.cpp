@@ -2,7 +2,7 @@
 
 #include "tactile/core/layer/dense_tile_matrix.hpp"
 
-#include "tactile/base/util/sign_cast.hpp"
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
 
@@ -13,7 +13,7 @@ void _add_rows(Vector<Vector<TileID>>& rows,
                const MatrixExtent::value_type n,
                const MatrixExtent::value_type cols)
 {
-  rows.reserve(rows.size() + to_unsigned(n));
+  rows.reserve(rows.size() + saturate_cast<usize>(n));
   for (MatrixExtent::value_type i = 0; i < n; ++i) {
     rows.emplace_back(cols, kEmptyTile);
   }
@@ -23,7 +23,7 @@ void _add_columns(Vector<Vector<TileID>>& rows,
                   const MatrixExtent::value_type n)
 {
   for (auto& row : rows) {
-    row.reserve(row.size() + to_unsigned(n));
+    row.reserve(row.size() + saturate_cast<usize>(n));
     for (MatrixExtent::value_type i = 0; i < n; ++i) {
       row.push_back(kEmptyTile);
     }
@@ -55,9 +55,9 @@ void _remove_columns(Vector<Vector<TileID>>& rows,
 DenseTileMatrix::DenseTileMatrix(const MatrixExtent& extent)
   : mExtent {extent}
 {
-  mRows.reserve(to_unsigned(mExtent.rows));
-  mRows.assign(to_unsigned(mExtent.rows),
-               Vector<TileID>(to_unsigned(mExtent.cols), kEmptyTile));
+  mRows.reserve(saturate_cast<usize>(mExtent.rows));
+  mRows.assign(saturate_cast<usize>(mExtent.rows),
+               Vector<TileID>(saturate_cast<usize>(mExtent.cols), kEmptyTile));
 }
 
 void DenseTileMatrix::resize(const MatrixExtent& new_extent)
@@ -100,7 +100,7 @@ auto DenseTileMatrix::at(const MatrixIndex index) -> TileID
     throw Exception {"bad matrix index"};
   }
 
-  return mRows[to_unsigned(index.row)][to_unsigned(index.col)];
+  return mRows[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
 }
 
 auto DenseTileMatrix::at(const MatrixIndex index) const -> const TileID&
@@ -109,7 +109,7 @@ auto DenseTileMatrix::at(const MatrixIndex index) const -> const TileID&
     throw Exception {"bad matrix index"};
   }
 
-  return mRows[to_unsigned(index.row)][to_unsigned(index.col)];
+  return mRows[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
 }
 
 auto DenseTileMatrix::operator[](const MatrixIndex index) noexcept -> TileID&
@@ -118,7 +118,7 @@ auto DenseTileMatrix::operator[](const MatrixIndex index) noexcept -> TileID&
   TACTILE_ASSERT_MSG(index.col >= 0, "negative column index");
   TACTILE_ASSERT_MSG(index.row < mExtent.rows, "bad row index");
   TACTILE_ASSERT_MSG(index.col < mExtent.cols, "bad column index");
-  return mRows[to_unsigned(index.row)][to_unsigned(index.col)];
+  return mRows[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
 }
 
 auto DenseTileMatrix::is_valid(const MatrixIndex& index) const noexcept -> bool
