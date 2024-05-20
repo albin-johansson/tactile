@@ -7,7 +7,7 @@
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
-#include "tactile/core/numeric/narrow.hpp"
+#include "tactile/base/numeric/saturate_cast.hpp"
 
 namespace tactile {
 
@@ -78,15 +78,15 @@ template <typename T>
 {
   if constexpr (std::signed_integral<T>) {
     return parse_int(str).transform(
-        [](int64 value) { return narrow_cast<T>(value); });
+        [](int64 value) { return saturate_cast<T>(value); });
   }
   else if constexpr (std::unsigned_integral<T>) {
     return parse_uint(str).transform(
-        [](uint64 value) { return narrow_cast<T>(value); });
+        [](uint64 value) { return saturate_cast<T>(value); });
   }
   else {
     return parse_float(str).transform(
-        [](double value) { return narrow_cast<T>(value); });
+        [](double value) { return static_cast<T>(value); });
   }
 }
 

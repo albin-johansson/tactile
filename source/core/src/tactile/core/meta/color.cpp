@@ -7,7 +7,6 @@
 #include <format>     // format
 
 #include "tactile/core/debug/generic_error.hpp"
-#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/util/string_conv.hpp"
 
 namespace tactile {
@@ -40,9 +39,9 @@ auto Color::parse_rgb(const StringView rgb) -> Result<Color>
   const auto b = parse_uint(rgb.substr(5, 2), 16);
 
   if (r && g && b) {
-    return Color {narrow_cast<uint8>(*r),
-                  narrow_cast<uint8>(*g),
-                  narrow_cast<uint8>(*b),
+    return Color {static_cast<uint8>(*r),
+                  static_cast<uint8>(*g),
+                  static_cast<uint8>(*b),
                   0xFF};
   }
 
@@ -61,10 +60,10 @@ auto Color::parse_rgba(const StringView rgba) -> Result<Color>
   const auto a = parse_uint(rgba.substr(7, 2), 16);
 
   if (r && g && b && a) {
-    return Color {narrow_cast<uint8>(*r),
-                  narrow_cast<uint8>(*g),
-                  narrow_cast<uint8>(*b),
-                  narrow_cast<uint8>(*a)};
+    return Color {static_cast<uint8>(*r),
+                  static_cast<uint8>(*g),
+                  static_cast<uint8>(*b),
+                  static_cast<uint8>(*a)};
   }
 
   return unexpected(make_error(GenericError::kInvalidParam));
@@ -82,10 +81,10 @@ auto Color::parse_argb(const StringView argb) -> Result<Color>
   const auto b = parse_uint(argb.substr(7, 2), 16);
 
   if (a && r && g && b) {
-    return Color {narrow_cast<uint8>(*r),
-                  narrow_cast<uint8>(*g),
-                  narrow_cast<uint8>(*b),
-                  narrow_cast<uint8>(*a)};
+    return Color {static_cast<uint8>(*r),
+                  static_cast<uint8>(*g),
+                  static_cast<uint8>(*b),
+                  static_cast<uint8>(*a)};
   }
 
   return unexpected(make_error(GenericError::kInvalidParam));

@@ -2,10 +2,10 @@
 
 #include "tactile/core/tile/animation.hpp"
 
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
-#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/tile/tile.hpp"
 
 namespace tactile {
@@ -59,7 +59,8 @@ auto add_animation_frame(Registry& registry,
     animation.frames.push_back(frame);
   }
   else if (frame_index < frame_count) {
-    const auto pos = animation.frames.begin() + narrow_cast<ssize>(frame_index);
+    const auto pos =
+        animation.frames.begin() + saturate_cast<ssize>(frame_index);
     animation.frames.insert(pos, frame);
   }
   else {
@@ -84,7 +85,7 @@ auto remove_animation_frame(Registry& registry,
     return unexpected(make_error(GenericError::kInvalidParam));
   }
 
-  const auto pos = animation.frames.begin() + narrow_cast<ssize>(frame_index);
+  const auto pos = animation.frames.begin() + saturate_cast<ssize>(frame_index);
   animation.frames.erase(pos);
 
   if (animation.frames.empty()) {

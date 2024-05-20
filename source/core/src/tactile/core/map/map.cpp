@@ -2,6 +2,7 @@
 
 #include "tactile/core/map/map.hpp"
 
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -12,7 +13,6 @@
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/meta/meta.hpp"
-#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "tactile/core/ui/viewport.hpp"
@@ -123,7 +123,7 @@ auto add_tileset_to_map(Registry& registry,
   }
 
   const auto& tileset = registry.get<CTileset>(tileset_entity);
-  id_cache.next_tile_id += narrow_cast<TileID>(tileset.tiles.size());
+  id_cache.next_tile_id += saturate_cast<TileID>(tileset.tiles.size());
 
   map.attached_tilesets.push_back(tileset_entity);
   map.active_tileset = tileset_entity;

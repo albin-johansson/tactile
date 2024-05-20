@@ -13,7 +13,6 @@
 #include <fast_float/fast_float.h>
 
 #include "tactile/core/debug/generic_error.hpp"
-#include "tactile/core/numeric/narrow.hpp"
 
 namespace tactile {
 inline namespace string_conv {

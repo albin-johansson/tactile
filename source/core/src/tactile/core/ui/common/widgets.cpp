@@ -2,8 +2,10 @@
 
 #include "tactile/core/ui/common/widgets.hpp"
 
+#include <utility>  // to_underlying
+
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
 namespace tactile::ui {
@@ -25,7 +27,7 @@ IdScope::IdScope(const int id)
 
 IdScope::IdScope(const EntityID id)
 {
-  ImGui::PushID(narrow_cast<int>(id));
+  ImGui::PushID(saturate_cast<int>(std::to_underlying(id)));
 }
 
 IdScope::~IdScope() noexcept

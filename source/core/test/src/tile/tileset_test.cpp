@@ -4,10 +4,10 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/io/texture.hpp"
 #include "tactile/core/meta/meta.hpp"
-#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
@@ -112,7 +112,7 @@ TEST_F(TilesetTest, InitTilesetInstance)
 
   EXPECT_EQ(instance.tile_range.first_id, first_tile);
   EXPECT_EQ(instance.tile_range.count,
-            narrow_cast<int32>(tileset.tiles.size()));
+            saturate_cast<int32>(tileset.tiles.size()));
   EXPECT_FALSE(instance.is_embedded);
 
   EXPECT_EQ(tile_cache.tileset_mapping.size(), tileset.tiles.size());

@@ -2,6 +2,7 @@
 
 #include "tactile/core/tile/tileset.hpp"
 
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -9,7 +10,6 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/meta/meta.hpp"
-#include "tactile/core/numeric/narrow.hpp"
 #include "tactile/core/numeric/vec_format.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
@@ -23,10 +23,10 @@ inline namespace tileset {
 void _create_tiles(Registry& registry, CTileset& tileset)
 {
   const auto tile_count = tileset.extent.rows * tileset.extent.cols;
-  tileset.tiles.reserve(tile_count);
+  tileset.tiles.reserve(saturate_cast<usize>(tile_count));
 
-  for (usize index = 0; index < tile_count; ++index) {
-    const auto tile_index = narrow_cast<TileIndex>(index);
+  for (ssize index = 0; index < tile_count; ++index) {
+    const auto tile_index = saturate_cast<TileIndex>(index);
     const auto tile_entity = make_tile(registry, tile_index);
 
     tileset.tiles.push_back(tile_entity);
@@ -110,7 +110,7 @@ auto init_tileset_instance(Registry& registry,
 
   const TileRange tile_range {
     .first_id = first_tile_id,
-    .count = narrow_cast<int32>(tileset.tiles.size()),
+    .count = saturate_cast<int32>(tileset.tiles.size()),
   };
 
   if (!is_tile_range_available(registry, tile_range)) {
