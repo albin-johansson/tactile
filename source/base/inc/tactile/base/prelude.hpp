@@ -172,11 +172,11 @@ inline constexpr bool kOnWindows = true;
 inline constexpr bool kOnWindows = false;
 #endif  // TACTILE_OS_WINDOWS
 
-#if TACTILE_OS_MACOS
+#if TACTILE_OS_APPLE
 inline constexpr bool kOnMacos = true;
 #else
 inline constexpr bool kOnMacos = false;
-#endif  // TACTILE_OS_MACOS
+#endif  // TACTILE_OS_APPLE
 
 #if TACTILE_OS_LINUX
 inline constexpr bool kOnLinux = true;
