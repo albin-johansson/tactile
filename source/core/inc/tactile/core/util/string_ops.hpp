@@ -5,7 +5,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/util/concepts.hpp"
+#include "tactile/base/util/concepts.hpp"
 
 namespace tactile {
 

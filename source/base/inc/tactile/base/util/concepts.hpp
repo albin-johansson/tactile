@@ -2,12 +2,21 @@
 
 #pragma once
 
-#include <type_traits>  // is_invocable_r_v
+#include <type_traits>  // is_arithmetic_v, is_invocable_r_v
 
 namespace tactile {
 
 /**
- * Represents a callable type with a given function signature, including the return type.
+ * Describes numeric types, i.e., types that primarily represent numeric values.
+ *
+ * \tparam T The type to check.
+ */
+template <typename T>
+concept ArithmeticType = std::is_arithmetic_v<T>;
+
+/**
+ * Represents a callable type with a given function signature, including the
+ * return type.
  *
  * \tparam T    The type to check.
  * \tparam Ret  The required return type.
