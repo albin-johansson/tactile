@@ -8,13 +8,13 @@
 
 namespace tactile {
 
-#if TACTILE_OS_MACOS
+#if TACTILE_OS_APPLE
   #define TACTILE_PRIMARY_MOD "Cmd"
   #define TACTILE_SECONDARY_MOD "Option"
 #else
   #define TACTILE_PRIMARY_MOD "Ctrl"
   #define TACTILE_SECONDARY_MOD "Alt"
-#endif  // TACTILE_OS_MACOS
+#endif  // TACTILE_OS_APPLE
 
 inline constexpr cen::key_mod kPrimaryModifier = kOnMacos ? cen::key_mod::lgui  //
                                                           : cen::key_mod::lctrl;
