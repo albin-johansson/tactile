@@ -7,9 +7,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Provides identifiers for all user-facing strings.
  *
@@ -19,6 +16,8 @@ namespace tactile::ui {
  * reason, it's important to keep the underlying range of values as small as
  * possible to minimize memory usage. Basically, don't provide explicit
  * enumerator values.
+ *
+ * \ingroup UI
  */
 enum class StringID : usize  // NOLINT(*-enum-size)
 {
@@ -46,6 +45,8 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kOrientation,
   kTileWidth,
   kTileHeight,
+  kLightThemes,
+  kDarkThemes,
 
   // Generic verbs.
   kCancel,
@@ -80,15 +81,20 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kDebugMenu,
   kRecentFilesMenu,
   kWidgetsMenu,
+  kThemeMenu,
   kExportAsMenu,
 
   // "Action" strings. These often have embedded leading icons.
   kCreateMap,
+  kOpen,
   kOpenMap,
   kOpenTileset,
   kOpenComponentEditor,
   kOpenSettings,
   kSaveAs,
+  kReopenLastClosedFile,
+  kClearFileHistory,
+  kResetLayout,
   kIncreaseFontSize,
   kDecreaseFontSize,
   kResetFontSize,
@@ -110,14 +116,24 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kRectangleTool,
   kEllipseTool,
   kPointTool,
+  kAddTileset,
+  kAddRow,
+  kAddColumn,
+  kRemoveRow,
+  kRemoveColumn,
+  kResize,
+  kFixInvalidTiles,
+  kShowMetadata,
   kReportBug,
-  kOpenDemoWindow,
+  kAboutTactile,
+  kOpenCredits,
+  kOpenDebugger,
   kOpenStyleEditor,
+  kOpenDemoWindow,
+  kOpenStorageDir,
 
   /** The number of string identifiers, not a string itself. */
   kMAX
 };
-
-/// \}
 
 }  // namespace tactile::ui

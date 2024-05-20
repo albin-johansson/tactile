@@ -2,33 +2,65 @@
 
 #pragma once
 
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Represents the different icons used in the UI.
+ *
+ * \ingroup UI
  */
-enum class Icon
+enum class Icon : uint8
 {
+  kNewFile,
+  kCloseFile,
+  kOpen,
+  kSave,
+  kSaveAs,
+  kQuit,
   kCreate,
   kRemove,
   kDuplicate,
+  kUndo,
+  kRedo,
+  kStamp,
+  kEraser,
+  kBucket,
+  kSelect,
+  kRectangle,
+  kEllipse,
+  kPoint,
+  kComponent,
+  kSettings,
+  kWidget,
+  kTheme,
   kMoveUp,
   kMoveDown,
   kMoveLeft,
   kMoveRight,
+  kResize,
+  kEye,
+  kTileset,
+  kExport,
   kAlignCenter,
   kZoomIn,
   kZoomOut,
   kZoomReset,
   kGrid,
   kBug,
+  kCode,
   kToolbox,
+  kRepair,
   kBrush,
+  kInfo,
+  kQuestion,
+  kHistory,
+  kGarbage,
+  kDebug,
+  kPerformance,
+  kStorage,
 };
 
 /**
@@ -39,6 +71,8 @@ enum class Icon
  * \return
  * An icon string. An empty string is returned if the icon identifier isn't
  * recognized.
+ *
+ * \ingroup UI
  */
 [[nodiscard]]
 auto to_string(Icon icon) noexcept -> const char*;
@@ -55,10 +89,10 @@ auto to_string(Icon icon) noexcept -> const char*;
  * \return
  * An icon prefix string. An empty string is returned if the icon identifier
  * isn't recognized.
+ *
+ * \ingroup UI
  */
 [[nodiscard]]
 auto to_prefix_string(Icon icon) noexcept -> const char*;
-
-/// \}
 
 }  // namespace tactile::ui

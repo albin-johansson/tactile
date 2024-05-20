@@ -64,6 +64,8 @@ auto _get_noun_names() -> HashMap<StringView, StringID>
     {"orientation", StringID::kOrientation},
     {"tile_width", StringID::kTileWidth},
     {"tile_height", StringID::kTileHeight},
+    {"light_themes", StringID::kLightThemes},
+    {"dark_themes", StringID::kDarkThemes},
   };
 }
 
@@ -81,11 +83,15 @@ auto _get_action_names() -> HashMap<StringView, StringID>
 {
   return {
     {"create_map", StringID::kCreateMap},
+    {"open", StringID::kOpen},
     {"open_map", StringID::kOpenMap},
     {"open_tileset", StringID::kOpenTileset},
     {"open_component_editor", StringID::kOpenComponentEditor},
     {"open_settings", StringID::kOpenSettings},
+    {"reset_layout", StringID::kResetLayout},
     {"save_as", StringID::kSaveAs},
+    {"reopen_last_closed_file", StringID::kReopenLastClosedFile},
+    {"clear_file_history", StringID::kClearFileHistory},
     {"increase_font_size", StringID::kIncreaseFontSize},
     {"decrease_font_size", StringID::kDecreaseFontSize},
     {"reset_font_size", StringID::kResetFontSize},
@@ -107,9 +113,21 @@ auto _get_action_names() -> HashMap<StringView, StringID>
     {"rectangle_tool", StringID::kRectangleTool},
     {"ellipse_tool", StringID::kEllipseTool},
     {"point_tool", StringID::kPointTool},
+    {"add_tileset", StringID::kAddTileset},
+    {"add_row", StringID::kAddRow},
+    {"add_column", StringID::kAddColumn},
+    {"remove_row", StringID::kRemoveRow},
+    {"remove_column", StringID::kRemoveColumn},
+    {"resize", StringID::kResize},
+    {"fix_invalid_tiles", StringID::kFixInvalidTiles},
+    {"show_metadata", StringID::kShowMetadata},
     {"report_bug", StringID::kReportBug},
-    {"open_demo_window", StringID::kOpenDemoWindow},
+    {"about_tactile", StringID::kAboutTactile},
+    {"open_credits", StringID::kOpenCredits},
+    {"open_debugger", StringID::kOpenDebugger},
     {"open_style_editor", StringID::kOpenStyleEditor},
+    {"open_demo_window", StringID::kOpenDemoWindow},
+    {"open_storage_dir", StringID::kOpenStorageDir},
   };
 }
 
@@ -126,6 +144,7 @@ auto _get_menu_names() -> HashMap<StringView, StringID>
     {"debug", StringID::kDebugMenu},
     {"recent_files", StringID::kRecentFilesMenu},
     {"widgets", StringID::kWidgetsMenu},
+    {"theme", StringID::kThemeMenu},
     {"export_as", StringID::kExportAsMenu},
   };
 }
