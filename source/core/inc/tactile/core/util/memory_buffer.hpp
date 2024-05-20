@@ -10,8 +10,8 @@
 #include "tactile/base/container/array.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/base/numeric/sign_cast.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/sign_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
 

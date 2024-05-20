@@ -7,9 +7,9 @@
 #include <type_traits>  // invoke_result_t, is_same_v
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/numeric/arithmetic_type.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
-#include "tactile/core/numeric/arithmetic_type.hpp"
 
 namespace tactile {
 

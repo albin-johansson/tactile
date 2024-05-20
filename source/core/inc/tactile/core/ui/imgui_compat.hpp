@@ -6,9 +6,9 @@
 
 #include <imgui.h>
 
+#include "tactile/base/numeric/arithmetic_type.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/exception.hpp"
-#include "tactile/core/numeric/arithmetic_type.hpp"
 #include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
