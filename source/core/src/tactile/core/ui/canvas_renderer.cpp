@@ -17,6 +17,58 @@
 #include "tactile/core/util/lookup.hpp"
 
 namespace tactile::ui {
+inline namespace renderer {
+
+using VisibleRegion = CanvasRenderer::VisibleRegion;
+using VisibleTileRegion = CanvasRenderer::VisibleTileRegion;
+using RenderBounds = CanvasRenderer::RenderBounds;
+
+[[nodiscard]]
+auto _get_visible_region(const Float2& viewport_pos,
+                         const Float2& window_size) -> VisibleRegion
+{
+  VisibleRegion region {};
+
+  region.begin = viewport_pos;
+  region.end = viewport_pos + window_size;
+
+  return region;
+}
+
+[[nodiscard]]
+auto _get_visible_tiles(const VisibleRegion& visible_region,
+                        const Float2& tile_size) -> VisibleTileRegion
+{
+  VisibleTileRegion visible_tiles {};
+
+  const auto top_left = visible_region.begin / tile_size;
+  const auto bottom_right = ceil(visible_region.end / tile_size);
+
+  visible_tiles.begin.row = static_cast<ssize>(top_left.y());
+  visible_tiles.begin.col = static_cast<ssize>(top_left.x());
+
+  visible_tiles.end.row = static_cast<ssize>(bottom_right.y());
+  visible_tiles.end.col = static_cast<ssize>(bottom_right.x());
+
+  return visible_tiles;
+}
+
+[[nodiscard]]
+auto _get_render_bounds(const VisibleTileRegion& tiles,
+                        const MatrixExtent& extent) -> RenderBounds
+{
+  RenderBounds bounds {};
+
+  bounds.begin.row = std::clamp(tiles.begin.row, ssize {0}, extent.rows - 1);
+  bounds.begin.col = std::clamp(tiles.begin.col, ssize {0}, extent.cols - 1);
+
+  bounds.end.row = std::clamp(tiles.end.row, bounds.begin.row, extent.rows);
+  bounds.end.col = std::clamp(tiles.end.col, bounds.begin.col, extent.cols);
+
+  return bounds;
+}
+
+}  // namespace renderer
 
 CanvasRenderer::CanvasRenderer(const Window& window,
                                const MatrixExtent& extent,
@@ -28,9 +80,9 @@ CanvasRenderer::CanvasRenderer(const Window& window,
     mCanvasTileSize {vec_cast<Float2>(tile_size) * viewport.scale},
     mWindowTL {window.get_pos()},
     mWindowBR {mWindowTL + window.get_size()},
-    mVisibleRegion {_compute_visible_region()},
-    mVisibleTiles {_compute_visible_tiles()},
-    mRenderBounds {_compute_render_bounds()}
+    mVisibleRegion {_get_visible_region(mViewportPos, mWindowBR - mWindowTL)},
+    mVisibleTiles {_get_visible_tiles(mVisibleRegion, mCanvasTileSize)},
+    mRenderBounds {_get_render_bounds(mVisibleTiles, mExtent)}
 {
   auto* draw_list = ImGui::GetWindowDrawList();
   draw_list->PushClipRect(to_imvec2(mWindowTL), to_imvec2(mWindowBR), false);
@@ -152,50 +204,6 @@ auto CanvasRenderer::to_screen_pos(const Float2& world_pos) const noexcept
     -> Float2
 {
   return world_pos - mViewportPos + mWindowTL;
-}
-
-auto CanvasRenderer::_compute_visible_region() const -> VisibleRegion
-{
-  VisibleRegion region {};
-
-  const auto window_size = mWindowBR - mWindowTL;
-  region.begin = mViewportPos;
-  region.end = mViewportPos + window_size;
-
-  return region;
-}
-
-auto CanvasRenderer::_compute_visible_tiles() const -> VisibleTileRegion
-{
-  VisibleTileRegion visible_tiles {};
-
-  const auto& region = mVisibleRegion;
-
-  const auto tl = region.begin / mCanvasTileSize;
-  const auto br = ceil(region.end / mCanvasTileSize);
-
-  visible_tiles.begin.row = static_cast<ssize>(tl.y());
-  visible_tiles.begin.col = static_cast<ssize>(tl.x());
-
-  visible_tiles.end.row = static_cast<ssize>(br.y());
-  visible_tiles.end.col = static_cast<ssize>(br.x());
-
-  return visible_tiles;
-}
-
-auto CanvasRenderer::_compute_render_bounds() const -> RenderBounds
-{
-  RenderBounds bounds {};
-
-  const auto& visible = mVisibleTiles;
-
-  bounds.begin.row = std::clamp(visible.begin.row, ssize {0}, mExtent.rows);
-  bounds.begin.col = std::clamp(visible.begin.col, ssize {0}, mExtent.cols);
-
-  bounds.end.row = std::clamp(visible.end.row, bounds.begin.row, mExtent.rows);
-  bounds.end.col = std::clamp(visible.end.col, bounds.begin.col, mExtent.cols);
-
-  return bounds;
 }
 
 }  // namespace tactile::ui

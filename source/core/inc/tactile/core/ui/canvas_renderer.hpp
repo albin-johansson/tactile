@@ -168,18 +168,14 @@ class CanvasRenderer final
   /** The bottom-right window corner position (absolute coords). */
   Float2 mWindowBR;
 
+  /** The region visible via the current viewport. */
   VisibleRegion mVisibleRegion;
+
+  /** The tile region visible via the current viewport. */
   VisibleTileRegion mVisibleTiles;
+
+  /** The content tile positions that are within the visible region. */
   RenderBounds mRenderBounds;
-
-  [[nodiscard]]
-  auto _compute_visible_region() const -> VisibleRegion;
-
-  [[nodiscard]]
-  auto _compute_visible_tiles() const -> VisibleTileRegion;
-
-  [[nodiscard]]
-  auto _compute_render_bounds() const -> RenderBounds;
 };
 
 /// \}
