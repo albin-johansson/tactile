@@ -5,6 +5,7 @@
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/layer/tile_matrix.hpp"
 #include "tactile/core/util/matrix_extent.hpp"
 #include "tactile/core/util/matrix_index.hpp"
 
@@ -12,8 +13,10 @@ namespace tactile {
 
 /**
  * Represents a densely populated two-dimensional grid of tile identifiers.
+ *
+ * \ingroup Layer
  */
-class DenseTileMatrix final
+class DenseTileMatrix final : public ITileMatrix
 {
  public:
   TACTILE_DEFAULT_COPY(DenseTileMatrix);
@@ -33,67 +36,21 @@ class DenseTileMatrix final
 
   ~DenseTileMatrix() noexcept = default;
 
-  /**
-   * Changes the extent of the matrix.
-   *
-   * \param new_extent The new extent.
-   */
-  void resize(const MatrixExtent& new_extent);
+  void resize(const MatrixExtent& new_extent) override;
 
-  /**
-   * Returns the tile identifier at a given index.
-   *
-   * \warning
-   * This function performs no bounds checking.
-   *
-   * \pre The provided index must be valid.
-   *
-   * \param index The index of the desired tile.
-   *
-   * \return
-   * A tile identifier.
-   */
-  auto operator[](MatrixIndex index) noexcept -> TileID&;
+  auto operator[](const MatrixIndex& index) noexcept -> TileID& override;
 
-  /**
-   * Returns the tile identifier at a given index.
-   *
-   * \param index The index of the desired tile.
-   *
-   * \return
-   * A tile identifier.
-   *
-   * \throw Exception if the index is invalid.
-   */
   [[nodiscard]]
-  auto at(MatrixIndex index) -> TileID;
+  auto at(const MatrixIndex& index) -> TileID override;
 
-  /**
-   * \copydoc at
-   */
   [[nodiscard]]
-  auto at(MatrixIndex index) const -> const TileID&;
+  auto at(const MatrixIndex& index) const -> TileID override;
 
-  /**
-   * Indicates whether an index is valid, i.e., whether it refers to a tile in
-   * the matrix.
-   *
-   * \param index The index that will be checked.
-   *
-   * \return
-   * True if the index is valid; false otherwise.
-   */
   [[nodiscard]]
-  auto is_valid(const MatrixIndex& index) const noexcept -> bool;
+  auto is_valid(const MatrixIndex& index) const noexcept -> bool override;
 
-  /**
-   * Returns the current extent of the matrix.
-   *
-   * \return
-   * A matrix extent.
-   */
   [[nodiscard]]
-  auto get_extent() const noexcept -> const MatrixExtent&;
+  auto get_extent() const noexcept -> const MatrixExtent& override;
 
   [[nodiscard]]
   auto operator==(const DenseTileMatrix&) const -> bool = default;

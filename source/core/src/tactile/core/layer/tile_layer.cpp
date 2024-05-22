@@ -3,8 +3,10 @@
 #include "tactile/core/layer/tile_layer.hpp"
 
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/layer.hpp"
+#include "tactile/core/log/logger.hpp"
 #include "tactile/core/meta/meta.hpp"
 
 namespace tactile {
@@ -33,21 +35,18 @@ void _copy_tile_matrix(const TileMatrix1& from, TileMatrix2& to)
 
 auto is_tile_layer(const Registry& registry, const EntityID entity) -> bool
 {
-  return registry.has<CMeta>(entity) &&       //
-         registry.has<CLayer>(entity) &&      //
-         registry.has<CTileLayer>(entity) &&  //
-         (registry.has<CDenseTileLayer>(entity) ||
-          registry.has<CSparseTileLayer>(entity));
+  return registry.has<CMeta>(entity) &&   //
+         registry.has<CLayer>(entity) &&  //
+         registry.has<CTileLayer>(entity);
 }
 
 auto make_tile_layer(Registry& registry, const MatrixExtent& extent) -> EntityID
 {
   const auto entity = make_unspecialized_layer(registry);
 
-  registry.add<CTileLayer>(entity);
-
-  auto& dense = registry.add<CDenseTileLayer>(entity);
-  dense.tiles.resize(extent);
+  auto& tile_layer = registry.add<CTileLayer>(entity);
+  auto& tiles = tile_layer.tiles.emplace<DenseTileMatrix>();
+  tiles.resize(extent);
 
   TACTILE_ASSERT(is_tile_layer(registry, entity));
   return entity;
@@ -62,13 +61,13 @@ void destroy_tile_layer(Registry& registry, const EntityID layer_entity)
 void to_dense_tile_layer(Registry& registry, const EntityID layer_entity)
 {
   TACTILE_ASSERT(is_tile_layer(registry, layer_entity));
+  auto& tile_layer = registry.get<CTileLayer>(layer_entity);
 
-  const auto sparse_tile_layer =
-      registry.detach<CSparseTileLayer>(layer_entity);
-
-  if (sparse_tile_layer.has_value()) {
-    auto& dense_tile_layer = registry.add<CDenseTileLayer>(layer_entity);
-    _copy_tile_matrix(sparse_tile_layer->tiles, dense_tile_layer.tiles);
+  if (const auto* sparse_tiles =
+          std::get_if<SparseTileMatrix>(&tile_layer.tiles)) {
+    DenseTileMatrix dense_tiles {};
+    _copy_tile_matrix(*sparse_tiles, dense_tiles);
+    tile_layer.tiles.emplace<DenseTileMatrix>(std::move(dense_tiles));
   }
 
   TACTILE_ASSERT(is_tile_layer(registry, layer_entity));
@@ -77,12 +76,13 @@ void to_dense_tile_layer(Registry& registry, const EntityID layer_entity)
 void to_sparse_tile_layer(Registry& registry, const EntityID layer_entity)
 {
   TACTILE_ASSERT(is_tile_layer(registry, layer_entity));
+  auto& tile_layer = registry.get<CTileLayer>(layer_entity);
 
-  const auto dense_tile_layer = registry.detach<CDenseTileLayer>(layer_entity);
-
-  if (dense_tile_layer.has_value()) {
-    auto& sparse_tile_layer = registry.add<CSparseTileLayer>(layer_entity);
-    _copy_tile_matrix(dense_tile_layer->tiles, sparse_tile_layer.tiles);
+  if (const auto* dense_tiles =
+          std::get_if<DenseTileMatrix>(&tile_layer.tiles)) {
+    SparseTileMatrix sparse_tiles {};
+    _copy_tile_matrix(*dense_tiles, sparse_tiles);
+    tile_layer.tiles.emplace<SparseTileMatrix>(std::move(sparse_tiles));
   }
 
   TACTILE_ASSERT(is_tile_layer(registry, layer_entity));

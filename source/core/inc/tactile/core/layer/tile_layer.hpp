@@ -2,11 +2,13 @@
 
 #pragma once
 
+#include "tactile/base/container/variant.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/layer/dense_tile_matrix.hpp"
 #include "tactile/core/layer/sparse_tile_matrix.hpp"
 #include "tactile/core/util/matrix_extent.hpp"
+#include "tactile/core/util/matrix_index.hpp"
 
 namespace tactile {
 
@@ -19,26 +21,9 @@ class Registry;
  * Tag component for tile layers.
  */
 struct CTileLayer final : CTag
-{};
-
-/**
- * A component used by tile layers that feature densely packed tile data.
- */
-struct CDenseTileLayer final
 {
-  TACTILE_DEFAULT_ALL(CDenseTileLayer);
-
-  DenseTileMatrix tiles;
-};
-
-/**
- * A component used by tile layers that feature sparsely packed tile data.
- */
-struct CSparseTileLayer final
-{
-  TACTILE_DEFAULT_ALL(CSparseTileLayer);
-
-  SparseTileMatrix tiles;
+  /** The associated tile data. */
+  Variant<DenseTileMatrix, SparseTileMatrix> tiles;
 };
 
 /**
@@ -48,8 +33,7 @@ struct CSparseTileLayer final
  * Tile layer entities feature the following components. \n
  * - \c CMeta \n
  * - \c CLayer \n
- * - \c CTileLayer \n
- * - Either \c CDenseTileLayer or \c CSparseTileLayer
+ * - \c CTileLayer
  *
  * \param registry The associated registry.
  * \param entity   The entity to check.

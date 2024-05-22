@@ -94,7 +94,7 @@ void DenseTileMatrix::_set_column_count(const MatrixExtent::value_type cols)
   }
 }
 
-auto DenseTileMatrix::at(const MatrixIndex index) -> TileID
+auto DenseTileMatrix::at(const MatrixIndex& index) -> TileID
 {
   if (!is_valid(index)) [[unlikely]] {
     throw Exception {"bad matrix index"};
@@ -103,7 +103,7 @@ auto DenseTileMatrix::at(const MatrixIndex index) -> TileID
   return mRows[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
 }
 
-auto DenseTileMatrix::at(const MatrixIndex index) const -> const TileID&
+auto DenseTileMatrix::at(const MatrixIndex& index) const -> TileID
 {
   if (!is_valid(index)) [[unlikely]] {
     throw Exception {"bad matrix index"};
@@ -112,7 +112,7 @@ auto DenseTileMatrix::at(const MatrixIndex index) const -> const TileID&
   return mRows[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
 }
 
-auto DenseTileMatrix::operator[](const MatrixIndex index) noexcept -> TileID&
+auto DenseTileMatrix::operator[](const MatrixIndex& index) noexcept -> TileID&
 {
   TACTILE_ASSERT_MSG(index.row >= 0, "negative row index");
   TACTILE_ASSERT_MSG(index.col >= 0, "negative column index");

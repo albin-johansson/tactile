@@ -9,8 +9,7 @@
 namespace tactile {
 inline namespace tile_matrix_test {
 
-template <typename MatrixType>
-void _validate_tiles(const MatrixType& tile_matrix,
+void _validate_tiles(const ITileMatrix& tile_matrix,
                      const MatrixExtent& expected_extent)
 {
   EXPECT_EQ(tile_matrix.get_extent(), expected_extent);

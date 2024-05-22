@@ -19,7 +19,7 @@ void SparseTileMatrix::resize(const MatrixExtent& new_extent)
                 [this](const auto& pair) { return !is_valid(pair.first); });
 }
 
-auto SparseTileMatrix::at(const MatrixIndex index) -> TileID
+auto SparseTileMatrix::at(const MatrixIndex& index) -> TileID
 {
   if (!is_valid(index)) [[unlikely]] {
     throw Exception {"bad matrix index"};
@@ -32,7 +32,7 @@ auto SparseTileMatrix::at(const MatrixIndex index) -> TileID
   return kEmptyTile;
 }
 
-auto SparseTileMatrix::at(const MatrixIndex index) const -> TileID
+auto SparseTileMatrix::at(const MatrixIndex& index) const -> TileID
 {
   if (!is_valid(index)) [[unlikely]] {
     throw Exception {"bad matrix index"};
@@ -45,7 +45,7 @@ auto SparseTileMatrix::at(const MatrixIndex index) const -> TileID
   return kEmptyTile;
 }
 
-auto SparseTileMatrix::operator[](const MatrixIndex index) -> TileID&
+auto SparseTileMatrix::operator[](const MatrixIndex& index) -> TileID&
 {
   TACTILE_ASSERT(is_valid(index));
   return mTiles[index];

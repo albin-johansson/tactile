@@ -98,10 +98,8 @@ TEST_F(GroupLayerTest, DestroyGroupLayerWithStoredLayers)
   EXPECT_EQ(mRegistry.count<CLayer>(), 6);
   EXPECT_EQ(mRegistry.count<CGroupLayer>(), 2);
   EXPECT_EQ(mRegistry.count<CTileLayer>(), 3);
-  EXPECT_EQ(mRegistry.count<CDenseTileLayer>(), 3);
-  EXPECT_EQ(mRegistry.count<CSparseTileLayer>(), 0);
   EXPECT_EQ(mRegistry.count<CObjectLayer>(), 1);
-  EXPECT_EQ(mRegistry.count(), 21);
+  EXPECT_EQ(mRegistry.count(), 18);
 
   destroy_group_layer(mRegistry, group_layer_entity);
 
@@ -110,8 +108,6 @@ TEST_F(GroupLayerTest, DestroyGroupLayerWithStoredLayers)
   EXPECT_EQ(mRegistry.count<CLayer>(), 0);
   EXPECT_EQ(mRegistry.count<CGroupLayer>(), 0);
   EXPECT_EQ(mRegistry.count<CTileLayer>(), 0);
-  EXPECT_EQ(mRegistry.count<CDenseTileLayer>(), 0);
-  EXPECT_EQ(mRegistry.count<CSparseTileLayer>(), 0);
   EXPECT_EQ(mRegistry.count<CObjectLayer>(), 0);
   EXPECT_EQ(mRegistry.count(), 0);
 }
