@@ -67,7 +67,7 @@ auto to_native_string(const StringView str) -> Result<NativeString>
   }
 
   const auto* input_data = str.data();
-  const auto input_size = narrow_cast<int>(str.size());
+  const auto input_size = saturate_cast<int>(str.size());
 
   // Figure out the required size of the converted string.
   const auto wide_char_count = MultiByteToWideChar(CP_UTF8,
@@ -108,7 +108,7 @@ auto from_native_string(const NativeStringView str) -> Result<String>
   }
 
   const auto* input_data = str.data();
-  const auto input_size = narrow_cast<int>(str.size());
+  const auto input_size = saturate_cast<int>(str.size());
 
   // Figure out the required size of the converted string.
   const auto char_count = WideCharToMultiByte(CP_UTF8,
