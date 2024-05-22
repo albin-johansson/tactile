@@ -38,7 +38,8 @@ jobs:
                            autoconf-archive \
                            autopoint \
                            gperf \
-                           python3-jinja2
+                           python3-jinja2 \
+                           mold
 
       - name: Use GCC 14
         run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14
@@ -89,6 +90,8 @@ jobs:
           mkdir build && cd build
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
+                   -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=mold" \
+                   -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=mold" \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_BUILD_TESTS=ON \
                    -DTACTILE_BUILD_OPENGL_RENDERER=ON \
