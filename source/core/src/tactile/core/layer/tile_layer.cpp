@@ -3,17 +3,14 @@
 #include "tactile/core/layer/tile_layer.hpp"
 
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/layer.hpp"
-#include "tactile/core/log/logger.hpp"
 #include "tactile/core/meta/meta.hpp"
 
 namespace tactile {
 inline namespace tile_layer {
 
-template <typename TileMatrix1, typename TileMatrix2>
-void _copy_tile_matrix(const TileMatrix1& from, TileMatrix2& to)
+void _copy_tile_matrix(const ITileMatrix& from, ITileMatrix& to)
 {
   const auto extent = from.get_extent();
   to.resize(extent);
@@ -86,6 +83,34 @@ void to_sparse_tile_layer(Registry& registry, const EntityID layer_entity)
   }
 
   TACTILE_ASSERT(is_tile_layer(registry, layer_entity));
+}
+
+auto get_tile_layer_data(Registry& registry,
+                         const EntityID layer_entity) -> ITileMatrix&
+{
+  TACTILE_ASSERT(is_tile_layer(registry, layer_entity));
+  auto& tile_layer = registry.get<CTileLayer>(layer_entity);
+
+  if (std::holds_alternative<DenseTileMatrix>(tile_layer.tiles)) {
+    return std::get<DenseTileMatrix>(tile_layer.tiles);
+  }
+
+  TACTILE_ASSERT(std::holds_alternative<SparseTileMatrix>(tile_layer.tiles));
+  return std::get<SparseTileMatrix>(tile_layer.tiles);
+}
+
+auto get_tile_layer_data(const Registry& registry,
+                         const EntityID layer_entity) -> const ITileMatrix&
+{
+  TACTILE_ASSERT(is_tile_layer(registry, layer_entity));
+  const auto& tile_layer = registry.get<CTileLayer>(layer_entity);
+
+  if (std::holds_alternative<DenseTileMatrix>(tile_layer.tiles)) {
+    return std::get<DenseTileMatrix>(tile_layer.tiles);
+  }
+
+  TACTILE_ASSERT(holds_alternative<SparseTileMatrix>(tile_layer.tiles));
+  return std::get<SparseTileMatrix>(tile_layer.tiles);
 }
 
 }  // namespace tactile

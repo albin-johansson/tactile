@@ -2,6 +2,7 @@
 
 #include "tactile/core/layer/tile_layer.hpp"
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "tactile/core/entity/registry.hpp"
@@ -10,6 +11,8 @@
 #include "tactile/core/meta/meta.hpp"
 
 namespace tactile {
+
+using testing::Const;
 
 class TileLayerTest : public testing::Test
 {
@@ -129,6 +132,27 @@ TEST_F(TileLayerTest, DenseSparseConversion)
     EXPECT_EQ(tiles.at(MatrixIndex {0, 1}), TileID {73});
     EXPECT_EQ(tiles.at(MatrixIndex {3, 2}), TileID {99});
     EXPECT_EQ(tiles.at(MatrixIndex {5, 3}), TileID {36});
+  }
+}
+
+/// \trace tactile::get_tile_layer_data
+TEST_F(TileLayerTest, GetTileLayerData)
+{
+  const MatrixExtent extent {8, 7};
+  const auto layer_entity = make_tile_layer(mRegistry, extent);
+
+  auto& tiles = get_tile_layer_data(mRegistry, layer_entity);
+  const auto& const_tiles = get_tile_layer_data(Const(mRegistry), layer_entity);
+
+  EXPECT_EQ(tiles.get_extent(), extent);
+  EXPECT_EQ(const_tiles.get_extent(), extent);
+
+  for (MatrixExtent::value_type r = 0; r < extent.rows; ++r) {
+    for (MatrixExtent::value_type c = 0; c < extent.cols; ++c) {
+      const MatrixIndex index {r, c};
+      tiles[index] = TileID {7};
+      EXPECT_EQ(tiles.at(index), TileID {7});
+    }
   }
 }
 

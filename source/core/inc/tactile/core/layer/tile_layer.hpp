@@ -93,6 +93,28 @@ void to_dense_tile_layer(Registry& registry, EntityID layer_entity);
  */
 void to_sparse_tile_layer(Registry& registry, EntityID layer_entity);
 
+/**
+ * Returns the tile matrix with the tile data for a specified tile layer.
+ *
+ * \pre The specified entity must be a tile layer.
+ *
+ * \param registry     The associated registry.
+ * \param layer_entity The target tile layer entity.
+ *
+ * \return
+ * The associated tile matrix.
+ */
+[[nodiscard]]
+auto get_tile_layer_data(Registry& registry,
+                         EntityID layer_entity) -> ITileMatrix&;
+
+/**
+ * \copydoc get_tile_layer_data()
+ */
+[[nodiscard]]
+auto get_tile_layer_data(const Registry& registry,
+                         EntityID layer_entity) -> const ITileMatrix&;
+
 /// \}
 
 }  // namespace tactile
