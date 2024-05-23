@@ -8,13 +8,11 @@
 #include <imgui.h>
 
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/color.hpp"
 #include "tactile/core/numeric/vec_common.hpp"
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/viewport.hpp"
-#include "tactile/core/util/lookup.hpp"
 
 namespace tactile::ui {
 inline namespace renderer {
@@ -177,7 +175,6 @@ void CanvasRenderer::draw_tile_outline(const Float2& world_pos,
   const auto tile_pos = tile_index * mCanvasTileSize;
   draw_rect(to_screen_pos(tile_pos), mCanvasTileSize, color);
 }
-
 
 auto CanvasRenderer::get_content_position() const noexcept -> Float2
 {

@@ -76,8 +76,8 @@ class CanvasRenderer final
    * Creates a renderer.
    *
    * \param window    The associated window.
-   * \param tile_size The logical tile size.
    * \param extent    The current extent of the content.
+   * \param tile_size The logical tile size.
    * \param viewport  The state of the viewport.
    */
   CanvasRenderer(const Window& window,
