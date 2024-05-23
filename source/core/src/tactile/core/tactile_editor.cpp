@@ -72,6 +72,8 @@ void TactileEditor::on_update()
     mLogDock.push(model, mEventDispatcher);
   }
 
+  mNewMapDialog.push(model, mEventDispatcher);
+
   ui::push_global_shortcuts(model, mEventDispatcher);
 }
 
