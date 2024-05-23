@@ -153,6 +153,7 @@ auto _get_menu_names() -> HashMap<StringView, StringID>
 auto _get_widget_names() -> HashMap<StringView, StringID>
 {
   return {
+    {"document_dock", StringID::kDocumentDock},
     {"layer_dock", StringID::kLayerDock},
     {"tileset_dock", StringID::kTilesetDock},
     {"property_dock", StringID::kPropertyDock},

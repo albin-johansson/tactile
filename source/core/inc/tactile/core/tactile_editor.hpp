@@ -8,6 +8,13 @@
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/model/settings.hpp"
+#include "tactile/core/ui/dock/component_dock.hpp"
+#include "tactile/core/ui/dock/dock_space.hpp"
+#include "tactile/core/ui/dock/document_dock.hpp"
+#include "tactile/core/ui/dock/layer_dock.hpp"
+#include "tactile/core/ui/dock/log_dock.hpp"
+#include "tactile/core/ui/dock/property_dock.hpp"
+#include "tactile/core/ui/dock/tileset_dock.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
 namespace tactile {
@@ -43,6 +50,13 @@ class TactileEditor final : public IEngineApp
   Maybe<ui::Language> mLanguage {};
   Maybe<Model> mModel {};
   EventDispatcher mEventDispatcher {};
+  ui::DockSpace mDockSpace {};
+  ui::DocumentDock mDocumentDock {};
+  ui::TilesetDock mTilesetDock {};
+  ui::LayerDock mLayerDock {};
+  ui::PropertyDock mPropertyDock {};
+  ui::ComponentDock mComponentDock {};
+  ui::LogDock mLogDock {};
 };
 
 }  // namespace tactile

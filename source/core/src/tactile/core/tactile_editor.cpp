@@ -5,6 +5,7 @@
 #include <utility>  // move, to_underlying
 
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/document/map_document.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
 #include "tactile/core/ui/shortcuts.hpp"
@@ -52,6 +53,23 @@ void TactileEditor::on_update()
   mEventDispatcher.update();
 
   const auto& model = *mModel;
+  const auto& language = model.get_language();
+  const auto* current_doc = model.get_current_document();
+  const auto* current_map_doc = dynamic_cast<const MapDocument*>(current_doc);
+
+  mDockSpace.update(language);
+  mDocumentDock.push(model, mEventDispatcher);
+
+  if (current_map_doc != nullptr) {
+    mTilesetDock.push(language, *current_map_doc, mEventDispatcher);
+    mLayerDock.update(language, *current_map_doc, mEventDispatcher);
+  }
+
+  if (current_doc != nullptr) {
+    mPropertyDock.push(language, *current_doc, mEventDispatcher);
+    mComponentDock.push(language, *current_doc, mEventDispatcher);
+    mLogDock.push(model, mEventDispatcher);
+  }
 
   ui::push_global_shortcuts(model, mEventDispatcher);
 }

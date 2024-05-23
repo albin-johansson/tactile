@@ -63,6 +63,7 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kHexagonal,
 
   // Window names.
+  kDocumentDock,
   kLayerDock,
   kTilesetDock,
   kPropertyDock,
