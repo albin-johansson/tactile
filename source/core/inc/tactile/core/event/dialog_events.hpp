@@ -7,6 +7,40 @@
 namespace tactile {
 
 /**
+ * Event for opening the map document creation dialog.
+ */
+struct ShowNewMapDialogEvent final
+{};
+
+/**
+ * Event for opening the map document loading dialog.
+ */
+struct ShowOpenMapDialogEvent final
+{};
+
+/**
+ * Event for opening the 'Save As' dialog.
+ */
+struct ShowSaveAsDialogEvent final
+{};
+
+/**
+ * Event for opening the component editor dialog.
+ *
+ * \ingroup Event
+ */
+struct ShowComponentEditorDialogEvent final
+{};
+
+/**
+ * Event for opening the settings dialog.
+ *
+ * \ingroup Event
+ */
+struct ShowSettingsDialogEvent final
+{};
+
+/**
  * Event for opening the "About Tactile" dialog.
  *
  * \ingroup Event

@@ -7,30 +7,15 @@
 
 namespace tactile {
 
-/// \addtogroup Event
-/// \{
-
-/**
- * Event for opening the map document creation dialog.
- */
-struct ShowNewMapDialogEvent final
-{};
-
-/**
- * Event for opening the map document loading dialog.
- */
-struct ShowOpenMapDialogEvent final
-{};
-
 /**
  * Event for creating new map documents.
+ *
+ * \ingroup Event
  */
 struct CreateMapEvent final
 {
   /** The requested map specification. */
   MapSpec spec;
 };
-
-/// \}
 
 }  // namespace tactile
