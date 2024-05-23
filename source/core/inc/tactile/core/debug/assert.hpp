@@ -14,12 +14,10 @@
 
 #if TACTILE_ENABLE_ASSERTIONS
   #define TACTILE_ASSERT_MSG(Expr, Msg) \
-    (!!(Expr) ? ((void) 0)              \
-              : tactile::on_assertion_failed(#Expr, (Msg), __FILE__, __LINE__))
+    (static_cast<bool>(Expr)            \
+         ? ((void) 0)                   \
+         : tactile::on_assertion_failed(#Expr, (Msg), __FILE__, __LINE__))
   #define TACTILE_ASSERT(Expr) TACTILE_ASSERT_MSG(Expr, "?")
-#elif __has_cpp_attribute(assume)
-  #define TACTILE_ASSERT_MSG(Expr, Msg) [[assume(!!(Expr))]]
-  #define TACTILE_ASSERT(Expr) [[assume(!!(Expr))]]
 #else
   #define TACTILE_ASSERT_MSG(Expr, Msg) (void) 0
   #define TACTILE_ASSERT(Expr) (void) 0
@@ -31,8 +29,8 @@ namespace tactile {
  * Logs an error message and terminates the program.
  *
  * \details
- *    This function is called by the assert macros if an assertion fails, unless
- *    TACTILE_ENABLE_ASSERTIONS is defined as 0.
+ * This function is called by the assert macros if an assertion fails, unless
+ * \c TACTILE_ENABLE_ASSERTIONS is defined as 0.
  *
  * \param expr The assertion expression.
  * \param msg  The assertion description message.
@@ -40,6 +38,9 @@ namespace tactile {
  * \param line The file line number of the assertion.
  */
 [[noreturn]]
-void on_assertion_failed(const char* expr, const char* msg, const char* file, int line);
+void on_assertion_failed(const char* expr,
+                         const char* msg,
+                         const char* file,
+                         int line);
 
 }  // namespace tactile
