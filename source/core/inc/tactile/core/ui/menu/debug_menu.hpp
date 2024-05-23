@@ -24,6 +24,11 @@ class DebugMenu final
    * \param model The associated model.
    */
   void push(const Model& model);
+
+ private:
+  bool mShowDebugger {};
+  bool mShowDemo {};
+  bool mShowStyle {};
 };
 
 }  // namespace ui
