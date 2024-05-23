@@ -57,6 +57,7 @@ void TactileEditor::on_update()
   const auto* current_doc = model.get_current_document();
   const auto* current_map_doc = dynamic_cast<const MapDocument*>(current_doc);
 
+  mMenuBar.push(model, mEventDispatcher);
   mDockSpace.update(language);
   mDocumentDock.push(model, mEventDispatcher);
 

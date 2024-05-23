@@ -16,6 +16,7 @@
 #include "tactile/core/ui/dock/property_dock.hpp"
 #include "tactile/core/ui/dock/tileset_dock.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
+#include "tactile/core/ui/menu/menu_bar.hpp"
 
 namespace tactile {
 
@@ -50,6 +51,7 @@ class TactileEditor final : public IEngineApp
   Maybe<ui::Language> mLanguage {};
   Maybe<Model> mModel {};
   EventDispatcher mEventDispatcher {};
+  ui::MenuBar mMenuBar {};
   ui::DockSpace mDockSpace {};
   ui::DocumentDock mDocumentDock {};
   ui::TilesetDock mTilesetDock {};
