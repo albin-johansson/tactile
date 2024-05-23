@@ -27,6 +27,22 @@ struct SaveAsEvent final
 };
 
 /**
+ * Event for reopening the last closed file.
+ *
+ * \ingroup Event
+ */
+struct ReopenLastClosedFileEvent final
+{};
+
+/**
+ * Event for clearing the file history.
+ *
+ * \ingroup Event
+ */
+struct ClearFileHistoryEvent final
+{};
+
+/**
  * Event for closing the current document.
  *
  * \ingroup Event

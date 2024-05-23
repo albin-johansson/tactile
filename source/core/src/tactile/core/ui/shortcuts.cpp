@@ -4,9 +4,8 @@
 
 #include <imgui_internal.h>
 
+#include "tactile/core/event/dialog_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/file_events.hpp"
-#include "tactile/core/event/map_events.hpp"
 
 namespace tactile::ui {
 
@@ -18,7 +17,7 @@ void push_global_shortcuts(const Model& model, EventDispatcher& dispatcher)
     dispatcher.push<ShowNewMapDialogEvent>();
   }
 
-  if (ImGui::Shortcut(kOpenMapShortcut.chord,
+  if (ImGui::Shortcut(kOpenShortcut.chord,
                       ImGuiKeyOwner_Any,
                       ImGuiInputFlags_RouteGlobalLow)) {
     dispatcher.push<ShowOpenMapDialogEvent>();
