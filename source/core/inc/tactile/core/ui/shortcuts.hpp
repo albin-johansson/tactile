@@ -39,7 +39,7 @@ inline constexpr ShortcutInfo kCreateMapShortcut {
   TACTILE_SHORTCUT " + N",
 };
 
-inline constexpr ShortcutInfo kOpenMapShortcut {
+inline constexpr ShortcutInfo kOpenShortcut {
   ImGuiMod_Shortcut | ImGuiKey_O,
   TACTILE_SHORTCUT " + O",
 };
