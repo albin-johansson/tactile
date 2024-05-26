@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/numeric/vec.hpp"
@@ -110,6 +111,41 @@ class CanvasRenderer final
   static void fill_rect(const Float2& screen_pos,
                         const Float2& size,
                         const Color& color);
+
+  /**
+   * Renders an N-sided polygon.
+   *
+   * \param screen_pos    The center position of the polygon, in screen-space.
+   * \param radius        The radius of the polygon.
+   * \param color_mask    The ABGR line color mask.
+   * \param segment_count The number of sides (the "N" in N-gon).
+   * \param thickness     The line thickness.
+   * \param angle         The polygon rotation, in radians.
+   */
+  static void draw_ngon(const Float2& screen_pos,
+                        float radius,
+                        uint32 color_mask,
+                        int segment_count,
+                        float thickness = 1.0f,
+                        float angle = 0.0f);
+
+  /**
+   * Renders a hexagon.
+   *
+   * \details
+   * The rendered hexagon will feature an vertex immediately above the provided
+   * center point, as if rendered via \c draw_ngon() with an angle of Pi divided
+   * by two.
+   *
+   * \param screen_pos    The center position of the hexagon, in screen-space.
+   * \param radius        The radius of the hexagon.
+   * \param color_mask    The ABGR line color mask.
+   * \param thickness     The line thickness.
+   */
+  static void draw_hexagon(const Float2& screen_pos,
+                           float radius,
+                           uint32 color_mask,
+                           float thickness = 1.0f);
 
   /**
    * Clears the canvas with a given color.
