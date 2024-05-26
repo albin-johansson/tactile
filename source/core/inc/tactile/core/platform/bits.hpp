@@ -20,13 +20,13 @@ namespace tactile {
  * \param n      The index of the byte to read.
  *
  * \return
- *    The N-th byte.
+ * The N-th byte.
  */
 template <typename T>
 [[nodiscard]] auto nth_byte(const T& object, const usize n) noexcept -> uint8
 {
   TACTILE_ASSERT_MSG(n < sizeof(T), "invalid byte index");
-  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&object));
+  const auto* bytes = reinterpret_cast<const uint8*>(&object);
   return bytes[n];
 }
 
@@ -39,7 +39,7 @@ template <typename T>
 template <std::integral IntType, std::invocable<uint8> CallableType>
 void each_byte(const IntType value, const CallableType& callable)
 {
-  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
+  const auto* bytes = reinterpret_cast<const uint8*>(&value);
   for (usize idx = 0; idx < sizeof(IntType); ++idx) {
     callable(bytes[idx]);
   }
@@ -51,12 +51,14 @@ void each_byte(const IntType value, const CallableType& callable)
  * \param value The native integer value.
  *
  * \return
- *    A little endian integer value.
+ * A little endian integer value.
  */
 template <std::integral IntType>
-[[nodiscard]] constexpr auto to_little_endian(const IntType value) noexcept -> IntType
+[[nodiscard]] constexpr auto to_little_endian(const IntType value) noexcept
+    -> IntType
 {
-  return (std::endian::native == std::endian::little) ? value : std::byteswap(value);
+  return (std::endian::native == std::endian::little) ? value
+                                                      : std::byteswap(value);
 }
 
 }  // namespace tactile
