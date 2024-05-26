@@ -137,6 +137,13 @@ void center_next_widget(const Float2& size);
  */
 void prepare_for_vertically_centered_widgets(float count);
 
+/**
+ * Pushes a centered text label to the widget stack.
+ *
+ * \param text The label text.
+ */
+void push_centered_label(const char* text);
+
 /// \}
 
 }  // namespace tactile::ui

@@ -77,7 +77,7 @@ TooltipScope::~TooltipScope() noexcept
 
 auto get_widget_size(const char* text) -> Float2
 {
-  TACTILE_ASSERT(text);
+  TACTILE_ASSERT(text != nullptr);
   return to_float2(ImGui::CalcTextSize(text) +
                    (ImGui::GetStyle().FramePadding * 2.0f));
 }
@@ -105,6 +105,14 @@ void center_next_widget(const Float2& size)
 void prepare_for_vertically_centered_widgets(const float count)
 {
   center_next_widget_vertically(count * ImGui::GetFrameHeight());
+}
+
+void push_centered_label(const char* text)
+{
+  TACTILE_ASSERT(text != nullptr);
+  const auto text_size = ImGui::CalcTextSize(text);
+  center_next_widget_horizontally(text_size.x);
+  ImGui::TextUnformatted(text);
 }
 
 }  // namespace tactile::ui
