@@ -52,9 +52,6 @@ class DenseTileMatrix final : public ITileMatrix
   [[nodiscard]]
   auto get_extent() const noexcept -> const MatrixExtent& override;
 
-  [[nodiscard]]
-  auto operator==(const DenseTileMatrix&) const -> bool = default;
-
  private:
   MatrixExtent mExtent {0, 0};
   Vector<Vector<TileID>> mRows {};
