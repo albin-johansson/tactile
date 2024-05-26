@@ -188,7 +188,7 @@ void CanvasRenderer::draw_orthogonal_grid(const Color& color) const
   auto& draw_list = get_draw_list();
 
   // Draw horizontal lines.
-  for (MatrixIndex::value_type r = 0; r < row_count + 1; ++r) {
+  for (MatrixIndex::value_type r = 0; r < row_count; ++r) {
     const auto row_offset = static_cast<float>(r) * tile_height;
     const auto line_y = begin_y + grid_offset_y + row_offset;
     draw_list.AddLine(ImVec2 {begin_x, line_y},
