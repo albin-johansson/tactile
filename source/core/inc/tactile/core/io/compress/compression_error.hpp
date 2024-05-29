@@ -9,8 +9,11 @@
 
 namespace tactile {
 
-/** Provides error codes for errors related to compression providers. */
-enum class CompressionError : int {  // NOLINT(*-enum-size)
+/**
+ * Provides error codes for errors related to compression providers.
+ */
+enum class CompressionError : int  // NOLINT(*-enum-size)
+{
   kBadInit,
   kBadCleanup,
   kBadState,
@@ -22,7 +25,7 @@ enum class CompressionError : int {  // NOLINT(*-enum-size)
  * Returns the error category for compression errors.
  *
  * \return
- *    An error category.
+ * An error category.
  */
 [[nodiscard]]
 auto get_compression_error_category() noexcept -> const ErrorCategory&;
@@ -32,11 +35,13 @@ auto get_compression_error_category() noexcept -> const ErrorCategory&;
  *
  * \param error An error code.
  *
- * \return An error code.
+ * \return
+ * An error code.
  */
 inline auto make_error(const CompressionError error) noexcept -> ErrorCode
 {
-  return ErrorCode {std::to_underlying(error), get_compression_error_category()};
+  return ErrorCode {std::to_underlying(error),
+                    get_compression_error_category()};
 }
 
 }  // namespace tactile

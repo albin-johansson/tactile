@@ -11,15 +11,15 @@ namespace tactile {
  * Throws an exception if the provided pointer is null, returns it if not.
  *
  * \note
- *    This function is particularly useful for use in constructor member initializer lists, as in
- *    the following example.
+ * This function is particularly useful for use in constructor member
+ * initializer lists, as in the following example.
  *
- *    \code{cpp}
- *    A::A(B* b, C* c)
- *      : _b{require_not_null(b)},
- *        _c{require_not_null(c)}
- *    {}
- *    \endcode
+ * \code{cpp}
+ * A::A(B* b, C* c)
+ *   : _b{require_not_null(b)},
+ *     _c{require_not_null(c)}
+ * {}
+ * \endcode
  *
  * \tparam PointerType A pointer-like type.
  *
@@ -27,11 +27,11 @@ namespace tactile {
  * \param error_message An error message used if the pointer is null.
  *
  * \return
- *    The provided pointer.
+ * The provided pointer.
  */
 template <typename PointerType>
 [[nodiscard]] auto require_not_null(PointerType ptr,
-                                    const char* error_message = "bad null pointer")
+                                    const char* error_message = "null pointer")
     -> PointerType
 {
   if (ptr == nullptr) [[unlikely]] {

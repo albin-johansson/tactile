@@ -12,10 +12,11 @@ namespace tactile {
  * Utility for importing and saving files.
  *
  * \details
- *    This class is a simple wrapper around the native-file-dialogs library,
- *    with some additional utilities for dealing with map and image files, etc.
+ * This class is a simple wrapper around the native-file-dialogs library, with
+ * some additional utilities for dealing with map and image files, etc.
  */
-class FileDialog final {
+class FileDialog final
+{
  public:
   TACTILE_STATIC_CLASS(FileDialog);
 
@@ -23,7 +24,7 @@ class FileDialog final {
    * Shows a file dialog that can be used for selecting folders.
    *
    * \return
-   *    The selected folder; or an error code if none was selected.
+   * The selected folder; or an error code if none was selected.
    */
   [[nodiscard]]
   static auto open_folder() -> Result<Path>;
@@ -32,7 +33,7 @@ class FileDialog final {
    * Shows a file dialog that can be used for selecting files.
    *
    * \return
-   *    The selected file; or an error code if none was selected.
+   * The selected file; or an error code if none was selected.
    */
   [[nodiscard]]
   static auto open_file() -> Result<Path>;
@@ -41,7 +42,7 @@ class FileDialog final {
    * Shows a file dialog that can be used for selecting map files.
    *
    * \return
-   *    The selected map file; or an error code if none was selected.
+   * The selected map file; or an error code if none was selected.
    */
   [[nodiscard]]
   static auto open_map() -> Result<Path>;
@@ -50,7 +51,7 @@ class FileDialog final {
    * Shows a file dialog that can be used for selecting image files.
    *
    * \return
-   *    The selected image file; or an error code if none was selected.
+   * The selected image file; or an error code if none was selected.
    */
   [[nodiscard]]
   static auto open_image() -> Result<Path>;
@@ -59,7 +60,7 @@ class FileDialog final {
    * Shows a file dialog that can be used for selecting map file paths.
    *
    * \return
-   *    The chosen map file path; or an error code if none was picked.
+   * The chosen map file path; or an error code if none was picked.
    */
   [[nodiscard]]
   static auto save_map() -> Result<Path>;
@@ -68,7 +69,7 @@ class FileDialog final {
    * Shows a file dialog that can be used for selecting image file paths.
    *
    * \return
-   *    The chosen image file path; or an error code if none was picked.
+   * The chosen image file path; or an error code if none was picked.
    */
   [[nodiscard]]
   static auto save_image() -> Result<Path>;

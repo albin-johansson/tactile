@@ -11,7 +11,7 @@ namespace tactile {
  * Captures and returns the current call stack.
  *
  * \return
- *    The call stack encoded in a string.
+ * The call stack encoded in a string.
  */
 [[nodiscard]]
 TACTILE_NOINLINE auto get_stacktrace() -> String;

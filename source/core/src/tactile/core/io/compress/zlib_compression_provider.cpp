@@ -22,11 +22,14 @@ using z_byte = ::Bytef;
 using z_uint = ::uInt;
 using z_ulong = ::uLong;
 
-/** Type used for local "staging" buffers, used to batch data processing. */
+/**
+ * Type used for local "staging" buffers, used to batch data processing.
+ */
 using StagingBuffer = Array<z_byte, 16'384>;
 
-/** Provides callbacks that controls the behavior of stream processing
- * functions. */
+/**
+ * Provides callbacks that controls the behavior of stream processing functions.
+ */
 struct ZlibCallbacks final
 {
   using init_stream_func = int (*)(z_stream*);
@@ -47,7 +50,7 @@ struct ZlibCallbacks final
  * \param[out] stream         The resulting stream.
  *
  * \return
- *    Nothing if successful; an error code otherwise.
+ * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
 auto _init_stream(const ZlibCallbacks& callbacks,
@@ -80,7 +83,7 @@ auto _init_stream(const ZlibCallbacks& callbacks,
  * \param[out] output_buffer  The target output buffer.
  *
  * \return
- *    Nothing if successful; an error code otherwise.
+ * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
 auto _process_stream(const ZlibCallbacks& callbacks,
@@ -127,7 +130,7 @@ auto _process_stream(const ZlibCallbacks& callbacks,
  * \param stream    The associated stream.
  *
  * \return
- *    Nothing if successful; an error code otherwise.
+ * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
 auto _end_stream(const ZlibCallbacks& callbacks,

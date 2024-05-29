@@ -12,10 +12,10 @@ namespace tactile {
  * Provides identifiers for save format implementations.
  *
  * \note
- *    The enumerator values must be kept in sync with the
- *    associated Protobuf enum.
+ * The enumerator values must be kept in sync with the associated Protobuf enum.
  */
-enum class SaveFormatId : uint8 {
+enum class SaveFormatId : uint8
+{
   kTactileYaml = 0,  ///< The native YAML save format.
   kTiledJson = 1,    ///< The Tiled JSON (aka TMJ) save format.
   kTiledXml = 2,     ///< The Tiled XML (aka TMX/TSX) save format.
@@ -26,12 +26,12 @@ enum class SaveFormatId : uint8 {
  * Returns a language-agnostic identifier for a save format identifier.
  *
  * \details
- *    The returned string is guaranteed to be null-terminated.
+ * The returned string is guaranteed to be null-terminated.
  *
  * \param format The save format to query.
  *
  * \return
- *    A string identifier.
+ * A string identifier.
  */
 [[nodiscard]]
 auto to_string(SaveFormatId format) -> StringView;
@@ -40,13 +40,13 @@ auto to_string(SaveFormatId format) -> StringView;
  * Returns a valid file extension for a given save format.
  *
  * \note
- *    Several file extensions are valid for most formats. For example, \c ".yml" and
- *    \c ".yaml" for the Tactile YAML format.
+ * Several file extensions are valid for most formats. For example, \c ".yml"
+ * and \c ".yaml" for the Tactile YAML format.
  *
  * \param format The save format to consider.
  *
  * \return
- *    A file extension string, on the form \c ".foo".
+ * A file extension string, on the form \c ".foo".
  */
 [[nodiscard]]
 auto get_file_extension(SaveFormatId format) -> String;
@@ -57,7 +57,7 @@ auto get_file_extension(SaveFormatId format) -> String;
  * \param path The file path to check.
  *
  * \return
- *    True if the file extension is valid; false otherwise.
+ * True if the file extension is valid; false otherwise.
  */
 [[nodiscard]]
 auto has_valid_tactile_yaml_extension(const Path& path) -> bool;
@@ -68,7 +68,7 @@ auto has_valid_tactile_yaml_extension(const Path& path) -> bool;
  * \param path The file path to check.
  *
  * \return
- *    True if the file extension is valid; false otherwise.
+ * True if the file extension is valid; false otherwise.
  */
 [[nodiscard]]
 auto has_valid_tiled_json_extension(const Path& path) -> bool;
@@ -79,7 +79,7 @@ auto has_valid_tiled_json_extension(const Path& path) -> bool;
  * \param path The file path to check.
  *
  * \return
- *    True if the file extension is valid; false otherwise.
+ * True if the file extension is valid; false otherwise.
  */
 [[nodiscard]]
 auto has_valid_tiled_xml_extension(const Path& path) -> bool;

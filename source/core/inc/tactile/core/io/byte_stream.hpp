@@ -24,7 +24,7 @@ using ByteStream = Vector<uint8>;
  * \param container A contiguous container.
  *
  * \return
- *    A byte span.
+ * A byte span.
  */
 template <std::ranges::contiguous_range T>
 [[nodiscard]] constexpr auto make_byte_span(const T& container) -> ByteSpan

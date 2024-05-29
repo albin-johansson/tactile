@@ -7,9 +7,11 @@
 namespace tactile {
 
 /**
- * Interface for applications that can may be injected into an \c Engine instance.
+ * Interface for applications that can may be injected into an \c Engine
+ * instance.
  */
-class IEngineApp {
+class IEngineApp
+{
  public:
   TACTILE_INTERFACE_CLASS(IEngineApp);
 
@@ -32,7 +34,7 @@ class IEngineApp {
    * Called whenever the display framebuffer scale changes.
    *
    * \note
-   *    This function is always called outside of an active frame.
+   * This function is always called outside of an active frame.
    *
    * \param framebuffer_scale The new framebuffer scale.
    */

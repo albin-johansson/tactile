@@ -44,15 +44,15 @@ struct CObject final
  * Indicates whether an entity represents an object.
  *
  * \details
- *    Object entities feature the following components: \n
- *    - \c CMeta \n
- *    - \c CObject
+ * Object entities feature the following components: \n
+ * - \c CMeta \n
+ * - \c CObject
  *
  * \param registry The associated registry.
  * \param entity   The entity to check.
  *
  * \return
- *    True if the entity is an object; false otherwise.
+ * True if the entity is an object; false otherwise.
  */
 [[nodiscard]]
 auto is_object(const Registry& registry, EntityID entity) -> bool;
@@ -65,7 +65,7 @@ auto is_object(const Registry& registry, EntityID entity) -> bool;
  * \param type     The object type.
  *
  * \return
- *    An object entity.
+ * An object entity.
  */
 [[nodiscard]]
 auto make_object(Registry& registry, ObjectID id, ObjectType type) -> EntityID;

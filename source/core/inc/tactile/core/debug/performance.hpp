@@ -21,31 +21,35 @@ namespace tactile {
  * RAII type used to measure the duration of scope.
  *
  * \details
- *    All required to use this class to profile a scope is to construct a profiler
- *    instance at the start of the scope (or wherever you want to start the
- *    measurement). The profiler destructor will subsequently log the duration
- *    of the scope.
+ * All required to use this class to profile a scope is to construct a profiler
+ * instance at the start of the scope (or wherever you want to start the
+ * measurement). The profiler destructor will subsequently log the duration
+ * of the scope.
  *
- *    \code{cpp}
- *    {
- *      const ScopeProfiler profiler {"foo::bar"};
+ * \code{cpp}
+ * {
+ *   const ScopeProfiler profiler {"foo::bar"};
  *
- *      // ...
+ *   // ...
  *
- *    } // Logs the duration of the scope
- *    \endcode
+ * } // Logs the duration of the scope
+ * \endcode
  */
-class ScopeProfiler final {
+class ScopeProfiler final
+{
  public:
   /**
    * Starts measuring the scope.
    *
-   * \param description An arbitrary description of the scope, included in the log output.
+   * \param description An arbitrary description of the scope, included in the
+   *                    log output.
    */
   [[nodiscard]]
   explicit ScopeProfiler(const char* description) noexcept;
 
-  /** Ends the measurement and logs the result. */
+  /**
+   * Ends the measurement and logs the result.
+   */
   ~ScopeProfiler() noexcept;
 
   TACTILE_DELETE_COPY(ScopeProfiler);

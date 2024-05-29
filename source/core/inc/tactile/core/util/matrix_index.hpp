@@ -37,7 +37,7 @@ struct MatrixIndex final
  * \param index  The matrix index to emit.
  *
  * \return
- *    The provided stream.
+ * The provided stream.
  */
 auto operator<<(std::ostream& stream,
                 const MatrixIndex& index) -> std::ostream&;

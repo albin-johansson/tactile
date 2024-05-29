@@ -25,7 +25,7 @@ class EventDispatcher final
    * Pushes an event to the event queue.
    *
    * \details
-   *    Use the \c update function to issue enqueued events.
+   * Use the \c update function to issue enqueued events.
    *
    * \tparam Event The event type.
    * \tparam Args  The event argument types.
@@ -68,7 +68,8 @@ class EventDispatcher final
   template <typename Event, auto Slot, typename... Args>
   void bind(Args&&... args)
   {
-    mDispatcher.sink<Event>().template connect<Slot>(std::forward<Args>(args)...);
+    mDispatcher.sink<Event>().template connect<Slot>(
+        std::forward<Args>(args)...);
   }
 
  private:

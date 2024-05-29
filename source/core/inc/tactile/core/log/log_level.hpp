@@ -10,9 +10,10 @@ namespace tactile {
  * The supported log level categories.
  *
  * \details
- *    The underlying value increases with severity.
+ * The underlying value increases with severity.
  */
-enum class LogLevel : uint8 {
+enum class LogLevel : uint8
+{
   kTrace,  ///< For verbose messages only useful for detailed debugging.
   kDebug,  ///< For messages that provide useful developer information.
   kInfo,   ///< For messages that provide general high-level information.

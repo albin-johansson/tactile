@@ -6,7 +6,9 @@
 
 namespace tactile {
 
-/** Forces initialization of the RNG engine for the current thread. */
+/**
+ * Forces initialization of the RNG engine for the current thread.
+ */
 void init_random_number_generator();
 
 /**
@@ -16,7 +18,7 @@ void init_random_number_generator();
  * \param max The maximum possible value.
  *
  * \return
- *    A pseudo-random value in the interval [min, max].
+ * A pseudo-random value in the interval [min, max].
  */
 [[nodiscard]]
 auto get_random_int(int min, int max) -> int;
@@ -28,7 +30,7 @@ auto get_random_int(int min, int max) -> int;
  * \param max The maximum possible value.
  *
  * \return
- *    A pseudo-random value in the interval [min, max].
+ * A pseudo-random value in the interval [min, max].
  */
 [[nodiscard]]
 auto get_random_uint(uint min, uint max) -> uint;
@@ -40,7 +42,7 @@ auto get_random_uint(uint min, uint max) -> uint;
  * \param max The maximum possible value.
  *
  * \return
- *    A pseudo-random value in the interval [min, max].
+ * A pseudo-random value in the interval [min, max].
  */
 [[nodiscard]]
 auto get_random_float(float min, float max) -> float;
@@ -49,7 +51,7 @@ auto get_random_float(float min, float max) -> float;
  * Returns a pseudo-random float.
  *
  * \return
- *    A float in the interval [0, 1].
+ * A float in the interval [0, 1].
  */
 [[nodiscard]]
 auto get_random_float_normalized() -> float;
@@ -58,7 +60,7 @@ auto get_random_float_normalized() -> float;
  * Returns a pseudo-random boolean value.
  *
  * \return
- *    True or false.
+ * True or false.
  */
 [[nodiscard]]
 auto get_random_bool() -> bool;

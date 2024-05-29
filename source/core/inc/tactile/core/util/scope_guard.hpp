@@ -15,22 +15,23 @@ namespace tactile {
  * RAII type used to invoke a callback at the end of a scope.
  *
  * \details
- *    This class is useful for creating "inline" destructors without
- *    having to define a new type. Such as in the following example.
+ * This class is useful for creating "inline" destructors without having to
+ * define a new type. Such as in the following example.
  *
- *    \code{cpp}
- *    int i = 0;
+ * \code{cpp}
+ * int i = 0;
  *
- *    {
- *      const ScopeGuard guard {[&] { i = 10; }};
- *      i = 20;
- *    }
+ * {
+ *   const ScopeGuard guard {[&] { i = 10; }};
+ *   i = 20;
+ * }
  *
- *    assert(i == 10);
- *    \endcode
+ * assert(i == 10);
+ * \endcode
  */
 template <std::invocable T>
-class ScopeGuard final {
+class ScopeGuard final
+{
  public:
   TACTILE_DELETE_COPY(ScopeGuard);
   TACTILE_DELETE_MOVE(ScopeGuard);
@@ -38,21 +39,25 @@ class ScopeGuard final {
   /**
    * Creates a scope guard.
    *
-   * \param callback The function object that will be called at the end of the scope.
+   * \param callback The function object that will be called at the end of the
+   *                 scope.
    */
   [[nodiscard]]
   explicit ScopeGuard(T callable)
     : mCallable {std::move(callable)}
   {}
 
-  /** Invokes the associated function object. */
+  /**
+   * Invokes the associated function object.
+   */
   ~ScopeGuard() noexcept
   {
     try {
       mCallable();
     }
     catch (const std::exception& ex) {
-      TACTILE_LOG_ERROR("Scope guard destructor threw exception: {}", ex.what());
+      TACTILE_LOG_ERROR("Scope guard destructor threw exception: {}",
+                        ex.what());
     }
     catch (...) {
       TACTILE_LOG_ERROR("Scope guard destructor threw exception");

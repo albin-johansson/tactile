@@ -10,8 +10,11 @@
 
 namespace tactile {
 
-/** The supported attribute value types. */
-enum class AttributeType : uint8 {
+/**
+ * The supported attribute value types.
+ */
+enum class AttributeType : uint8
+{
   kStr,
   kInt,
   kInt2,
@@ -33,7 +36,7 @@ enum class AttributeType : uint8 {
  * \param name The attribute type name.
  *
  * \return
- *    An attribute type if successful; an error code otherwise.
+ * An attribute type if successful; an error code otherwise.
  */
 [[nodiscard]]
 auto parse_attribute_type(StringView name) -> Result<AttributeType>;
@@ -42,12 +45,12 @@ auto parse_attribute_type(StringView name) -> Result<AttributeType>;
  * Converts an attribute type to a string.
  *
  * \details
- *    The returned string is guaranteed to be null-terminated.
+ * The returned string is guaranteed to be null-terminated.
  *
  * \param type An attribute type.
  *
  * \return
- *    A string.
+ * A string.
  */
 [[nodiscard]]
 auto serialize(AttributeType type) -> StringView;
@@ -59,7 +62,7 @@ auto serialize(AttributeType type) -> StringView;
  * \param type   The attribute type to output.
  *
  * \return
- *    The provided stream.
+ * The provided stream.
  */
 auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 

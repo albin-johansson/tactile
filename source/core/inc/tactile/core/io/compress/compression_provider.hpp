@@ -9,8 +9,11 @@
 
 namespace tactile {
 
-/** Interface for data compression providers. */
-class ICompressionProvider {
+/**
+ * Interface for data compression providers.
+ */
+class ICompressionProvider
+{
  public:
   TACTILE_INTERFACE_CLASS(ICompressionProvider);
 
@@ -20,7 +23,7 @@ class ICompressionProvider {
    * \param input_data The data that will be compressed.
    *
    * \return
-   *    A compressed byte stream if successful; an error code otherwise.
+   * A compressed byte stream if successful; an error code otherwise.
    */
   [[nodiscard]]
   virtual auto compress(ByteSpan input_data) const -> Result<ByteStream> = 0;
@@ -31,7 +34,7 @@ class ICompressionProvider {
    * \param input_data The data that will be decompressed.
    *
    * \return
-   *    An uncompressed byte stream if successful; an error code otherwise.
+   * An uncompressed byte stream if successful; an error code otherwise.
    */
   [[nodiscard]]
   virtual auto decompress(ByteSpan input_data) const -> Result<ByteStream> = 0;

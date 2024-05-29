@@ -34,7 +34,7 @@ struct MatrixExtent final
  * \param extent The matrix extent to emit.
  *
  * \return
- *    The provided stream.
+ * The provided stream.
  */
 auto operator<<(std::ostream& stream,
                 const MatrixExtent& extent) -> std::ostream&;
