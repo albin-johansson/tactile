@@ -9,8 +9,6 @@ namespace tactile {
 
 /**
  * Event for creating new map documents.
- *
- * \ingroup Event
  */
 struct CreateMapEvent final
 {
