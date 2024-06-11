@@ -12,8 +12,6 @@ namespace tactile {
 
 /**
  * Event for creating a new layer in the active map.
- *
- * \ingroup Event
  */
 struct CreateLayerEvent final
 {
@@ -23,8 +21,6 @@ struct CreateLayerEvent final
 
 /**
  * Event for removing a layer from the active map.
- *
- * \ingroup Event
  */
 struct RemoveLayerEvent final
 {
@@ -34,8 +30,6 @@ struct RemoveLayerEvent final
 
 /**
  * Event for duplicating a layer in the active map.
- *
- * \ingroup Event
  */
 struct DuplicateLayerEvent final
 {
@@ -45,8 +39,6 @@ struct DuplicateLayerEvent final
 
 /**
  * Event for moving a layer up in the active map.
- *
- * \ingroup Event
  */
 struct MoveLayerUpEvent final
 {
@@ -56,8 +48,6 @@ struct MoveLayerUpEvent final
 
 /**
  * Event for moving a layer down in the active map.
- *
- * \ingroup Event
  */
 struct MoveLayerDownEvent final
 {
@@ -67,8 +57,6 @@ struct MoveLayerDownEvent final
 
 /**
  * Event for changing the name of a layer in the active map.
- *
- * \ingroup Event
  */
 struct RenameLayerEvent final
 {
@@ -81,8 +69,6 @@ struct RenameLayerEvent final
 
 /**
  * Event for changing the opacity of a layer in the active map.
- *
- * \ingroup Event
  */
 struct SetLayerOpacityEvent final
 {
@@ -95,8 +81,6 @@ struct SetLayerOpacityEvent final
 
 /**
  * Event for changing the visibility of a layer in the active map.
- *
- * \ingroup Event
  */
 struct SetLayerVisibleEvent final
 {
