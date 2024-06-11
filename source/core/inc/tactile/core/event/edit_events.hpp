@@ -7,73 +7,55 @@
 namespace tactile {
 
 /**
- * An event for undoing the most recent command.
- *
- * \ingroup Event
+ * Event for undoing the most recent command.
  */
 struct UndoEvent final
 {};
 
 /**
- * An event for redoing the most recently reverted command.
- *
- * \ingroup Event
+ * Event for redoing the most recently reverted command.
  */
 struct RedoEvent final
 {};
 
 /**
- * An event for enabling the stamp tool.
- *
- * \ingroup Event
+ * Event for enabling the stamp tool.
  */
 struct EnableStampToolEvent final
 {};
 
 /**
- * An event for enabling the eraser tool.
- *
- * \ingroup Event
+ * Event for enabling the eraser tool.
  */
 struct EnableEraserToolEvent final
 {};
 
 /**
- * An event for enabling the bucket fill tool.
- *
- * \ingroup Event
+ * Event for enabling the bucket fill tool.
  */
 struct EnableBucketToolEvent final
 {};
 
 /**
- * An event for enabling the object selector tool.
- *
- * \ingroup Event
+ * Event for enabling the object selector tool.
  */
 struct EnableSelectorToolEvent final
 {};
 
 /**
- * An event for enabling the rectangle tool.
- *
- * \ingroup Event
+ * Event for enabling the rectangle tool.
  */
 struct EnableRectangleToolEvent final
 {};
 
 /**
- * An event for enabling the ellipse tool.
- *
- * \ingroup Event
+ * Event for enabling the ellipse tool.
  */
 struct EnableEllipseToolEvent final
 {};
 
 /**
- * An event for enabling the point tool.
- *
- * \ingroup Event
+ * Event for enabling the point tool.
  */
 struct EnablePointToolEvent final
 {};
