@@ -3,23 +3,30 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/entity/entity.hpp"
 
 namespace tactile {
 
 /**
  * Event for opening the map document creation dialog.
+ *
+ * \ingroup Event
  */
 struct ShowNewMapDialogEvent final
 {};
 
 /**
  * Event for opening the map document loading dialog.
+ *
+ * \ingroup Event
  */
 struct ShowOpenMapDialogEvent final
 {};
 
 /**
  * Event for opening the 'Save As' dialog.
+ *
+ * \ingroup Event
  */
 struct ShowSaveAsDialogEvent final
 {};
@@ -55,5 +62,16 @@ struct ShowAboutDialogEvent final
  */
 struct ShowCreditsDialogEvent final
 {};
+
+/**
+ * Event for opening the dialog for renaming a layer in the active map.
+ *
+ * \ingroup Event
+ */
+struct ShowRenameLayerDialogEvent final
+{
+  /** The target layer. */
+  EntityID layer_entity;
+};
 
 }  // namespace tactile
