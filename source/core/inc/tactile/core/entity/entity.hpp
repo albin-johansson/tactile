@@ -4,6 +4,7 @@
 
 #include <entt/entity/entity.hpp>
 
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -19,5 +20,16 @@ struct CTag
 {
   char unused [[maybe_unused]];
 };
+
+/**
+ * Returns a string that describes an entity identifier.
+ *
+ * \param entity An entity identifier.
+ *
+ * \return
+ * A string describing an entity identifier.
+ */
+[[nodiscard]]
+auto entity_to_string(EntityID entity) -> String;
 
 }  // namespace tactile
