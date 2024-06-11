@@ -2,13 +2,11 @@
 
 #pragma once
 
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/i18n/language_id.hpp"
 
 namespace tactile {
-
-/// \addtogroup Model
-/// \{
 
 /**
  * Represents editor settings that the user can control.
@@ -17,6 +15,9 @@ struct Settings final
 {
   /** The language that will be loaded at startup. */
   LanguageID language;
+
+  /** The maximum number of changes to track in a document. */
+  usize command_capacity;
 
   /** The UI font size. */
   float font_size;
@@ -33,7 +34,5 @@ struct Settings final
  */
 [[nodiscard]]
 auto get_default_settings() -> Settings;
-
-/// \}
 
 }  // namespace tactile

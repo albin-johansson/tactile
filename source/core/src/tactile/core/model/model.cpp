@@ -3,13 +3,16 @@
 #include "tactile/core/model/model.hpp"
 
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/model/settings.hpp"
 
 namespace tactile {
 
 Model::Model(const Settings* settings, const ui::Language* language)
   : mSettings {require_not_null(settings, "null settings")},
     mLanguage {require_not_null(language, "null language")}
-{}
+{
+  mDocuments.set_command_capacity(mSettings->command_capacity);
+}
 
 auto Model::get_document_manager() -> DocumentManager&
 {

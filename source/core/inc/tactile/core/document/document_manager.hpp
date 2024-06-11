@@ -6,16 +6,15 @@
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/vector.hpp"
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/cmd/command_stack.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
 
 struct MapSpec;
 class IDocument;
-
-/// \addtogroup Document
-/// \{
 
 /**
  * Manages a collection of documents.
@@ -80,6 +79,39 @@ class DocumentManager final
   auto get_open_documents() const -> const Vector<UUID>&;
 
   /**
+   * Sets the maximum number of commands tracked by each document.
+   *
+   * \param capacity The new command capacity.
+   */
+  void set_command_capacity(usize capacity);
+
+  /**
+   * Returns the maximum number of commands stored by a document.
+   *
+   * \return
+   * The current command capacity.
+   */
+  [[nodiscard]]
+  auto command_capacity() const -> usize;
+
+  /**
+   * Returns the command history associated with a given document.
+   *
+   * \param uuid The associated document identifier.
+   *
+   * \return
+   * The command stack associated with the document.
+   */
+  [[nodiscard]]
+  auto get_history(const UUID& uuid) -> CommandStack&;
+
+  /**
+   * \copydoc get_history()
+   */
+  [[nodiscard]]
+  auto get_history(const UUID& uuid) const -> const CommandStack&;
+
+  /**
    * Indicates whether a map document is currently active.
    *
    * \return
@@ -92,8 +124,8 @@ class DocumentManager final
   HashMap<UUID, Unique<IDocument>> mDocuments {};
   Vector<UUID> mOpenDocuments {};
   UUID mActiveDocument {};
+  HashMap<UUID, CommandStack> mHistories {};
+  usize mCommandCapacity {100};
 };
-
-/// \}
 
 }  // namespace tactile

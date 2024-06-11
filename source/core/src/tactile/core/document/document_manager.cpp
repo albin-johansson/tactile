@@ -29,6 +29,8 @@ auto DocumentManager::create_and_open_map(const MapSpec& spec) -> Result<UUID>
   }
 
   mOpenDocuments.push_back(document_uuid);
+  mHistories.try_emplace(document_uuid, mCommandCapacity);
+
   mActiveDocument = document_uuid;
 
   return document_uuid;
@@ -65,6 +67,31 @@ auto DocumentManager::get_current_document() const -> const IDocument*
 auto DocumentManager::get_open_documents() const -> const Vector<UUID>&
 {
   return mOpenDocuments;
+}
+
+void DocumentManager::set_command_capacity(const usize capacity)
+{
+  TACTILE_LOG_DEBUG("Setting command capacity to {}", capacity);
+  mCommandCapacity = capacity;
+
+  for (auto& [document_uuid, command_stack] : mHistories) {
+    command_stack.set_capacity(mCommandCapacity);
+  }
+}
+
+auto DocumentManager::command_capacity() const -> usize
+{
+  return mCommandCapacity;
+}
+
+auto DocumentManager::get_history(const UUID& uuid) -> CommandStack&
+{
+  return lookup_in(mHistories, uuid);
+}
+
+auto DocumentManager::get_history(const UUID& uuid) const -> const CommandStack&
+{
+  return lookup_in(mHistories, uuid);
 }
 
 auto DocumentManager::is_map_active() const -> bool
