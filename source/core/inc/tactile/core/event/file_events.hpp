@@ -9,16 +9,12 @@ namespace tactile {
 
 /**
  * Event for saving the current document to disk.
- *
- * \ingroup Event
  */
 struct SaveEvent final
 {};
 
 /**
  * Event for saving the current document to a new location.
- *
- * \ingroup Event
  */
 struct SaveAsEvent final
 {
@@ -28,32 +24,24 @@ struct SaveAsEvent final
 
 /**
  * Event for reopening the last closed file.
- *
- * \ingroup Event
  */
 struct ReopenLastClosedFileEvent final
 {};
 
 /**
  * Event for clearing the file history.
- *
- * \ingroup Event
  */
 struct ClearFileHistoryEvent final
 {};
 
 /**
  * Event for closing the current document.
- *
- * \ingroup Event
  */
 struct CloseEvent final
 {};
 
 /**
  * Event for gracefully shutting down the application.
- *
- * \ingroup Event
  */
 struct QuitEvent final
 {};
