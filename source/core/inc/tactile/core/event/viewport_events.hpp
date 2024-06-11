@@ -8,9 +8,6 @@
 
 namespace tactile {
 
-/// \addtogroup Event
-/// \{
-
 /**
  * Event for moving a viewport in the current document.
  */
@@ -73,7 +70,5 @@ struct CenterViewportEvent final
   /** The size of the underlying content. */
   Float2 content_size;
 };
-
-/// \}
 
 }  // namespace tactile

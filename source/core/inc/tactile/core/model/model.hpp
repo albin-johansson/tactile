@@ -14,9 +14,6 @@ namespace ui {
 class Language;
 }  // namespace ui
 
-/// \addtogroup Model
-/// \{
-
 /**
  * Provides the top-level API for the core document model.
  *
@@ -89,7 +86,5 @@ class Model final
   const ui::Language* mLanguage {};
   DocumentManager mDocuments {};
 };
-
-/// \}
 
 }  // namespace tactile
