@@ -10,6 +10,9 @@ namespace tactile {
 template <typename T>
 using Maybe = std::optional<T>;
 
+template <typename T>
+using Optional = std::optional<T>;
+
 /**
  * Creates an optional with a given value.
  *
