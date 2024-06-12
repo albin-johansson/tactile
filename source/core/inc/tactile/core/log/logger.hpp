@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <format>  // format_string, make_format_args, format_args
+#include <format>  // make_format_args, format_args
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
@@ -12,6 +12,7 @@
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/log/log_level.hpp"
 #include "tactile/core/log/log_sink.hpp"
+#include "tactile/core/util/format.hpp"
 
 #define TACTILE_LOG(Level, FmtString, ...)                                  \
   {                                                                         \
@@ -68,10 +69,14 @@ class Logger final
    */
   template <typename... Args>
   void log(const LogLevel level,
-           const std::format_string<Args...> fmt,
+           const FormatString<Args...> fmt,
            const Args&... args) noexcept
   {
+#if TACTILE_HAS_STD_FORMAT_STRING
     _log(level, fmt.get(), std::make_format_args(args...));
+#else
+    _log(level, fmt, std::make_format_args(args...));
+#endif
   }
 
   /**
