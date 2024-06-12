@@ -8,7 +8,7 @@ namespace tactile {
 
 auto entity_to_string(const EntityID entity) -> String
 {
-  return std::format("({:X},v{})",
+  return std::format("{:X}#{}",
                      entt::to_entity(entity),
                      entt::to_version(entity));
 }

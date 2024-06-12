@@ -8,7 +8,8 @@
 namespace tactile {
 
 /** RAII type for changing the logger identifier of the current scope. */
-class SetLogScope final {
+class SetLogScope final
+{
  public:
   /**
    * Changes the logger scope identifier.
@@ -29,3 +30,9 @@ class SetLogScope final {
 };
 
 }  // namespace tactile
+
+#define TACTILE_SET_LOG_SCOPE(Name)              \
+  const ::tactile::SetLogScope tactile_log_scope \
+  {                                              \
+    (Name)                                       \
+  }
