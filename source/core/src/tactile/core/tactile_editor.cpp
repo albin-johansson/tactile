@@ -39,7 +39,21 @@ void TactileEditor::on_startup()
     throw Exception {"could not parse language file"};
   }
 
-  mModel.emplace(&mSettings, &mLanguage.value());
+  auto& model = mModel.emplace(&mSettings, &mLanguage.value());
+
+  auto& file_event_handler = mFileEventHandler.emplace(&model);
+  auto& edit_event_handler = mEditEventHandler.emplace(&model);
+  auto& view_event_handler = mViewEventHandler.emplace(&model, &mWidgetManager);
+  auto& map_event_handler = mMapEventHandler.emplace(&model, &mWidgetManager);
+  auto& layer_event_handler = mLayerEventHandler.emplace(&model);
+  auto& viewport_event_handler = mViewportEventHandler.emplace(&model);
+
+  file_event_handler.install(mEventDispatcher);
+  edit_event_handler.install(mEventDispatcher);
+  view_event_handler.install(mEventDispatcher);
+  map_event_handler.install(mEventDispatcher);
+  layer_event_handler.install(mEventDispatcher);
+  viewport_event_handler.install(mEventDispatcher);
 }
 
 void TactileEditor::on_shutdown()
