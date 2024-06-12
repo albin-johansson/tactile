@@ -10,7 +10,6 @@
 
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
-#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/util/memory_buffer.hpp"
 
@@ -64,16 +63,20 @@ void format_to_buffer(MemoryBuffer<char, N>& buffer,
     return;
   }
 
-#if TACTILE_HAS_STD_FORMAT_STRING
-  std::format_to_n(std::back_inserter(buffer),
-                   saturate_cast<ssize>(remaining_chars),
-                   fmt,
-                   std::forward<Args>(args)...);
-#else
   // We have to use vformat_to to avoid compile-time checks, because Clang might
   // actually feature such checks even though their library doesn't announce it.
   // This is safe because the MemoryBuffer::push_back function has no effect
-  // when the buffer is full.
+  // when the buffer is full. Ideally, we would like to do something like:
+  //     std::format_to_n(std::back_inserter(buffer),
+  //                      saturate_cast<ssize>(remaining_chars),
+  //                      fmt,
+  //                      std::forward<Args>(args)...);
+
+#if TACTILE_HAS_STD_FORMAT_STRING
+  std::vformat_to(std::back_inserter(buffer),
+                  fmt.get(),
+                  std::make_format_args(args...));
+#else
   std::vformat_to(std::back_inserter(buffer),
                   fmt,
                   std::make_format_args(args...));
