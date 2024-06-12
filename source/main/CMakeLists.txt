@@ -1,16 +1,11 @@
 project(tactile-main CXX)
 
-set(TACTILE_MAIN "tactile")
-
-file(GLOB_RECURSE TACTILE_MAIN_SOURCE_FILES CONFIGURE_DEPENDS
-     "${PROJECT_SOURCE_DIR}/inc/**/*.hpp"
-     "${PROJECT_SOURCE_DIR}/src/**/*.hpp"
-     "${PROJECT_SOURCE_DIR}/src/**/*.cpp"
-     )
-
 add_executable(tactile WIN32)
 
-target_sources(tactile PRIVATE "${TACTILE_MAIN_SOURCE_FILES}")
+target_sources(tactile
+               PRIVATE
+               "${PROJECT_SOURCE_DIR}/src/tactile/main.cpp"
+               )
 
 tactile_prepare_target(tactile)
 

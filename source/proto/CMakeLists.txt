@@ -2,8 +2,10 @@ project(tactile-proto CXX)
 
 set(TACTILE_PROTO tactile-proto)
 
-file(GLOB_RECURSE TACTILE_PROTO_FILES CONFIGURE_DEPENDS
-     "${PROJECT_SOURCE_DIR}/*.proto"
+list(APPEND TACTILE_PROTO_FILES
+    "${PROJECT_SOURCE_DIR}/history.proto"
+    "${PROJECT_SOURCE_DIR}/session.proto"
+    "${PROJECT_SOURCE_DIR}/settings.proto"
      )
 
 protobuf_generate_cpp(TACTILE_PROTO_GEN_SOURCE_FILES TACTILE_PROTO_GEN_HEADER_FILES "${TACTILE_PROTO_FILES}")

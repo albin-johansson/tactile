@@ -1,14 +1,20 @@
 project(tactile-opengl CXX)
 
-file(GLOB_RECURSE TACTILE_OPENGL_SOURCE_FILES CONFIGURE_DEPENDS
-     "${PROJECT_SOURCE_DIR}/inc/**/*.hpp"
-     "${PROJECT_SOURCE_DIR}/src/**/*.cpp"
-     )
-
 add_library(tactile-opengl SHARED EXCLUDE_FROM_ALL)
 add_library(tactile::opengl ALIAS tactile-opengl)
 
-target_sources(tactile-opengl PRIVATE "${TACTILE_OPENGL_SOURCE_FILES}")
+target_sources(tactile-opengl
+               PRIVATE
+               "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/api.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/opengl_error.hpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_error.cpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/opengl_imgui.hpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_imgui.cpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/opengl_renderer.hpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_renderer.cpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/opengl_texture.hpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_texture.cpp"
+               )
 
 tactile_prepare_target(tactile-opengl)
 
