@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Select Xcode version
+        run: xcode-select --switch /Applications/Xcode_15.4.app
+
       - name: Install system dependencies
         run: |
           brew update
