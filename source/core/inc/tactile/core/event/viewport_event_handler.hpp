@@ -3,6 +3,8 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/entity/entity.hpp"
+#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 
@@ -15,6 +17,10 @@ struct IncreaseViewportZoomEvent;
 struct DecreaseViewportZoomEvent;
 struct ResetViewportZoomEvent;
 struct CenterViewportEvent;
+struct PanViewportUpEvent;
+struct PanViewportDownEvent;
+struct PanViewportLeftEvent;
+struct PanViewportRightEvent;
 
 /**
  * Handles events related to document viewports.
@@ -78,8 +84,39 @@ class ViewportEventHandler final
    */
   void on_center_viewport(const CenterViewportEvent& event);
 
+  /**
+   * Pans a viewport upwards.
+   *
+   * \param event The associated event.
+   */
+  void on_pan_viewport_up(const PanViewportUpEvent& event);
+
+  /**
+   * Pans a viewport downwards.
+   *
+   * \param event The associated event.
+   */
+  void on_pan_viewport_down(const PanViewportDownEvent& event);
+
+  /**
+   * Pans a viewport to the left.
+   *
+   * \param event The associated event.
+   */
+  void on_pan_viewport_left(const PanViewportLeftEvent& event);
+
+  /**
+   * Pans a viewport to the right.
+   *
+   * \param event The associated event.
+   */
+  void on_pan_viewport_right(const PanViewportRightEvent& event);
+
  private:
   Model* mModel;
+
+  void _pan_viewport(EntityID viewport_entity,
+                     const Float2& tile_offset_factor);
 };
 
 }  // namespace tactile

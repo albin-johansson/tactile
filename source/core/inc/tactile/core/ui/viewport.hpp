@@ -10,9 +10,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup Viewport
-/// \{
-
 /**
  * A component that represents a viewport over a tile grid.
  */
@@ -80,76 +77,46 @@ void set_viewport_limits(Registry& registry,
 /**
  * Translates the offset of a viewport.
  *
- * \details
- * This function will take viewport limits into account if the viewport entity
- * features a \c CViewportLimitsComponent.
- *
- * \pre The specified entity must be a viewport.
- *
- * \param registry        The associated registry.
- * \param viewport_entity The target viewport entity.
- * \param delta           The offset delta.
+ * \param viewport The target viewport.
+ * \param delta    The offset delta.
+ * \param limits   (Optional) The viewport limits.
  */
-void translate_viewport(Registry& registry,
-                        EntityID viewport_entity,
-                        const Float2& delta);
+void translate_viewport(CViewport& viewport,
+                        const Float2& delta,
+                        const CViewportLimits* limits);
 
 /**
  * Increases the zoom of a viewport.
  *
- * \details
- * This function will take viewport limits into account if the viewport entity
- * features a \c ViewportLimitsComponent.
- *
- * \pre The specified entity must be a viewport.
- *
- * \param registry          The associated registry.
- * \param viewport_entity   The target viewport entity.
+ * \param viewport          The target viewport.
  * \param anchor_screen_pos The target of the zoom operation.
+ * \param limits            (Optional) The viewport limits.
  */
-void increase_viewport_zoom(Registry& registry,
-                            EntityID viewport_entity,
-                            const Float2& anchor_screen_pos);
+void increase_viewport_zoom(CViewport& viewport,
+                            const Float2& anchor_screen_pos,
+                            const CViewportLimits* limits);
 
 /**
  * Decreases the zoom of a viewport.
  *
- * \details
- * This function will take viewport limits into account if the viewport entity
- * features a \c ViewportLimitsComponent.
- *
- * \pre The specified entity must be a viewport.
- *
- * \param registry          The associated registry.
- * \param viewport_entity   The target viewport entity.
+ * \param viewport          The target viewport.
  * \param anchor_screen_pos The target of the zoom operation.
+ * \param limits            (Optional) The viewport limits.
  */
-void decrease_viewport_zoom(Registry& registry,
-                            EntityID viewport_entity,
-                            const Float2& anchor_screen_pos);
-
-/**
- * Resets the zoom of a viewport.
- *
- * \pre The specified entity must be a viewport.
- *
- * \param registry        The associated registry.
- * \param viewport_entity The target viewport entity.
- */
-void reset_viewport_zoom(Registry& registry, EntityID viewport_entity);
+void decrease_viewport_zoom(CViewport& viewport,
+                            const Float2& anchor_screen_pos,
+                            const CViewportLimits* limits);
 
 /**
  * Aligns a viewport to be centered over the associated content.
  *
- * \pre The specified entity must be a viewport.
- *
- * \param registry        The associated registry.
- * \param viewport_entity The target viewport entity.
- * \param content_size    The size of the underlying content.
+ * \param viewport     The target viewport.
+ * \param content_size The size of the underlying content.
+ * \param limits       (Optional) The viewport limits.
  */
-void center_viewport_over_content(Registry& registry,
-                                  EntityID viewport_entity,
-                                  const Float2& content_size);
+void center_viewport_over_content(CViewport& viewport,
+                                  const Float2& content_size,
+                                  const CViewportLimits* limits);
 
 /**
  * Converts a position using screen coordinates to one with world coordinates.
@@ -163,7 +130,5 @@ void center_viewport_over_content(Registry& registry,
 [[nodiscard]]
 auto to_world_pos(const CViewport& viewport,
                   const Float2& screen_pos) noexcept -> Float2;
-
-/// \}
 
 }  // namespace tactile

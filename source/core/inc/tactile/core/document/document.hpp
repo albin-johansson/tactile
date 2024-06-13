@@ -12,9 +12,6 @@ namespace tactile {
 class UUID;
 class Registry;
 
-/// \addtogroup Document
-/// \{
-
 /**
  * Provides the basic document API.
  */
@@ -85,6 +82,15 @@ class IDocument
   virtual auto get_content_size() const -> Float2 = 0;
 
   /**
+   * Returns the logical size of tiles in the document.
+   *
+   * \return
+   * A logical tile size.
+   */
+  [[nodiscard]]
+  virtual auto get_tile_size() const -> Int2 = 0;
+
+  /**
    * Returns the UUID associated with the document.
    *
    * \return
@@ -93,7 +99,5 @@ class IDocument
   [[nodiscard]]
   virtual auto get_uuid() const -> const UUID& = 0;
 };
-
-/// \}
 
 }  // namespace tactile

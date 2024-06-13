@@ -71,4 +71,40 @@ struct CenterViewportEvent final
   Float2 content_size;
 };
 
+/**
+ * Event for panning a viewport upwards in the current document.
+ */
+struct PanViewportUpEvent final
+{
+  /** The target viewport. */
+  EntityID viewport_entity;
+};
+
+/**
+ * Event for panning a viewport downwards in the current document.
+ */
+struct PanViewportDownEvent final
+{
+  /** The target viewport. */
+  EntityID viewport_entity;
+};
+
+/**
+ * Event for panning a viewport leftwards in the current document.
+ */
+struct PanViewportLeftEvent final
+{
+  /** The target viewport. */
+  EntityID viewport_entity;
+};
+
+/**
+ * Event for panning a viewport rightwards in the current document.
+ */
+struct PanViewportRightEvent final
+{
+  /** The target viewport. */
+  EntityID viewport_entity;
+};
+
 }  // namespace tactile

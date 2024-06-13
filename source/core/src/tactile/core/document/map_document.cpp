@@ -80,6 +80,12 @@ auto MapDocument::get_content_size() const -> Float2
          vec_cast<Float2>(map.tile_size) * viewport.scale;
 }
 
+auto MapDocument::get_tile_size() const -> Int2
+{
+  const auto& map = mData->registry.get<CMap>(mData->map_entity);
+  return map.tile_size;
+}
+
 auto MapDocument::get_uuid() const -> const UUID&
 {
   return mData->uuid;

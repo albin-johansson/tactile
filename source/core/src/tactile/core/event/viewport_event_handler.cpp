@@ -5,7 +5,6 @@
 #include <imgui.h>
 
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/entity/entity.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/viewport_events.hpp"
@@ -35,6 +34,10 @@ void ViewportEventHandler::install(EventDispatcher& dispatcher)
   dispatcher.bind<DecreaseViewportZoomEvent, &Self::on_decrease_viewport_zoom>(this);
   dispatcher.bind<ResetViewportZoomEvent, &Self::on_reset_viewport_zoom>(this);
   dispatcher.bind<CenterViewportEvent, &Self::on_center_viewport>(this);
+  dispatcher.bind<PanViewportUpEvent, &Self::on_pan_viewport_up>(this);
+  dispatcher.bind<PanViewportDownEvent, &Self::on_pan_viewport_down>(this);
+  dispatcher.bind<PanViewportLeftEvent, &Self::on_pan_viewport_left>(this);
+  dispatcher.bind<PanViewportRightEvent, &Self::on_pan_viewport_right>(this);
   // clang-format on
 }
 
@@ -49,8 +52,10 @@ void ViewportEventHandler::on_offset_viewport(const OffsetViewportEvent& event)
   if (auto* document = mModel->get_current_document()) {
     auto& registry = document->get_registry();
 
-    const auto root_entity = document->get_root_entity();
-    translate_viewport(registry, root_entity, event.delta);
+    auto& viewport = registry.get<CViewport>(event.viewport_entity);
+    const auto* limits = registry.find<CViewportLimits>(event.viewport_entity);
+
+    translate_viewport(viewport, event.delta, limits);
   }
 }
 
@@ -80,9 +85,11 @@ void ViewportEventHandler::on_increase_viewport_zoom(
 
   if (auto* document = mModel->get_current_document()) {
     auto& registry = document->get_registry();
-    increase_viewport_zoom(registry,
-                           event.viewport_entity,
-                           to_float2(ImGui::GetMousePos()));
+
+    auto& viewport = registry.get<CViewport>(event.viewport_entity);
+    const auto* limits = registry.find<CViewportLimits>(event.viewport_entity);
+
+    increase_viewport_zoom(viewport, to_float2(ImGui::GetMousePos()), limits);
   }
 }
 
@@ -96,9 +103,11 @@ void ViewportEventHandler::on_decrease_viewport_zoom(
 
   if (auto* document = mModel->get_current_document()) {
     auto& registry = document->get_registry();
-    decrease_viewport_zoom(registry,
-                           event.viewport_entity,
-                           to_float2(ImGui::GetMousePos()));
+
+    auto& viewport = registry.get<CViewport>(event.viewport_entity);
+    const auto* limits = registry.find<CViewportLimits>(event.viewport_entity);
+
+    decrease_viewport_zoom(viewport, to_float2(ImGui::GetMousePos()), limits);
   }
 }
 
@@ -110,7 +119,8 @@ void ViewportEventHandler::on_reset_viewport_zoom(
 
   if (auto* document = mModel->get_current_document()) {
     auto& registry = document->get_registry();
-    reset_viewport_zoom(registry, event.viewport_entity);
+    auto& viewport = registry.get<CViewport>(event.viewport_entity);
+    viewport.scale = 1.0f;
   }
 }
 
@@ -122,9 +132,66 @@ void ViewportEventHandler::on_center_viewport(const CenterViewportEvent& event)
 
   if (auto* document = mModel->get_current_document()) {
     auto& registry = document->get_registry();
-    center_viewport_over_content(registry,
-                                 event.viewport_entity,
-                                 event.content_size);
+
+    auto& viewport = registry.get<CViewport>(event.viewport_entity);
+    const auto* limits = registry.find<CViewportLimits>(event.viewport_entity);
+
+    center_viewport_over_content(viewport, event.content_size, limits);
+  }
+}
+
+void ViewportEventHandler::on_pan_viewport_up(const PanViewportUpEvent& event)
+{
+  if (mModel->get_settings().log_verbose_events) {
+    TACTILE_LOG_TRACE("PanViewportUpEvent(viewport: {})",
+                      entity_to_string(event.viewport_entity));
+  }
+  _pan_viewport(event.viewport_entity, Float2 {0.0f, -1.0f});
+}
+
+void ViewportEventHandler::on_pan_viewport_down(
+    const PanViewportDownEvent& event)
+{
+  if (mModel->get_settings().log_verbose_events) {
+    TACTILE_LOG_TRACE("PanViewportDownEvent(viewport: {})",
+                      entity_to_string(event.viewport_entity));
+  }
+  _pan_viewport(event.viewport_entity, Float2 {0.0f, 1.0f});
+}
+
+void ViewportEventHandler::on_pan_viewport_left(
+    const PanViewportLeftEvent& event)
+{
+  if (mModel->get_settings().log_verbose_events) {
+    TACTILE_LOG_TRACE("PanViewportLeftEvent(viewport: {})",
+                      entity_to_string(event.viewport_entity));
+  }
+  _pan_viewport(event.viewport_entity, Float2 {-1.0f, 0.0f});
+}
+
+void ViewportEventHandler::on_pan_viewport_right(
+    const PanViewportRightEvent& event)
+{
+  if (mModel->get_settings().log_verbose_events) {
+    TACTILE_LOG_TRACE("PanViewportRightEvent(viewport: {})",
+                      entity_to_string(event.viewport_entity));
+  }
+  _pan_viewport(event.viewport_entity, Float2 {1.0f, 0.0f});
+}
+
+void ViewportEventHandler::_pan_viewport(const EntityID viewport_entity,
+                                         const Float2& tile_offset_factor)
+{
+  if (auto* document = mModel->get_current_document()) {
+    auto& registry = document->get_registry();
+
+    auto& viewport = registry.get<CViewport>(viewport_entity);
+    const auto* limits = registry.find<CViewportLimits>(viewport_entity);
+
+    const auto tile_size = vec_cast<Float2>(document->get_tile_size());
+    const auto delta = tile_size * viewport.scale * tile_offset_factor;
+
+    translate_viewport(viewport, delta, limits);
   }
 }
 

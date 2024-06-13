@@ -51,6 +51,9 @@ class MapDocument final : public IDocument
   auto get_content_size() const -> Float2 override;
 
   [[nodiscard]]
+  auto get_tile_size() const -> Int2 override;
+
+  [[nodiscard]]
   auto get_uuid() const -> const UUID& override;
 
  private:
