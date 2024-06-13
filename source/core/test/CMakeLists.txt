@@ -5,6 +5,7 @@ add_executable(tactile-core-test)
 target_sources(tactile-core-test
                PRIVATE
                "${PROJECT_SOURCE_DIR}/src/cmd/meta/create_property_command_test.cpp"
+               "${PROJECT_SOURCE_DIR}/src/cmd/meta/rename_property_command_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/cmd/meta/update_property_command_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/cmd/command_stack_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/debug/validation_test.cpp"
