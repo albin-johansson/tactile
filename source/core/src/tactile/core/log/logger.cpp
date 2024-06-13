@@ -4,6 +4,7 @@
 
 #include <cstdio>     // fprintf, stderr
 #include <exception>  // exception
+#include <iterator>   // back_inserter
 
 #include "tactile/core/util/format.hpp"
 #include "tactile/core/util/memory_buffer.hpp"
@@ -22,7 +23,9 @@ void Logger::_log(const LogLevel level,
   try {
     if (!mSinks.empty() && would_log(level)) {
       const auto log_instant = SteadyClock::now();
-      const auto text = std::vformat(fmt_string, args);
+
+      MemoryBuffer<char, 256> text_buffer;  // NOLINT default-initialization
+      std::vformat_to(std::back_inserter(text_buffer), fmt_string, args);
 
       const auto level_acronym = get_acronym(level);
       const auto elapsed_time = _to_elapsed_time(log_instant);
@@ -35,9 +38,9 @@ void Logger::_log(const LogLevel level,
 
       const LogMessage msg {
         .level = level,
-        .prefix = StringView {prefix_buffer.data(), prefix_buffer.size()},
+        .prefix = prefix_buffer.view(),
         .scope = mScope,
-        .text = text,
+        .text = text_buffer.view(),
         .instant = log_instant,
       };
 

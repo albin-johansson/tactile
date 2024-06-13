@@ -303,6 +303,19 @@ class MemoryBuffer
     return size() == 0;
   }
 
+  /**
+   * Returns a string view into the buffer.
+   *
+   * \return
+   * A string view.
+   */
+  [[nodiscard]]
+  constexpr auto view() const noexcept -> StringView
+    requires(std::same_as<value_type, StringView::value_type>)
+  {
+    return StringView {data(), size()};
+  }
+
  private:
   // The buffer is not initialized by default, to avoid expensive dead writes.
   Array<value_type, Capacity> mBuf;

@@ -12,11 +12,11 @@
 #include "tactile/base/container/vector.hpp"
 #include "tactile/core/debug/exception.hpp"
 
-namespace tactile {
+namespace tactile::test {
 
 using testing::Const;
 
-/// \trace tactile::MemoryBuffer::MemoryBuffer
+// tactile::MemoryBuffer::MemoryBuffer
 TEST(MemoryBuffer, DefaultConstructor)
 {
   MemoryBuffer buffer;  // NOLINT
@@ -39,7 +39,7 @@ TEST(MemoryBuffer, DefaultConstructor)
   EXPECT_EQ(std::distance(Const(buffer).begin(), Const(buffer).end()), 0);
 }
 
-/// \trace tactile::MemoryBuffer::clear
+// tactile::MemoryBuffer::clear
 TEST(MemoryBuffer, Clear)
 {
   MemoryBuffer<char> buffer;  // NOLINT
@@ -58,7 +58,7 @@ TEST(MemoryBuffer, Clear)
   EXPECT_EQ(buffer.remaining_capacity(), buffer.capacity());
 }
 
-/// \trace tactile::MemoryBuffer::push_back
+// tactile::MemoryBuffer::push_back
 TEST(MemoryBuffer, PushBack)
 {
   MemoryBuffer<char> buffer;  // NOLINT
@@ -104,7 +104,7 @@ TEST(MemoryBuffer, PushBack)
   EXPECT_EQ(buffer.at(5), 'r');
 }
 
-/// \trace tactile::MemoryBuffer::push_back
+// tactile::MemoryBuffer::push_back
 TEST(MemoryBuffer, PushBackWithOverflow)
 {
   MemoryBuffer<char> buffer;  // NOLINT
@@ -115,7 +115,7 @@ TEST(MemoryBuffer, PushBackWithOverflow)
   ASSERT_EQ(buffer.remaining_capacity(), 0);
 }
 
-/// \trace tactile::MemoryBuffer::push_back
+// tactile::MemoryBuffer::push_back
 TEST(MemoryBuffer, BackInserterCompatibility)
 {
   MemoryBuffer<char> buffer;  // NOLINT
@@ -139,7 +139,7 @@ TEST(MemoryBuffer, BackInserterCompatibility)
   EXPECT_EQ(buffer.at(buffer.size() - 1), '?');
 }
 
-/// \trace tactile::MemoryBuffer::append [iterator version]
+// tactile::MemoryBuffer::append [iterator version]
 TEST(MemoryBuffer, AppendIteratorRange)
 {
   const Array<char, 4> values = {'!', '?', '+', '-'};
@@ -165,7 +165,7 @@ TEST(MemoryBuffer, AppendIteratorRange)
   EXPECT_EQ(buffer.at(6), '+');
 }
 
-/// \trace tactile::MemoryBuffer::append [container version]
+// tactile::MemoryBuffer::append [container version]
 TEST(MemoryBuffer, AppendContainer)
 {
   const Vector<uint32> values = {1, 2, 3, 4, 5};
@@ -200,7 +200,7 @@ TEST(MemoryBuffer, AppendContainer)
   EXPECT_EQ(buffer.at(7), 3);
 }
 
-/// \trace tactile::MemoryBuffer::operator[]
+// tactile::MemoryBuffer::operator[]
 TEST(MemoryBuffer, SubscriptOperator)
 {
   MemoryBuffer<char, 4> buffer;  // NOLINT
@@ -217,7 +217,7 @@ TEST(MemoryBuffer, SubscriptOperator)
   EXPECT_EQ(Const(buffer)[2], 'c');
 }
 
-/// \trace tactile::MemoryBuffer::at
+// tactile::MemoryBuffer::at
 TEST(MemoryBuffer, At)
 {
   MemoryBuffer<char, 4> buffer;  // NOLINT
@@ -234,7 +234,7 @@ TEST(MemoryBuffer, At)
   EXPECT_THROW((void) Const(buffer).at(2), Exception);
 }
 
-/// \trace tactile::MemoryBuffer::data
+// tactile::MemoryBuffer::data
 TEST(MemoryBuffer, Data)
 {
   MemoryBuffer<char, 32> buffer;  // NOLINT
@@ -250,8 +250,8 @@ TEST(MemoryBuffer, Data)
   EXPECT_NE(Const(buffer).data(), nullptr);
 }
 
-/// \trace tactile::MemoryBuffer::begin
-/// \trace tactile::MemoryBuffer::end
+// tactile::MemoryBuffer::begin
+// tactile::MemoryBuffer::end
 TEST(MemoryBuffer, Iteration)
 {
   MemoryBuffer<uint16, 6> buffer;  // NOLINT
@@ -267,4 +267,20 @@ TEST(MemoryBuffer, Iteration)
   EXPECT_EQ(std::distance(Const(buffer).begin(), Const(buffer).end()), 3);
 }
 
-}  // namespace tactile
+// tactile::MemoryBuffer::view
+TEST(MemoryBuffer, View)
+{
+  MemoryBuffer<char, 32> buffer;  // NOLINT
+
+  buffer.push_back('f');
+  buffer.push_back('o');
+  buffer.push_back('o');
+  buffer.push_back('b');
+  buffer.push_back('a');
+  buffer.push_back('r');
+
+  EXPECT_EQ(buffer.size(), 6);
+  EXPECT_EQ(buffer.view(), "foobar");
+}
+
+}  // namespace tactile::test
