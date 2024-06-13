@@ -5,6 +5,7 @@ add_executable(tactile-core-test)
 target_sources(tactile-core-test
                PRIVATE
                "${PROJECT_SOURCE_DIR}/src/cmd/meta/create_property_command_test.cpp"
+               "${PROJECT_SOURCE_DIR}/src/cmd/meta/update_property_command_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/cmd/command_stack_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/debug/validation_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/debug/validation_test.cpp"
@@ -29,6 +30,7 @@ target_sources(tactile-core-test
                "${PROJECT_SOURCE_DIR}/src/numeric/vec_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/platform/bits_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/platform/filesystem_test.cpp"
+               "${PROJECT_SOURCE_DIR}/inc/test/document_testing.hpp"
                "${PROJECT_SOURCE_DIR}/src/tile/animation_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/tile/tile_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/tile/tileset_test.cpp"
@@ -47,6 +49,8 @@ target_sources(tactile-core-test
                )
 
 tactile_prepare_target(tactile-core-test)
+
+target_include_directories(tactile-core-test PRIVATE "${PROJECT_SOURCE_DIR}/inc")
 
 target_link_libraries(tactile-core-test
                       PUBLIC

@@ -8,36 +8,15 @@
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
+#include "test/document_testing.hpp"
 
 namespace tactile::test {
 
-class CreatePropertyCommandTest : public testing::Test
-{
- public:
-  void SetUp() override
-  {
-    mDocument.emplace(MapSpec {
-      .orientation = MapOrientation::kOrthogonal,
-      .extent = MatrixExtent {10, 10},
-      .tile_size = Int2 {50, 50},
-    });
-  }
-
-  [[nodiscard]]
-  auto get_map_document() -> MapDocument&
-  {
-    return mDocument.value();
-  }
-
- private:
-  Optional<MapDocument> mDocument {};
-};
-
 // tactile::CreatePropertyCommand::redo
 // tactile::CreatePropertyCommand::undo
-TEST_F(CreatePropertyCommandTest, RedoUndo)
+TEST(CreatePropertyCommand, RedoUndo)
 {
-  auto& document = get_map_document();
+  MapDocument document {kOrthogonalMapSpec};
 
   const auto& registry = document.get_registry();
   const auto map_entity = document.get_root_entity();

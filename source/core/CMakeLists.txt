@@ -10,6 +10,8 @@ target_sources(tactile-core
                PRIVATE
                "${TACTIlE_CORE_INC_PREFIX}/cmd/meta/create_property_command.hpp"
                "${TACTIlE_CORE_SRC_PREFIX}/cmd/meta/create_property_command.cpp"
+               "${TACTIlE_CORE_INC_PREFIX}/cmd/meta/update_property_command.hpp"
+               "${TACTIlE_CORE_SRC_PREFIX}/cmd/meta/update_property_command.cpp"
                "${TACTIlE_CORE_INC_PREFIX}/cmd/command.hpp"
                "${TACTIlE_CORE_INC_PREFIX}/cmd/command_stack.hpp"
                "${TACTIlE_CORE_SRC_PREFIX}/cmd/command_stack.cpp"
