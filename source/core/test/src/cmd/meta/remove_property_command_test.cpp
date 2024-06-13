@@ -1,0 +1,44 @@
+// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
+
+#include "tactile/core/cmd/meta/remove_property_command.hpp"
+
+#include <gtest/gtest.h>
+
+#include "tactile/core/document/map_document.hpp"
+#include "tactile/core/entity/registry.hpp"
+#include "tactile/core/meta/meta.hpp"
+#include "test/document_testing.hpp"
+
+namespace tactile::test {
+
+// tactile::RemovePropertyCommand::redo
+// tactile::RemovePropertyCommand::undo
+TEST(RemovePropertyCommand, RedoUndo)
+{
+  const String name {"xyz"};
+  const Attribute value {123};
+
+  MapDocument document {kOrthogonalMapSpec};
+  const auto map_entity = document.get_root_entity();
+
+  auto& registry = document.get_registry();
+  auto& meta = registry.get<CMeta>(map_entity);
+  meta.properties.insert_or_assign(name, value);
+
+  ASSERT_TRUE(meta.properties.contains(name));
+  ASSERT_EQ(meta.properties.at(name), value);
+  ASSERT_EQ(meta.properties.size(), 1);
+
+  RemovePropertyCommand command {&document, map_entity, name};
+
+  command.redo();
+  EXPECT_FALSE(meta.properties.contains(name));
+  EXPECT_EQ(meta.properties.size(), 0);
+
+  command.undo();
+  EXPECT_TRUE(meta.properties.contains(name));
+  EXPECT_EQ(meta.properties.at(name), value);
+  EXPECT_EQ(meta.properties.size(), 1);
+}
+
+}  // namespace tactile::test
