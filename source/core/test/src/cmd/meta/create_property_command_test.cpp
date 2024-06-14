@@ -26,12 +26,12 @@ TEST(CreatePropertyCommand, RedoUndo)
   ASSERT_EQ(meta.components.size(), 0);
 
   const String property_name {"foo"};
-  const auto property_type = AttributeType::kInt;
+  const Attribute property_value {42};
 
   CreatePropertyCommand command {&document,
                                  map_entity,
                                  property_name,
-                                 property_type};
+                                 property_value};
 
   EXPECT_FALSE(meta.properties.contains(property_name));
   EXPECT_EQ(meta.properties.size(), 0);
@@ -40,8 +40,7 @@ TEST(CreatePropertyCommand, RedoUndo)
   command.redo();
 
   EXPECT_TRUE(meta.properties.contains(property_name));
-  EXPECT_TRUE(meta.properties.at(property_name).has_default_value());
-  EXPECT_EQ(meta.properties.at(property_name).get_type(), property_type);
+  EXPECT_EQ(meta.properties.at(property_name), property_value);
   EXPECT_EQ(meta.properties.size(), 1);
   EXPECT_EQ(meta.components.size(), 0);
 

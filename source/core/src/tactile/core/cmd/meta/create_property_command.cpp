@@ -16,38 +16,38 @@ namespace tactile {
 
 CreatePropertyCommand::CreatePropertyCommand(IDocument* document,
                                              const EntityID context_entity,
-                                             String property_name,
-                                             const AttributeType property_type)
+                                             String name,
+                                             Attribute value)
   : mDocument {require_not_null(document, "null document")},
     mContextEntity {context_entity},
-    mPropertyName {std::move(property_name)},
-    mPropertyType {property_type}
+    mName {std::move(name)},
+    mValue {std::move(value)}
 {}
 
 void CreatePropertyCommand::undo()
 {
   TACTILE_SET_LOG_SCOPE("CreatePropertyCommand");
   TACTILE_LOG_DEBUG("Removing property '{}' from entity {}",
-                    mPropertyName,
+                    mName,
                     entity_to_string(mContextEntity));
 
   auto& registry = mDocument->get_registry();
   auto& meta = registry.get<CMeta>(mContextEntity);
 
-  erase_from(meta.properties, mPropertyName);
+  erase_from(meta.properties, mName);
 }
 
 void CreatePropertyCommand::redo()
 {
   TACTILE_SET_LOG_SCOPE("CreatePropertyCommand");
   TACTILE_LOG_DEBUG("Adding property '{}' to entity {}",
-                    mPropertyName,
+                    mName,
                     entity_to_string(mContextEntity));
 
   auto& registry = mDocument->get_registry();
   auto& meta = registry.get<CMeta>(mContextEntity);
 
-  meta.properties[mPropertyName].reset(mPropertyType);
+  meta.properties[mName] = mValue;
 }
 
 }  // namespace tactile

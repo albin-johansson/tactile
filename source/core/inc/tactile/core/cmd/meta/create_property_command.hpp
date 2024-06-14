@@ -7,7 +7,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/meta/attribute_type.hpp"
+#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
@@ -25,13 +25,13 @@ class CreatePropertyCommand final : public ICommand
    *
    * \param document       The parent document.
    * \param context_entity The target meta context entity.
-   * \param property_name  The name of the property.
-   * \param property_type  The type of the property.
+   * \param name           The name of the property.
+   * \param value          The value of the property.
    */
   CreatePropertyCommand(IDocument* document,
                         EntityID context_entity,
-                        String property_name,
-                        AttributeType property_type);
+                        String name,
+                        Attribute value);
 
   void undo() override;
 
@@ -40,8 +40,8 @@ class CreatePropertyCommand final : public ICommand
  private:
   IDocument* mDocument;
   EntityID mContextEntity;
-  String mPropertyName;
-  AttributeType mPropertyType;
+  String mName;
+  Attribute mValue;
 };
 
 }  // namespace tactile
