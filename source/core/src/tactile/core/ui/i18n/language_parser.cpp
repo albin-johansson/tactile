@@ -33,6 +33,7 @@ auto _get_verb_names() -> HashMap<StringView, StringID>
     {"apply", StringID::kApply},
     {"close", StringID::kClose},
     {"create", StringID::kCreate},
+    {"rename", StringID::kRename},
     {"undo", StringID::kUndo},
     {"redo", StringID::kRedo},
     {"save", StringID::kSave},

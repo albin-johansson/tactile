@@ -10,9 +10,6 @@ namespace tactile {
 
 struct MapSpec;
 
-/// \addtogroup Document
-/// \{
-
 /**
  * Represents a single map document.
  */
@@ -60,7 +57,5 @@ class MapDocument final : public IDocument
   struct Data;
   Unique<Data> mData;
 };
-
-/// \}
 
 }  // namespace tactile

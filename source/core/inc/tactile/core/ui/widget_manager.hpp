@@ -5,6 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/dialog/new_map_dialog.hpp"
 #include "tactile/core/ui/dialog/new_property_dialog.hpp"
+#include "tactile/core/ui/dialog/rename_property_dialog.hpp"
 #include "tactile/core/ui/dock/component_dock.hpp"
 #include "tactile/core/ui/dock/dock_space.hpp"
 #include "tactile/core/ui/dock/document_dock.hpp"
@@ -62,6 +63,15 @@ class WidgetManager final
   [[nodiscard]]
   auto get_new_property_dialog() -> NewPropertyDialog&;
 
+  /**
+   * Returns the property rename dialog.
+   *
+   * \return
+   * The associated property rename dialog.
+   */
+  [[nodiscard]]
+  auto get_rename_property_dialog() -> RenamePropertyDialog&;
+
  private:
   MenuBar mMenuBar {};
   DockSpace mDockSpace {};
@@ -73,6 +83,7 @@ class WidgetManager final
   LogDock mLogDock {};
   NewMapDialog mNewMapDialog {};
   NewPropertyDialog mNewPropertyDialog {};
+  RenamePropertyDialog mRenamePropertyDialog {};
 };
 
 }  // namespace ui

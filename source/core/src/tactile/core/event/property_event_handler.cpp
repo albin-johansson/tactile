@@ -49,7 +49,8 @@ void PropertyEventHandler::on_show_rename_property_dialog(
   TACTILE_LOG_TRACE("ShowRenamePropertyDialogEvent(context: {}, name: {})",
                     entity_to_string(event.context_entity),
                     event.name);
-  // TODO
+  mWidgetManager->get_rename_property_dialog().open(event.context_entity,
+                                                    event.name);
 }
 
 void PropertyEventHandler::on_create_property(const CreatePropertyEvent& event)

@@ -6,6 +6,7 @@
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/map/map_spec.hpp"
@@ -34,6 +35,11 @@ MapDocument::MapDocument(const MapSpec& spec)
   if (mData->map_entity == kInvalidEntity) {
     throw Exception {"could not create map"};
   }
+
+  auto& document_info = registry.add<CDocumentInfo>();
+  document_info.root = mData->map_entity;
+  document_info.active_context = document_info.root;
+  document_info.tile_size = spec.tile_size;
 }
 
 TACTILE_DEFINE_MOVE(MapDocument);

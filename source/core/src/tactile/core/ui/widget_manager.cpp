@@ -31,6 +31,7 @@ void WidgetManager::push(const Model& model, EventDispatcher& dispatcher)
 
   mNewMapDialog.push(model, dispatcher);
   mNewPropertyDialog.push(model, dispatcher);
+  mRenamePropertyDialog.push(model, dispatcher);
 
   push_global_shortcuts(model, dispatcher);
 }
@@ -48,6 +49,11 @@ auto WidgetManager::get_new_map_dialog() -> NewMapDialog&
 auto WidgetManager::get_new_property_dialog() -> NewPropertyDialog&
 {
   return mNewPropertyDialog;
+}
+
+auto WidgetManager::get_rename_property_dialog() -> RenamePropertyDialog&
+{
+  return mRenamePropertyDialog;
 }
 
 }  // namespace tactile::ui

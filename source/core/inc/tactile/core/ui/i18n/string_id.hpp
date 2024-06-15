@@ -56,6 +56,7 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kApply,
   kClose,
   kCreate,
+  kRename,
   kUndo,
   kRedo,
   kSave,
