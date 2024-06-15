@@ -7,6 +7,7 @@
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/log/logger.hpp"
+#include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
 #include "tactile/render/renderer.hpp"
 #include "tactile/render/window.hpp"
@@ -69,6 +70,8 @@ void TactileEditor::on_update()
 }
 
 void TactileEditor::on_framebuffer_scale_changed(const float framebuffer_scale)
-{}
+{
+  ui::reload_fonts(*mRenderer, mModel->get_settings(), framebuffer_scale);
+}
 
 }  // namespace tactile

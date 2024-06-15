@@ -7,9 +7,10 @@
 
 #include "tactile/base/container/array.hpp"
 #include "tactile/core/log/logger.hpp"
+#include "tactile/core/model/settings.hpp"
 #include "tactile/render/renderer.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 inline namespace fonts {
 
 inline constexpr Array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
@@ -17,22 +18,29 @@ inline constexpr Array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
 }  // namespace fonts
 
 void reload_fonts(IRenderer& renderer,
-                  const float font_size,
+                  const Settings& settings,
                   const float framebuffer_scale)
 {
   if (renderer.can_reload_fonts()) {
-    TACTILE_LOG_DEBUG("Reloading fonts (size: {})", font_size);
+    TACTILE_LOG_DEBUG("Reloading fonts (size: {})", settings.font_size);
 
     auto& io = ImGui::GetIO();
     io.Fonts->Clear();
 
-    const auto scaled_font_size = font_size * framebuffer_scale;
+    const auto scaled_font_size = settings.font_size * framebuffer_scale;
 
-    ImFontConfig roboto_config {};
-    roboto_config.SizePixels = scaled_font_size;
-    io.Fonts->AddFontFromFileTTF("assets/fonts/roboto/Roboto-Regular.ttf",
-                                 scaled_font_size,
-                                 &roboto_config);
+    if (settings.use_built_in_font) {
+      ImFontConfig default_config {};
+      default_config.SizePixels = scaled_font_size;
+      io.Fonts->AddFontDefault(&default_config);
+    }
+    else {
+      ImFontConfig roboto_config {};
+      roboto_config.SizePixels = scaled_font_size;
+      io.Fonts->AddFontFromFileTTF("assets/fonts/roboto/Roboto-Regular.ttf",
+                                   scaled_font_size,
+                                   &roboto_config);
+    }
 
     ImFontConfig fa_config {};
     fa_config.MergeMode = true;
@@ -54,8 +62,9 @@ void reload_fonts(IRenderer& renderer,
     ImGui::GetStyle().ScaleAllSizes(1.0f);
   }
   else {
-    TACTILE_LOG_WARN("Tried to reload fonts, but the renderer didn't support it");
+    TACTILE_LOG_WARN(
+        "Tried to reload fonts, but the renderer didn't support it");
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

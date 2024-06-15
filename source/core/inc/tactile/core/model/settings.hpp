@@ -22,6 +22,9 @@ struct Settings final
   /** The UI font size. */
   float font_size;
 
+  /** Whether the built-in Dear ImGui font should be used. */
+  bool use_built_in_font : 1;
+
   /** Whether verbose events (e.g., some mouse events) should be logged. */
   bool log_verbose_events : 1;
 };

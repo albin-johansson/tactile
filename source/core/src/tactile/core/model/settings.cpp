@@ -8,6 +8,7 @@ inline namespace settings {
 inline constexpr LanguageID kLanguageDefault = LanguageID::kAmericanEnglish;
 inline constexpr usize kCommandCapacityDefault = 100;
 inline constexpr float kFontSizeDefault = 13.0f;
+inline constexpr bool kUseBuiltInFontDefault = true;
 inline constexpr bool kLogVerboseEventsDefault = false;
 
 }  // namespace settings
@@ -18,6 +19,7 @@ auto get_default_settings() -> Settings
     .language = kLanguageDefault,
     .command_capacity = kCommandCapacityDefault,
     .font_size = kFontSizeDefault,
+    .use_built_in_font = kUseBuiltInFontDefault,
     .log_verbose_events = kLogVerboseEventsDefault,
   };
 }

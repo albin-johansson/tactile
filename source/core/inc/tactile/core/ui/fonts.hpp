@@ -7,6 +7,9 @@
 namespace tactile {
 
 class IRenderer;
+struct Settings;
+
+namespace ui {
 
 /**
  * Attempts to reload the font texture atlas.
@@ -15,11 +18,12 @@ class IRenderer;
  * This function does nothing if the renderer doesn't support font reloading.
  *
  * \param renderer          The active renderer.
- * \param font_size         The font size to use.
+ * \param settings          The current settings.
  * \param framebuffer_scale The display framebuffer scale.
  */
 void reload_fonts(IRenderer& renderer,
-                  float font_size,
+                  const Settings& settings,
                   float framebuffer_scale);
 
+}  // namespace ui
 }  // namespace tactile
