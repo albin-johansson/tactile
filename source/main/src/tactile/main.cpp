@@ -24,6 +24,7 @@
 #include "tactile/core/platform/win32.hpp"
 #include "tactile/core/platform/window.hpp"
 #include "tactile/core/tactile_editor.hpp"
+#include "tactile/core/ui/common/style.hpp"
 #include "tactile/core/ui/imgui_context.hpp"
 #include "tactile/core/util/scope_guard.hpp"
 #include "tactile/render/renderer.hpp"
@@ -121,6 +122,8 @@ auto _run() -> int
   auto& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+  ui::apply_custom_style(ImGui::GetStyle());
 
   const auto renderer_functions =
       _load_renderer_functions("tactile-opengl" TACTILE_DLL_EXT);

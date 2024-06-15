@@ -12,9 +12,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * RAII helper for the PushStyleVar/PopStyleVar ImGui functions.
  */
@@ -62,6 +59,13 @@ class StyleColorScope final
 };
 
 /**
+ * Applies the custom editor style options to a style descriptor.
+ *
+ * \param style The target style descriptor.
+ */
+void apply_custom_style(ImGuiStyle& style);
+
+/**
  * Returns the minimum offset required to align labeled widgets.
  *
  * \tparam Args The string pack types.
@@ -79,7 +83,5 @@ template <typename... Args>
   const auto spacing = style.ItemSpacing.x * 2.0f;
   return spacing + std::max({ImGui::CalcTextSize(strings).x...});
 }
-
-/// \}
 
 }  // namespace tactile::ui
