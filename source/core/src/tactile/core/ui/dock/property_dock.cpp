@@ -28,6 +28,7 @@ void _push_property_table_context_menu_content(const Language& language,
 {
   if (const DisabledScope disable_if {prop_name != nullptr};
       ImGui::Selectable(language.get(StringID::kCreateProperty))) {
+    dispatcher.push<ShowNewPropertyDialogEvent>(context_entity);
   }
 
   ImGui::Separator();
