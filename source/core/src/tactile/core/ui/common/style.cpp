@@ -93,7 +93,7 @@ void apply_custom_style(ImGuiStyle& style)
   style.SelectableTextAlign = ImVec2 {0.0f, 0.5f};
   style.SeparatorTextBorderSize = 1.0f;
   style.SeparatorTextAlign = ImVec2 {0.5f, 0.5f};
-  style.SeparatorTextPadding = ImVec2 {0.0f, 6.0f};
+  style.SeparatorTextPadding = ImVec2 {0.0f, 2.0f};
   // style.LogSliderDeadzone = 4.0f;
 
   // Docking

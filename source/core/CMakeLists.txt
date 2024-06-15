@@ -169,6 +169,8 @@ target_sources(tactile-core
                "${TACTIlE_CORE_SRC_PREFIX}/ui/common/icons.cpp"
                "${TACTIlE_CORE_INC_PREFIX}/ui/common/menus.hpp"
                "${TACTIlE_CORE_SRC_PREFIX}/ui/common/menus.cpp"
+               "${TACTIlE_CORE_INC_PREFIX}/ui/common/overlays.hpp"
+               "${TACTIlE_CORE_SRC_PREFIX}/ui/common/overlays.cpp"
                "${TACTIlE_CORE_INC_PREFIX}/ui/common/popups.hpp"
                "${TACTIlE_CORE_SRC_PREFIX}/ui/common/popups.cpp"
                "${TACTIlE_CORE_INC_PREFIX}/ui/common/style.hpp"
