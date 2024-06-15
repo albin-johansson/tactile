@@ -51,7 +51,7 @@ auto push_string_input(const char* id, const Attribute::string_type& str)
   // Make sure we leave one character available for the NUL terminator.
   const auto copy_count = std::min(str.size(), buffer.size() - 1);
 
-  auto* copy_end = std::copy_n(str.begin(), copy_count, buffer.begin());
+  auto copy_end = std::copy_n(str.begin(), copy_count, buffer.begin());
   *copy_end = '\0';
 
   ImGui::SetNextItemWidth(-1.0f);
