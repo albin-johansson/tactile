@@ -10,6 +10,7 @@
 #include "tactile/core/event/file_event_handler.hpp"
 #include "tactile/core/event/layer_event_handler.hpp"
 #include "tactile/core/event/map_event_handler.hpp"
+#include "tactile/core/event/property_event_handler.hpp"
 #include "tactile/core/event/view_event_handler.hpp"
 #include "tactile/core/event/viewport_event_handler.hpp"
 #include "tactile/core/model/model.hpp"
@@ -29,7 +30,7 @@ class TactileEditor final : public IEngineApp
 {
  public:
   TACTILE_DELETE_COPY(TactileEditor);
-  TACTILE_DECLARE_MOVE(TactileEditor);
+  TACTILE_DELETE_MOVE(TactileEditor);
 
   TactileEditor(IWindow* window, IRenderer* renderer);
 
@@ -76,6 +77,9 @@ class TactileEditor final : public IEngineApp
 
   /** Delegate for layer events. */
   Optional<LayerEventHandler> mLayerEventHandler {};
+
+  /** Delegate for property events. */
+  Optional<PropertyEventHandler> mPropertyEventHandler {};
 
   /** Delegate for viewport events. */
   Optional<ViewportEventHandler> mViewportEventHandler {};

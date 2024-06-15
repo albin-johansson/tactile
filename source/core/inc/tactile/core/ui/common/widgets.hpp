@@ -99,6 +99,41 @@ class TooltipScope final
 };
 
 /**
+ * RAII helper for the BeginCombo/EndCombo ImGui functions.
+ */
+class ComboScope final
+{
+ public:
+  TACTILE_DELETE_COPY(ComboScope);
+  TACTILE_DELETE_MOVE(ComboScope);
+
+  /**
+   * Pushes a combo to the widget stack.
+   *
+   * \param label   The associated label.
+   * \param preview The preview (selected) value.
+   * \param flags   The flags to use.
+   */
+  ComboScope(const char* label,
+             const char* preview,
+             ImGuiComboFlags flags = ImGuiComboFlags_None);
+
+  ~ComboScope() noexcept;
+
+  /**
+   * Indicates whether the combo is open.
+   *
+   * \return
+   * True if the combo is open; false otherwise.
+   */
+  [[nodiscard]]
+  auto is_open() const -> bool;
+
+ private:
+  bool mIsOpen;
+};
+
+/**
  * Calculates the size of a standard widget (e.g., a button) with a given label.
  *
  * \param text The widget label.

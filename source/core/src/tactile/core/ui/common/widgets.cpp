@@ -75,6 +75,24 @@ TooltipScope::~TooltipScope() noexcept
   ImGui::EndTooltip();
 }
 
+ComboScope::ComboScope(const char* label,
+                       const char* preview,
+                       const ImGuiComboFlags flags)
+  : mIsOpen {ImGui::BeginCombo(label, preview, flags)}
+{}
+
+ComboScope::~ComboScope() noexcept
+{
+  if (mIsOpen) {
+    ImGui::EndCombo();
+  }
+}
+
+auto ComboScope::is_open() const -> bool
+{
+  return mIsOpen;
+}
+
 auto get_widget_size(const char* text) -> Float2
 {
   TACTILE_ASSERT(text != nullptr);

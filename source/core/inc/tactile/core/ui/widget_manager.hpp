@@ -4,6 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/dialog/new_map_dialog.hpp"
+#include "tactile/core/ui/dialog/new_property_dialog.hpp"
 #include "tactile/core/ui/dock/component_dock.hpp"
 #include "tactile/core/ui/dock/dock_space.hpp"
 #include "tactile/core/ui/dock/document_dock.hpp"
@@ -52,6 +53,15 @@ class WidgetManager final
   [[nodiscard]]
   auto get_new_map_dialog() -> NewMapDialog&;
 
+  /**
+   * Returns the property creation dialog.
+   *
+   * \return
+   * The associated property creation dialog.
+   */
+  [[nodiscard]]
+  auto get_new_property_dialog() -> NewPropertyDialog&;
+
  private:
   MenuBar mMenuBar {};
   DockSpace mDockSpace {};
@@ -62,6 +72,7 @@ class WidgetManager final
   ComponentDock mComponentDock {};
   LogDock mLogDock {};
   NewMapDialog mNewMapDialog {};
+  NewPropertyDialog mNewPropertyDialog {};
 };
 
 }  // namespace ui

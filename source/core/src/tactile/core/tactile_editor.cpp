@@ -13,8 +13,6 @@
 
 namespace tactile {
 
-TACTILE_DEFINE_MOVE(TactileEditor);
-
 TactileEditor::TactileEditor(IWindow* window, IRenderer* renderer)
   : mWindow {require_not_null(window, "null window")},
     mRenderer {require_not_null(renderer, "null renderer")}
@@ -46,6 +44,8 @@ void TactileEditor::on_startup()
   auto& view_event_handler = mViewEventHandler.emplace(&model, &mWidgetManager);
   auto& map_event_handler = mMapEventHandler.emplace(&model, &mWidgetManager);
   auto& layer_event_handler = mLayerEventHandler.emplace(&model);
+  auto& property_event_handler =
+      mPropertyEventHandler.emplace(&model, &mWidgetManager);
   auto& viewport_event_handler = mViewportEventHandler.emplace(&model);
 
   file_event_handler.install(mEventDispatcher);
@@ -53,6 +53,7 @@ void TactileEditor::on_startup()
   view_event_handler.install(mEventDispatcher);
   map_event_handler.install(mEventDispatcher);
   layer_event_handler.install(mEventDispatcher);
+  property_event_handler.install(mEventDispatcher);
   viewport_event_handler.install(mEventDispatcher);
 }
 
