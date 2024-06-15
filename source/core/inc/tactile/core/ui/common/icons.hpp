@@ -61,6 +61,7 @@ enum class Icon : uint8
   kDebug,
   kPerformance,
   kStorage,
+  kEllipsis,
 };
 
 /**

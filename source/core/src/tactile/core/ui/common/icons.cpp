@@ -52,6 +52,7 @@
 #define TACTILE_ICON_DEBUG        ICON_FA_BUG_SLASH
 #define TACTILE_ICON_PERFORMANCE  ICON_FA_GAUGE_HIGH
 #define TACTILE_ICON_STORAGE      ICON_FA_DATABASE
+#define TACTILE_ICON_ELLIPSIS     ICON_FA_ELLIPSIS
 // clang-format on
 
 namespace tactile::ui {
@@ -106,6 +107,7 @@ auto to_string(const Icon icon) noexcept -> const char*
     case Icon::kDebug:       return TACTILE_ICON_DEBUG;
     case Icon::kPerformance: return TACTILE_ICON_PERFORMANCE;
     case Icon::kStorage:     return TACTILE_ICON_STORAGE;
+    case Icon::kEllipsis:    return TACTILE_ICON_ELLIPSIS;
   }
 
   return "";
@@ -161,6 +163,7 @@ auto to_prefix_string(const Icon icon) noexcept -> const char*
     case Icon::kDebug:       return TACTILE_ICON_DEBUG " ";
     case Icon::kPerformance: return TACTILE_ICON_PERFORMANCE " ";
     case Icon::kStorage:     return TACTILE_ICON_STORAGE " ";
+    case Icon::kEllipsis:    return TACTILE_ICON_ELLIPSIS " ";
   }
 
   return "";

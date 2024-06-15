@@ -2,9 +2,16 @@
 
 #include "tactile/core/ui/common/attribute_widgets.hpp"
 
-#include <utility>  // to_underlying
+#include <algorithm>  // copy_n, min
+#include <cstring>    // strlen
+#include <utility>    // to_underlying
+
+#include <imgui.h>
 
 #include "tactile/base/container/array.hpp"
+#include "tactile/base/int.hpp"
+#include "tactile/core/platform/file_dialog.hpp"
+#include "tactile/core/ui/common/buttons.hpp"
 #include "tactile/core/ui/common/widgets.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
@@ -12,6 +19,8 @@ namespace tactile::ui {
 inline namespace attribute_widgets {
 
 using AttributeTypeNameArray = Array<const char*, 13>;
+
+inline constexpr usize kStringCharLimit = 128;
 
 auto _push_attribute_type_selectable(const AttributeTypeNameArray& names,
                                      const AttributeType selectable_type,
@@ -30,6 +39,297 @@ auto _push_attribute_type_selectable(const AttributeTypeNameArray& names,
 }
 
 }  // namespace attribute_widgets
+
+auto push_string_input(const char* id, const Attribute::string_type& str)
+    -> Optional<Attribute::string_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::string_type> new_str {};
+
+  Array<char, kStringCharLimit + 1> buffer;  // NOLINT
+
+  // Make sure we leave one character available for the NUL terminator.
+  const auto copy_count = std::min(str.size(), buffer.size() - 1);
+
+  auto* copy_end = std::copy_n(str.begin(), copy_count, buffer.begin());
+  *copy_end = '\0';
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::InputText("##Str", buffer.data(), buffer.size())) {
+    const auto new_str_length = std::strlen(buffer.data());
+    new_str = Attribute::string_type {buffer.data(), new_str_length};
+  }
+
+  return new_str;
+}
+
+auto push_int_input(const char* id,
+                    Attribute::int_type value) -> Optional<Attribute::int_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::int_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragInt("##Int", &value)) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_int2_input(const char* id, Attribute::int2_type value)
+    -> Optional<Attribute::int2_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::int2_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragInt2("##Int2", value.data())) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_int3_input(const char* id, Attribute::int3_type value)
+    -> Optional<Attribute::int3_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::int3_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragInt3("##Int3", value.data())) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_int4_input(const char* id, Attribute::int4_type value)
+    -> Optional<Attribute::int4_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::int4_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragInt4("##Int4", value.data())) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_float_input(const char* id, Attribute::float_type value)
+    -> Optional<Attribute::float_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::float_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragFloat("##Float", &value)) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_float2_input(const char* id, Attribute::float2_type value)
+    -> Optional<Attribute::float2_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::float2_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragFloat2("##Float2", value.data())) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_float3_input(const char* id, Attribute::float3_type value)
+    -> Optional<Attribute::float3_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::float3_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragFloat3("##Float3", value.data())) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_float4_input(const char* id, Attribute::float4_type value)
+    -> Optional<Attribute::float4_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::float4_type> new_value {};
+
+  ImGui::SetNextItemWidth(-1.0f);
+  if (ImGui::DragFloat4("##Float4", value.data())) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_bool_input(const char* id, bool value) -> Optional<bool>
+{
+  const IdScope scope {id};
+  Optional<bool> new_value {};
+
+  if (ImGui::Checkbox("##Bool", &value)) {
+    new_value = value;
+  }
+
+  return new_value;
+}
+
+auto push_path_input(const char* id, const Attribute::path_type& path)
+    -> Optional<Attribute::path_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::path_type> new_path {};
+
+#if TACTILE_OS_WINDOWS
+  const auto path_string = path.string();
+  const auto* path_c_str = path_string.c_str();
+#else
+  const auto* path_c_str = path.c_str();
+#endif
+
+  if (push_icon_button(Icon::kEllipsis)) {
+    if (auto selected_path = FileDialog::open_file()) {
+      new_path = Attribute::path_type {std::move(*selected_path)};
+    }
+  }
+
+  ImGui::SameLine();
+
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted(path_c_str);
+
+  return new_path;
+}
+
+auto push_color_input(const char* id, const Attribute::color_type& color)
+    -> Optional<Attribute::color_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::color_type> new_color {};
+
+  const auto flags = ImGuiColorEditFlags_NoInputs |
+                     ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_AlphaBar;
+
+  auto rgba_array = color.normalized();
+  if (ImGui::ColorEdit4("##Color", rgba_array.data(), flags)) {
+    new_color = Attribute::color_type::from(rgba_array);
+  }
+
+  return new_color;
+}
+
+auto push_objref_input(const char* id, const Attribute::objref_type& object)
+    -> Optional<Attribute::objref_type>
+{
+  const IdScope scope {id};
+  Optional<Attribute::objref_type> new_object {};
+
+  // TODO
+  ImGui::Text("%i", object.value);
+
+  return new_object;
+}
+
+// NOLINTNEXTLINE(*-cognitive-complexity)
+auto push_attribute_input(const char* id,
+                          const Attribute& attribute) -> Optional<Attribute>
+{
+  switch (attribute.get_type()) {
+    case AttributeType::kStr: {
+      if (auto new_value = push_string_input(id, attribute.as_string())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kInt: {
+      if (auto new_value = push_int_input(id, attribute.as_int())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kInt2: {
+      if (auto new_value = push_int2_input(id, attribute.as_int2())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kInt3: {
+      if (auto new_value = push_int3_input(id, attribute.as_int3())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kInt4: {
+      if (auto new_value = push_int4_input(id, attribute.as_int4())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kFloat: {
+      if (auto new_value = push_float_input(id, attribute.as_float())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kFloat2: {
+      if (auto new_value = push_float2_input(id, attribute.as_float2())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kFloat3: {
+      if (auto new_value = push_float3_input(id, attribute.as_float3())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kFloat4: {
+      if (auto new_value = push_float4_input(id, attribute.as_float4())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kBool: {
+      if (auto new_value = push_bool_input(id, attribute.as_bool())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kPath: {
+      if (auto new_value = push_path_input(id, attribute.as_path())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kColor: {
+      if (auto new_value = push_color_input(id, attribute.as_color())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+    case AttributeType::kObject: {
+      if (auto new_value = push_objref_input(id, attribute.as_object())) {
+        return Attribute {*new_value};
+      }
+      break;
+    }
+  }
+
+  return kNone;
+}
 
 auto push_attribute_type_combo(const Language& language,
                                const char* label,
