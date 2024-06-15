@@ -45,6 +45,7 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kOrientation,
   kName,
   kType,
+  kValue,
   kTileWidth,
   kTileHeight,
   kLightThemes,
@@ -127,6 +128,9 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kResize,
   kFixInvalidTiles,
   kCreateProperty,
+  kRemoveProperty,
+  kRenameProperty,
+  kChangePropertyType,
   kShowMetadata,
   kReportBug,
   kAboutTactile,
@@ -135,6 +139,11 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kOpenStyleEditor,
   kOpenDemoWindow,
   kOpenStorageDir,
+
+  // Hint strings.
+  kContextHasNoProperties,
+  kContextHasNoComponents,
+  kMapHasNoLayers,
 
   /** The number of string identifiers, not a string itself. */
   kMAX

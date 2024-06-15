@@ -10,9 +10,10 @@
 #define TACTILE_ICON_CLOSE_FILE   ICON_FA_FILE_CIRCLE_MINUS
 #define TACTILE_ICON_SAVE         ICON_FA_FLOPPY_DISK
 #define TACTILE_ICON_SAVE_AS      ICON_FA_COPY
+#define TACTILE_ICON_EDIT         ICON_FA_PEN_TO_SQUARE
 #define TACTILE_ICON_QUIT         ICON_FA_POWER_OFF
-#define TACTILE_ICON_CREATE       ICON_FA_CIRCLE_PLUS
-#define TACTILE_ICON_REMOVE       ICON_FA_CIRCLE_MINUS
+#define TACTILE_ICON_CREATE       ICON_FA_SQUARE_PLUS
+#define TACTILE_ICON_REMOVE       ICON_FA_SQUARE_MINUS
 #define TACTILE_ICON_DUPLICATE    ICON_FA_CLONE
 #define TACTILE_ICON_UNDO         ICON_FA_ROTATE_LEFT
 #define TACTILE_ICON_REDO         ICON_FA_ROTATE_RIGHT
@@ -65,6 +66,7 @@ auto to_string(const Icon icon) noexcept -> const char*
     case Icon::kCloseFile:   return TACTILE_ICON_CLOSE_FILE;
     case Icon::kSave:        return TACTILE_ICON_SAVE;
     case Icon::kSaveAs:      return TACTILE_ICON_SAVE_AS;
+    case Icon::kEdit:        return TACTILE_ICON_EDIT;
     case Icon::kQuit:        return TACTILE_ICON_QUIT;
     case Icon::kCreate:      return TACTILE_ICON_CREATE;
     case Icon::kRemove:      return TACTILE_ICON_REMOVE;
@@ -121,6 +123,7 @@ auto to_prefix_string(const Icon icon) noexcept -> const char*
     case Icon::kCloseFile:   return TACTILE_ICON_CLOSE_FILE " ";
     case Icon::kSave:        return TACTILE_ICON_SAVE " ";
     case Icon::kSaveAs:      return TACTILE_ICON_SAVE_AS " ";
+    case Icon::kEdit:        return TACTILE_ICON_EDIT " ";
     case Icon::kQuit:        return TACTILE_ICON_QUIT " ";
     case Icon::kCreate:      return TACTILE_ICON_CREATE " ";
     case Icon::kRemove:      return TACTILE_ICON_REMOVE " ";

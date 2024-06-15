@@ -134,6 +134,41 @@ class ComboScope final
 };
 
 /**
+ * RAII helper for the BeginTable/EndTable ImGui functions.
+ */
+class TableScope final
+{
+ public:
+  TACTILE_DELETE_COPY(TableScope);
+  TACTILE_DELETE_MOVE(TableScope);
+
+  /**
+   * Pushes a table to the widget stack.
+   *
+   * \param label   The associated label.
+   * \param columns The number of columns in the table.
+   * \param flags   The flags to use.
+   */
+  TableScope(const char* label,
+             int columns,
+             ImGuiTableFlags flags = ImGuiTableFlags_None);
+
+  ~TableScope() noexcept;
+
+  /**
+   * Indicates whether the table is open.
+   *
+   * \return
+   * True if the table is open; false otherwise.
+   */
+  [[nodiscard]]
+  auto is_open() const -> bool;
+
+ private:
+  bool mIsOpen;
+};
+
+/**
  * Calculates the size of a standard widget (e.g., a button) with a given label.
  *
  * \param text The widget label.

@@ -19,6 +19,18 @@ struct ShowNewPropertyDialogEvent final
 };
 
 /**
+ * Event for opening the dialog for renaming a property.
+ */
+struct ShowRenamePropertyDialogEvent final
+{
+  /** The associated meta context. */
+  EntityID context_entity;
+
+  /** The target property. */
+  String name;
+};
+
+/**
  * Event for creating and attaching a property to a meta context.
  */
 struct CreatePropertyEvent final
@@ -31,6 +43,48 @@ struct CreatePropertyEvent final
 
   /** The initial value of the property. */
   Attribute value;
+};
+
+/**
+ * Event for updating the value of a property in a meta context.
+ */
+struct UpdatePropertyEvent final
+{
+  /** The target meta context. */
+  EntityID context_entity;
+
+  /** The target property name. */
+  String name;
+
+  /** The new value of the property. */
+  Attribute value;
+};
+
+/**
+ * Event for removing a property from a meta context.
+ */
+struct RemovePropertyEvent final
+{
+  /** The target meta context. */
+  EntityID context_entity;
+
+  /** The target property name. */
+  String name;
+};
+
+/**
+ * Event for renaming a property in a meta context.
+ */
+struct RenamePropertyEvent final
+{
+  /** The target meta context. */
+  EntityID context_entity;
+
+  /** The old property name. */
+  String old_name;
+
+  /** The new property name. */
+  String new_name;
 };
 
 }  // namespace tactile

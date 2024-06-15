@@ -64,6 +64,7 @@ auto _get_noun_names() -> HashMap<StringView, StringID>
     {"orientation", StringID::kOrientation},
     {"name", StringID::kName},
     {"type", StringID::kType},
+    {"value", StringID::kValue},
     {"tile_width", StringID::kTileWidth},
     {"tile_height", StringID::kTileHeight},
     {"light_themes", StringID::kLightThemes},
@@ -122,6 +123,9 @@ auto _get_action_names() -> HashMap<StringView, StringID>
     {"remove_column", StringID::kRemoveColumn},
     {"resize", StringID::kResize},
     {"create_property", StringID::kCreateProperty},
+    {"remove_property", StringID::kRemoveProperty},
+    {"rename_property", StringID::kRenameProperty},
+    {"change_property_type", StringID::kChangePropertyType},
     {"fix_invalid_tiles", StringID::kFixInvalidTiles},
     {"show_metadata", StringID::kShowMetadata},
     {"report_bug", StringID::kReportBug},
@@ -131,6 +135,16 @@ auto _get_action_names() -> HashMap<StringView, StringID>
     {"open_style_editor", StringID::kOpenStyleEditor},
     {"open_demo_window", StringID::kOpenDemoWindow},
     {"open_storage_dir", StringID::kOpenStorageDir},
+  };
+}
+
+[[nodiscard]]
+auto _get_hint_names() -> HashMap<StringView, StringID>
+{
+  return {
+    {"context_has_no_properties", StringID::kContextHasNoProperties},
+    {"context_has_no_components", StringID::kContextHasNoComponents},
+    {"map_has_no_layers", StringID::kMapHasNoLayers},
   };
 }
 
@@ -216,6 +230,7 @@ LanguageParser::LanguageParser()
     mNounNames {_get_noun_names()},
     mAdjectiveNames {_get_adjective_names()},
     mActionNames {_get_action_names()},
+    mHintNames {_get_hint_names()},
     mMenuNames {_get_menu_names()},
     mWidgetNames {_get_widget_names()}
 {}
@@ -237,6 +252,7 @@ auto LanguageParser::parse(const LanguageID id,
         _parse_section(ini, "noun", mNounNames, strings);
         _parse_section(ini, "adjective", mAdjectiveNames, strings);
         _parse_section(ini, "action", mActionNames, strings);
+        _parse_section(ini, "hint", mHintNames, strings);
         _parse_section(ini, "menu", mMenuNames, strings);
         _parse_section(ini, "widget", mWidgetNames, strings);
 

@@ -11,9 +11,6 @@
 
 namespace tactile {
 
-/// \addtogroup meta
-/// \{
-
 /**
  * Represents an attribute bundle.
  *
@@ -37,7 +34,5 @@ struct CMeta final
   /** The attached attribute bundles. */
   HashMap<UUID, AttributeBundle> components;
 };
-
-/// \}
 
 }  // namespace tactile

@@ -75,6 +75,10 @@ void Language::add_icons()
   inject_icon(StringID::kOpenDemoWindow, to_prefix_string(Icon::kToolbox));
   inject_icon(StringID::kOpenStorageDir, to_prefix_string(Icon::kOpen));
 
+  inject_icon(StringID::kCreateProperty, to_prefix_string(Icon::kCreate));
+  inject_icon(StringID::kRemoveProperty, to_prefix_string(Icon::kRemove));
+  inject_icon(StringID::kRenameProperty, to_prefix_string(Icon::kEdit));
+
   inject_icon(StringID::kShowMetadata, to_prefix_string(Icon::kInfo));
 }
 

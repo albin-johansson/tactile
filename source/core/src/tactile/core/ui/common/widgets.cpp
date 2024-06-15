@@ -93,6 +93,24 @@ auto ComboScope::is_open() const -> bool
   return mIsOpen;
 }
 
+TableScope::TableScope(const char* label,
+                       const int columns,
+                       const ImGuiTableFlags flags)
+  : mIsOpen {ImGui::BeginTable(label, columns, flags)}
+{}
+
+TableScope::~TableScope() noexcept
+{
+  if (mIsOpen) {
+    ImGui::EndTable();
+  }
+}
+
+auto TableScope::is_open() const -> bool
+{
+  return mIsOpen;
+}
+
 auto get_widget_size(const char* text) -> Float2
 {
   TACTILE_ASSERT(text != nullptr);

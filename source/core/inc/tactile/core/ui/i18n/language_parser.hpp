@@ -50,6 +50,7 @@ class LanguageParser final
   HashMap<StringView, StringID> mNounNames {};
   HashMap<StringView, StringID> mAdjectiveNames {};
   HashMap<StringView, StringID> mActionNames {};
+  HashMap<StringView, StringID> mHintNames {};
   HashMap<StringView, StringID> mMenuNames {};
   HashMap<StringView, StringID> mWidgetNames {};
 };

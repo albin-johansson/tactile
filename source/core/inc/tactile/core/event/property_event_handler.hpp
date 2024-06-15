@@ -14,7 +14,11 @@ class WidgetManager;
 }  // namespace ui
 
 struct ShowNewPropertyDialogEvent;
+struct ShowRenamePropertyDialogEvent;
 struct CreatePropertyEvent;
+struct UpdatePropertyEvent;
+struct RemovePropertyEvent;
+struct RenamePropertyEvent;
 
 /**
  * Handles events related to meta context properties.
@@ -45,11 +49,40 @@ class PropertyEventHandler final
   void on_show_new_property_dialog(const ShowNewPropertyDialogEvent& event);
 
   /**
+   * Opens the property rename dialog.
+   *
+   * \param event The associated event.
+   */
+  void on_show_rename_property_dialog(
+      const ShowRenamePropertyDialogEvent& event);
+
+  /**
    * Creates a new property.
    *
    * \param event The associated event.
    */
   void on_create_property(const CreatePropertyEvent& event);
+
+  /**
+   * Updates an existing property.
+   *
+   * \param event The associated event.
+   */
+  void on_update_property(const UpdatePropertyEvent& event);
+
+  /**
+   * Removes an existing property.
+   *
+   * \param event The associated event.
+   */
+  void on_remove_property(const RemovePropertyEvent& event);
+
+  /**
+   * Renames an existing property.
+   *
+   * \param event The associated event.
+   */
+  void on_rename_property(const RenamePropertyEvent& event);
 
  private:
   Model* mModel;

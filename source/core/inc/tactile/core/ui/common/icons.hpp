@@ -19,6 +19,7 @@ enum class Icon : uint8
   kOpen,
   kSave,
   kSaveAs,
+  kEdit,
   kQuit,
   kCreate,
   kRemove,
