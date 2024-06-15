@@ -47,9 +47,12 @@ auto push_icon_button(const Icon icon,
   const auto* icon_string = to_string(icon);
 
   const auto& style = ImGui::GetStyle();
-  const auto side_length = ImGui::GetFontSize() + style.ItemSpacing.y * 2.0f;
 
-  return push_button(icon_string, tooltip, enabled, side_length, side_length);
+  const auto font_size = ImGui::GetFontSize();
+  const auto width = font_size + style.FramePadding.x * 2.0f;
+  const auto height = font_size + style.FramePadding.y * 2.0f;
+
+  return push_button(icon_string, tooltip, enabled, width, height);
 }
 
 }  // namespace tactile::ui
