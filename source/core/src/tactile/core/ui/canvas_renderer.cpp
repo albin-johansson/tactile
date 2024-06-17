@@ -11,7 +11,6 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/meta/color.hpp"
 #include "tactile/core/numeric/vec_common.hpp"
-#include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
@@ -74,15 +73,16 @@ auto _get_render_bounds(const VisibleTileRegion& tiles,
 
 }  // namespace renderer
 
-CanvasRenderer::CanvasRenderer(const Window& window,
+CanvasRenderer::CanvasRenderer(const Float2& canvas_tl,
+                               const Float2& canvas_br,
                                const MatrixExtent& extent,
                                const Int2& tile_size,
                                const CViewport& viewport)
   : mExtent {extent},
     mViewportPos {viewport.pos},
     mCanvasTileSize {vec_cast<Float2>(tile_size) * viewport.scale},
-    mWindowTL {window.get_pos()},
-    mWindowBR {mWindowTL + window.get_size()},
+    mWindowTL {canvas_tl},
+    mWindowBR {canvas_br},
     mVisibleRegion {_get_visible_region(mViewportPos, mWindowBR - mWindowTL)},
     mVisibleTiles {_get_visible_tiles(mVisibleRegion, mCanvasTileSize)},
     mRenderBounds {_get_render_bounds(mVisibleTiles, mExtent)}

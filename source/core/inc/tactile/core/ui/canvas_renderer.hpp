@@ -19,8 +19,6 @@ class Registry;
 
 namespace ui {
 
-class Window;
-
 /**
  * Provides the canvas rendering API.
  *
@@ -76,12 +74,14 @@ class CanvasRenderer final
   /**
    * Creates a renderer.
    *
-   * \param window    The associated window.
+   * \param canvas_tl The top-left position of the canvas.
+   * \param canvas_br The bottom-right position of the canvas.
    * \param extent    The current extent of the content.
    * \param tile_size The logical tile size.
    * \param viewport  The state of the viewport.
    */
-  CanvasRenderer(const Window& window,
+  CanvasRenderer(const Float2& canvas_tl,
+                 const Float2& canvas_br,
                  const MatrixExtent& extent,
                  const Int2& tile_size,
                  const CViewport& viewport);
