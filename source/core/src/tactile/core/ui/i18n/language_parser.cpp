@@ -87,6 +87,7 @@ auto _get_action_names() -> HashMap<StringView, StringID>
 {
   return {
     {"create_map", StringID::kCreateMap},
+    {"create_tileset", StringID::kCreateTileset},
     {"open", StringID::kOpen},
     {"open_map", StringID::kOpenMap},
     {"open_tileset", StringID::kOpenTileset},
@@ -127,6 +128,7 @@ auto _get_action_names() -> HashMap<StringView, StringID>
     {"remove_property", StringID::kRemoveProperty},
     {"rename_property", StringID::kRenameProperty},
     {"change_property_type", StringID::kChangePropertyType},
+    {"select_image", StringID::kSelectImage},
     {"fix_invalid_tiles", StringID::kFixInvalidTiles},
     {"show_metadata", StringID::kShowMetadata},
     {"report_bug", StringID::kReportBug},
@@ -146,6 +148,7 @@ auto _get_hint_names() -> HashMap<StringView, StringID>
     {"context_has_no_properties", StringID::kContextHasNoProperties},
     {"context_has_no_components", StringID::kContextHasNoComponents},
     {"map_has_no_layers", StringID::kMapHasNoLayers},
+    {"select_tileset_image", StringID::kSelectTilesetImage},
   };
 }
 

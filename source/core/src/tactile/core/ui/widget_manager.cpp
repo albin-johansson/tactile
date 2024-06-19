@@ -30,6 +30,7 @@ void WidgetManager::push(const Model& model, EventDispatcher& dispatcher)
   }
 
   mNewMapDialog.push(model, dispatcher);
+  mNewTilesetDialog.push(model, dispatcher);
   mNewPropertyDialog.push(model, dispatcher);
   mRenamePropertyDialog.push(model, dispatcher);
 
@@ -44,6 +45,11 @@ auto WidgetManager::get_dock_space() -> DockSpace&
 auto WidgetManager::get_new_map_dialog() -> NewMapDialog&
 {
   return mNewMapDialog;
+}
+
+auto WidgetManager::get_new_tileset_dialog() -> NewTilesetDialog&
+{
+  return mNewTilesetDialog;
 }
 
 auto WidgetManager::get_new_property_dialog() -> NewPropertyDialog&

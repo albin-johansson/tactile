@@ -34,7 +34,7 @@
 #define TACTILE_ICON_MOVE_RIGHT   ICON_FA_ARROW_RIGHT
 #define TACTILE_ICON_RESIZE       ICON_FA_CROP_SIMPLE
 #define TACTILE_ICON_EYE          ICON_FA_EYE
-#define TACTILE_ICON_TILESET      ICON_FA_IMAGE
+#define TACTILE_ICON_IMAGE        ICON_FA_IMAGE
 #define TACTILE_ICON_EXPORT       ICON_FA_FILE_EXPORT
 #define TACTILE_ICON_ALIGN_CENTER ICON_FA_CROSSHAIRS
 #define TACTILE_ICON_ZOOM_IN      ICON_FA_MAGNIFYING_GLASS_PLUS
@@ -90,7 +90,7 @@ auto to_string(const Icon icon) noexcept -> const char*
     case Icon::kMoveRight:   return TACTILE_ICON_MOVE_RIGHT;
     case Icon::kResize:      return TACTILE_ICON_RESIZE;
     case Icon::kEye:         return TACTILE_ICON_EYE;
-    case Icon::kTileset:     return TACTILE_ICON_TILESET;
+    case Icon::kImage:       return TACTILE_ICON_IMAGE;
     case Icon::kExport:      return TACTILE_ICON_EXPORT;
     case Icon::kAlignCenter: return TACTILE_ICON_ALIGN_CENTER;
     case Icon::kZoomIn:      return TACTILE_ICON_ZOOM_IN;
@@ -147,7 +147,7 @@ auto to_prefix_string(const Icon icon) noexcept -> const char*
     case Icon::kMoveRight:   return TACTILE_ICON_MOVE_RIGHT " ";
     case Icon::kResize:      return TACTILE_ICON_RESIZE " ";
     case Icon::kEye:         return TACTILE_ICON_EYE " ";
-    case Icon::kTileset:     return TACTILE_ICON_TILESET " ";
+    case Icon::kImage:       return TACTILE_ICON_IMAGE " ";
     case Icon::kExport:      return TACTILE_ICON_EXPORT " ";
     case Icon::kAlignCenter: return TACTILE_ICON_ALIGN_CENTER " ";
     case Icon::kZoomIn:      return TACTILE_ICON_ZOOM_IN " ";

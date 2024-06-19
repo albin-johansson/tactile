@@ -89,6 +89,7 @@ enum class StringID : usize  // NOLINT(*-enum-size)
 
   // "Action" strings. These often have embedded leading icons.
   kCreateMap,
+  kCreateTileset,
   kOpen,
   kOpenMap,
   kOpenTileset,
@@ -130,6 +131,7 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kRemoveProperty,
   kRenameProperty,
   kChangePropertyType,
+  kSelectImage,
   kShowMetadata,
   kReportBug,
   kAboutTactile,
@@ -143,6 +145,7 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kContextHasNoProperties,
   kContextHasNoComponents,
   kMapHasNoLayers,
+  kSelectTilesetImage,
 
   /** The number of string identifiers, not a string itself. */
   kMAX

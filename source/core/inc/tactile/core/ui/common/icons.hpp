@@ -41,7 +41,7 @@ enum class Icon : uint8
   kMoveRight,
   kResize,
   kEye,
-  kTileset,
+  kImage,
   kExport,
   kAlignCenter,
   kZoomIn,

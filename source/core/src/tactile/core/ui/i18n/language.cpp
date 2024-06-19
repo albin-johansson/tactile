@@ -59,7 +59,7 @@ void Language::add_icons()
   inject_icon(StringID::kToggleUi, to_prefix_string(Icon::kEye));
 
   // Map
-  inject_icon(StringID::kAddTileset, to_prefix_string(Icon::kTileset));
+  inject_icon(StringID::kAddTileset, to_prefix_string(Icon::kImage));
   inject_icon(StringID::kResize, to_prefix_string(Icon::kResize));
   inject_icon(StringID::kFixInvalidTiles, to_prefix_string(Icon::kRepair));
   inject_icon(StringID::kExportAsMenu, to_prefix_string(Icon::kExport));
@@ -80,6 +80,9 @@ void Language::add_icons()
   inject_icon(StringID::kRenameProperty, to_prefix_string(Icon::kEdit));
 
   inject_icon(StringID::kShowMetadata, to_prefix_string(Icon::kInfo));
+
+  inject_icon(StringID::kCreateTileset, to_prefix_string(Icon::kCreate));
+  inject_icon(StringID::kSelectImage, to_prefix_string(Icon::kImage));
 }
 
 auto Language::get_id() const -> LanguageID

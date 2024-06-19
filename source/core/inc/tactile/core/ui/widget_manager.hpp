@@ -5,6 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/dialog/new_map_dialog.hpp"
 #include "tactile/core/ui/dialog/new_property_dialog.hpp"
+#include "tactile/core/ui/dialog/new_tileset_dialog.hpp"
 #include "tactile/core/ui/dialog/rename_property_dialog.hpp"
 #include "tactile/core/ui/dock/component_dock.hpp"
 #include "tactile/core/ui/dock/dock_space.hpp"
@@ -55,6 +56,15 @@ class WidgetManager final
   auto get_new_map_dialog() -> NewMapDialog&;
 
   /**
+   * Returns the tileset creation dialog.
+   *
+   * \return
+   * The associated tileset creation dialog.
+   */
+  [[nodiscard]]
+  auto get_new_tileset_dialog() -> NewTilesetDialog&;
+
+  /**
    * Returns the property creation dialog.
    *
    * \return
@@ -82,6 +92,7 @@ class WidgetManager final
   ComponentDock mComponentDock {};
   LogDock mLogDock {};
   NewMapDialog mNewMapDialog {};
+  NewTilesetDialog mNewTilesetDialog {};
   NewPropertyDialog mNewPropertyDialog {};
   RenamePropertyDialog mRenamePropertyDialog {};
 };
