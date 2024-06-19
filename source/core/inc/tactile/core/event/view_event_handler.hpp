@@ -7,6 +7,7 @@
 namespace tactile {
 
 class Model;
+class IRenderer;
 class EventDispatcher;
 
 namespace ui {
@@ -24,6 +25,8 @@ struct SetThemeEvent;
 struct IncreaseFontSizeEvent;
 struct DecreaseFontSizeEvent;
 struct ResetFontSizeEvent;
+struct SetFontEvent;
+struct ReloadFontsEvent;
 struct ToggleGridEvent;
 struct ToggleLayerHighlightEvent;
 
@@ -37,9 +40,12 @@ class ViewEventHandler
    * Creates a view event handler.
    *
    * \param model          The associated model, cannot be null.
+   * \param renderer       The associated renderer, cannot be null.
    * \param widget_manager The associated widget manager, cannot be null.
    */
-  ViewEventHandler(Model* model, ui::WidgetManager* widget_manager);
+  ViewEventHandler(Model* model,
+                   IRenderer* renderer,
+                   ui::WidgetManager* widget_manager);
 
   /**
    * Installs the event handler to a given event dispatcher.
@@ -126,6 +132,20 @@ class ViewEventHandler
   void on_reset_font_size(const ResetFontSizeEvent& event);
 
   /**
+   * Sets the selected UI font.
+   *
+   * \param event The associated event.
+   */
+  void on_set_font(const SetFontEvent& event);
+
+  /**
+   * Reloads the current UI fonts.
+   *
+   * \param event The associated event.
+   */
+  void on_reload_fonts(const ReloadFontsEvent& event);
+
+  /**
    * Toggles the visibility of the viewport grid.
    *
    * \param event The associated event.
@@ -141,6 +161,7 @@ class ViewEventHandler
 
  private:
   Model* mModel;
+  IRenderer* mRenderer;
   ui::WidgetManager* mWidgetManager;
 };
 

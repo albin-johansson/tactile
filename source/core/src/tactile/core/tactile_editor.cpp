@@ -6,6 +6,7 @@
 
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/document/map_document.hpp"
+#include "tactile/core/event/view_events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
@@ -42,7 +43,8 @@ void TactileEditor::on_startup()
 
   auto& file_event_handler = mFileEventHandler.emplace(&model);
   auto& edit_event_handler = mEditEventHandler.emplace(&model);
-  auto& view_event_handler = mViewEventHandler.emplace(&model, &mWidgetManager);
+  auto& view_event_handler =
+      mViewEventHandler.emplace(&model, mRenderer, &mWidgetManager);
   auto& map_event_handler = mMapEventHandler.emplace(&model, &mWidgetManager);
   auto& layer_event_handler = mLayerEventHandler.emplace(&model);
   auto& property_event_handler =
@@ -66,12 +68,16 @@ void TactileEditor::on_shutdown()
 void TactileEditor::on_update()
 {
   mEventDispatcher.update();
+}
+
+void TactileEditor::on_render()
+{
   mWidgetManager.push(*mModel, mEventDispatcher);
 }
 
 void TactileEditor::on_framebuffer_scale_changed(const float framebuffer_scale)
 {
-  ui::reload_fonts(*mRenderer, mModel->get_settings(), framebuffer_scale);
+  mEventDispatcher.push<ReloadFontsEvent>(framebuffer_scale);
 }
 
 }  // namespace tactile

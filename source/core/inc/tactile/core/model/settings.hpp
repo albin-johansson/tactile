@@ -4,6 +4,7 @@
 
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/i18n/language_id.hpp"
 
 namespace tactile {
@@ -19,11 +20,11 @@ struct Settings final
   /** The maximum number of changes to track in a document. */
   usize command_capacity;
 
+  /** The font used in the UI. */
+  ui::FontID font;
+
   /** The UI font size. */
   float font_size;
-
-  /** Whether the built-in Dear ImGui font should be used. */
-  bool use_built_in_font : 1;
 
   /** Whether verbose events (e.g., some mouse events) should be logged. */
   bool log_verbose_events : 1;

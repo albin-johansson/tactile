@@ -33,7 +33,7 @@ class Model final
    * \param settings The associated settings.
    * \param language The language that will be used throughout this session.
    */
-  Model(const Settings* settings, const ui::Language* language);
+  Model(Settings* settings, const ui::Language* language);
 
   /**
    * Returns the associated document manager.
@@ -69,7 +69,13 @@ class Model final
    * Returns the associated settings.
    *
    * \return
-   * A pointer to the settings.
+   * The current settings.
+   */
+  [[nodiscard]]
+  auto get_settings() -> Settings&;
+
+  /**
+   * \copydoc get_settings()
    */
   [[nodiscard]]
   auto get_settings() const -> const Settings&;
@@ -104,7 +110,7 @@ class Model final
   }
 
  private:
-  const Settings* mSettings {};
+  Settings* mSettings {};
   const ui::Language* mLanguage {};
   DocumentManager mDocuments {};
 };

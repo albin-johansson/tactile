@@ -26,9 +26,19 @@ class IEngineApp
   virtual void on_shutdown() = 0;
 
   /**
-   * Called once per render frame.
+   * Called once per engine loop iteration, but outside of the render frame.
+   *
+   * \details
+   * This is needed because some resources, such as fonts, cannot be reloaded
+   * during an active render frame. Therefore, such updates need to happen in
+   * this function.
    */
   virtual void on_update() = 0;
+
+  /**
+   * Called once per render frame.
+   */
+  virtual void on_render() = 0;
 
   /**
    * Called whenever the display framebuffer scale changes.

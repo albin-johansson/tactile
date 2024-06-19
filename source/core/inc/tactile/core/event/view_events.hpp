@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/theme.hpp"
 
 namespace tactile {
@@ -74,6 +75,24 @@ struct DecreaseFontSizeEvent final
  */
 struct ResetFontSizeEvent final
 {};
+
+/**
+ * Event for setting the editor font.
+ */
+struct SetFontEvent final
+{
+  /** The selected font. */
+  ui::FontID font;
+};
+
+/**
+ * Event for reloading the current fonts.
+ */
+struct ReloadFontsEvent final
+{
+  /** The current framebuffer scale (usually either 1 or 2). */
+  float framebuffer_scale;
+};
 
 /**
  * Event for toggling the visibility of the viewport grid.

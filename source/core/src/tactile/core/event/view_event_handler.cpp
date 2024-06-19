@@ -2,18 +2,23 @@
 
 #include "tactile/core/event/view_event_handler.hpp"
 
+#include <imgui.h>
+
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/view_events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
+#include "tactile/core/model/settings.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
 namespace tactile {
 
 ViewEventHandler::ViewEventHandler(Model* model,
+                                   IRenderer* renderer,
                                    ui::WidgetManager* widget_manager)
   : mModel {require_not_null(model, "null model")},
+    mRenderer {require_not_null(renderer, "null renderer")},
     mWidgetManager {require_not_null(widget_manager, "null widget manager")}
 {}
 
@@ -35,6 +40,8 @@ void ViewEventHandler::install(EventDispatcher& dispatcher)
   dispatcher.bind<IncreaseFontSizeEvent, &Self::on_increase_font_size>(this);
   dispatcher.bind<DecreaseFontSizeEvent, &Self::on_decrease_font_size>(this);
   dispatcher.bind<ResetFontSizeEvent, &Self::on_reset_font_size>(this);
+  dispatcher.bind<ReloadFontsEvent, &Self::on_reload_fonts>(this);
+  dispatcher.bind<SetFontEvent, &Self::on_set_font>(this);
   dispatcher.bind<ToggleGridEvent, &Self::on_toggle_grid>(this);
   dispatcher.bind<ToggleLayerHighlightEvent, &Self::on_toggle_layer_highlight>(this);
   // clang-format on
@@ -96,6 +103,26 @@ void ViewEventHandler::on_decrease_font_size(const DecreaseFontSizeEvent&)
 void ViewEventHandler::on_reset_font_size(const ResetFontSizeEvent&)
 {
   TACTILE_LOG_TRACE("ResetFontSizeEvent");
+}
+
+void ViewEventHandler::on_set_font(const SetFontEvent& event)
+{
+  TACTILE_LOG_TRACE("SetFontEvent");
+
+  auto& settings = mModel->get_settings();
+  settings.font = event.font;
+
+  const auto& io = ImGui::GetIO();
+  on_reload_fonts(ReloadFontsEvent {
+    .framebuffer_scale = io.DisplayFramebufferScale.x,
+  });
+}
+
+void ViewEventHandler::on_reload_fonts(const ReloadFontsEvent& event)
+{
+  TACTILE_LOG_TRACE("ReloadFontsEvent(framebuffer scale: {})",
+                    event.framebuffer_scale);
+  ui::reload_fonts(*mRenderer, mModel->get_settings(), event.framebuffer_scale);
 }
 
 void ViewEventHandler::on_toggle_grid(const ToggleGridEvent&)

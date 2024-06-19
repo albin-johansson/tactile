@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -10,6 +11,16 @@ class IRenderer;
 struct Settings;
 
 namespace ui {
+
+/**
+ * Provides identifiers for the supported editor fonts.
+ */
+enum class FontID : uint8
+{
+  /** The default embedded Dear ImGui font. */
+  kDefault,
+  kRoboto
+};
 
 /**
  * Attempts to reload the font texture atlas.

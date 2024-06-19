@@ -29,7 +29,7 @@ void reload_fonts(IRenderer& renderer,
 
     const auto scaled_font_size = settings.font_size * framebuffer_scale;
 
-    if (settings.use_built_in_font) {
+    if (settings.font == FontID::kDefault) {
       ImFontConfig default_config {};
       default_config.SizePixels = scaled_font_size;
       io.Fonts->AddFontDefault(&default_config);

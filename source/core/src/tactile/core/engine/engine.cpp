@@ -28,8 +28,10 @@ void Engine::run()
 
     _check_framebuffer_scale();
 
+    mApp->on_update();
+
     if (mRenderer->begin_frame()) {
-      mApp->on_update();
+      mApp->on_render();
       mRenderer->end_frame();
     }
   }

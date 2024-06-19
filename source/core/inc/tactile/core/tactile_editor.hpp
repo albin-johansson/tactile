@@ -42,6 +42,8 @@ class TactileEditor final : public IEngineApp
 
   void on_update() override;
 
+  void on_render() override;
+
   void on_framebuffer_scale_changed(float framebuffer_scale) override;
 
  private:

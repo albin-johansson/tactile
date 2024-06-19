@@ -5,11 +5,11 @@
 namespace tactile {
 inline namespace settings {
 
-inline constexpr LanguageID kLanguageDefault = LanguageID::kAmericanEnglish;
-inline constexpr usize kCommandCapacityDefault = 100;
-inline constexpr float kFontSizeDefault = 13.0f;
-inline constexpr bool kUseBuiltInFontDefault = true;
-inline constexpr bool kLogVerboseEventsDefault = false;
+inline constexpr auto kLanguageDefault = LanguageID::kAmericanEnglish;
+inline constexpr auto kCommandCapacityDefault = usize {100};
+inline constexpr auto kFontDefault = ui::FontID::kDefault;
+inline constexpr auto kFontSizeDefault = 13.0f;
+inline constexpr auto kLogVerboseEventsDefault = false;
 
 }  // namespace settings
 
@@ -18,8 +18,8 @@ auto get_default_settings() -> Settings
   return Settings {
     .language = kLanguageDefault,
     .command_capacity = kCommandCapacityDefault,
+    .font = kFontDefault,
     .font_size = kFontSizeDefault,
-    .use_built_in_font = kUseBuiltInFontDefault,
     .log_verbose_events = kLogVerboseEventsDefault,
   };
 }
