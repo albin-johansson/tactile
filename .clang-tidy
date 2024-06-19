@@ -18,6 +18,7 @@ Checks: "-*,
          -readability-implicit-bool-conversion,
          -readability-named-parameter,
          -readability-redundant-member-init,
+         -readability-convert-member-functions-to-static,
 
          modernize-*,
          -modernize-avoid-c-arrays,
