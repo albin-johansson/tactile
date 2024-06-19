@@ -45,6 +45,7 @@ enum class DialogStatus : uint8
  * \return
  * The current dialog status.
  */
+[[nodiscard]]
 auto push_dialog_control_buttons(const char* close,
                                  const char* accept,
                                  const char* apply = nullptr,

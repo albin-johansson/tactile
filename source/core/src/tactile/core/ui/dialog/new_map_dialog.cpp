@@ -8,8 +8,10 @@
 #include "tactile/core/event/map_events.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/common/buttons.hpp"
+#include "tactile/core/ui/common/dialogs.hpp"
 #include "tactile/core/ui/common/popups.hpp"
 #include "tactile/core/ui/common/style.hpp"
+#include "tactile/core/ui/common/widgets.hpp"
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
@@ -43,58 +45,6 @@ void _push_map_orientation_combo(const Language& language,
   }
 }
 
-void _push_row_count_input(const Language& language,
-                           const float offset,
-                           MatrixExtent::value_type& rows)
-{
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(language.get(StringID::kRows));
-  ImGui::SameLine(offset);
-  ImGui::SetNextItemWidth(-1.0f);
-  ImGui::InputScalar("##Rows",
-                     to_imgui_data_type<MatrixExtent::value_type>(),
-                     &rows);
-}
-
-void _push_column_count_input(const Language& language,
-                              const float offset,
-                              MatrixExtent::value_type& columns)
-{
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(language.get(StringID::kColumns));
-  ImGui::SameLine(offset);
-  ImGui::SetNextItemWidth(-1.0f);
-  ImGui::InputScalar("##Columns",
-                     to_imgui_data_type<MatrixExtent::value_type>(),
-                     &columns);
-}
-
-void _push_tile_width_input(const Language& language,
-                            const float offset,
-                            Int2::value_type& tile_width)
-{
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(language.get(StringID::kTileWidth));
-  ImGui::SameLine(offset);
-  ImGui::SetNextItemWidth(-1.0f);
-  ImGui::InputScalar("##TileWidth",
-                     to_imgui_data_type<Int2::value_type>(),
-                     &tile_width);
-}
-
-void _push_tile_height_input(const Language& language,
-                             const float offset,
-                             Int2::value_type& tile_height)
-{
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(language.get(StringID::kTileHeight));
-  ImGui::SameLine(offset);
-  ImGui::SetNextItemWidth(-1.0f);
-  ImGui::InputScalar("##TileHeight",
-                     to_imgui_data_type<Int2::value_type>(),
-                     &tile_height);
-}
-
 }  // namespace new_map_dialog
 
 void NewMapDialog::push(const Model& model, EventDispatcher& dispatcher)
@@ -119,27 +69,29 @@ void NewMapDialog::push(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Spacing();
 
-    _push_row_count_input(language, widget_offset, mSpec.extent.rows);
-    _push_column_count_input(language, widget_offset, mSpec.extent.cols);
+    push_scalar_input_row(language.get(StringID::kRows),
+                          mSpec.extent.rows,
+                          widget_offset);
+    push_scalar_input_row(language.get(StringID::kColumns),
+                          mSpec.extent.cols,
+                          widget_offset);
 
     ImGui::Spacing();
 
-    _push_tile_width_input(language, widget_offset, mSpec.tile_size[0]);
-    _push_tile_height_input(language, widget_offset, mSpec.tile_size[1]);
+    push_scalar_input_row(language.get(StringID::kTileWidth),
+                          mSpec.tile_size[0],
+                          widget_offset);
+    push_scalar_input_row(language.get(StringID::kTileHeight),
+                          mSpec.tile_size[1],
+                          widget_offset);
 
-    ImGui::Spacing();
-
-    if (push_button(language.get(StringID::kCancel))) {
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::SameLine();
-
-    if (push_button(language.get(StringID::kCreate),
-                    nullptr,
-                    is_valid(mSpec))) {
+    const auto status =
+        push_dialog_control_buttons(language.get(StringID::kCancel),
+                                    language.get(StringID::kCreate),
+                                    nullptr,
+                                    is_valid(mSpec));
+    if (status == DialogStatus::kAccepted) {
       dispatcher.push<CreateMapEvent>(mSpec);
-      ImGui::CloseCurrentPopup();
     }
   }
 

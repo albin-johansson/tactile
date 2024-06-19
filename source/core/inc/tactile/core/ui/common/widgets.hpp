@@ -8,6 +8,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/numeric/vec.hpp"
+#include "tactile/core/ui/imgui_compat.hpp"
 
 namespace tactile::ui {
 
@@ -211,5 +212,35 @@ void prepare_for_vertically_centered_widgets(float count);
  */
 void push_centered_label(const char* text);
 
+/**
+ * Pushes a labeled scalar input to the widget stack.
+ *
+ * \tparam T A scalar type.
+ *
+ * \param      label        The associated label text.
+ * \param[out] value        The output scalar value.
+ * \param      input_offset The offset of the input widget, useful for aligning
+ *                          subsequent input rows.
+ *
+ * \return
+ * True if the scalar value changed; false otherwise.
+ *
+ * \see get_alignment_offset
+ */
+template <typename T>
+auto push_scalar_input_row(const char* label,
+                           T& value,
+                           const float input_offset = 0) -> bool
+{
+  const IdScope scope {label};
+
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted(label);
+
+  ImGui::SameLine(input_offset);
+
+  ImGui::SetNextItemWidth(-1.0f);
+  return ImGui::InputScalar("##Scalar", to_imgui_data_type<T>(), &value);
+}
 
 }  // namespace tactile::ui
