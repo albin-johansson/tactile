@@ -8,9 +8,6 @@
 
 namespace tactile {
 
-/// \addtogroup Tileset
-/// \{
-
 /**
  * Represents the information needed to construct a tileset.
  */
@@ -22,7 +19,5 @@ struct TilesetSpec final
   /** The associated texture. */
   CTexture texture;
 };
-
-/// \}
 
 }  // namespace tactile

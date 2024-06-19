@@ -13,9 +13,6 @@
 
 namespace tactile {
 
-/// \addtogroup Vec
-/// \{
-
 /**
  * Creates a vector that features the absolute values of a given vector.
  *
@@ -141,7 +138,5 @@ template <ArithmeticType T, usize N>
 {
   return apply2(lhs, rhs, [](const T a, const T b) { return a == b; });
 }
-
-/// \}
 
 }  // namespace tactile

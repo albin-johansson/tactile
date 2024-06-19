@@ -6,9 +6,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * RAII helper for the BeginMenu/EndMenu ImGui functions.
  */
@@ -43,7 +40,5 @@ class MenuScope final
  private:
   bool mIsOpen {};
 };
-
-/// \}
 
 }  // namespace tactile::ui

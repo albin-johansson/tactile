@@ -7,9 +7,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Adds a button to the widget stack.
  *
@@ -62,7 +59,5 @@ auto push_horizontally_centered_button(const char* label,
 auto push_icon_button(Icon icon,
                       const char* tooltip = nullptr,
                       bool enabled = true) -> bool;
-
-/// \}
 
 }  // namespace tactile::ui

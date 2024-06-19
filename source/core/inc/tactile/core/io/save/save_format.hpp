@@ -13,9 +13,6 @@ struct SaveFormatReadOptions;
 struct SaveFormatWriteOptions;
 class MapDocument;
 
-/// \addtogroup IO
-/// \{
-
 /**
  * Interface for save file format reader/parser implementations.
  *
@@ -57,7 +54,5 @@ class ISaveFormat
                         const SaveFormatWriteOptions& options) const
       -> Result<void> = 0;
 };
-
-/// \}
 
 }  // namespace tactile

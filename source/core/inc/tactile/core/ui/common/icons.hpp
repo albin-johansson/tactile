@@ -9,8 +9,6 @@ namespace tactile::ui {
 
 /**
  * Represents the different icons used in the UI.
- *
- * \ingroup UI
  */
 enum class Icon : uint8
 {
@@ -73,8 +71,6 @@ enum class Icon : uint8
  * \return
  * An icon string. An empty string is returned if the icon identifier isn't
  * recognized.
- *
- * \ingroup UI
  */
 [[nodiscard]]
 auto to_string(Icon icon) noexcept -> const char*;
@@ -91,8 +87,6 @@ auto to_string(Icon icon) noexcept -> const char*;
  * \return
  * An icon prefix string. An empty string is returned if the icon identifier
  * isn't recognized.
- *
- * \ingroup UI
  */
 [[nodiscard]]
 auto to_prefix_string(Icon icon) noexcept -> const char*;

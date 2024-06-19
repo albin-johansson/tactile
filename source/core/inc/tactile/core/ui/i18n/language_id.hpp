@@ -7,9 +7,6 @@
 
 namespace tactile {
 
-/// \addtogroup I18N
-/// \{
-
 /**
  * Provides identifiers for the supported languages.
  */
@@ -19,7 +16,5 @@ enum class LanguageID : uint8
   kBritishEnglish,
   kSwedish,
 };
-
-/// \}
 
 }  // namespace tactile

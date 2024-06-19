@@ -20,8 +20,6 @@ namespace ui {
 
 /**
  * Represents the main menu bar widget.
- *
- * \ingroup UI
  */
 class MenuBar final
 {

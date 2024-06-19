@@ -29,8 +29,6 @@ struct ToggleLayerHighlightEvent;
 
 /**
  * Handles miscellaneous view related events.
- *
- * \ingroup Event
  */
 class ViewEventHandler
 {

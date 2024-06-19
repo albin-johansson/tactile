@@ -12,9 +12,6 @@ class EventDispatcher;
 
 namespace ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * A dialog for creating new map documents.
  */
@@ -38,8 +35,6 @@ class NewMapDialog final
   MapSpec mSpec {};
   bool mShouldOpen {false};
 };
-
-/// \}
 
 }  // namespace ui
 }  // namespace tactile

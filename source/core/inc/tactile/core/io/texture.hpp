@@ -9,9 +9,6 @@
 
 namespace tactile {
 
-/// \addtogroup Texture
-/// \{
-
 /**
  * A component that represents a loaded texture resource.
  */
@@ -26,7 +23,5 @@ struct CTexture final
   /** The path to the file from which the texture was originally loaded. */
   Path path;
 };
-
-/// \}
 
 }  // namespace tactile

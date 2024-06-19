@@ -19,9 +19,6 @@ struct CTexture;
 struct TilesetSpec;
 class Registry;
 
-/// \addtogroup Tileset
-/// \{
-
 /**
  * Represents an sequence of tile identifiers.
  */
@@ -250,7 +247,5 @@ auto is_tile_range_available(const Registry& registry,
  */
 [[nodiscard]]
 auto has_tile(const TileRange& tile_range, TileID tile_id) -> bool;
-
-/// \}
 
 }  // namespace tactile

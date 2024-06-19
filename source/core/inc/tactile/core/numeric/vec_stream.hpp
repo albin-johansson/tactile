@@ -11,9 +11,6 @@
 
 namespace tactile {
 
-/// \addtogroup Vec
-/// \{
-
 /**
  * Outputs a vector to a stream (for debugging purposes).
  *
@@ -43,7 +40,5 @@ auto operator<<(std::ostream& stream, const Vec<T, N>& vec) -> std::ostream&
 
   return stream;
 }
-
-/// \}
 
 }  // namespace tactile

@@ -13,8 +13,6 @@ namespace ui {
 
 /**
  * Represents the "Help" menu.
- *
- * \ingroup UI
  */
 class HelpMenu final
 {

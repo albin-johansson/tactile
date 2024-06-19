@@ -12,8 +12,6 @@ namespace tactile {
  * \details
  * This function will log an error message including the current stack trace,
  * and subsequently abort the program.
- *
- * \ingroup Debug
  */
 [[noreturn]]
 void on_terminate() noexcept;

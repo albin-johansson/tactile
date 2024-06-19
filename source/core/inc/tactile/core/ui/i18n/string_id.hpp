@@ -16,8 +16,6 @@ namespace tactile::ui {
  * reason, it's important to keep the underlying range of values as small as
  * possible to minimize memory usage. Basically, don't provide explicit
  * enumerator values.
- *
- * \ingroup UI
  */
 enum class StringID : usize  // NOLINT(*-enum-size)
 {

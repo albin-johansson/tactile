@@ -8,9 +8,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Tag type used to create modal popups.
  */
@@ -69,7 +66,5 @@ class PopupScope final
  private:
   bool mIsOpen {};
 };
-
-/// \}
 
 }  // namespace tactile::ui

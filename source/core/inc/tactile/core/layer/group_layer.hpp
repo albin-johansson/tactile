@@ -10,9 +10,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup GroupLayer
-/// \{
-
 /**
  * A component that represents a layer variant that stores other layers.
  */
@@ -61,6 +58,5 @@ auto make_group_layer(Registry& registry) -> EntityID;
  */
 void destroy_group_layer(Registry& registry, EntityID group_layer_entity);
 
-/// \}
 
 }  // namespace tactile

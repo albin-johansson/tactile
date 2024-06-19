@@ -12,8 +12,6 @@ namespace ui {
 
 /**
  * Represents the "Debug" menu.
- *
- * \ingroup UI
  */
 class DebugMenu final
 {

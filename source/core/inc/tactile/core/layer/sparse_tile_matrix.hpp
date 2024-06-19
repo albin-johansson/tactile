@@ -13,8 +13,6 @@ namespace tactile {
 
 /**
  * Represents a sparsely populated two-dimensional grid of tile identifiers.
- *
- * \ingroup Layer
  */
 class SparseTileMatrix final : public ITileMatrix
 {

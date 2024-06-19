@@ -11,9 +11,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * RAII helper for the PushID/PopID ImGui functions.
  */
@@ -214,6 +211,5 @@ void prepare_for_vertically_centered_widgets(float count);
  */
 void push_centered_label(const char* text);
 
-/// \}
 
 }  // namespace tactile::ui

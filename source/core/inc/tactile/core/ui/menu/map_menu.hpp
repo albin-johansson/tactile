@@ -13,8 +13,6 @@ namespace ui {
 
 /**
  * Represents the "Map" menu.
- *
- * \ingroup UI
  */
 class MapMenu final
 {

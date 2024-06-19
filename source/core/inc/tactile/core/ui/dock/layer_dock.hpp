@@ -15,8 +15,6 @@ class Language;
 
 /**
  * A dock widget that displays the layers present in a map document.
- *
- * \ingroup UI
  */
 class LayerDock final
 {

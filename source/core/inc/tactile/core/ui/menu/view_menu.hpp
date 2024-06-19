@@ -13,8 +13,6 @@ namespace ui {
 
 /**
  * Represents the "View" menu.
- *
- * \ingroup UI
  */
 class ViewMenu final
 {

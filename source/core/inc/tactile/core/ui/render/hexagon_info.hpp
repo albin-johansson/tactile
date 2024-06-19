@@ -11,8 +11,6 @@ namespace tactile::ui {
 
 /**
  * Provides pre-computed information about hexagons of a specific size.
- *
- * \ingroup UI
  */
 struct HexagonInfo final
 {
@@ -48,8 +46,6 @@ struct HexagonInfo final
  *
  * \return
  * The computed hexagon information.
- *
- * \ingroup UI
  */
 [[nodiscard]]
 auto get_hexagon_info(float side_length) noexcept -> HexagonInfo;
@@ -68,8 +64,6 @@ auto get_hexagon_info(float side_length) noexcept -> HexagonInfo;
  * \param      center_pos       The center position of the hexagon.
  * \param      hexagon_info     The hexagon information.
  * \param[out] hexagon_vertices The computed vertices.
- *
- * \ingroup UI
  */
 void get_hexagon_vertices(const Float2& center_pos,
                           const HexagonInfo& hexagon_info,
@@ -86,8 +80,6 @@ void get_hexagon_vertices(const Float2& center_pos,
  *
  * \return
  * A bounding box for the hexagon.
- *
- * \ingroup UI
  */
 [[nodiscard]]
 auto get_hexagon_bounding_box(const Float2& center_pos,
@@ -102,8 +94,6 @@ auto get_hexagon_bounding_box(const Float2& center_pos,
  *
  * \return
  * The hexagon center point.
- *
- * \ingroup UI
  */
 [[nodiscard]]
 auto get_hexagon_center(const MatrixIndex& index,

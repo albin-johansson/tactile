@@ -10,9 +10,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup ObjectLayer
-/// \{
-
 /**
  * A component that represents a layer of objects.
  */
@@ -60,7 +57,5 @@ auto make_object_layer(Registry& registry) -> EntityID;
  * \param object_layer_entity The object layer to destroy.
  */
 void destroy_object_layer(Registry& registry, EntityID object_layer_entity);
-
-/// \}
 
 }  // namespace tactile

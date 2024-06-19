@@ -13,9 +13,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Represents a set of translated user-facing strings.
  */
@@ -70,7 +67,5 @@ class Language final
 
   Language(LanguageID id, Vector<String> strings);
 };
-
-/// \}
 
 }  // namespace tactile::ui

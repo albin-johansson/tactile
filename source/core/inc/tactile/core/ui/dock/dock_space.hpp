@@ -13,8 +13,6 @@ class Language;
 
 /**
  * Manages the ImGui "dock space", handling the layout of dock widgets.
- *
- * \ingroup UI
  */
 class DockSpace final
 {

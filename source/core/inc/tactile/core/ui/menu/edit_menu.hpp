@@ -13,8 +13,6 @@ namespace ui {
 
 /**
  * Represents the "Edit" menu.
- *
- * \ingroup UI
  */
 class EditMenu final
 {

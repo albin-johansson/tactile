@@ -15,8 +15,6 @@ class Language;
 
 /**
  * Represents the dock widget that displays the tilesets attached to a map.
- *
- * \ingroup UI
  */
 class TilesetDock final
 {

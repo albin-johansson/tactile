@@ -11,9 +11,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup layer
-/// \{
-
 /**
  * A component that provides common layer information.
  */
@@ -64,7 +61,5 @@ auto is_layer(const Registry& registry, EntityID entity) -> bool;
  */
 [[nodiscard]]
 auto make_unspecialized_layer(Registry& registry) -> EntityID;
-
-/// \}
 
 }  // namespace tactile

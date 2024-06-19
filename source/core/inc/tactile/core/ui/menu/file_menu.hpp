@@ -13,8 +13,6 @@ namespace ui {
 
 /**
  * Represents the "File" menu.
- *
- * \ingroup UI
  */
 class FileMenu final
 {

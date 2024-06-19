@@ -21,9 +21,6 @@ struct MapSpec;
 struct TilesetSpec;
 class Registry;
 
-/// \addtogroup Map
-/// \{
-
 /**
  * A component featured by all maps.
  */

@@ -19,9 +19,6 @@ class EventDispatcher;
 
 namespace ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Provides information about an editor shortcut.
  */
@@ -131,8 +128,6 @@ inline constexpr ShortcutInfo kPanDownShortcut {
  * \param dispatcher The event dispatcher to use.
  */
 void push_global_shortcuts(const Model& model, EventDispatcher& dispatcher);
-
-/// \}
 
 }  // namespace ui
 }  // namespace tactile

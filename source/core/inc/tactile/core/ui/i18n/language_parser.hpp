@@ -13,9 +13,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Utility for parsing language INI files.
  */
@@ -65,7 +62,5 @@ class LanguageParser final
  */
 [[nodiscard]]
 auto parse_language_from_disk(LanguageID id) -> Result<Language>;
-
-/// \}
 
 }  // namespace tactile::ui

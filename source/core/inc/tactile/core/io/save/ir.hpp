@@ -18,9 +18,6 @@
 
 namespace tactile::ir {
 
-/// \addtogroup IO
-/// \{
-
 /**
  * Intermediate representation of an attribute with a given name.
  */
@@ -320,7 +317,5 @@ struct Map final
   [[nodiscard]]
   auto operator==(const Map&) const -> bool = default;
 };
-
-/// \}
 
 }  // namespace tactile::ir

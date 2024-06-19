@@ -15,8 +15,6 @@ class Language;
 
 /**
  * A dock widget that provides a view into the properties of the active context.
- *
- * \ingroup UI
  */
 class PropertyDock final
 {

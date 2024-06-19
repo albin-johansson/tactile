@@ -12,8 +12,6 @@ struct MatrixIndex;
 
 /**
  * Interface for tile matrix variants.
- *
- * \ingroup Layer
  */
 class ITileMatrix
 {

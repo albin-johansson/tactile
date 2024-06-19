@@ -13,9 +13,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup object
-/// \{
-
 /**
  * A component for layer objects.
  */
@@ -93,7 +90,5 @@ void destroy_object(Registry& registry, EntityID object_entity);
  */
 [[nodiscard]]
 auto copy_object(Registry& registry, EntityID object_entity) -> EntityID;
-
-/// \}
 
 }  // namespace tactile

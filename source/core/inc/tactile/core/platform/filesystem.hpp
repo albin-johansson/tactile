@@ -9,9 +9,6 @@
 
 namespace tactile {
 
-/// \addtogroup Filesystem
-/// \{
-
 /**
  * Attempts to open a directory in the operating system file explorer.
  *
@@ -92,7 +89,5 @@ auto has_prefix(const Path& path, StringView prefix) -> bool;
 [[nodiscard]]
 auto strip_home_directory_prefix(const Path& path,
                                  StringView home_dir) -> Result<String>;
-
-/// \}
 
 }  // namespace tactile

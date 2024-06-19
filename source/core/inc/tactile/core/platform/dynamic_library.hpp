@@ -16,9 +16,6 @@
 
 namespace tactile {
 
-/// \addtogroup Platform
-/// \{
-
 /**
  * Interface for dynamically loaded libraries.
  *
@@ -87,7 +84,5 @@ template <typename T>
 {
   return reinterpret_cast<T*>(lib.find_symbol(name));
 }
-
-/// \}
 
 }  // namespace tactile

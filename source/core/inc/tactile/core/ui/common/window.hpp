@@ -10,9 +10,6 @@
 
 namespace tactile::ui {
 
-/// \addtogroup UI
-/// \{
-
 /**
  * Wrapper around an ImGui window.
  */
@@ -138,7 +135,5 @@ class Window final
  * \param condition The condition that dictates when the window is centered.
  */
 void center_next_window(ImGuiCond condition);
-
-/// \}
 
 }  // namespace tactile::ui

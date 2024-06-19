@@ -11,9 +11,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup Tile
-/// \{
-
 /**
  * A component that represents a tile definition.
  */
@@ -79,7 +76,5 @@ void destroy_tile(Registry& registry, EntityID tile_entity);
  */
 [[nodiscard]]
 auto copy_tile(Registry& registry, EntityID tile_entity) -> EntityID;
-
-/// \}
 
 }  // namespace tactile

@@ -26,8 +26,6 @@ namespace ui {
  * Instances of this class are lightweight, and are intended to be constructed
  * just before use and subsequently discarded. In other words, there should be
  * no caching of renderer instances.
- *
- * \ingroup UI
  */
 class CanvasRenderer final
 {

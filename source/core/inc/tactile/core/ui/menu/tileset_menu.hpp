@@ -13,8 +13,6 @@ namespace ui {
 
 /**
  * Represents the "Tileset" menu.
- *
- * \ingroup UI
  */
 class TilesetMenu final
 {

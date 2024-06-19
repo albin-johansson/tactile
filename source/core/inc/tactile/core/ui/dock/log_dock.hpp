@@ -15,8 +15,6 @@ class Language;
 
 /**
  * Represents the dock widget that provides a view into the program log.
- *
- * \ingroup UI
  */
 class LogDock final
 {

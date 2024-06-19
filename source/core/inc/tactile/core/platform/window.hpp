@@ -12,9 +12,6 @@ struct SDL_Window;
 
 namespace tactile {
 
-/// \addtogroup Platform
-/// \{
-
 /**
  * Custom deleter for an SDL window.
  */
@@ -64,7 +61,5 @@ class Window final : public IWindow
 
   explicit Window(SDL_Window* window);
 };
-
-/// \}
 
 }  // namespace tactile

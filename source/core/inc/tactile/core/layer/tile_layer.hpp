@@ -14,9 +14,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup TileLayer
-/// \{
-
 /**
  * Tag component for tile layers.
  */
@@ -114,7 +111,5 @@ auto get_tile_layer_data(Registry& registry,
 [[nodiscard]]
 auto get_tile_layer_data(const Registry& registry,
                          EntityID layer_entity) -> const ITileMatrix&;
-
-/// \}
 
 }  // namespace tactile

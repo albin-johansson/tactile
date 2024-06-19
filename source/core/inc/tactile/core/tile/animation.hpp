@@ -14,9 +14,6 @@ namespace tactile {
 
 class Registry;
 
-/// \addtogroup animation
-/// \{
-
 /**
  * Represents a single frame in a tile animation.
  */
@@ -100,7 +97,5 @@ auto add_animation_frame(Registry& registry,
 auto remove_animation_frame(Registry& registry,
                             EntityID tile_entity,
                             usize frame_index) -> Result<void>;
-
-/// \}
 
 }  // namespace tactile

@@ -13,8 +13,6 @@ namespace tactile {
 
 /**
  * Represents a densely populated two-dimensional grid of tile identifiers.
- *
- * \ingroup Layer
  */
 class DenseTileMatrix final : public ITileMatrix
 {

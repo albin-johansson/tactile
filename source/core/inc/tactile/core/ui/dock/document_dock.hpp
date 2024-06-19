@@ -13,8 +13,6 @@ namespace ui {
 
 /**
  * A dock widget that contains the primary document viewports.
- *
- * \ingroup UI
  */
 class DocumentDock final
 {

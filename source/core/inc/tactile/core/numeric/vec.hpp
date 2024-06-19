@@ -13,9 +13,6 @@
 
 namespace tactile {
 
-/// \addtogroup Vec
-/// \{
-
 /**
  * Represents a generic mathematical vector.
  *
@@ -469,7 +466,5 @@ TACTILE_VEC_IMPL_ARITHMETIC_OP(/);
 
 TACTILE_VEC_IMPL_SCALAR_OP(*);
 TACTILE_VEC_IMPL_SCALAR_OP(/);
-
-/// \}
 
 }  // namespace tactile
