@@ -111,6 +111,38 @@ auto TableScope::is_open() const -> bool
   return mIsOpen;
 }
 
+TabBarScope::TabBarScope(const char* id, const ImGuiTabBarFlags flags)
+  : mIsOpen {ImGui::BeginTabBar(id, flags)}
+{}
+
+TabBarScope::~TabBarScope() noexcept
+{
+  if (mIsOpen) {
+    ImGui::EndTabBar();
+  }
+}
+
+auto TabBarScope::is_open() const -> bool
+{
+  return mIsOpen;
+}
+
+TabItemScope::TabItemScope(const char* label, const ImGuiTabItemFlags flags)
+  : mIsOpen {ImGui::BeginTabItem(label, nullptr, flags)}
+{}
+
+TabItemScope::~TabItemScope() noexcept
+{
+  if (mIsOpen) {
+    ImGui::EndTabItem();
+  }
+}
+
+auto TabItemScope::is_open() const -> bool
+{
+  return mIsOpen;
+}
+
 auto get_widget_size(const char* text) -> Float2
 {
   TACTILE_ASSERT(text != nullptr);

@@ -167,6 +167,71 @@ class TableScope final
 };
 
 /**
+ * RAII helper for the BeginTabBar/EndTabBar ImGui functions.
+ */
+class TabBarScope final
+{
+ public:
+  TACTILE_DELETE_COPY(TabBarScope);
+  TACTILE_DELETE_MOVE(TabBarScope);
+
+  /**
+   * Pushes a tab bar to the widget stack.
+   *
+   * \param id    The associated identifier.
+   * \param flags The flags to use.
+   */
+  TabBarScope(const char* id, ImGuiTabBarFlags flags = ImGuiTabBarFlags_None);
+
+  ~TabBarScope() noexcept;
+
+  /**
+   * Indicates whether the tab bar is open.
+   *
+   * \return
+   * True if the tab bar is open; false otherwise.
+   */
+  [[nodiscard]]
+  auto is_open() const -> bool;
+
+ private:
+  bool mIsOpen;
+};
+
+/**
+ * RAII helper for the BeginTabItem/EndTabItem ImGui functions.
+ */
+class TabItemScope final
+{
+ public:
+  TACTILE_DELETE_COPY(TabItemScope);
+  TACTILE_DELETE_MOVE(TabItemScope);
+
+  /**
+   * Pushes a tab item to the widget stack.
+   *
+   * \param label The associated label.
+   * \param flags The flags to use.
+   */
+  TabItemScope(const char* label,
+               ImGuiTabItemFlags flags = ImGuiTabItemFlags_None);
+
+  ~TabItemScope() noexcept;
+
+  /**
+   * Indicates whether the tab item is open.
+   *
+   * \return
+   * True if the tab item is open; false otherwise.
+   */
+  [[nodiscard]]
+  auto is_open() const -> bool;
+
+ private:
+  bool mIsOpen;
+};
+
+/**
  * Calculates the size of a standard widget (e.g., a button) with a given label.
  *
  * \param text The widget label.
