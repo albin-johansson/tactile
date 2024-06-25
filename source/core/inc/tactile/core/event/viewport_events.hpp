@@ -33,6 +33,21 @@ struct UpdateViewportSizeEvent final
 };
 
 /**
+ * Event for changing the limits of a viewport in the current document.
+ */
+struct UpdateViewportLimitsEvent final
+{
+  /** The target viewport. */
+  EntityID viewport_entity;
+
+  /** The new minimum position. */
+  Float2 min_pos;
+
+  /** The new maximum position. */
+  Float2 max_pos;
+};
+
+/**
  * Event for increasing the zoom of a viewport in the current document.
  */
 struct IncreaseViewportZoomEvent final

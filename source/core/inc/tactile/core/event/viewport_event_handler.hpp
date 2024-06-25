@@ -13,6 +13,7 @@ class EventDispatcher;
 
 struct OffsetViewportEvent;
 struct UpdateViewportSizeEvent;
+struct UpdateViewportLimitsEvent;
 struct IncreaseViewportZoomEvent;
 struct DecreaseViewportZoomEvent;
 struct ResetViewportZoomEvent;
@@ -55,6 +56,13 @@ class ViewportEventHandler final
    * \param event The associated event.
    */
   void on_update_viewport_size(const UpdateViewportSizeEvent& event);
+
+  /**
+   * Updates the limits of a viewport.
+   *
+   * \param event The associated event.
+   */
+  void on_update_viewport_limits(const UpdateViewportLimitsEvent& event);
 
   /**
    * Increases the zoom of a viewport.

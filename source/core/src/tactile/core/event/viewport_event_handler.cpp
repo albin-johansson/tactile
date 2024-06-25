@@ -30,6 +30,7 @@ void ViewportEventHandler::install(EventDispatcher& dispatcher)
   // clang-format off
   dispatcher.bind<OffsetViewportEvent, &Self::on_offset_viewport>(this);
   dispatcher.bind<UpdateViewportSizeEvent, &Self::on_update_viewport_size>(this);
+  dispatcher.bind<UpdateViewportLimitsEvent, &Self::on_update_viewport_limits>(this);
   dispatcher.bind<IncreaseViewportZoomEvent, &Self::on_increase_viewport_zoom>(this);
   dispatcher.bind<DecreaseViewportZoomEvent, &Self::on_decrease_viewport_zoom>(this);
   dispatcher.bind<ResetViewportZoomEvent, &Self::on_reset_viewport_zoom>(this);
@@ -72,6 +73,28 @@ void ViewportEventHandler::on_update_viewport_size(
     auto& registry = document->get_registry();
     auto& viewport = registry.get<CViewport>(event.viewport_entity);
     viewport.size = event.new_size;
+  }
+}
+
+void ViewportEventHandler::on_update_viewport_limits(
+    const UpdateViewportLimitsEvent& event)
+{
+  if (mModel->get_settings().log_verbose_events) {
+    TACTILE_LOG_TRACE(
+        "UpdateViewportLimitsEvent(viewport: {}, min: {}, max: {})",
+        entity_to_string(event.viewport_entity),
+        event.min_pos,
+        event.max_pos);
+  }
+
+  if (auto* document = mModel->get_current_document()) {
+    auto& registry = document->get_registry();
+    auto& limits = registry.get<CViewportLimits>(event.viewport_entity);
+    limits.min_pos = event.min_pos;
+    limits.max_pos = event.max_pos;
+
+    auto& viewport = registry.get<CViewport>(event.viewport_entity);
+    translate_viewport(viewport, Float2 {0, 0}, &limits);
   }
 }
 
