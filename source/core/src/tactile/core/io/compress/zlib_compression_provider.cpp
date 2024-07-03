@@ -58,8 +58,7 @@ auto _init_stream(const ZlibCallbacks& callbacks,
                   StagingBuffer& staging_buffer,
                   z_stream& stream) -> Result<void>
 {
-  stream.next_in =
-      (z_byte*) input_data.data();  // NOLINT: not much we can do here.
+  stream.next_in = const_cast<z_byte*>(input_data.data());  // NOLINT
   stream.avail_in = saturate_cast<z_uint>(input_data.size_bytes());
   stream.next_out = staging_buffer.data();
   stream.avail_out = saturate_cast<z_uint>(staging_buffer.size());
