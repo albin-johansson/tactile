@@ -5,6 +5,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/engine/engine_app.hpp"
+#include "tactile/core/event/component_event_handler.hpp"
 #include "tactile/core/event/edit_event_handler.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/file_event_handler.hpp"
@@ -83,6 +84,9 @@ class TactileEditor final : public IEngineApp
 
   /** Delegate for layer events. */
   Optional<LayerEventHandler> mLayerEventHandler {};
+
+  /** Delegate for component events. */
+  Optional<ComponentEventHandler> mComponentEventHandler {};
 
   /** Delegate for property events. */
   Optional<PropertyEventHandler> mPropertyEventHandler {};

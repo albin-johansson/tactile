@@ -47,6 +47,8 @@ void TactileEditor::on_startup()
       mTilesetEventHandler.emplace(&model, mRenderer, &mWidgetManager);
   auto& map_event_handler = mMapEventHandler.emplace(&model, &mWidgetManager);
   auto& layer_event_handler = mLayerEventHandler.emplace(&model);
+  auto& component_event_handler =
+      mComponentEventHandler.emplace(&model, &mWidgetManager);
   auto& property_event_handler =
       mPropertyEventHandler.emplace(&model, &mWidgetManager);
   auto& viewport_event_handler = mViewportEventHandler.emplace(&model);
@@ -57,6 +59,7 @@ void TactileEditor::on_startup()
   tileset_event_handler.install(mEventDispatcher);
   map_event_handler.install(mEventDispatcher);
   layer_event_handler.install(mEventDispatcher);
+  component_event_handler.install(mEventDispatcher);
   property_event_handler.install(mEventDispatcher);
   viewport_event_handler.install(mEventDispatcher);
 }
