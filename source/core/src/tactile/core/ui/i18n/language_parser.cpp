@@ -148,6 +148,7 @@ auto _get_hint_names() -> HashMap<StringView, StringID>
     {"context_has_no_properties", StringID::kContextHasNoProperties},
     {"context_has_no_components", StringID::kContextHasNoComponents},
     {"map_has_no_layers", StringID::kMapHasNoLayers},
+    {"map_has_no_tilesets", StringID::kMapHasNoTilesets},
     {"select_tileset_image", StringID::kSelectTilesetImage},
   };
 }

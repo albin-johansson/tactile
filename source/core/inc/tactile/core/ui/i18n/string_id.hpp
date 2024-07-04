@@ -145,6 +145,7 @@ enum class StringID : usize  // NOLINT(*-enum-size)
   kContextHasNoProperties,
   kContextHasNoComponents,
   kMapHasNoLayers,
+  kMapHasNoTilesets,
   kSelectTilesetImage,
 
   /** The number of string identifiers, not a string itself. */
