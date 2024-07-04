@@ -169,7 +169,8 @@ TEST_F(MapTest, AddTilesetToMap)
     .tile_size = Int2 {50, 50},
     .texture =
         CTexture {
-          .texture_id = TextureID {42},
+          .raw_handle = nullptr,
+          .id = TextureID {42},
           .size = Int2 {500, 500},
           .path = "foo/bar.png",
         },

@@ -28,7 +28,7 @@ class TilesetTest : public testing::Test
   {
     CTexture texture {};
 
-    texture.texture_id = TextureID {10};
+    texture.id = TextureID {10};
     texture.size = size;
     texture.path = "foo/bar.png";
 
@@ -83,7 +83,8 @@ TEST_F(TilesetTest, MakeTileset)
     EXPECT_TRUE(is_tile(mRegistry, tile_entity));
   }
 
-  EXPECT_EQ(texture.texture_id, spec.texture.texture_id);
+  EXPECT_EQ(texture.raw_handle, spec.texture.raw_handle);
+  EXPECT_EQ(texture.id, spec.texture.id);
   EXPECT_EQ(texture.size, spec.texture.size);
   EXPECT_EQ(texture.path, spec.texture.path);
 

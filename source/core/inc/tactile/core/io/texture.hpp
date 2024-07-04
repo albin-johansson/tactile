@@ -14,8 +14,11 @@ namespace tactile {
  */
 struct CTexture final
 {
+  /** A raw handle to the underlying API resource. */
+  void* raw_handle;
+
   /** The ID of the associated texture. */
-  TextureID texture_id;
+  TextureID id;
 
   /** The size of the texture. */
   Int2 size;
