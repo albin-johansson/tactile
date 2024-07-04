@@ -5,10 +5,8 @@
 #include <utility>  // move
 
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/document/map_document.hpp"
 #include "tactile/core/event/view_events.hpp"
 #include "tactile/core/log/logger.hpp"
-#include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
 #include "tactile/render/renderer.hpp"
 #include "tactile/render/window.hpp"
@@ -45,6 +43,8 @@ void TactileEditor::on_startup()
   auto& edit_event_handler = mEditEventHandler.emplace(&model);
   auto& view_event_handler =
       mViewEventHandler.emplace(&model, mRenderer, &mWidgetManager);
+  auto& tileset_event_handler =
+      mTilesetEventHandler.emplace(&model, mRenderer, &mWidgetManager);
   auto& map_event_handler = mMapEventHandler.emplace(&model, &mWidgetManager);
   auto& layer_event_handler = mLayerEventHandler.emplace(&model);
   auto& property_event_handler =
@@ -54,6 +54,7 @@ void TactileEditor::on_startup()
   file_event_handler.install(mEventDispatcher);
   edit_event_handler.install(mEventDispatcher);
   view_event_handler.install(mEventDispatcher);
+  tileset_event_handler.install(mEventDispatcher);
   map_event_handler.install(mEventDispatcher);
   layer_event_handler.install(mEventDispatcher);
   property_event_handler.install(mEventDispatcher);

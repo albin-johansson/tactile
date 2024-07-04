@@ -63,6 +63,8 @@ target_sources(tactile-core
                "${TACTIlE_CORE_INC_PREFIX}/event/property_event_handler.hpp"
                "${TACTIlE_CORE_SRC_PREFIX}/event/property_event_handler.cpp"
                "${TACTIlE_CORE_INC_PREFIX}/event/property_events.hpp"
+               "${TACTIlE_CORE_INC_PREFIX}/event/tileset_event_handler.hpp"
+               "${TACTIlE_CORE_SRC_PREFIX}/event/tileset_event_handler.cpp"
                "${TACTIlE_CORE_INC_PREFIX}/event/tileset_events.hpp"
                "${TACTIlE_CORE_INC_PREFIX}/event/view_event_handler.hpp"
                "${TACTIlE_CORE_SRC_PREFIX}/event/view_event_handler.cpp"

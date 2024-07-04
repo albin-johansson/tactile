@@ -11,6 +11,7 @@
 #include "tactile/core/event/layer_event_handler.hpp"
 #include "tactile/core/event/map_event_handler.hpp"
 #include "tactile/core/event/property_event_handler.hpp"
+#include "tactile/core/event/tileset_event_handler.hpp"
 #include "tactile/core/event/view_event_handler.hpp"
 #include "tactile/core/event/viewport_event_handler.hpp"
 #include "tactile/core/model/model.hpp"
@@ -73,6 +74,9 @@ class TactileEditor final : public IEngineApp
 
   /** Delegate for general "view" events. */
   Optional<ViewEventHandler> mViewEventHandler {};
+
+  /** Delegate for tileset events. */
+  Optional<TilesetEventHandler> mTilesetEventHandler {};
 
   /** Delegate for map events. */
   Optional<MapEventHandler> mMapEventHandler {};
