@@ -7,6 +7,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/document/document.hpp"
 #include "tactile/core/document/document_manager.hpp"
+#include "tactile/core/document/map_document.hpp"
 
 namespace tactile {
 
@@ -104,6 +105,26 @@ class Model final
   void push_command(Args&&... args)
   {
     if (auto* document = get_current_document()) {
+      auto& history = mDocuments.get_history(document->get_uuid());
+      history.push<T>(document, std::forward<Args>(args)...);
+    }
+  }
+
+  /**
+   * Attempts to push a map command to the command stack of the active document.
+   *
+   * \tparam T    The command type.
+   * \tparam Args The types of the command constructor arguments.
+   *
+   * \param args The arguments forwarded to a command constructor. Note, all
+   *             map command constructor are assumed to feature at least an
+   *             initial \c MapDocument* parameter, so this function
+   *             automatically provides it.
+   */
+  template <typename T, typename... Args>
+  void push_map_command(Args&&... args)
+  {
+    if (auto* document = dynamic_cast<MapDocument*>(get_current_document())) {
       auto& history = mDocuments.get_history(document->get_uuid());
       history.push<T>(document, std::forward<Args>(args)...);
     }
