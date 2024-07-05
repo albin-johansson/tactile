@@ -92,6 +92,9 @@ auto is_tileset(const Registry& registry, EntityID entity) -> bool;
 /**
  * Creates a tileset.
  *
+ * \note
+ * The associated texture must have been loaded before calling this function.
+ *
  * \param registry The associated registry.
  * \param spec     The tileset specification.
  *
