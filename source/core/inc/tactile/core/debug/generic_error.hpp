@@ -10,7 +10,7 @@ namespace tactile {
 
 /** Provides error codes for generic high-level errors. */
 enum class GenericError : int
-{  // NOLINT(*-enum-size)
+{
   kUnknown,
   kUnsupported,
   kOutOfMemory,

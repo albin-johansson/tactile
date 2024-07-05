@@ -13,7 +13,7 @@ namespace tactile {
 /**
  * Provides error codes for OpenGL errors.
  */
-enum class OpenGLError : int  // NOLINT(*-enum-size)
+enum class OpenGLError : int
 {
   kUnknown,
   kInvalidParam,

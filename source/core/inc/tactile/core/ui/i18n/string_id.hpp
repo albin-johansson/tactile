@@ -17,7 +17,7 @@ namespace tactile::ui {
  * possible to minimize memory usage. Basically, don't provide explicit
  * enumerator values.
  */
-enum class StringID : usize  // NOLINT(*-enum-size)
+enum class StringID : usize
 {
   // Miscellaneous.
   kOK,

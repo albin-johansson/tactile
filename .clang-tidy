@@ -1,7 +1,5 @@
 FormatStyle: google
 Checks: "-*,
-         performance-*,
-         portability-*,
 
          bugprone-*,
          -bugprone-easily-swappable-parameters,
@@ -10,7 +8,12 @@ Checks: "-*,
 
          clang-analyzer-*,
          -clang-analyzer-optin.core.EnumCastOutOfRange,
-         
+
+         performance-*,
+         -performance-enum-size,
+
+         portability-*,
+
          readability-*,
          -readability-identifier-length,
          -readability-uppercase-literal-suffix,

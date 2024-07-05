@@ -12,7 +12,7 @@ namespace tactile {
 /**
  * Provides error codes for errors related to compression providers.
  */
-enum class CompressionError : int  // NOLINT(*-enum-size)
+enum class CompressionError : int
 {
   kBadInit,
   kBadCleanup,
