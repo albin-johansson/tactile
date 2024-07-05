@@ -5,15 +5,16 @@
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/texture.hpp"
 #include "tactile/opengl/api.hpp"
-#include "tactile/render/texture.hpp"
 
 namespace tactile {
 
 /**
  * Represents an OpenGL texture.
  */
-class TACTILE_OPENGL_API OpenGLTexture final : public ITexture {
+class TACTILE_OPENGL_API OpenGLTexture final : public ITexture
+{
  public:
   using id_type = uint;
 

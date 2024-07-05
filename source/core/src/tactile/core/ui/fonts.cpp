@@ -6,9 +6,9 @@
 #include <imgui.h>
 
 #include "tactile/base/container/array.hpp"
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/settings.hpp"
-#include "tactile/render/renderer.hpp"
 
 namespace tactile::ui {
 inline namespace fonts {

@@ -16,10 +16,10 @@
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/base/render/window.hpp"
 #include "tactile/opengl/opengl_error.hpp"
 #include "tactile/opengl/opengl_imgui.hpp"
 #include "tactile/opengl/opengl_texture.hpp"
-#include "tactile/render/window.hpp"
 
 namespace tactile {
 

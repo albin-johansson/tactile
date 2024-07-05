@@ -31,7 +31,6 @@ target_include_directories(tactile-opengl
 target_link_libraries(tactile-opengl
                       PUBLIC
                       tactile::base
-                      tactile::render
 
                       PRIVATE
                       OpenGL::GL

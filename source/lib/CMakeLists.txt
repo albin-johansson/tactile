@@ -28,7 +28,6 @@ target_link_libraries(libtactile
                       PUBLIC
                       tactile::proto
                       tactile::base
-                      tactile::render
                       tactile::core
                       tactile::opengl
 

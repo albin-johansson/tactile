@@ -6,10 +6,10 @@
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/engine/engine_app.hpp"
 #include "tactile/core/log/logger.hpp"
-#include "tactile/render/renderer.hpp"
 
 namespace tactile {
 

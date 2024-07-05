@@ -291,7 +291,6 @@ target_compile_definitions(tactile-core
 target_link_libraries(tactile-core
                       PUBLIC
                       tactile::base
-                      tactile::render
                       EnTT::EnTT
                       imgui::imgui
 

@@ -6,7 +6,7 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/render/window.hpp"
+#include "tactile/base/render/window.hpp"
 
 struct SDL_Window;
 

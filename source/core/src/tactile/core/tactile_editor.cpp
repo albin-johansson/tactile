@@ -4,12 +4,12 @@
 
 #include <utility>  // move
 
+#include "tactile/base/render/renderer.hpp"
+#include "tactile/base/render/window.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/view_events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
-#include "tactile/render/renderer.hpp"
-#include "tactile/render/window.hpp"
 
 namespace tactile {
 

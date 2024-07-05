@@ -10,6 +10,7 @@
 
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/terminate.hpp"
@@ -27,7 +28,6 @@
 #include "tactile/core/ui/common/style.hpp"
 #include "tactile/core/ui/imgui_context.hpp"
 #include "tactile/core/util/scope_guard.hpp"
-#include "tactile/render/renderer.hpp"
 
 namespace tactile {
 

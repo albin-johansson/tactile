@@ -5,8 +5,8 @@
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/opengl/api.hpp"
-#include "tactile/render/renderer.hpp"
 
 namespace tactile {
 
