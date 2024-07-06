@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/core/io/compress/compression_provider.hpp"
+#include "tactile/base/io/compress/compression_provider.hpp"
 
 namespace tactile {
 

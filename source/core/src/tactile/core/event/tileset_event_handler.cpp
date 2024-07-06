@@ -2,13 +2,13 @@
 
 #include "tactile/core/event/tileset_event_handler.hpp"
 
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/tileset_events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
-#include "tactile/render/renderer.hpp"
 
 namespace tactile {
 

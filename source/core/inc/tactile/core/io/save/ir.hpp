@@ -9,7 +9,7 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
-#include "tactile/core/io/compress/compression_type.hpp"
+#include "tactile/base/io/compress/compression_type.hpp"
 #include "tactile/core/layer/dense_tile_matrix.hpp"
 #include "tactile/core/layer/layer_type.hpp"
 #include "tactile/core/layer/object_type.hpp"

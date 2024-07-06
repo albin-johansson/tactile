@@ -4,8 +4,8 @@
 
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/io/byte_stream.hpp"
 
 namespace tactile {
 

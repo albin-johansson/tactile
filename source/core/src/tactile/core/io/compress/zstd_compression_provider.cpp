@@ -43,7 +43,8 @@ auto ZstdCompressionProvider::compress(const ByteSpan input_data) const
                                                 ZSTD_CLEVEL_DEFAULT);
 
   if (ZSTD_isError(written_byte_count)) {
-    TACTILE_LOG_ERROR("Compression failed: {}", ZSTD_getErrorName(written_byte_count));
+    TACTILE_LOG_ERROR("Compression failed: {}",
+                      ZSTD_getErrorName(written_byte_count));
     return unexpected(make_error(CompressionError::kCouldNotCompress));
   }
 
@@ -105,7 +106,8 @@ auto ZstdCompressionProvider::decompress(const ByteSpan input_data) const
         ZSTD_decompressStream(stream.get(), &output_view, &input_view);
 
     if (ZSTD_isError(decompress_result)) {
-      TACTILE_LOG_ERROR("Decompression failed: {}", ZSTD_getErrorName(decompress_result));
+      TACTILE_LOG_ERROR("Decompression failed: {}",
+                        ZSTD_getErrorName(decompress_result));
       return unexpected(make_error(CompressionError::kCouldNotDecompress));
     }
 
