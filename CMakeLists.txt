@@ -70,8 +70,8 @@ tactile_find_dependencies()
 
 add_subdirectory("source/proto")
 add_subdirectory("source/base")
-add_subdirectory("source/render")
 add_subdirectory("source/core")
+add_subdirectory("source/runtime")
 add_subdirectory("source/main")
 
 if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
