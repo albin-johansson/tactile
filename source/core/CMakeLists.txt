@@ -37,7 +37,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/src/tactile/core/document/map_document.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/engine/engine.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/engine/engine.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/engine/engine_app.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/entity/entity.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/entity/entity.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/entity/registry.hpp"
