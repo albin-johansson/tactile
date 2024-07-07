@@ -26,12 +26,6 @@ struct ShowSaveAsDialogEvent final
 {};
 
 /**
- * Event for opening the component editor dialog.
- */
-struct ShowComponentEditorDialogEvent final
-{};
-
-/**
  * Event for opening the settings dialog.
  */
 struct ShowSettingsDialogEvent final
