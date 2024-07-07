@@ -29,6 +29,7 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/io/byte_stream.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/numeric/saturate_cast.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/numeric/sign_cast.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/plugin/plugin.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/render/renderer.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/render/texture.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/render/window.hpp"
