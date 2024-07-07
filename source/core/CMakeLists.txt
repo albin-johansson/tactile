@@ -148,8 +148,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/src/tactile/core/platform/sdl_context.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/platform/win32.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/platform/win32.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/platform/window.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/core/platform/window.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/tile/animation.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/tile/animation.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/tile/tile.hpp"

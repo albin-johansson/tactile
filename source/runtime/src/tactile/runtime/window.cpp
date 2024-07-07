@@ -1,6 +1,6 @@
-// Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
+// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/platform/window.hpp"
+#include "tactile/runtime/window.hpp"
 
 #include <SDL2/SDL.h>
 

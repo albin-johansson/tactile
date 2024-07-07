@@ -1,4 +1,4 @@
-// Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
+// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
 #pragma once
 
@@ -7,6 +7,7 @@
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/window.hpp"
+#include "tactile/runtime/api.hpp"
 
 struct SDL_Window;
 
@@ -15,7 +16,7 @@ namespace tactile {
 /**
  * Custom deleter for an SDL window.
  */
-struct WindowHandleDeleter final
+struct TACTILE_RUNTIME_API WindowHandleDeleter final
 {
   void operator()(SDL_Window* window) noexcept;
 };
@@ -23,7 +24,7 @@ struct WindowHandleDeleter final
 /**
  * Represents an operating system window.
  */
-class Window final : public IWindow
+class TACTILE_RUNTIME_API Window final : public IWindow
 {
  public:
   TACTILE_DELETE_COPY(Window);

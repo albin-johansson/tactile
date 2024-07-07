@@ -23,11 +23,11 @@
 #include "tactile/core/platform/dynamic_library.hpp"
 #include "tactile/core/platform/sdl_context.hpp"
 #include "tactile/core/platform/win32.hpp"
-#include "tactile/core/platform/window.hpp"
 #include "tactile/core/tactile_editor.hpp"
 #include "tactile/core/ui/common/style.hpp"
 #include "tactile/core/ui/imgui_context.hpp"
 #include "tactile/core/util/scope_guard.hpp"
+#include "tactile/runtime/window.hpp"
 
 namespace tactile {
 

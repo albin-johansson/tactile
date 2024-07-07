@@ -6,6 +6,8 @@ add_library(tactile::runtime ALIAS tactile-runtime)
 target_sources(tactile-runtime
                PRIVATE
                "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/api.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/window.hpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/window.cpp"
                )
 
 tactile_prepare_target(tactile-runtime)
@@ -20,4 +22,5 @@ target_link_libraries(tactile-runtime
 
                       PRIVATE
                       tactile::core
+                      SDL2::SDL2
                       )
