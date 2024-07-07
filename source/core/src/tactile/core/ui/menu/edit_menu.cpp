@@ -4,6 +4,7 @@
 
 #include <imgui.h>
 
+#include "tactile/core/event/component_events.hpp"
 #include "tactile/core/event/dialog_events.hpp"
 #include "tactile/core/event/edit_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
