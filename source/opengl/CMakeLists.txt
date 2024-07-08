@@ -12,6 +12,8 @@ target_sources(tactile-opengl
                "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_imgui.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/opengl_renderer.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_renderer.cpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/opengl_renderer_plugin.hpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_renderer_plugin.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/opengl/opengl_texture.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/opengl/opengl_texture.cpp"
                )
@@ -31,6 +33,7 @@ target_include_directories(tactile-opengl
 target_link_libraries(tactile-opengl
                       PUBLIC
                       tactile::base
+                      tactile::runtime
 
                       PRIVATE
                       OpenGL::GL

@@ -68,17 +68,4 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   OpenGLRenderer();
 };
 
-extern "C"
-{
-  TACTILE_OPENGL_API
-  void tactile_prepare_renderer(uint32* window_flags);
-
-  TACTILE_OPENGL_API
-  auto tactile_make_renderer(IWindow* window,
-                             ImGuiContext* context) -> IRenderer*;
-
-  TACTILE_OPENGL_API
-  void tactile_free_renderer(IRenderer* renderer);
-}
-
 }  // namespace tactile

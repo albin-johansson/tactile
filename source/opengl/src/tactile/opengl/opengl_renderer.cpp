@@ -20,6 +20,7 @@
 #include "tactile/opengl/opengl_error.hpp"
 #include "tactile/opengl/opengl_imgui.hpp"
 #include "tactile/opengl/opengl_texture.hpp"
+#include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
 
@@ -188,41 +189,6 @@ auto OpenGLRenderer::get_window() -> IWindow*
 auto OpenGLRenderer::get_window() const -> const IWindow*
 {
   return mData->window;
-}
-
-void tactile_prepare_renderer(uint32* window_flags)
-{
-  if (window_flags != nullptr) {
-    *window_flags = SDL_WINDOW_OPENGL;
-  }
-
-  if constexpr (kOnMacos) {
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
-                        SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
-  }
-
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-  SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, SDL_TRUE);
-}
-
-auto tactile_make_renderer(IWindow* window, ImGuiContext* context) -> IRenderer*
-{
-  if (auto renderer = OpenGLRenderer::make(window, context)) {
-    return new (std::nothrow) OpenGLRenderer {std::move(*renderer)};
-  }
-
-  return nullptr;
-}
-
-void tactile_free_renderer(IRenderer* renderer)
-{
-  delete renderer;
 }
 
 }  // namespace tactile

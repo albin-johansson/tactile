@@ -3,22 +3,28 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/runtime/api.hpp"
 
 namespace tactile {
 
 /**
  * RAII type that handles the initialization of the Protobuf library.
  */
-class ProtobufContext final {
+class TACTILE_RUNTIME_API ProtobufContext final
+{
  public:
   TACTILE_DELETE_COPY(ProtobufContext);
   TACTILE_DELETE_MOVE(ProtobufContext);
 
-  /** Prepares the Protobuf context. */
+  /**
+   * Prepares the Protobuf context.
+   */
   [[nodiscard]]
   ProtobufContext();
 
-  /** Cleans up Protobuf resources. */
+  /**
+   * Cleans up Protobuf resources.
+   */
   ~ProtobufContext() noexcept;
 };
 
