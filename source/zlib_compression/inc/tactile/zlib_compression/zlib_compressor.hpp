@@ -3,6 +3,8 @@
 #pragma once
 
 #include "tactile/base/io/compress/compression_provider.hpp"
+#include "tactile/base/prelude.hpp"
+#include "tactile/zlib_compression/api.hpp"
 
 namespace tactile {
 
@@ -11,7 +13,8 @@ namespace tactile {
  *
  * \see https://github.com/madler/zlib
  */
-class ZlibCompressionProvider final : public ICompressionProvider {
+class TACTILE_ZLIB_API ZlibCompressor final : public ICompressionProvider
+{
  public:
   [[nodiscard]]
   auto compress(ByteSpan input_data) const -> Result<ByteStream> override;

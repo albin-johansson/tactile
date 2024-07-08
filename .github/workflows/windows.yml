@@ -79,6 +79,11 @@ jobs:
         shell: cmd
         run: tactile-core-test.exe
 
+      - name: Run Zlib compression tests
+        working-directory: ./build/debug
+        shell: cmd
+        run: tactile-zlib-compression-test.exe
+
       - name: Run Zstd compression tests
         working-directory: ./build/debug
         shell: cmd

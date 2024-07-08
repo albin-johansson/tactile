@@ -13,7 +13,6 @@ target_sources(tactile-core-test
                "${PROJECT_SOURCE_DIR}/src/debug/validation_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/entity/registry_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/event/event_dispatcher_test.cpp"
-               "${PROJECT_SOURCE_DIR}/src/io/compress/compression_provider_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/io/save/save_format_id_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/io/ini_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/layer/group_layer_test.cpp"

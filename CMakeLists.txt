@@ -72,6 +72,7 @@ add_subdirectory("source/proto")
 add_subdirectory("source/base")
 add_subdirectory("source/core")
 add_subdirectory("source/runtime")
+add_subdirectory("source/zlib_compression")
 add_subdirectory("source/zstd_compression")
 add_subdirectory("source/main")
 

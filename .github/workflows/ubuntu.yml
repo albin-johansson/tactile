@@ -114,6 +114,10 @@ jobs:
         working-directory: ./build/debug
         run: ./tactile-core-test
 
+      - name: Run Zlib compression tests
+        working-directory: ./build/debug
+        run: ./tactile-zlib-compression-test
+
       - name: Run Zstd compression tests
         working-directory: ./build/debug
         run: ./tactile-zstd-compression-test
