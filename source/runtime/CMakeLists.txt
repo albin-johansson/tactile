@@ -33,6 +33,7 @@ target_compile_definitions(tactile-runtime
                            "TACTILE_BUILDING_RUNTIME"
                            "TACTILE_ENABLE_ZLIB_COMPRESSION"
                            "TACTILE_ENABLE_ZSTD_COMPRESSION"
+                           "TACTILE_ENABLE_YAML_FORMAT"
                            "TACTILE_ENABLE_OPENGL_RENDERER"
                            )
 

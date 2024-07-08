@@ -74,6 +74,7 @@ add_subdirectory("source/core")
 add_subdirectory("source/runtime")
 add_subdirectory("source/zlib_compression")
 add_subdirectory("source/zstd_compression")
+add_subdirectory("source/yaml_format")
 add_subdirectory("source/main")
 
 if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")

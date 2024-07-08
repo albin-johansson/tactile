@@ -29,7 +29,7 @@ auto get_plugin_names() -> Vector<StringView>
   plugin_names.emplace_back("tactile-zstd-compression" TACTILE_DLL_EXT);
 #endif
 
-#ifdef TACTILE_ENABLE_TACTILE_YAML_FORMAT
+#ifdef TACTILE_ENABLE_YAML_FORMAT
   plugin_names.emplace_back("tactile-yaml-format" TACTILE_DLL_EXT);
 #endif
 
