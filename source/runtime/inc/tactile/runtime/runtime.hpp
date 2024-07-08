@@ -46,7 +46,7 @@ class TACTILE_RUNTIME_API Runtime final
 
  private:
   struct Data;
-  Unique<Data> mData {};
+  Unique<Data> mData;
 };
 
 }  // namespace tactile

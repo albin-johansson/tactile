@@ -60,7 +60,6 @@ auto get_plugin_names() -> Vector<StringView>
 auto load_plugins(Runtime& runtime) -> Vector<PluginInstance>
 {
   const auto plugin_names = get_plugin_names();
-  TACTILE_LOG_DEBUG("Plugins: {}", plugin_names);
 
   Vector<PluginInstance> plugins {};
 

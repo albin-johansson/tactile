@@ -15,5 +15,6 @@ target_link_libraries(tactile
                       PRIVATE
                       tactile::base
                       tactile::runtime
+                      SDL2::SDL2
                       SDL2::SDL2main
                       )
