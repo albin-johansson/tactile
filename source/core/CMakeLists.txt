@@ -99,7 +99,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/layer/tile_layer.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/layer/tile_layer.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/layer/tile_matrix.hpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/log/log_level.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/log/log_sink.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/log/logger.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/log/logger.cpp"

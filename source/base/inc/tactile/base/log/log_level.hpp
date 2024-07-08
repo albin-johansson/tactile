@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 

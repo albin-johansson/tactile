@@ -8,6 +8,7 @@
 #include <zstd.h>
 
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
 namespace zstd_compressor_impl {
@@ -39,8 +40,9 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const
                                                 ZSTD_CLEVEL_DEFAULT);
 
   if (ZSTD_isError(written_byte_count)) {
-    // TACTILE_LOG_ERROR("Compression failed: {}",
-    //                   ZSTD_getErrorName(written_byte_count));
+    Runtime::log(LogLevel::kError,
+                 "Compression failed: {}",
+                 ZSTD_getErrorName(written_byte_count));
     return unexpected(std::make_error_code(std::errc::io_error));
   }
 
@@ -55,14 +57,15 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
 {
   const zstd_compressor_impl::UniqueDStream stream {ZSTD_createDStream()};
   if (!stream) {
-    // TACTILE_LOG_ERROR("Could not create stream");
+    Runtime::log(LogLevel::kError, "Could not create stream");
     return unexpected(std::make_error_code(std::errc::not_enough_memory));
   }
 
   const auto init_stream_result = ZSTD_initDStream(stream.get());
   if (ZSTD_isError(init_stream_result)) {
-    // TACTILE_LOG_ERROR("Could not initialize stream: {}",
-    //                   ZSTD_getErrorName(init_stream_result));
+    Runtime::log(LogLevel::kError,
+                 "Could not initialize stream: {}",
+                 ZSTD_getErrorName(init_stream_result));
     return unexpected(std::make_error_code(std::errc::io_error));
   }
 
@@ -100,8 +103,9 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
         ZSTD_decompressStream(stream.get(), &output_view, &input_view);
 
     if (ZSTD_isError(decompress_result)) {
-      // TACTILE_LOG_ERROR("Decompression failed: {}",
-      //                   ZSTD_getErrorName(decompress_result));
+      Runtime::log(LogLevel::kError,
+                   "Decompression failed: {}",
+                   ZSTD_getErrorName(decompress_result));
       return unexpected(std::make_error_code(std::errc::io_error));
     }
 

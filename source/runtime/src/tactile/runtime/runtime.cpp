@@ -10,6 +10,7 @@
 
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/util/buffer.hpp"
 #include "tactile/core/debug/terminate.hpp"
 #include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -177,6 +178,15 @@ auto Runtime::get_renderer() -> IRenderer*
 auto Runtime::get_imgui_context() -> ImGuiContext*
 {
   return mData->imgui_context.get();
+}
+
+void Runtime::_log(const LogLevel level,
+                   const StringView fmt,
+                   std::format_args args)
+{
+  Buffer<char, 256> buffer;  // NOLINT uninitialized
+  vformat_to_buffer(buffer, fmt, args);
+  TACTILE_LOG(level, "{}", buffer.view());
 }
 
 }  // namespace tactile

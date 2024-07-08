@@ -8,10 +8,10 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
+#include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/base/util/format.hpp"
-#include "tactile/core/log/log_level.hpp"
 #include "tactile/core/log/log_sink.hpp"
 
 #define TACTILE_LOG(Level, FmtString, ...)                                  \
