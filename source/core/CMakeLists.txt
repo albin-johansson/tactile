@@ -232,7 +232,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/src/tactile/core/util/matrix_extent.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/matrix_index.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/util/matrix_index.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/memory_buffer.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/scope_guard.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/string_conv.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/util/string_conv.cpp"

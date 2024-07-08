@@ -32,6 +32,7 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/render/renderer.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/render/texture.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/render/window.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/buffer.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/chrono.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/concepts.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/hash.hpp"

@@ -8,63 +8,60 @@
 
 namespace tactile {
 
-/// \trace tactile::format_to_buffer
+// tactile::format_to_buffer
 TEST(Format, FormatToBuffer)
 {
-  MemoryBuffer<char, 32> buffer;
+  Buffer<char, 32> buffer;  // NOLINT
   format_to_buffer(buffer, "{}", "foobar");
 
   ASSERT_EQ(buffer.size(), 6);
-  EXPECT_EQ(buffer[0], 'f');
-  EXPECT_EQ(buffer[1], 'o');
-  EXPECT_EQ(buffer[2], 'o');
-  EXPECT_EQ(buffer[3], 'b');
-  EXPECT_EQ(buffer[4], 'a');
-  EXPECT_EQ(buffer[5], 'r');
+  EXPECT_EQ(buffer.view()[0], 'f');
+  EXPECT_EQ(buffer.view()[1], 'o');
+  EXPECT_EQ(buffer.view()[2], 'o');
+  EXPECT_EQ(buffer.view()[3], 'b');
+  EXPECT_EQ(buffer.view()[4], 'a');
+  EXPECT_EQ(buffer.view()[5], 'r');
 }
 
-/// \trace tactile::format_to_buffer
+// tactile::format_to_buffer
 TEST(Format, FormatToBufferWhenFull)
 {
-  MemoryBuffer<char, 32> buffer;
+  Buffer<char, 32> buffer;  // NOLINT
   for (usize i = 0; i < buffer.capacity(); ++i) {
     buffer.push_back('?');
   }
 
   ASSERT_EQ(buffer.size(), buffer.capacity());
-  EXPECT_EQ(buffer.remaining_capacity(), 0);
   EXPECT_TRUE(buffer.full());
 
   format_to_buffer(buffer, "{}", "foobar");
 
   ASSERT_EQ(buffer.size(), buffer.capacity());
-  EXPECT_EQ(buffer[buffer.size() - 3], '?');
-  EXPECT_EQ(buffer[buffer.size() - 2], '?');
-  EXPECT_EQ(buffer[buffer.size() - 1], '?');
+  EXPECT_EQ(buffer.view()[buffer.size() - 3], '?');
+  EXPECT_EQ(buffer.view()[buffer.size() - 2], '?');
+  EXPECT_EQ(buffer.view()[buffer.size() - 1], '?');
 }
 
-/// \trace tactile::format_to_buffer
+// tactile::format_to_buffer
 TEST(Format, FormatToBufferWithOverflow)
 {
-  MemoryBuffer<char, 32> buffer;
+  Buffer<char, 32> buffer;  // NOLINT
   for (usize i = 0; i < buffer.capacity() - 3; ++i) {
     buffer.push_back('?');
   }
 
   ASSERT_EQ(buffer.size(), buffer.capacity() - 3);
-  EXPECT_EQ(buffer.remaining_capacity(), 3);
   EXPECT_FALSE(buffer.full());
 
   format_to_buffer(buffer, "{}", "foo");
 
   ASSERT_EQ(buffer.size(), buffer.capacity());
-  EXPECT_EQ(buffer.remaining_capacity(), 0);
   EXPECT_TRUE(buffer.full());
 
-  EXPECT_EQ(buffer[buffer.size() - 4], '?');
-  EXPECT_EQ(buffer[buffer.size() - 3], 'f');
-  EXPECT_EQ(buffer[buffer.size() - 2], 'o');
-  EXPECT_EQ(buffer[buffer.size() - 1], 'o');
+  EXPECT_EQ(buffer.view()[buffer.size() - 4], '?');
+  EXPECT_EQ(buffer.view()[buffer.size() - 3], 'f');
+  EXPECT_EQ(buffer.view()[buffer.size() - 2], 'o');
+  EXPECT_EQ(buffer.view()[buffer.size() - 1], 'o');
 }
 
 }  // namespace tactile

@@ -11,7 +11,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/util/memory_buffer.hpp"
+#include "tactile/base/util/buffer.hpp"
 
 // Despite Clang having implemented most of std::format, they don't (yet)
 // provide the associated version macros. Making it difficult to write portable
@@ -54,11 +54,11 @@ using FormatString = StringView;
  * \param args   The format arguments.
  */
 template <usize N, typename... Args>
-void format_to_buffer(MemoryBuffer<char, N>& buffer,
+void format_to_buffer(Buffer<char, N>& buffer,
                       const FormatString<Args...> fmt,
                       const Args&... args)
 {
-  const auto remaining_chars = buffer.remaining_capacity();
+  const auto remaining_chars = buffer.capacity() - buffer.size();
   if (remaining_chars < 1) {
     return;
   }

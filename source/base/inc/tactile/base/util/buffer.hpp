@@ -8,12 +8,12 @@
 #include <iterator>   // distance
 
 #include "tactile/base/container/array.hpp"
+#include "tactile/base/container/span.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/numeric/sign_cast.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -27,7 +27,7 @@ inline constexpr usize kDefaultMemoryBufferCapacity = 512;
  */
 template <typename T = uint8, usize Capacity = kDefaultMemoryBufferCapacity>
   requires(Capacity > 0)
-class MemoryBuffer
+class Buffer final
 {
  public:
   using value_type = T;
@@ -42,12 +42,12 @@ class MemoryBuffer
   /**
    * Creates an empty buffer.
    */
-  constexpr MemoryBuffer() noexcept = default;
+  constexpr Buffer() noexcept = default;
 
-  constexpr ~MemoryBuffer() noexcept = default;
+  constexpr ~Buffer() noexcept = default;
 
-  TACTILE_DELETE_COPY(MemoryBuffer);
-  TACTILE_DELETE_MOVE(MemoryBuffer);
+  TACTILE_DELETE_COPY(Buffer);
+  TACTILE_DELETE_MOVE(Buffer);
 
   /**
    * Resets the buffer size to zero.
@@ -91,7 +91,7 @@ class MemoryBuffer
   template <std::input_iterator Iter>
   constexpr void append(const Iter begin, const Iter end) noexcept
   {
-    const auto avail_count = remaining_capacity();
+    const auto avail_count = capacity() - size();
     const auto elem_count = to_unsigned(std::abs(std::distance(begin, end)));
     const auto n = std::min(avail_count, elem_count);
     mEnd = std::copy_n(begin, n, mEnd);
@@ -110,68 +110,6 @@ class MemoryBuffer
   constexpr void append(const Container& container) noexcept
   {
     append(container.begin(), container.end());
-  }
-
-  /**
-   * Returns the elements at the specified position.
-   *
-   * \pre The index must refer to a valid element in the buffer.
-   *
-   * \param index The element index.
-   *
-   * \return
-   * The element at the given index.
-   */
-  [[nodiscard]]
-  constexpr auto operator[](const size_type index) noexcept -> reference
-  {
-    TACTILE_ASSERT(index < size());
-    return mBuf[index];
-  }
-
-  /**
-   * \copydoc operator[]()
-   */
-  [[nodiscard]]
-  constexpr auto operator[](const size_type index) const noexcept
-      -> const_reference
-  {
-    TACTILE_ASSERT(index < size());
-    return mBuf[index];
-  }
-
-  /**
-   * Returns the elements at the specified position.
-   *
-   * \details
-   * An exception is thrown if the provided index is invalid.
-   *
-   * \param index The element index.
-   *
-   * \return
-   * The element at the given index.
-   */
-  [[nodiscard]]
-  constexpr auto at(const size_type index) -> reference
-  {
-    if (index >= size()) [[unlikely]] {
-      throw Exception {"bad index"};
-    }
-
-    return mBuf[index];
-  }
-
-  /**
-   * \copydoc at()
-   */
-  [[nodiscard]]
-  constexpr auto at(const size_type index) const -> const_reference
-  {
-    if (index >= size()) [[unlikely]] {
-      throw Exception {"bad index"};
-    }
-
-    return mBuf[index];
   }
 
   /**
@@ -205,7 +143,6 @@ class MemoryBuffer
   [[nodiscard]]
   constexpr auto begin() noexcept -> iterator
   {
-    TACTILE_ASSERT(mBegin != nullptr);
     return mBegin;
   }
 
@@ -215,7 +152,6 @@ class MemoryBuffer
   [[nodiscard]]
   constexpr auto begin() const noexcept -> const_iterator
   {
-    TACTILE_ASSERT(mBegin != nullptr);
     return mBegin;
   }
 
@@ -228,7 +164,6 @@ class MemoryBuffer
   [[nodiscard]]
   constexpr auto end() noexcept -> iterator
   {
-    TACTILE_ASSERT(mBegin != nullptr);
     return mEnd;
   }
 
@@ -238,7 +173,6 @@ class MemoryBuffer
   [[nodiscard]]
   constexpr auto end() const noexcept -> const_iterator
   {
-    TACTILE_ASSERT(mBegin != nullptr);
     return mEnd;
   }
 
@@ -252,19 +186,6 @@ class MemoryBuffer
   constexpr auto size() const noexcept -> size_type
   {
     return saturate_cast<size_type>(std::distance(mBegin, mEnd));
-  }
-
-  /**
-   * Returns the remaining number elements that could be stored in the buffer.
-   *
-   * \return
-   * The number of elements.
-   */
-  [[nodiscard]]
-  constexpr auto remaining_capacity() const noexcept -> size_type
-  {
-    TACTILE_ASSERT(size() <= Capacity);
-    return Capacity - size();
   }
 
   /**
@@ -304,6 +225,19 @@ class MemoryBuffer
   }
 
   /**
+   * Returns a span view into the buffer.
+   *
+   * \return
+   * A span.
+   */
+  [[nodiscard]]
+  constexpr auto view() const noexcept -> Span<const value_type>
+    requires(!std::same_as<value_type, StringView::value_type>)
+  {
+    return Span<const value_type> {data(), size()};
+  }
+
+  /**
    * Returns a string view into the buffer.
    *
    * \return
@@ -323,7 +257,7 @@ class MemoryBuffer
   iterator mEnd {mBegin};
 };
 
-template class MemoryBuffer<char>;
-template class MemoryBuffer<uint8>;
+template class Buffer<char>;
+template class Buffer<uint8>;
 
 }  // namespace tactile
