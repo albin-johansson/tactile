@@ -2,17 +2,10 @@
 
 #include "tactile/opengl/opengl_texture.hpp"
 
-#include <utility>  // move
-
-#include <SDL2/SDL.h>
 #include <gtest/gtest.h>
-#include <imgui.h>
 
-#include "tactile/base/container/maybe.hpp"
-#include "tactile/core/platform/sdl_context.hpp"
-#include "tactile/core/platform/window.hpp"
-#include "tactile/core/ui/imgui_context.hpp"
-#include "tactile/opengl/opengl_renderer.hpp"
+#include "tactile/opengl/opengl_renderer_plugin.hpp"
+#include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
 
@@ -21,30 +14,16 @@ class OpenGLTextureTest : public testing::Test
  protected:
   void SetUp() override
   {
-    mSDL.emplace();
-
-    if (auto window = Window::create(SDL_WINDOW_OPENGL)) {
-      mWindow.emplace(std::move(*window));
-    }
-    else {
-      FAIL();
-    }
-
-    mImGuiCtx.reset(ImGui::CreateContext());
-
-    if (auto renderer =
-            OpenGLRenderer::make(&mWindow.value(), mImGuiCtx.get())) {
-      mRenderer.emplace(std::move(*renderer));
-    }
-    else {
-      FAIL() << "Could not initialize OpenGL renderer";
-    }
+    mPlugin.load(mRuntime);
   }
 
-  Maybe<SDLContext> mSDL {};
-  Maybe<Window> mWindow {};
-  ui::UniqueImGuiContext mImGuiCtx {};
-  Maybe<OpenGLRenderer> mRenderer {};
+  void TearDown() override
+  {
+    mPlugin.unload(mRuntime);
+  }
+
+  Runtime mRuntime {};
+  OpenGLRendererPlugin mPlugin {};
 };
 
 /// \trace tactile::OpenGLTexture::load

@@ -42,6 +42,9 @@ class TACTILE_RUNTIME_API Runtime final
   auto get_window() -> IWindow*;
 
   [[nodiscard]]
+  auto get_renderer() -> IRenderer*;
+
+  [[nodiscard]]
   auto get_imgui_context() -> ImGuiContext*;
 
  private:

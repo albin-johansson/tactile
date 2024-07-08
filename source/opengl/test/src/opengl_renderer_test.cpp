@@ -2,14 +2,10 @@
 
 #include "tactile/opengl/opengl_renderer.hpp"
 
-#include <SDL2/SDL.h>
 #include <gtest/gtest.h>
-#include <imgui.h>
 
-#include "tactile/base/container/maybe.hpp"
-#include "tactile/core/platform/sdl_context.hpp"
-#include "tactile/core/platform/window.hpp"
-#include "tactile/core/ui/imgui_context.hpp"
+#include "tactile/opengl/opengl_renderer_plugin.hpp"
+#include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
 
@@ -18,28 +14,23 @@ class OpenGLRendererTest : public testing::Test
  protected:
   void SetUp() override
   {
-    mSDL.emplace();
-
-    if (auto window = Window::create(SDL_WINDOW_OPENGL)) {
-      mWindow.emplace(std::move(*window));
-    }
-    else {
-      FAIL() << "Could not initialize OpenGL renderer";
-    }
-
-    mImGuiContext.reset(ImGui::CreateContext());
+    mPlugin.load(mRuntime);
   }
 
-  Maybe<SDLContext> mSDL {};
-  Maybe<Window> mWindow {};
-  ui::UniqueImGuiContext mImGuiContext {};
+  void TearDown() override
+  {
+    mPlugin.unload(mRuntime);
+  }
+
+  Runtime mRuntime {};
+  OpenGLRendererPlugin mPlugin {};
 };
 
 /// \trace tactile::OpenGLRenderer::load_texture
 TEST_F(OpenGLRendererTest, LoadTexture)
 {
-  auto renderer = OpenGLRenderer::make(&mWindow.value(), mImGuiContext.get());
-  ASSERT_TRUE(renderer.has_value());
+  auto* renderer = dynamic_cast<OpenGLRenderer*>(mRuntime.get_renderer());
+  ASSERT_NE(renderer, nullptr);
 
   EXPECT_EQ(renderer->load_texture("assets/images/dummy.png"), TextureID {1});
   EXPECT_FALSE(renderer->load_texture("a/b/c.png").has_value());

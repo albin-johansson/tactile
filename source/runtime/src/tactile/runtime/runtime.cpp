@@ -169,6 +169,11 @@ auto Runtime::get_window() -> IWindow*
   return mData->window.has_value() ? &mData->window.value() : nullptr;
 }
 
+auto Runtime::get_renderer() -> IRenderer*
+{
+  return mData->renderer;
+}
+
 auto Runtime::get_imgui_context() -> ImGuiContext*
 {
   return mData->imgui_context.get();
