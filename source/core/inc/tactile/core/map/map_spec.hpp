@@ -2,8 +2,8 @@
 
 #pragma once
 
+#include "tactile/base/layer/tile_orientation.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/map/map_orientation.hpp"
 #include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/matrix_extent.hpp"
 
@@ -14,8 +14,8 @@ namespace tactile {
  */
 struct MapSpec final
 {
-  /** The orientation mode to use. */
-  MapOrientation orientation;
+  /** The tile orientation mode to use. */
+  TileOrientation orientation;
 
   /** The initial extent of the map. */
   MatrixExtent extent;

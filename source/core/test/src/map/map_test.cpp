@@ -31,7 +31,7 @@ class MapTest : public testing::Test
 TEST_F(MapTest, IsMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {5, 5},
     .tile_size = Int2 {16, 16},
   };
@@ -47,7 +47,7 @@ TEST_F(MapTest, IsMap)
 TEST_F(MapTest, MakeMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {10, 8},
     .tile_size = Int2 {32, 36},
   };
@@ -102,13 +102,13 @@ TEST_F(MapTest, MakeMap)
 TEST_F(MapTest, MakeMapWithInvalidSpec)
 {
   const MapSpec bad_extent {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {0, 0},
     .tile_size = Int2 {32, 32},
   };
 
   const MapSpec bad_tile_size {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {10, 10},
     .tile_size = Int2 {0, 0},
   };
@@ -121,7 +121,7 @@ TEST_F(MapTest, MakeMapWithInvalidSpec)
 TEST_F(MapTest, DestroyMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {5, 5},
     .tile_size = Int2 {32, 32},
   };
@@ -155,7 +155,7 @@ TEST_F(MapTest, DestroyMap)
 TEST_F(MapTest, AddTilesetToMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {10, 10},
     .tile_size = Int2 {32, 32},
   };

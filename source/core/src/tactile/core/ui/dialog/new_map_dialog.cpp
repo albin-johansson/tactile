@@ -20,25 +20,25 @@ namespace tactile::ui {
 inline namespace new_map_dialog {
 
 void _push_map_orientation_combo(const Language& language,
-                                 MapOrientation& orientation)
+                                 TileOrientation& orientation)
 {
   const auto* orthogonal = language.get(StringID::kOrthogonal);
   const auto* hexagonal = language.get(StringID::kHexagonal);
 
   const auto* orientation_preview =
-      (orientation == MapOrientation::kOrthogonal) ? orthogonal : hexagonal;
+      (orientation == TileOrientation::kOrthogonal) ? orthogonal : hexagonal;
 
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(language.get(StringID::kOrientation));
   ImGui::SameLine();
 
-  if (ImGui::BeginCombo("##MapOrientation", orientation_preview)) {
+  if (ImGui::BeginCombo("##TileOrientation", orientation_preview)) {
     if (ImGui::Selectable(orthogonal)) {
-      orientation = MapOrientation::kOrthogonal;
+      orientation = TileOrientation::kOrthogonal;
     }
 
     if (ImGui::Selectable(hexagonal)) {
-      orientation = MapOrientation::kHexagonal;
+      orientation = TileOrientation::kHexagonal;
     }
 
     ImGui::EndCombo();
@@ -104,7 +104,7 @@ void NewMapDialog::push(const Model& model, EventDispatcher& dispatcher)
 void NewMapDialog::open()
 {
   mSpec = MapSpec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {10, 10},
     .tile_size = Int2 {32, 32},
   };

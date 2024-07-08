@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/base/io/compress/compression_type.hpp"
-#include "tactile/core/tile/tile_encoding.hpp"
+#include "tactile/base/layer/tile_encoding.hpp"
 
 namespace tactile {
 

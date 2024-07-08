@@ -8,11 +8,11 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_type.hpp"
+#include "tactile/base/layer/tile_encoding.hpp"
+#include "tactile/base/layer/tile_orientation.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/map/map_orientation.hpp"
 #include "tactile/core/numeric/vec.hpp"
-#include "tactile/core/tile/tile_encoding.hpp"
 #include "tactile/core/util/matrix_extent.hpp"
 
 namespace tactile {
@@ -26,8 +26,8 @@ class Registry;
  */
 struct CMap final
 {
-  /** The orientation used by the map. */
-  MapOrientation orientation;
+  /** The tile orientation used by the map. */
+  TileOrientation orientation;
 
   /** The size of the map, in tiles. */
   MatrixExtent extent;

@@ -9,7 +9,7 @@
 namespace tactile::test {
 
 inline constexpr MapSpec kOrthogonalMapSpec {
-  .orientation = MapOrientation::kOrthogonal,
+  .orientation = TileOrientation::kOrthogonal,
   .extent = MatrixExtent {10, 10},
   .tile_size = Int2 {50, 50},
 };

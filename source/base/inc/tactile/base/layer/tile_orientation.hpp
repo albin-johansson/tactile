@@ -8,14 +8,14 @@
 namespace tactile {
 
 /**
- * Represents the different supported map orientations.
+ * Represents the different supported tile orientations.
  */
-enum class MapOrientation : uint8
+enum class TileOrientation : uint8
 {
-  /** Classic map orientation, with orthogonal x and y axes. */
+  /** The classic tile orientation, with orthogonal x and y axes. */
   kOrthogonal,
 
-  /** Map with hexagonal tiles. */
+  /** Hexagons arranged so that one vertex is located directly above center. */
   kHexagonal,
 };
 

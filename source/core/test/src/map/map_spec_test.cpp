@@ -9,8 +9,8 @@ namespace tactile {
 /// \trace tactile::is_valid [MapSpec]
 TEST(MapSpec, IsValid)
 {
-  const auto orthogonal = MapOrientation::kOrthogonal;
-  const auto hex = MapOrientation::kHexagonal;
+  const auto orthogonal = TileOrientation::kOrthogonal;
+  const auto hex = TileOrientation::kHexagonal;
 
   const MapSpec bad_empty {};
   const MapSpec bad_extent_width {orthogonal, {0, 1}, {1, 1}};
