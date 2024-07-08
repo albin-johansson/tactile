@@ -8,7 +8,6 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/io/compress/zlib_compression_provider.hpp"
-#include "tactile/core/io/compress/zstd_compression_provider.hpp"
 #include "tactile/core/numeric/random.hpp"
 
 namespace tactile {
@@ -17,8 +16,7 @@ template <typename T>
 class CompressionProviderTest : public testing::Test
 {};
 
-using CompressionProviderTypes =
-    testing::Types<ZlibCompressionProvider, ZstdCompressionProvider>;
+using CompressionProviderTypes = testing::Types<ZlibCompressionProvider>;
 
 TYPED_TEST_SUITE(CompressionProviderTest, CompressionProviderTypes);
 

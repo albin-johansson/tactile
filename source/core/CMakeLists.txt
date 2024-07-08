@@ -75,8 +75,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/src/tactile/core/io/compress/compression_error.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/compress/zlib_compression_provider.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/io/compress/zlib_compression_provider.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/compress/zstd_compression_provider.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/core/io/compress/zstd_compression_provider.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/save/ir.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/save/save_format.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/save/save_format_id.hpp"
@@ -288,5 +286,4 @@ target_link_libraries(tactile-core
                       protobuf::libprotobuf
                       tinyfiledialogs::tinyfiledialogs
                       ZLIB::ZLIB
-                      $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
                       )
