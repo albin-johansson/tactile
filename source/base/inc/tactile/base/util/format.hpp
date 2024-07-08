@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include <format>       // format_to_n, vformat_to, make_format_args
-#include <iterator>     // back_inserter
+#include <format>    // format_to_n, vformat_to, make_format_args, format_args
+#include <iterator>  // back_inserter
 #include <type_traits>  // type_identity_t
 #include <utility>      // forward
 #include <version>      // __cpp_lib_format
@@ -46,6 +46,39 @@ using FormatString = StringView;
  * \details
  * The formatted string will be truncated if it doesn't fit in the buffer.
  *
+ * \tparam N The maximum number of elements in the buffer.
+ *
+ * \param buffer The target memory buffer.
+ * \param fmt    The format string.
+ * \param args   The format arguments.
+ */
+template <usize N>
+void vformat_to_buffer(Buffer<char, N>& buffer,
+                       const StringView fmt,
+                       std::format_args args)
+{
+  const auto remaining_chars = buffer.capacity() - buffer.size();
+  if (remaining_chars < 1) {
+    return;
+  }
+
+  // We have to use vformat_to to avoid compile-time checks, because Clang might
+  // actually feature such checks even though their library doesn't announce it.
+  // This is safe because the Buffer::push_back function has no effect when the
+  // buffer is full. Ideally, we would like to do something like:
+  //     std::format_to_n(std::back_inserter(buffer),
+  //                      saturate_cast<ssize>(remaining_chars),
+  //                      fmt,
+  //                      std::forward<Args>(args)...);
+  std::vformat_to(std::back_inserter(buffer), fmt, args);
+}
+
+/**
+ * Formats a string into a given memory buffer.
+ *
+ * \details
+ * The formatted string will be truncated if it doesn't fit in the buffer.
+ *
  * \tparam N    The maximum number of elements in the buffer.
  * \tparam Args The format argument types.
  *
@@ -58,28 +91,10 @@ void format_to_buffer(Buffer<char, N>& buffer,
                       const FormatString<Args...> fmt,
                       const Args&... args)
 {
-  const auto remaining_chars = buffer.capacity() - buffer.size();
-  if (remaining_chars < 1) {
-    return;
-  }
-
-  // We have to use vformat_to to avoid compile-time checks, because Clang might
-  // actually feature such checks even though their library doesn't announce it.
-  // This is safe because the MemoryBuffer::push_back function has no effect
-  // when the buffer is full. Ideally, we would like to do something like:
-  //     std::format_to_n(std::back_inserter(buffer),
-  //                      saturate_cast<ssize>(remaining_chars),
-  //                      fmt,
-  //                      std::forward<Args>(args)...);
-
 #if TACTILE_HAS_STD_FORMAT_STRING
-  std::vformat_to(std::back_inserter(buffer),
-                  fmt.get(),
-                  std::make_format_args(args...));
+  vformat_to_buffer(buffer, fmt.get(), std::make_format_args(args...));
 #else
-  std::vformat_to(std::back_inserter(buffer),
-                  fmt,
-                  std::make_format_args(args...));
+  vformat_to_buffer(buffer, fmt, std::make_format_args(args...));
 #endif
 }
 

@@ -7,7 +7,6 @@
 #include <iterator>   // back_inserter
 
 #include "tactile/base/util/buffer.hpp"
-#include "tactile/core/util/format.hpp"
 
 namespace tactile {
 inline namespace logger {
@@ -25,7 +24,7 @@ void Logger::_log(const LogLevel level,
       const auto log_instant = SteadyClock::now();
 
       Buffer<char, 512> text_buffer;  // NOLINT uninitialized
-      std::vformat_to(std::back_inserter(text_buffer), fmt_string, args);
+      vformat_to_buffer(text_buffer, fmt_string, args);
 
       const auto level_acronym = get_acronym(level);
       const auto elapsed_time = _to_elapsed_time(log_instant);

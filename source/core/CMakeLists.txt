@@ -226,7 +226,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/src/tactile/core/ui/viewport.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/ui/widget_manager.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/ui/widget_manager.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/format.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/lookup.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/matrix_extent.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/util/matrix_extent.cpp"

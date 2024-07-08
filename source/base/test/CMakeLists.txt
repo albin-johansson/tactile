@@ -1,13 +1,14 @@
 project(tactile-base-test CXX)
 
-file(GLOB_RECURSE TACTILE_BASE_TEST_FILES CONFIGURE_DEPENDS
-     "${PROJECT_SOURCE_DIR}/src/*.cpp"
-     "${PROJECT_SOURCE_DIR}/src/*.hpp"
-     "${PROJECT_SOURCE_DIR}/src/**/*.cpp"
-     "${PROJECT_SOURCE_DIR}/src/**/*.hpp"
-     )
+add_executable(tactile-base-test)
 
-add_executable(tactile-base-test "${TACTILE_BASE_TEST_FILES}")
+target_sources(tactile-base-test
+               PRIVATE
+               "${PROJECT_SOURCE_DIR}/src/numeric/saturate_cast_test.cpp"
+               "${PROJECT_SOURCE_DIR}/src/util/buffer_test.cpp"
+               "${PROJECT_SOURCE_DIR}/src/util/format_test.cpp"
+               "${PROJECT_SOURCE_DIR}/src/main.cpp"
+               )
 
 tactile_prepare_target(tactile-base-test)
 

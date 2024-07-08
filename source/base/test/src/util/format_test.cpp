@@ -1,12 +1,22 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/util/format.hpp"
+#include "tactile/base/util/format.hpp"
 
 #include <gtest/gtest.h>
 
 #include "tactile/base/int.hpp"
 
 namespace tactile {
+
+// tactile::format_to_buffer
+TEST(Format, FormatOneCharToBuffer)
+{
+  Buffer<char, 1> buffer;  // NOLINT
+  format_to_buffer(buffer, "{}", "!");
+
+  ASSERT_EQ(buffer.size(), 1);
+  EXPECT_EQ(buffer.view()[0], '!');
+}
 
 // tactile::format_to_buffer
 TEST(Format, FormatToBuffer)

@@ -10,9 +10,9 @@
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/base/util/format.hpp"
 #include "tactile/core/log/log_level.hpp"
 #include "tactile/core/log/log_sink.hpp"
-#include "tactile/core/util/format.hpp"
 
 #define TACTILE_LOG(Level, FmtString, ...)                                  \
   {                                                                         \
