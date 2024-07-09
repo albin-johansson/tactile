@@ -9,11 +9,6 @@ target_sources(tactile
 
 tactile_prepare_target(tactile)
 
-target_include_directories(tactile
-                           PUBLIC
-                           "${PROJECT_SOURCE_DIR}/inc"
-                           )
-
 target_link_libraries(tactile
                       PRIVATE
                       tactile::base
