@@ -85,6 +85,10 @@ if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
   endif ()
 endif ()
 
+if (TACTILE_BUILD_VULKAN_RENDERER)
+  add_subdirectory("source/vulkan_renderer")
+endif ()
+
 if (TACTILE_BUILD_LEGACY MATCHES "ON")
   add_subdirectory("source/lib")
   add_subdirectory("source/app")
