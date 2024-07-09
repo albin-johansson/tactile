@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-option(TACTILE_BUILD_LEGACY "Build the legacy targets" OFF)
 option(TACTILE_BUILD_TESTS "Build the tests" OFF)
 option(TACTILE_BUILD_OPENGL_RENDERER "Build the OpenGL renderer" OFF)
 option(TACTILE_BUILD_VULKAN_RENDERER "Build the Vulkan renderer" OFF)
@@ -13,7 +12,6 @@ if (CMAKE_SKIP_INSTALL_ALL_DEPENDENCY MATCHES "")
   set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY "ON")
 endif ()
 
-message(DEBUG "TACTILE_BUILD_LEGACY: ${TACTILE_BUILD_LEGACY}")
 message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
 message(DEBUG "TACTILE_BUILD_OPENGL_RENDERER: ${TACTILE_BUILD_OPENGL_RENDERER}")
 message(DEBUG "TACTILE_BUILD_VULKAN_RENDERER: ${TACTILE_BUILD_VULKAN_RENDERER}")
@@ -72,10 +70,12 @@ add_subdirectory("source/proto")
 add_subdirectory("source/base")
 add_subdirectory("source/core")
 add_subdirectory("source/runtime")
+add_subdirectory("source/main")
+
 add_subdirectory("source/zlib_compression")
 add_subdirectory("source/zstd_compression")
+
 add_subdirectory("source/yaml_format")
-add_subdirectory("source/main")
 
 if (TACTILE_BUILD_OPENGL_RENDERER)
   add_subdirectory("source/opengl_renderer")
@@ -83,18 +83,4 @@ endif ()
 
 if (TACTILE_BUILD_VULKAN_RENDERER)
   add_subdirectory("source/vulkan_renderer")
-endif ()
-
-if (TACTILE_BUILD_LEGACY MATCHES "ON")
-  add_subdirectory("source/lib")
-  add_subdirectory("source/app")
-endif ()
-
-if (TACTILE_BUILD_TESTS MATCHES "ON")
-  if (TACTILE_BUILD_LEGACY MATCHES "ON")
-    add_subdirectory("test")
-  endif ()
-
-  add_subdirectory("source/base/test")
-  add_subdirectory("source/core/test")
 endif ()

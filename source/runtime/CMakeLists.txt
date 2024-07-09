@@ -1,3 +1,3 @@
 project(tactile-runtime CXX)
 
-add_subdirectory(lib)
+add_subdirectory("lib")

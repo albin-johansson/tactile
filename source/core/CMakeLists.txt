@@ -275,3 +275,7 @@ target_link_libraries(tactile-core
                       protobuf::libprotobuf
                       tinyfiledialogs::tinyfiledialogs
                       )
+
+if (TACTILE_BUILD_TESTS)
+  add_subdirectory("test")
+endif ()

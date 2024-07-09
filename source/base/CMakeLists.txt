@@ -49,4 +49,11 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/prelude.hpp"
                )
 
-target_include_directories(tactile-base INTERFACE "${PROJECT_SOURCE_DIR}/inc")
+target_include_directories(tactile-base
+                           INTERFACE
+                           "${PROJECT_SOURCE_DIR}/inc"
+                           )
+
+if (TACTILE_BUILD_TESTS)
+  add_subdirectory("test")
+endif ()
