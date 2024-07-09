@@ -77,12 +77,8 @@ add_subdirectory("source/zstd_compression")
 add_subdirectory("source/yaml_format")
 add_subdirectory("source/main")
 
-if (TACTILE_BUILD_OPENGL_RENDERER MATCHES "ON")
-  add_subdirectory("source/opengl")
-
-  if (TACTILE_BUILD_TESTS MATCHES "ON")
-    add_subdirectory("source/opengl/test")
-  endif ()
+if (TACTILE_BUILD_OPENGL_RENDERER)
+  add_subdirectory("source/opengl_renderer")
 endif ()
 
 if (TACTILE_BUILD_VULKAN_RENDERER)

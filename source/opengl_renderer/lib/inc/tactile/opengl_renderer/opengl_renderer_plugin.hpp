@@ -4,8 +4,8 @@
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/opengl/api.hpp"
-#include "tactile/opengl/opengl_renderer.hpp"
+#include "tactile/opengl_renderer/api.hpp"
+#include "tactile/opengl_renderer/opengl_renderer.hpp"
 #include "tactile/runtime/plugin.hpp"
 
 namespace tactile {

@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_renderer.hpp"
+#include "tactile/opengl_renderer/opengl_renderer.hpp"
 
 #include <cstdlib>  // malloc, free
 #include <list>     // list
@@ -17,9 +17,9 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/render/window.hpp"
-#include "tactile/opengl/opengl_error.hpp"
-#include "tactile/opengl/opengl_imgui.hpp"
-#include "tactile/opengl/opengl_texture.hpp"
+#include "tactile/opengl_renderer/opengl_error.hpp"
+#include "tactile/opengl_renderer/opengl_imgui.hpp"
+#include "tactile/opengl_renderer/opengl_texture.hpp"
 #include "tactile/runtime/runtime.hpp"
 
 namespace tactile {

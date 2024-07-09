@@ -4,7 +4,7 @@
 
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/opengl/api.hpp"
+#include "tactile/opengl_renderer/api.hpp"
 
 struct SDL_Window;
 struct ImGuiContext;

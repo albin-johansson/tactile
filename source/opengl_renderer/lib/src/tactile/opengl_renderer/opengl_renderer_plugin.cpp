@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_renderer_plugin.hpp"
+#include "tactile/opengl_renderer/opengl_renderer_plugin.hpp"
 
 #include <new>  // nothrow
 

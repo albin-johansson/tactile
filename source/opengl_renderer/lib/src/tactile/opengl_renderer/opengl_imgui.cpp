@@ -1,13 +1,13 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_imgui.hpp"
+#include "tactile/opengl_renderer/opengl_imgui.hpp"
 
 #include <utility>  // exchange
 
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "tactile/opengl/opengl_error.hpp"
+#include "tactile/opengl_renderer/opengl_error.hpp"
 
 namespace tactile {
 

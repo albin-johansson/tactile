@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_texture.hpp"
+#include "tactile/opengl_renderer/opengl_texture.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 
@@ -10,7 +10,7 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
-#include "tactile/opengl/opengl_error.hpp"
+#include "tactile/opengl_renderer/opengl_error.hpp"
 
 namespace tactile {
 
