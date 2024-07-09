@@ -4,12 +4,15 @@ add_executable(tactile WIN32)
 
 target_sources(tactile
                PRIVATE
-               "${PROJECT_SOURCE_DIR}/src/tactile/main.cpp"
+               "${PROJECT_SOURCE_DIR}/main.cpp"
                )
 
 tactile_prepare_target(tactile)
 
-target_include_directories(tactile PUBLIC "${PROJECT_SOURCE_DIR}/inc")
+target_include_directories(tactile
+                           PUBLIC
+                           "${PROJECT_SOURCE_DIR}/inc"
+                           )
 
 target_link_libraries(tactile
                       PRIVATE
