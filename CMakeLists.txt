@@ -76,6 +76,7 @@ add_subdirectory("source/zlib_compression")
 add_subdirectory("source/zstd_compression")
 
 add_subdirectory("source/yaml_format")
+add_subdirectory("source/tiled_tmj_format")
 
 if (TACTILE_BUILD_OPENGL_RENDERER)
   add_subdirectory("source/opengl_renderer")
