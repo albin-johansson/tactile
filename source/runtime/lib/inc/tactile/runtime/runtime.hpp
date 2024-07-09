@@ -94,17 +94,6 @@ class TACTILE_RUNTIME_API Runtime final
   void set_compression_provider(CompressionType format,
                                 ICompressionProvider* compressor);
 
-  /**
-   * Attempts to start the application loop.
-   *
-   * \note
-   * A window and renderer must have been configured before this function is
-   * called.
-   *
-   * \return
-   * \c EXIT_SUCCESS if successful; \c EXIT_FAILURE otherwise.
-   */
-  auto start() -> int;
 
   /**
    * Returns the application window.

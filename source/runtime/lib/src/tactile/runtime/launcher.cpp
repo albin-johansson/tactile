@@ -8,10 +8,12 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/core/debug/exception.hpp"
+#include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/platform/dynamic_library.hpp"
 #include "tactile/runtime/plugin_instance.hpp"
 #include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/tactile_app.hpp"
 
 namespace tactile {
 namespace launcher_impl {
@@ -82,13 +84,31 @@ auto load_plugins(Runtime& runtime) -> Vector<PluginInstance>
 auto launch(const int, char*[]) -> int
 {
   try {
-    tactile::Runtime runtime {};
+    Runtime runtime {};
 
     const auto plugins [[maybe_unused]] = launcher_impl::load_plugins(runtime);
 
-    return runtime.start();
+    auto* window = runtime.get_window();
+    auto* renderer = runtime.get_renderer();
+
+    if (window == nullptr) {
+      TACTILE_LOG_ERROR("Window has not been initialized");
+      return EXIT_FAILURE;
+    }
+
+    if (renderer == nullptr) {
+      TACTILE_LOG_ERROR("A renderer has not been installed");
+      return EXIT_FAILURE;
+    }
+
+    TactileApp app {window, renderer};
+
+    Engine engine {&app, renderer};
+    engine.run();
+
+    return EXIT_SUCCESS;
   }
-  catch (const tactile::Exception& exception) {
+  catch (const Exception& exception) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}",
                       exception.what(),
                       exception.trace());

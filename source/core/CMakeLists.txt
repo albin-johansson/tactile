@@ -231,8 +231,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/src/tactile/core/util/string_ops.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/util/uuid.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/util/uuid.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/tactile_editor.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/core/tactile_editor.cpp"
                )
 
 tactile_prepare_target(tactile-core)

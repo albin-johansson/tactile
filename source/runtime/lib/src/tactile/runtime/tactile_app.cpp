@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/tactile_editor.hpp"
+#include "tactile/runtime/tactile_app.hpp"
 
 #include <utility>  // move
 
@@ -13,14 +13,14 @@
 
 namespace tactile {
 
-TactileEditor::TactileEditor(IWindow* window, IRenderer* renderer)
+TactileApp::TactileApp(IWindow* window, IRenderer* renderer)
   : mWindow {require_not_null(window, "null window")},
     mRenderer {require_not_null(renderer, "null renderer")}
 {}
 
-TactileEditor::~TactileEditor() noexcept = default;
+TactileApp::~TactileApp() noexcept = default;
 
-void TactileEditor::on_startup()
+void TactileApp::on_startup()
 {
   mWindow->show();
   mWindow->maximize();
@@ -64,22 +64,22 @@ void TactileEditor::on_startup()
   viewport_event_handler.install(mEventDispatcher);
 }
 
-void TactileEditor::on_shutdown()
+void TactileApp::on_shutdown()
 {
   mWindow->hide();
 }
 
-void TactileEditor::on_update()
+void TactileApp::on_update()
 {
   mEventDispatcher.update();
 }
 
-void TactileEditor::on_render()
+void TactileApp::on_render()
 {
   mWidgetManager.push(*mModel, mEventDispatcher);
 }
 
-void TactileEditor::on_framebuffer_scale_changed(const float framebuffer_scale)
+void TactileApp::on_framebuffer_scale_changed(const float framebuffer_scale)
 {
   mEventDispatcher.push<ReloadFontsEvent>(framebuffer_scale);
 }

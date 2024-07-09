@@ -3,8 +3,8 @@
 #pragma once
 
 #include "tactile/base/container/maybe.hpp"
-#include "tactile/base/prelude.hpp"
 #include "tactile/base/engine/engine_app.hpp"
+#include "tactile/base/prelude.hpp"
 #include "tactile/core/event/component_event_handler.hpp"
 #include "tactile/core/event/edit_event_handler.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
@@ -19,6 +19,7 @@
 #include "tactile/core/model/settings.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
+#include "tactile/runtime/api.hpp"
 
 namespace tactile {
 
@@ -28,15 +29,15 @@ class IRenderer;
 /**
  * Represents the Tactile editor application.
  */
-class TactileEditor final : public IEngineApp
+class TACTILE_RUNTIME_API TactileApp final : public IEngineApp
 {
  public:
-  TACTILE_DELETE_COPY(TactileEditor);
-  TACTILE_DELETE_MOVE(TactileEditor);
+  TACTILE_DELETE_COPY(TactileApp);
+  TACTILE_DELETE_MOVE(TactileApp);
 
-  TactileEditor(IWindow* window, IRenderer* renderer);
+  TactileApp(IWindow* window, IRenderer* renderer);
 
-  ~TactileEditor() noexcept override;
+  ~TactileApp() noexcept override;
 
   void on_startup() override;
 

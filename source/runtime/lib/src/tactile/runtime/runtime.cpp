@@ -12,13 +12,11 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/util/buffer.hpp"
 #include "tactile/core/debug/terminate.hpp"
-#include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/log/terminal_log_sink.hpp"
 #include "tactile/core/numeric/random.hpp"
 #include "tactile/core/platform/win32.hpp"
-#include "tactile/core/tactile_editor.hpp"
 #include "tactile/core/ui/common/style.hpp"
 #include "tactile/runtime/protobuf_context.hpp"
 #include "tactile/runtime/sdl_context.hpp"
@@ -86,7 +84,6 @@ struct Runtime::Data final
   Optional<Window> window {};
   IRenderer* renderer {};
   HashMap<CompressionType, ICompressionProvider*> compression_providers {};
-  Optional<TactileEditor> editor {};
 
   Data()
     : protobuf_context {},
@@ -138,31 +135,6 @@ void Runtime::set_compression_provider(const CompressionType format,
   else {
     mData->compression_providers.erase(format);
   }
-}
-
-auto Runtime::start() -> int
-{
-  auto& data = *mData;
-
-  if (!data.window) {
-    TACTILE_LOG_ERROR("Window has not been initialized");
-    return EXIT_FAILURE;
-  }
-
-  if (!data.renderer) {
-    TACTILE_LOG_ERROR("A renderer has not been installed");
-    return EXIT_FAILURE;
-  }
-
-  auto* window = &data.window.value();
-  auto* renderer = data.renderer;
-
-  auto& app = data.editor.emplace(window, renderer);
-
-  Engine engine {&app, renderer};
-  engine.run();
-
-  return EXIT_SUCCESS;
 }
 
 auto Runtime::get_window() -> IWindow*

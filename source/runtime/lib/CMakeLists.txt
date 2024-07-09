@@ -17,6 +17,8 @@ target_sources(tactile-runtime
                "${PROJECT_SOURCE_DIR}/src/tactile/runtime/runtime.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/sdl_context.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/runtime/sdl_context.cpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/tactile_app.hpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/tactile_app.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/window.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/runtime/window.cpp"
                )
