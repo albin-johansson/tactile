@@ -19,7 +19,6 @@
 #include "tactile/core/model/settings.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
-#include "tactile/runtime/api.hpp"
 
 namespace tactile {
 
@@ -29,7 +28,7 @@ class IRenderer;
 /**
  * Represents the Tactile editor application.
  */
-class TACTILE_RUNTIME_API TactileApp final : public IEngineApp
+class TactileApp final : public IEngineApp
 {
  public:
   TACTILE_DELETE_COPY(TactileApp);
