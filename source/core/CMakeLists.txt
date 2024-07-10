@@ -1,5 +1,15 @@
 project(tactile-core CXX)
 
+find_package(Boost REQUIRED)
+find_package(EnTT CONFIG REQUIRED)
+find_package(FastFloat CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+find_package(Protobuf CONFIG REQUIRED)
+find_package(tinyfiledialogs CONFIG REQUIRED)
+find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
+
 add_library(tactile-core STATIC)
 add_library(tactile::core ALIAS tactile-core)
 
@@ -242,6 +252,7 @@ target_include_directories(tactile-core
                            SYSTEM PUBLIC
                            "${TACTILE_VENDOR_DIR}/centurion"
                            "${TACTILE_VENDOR_DIR}/fontawesome"
+                           "${CPPCODEC_INCLUDE_DIRS}"
                            )
 
 target_compile_definitions(tactile-core
@@ -269,7 +280,6 @@ target_link_libraries(tactile-core
                       Boost::boost
                       FastFloat::fast_float
                       magic_enum::magic_enum
-                      SDL2::SDL2
                       protobuf::libprotobuf
                       tinyfiledialogs::tinyfiledialogs
                       )

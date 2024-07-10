@@ -1,5 +1,7 @@
 project(tactile-zstd-compression CXX)
 
+find_package(zstd CONFIG REQUIRED)
+
 add_subdirectory("lib")
 
 if (TACTILE_BUILD_TESTS)

@@ -1,7 +1,5 @@
 project(tactile-tiled-tmj-format-lib CXX)
 
-find_package(nlohmann_json CONFIG REQUIRED)
-
 add_library(tactile-tiled-tmj-format SHARED)
 add_library(tactile::tiled_tmj_format ALIAS tactile-tiled-tmj-format)
 

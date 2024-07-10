@@ -1,7 +1,5 @@
 project(tactile-yaml-format-lib CXX)
 
-find_package(yaml-cpp CONFIG REQUIRED)
-
 add_library(tactile-yaml-format SHARED)
 add_library(tactile::yaml_format ALIAS tactile-yaml-format)
 

@@ -1,7 +1,5 @@
 project(tactile-zstd-compression-lib CXX)
 
-find_package(zstd CONFIG REQUIRED)
-
 add_library(tactile-zstd-compression SHARED)
 add_library(tactile::zstd_compression ALIAS tactile-zstd-compression)
 

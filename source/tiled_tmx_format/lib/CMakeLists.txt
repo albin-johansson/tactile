@@ -1,7 +1,5 @@
 project(tactile-tiled-tmx-format-lib CXX)
 
-find_package(pugixml CONFIG REQUIRED)
-
 add_library(tactile-tiled-tmx-format SHARED)
 add_library(tactile::tiled_tmx_format ALIAS tactile-tiled-tmx-format)
 

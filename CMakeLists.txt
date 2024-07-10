@@ -76,7 +76,10 @@ message(DEBUG "TACTILE_ASSET_DIR: ${TACTILE_ASSET_DIR}")
 install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
 include("${TACTILE_ROOT_DIR}/cmake/tactile.cmake")
-tactile_find_dependencies()
+
+if (TACTILE_BUILD_TESTS)
+  find_package(GTest CONFIG REQUIRED)
+endif ()
 
 add_subdirectory("source/proto")
 add_subdirectory("source/base")

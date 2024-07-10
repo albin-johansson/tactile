@@ -1,5 +1,7 @@
 project(tactile-main CXX)
 
+find_package(SDL2 CONFIG REQUIRED)
+
 add_executable(tactile WIN32)
 
 target_sources(tactile
