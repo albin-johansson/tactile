@@ -9,7 +9,7 @@
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
-#include "tactile/core/meta/attribute.hpp"
+#include "tactile/base/meta/attribute.hpp"
 
 namespace tactile {
 

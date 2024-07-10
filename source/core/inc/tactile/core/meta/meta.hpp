@@ -5,8 +5,8 @@
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

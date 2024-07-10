@@ -11,10 +11,10 @@
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/layer/dense_tile_matrix.hpp"
-#include "tactile/core/meta/attribute.hpp"
 
 namespace tactile::ir {
 

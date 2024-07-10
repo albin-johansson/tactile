@@ -2,8 +2,12 @@
 
 #pragma once
 
-#include <concepts>  // same_as, convertible_to
-#include <utility>   // move
+#include <cassert>      // assert
+#include <concepts>     // same_as, convertible_to
+#include <stdexcept>    // logic_error
+#include <type_traits>  // decay_t
+#include <utility>      // move
+#include <variant>      // visit
 
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
@@ -12,8 +16,8 @@
 #include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/meta/color.hpp"
 #include "tactile/base/numeric/vec.hpp"
+#include "tactile/base/numeric/vec_stream.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -91,7 +95,10 @@ class Attribute final
    *
    * \param type The underlying value type.
    */
-  explicit Attribute(AttributeType type);
+  explicit Attribute(const AttributeType type)
+  {
+    reset(type);
+  }
 
   /**
    * Creates an attribute with a specific value.
@@ -111,14 +118,37 @@ class Attribute final
    *
    * \param str A C-style string.
    */
-  explicit Attribute(const char* str);
+  explicit Attribute(const char* str)
+  {
+    assert(str);
+    mValue.emplace<string_type>(str);
+  }
 
   /**
    * Resets the attribute the default value for the specified type.
    *
    * \param type The underlying value type.
    */
-  void reset(AttributeType type);
+  void reset(AttributeType type)
+  {
+    switch (type) {
+      case AttributeType::kStr:    set(string_type {}); return;
+      case AttributeType::kInt:    set(int_type {}); return;
+      case AttributeType::kInt2:   set(int2_type {}); return;
+      case AttributeType::kInt3:   set(int3_type {}); return;
+      case AttributeType::kInt4:   set(int4_type {}); return;
+      case AttributeType::kFloat:  set(float_type {}); return;
+      case AttributeType::kFloat2: set(float2_type {}); return;
+      case AttributeType::kFloat3: set(float3_type {}); return;
+      case AttributeType::kFloat4: set(float4_type {}); return;
+      case AttributeType::kBool:   set(bool {}); return;
+      case AttributeType::kPath:   set(path_type {}); return;
+      case AttributeType::kColor:  set(color_type {}); return;
+      case AttributeType::kObject: set(objref_type {}); return;
+    }
+
+    throw std::logic_error {"bad attribute type"};
+  }
 
   /**
    * Updates the value of the attribute.
@@ -138,7 +168,11 @@ class Attribute final
    *
    * \param str The new string value.
    */
-  void set(const char* str);
+  void set(const char* str)
+  {
+    assert(str);
+    mValue.emplace<string_type>(str);
+  }
 
   /**
    * Returns the underlying string value.
@@ -149,7 +183,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_string() const -> const string_type&;
+  auto as_string() const -> const string_type&
+  {
+    return _get<string_type>();
+  }
 
   /**
    * Returns the underlying int value.
@@ -160,7 +197,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_int() const -> int_type;
+  auto as_int() const -> int_type
+  {
+    return _get<int_type>();
+  }
 
   /**
    * Returns the underlying 2D int vector value.
@@ -171,7 +211,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_int2() const -> const int2_type&;
+  auto as_int2() const -> const int2_type&
+  {
+    return _get<int2_type>();
+  }
 
   /**
    * Returns the underlying 3D int vector value.
@@ -182,7 +225,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_int3() const -> const int3_type&;
+  auto as_int3() const -> const int3_type&
+  {
+    return _get<int3_type>();
+  }
 
   /**
    * Returns the underlying 4D int vector value.
@@ -193,7 +239,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_int4() const -> const int4_type&;
+  auto as_int4() const -> const int4_type&
+  {
+    return _get<int4_type>();
+  }
 
   /**
    * Returns the underlying float value.
@@ -204,7 +253,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_float() const -> float_type;
+  auto as_float() const -> float_type
+  {
+    return _get<float_type>();
+  }
 
   /**
    * Returns the underlying 2D float vector value.
@@ -215,7 +267,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_float2() const -> const float2_type&;
+  auto as_float2() const -> const float2_type&
+  {
+    return _get<float2_type>();
+  }
 
   /**
    * Returns the underlying 3D float vector value.
@@ -226,7 +281,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_float3() const -> const float3_type&;
+  auto as_float3() const -> const float3_type&
+  {
+    return _get<float3_type>();
+  }
 
   /**
    * Returns the underlying 4D float vector value.
@@ -237,7 +295,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_float4() const -> const float4_type&;
+  auto as_float4() const -> const float4_type&
+  {
+    return _get<float4_type>();
+  }
 
   /**
    * Returns the underlying boolean value.
@@ -248,7 +309,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_bool() const -> bool;
+  auto as_bool() const -> bool
+  {
+    return _get<bool>();
+  }
 
   /**
    * Returns the underlying color value.
@@ -259,7 +323,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_color() const -> const color_type&;
+  auto as_color() const -> const color_type&
+  {
+    return _get<color_type>();
+  }
 
   /**
    * Returns the underlying file path value.
@@ -270,7 +337,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_path() const -> const path_type&;
+  auto as_path() const -> const path_type&
+  {
+    return _get<path_type>();
+  }
 
   /**
    * Returns the underlying object reference value.
@@ -281,7 +351,10 @@ class Attribute final
    * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
-  auto as_object() const -> objref_type;
+  auto as_object() const -> objref_type
+  {
+    return _get<objref_type>();
+  }
 
   /**
    * Indicates whether the attribute is a vector attribute.
@@ -290,7 +363,27 @@ class Attribute final
    * True if the attribute has a vector value; false otherwise.
    */
   [[nodiscard]]
-  auto is_vector() const -> bool;
+  auto is_vector() const -> bool
+  {
+    switch (get_type()) {
+      case AttributeType::kInt2:
+      case AttributeType::kInt3:
+      case AttributeType::kInt4:
+      case AttributeType::kFloat2:
+      case AttributeType::kFloat3:
+      case AttributeType::kFloat4: return true;
+
+      case AttributeType::kStr:
+      case AttributeType::kInt:
+      case AttributeType::kFloat:
+      case AttributeType::kBool:
+      case AttributeType::kPath:
+      case AttributeType::kColor:
+      case AttributeType::kObject: return false;
+    }
+
+    return false;
+  }
 
   /**
    * Indicates whether the attribute has the default value for its type.
@@ -299,7 +392,15 @@ class Attribute final
    * True if the value is the default one; false otherwise.
    */
   [[nodiscard]]
-  auto has_default_value() const -> bool;
+  auto has_default_value() const -> bool
+  {
+    auto visitor = [](const auto& value) -> bool {
+      using T = std::decay_t<decltype(value)>;
+      return value == T {};
+    };
+
+    return std::visit(visitor, mValue);
+  }
 
   /**
    * Returns the type of the current value.
@@ -308,7 +409,26 @@ class Attribute final
    * The current type.
    */
   [[nodiscard]]
-  auto get_type() const -> AttributeType;
+  auto get_type() const -> AttributeType
+  {
+    switch (mValue.index()) {
+      case kStringTypeIndex: return AttributeType::kStr;
+      case kIntTypeIndex:    return AttributeType::kInt;
+      case kInt2TypeIndex:   return AttributeType::kInt2;
+      case kInt3TypeIndex:   return AttributeType::kInt3;
+      case kInt4TypeIndex:   return AttributeType::kInt4;
+      case kFloatTypeIndex:  return AttributeType::kFloat;
+      case kFloat2TypeIndex: return AttributeType::kFloat2;
+      case kFloat3TypeIndex: return AttributeType::kFloat3;
+      case kFloat4TypeIndex: return AttributeType::kFloat4;
+      case kBoolTypeIndex:   return AttributeType::kBool;
+      case kColorTypeIndex:  return AttributeType::kColor;
+      case kPathTypeIndex:   return AttributeType::kPath;
+      case kObjRefTypeIndex: return AttributeType::kObject;
+    }
+
+    throw std::logic_error {"bad attribute type"};
+  }
 
   [[nodiscard]] auto operator==(const Attribute&) const -> bool = default;
 
@@ -322,7 +442,7 @@ class Attribute final
       return *value;
     }
 
-    throw Exception {"bad attribute type"};
+    throw std::logic_error {"bad attribute type"};
   }
 };
 

@@ -4,6 +4,7 @@ add_executable(tactile-base-test)
 
 target_sources(tactile-base-test
                PRIVATE
+               "${PROJECT_SOURCE_DIR}/src/meta/attribute_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/numeric/saturate_cast_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/numeric/vec_common_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/numeric/vec_format_test.cpp"

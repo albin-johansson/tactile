@@ -3,9 +3,9 @@
 #pragma once
 
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/meta/attribute.hpp"
 
 namespace tactile {
 

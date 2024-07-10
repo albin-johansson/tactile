@@ -13,9 +13,9 @@
 #include "tactile/base/container/array.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/stacktrace.hpp"
-#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 

@@ -15,7 +15,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/meta/attribute.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"

@@ -1,12 +1,12 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/meta/attribute.hpp"
+#include "tactile/base/meta/attribute.hpp"
 
 #include <gtest/gtest.h>
 
 namespace tactile {
 
-/// \trace tactile::Attribute::Attribute
+// tactile::Attribute::Attribute
 TEST(Attribute, DefaultConstructor)
 {
   const Attribute attribute {};
@@ -14,7 +14,7 @@ TEST(Attribute, DefaultConstructor)
   EXPECT_TRUE(attribute.has_default_value());
 }
 
-/// \trace tactile::Attribute::Attribute [AttributeType]
+// tactile::Attribute::Attribute [AttributeType]
 TEST(Attribute, ExplicitTypeConstructor)
 {
   EXPECT_EQ(Attribute {AttributeType::kStr}, Attribute {String {}});
@@ -32,7 +32,7 @@ TEST(Attribute, ExplicitTypeConstructor)
   EXPECT_EQ(Attribute {AttributeType::kObject}, Attribute {ObjectRef {}});
 }
 
-/// \trace tactile::Attribute::Attribute [T]
+// tactile::Attribute::Attribute [T]
 TEST(Attribute, ImplicitValueConstructor)
 {
   {
@@ -88,7 +88,7 @@ TEST(Attribute, ImplicitValueConstructor)
   }
 }
 
-/// \trace tactile::Attribute::Attribute [const char*]
+// tactile::Attribute::Attribute [const char*]
 TEST(Attribute, ImplicitCStringConstructor)
 {
   const Attribute attribute {"foobar"};
@@ -98,8 +98,8 @@ TEST(Attribute, ImplicitCStringConstructor)
   EXPECT_EQ(attribute, Attribute {"foobar"});
 }
 
-/// \trace tactile::Attribute::reset
-/// \trace tactile::Attribute::has_default_value
+// tactile::Attribute::reset
+// tactile::Attribute::has_default_value
 TEST(Attribute, Reset)
 {
   Attribute attribute {};
@@ -157,7 +157,7 @@ TEST(Attribute, Reset)
   EXPECT_EQ(attribute, Attribute {ObjectRef {}});
 }
 
-/// \trace tactile::Attribute::set
+// tactile::Attribute::set
 TEST(Attribute, Set)
 {
   Attribute attribute {};
@@ -179,100 +179,98 @@ TEST(Attribute, Set)
   EXPECT_FALSE(attribute.has_default_value());
 }
 
-/// \trace tactile::Attribute::as_string
+// tactile::Attribute::as_string
 TEST(Attribute, AsString)
 {
   EXPECT_EQ(Attribute {AttributeType::kStr}.as_string(), "");
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_string(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kInt}.as_string());
 }
 
-/// \trace tactile::Attribute::as_int
+// tactile::Attribute::as_int
 TEST(Attribute, AsInt)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt}.as_int(), 0);
-  EXPECT_THROW((void) Attribute {AttributeType::kColor}.as_int(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kColor}.as_int());
 }
 
-/// \trace tactile::Attribute::as_int2
+// tactile::Attribute::as_int2
 TEST(Attribute, AsInt2)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt2}.as_int2(), Int2 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kPath}.as_int2(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kPath}.as_int2());
 }
 
-/// \trace tactile::Attribute::as_int3
+// tactile::Attribute::as_int3
 TEST(Attribute, AsInt3)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt3}.as_int3(), Int3 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_int3(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kInt}.as_int3());
 }
 
-/// \trace tactile::Attribute::as_int4
+// tactile::Attribute::as_int4
 TEST(Attribute, AsInt4)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt4}.as_int4(), Int4 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kFloat4}.as_int4(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kFloat4}.as_int4());
 }
 
-/// \trace tactile::Attribute::as_float
+// tactile::Attribute::as_float
 TEST(Attribute, AsFloat)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat}.as_float(), 0.0f);
-  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_float(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kStr}.as_float());
 }
 
-/// \trace tactile::Attribute::as_float2
+// tactile::Attribute::as_float2
 TEST(Attribute, AsFloat2)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat2}.as_float2(), Float2 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kBool}.as_float2(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kBool}.as_float2());
 }
 
-/// \trace tactile::Attribute::as_float3
+// tactile::Attribute::as_float3
 TEST(Attribute, AsFloat3)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat3}.as_float3(), Float3 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kObject}.as_float3(),
-               Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kObject}.as_float3());
 }
 
-/// \trace tactile::Attribute::as_float4
+// tactile::Attribute::as_float4
 TEST(Attribute, AsFloat4)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat4}.as_float4(), Float4 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kFloat3}.as_float4(),
-               Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kFloat3}.as_float4());
 }
 
-/// \trace tactile::Attribute::as_bool
+// tactile::Attribute::as_bool
 TEST(Attribute, AsBool)
 {
   EXPECT_EQ(Attribute {AttributeType::kBool}.as_bool(), false);
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_bool(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kInt}.as_bool());
 }
 
-/// \trace tactile::Attribute::as_color
+// tactile::Attribute::as_color
 TEST(Attribute, AsColor)
 {
   EXPECT_EQ(Attribute {AttributeType::kColor}.as_color(), UColor {});
-  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_color(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kStr}.as_color());
 }
 
-/// \trace tactile::Attribute::as_path
+// tactile::Attribute::as_path
 TEST(Attribute, AsPath)
 {
   EXPECT_EQ(Attribute {AttributeType::kPath}.as_path(), Path {});
-  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_path(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kStr}.as_path());
 }
 
-/// \trace tactile::Attribute::as_object
+// tactile::Attribute::as_object
 TEST(Attribute, AsObject)
 {
   EXPECT_EQ(Attribute {AttributeType::kObject}.as_object(), ObjectRef {});
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_object(), Exception);
+  EXPECT_ANY_THROW((void) Attribute {AttributeType::kInt}.as_object());
 }
 
-/// \trace tactile::Attribute::is_vector
+// tactile::Attribute::is_vector
 TEST(Attribute, IsVector)
 {
   EXPECT_TRUE(Attribute {AttributeType::kInt2}.is_vector());

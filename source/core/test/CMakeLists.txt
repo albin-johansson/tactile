@@ -22,7 +22,6 @@ target_sources(tactile-core-test
                "${PROJECT_SOURCE_DIR}/src/layer/tile_matrix_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/map/map_spec_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/map/map_test.cpp"
-               "${PROJECT_SOURCE_DIR}/src/meta/attribute_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/meta/attribute_type_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/meta/color_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/model/settings_test.cpp"

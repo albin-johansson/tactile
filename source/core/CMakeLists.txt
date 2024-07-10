@@ -117,8 +117,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/src/tactile/core/map/map.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/map/map_spec.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/map/map_spec.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/meta/attribute.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/core/meta/attribute.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/meta/attribute_type.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/meta/attribute_type.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/meta/color.hpp"

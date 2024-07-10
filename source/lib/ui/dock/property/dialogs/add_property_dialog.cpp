@@ -14,7 +14,7 @@
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
 #include "tactile/base/container/maybe.hpp"
-#include "tactile/core/meta/attribute.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
