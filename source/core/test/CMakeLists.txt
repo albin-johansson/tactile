@@ -35,8 +35,6 @@ target_sources(tactile-core-test
                "${PROJECT_SOURCE_DIR}/src/ui/imgui_compat_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/ui/viewport_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/util/lookup_test.cpp"
-               "${PROJECT_SOURCE_DIR}/src/util/matrix_extent_test.cpp"
-               "${PROJECT_SOURCE_DIR}/src/util/matrix_index_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/util/scope_guard_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/util/string_conv_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/util/string_ops_test.cpp"

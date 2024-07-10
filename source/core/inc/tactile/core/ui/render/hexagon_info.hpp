@@ -5,7 +5,7 @@
 #include "tactile/base/container/span.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/util/matrix_index.hpp"
+#include "tactile/base/util/matrix_index.hpp"
 
 namespace tactile::ui {
 

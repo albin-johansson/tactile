@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/util/matrix_index.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
 
 #include <format>  // format
 
@@ -8,9 +8,10 @@
 
 namespace tactile {
 
-TEST(MatrixIndex, Format)
+TEST(MatrixExtent, Format)
 {
-  EXPECT_EQ(std::format("{}", MatrixIndex {1, 2}), "(1, 2)");
+  const MatrixExtent extent {12, 34};
+  EXPECT_EQ(std::format("{}", extent), "(12, 34)");
 }
 
 }  // namespace tactile

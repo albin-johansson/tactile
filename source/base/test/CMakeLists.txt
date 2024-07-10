@@ -12,6 +12,8 @@ target_sources(tactile-base-test
                "${PROJECT_SOURCE_DIR}/src/numeric/vec_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/util/buffer_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/util/format_test.cpp"
+               "${PROJECT_SOURCE_DIR}/src/util/matrix_extent_test.cpp"
+               "${PROJECT_SOURCE_DIR}/src/util/matrix_index_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/main.cpp"
                )
 

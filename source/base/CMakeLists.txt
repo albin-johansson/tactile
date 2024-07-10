@@ -58,6 +58,8 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/concepts.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/format.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/hash.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/matrix_extent.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/matrix_index.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/util/strong_type.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/id.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/int.hpp"

@@ -5,7 +5,6 @@
 #include <cstddef>     // size_t
 #include <format>      // formatter, format_to, formattable
 #include <functional>  // hash
-#include <ostream>     // ostream
 
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -29,18 +28,6 @@ struct MatrixIndex final
   [[nodiscard]] auto operator==(const MatrixIndex&) const noexcept
       -> bool = default;
 };
-
-/**
- * Outputs a matrix index to a stream.
- *
- * \param stream The output stream.
- * \param index  The matrix index to emit.
- *
- * \return
- * The provided stream.
- */
-auto operator<<(std::ostream& stream,
-                const MatrixIndex& index) -> std::ostream&;
 
 }  // namespace tactile
 

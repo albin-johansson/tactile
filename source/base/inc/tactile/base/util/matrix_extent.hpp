@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <format>   // formatter, format_to, formattable
-#include <ostream>  // ostream
+#include <format>  // formatter, format_to, formattable
 
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -26,18 +25,6 @@ struct MatrixExtent final
   [[nodiscard]]
   auto operator==(const MatrixExtent&) const noexcept -> bool = default;
 };
-
-/**
- * Outputs a matrix extent to a stream.
- *
- * \param stream The output stream.
- * \param extent The matrix extent to emit.
- *
- * \return
- * The provided stream.
- */
-auto operator<<(std::ostream& stream,
-                const MatrixExtent& extent) -> std::ostream&;
 
 }  // namespace tactile
 

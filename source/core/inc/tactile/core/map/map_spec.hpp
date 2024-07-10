@@ -5,7 +5,7 @@
 #include "tactile/base/layer/tile_orientation.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/util/matrix_extent.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
 
 namespace tactile {
 

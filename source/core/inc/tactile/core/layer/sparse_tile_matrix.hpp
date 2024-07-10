@@ -5,9 +5,9 @@
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
+#include "tactile/base/util/matrix_index.hpp"
 #include "tactile/core/layer/tile_matrix.hpp"
-#include "tactile/core/util/matrix_extent.hpp"
-#include "tactile/core/util/matrix_index.hpp"
 
 namespace tactile {
 

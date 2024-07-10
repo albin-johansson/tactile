@@ -17,7 +17,7 @@ void _validate_tiles(const ITileMatrix& tile_matrix,
   for (MatrixExtent::value_type row = 0; row < expected_extent.rows; ++row) {
     for (MatrixExtent::value_type col = 0; col < expected_extent.cols; ++col) {
       const MatrixIndex index {row, col};
-      EXPECT_TRUE(tile_matrix.is_valid(index)) << "index is " << index;
+      EXPECT_TRUE(tile_matrix.is_valid(index));
     }
   }
 }
@@ -130,7 +130,7 @@ TYPED_TEST(TileMatrixTest, SubscriptOperator)
   const auto assign_and_check = [&](const MatrixIndex& index,
                                     const TileID tile_id) {
     tile_matrix[index] = tile_id;
-    EXPECT_EQ(tile_matrix[index], tile_id) << "index is " << index;
+    EXPECT_EQ(tile_matrix[index], tile_id);
   };
 
   assign_and_check({0, 0}, TileID {0});
