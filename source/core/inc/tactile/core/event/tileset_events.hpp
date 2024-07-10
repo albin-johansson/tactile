@@ -3,8 +3,8 @@
 #pragma once
 
 #include "tactile/base/container/path.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

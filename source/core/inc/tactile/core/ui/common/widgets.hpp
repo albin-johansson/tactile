@@ -5,9 +5,9 @@
 #include <imgui.h>
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
 namespace tactile::ui {

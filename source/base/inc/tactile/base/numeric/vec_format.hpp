@@ -4,8 +4,8 @@
 
 #include <format>  // formatter, format_to, formattable
 
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/numeric/vec.hpp"
 
 template <typename T>
 struct std::formatter<tactile::Vec<T, 2>> final

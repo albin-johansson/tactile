@@ -7,9 +7,9 @@
 #include <concepts>     // invocable
 #include <type_traits>  // invoke_result_t
 
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/concepts.hpp"
-#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

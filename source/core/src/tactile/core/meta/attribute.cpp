@@ -5,8 +5,8 @@
 #include <type_traits>  // decay_t
 #include <variant>      // visit
 
+#include "tactile/base/numeric/vec_stream.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/numeric/vec_stream.hpp"
 
 namespace tactile {
 

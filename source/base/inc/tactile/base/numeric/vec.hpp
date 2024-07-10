@@ -2,14 +2,14 @@
 
 #pragma once
 
+#include <cassert>      // assert
 #include <compare>      // partial_ordering
 #include <concepts>     // invocable
+#include <stdexcept>    // out_of_range
 #include <type_traits>  // invoke_result_t, is_same_v
 
 #include "tactile/base/int.hpp"
 #include "tactile/base/util/concepts.hpp"
-#include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
 
@@ -171,7 +171,7 @@ class Vec final
       return mData[index];
     }
 
-    throw Exception {"bad vector index"};
+    throw std::out_of_range {"bad vector index"};
   }
 
   /**
@@ -187,7 +187,7 @@ class Vec final
   [[nodiscard]]
   constexpr auto operator[](const size_type index) noexcept -> value_type&
   {
-    TACTILE_ASSERT_MSG(index < N, "bad vector index");
+    assert(index < N);
     return mData[index];
   }
 
@@ -196,7 +196,7 @@ class Vec final
   constexpr auto operator[](const size_type index) const noexcept
       -> const value_type&
   {
-    TACTILE_ASSERT_MSG(index < N, "bad vector index");
+    assert(index < N);
     return mData[index];
   }
 

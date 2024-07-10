@@ -4,7 +4,7 @@
 
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
-#include "tactile/core/numeric/vec.hpp"
+#include "tactile/base/numeric/vec.hpp"
 
 namespace tactile {
 

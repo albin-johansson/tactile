@@ -8,9 +8,9 @@
 
 #include <imgui.h>
 
+#include "tactile/base/numeric/vec_common.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/meta/color.hpp"
-#include "tactile/core/numeric/vec_common.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/viewport.hpp"
 

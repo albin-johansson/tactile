@@ -6,10 +6,10 @@
 
 #include <imgui.h>
 
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/concepts.hpp"
 #include "tactile/core/debug/exception.hpp"
-#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

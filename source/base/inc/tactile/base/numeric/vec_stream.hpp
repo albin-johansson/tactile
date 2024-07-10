@@ -5,9 +5,9 @@
 #include <ostream>  // ostream
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/concepts.hpp"
-#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

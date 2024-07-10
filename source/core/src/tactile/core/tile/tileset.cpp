@@ -3,6 +3,7 @@
 #include "tactile/core/tile/tileset.hpp"
 
 #include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/base/numeric/vec_format.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -10,7 +11,6 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/meta/meta.hpp"
-#include "tactile/core/numeric/vec_format.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"

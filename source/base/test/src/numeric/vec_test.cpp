@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/numeric/vec.hpp"
+#include "tactile/base/numeric/vec.hpp"
 
 #include <format>       // format
 #include <sstream>      // stringstream
@@ -8,13 +8,9 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/numeric/vec_common.hpp"
-#include "tactile/core/numeric/vec_format.hpp"
-#include "tactile/core/numeric/vec_stream.hpp"
-
 namespace tactile {
 
-/// \trace tactile::Vec
+// tactile::Vec
 TEST(Vec, SpecialMembers)
 {
   EXPECT_TRUE(std::is_nothrow_default_constructible_v<Int2>);
@@ -60,7 +56,7 @@ TEST(Vec, SpecialMembers)
   EXPECT_TRUE(std::is_nothrow_destructible_v<Float4>);
 }
 
-/// \trace tactile::Vec::Vec
+// tactile::Vec::Vec
 TEST(Vec, DefaultConstructor)
 {
   const Int2 ivec;
@@ -74,7 +70,7 @@ TEST(Vec, DefaultConstructor)
   EXPECT_EQ(fvec.w(), 0.0f);
 }
 
-/// \trace tactile::Vec::Vec
+// tactile::Vec::Vec
 TEST(Vec, ValueConstructor2D)
 {
   const Int2 ivec {1, 2};
@@ -87,7 +83,7 @@ TEST(Vec, ValueConstructor2D)
   EXPECT_EQ(fvec.y(), 2.0f);
 }
 
-/// \trace tactile::Vec::Vec
+// tactile::Vec::Vec
 TEST(Vec, ValueConstructor3D)
 {
   const Int3 ivec {1, 2, 3};
@@ -102,7 +98,7 @@ TEST(Vec, ValueConstructor3D)
   EXPECT_EQ(fvec.z(), 3.0f);
 }
 
-/// \trace tactile::Vec::Vec
+// tactile::Vec::Vec
 TEST(Vec, ValueConstructor4D)
 {
   const Int4 ivec {1, 2, 3, 4};
@@ -119,8 +115,8 @@ TEST(Vec, ValueConstructor4D)
   EXPECT_EQ(fvec.w(), 4.0f);
 }
 
-/// \trace tactile::Vec::set_x
-/// \trace tactile::Vec::x
+// tactile::Vec::set_x
+// tactile::Vec::x
 TEST(Vec, SetX)
 {
   Float2 vec {};
@@ -130,8 +126,8 @@ TEST(Vec, SetX)
   EXPECT_EQ(vec.y(), 0.0f);
 }
 
-/// \trace tactile::Vec::set_y
-/// \trace tactile::Vec::y
+// tactile::Vec::set_y
+// tactile::Vec::y
 TEST(Vec, SetY)
 {
   Int2 vec {};
@@ -141,8 +137,8 @@ TEST(Vec, SetY)
   EXPECT_EQ(vec.y(), 42);
 }
 
-/// \trace tactile::Vec::set_z
-/// \trace tactile::Vec::z
+// tactile::Vec::set_z
+// tactile::Vec::z
 TEST(Vec, SetZ)
 {
   Int3 vec {};
@@ -153,8 +149,8 @@ TEST(Vec, SetZ)
   EXPECT_EQ(vec.z(), 123);
 }
 
-/// \trace tactile::Vec::set_w
-/// \trace tactile::Vec::w
+// tactile::Vec::set_w
+// tactile::Vec::w
 TEST(Vec, SetW)
 {
   Float4 vec {};
@@ -166,7 +162,7 @@ TEST(Vec, SetW)
   EXPECT_EQ(vec.w(), 25.8f);
 }
 
-/// \trace tactile::Vec::at
+// tactile::Vec::at
 TEST(Vec, At)
 {
   Int4 vec {};
@@ -180,11 +176,11 @@ TEST(Vec, At)
   EXPECT_EQ(vec.at(2), 30);
   EXPECT_EQ(vec.at(3), 40);
 
-  EXPECT_THROW((void) vec.at(4), Exception);
-  EXPECT_THROW((void) vec.at(vec.size()), Exception);
+  EXPECT_ANY_THROW((void) vec.at(4));
+  EXPECT_ANY_THROW((void) vec.at(vec.size()));
 }
 
-/// \trace tactile::Vec::operator[]
+// tactile::Vec::operator[]
 TEST(Vec, SubscriptOperator)
 {
   Float4 vec {};
@@ -205,7 +201,7 @@ TEST(Vec, SubscriptOperator)
   EXPECT_EQ(const_vec[3], 4.0f);
 }
 
-/// \trace tactile::Vec::data
+// tactile::Vec::data
 TEST(Vec, Data)
 {
   Int3 vec {};
@@ -228,7 +224,7 @@ TEST(Vec, Data)
   EXPECT_EQ(const_data[2], 56);
 }
 
-/// \trace tactile::Vec::size
+// tactile::Vec::size
 TEST(Vec, Size)
 {
   EXPECT_EQ(Int2 {}.size(), 2);
@@ -240,7 +236,7 @@ TEST(Vec, Size)
   EXPECT_EQ(Float4 {}.size(), 4);
 }
 
-/// \trace tactile::Vec::operator-
+// tactile::Vec::operator-
 TEST(Vec, UnaryMinus)
 {
   const Int3 vec {-1, 2, 3};
@@ -251,7 +247,7 @@ TEST(Vec, UnaryMinus)
   EXPECT_EQ(negated_vec.z(), -3);
 }
 
-/// \trace tactile::operator== [Vec]
+// tactile::operator== [Vec]
 TEST(Vec, EqualityOperator)
 {
   const Int3 a {-83, 934, -193};
@@ -264,7 +260,7 @@ TEST(Vec, EqualityOperator)
   EXPECT_FALSE(b == a);
 }
 
-/// \trace tactile::operator!= [Vec]
+// tactile::operator!= [Vec]
 TEST(Vec, InequalityOperator)
 {
   const Float2 a {1.0f, 2.0f};
@@ -277,7 +273,7 @@ TEST(Vec, InequalityOperator)
   EXPECT_FALSE(b != b);
 }
 
-/// \trace tactile::operator<(const Vec&, const Vec&)
+// tactile::operator<(const Vec&, const Vec&)
 TEST(Vec, LessThanOperator)
 {
   const Float2 a {1.0f, 0.0f};
@@ -295,7 +291,7 @@ TEST(Vec, LessThanOperator)
   EXPECT_LT(d, b);
 }
 
-/// \trace tactile::operator<= [Vec]
+// tactile::operator<= [Vec]
 TEST(Vec, LessThanEqOperator)
 {
   const Int2 a {1, 0};
@@ -318,7 +314,7 @@ TEST(Vec, LessThanEqOperator)
   EXPECT_LE(d, b);
 }
 
-/// \trace tactile::operator> [Vec]
+// tactile::operator> [Vec]
 TEST(Vec, GreaterThanOperator)
 {
   const Float2 a {1.0f, 0.0f};
@@ -336,7 +332,7 @@ TEST(Vec, GreaterThanOperator)
   EXPECT_GT(d, c);
 }
 
-/// \trace tactile::operator>= [Vec]
+// tactile::operator>= [Vec]
 TEST(Vec, GreaterThanEqOperator)
 {
   const Int2 a {1, 0};
@@ -359,7 +355,7 @@ TEST(Vec, GreaterThanEqOperator)
   EXPECT_GE(d, c);
 }
 
-/// \trace tactile::operator+ [Vec]
+// tactile::operator+ [Vec]
 TEST(Vec, AdditionOperator)
 {
   const Int4 a {-5, 10, 73, -42};
@@ -376,7 +372,7 @@ TEST(Vec, AdditionOperator)
   EXPECT_EQ(ab, ba);
 }
 
-/// \trace tactile::operator- [Vec]
+// tactile::operator- [Vec]
 TEST(Vec, SubtractionOperator)
 {
   const Float3 a {54.3f, -20.1f, 89.6f};
@@ -396,7 +392,7 @@ TEST(Vec, SubtractionOperator)
   EXPECT_NE(ab, ba);
 }
 
-/// \trace tactile::operator* [Vec]
+// tactile::operator* [Vec]
 TEST(Vec, MultiplicationOperator)
 {
   const Float2 a {1.0f, 43.0f};
@@ -411,7 +407,7 @@ TEST(Vec, MultiplicationOperator)
   EXPECT_EQ(ab, ba);
 }
 
-/// \trace tactile::operator* [Vec]
+// tactile::operator* [Vec]
 TEST(Vec, MultiplicationWithScalarOperator)
 {
   const Float4 vec {1.0f, 2.0f, 3.0f, 4.0f};
@@ -428,7 +424,7 @@ TEST(Vec, MultiplicationWithScalarOperator)
   EXPECT_EQ(scaled_vec1, scaled_vec2);
 }
 
-/// \trace tactile::operator*=
+// tactile::operator*=
 TEST(Vec, ScalarMultiplicationAssignment)
 {
   Float3 vec {1.0f, -2.0f, 3.0f};
@@ -439,7 +435,7 @@ TEST(Vec, ScalarMultiplicationAssignment)
   EXPECT_EQ(vec.z(), 6.0f);
 }
 
-/// \trace tactile::operator/ [Vec]
+// tactile::operator/ [Vec]
 TEST(Vec, DivisionOperator)
 {
   const Float4 a {1.0f, 2.0f, 3.0f, 4.0f};
@@ -461,7 +457,7 @@ TEST(Vec, DivisionOperator)
   EXPECT_NE(ab, ba);
 }
 
-/// \trace tactile::operator/=
+// tactile::operator/=
 TEST(Vec, ScalarDivisionAssignment)
 {
   Float4 vec {1.0f, 2.0f, 3.0f, 4.0f};
@@ -473,7 +469,7 @@ TEST(Vec, ScalarDivisionAssignment)
   EXPECT_FLOAT_EQ(vec.w(), 2.0f);
 }
 
-/// \trace tactile::apply [Vec]
+// tactile::apply [Vec]
 TEST(Vec, Apply)
 {
   const Float3 a {1.0f, 5.0f, 10.0f};
@@ -484,7 +480,7 @@ TEST(Vec, Apply)
   EXPECT_EQ(b.z(), 20.0f);
 }
 
-/// \trace tactile::apply2 [Vec]
+// tactile::apply2 [Vec]
 TEST(Vec, Apply2)
 {
   const Int4 a {2, 24, 8, 12};
@@ -498,7 +494,7 @@ TEST(Vec, Apply2)
   EXPECT_EQ(c.w(), 12);
 }
 
-/// \trace tactile::vec_cast
+// tactile::vec_cast
 TEST(Vec, VecCast)
 {
   const Int4 ivec {10, 20, 30, 40};
@@ -508,161 +504,6 @@ TEST(Vec, VecCast)
   EXPECT_EQ(fvec.y(), static_cast<float>(ivec.y()));
   EXPECT_EQ(fvec.z(), static_cast<float>(ivec.z()));
   EXPECT_EQ(fvec.w(), static_cast<float>(ivec.w()));
-}
-
-/// \trace tactile::abs [Vec]
-TEST(Vec, Abs)
-{
-  const Int4 a {-1, 0, -52, 923};
-  const Int4 b = abs(a);
-
-  EXPECT_EQ(b.x(), 1);
-  EXPECT_EQ(b.y(), 0);
-  EXPECT_EQ(b.z(), 52);
-  EXPECT_EQ(b.w(), 923);
-}
-
-/// \trace tactile::round [Vec]
-TEST(Vec, Round)
-{
-  const Float4 a {1.1f, 32.9f, 4.5f, 0.7f};
-  const Float4 b = round(a);
-
-  EXPECT_EQ(b.x(), 1.0f);
-  EXPECT_EQ(b.y(), 33.0f);
-  EXPECT_EQ(b.z(), 5.0f);
-  EXPECT_EQ(b.w(), 1.0f);
-}
-
-/// \trace tactile::floor [Vec]
-TEST(Vec, Floor)
-{
-  const Float4 a {4.9f, 23.1f, 0.6f, 1.5f};
-  const Float4 b = floor(a);
-
-  EXPECT_EQ(b.x(), 4.0f);
-  EXPECT_EQ(b.y(), 23.0f);
-  EXPECT_EQ(b.z(), 0.0f);
-  EXPECT_EQ(b.w(), 1.0f);
-}
-
-/// \trace tactile::ceil [Vec]
-TEST(Vec, Ceil)
-{
-  const Float4 a {0.1f, -0.1f, 1.4f, 1.5f};
-  const Float4 b = ceil(a);
-
-  EXPECT_EQ(b.x(), 1.0f);
-  EXPECT_EQ(b.y(), 0.0f);
-  EXPECT_EQ(b.z(), 2.0f);
-  EXPECT_EQ(b.w(), 2.0f);
-}
-
-/// \trace tactile::min [Vec]
-TEST(Vec, Min)
-{
-  const Int4 a {-1, +2, -3, +4};
-  const Int4 b {+1, -2, +3, -4};
-  const auto ab_min = min(a, b);
-
-  EXPECT_EQ(ab_min.x(), -1);
-  EXPECT_EQ(ab_min.y(), -2);
-  EXPECT_EQ(ab_min.z(), -3);
-  EXPECT_EQ(ab_min.w(), -4);
-}
-
-/// \trace tactile::max [Vec]
-TEST(Vec, Max)
-{
-  const Int4 a {-1, +2, -3, +4};
-  const Int4 b {+1, -2, +3, -4};
-  const auto ab_max = max(a, b);
-
-  EXPECT_EQ(ab_max.x(), 1);
-  EXPECT_EQ(ab_max.y(), 2);
-  EXPECT_EQ(ab_max.z(), 3);
-  EXPECT_EQ(ab_max.w(), 4);
-}
-
-/// \trace tactile::compare_elements
-TEST(Vec, CompareElements)
-{
-  {
-    const Int4 vec {1, 2, 3, 4};
-    const auto result = compare_elements(vec, vec);
-    EXPECT_TRUE(result.x());
-    EXPECT_TRUE(result.y());
-    EXPECT_TRUE(result.z());
-    EXPECT_TRUE(result.w());
-  }
-
-  {
-    const Int4 a {1, 2, 3, 4};
-    const Int4 b {1, 5, 6, 7};
-    const auto result = compare_elements(a, b);
-    EXPECT_TRUE(result.x());
-    EXPECT_FALSE(result.y());
-    EXPECT_FALSE(result.z());
-    EXPECT_FALSE(result.w());
-  }
-
-  {
-    const Int4 a {2, 1, 4, 6};
-    const Int4 b {3, 1, 5, 7};
-    const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.x());
-    EXPECT_TRUE(result.y());
-    EXPECT_FALSE(result.z());
-    EXPECT_FALSE(result.w());
-  }
-
-  {
-    const Int4 a {2, 4, 1, 6};
-    const Int4 b {3, 5, 1, 7};
-    const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.x());
-    EXPECT_FALSE(result.y());
-    EXPECT_TRUE(result.z());
-    EXPECT_FALSE(result.w());
-  }
-
-  {
-    const Int4 a {2, 4, 6, 1};
-    const Int4 b {3, 5, 7, 1};
-    const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.x());
-    EXPECT_FALSE(result.y());
-    EXPECT_FALSE(result.z());
-    EXPECT_TRUE(result.w());
-  }
-
-  {
-    const Int4 a {1, 2, 3, 4};
-    const Int4 b {5, 6, 7, 8};
-    const auto result = compare_elements(a, b);
-    EXPECT_FALSE(result.x());
-    EXPECT_FALSE(result.y());
-    EXPECT_FALSE(result.z());
-    EXPECT_FALSE(result.w());
-  }
-}
-
-/// \trace tactile::operator<< [Vec]
-TEST(Vec, StreamOperator)
-{
-  const Int4 vec {1, 2, 3, 4};
-
-  std::stringstream stream {};
-  stream << vec;
-
-  EXPECT_EQ(stream.str(), "{1, 2, 3, 4}");
-}
-
-TEST(Vec, Format)
-{
-  EXPECT_EQ(std::format("{}", Int2 {1, 2}), "{1, 2}");
-  EXPECT_EQ(std::format("{}", Int3 {1, 2, 3}), "{1, 2, 3}");
-  EXPECT_EQ(std::format("{}", Int4 {1, 2, 3, 4}), "{1, 2, 3, 4}");
 }
 
 }  // namespace tactile

@@ -27,7 +27,6 @@ target_sources(tactile-core-test
                "${PROJECT_SOURCE_DIR}/src/meta/color_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/model/settings_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/numeric/random_test.cpp"
-               "${PROJECT_SOURCE_DIR}/src/numeric/vec_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/platform/bits_test.cpp"
                "${PROJECT_SOURCE_DIR}/src/platform/filesystem_test.cpp"
                "${PROJECT_SOURCE_DIR}/inc/test/document_testing.hpp"

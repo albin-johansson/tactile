@@ -10,9 +10,9 @@
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/layer/tile_orientation.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/matrix_extent.hpp"
 
 namespace tactile {
