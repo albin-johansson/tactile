@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/base/io/compress/compression_provider.hpp"
+#include "tactile/base/io/compress/compressor.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/zstd_compression/api.hpp"
 
@@ -13,7 +13,7 @@ namespace tactile {
  *
  * \see https://github.com/facebook/zstd
  */
-class TACTILE_ZSTD_API ZstdCompressor final : public ICompressionProvider
+class TACTILE_ZSTD_API ZstdCompressor final : public ICompressor
 {
  public:
   [[nodiscard]]

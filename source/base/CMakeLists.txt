@@ -24,7 +24,7 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/container/variant.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/container/vector.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/engine/engine_app.hpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/base/io/compress/compression_provider.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/io/compress/compressor.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/io/compress/compression_type.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/io/save/save_format_id.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/io/byte_stream.hpp"

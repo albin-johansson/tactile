@@ -18,7 +18,7 @@ namespace tactile {
 
 class IWindow;
 class IRenderer;
-class ICompressionProvider;
+class ICompressor;
 
 /**
  * Provides the primary API used by dynamic Tactile modules.
@@ -92,8 +92,7 @@ class TACTILE_RUNTIME_API Runtime final
    *                   is null.
    */
   void set_compression_provider(CompressionType format,
-                                ICompressionProvider* compressor);
-
+                                ICompressor* compressor);
 
   /**
    * Returns the application window.

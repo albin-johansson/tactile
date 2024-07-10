@@ -12,10 +12,10 @@ namespace tactile {
 /**
  * Interface for data compression providers.
  */
-class ICompressionProvider
+class ICompressor
 {
  public:
-  TACTILE_INTERFACE_CLASS(ICompressionProvider);
+  TACTILE_INTERFACE_CLASS(ICompressor);
 
   /**
    * Attempts to compress a byte stream.
