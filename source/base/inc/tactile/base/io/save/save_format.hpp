@@ -9,9 +9,37 @@
 
 namespace tactile {
 
-struct SaveFormatReadOptions;
-struct SaveFormatWriteOptions;
-class MapDocument;
+class IMapView;
+
+/**
+ * Provides save format parse options.
+ */
+struct SaveFormatReadOptions final
+{
+  /** The parent directory of the map or tileset file. */
+  Path base_dir;
+
+  /** Whether strict parsing is to be enforced. */
+  bool strict_mode : 1;
+};
+
+/**
+ * Provides save format save options.
+ */
+struct SaveFormatWriteOptions final
+{
+  /** The parent directory of the map or tileset file. */
+  Path base_dir;
+
+  /** Whether tilesets are saved in separate files. */
+  bool use_external_tilesets : 1;
+
+  /** Whether the output is indented. */
+  bool use_indentation : 1;
+
+  /** Whether tile rows are aligned by row. */
+  bool fold_tile_layer_data : 1;
+};
 
 /**
  * Interface for save file format reader/parser implementations.
@@ -43,14 +71,14 @@ class ISaveFormat
   /**
    * Attempts to save a map.
    *
-   * \param map_document The map document to save.
-   * \param options      The write options.
+   * \param map     The map that will be saved.
+   * \param options The write options.
    *
    * \return
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto save_map(const MapDocument& map_document,
+  virtual auto save_map(const IMapView& map,
                         const SaveFormatWriteOptions& options) const
       -> Result<void> = 0;
 };

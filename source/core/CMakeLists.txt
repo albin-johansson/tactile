@@ -84,7 +84,6 @@ target_sources(tactile-core
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/event/viewport_events.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/compress/compression_error.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/io/compress/compression_error.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/save/save_format.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/save/vec_serialization.hpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/io/save/vec_serialization.cpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/core/io/ini.hpp"
