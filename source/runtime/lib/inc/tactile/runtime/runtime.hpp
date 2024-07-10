@@ -7,7 +7,7 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
-#include "tactile/base/io/compress/compression_type.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
@@ -91,7 +91,7 @@ class TACTILE_RUNTIME_API Runtime final
    *                   compressor is unregistered for the given format if this
    *                   is null.
    */
-  void set_compression_provider(CompressionType format,
+  void set_compression_provider(CompressionFormat format,
                                 ICompressor* compressor);
 
   /**

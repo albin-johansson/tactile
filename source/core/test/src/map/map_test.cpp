@@ -82,7 +82,7 @@ TEST_F(MapTest, MakeMap)
   EXPECT_TRUE(is_group_layer(mRegistry, map.root_layer));
 
   EXPECT_EQ(format.encoding, TileEncoding::kPlainText);
-  EXPECT_EQ(format.compression, CompressionType::kNone);
+  EXPECT_EQ(format.compression, kNone);
   EXPECT_EQ(format.comp_level, kNone);
 
   EXPECT_EQ(id_cache.next_tile_id, TileID {1});

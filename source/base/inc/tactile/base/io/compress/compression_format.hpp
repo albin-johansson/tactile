@@ -3,14 +3,15 @@
 #pragma once
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
 /**
- * Represents different compression modes.
+ * Represents known compression formats.
  */
-enum class CompressionType : uint8 {
-  kNone,
+enum class CompressionFormat : uint8
+{
   kZlib,
   kZstd
 };

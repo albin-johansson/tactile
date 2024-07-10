@@ -13,14 +13,14 @@ void ZstdCompressionPlugin::load(Runtime& runtime)
   Runtime::log(LogLevel::kTrace, "Loading Zstd compression plugin");
 
   mCompressor = std::make_unique<ZstdCompressor>();
-  runtime.set_compression_provider(CompressionType::kZstd, mCompressor.get());
+  runtime.set_compression_provider(CompressionFormat::kZstd, mCompressor.get());
 }
 
 void ZstdCompressionPlugin::unload(Runtime& runtime)
 {
   Runtime::log(LogLevel::kTrace, "Unloading Zstd compression plugin");
 
-  runtime.set_compression_provider(CompressionType::kZstd, nullptr);
+  runtime.set_compression_provider(CompressionFormat::kZstd, nullptr);
   mCompressor.reset();
 }
 

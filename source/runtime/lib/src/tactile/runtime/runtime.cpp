@@ -83,7 +83,7 @@ struct Runtime::Data final
   runtime_impl::UniqueImGuiContext imgui_context {};
   Optional<Window> window {};
   IRenderer* renderer {};
-  HashMap<CompressionType, ICompressor*> compressors {};
+  HashMap<CompressionFormat, ICompressor*> compressors {};
 
   Data()
     : protobuf_context {},
@@ -126,7 +126,7 @@ void Runtime::set_renderer(IRenderer* renderer)
   mData->renderer = renderer;
 }
 
-void Runtime::set_compression_provider(const CompressionType format,
+void Runtime::set_compression_provider(const CompressionFormat format,
                                        ICompressor* provider)
 {
   if (provider != nullptr) {

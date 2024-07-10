@@ -7,7 +7,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
-#include "tactile/base/io/compress/compression_type.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
@@ -264,7 +264,7 @@ struct TileFormat final
   TileEncoding encoding;
 
   /** The tile compression strategy. */
-  CompressionType compression;
+  CompressionFormat compression;
 
   /** The compression level. */
   Maybe<int32> compression_level;
