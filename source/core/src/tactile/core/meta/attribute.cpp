@@ -166,27 +166,4 @@ auto Attribute::get_type() const -> AttributeType
   throw Exception {"bad attribute type"};
 }
 
-auto operator<<(std::ostream& stream,
-                const Attribute& attribute) -> std::ostream&
-{
-  switch (attribute.get_type()) {
-    case AttributeType::kStr:    return stream << attribute.as_string();
-    case AttributeType::kInt:    return stream << attribute.as_int();
-    case AttributeType::kInt2:   return stream << attribute.as_int2();
-    case AttributeType::kInt3:   return stream << attribute.as_int3();
-    case AttributeType::kInt4:   return stream << attribute.as_int4();
-    case AttributeType::kFloat:  return stream << attribute.as_float();
-    case AttributeType::kFloat2: return stream << attribute.as_float2();
-    case AttributeType::kFloat3: return stream << attribute.as_float3();
-    case AttributeType::kFloat4: return stream << attribute.as_float4();
-    case AttributeType::kBool:   return stream << attribute.as_bool();
-    case AttributeType::kPath:   return stream << attribute.as_path();
-    case AttributeType::kColor:  return stream << attribute.as_color();
-    case AttributeType::kObject:
-      return stream << "object/" << attribute.as_object().value;
-  }
-
-  return stream;
-}
-
 }  // namespace tactile

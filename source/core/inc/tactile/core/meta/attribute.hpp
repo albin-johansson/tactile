@@ -3,17 +3,16 @@
 #pragma once
 
 #include <concepts>  // same_as, convertible_to
-#include <ostream>   // ostream
 #include <utility>   // move
 
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/variant.hpp"
 #include "tactile/base/id.hpp"
+#include "tactile/base/meta/color.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/meta/attribute_type.hpp"
-#include "tactile/core/meta/color.hpp"
 #include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
@@ -29,7 +28,7 @@ concept AttributeValueType = std::same_as<T, bool> ||           //
                              std::convertible_to<T, Float2> ||  //
                              std::convertible_to<T, Float3> ||  //
                              std::convertible_to<T, Float4> ||  //
-                             std::convertible_to<T, Color> ||   //
+                             std::convertible_to<T, UColor> ||  //
                              std::convertible_to<T, Path> ||    //
                              std::convertible_to<T, ObjectRef>;
 
@@ -63,7 +62,7 @@ class Attribute final
   using float2_type = Float2;
   using float3_type = Float3;
   using float4_type = Float4;
-  using color_type = Color;
+  using color_type = UColor;
   using path_type = Path;
   using objref_type = ObjectRef;
 
@@ -326,17 +325,5 @@ class Attribute final
     throw Exception {"bad attribute type"};
   }
 };
-
-/**
- * Outputs an attribute to a stream for debugging purposes.
- *
- * \param stream    The output stream to use.
- * \param attribute The attribute to output.
- *
- * \return
- * The provided stream.
- */
-auto operator<<(std::ostream& stream,
-                const Attribute& attribute) -> std::ostream&;
 
 }  // namespace tactile

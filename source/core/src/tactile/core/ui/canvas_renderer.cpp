@@ -99,13 +99,13 @@ CanvasRenderer::~CanvasRenderer() noexcept
 
 void CanvasRenderer::draw_rect(const Float2& screen_pos,
                                const Float2& size,
-                               const Color& color,
+                               const UColor& color,
                                const float thickness)
 {
   auto& draw_list = get_draw_list();
   draw_list.AddRect(to_imvec2(screen_pos),
                     to_imvec2(screen_pos + size),
-                    color.to_uint32_abgr(),
+                    to_uint32_abgr(color),
                     0.0f,
                     ImDrawFlags_None,
                     thickness);
@@ -113,12 +113,12 @@ void CanvasRenderer::draw_rect(const Float2& screen_pos,
 
 void CanvasRenderer::fill_rect(const Float2& screen_pos,
                                const Float2& size,
-                               const Color& color)
+                               const UColor& color)
 {
   auto& draw_list = get_draw_list();
   draw_list.AddRectFilled(to_imvec2(screen_pos),
                           to_imvec2(screen_pos + size),
-                          color.to_uint32_abgr());
+                          to_uint32_abgr(color));
 }
 
 void CanvasRenderer::draw_ngon(const Float2& screen_pos,
@@ -155,12 +155,12 @@ void CanvasRenderer::draw_hexagon(const Float2& screen_pos,
   draw_ngon(screen_pos, radius, color_mask, 6, thickness, kHalfPi);
 }
 
-void CanvasRenderer::clear_canvas(const Color& color) const
+void CanvasRenderer::clear_canvas(const UColor& color) const
 {
   fill_rect(mWindowTL, mWindowBR, color);
 }
 
-void CanvasRenderer::draw_orthogonal_grid(const Color& color) const
+void CanvasRenderer::draw_orthogonal_grid(const UColor& color) const
 {
   const auto row_count = mVisibleTiles.end.row - mVisibleTiles.begin.row;
   const auto col_count = mVisibleTiles.end.col - mVisibleTiles.begin.col;
@@ -184,7 +184,7 @@ void CanvasRenderer::draw_orthogonal_grid(const Color& color) const
   const auto tile_width = mCanvasTileSize.x();
   const auto tile_height = mCanvasTileSize.y();
 
-  const auto line_color = color.to_uint32_abgr();
+  const auto line_color = to_uint32_abgr(color);
   auto& draw_list = get_draw_list();
 
   // Draw horizontal lines.
@@ -207,7 +207,7 @@ void CanvasRenderer::draw_orthogonal_grid(const Color& color) const
 }
 
 void CanvasRenderer::draw_tile_outline(const Float2& world_pos,
-                                       const Color& color) const
+                                       const UColor& color) const
 {
   const auto tile_index = floor(world_pos / mCanvasTileSize);
   const auto tile_pos = tile_index * mCanvasTileSize;

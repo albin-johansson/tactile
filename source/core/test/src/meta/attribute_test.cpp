@@ -27,7 +27,7 @@ TEST(Attribute, ExplicitTypeConstructor)
   EXPECT_EQ(Attribute {AttributeType::kFloat3}, Attribute {Float3 {}});
   EXPECT_EQ(Attribute {AttributeType::kFloat4}, Attribute {Float4 {}});
   EXPECT_EQ(Attribute {AttributeType::kBool}, Attribute {bool {}});
-  EXPECT_EQ(Attribute {AttributeType::kColor}, Attribute {Color {}});
+  EXPECT_EQ(Attribute {AttributeType::kColor}, Attribute {UColor {}});
   EXPECT_EQ(Attribute {AttributeType::kPath}, Attribute {Path {}});
   EXPECT_EQ(Attribute {AttributeType::kObject}, Attribute {ObjectRef {}});
 }
@@ -70,9 +70,9 @@ TEST(Attribute, ImplicitValueConstructor)
   }
 
   {
-    const Attribute color {Color {1, 2, 3, 4}};
+    const Attribute color {UColor {1, 2, 3, 4}};
     EXPECT_EQ(color.get_type(), AttributeType::kColor);
-    EXPECT_EQ(color.as_color(), (Color {1, 2, 3, 4}));
+    EXPECT_EQ(color.as_color(), (UColor {1, 2, 3, 4}));
   }
 
   {
@@ -146,7 +146,7 @@ TEST(Attribute, Reset)
 
   attribute.reset(AttributeType::kColor);
   EXPECT_TRUE(attribute.has_default_value());
-  EXPECT_EQ(attribute, Attribute {Color {}});
+  EXPECT_EQ(attribute, Attribute {UColor {}});
 
   attribute.reset(AttributeType::kPath);
   EXPECT_TRUE(attribute.has_default_value());
@@ -254,7 +254,7 @@ TEST(Attribute, AsBool)
 /// \trace tactile::Attribute::as_color
 TEST(Attribute, AsColor)
 {
-  EXPECT_EQ(Attribute {AttributeType::kColor}.as_color(), Color {});
+  EXPECT_EQ(Attribute {AttributeType::kColor}.as_color(), UColor {});
   EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_color(), Exception);
 }
 

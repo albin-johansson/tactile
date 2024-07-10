@@ -14,7 +14,7 @@ struct ImDrawList;
 namespace tactile {
 
 struct CViewport;
-class Color;
+struct UColor;
 class Registry;
 
 namespace ui {
@@ -96,7 +96,7 @@ class CanvasRenderer final
    */
   static void draw_rect(const Float2& screen_pos,
                         const Float2& size,
-                        const Color& color,
+                        const UColor& color,
                         float thickness = 1.0f);
 
   /**
@@ -108,7 +108,7 @@ class CanvasRenderer final
    */
   static void fill_rect(const Float2& screen_pos,
                         const Float2& size,
-                        const Color& color);
+                        const UColor& color);
 
   /**
    * Renders an N-sided polygon.
@@ -150,14 +150,14 @@ class CanvasRenderer final
    *
    * \param color The color to use.
    */
-  void clear_canvas(const Color& color) const;
+  void clear_canvas(const UColor& color) const;
 
   /**
    * Renders an orthogonal grid over the canvas.
    *
    * \param color The line color.
    */
-  void draw_orthogonal_grid(const Color& color) const;
+  void draw_orthogonal_grid(const UColor& color) const;
 
   /**
    * Renders an outline around the tile at the specified position.
@@ -165,7 +165,7 @@ class CanvasRenderer final
    * \param world_pos The position of the tile, in world-space.
    * \param color     The outline color.
    */
-  void draw_tile_outline(const Float2& world_pos, const Color& color) const;
+  void draw_tile_outline(const Float2& world_pos, const UColor& color) const;
 
   /**
    * Returns the world-space position of the main content.
