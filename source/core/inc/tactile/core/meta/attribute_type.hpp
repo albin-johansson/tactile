@@ -7,28 +7,10 @@
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/meta/attribute_type.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
-
-/**
- * The supported attribute value types.
- */
-enum class AttributeType : uint8
-{
-  kStr,
-  kInt,
-  kInt2,
-  kInt3,
-  kInt4,
-  kFloat,
-  kFloat2,
-  kFloat3,
-  kFloat4,
-  kBool,
-  kPath,
-  kColor,
-  kObject,
-};
 
 /**
  * Parses an attribute type from a string.

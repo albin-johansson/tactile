@@ -33,6 +33,8 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/layer/tile_encoding.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/layer/tile_orientation.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/log/log_level.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/meta/attribute_type.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/meta/color.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/numeric/saturate_cast.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/numeric/sign_cast.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/render/renderer.hpp"
