@@ -1,4 +1,4 @@
-// Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
+// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
 #pragma once
 
@@ -14,7 +14,6 @@
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
-#include "tactile/core/layer/dense_tile_matrix.hpp"
 
 namespace tactile::ir {
 
@@ -124,7 +123,7 @@ struct Object final
 struct Layer final
 {
   /** Metadata for the layer. */
-  Metadata meta;  ///<
+  Metadata meta;
 
   /** The layer name. */
   String name;
@@ -145,7 +144,7 @@ struct Layer final
   ssize col_count;
 
   /** The contained tiles (if tile layer). */
-  DenseTileMatrix tiles;
+  Vector<Vector<TileID>> tiles;
 
   /** The contained objects (if object layer). */
   Vector<Object> objects;
@@ -264,10 +263,10 @@ struct TileFormat final
   TileEncoding encoding;
 
   /** The tile compression strategy. */
-  CompressionFormat compression;
+  Optional<CompressionFormat> compression;
 
   /** The compression level. */
-  Maybe<int32> compression_level;
+  Optional<int32> compression_level;
 
   [[nodiscard]]
   auto operator==(const TileFormat&) const -> bool = default;
