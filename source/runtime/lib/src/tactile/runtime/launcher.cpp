@@ -48,7 +48,7 @@ auto get_plugin_names() -> Vector<StringView>
 #endif
 
 #ifdef TACTILE_ENABLE_OPENGL_RENDERER
-  plugin_names.emplace_back("tactile-opengl" TACTILE_DLL_EXT);
+  plugin_names.emplace_back("tactile-opengl-renderer" TACTILE_DLL_EXT);
 #elif defined(TACTILE_ENABLE_VULKAN_RENDERER)
   plugin_names.emplace_back("tactile-vulkan-renderer" TACTILE_DLL_EXT);
 #else
