@@ -39,8 +39,8 @@ target_link_libraries(tactile-opengl-renderer
                       tactile::runtime
 
                       PRIVATE
-                      OpenGL::GL
-                      glad::glad
-                      SDL2::SDL2
                       imgui::imgui
+                      glad::glad
+                      OpenGL::GL
+                      SDL2::SDL2
                       )
