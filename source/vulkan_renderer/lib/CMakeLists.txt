@@ -1,6 +1,6 @@
 project(tactile-vulkan-renderer-lib CXX)
 
-add_library(tactile-vulkan-renderer SHARED EXCLUDE_FROM_ALL)
+add_library(tactile-vulkan-renderer SHARED)
 add_library(tactile::vulkan_renderer ALIAS tactile-vulkan-renderer)
 
 target_sources(tactile-vulkan-renderer

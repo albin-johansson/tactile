@@ -2,7 +2,7 @@ project(tactile-tiled-tmx-format-lib CXX)
 
 find_package(pugixml CONFIG REQUIRED)
 
-add_library(tactile-tiled-tmx-format SHARED EXCLUDE_FROM_ALL)
+add_library(tactile-tiled-tmx-format SHARED)
 add_library(tactile::tiled_tmx_format ALIAS tactile-tiled-tmx-format)
 
 target_sources(tactile-tiled-tmx-format

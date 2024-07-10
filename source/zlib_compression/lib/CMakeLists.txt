@@ -1,6 +1,6 @@
 project(tactile-zlib-compression-lib CXX)
 
-add_library(tactile-zlib-compression SHARED EXCLUDE_FROM_ALL)
+add_library(tactile-zlib-compression SHARED)
 add_library(tactile::zlib_compression ALIAS tactile-zlib-compression)
 
 target_sources(tactile-zlib-compression

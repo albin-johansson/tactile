@@ -1,6 +1,6 @@
 project(tactile-godot-tscn-format-lib CXX)
 
-add_library(tactile-godot-tscn-format SHARED EXCLUDE_FROM_ALL)
+add_library(tactile-godot-tscn-format SHARED)
 add_library(tactile::godot_tscn_format ALIAS tactile-godot-tscn-format)
 
 target_sources(tactile-godot-tscn-format

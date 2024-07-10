@@ -1,6 +1,6 @@
 project(tactile-opengl-renderer-lib CXX)
 
-add_library(tactile-opengl-renderer SHARED EXCLUDE_FROM_ALL)
+add_library(tactile-opengl-renderer SHARED)
 add_library(tactile::opengl_renderer ALIAS tactile-opengl-renderer)
 
 target_sources(tactile-opengl-renderer
