@@ -23,6 +23,7 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/container/tree_map.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/container/variant.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/container/vector.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/component_view.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/document_visitor.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/layer_view.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/map_view.hpp"

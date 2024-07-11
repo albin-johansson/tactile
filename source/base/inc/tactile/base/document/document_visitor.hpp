@@ -6,6 +6,7 @@
 
 namespace tactile {
 
+class IComponentView;
 class IMapView;
 class ILayerView;
 class IObjectView;
@@ -29,6 +30,13 @@ class IDocumentVisitor
 {
  public:
   TACTILE_INTERFACE_CLASS(IDocumentVisitor);
+
+  /**
+   * Visits a component.
+   *
+   * \param component A component view.
+   */
+  virtual void visit(const IComponentView& component) = 0;
 
   /**
    * Visits a map.
