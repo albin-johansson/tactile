@@ -27,6 +27,7 @@ target_sources(tactile-base
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/document_visitor.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/layer_view.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/map_view.hpp"
+               "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/meta_view.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/object_view.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/tile_view.hpp"
                "${PROJECT_SOURCE_DIR}/inc/tactile/base/document/tileset_view.hpp"
