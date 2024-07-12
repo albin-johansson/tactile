@@ -11,6 +11,7 @@ namespace tactile {
 
 class IDocumentVisitor;
 class ILayerView;
+class ITileView;
 class IMetaView;
 
 /**
@@ -29,13 +30,22 @@ class IObjectView
   virtual void accept(IDocumentVisitor& visitor) const = 0;
 
   /**
-   * Returns a view of the parent object layer.
+   * Returns a view of the parent object layer, if any.
    *
    * \return
-   * An object layer view.
+   * An object layer view if hosted in a layer; a null pointer otherwise.
    */
   [[nodiscard]]
-  virtual auto get_parent_layer() const -> const ILayerView& = 0;
+  virtual auto get_parent_layer() const -> const ILayerView* = 0;
+
+  /**
+   * Returns a view of the parent tile, if any.
+   *
+   * \return
+   * A tile view if hosted in a tile; a null pointer otherwise.
+   */
+  [[nodiscard]]
+  virtual auto get_parent_tile() const -> const ITileView* = 0;
 
   /**
    * Returns the type of the object.
