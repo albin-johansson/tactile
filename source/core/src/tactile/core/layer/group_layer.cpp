@@ -168,6 +168,24 @@ void destroy_group_layer(Registry& registry, const EntityID group_layer_id)
   registry.destroy(group_layer_id);
 }
 
+auto count_layers(const Registry& registry,
+                  const EntityID root_layer_id) -> usize
+{
+  TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
+
+  const auto& root_layer = registry.get<CGroupLayer>(root_layer_id);
+  usize count = 0;
+
+  for (const auto layer_id : root_layer.layers) {
+    ++count;
+    if (is_group_layer(registry, layer_id)) {
+      count += count_layers(registry, layer_id);
+    }
+  }
+
+  return count;
+}
+
 auto find_parent_layer(const Registry& registry,
                        const EntityID root_layer_id,
                        const EntityID target_layer_id) -> EntityID

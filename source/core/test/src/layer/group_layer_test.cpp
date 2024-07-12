@@ -236,6 +236,19 @@ TEST_F(GroupLayerTest, DestroyGroupLayerWithStoredLayers)
   EXPECT_EQ(mRegistry.count(), 0);
 }
 
+// tactile::count_layers
+TEST_F(GroupLayerTest, CountLayers)
+{
+  const auto tree = make_test_hierarchy();
+  EXPECT_EQ(count_layers(mRegistry, tree.root_id), 20);
+  EXPECT_EQ(count_layers(mRegistry, tree.group1_id), 6);
+  EXPECT_EQ(count_layers(mRegistry, tree.group2_id), 2);
+  EXPECT_EQ(count_layers(mRegistry, tree.group3_id), 10);
+  EXPECT_EQ(count_layers(mRegistry, tree.group4_id), 6);
+  EXPECT_EQ(count_layers(mRegistry, tree.group5_id), 0);
+  EXPECT_EQ(count_layers(mRegistry, tree.group6_id), 3);
+}
+
 // tactile::find_parent_layer
 TEST_F(GroupLayerTest, FindParentLayer)
 {
