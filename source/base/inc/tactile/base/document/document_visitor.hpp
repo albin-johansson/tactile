@@ -18,7 +18,7 @@ class ITileView;
  *
  * \details
  * The elements in a document are visited in a depth-first manner. In general,
- * the high-level order of iteration is: components, maps, tilesets, layers.
+ * the high-level order of iteration is: maps, tilesets, layers, components.
  *
  * \details
  * This interface is the sole mechanism by which external modules (i.e. plugins)
