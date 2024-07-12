@@ -5,17 +5,14 @@ add_library(tactile::tiled_tmx_format ALIAS tactile-tiled-tmx-format)
 
 target_sources(tactile-tiled-tmx-format
                PRIVATE
-               "${PROJECT_SOURCE_DIR}/inc/tactile/tiled_tmx_format/api.hpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/tiled_tmx_format/tiled_tmx_format_plugin.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/tiled_tmx_format/tiled_tmx_format_plugin.cpp"
+               "src/tactile/tiled_tmx_format/tiled_tmx_format_plugin.cpp"
+
+               PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/tiled_tmx_format/api.hpp"
+               "inc/tactile/tiled_tmx_format/tiled_tmx_format_plugin.hpp"
                )
 
 tactile_prepare_target(tactile-tiled-tmx-format)
-
-target_include_directories(tactile-tiled-tmx-format
-                           PUBLIC
-                           "${PROJECT_SOURCE_DIR}/inc"
-                           )
 
 target_compile_definitions(tactile-tiled-tmx-format
                            PRIVATE

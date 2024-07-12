@@ -5,16 +5,16 @@ add_library(tactile::zlib_compression ALIAS tactile-zlib-compression)
 
 target_sources(tactile-zlib-compression
                PRIVATE
-               "${PROJECT_SOURCE_DIR}/inc/tactile/zlib_compression/api.hpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/zlib_compression/zlib_compression_plugin.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/zlib_compression/zlib_compression_plugin.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/zlib_compression/zlib_compressor.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/zlib_compression/zlib_compressor.cpp"
+               "src/tactile/zlib_compression/zlib_compression_plugin.cpp"
+               "src/tactile/zlib_compression/zlib_compressor.cpp"
+
+               PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/zlib_compression/api.hpp"
+               "inc/tactile/zlib_compression/zlib_compression_plugin.hpp"
+               "inc/tactile/zlib_compression/zlib_compressor.hpp"
                )
 
 tactile_prepare_target(tactile-zlib-compression)
-
-target_include_directories(tactile-zlib-compression PUBLIC "${PROJECT_SOURCE_DIR}/inc")
 
 target_compile_definitions(tactile-zlib-compression PRIVATE "TACTILE_BUILDING_ZLIB_COMPRESSION")
 

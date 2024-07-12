@@ -4,10 +4,10 @@ add_executable(tactile-opengl-renderer-test)
 
 target_sources(tactile-opengl-renderer-test
                PRIVATE
-               "${PROJECT_SOURCE_DIR}/src/main.cpp"
-               "${PROJECT_SOURCE_DIR}/src/opengl_error_test.cpp"
-               "${PROJECT_SOURCE_DIR}/src/opengl_renderer_test.cpp"
-               "${PROJECT_SOURCE_DIR}/src/opengl_texture_test.cpp"
+               "src/main.cpp"
+               "src/opengl_error_test.cpp"
+               "src/opengl_renderer_test.cpp"
+               "src/opengl_texture_test.cpp"
                )
 
 tactile_prepare_target(tactile-opengl-renderer-test)

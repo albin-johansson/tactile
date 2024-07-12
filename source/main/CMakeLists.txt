@@ -6,7 +6,7 @@ add_executable(tactile WIN32)
 
 target_sources(tactile
                PRIVATE
-               "${PROJECT_SOURCE_DIR}/main.cpp"
+               "main.cpp"
                )
 
 tactile_prepare_target(tactile)

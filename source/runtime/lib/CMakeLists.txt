@@ -5,33 +5,29 @@ add_library(tactile::runtime ALIAS tactile-runtime)
 
 target_sources(tactile-runtime
                PRIVATE
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/api.hpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/launcher.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/launcher.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/plugin.hpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/plugin_instance.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/plugin_instance.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/protobuf_context.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/protobuf_context.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/runtime.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/runtime.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/sdl_context.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/sdl_context.cpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/tactile_app.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/tactile_app.cpp"
-               "${PROJECT_SOURCE_DIR}/inc/tactile/runtime/window.hpp"
-               "${PROJECT_SOURCE_DIR}/src/tactile/runtime/window.cpp"
+               "src/tactile/runtime/launcher.cpp"
+               "src/tactile/runtime/plugin_instance.cpp"
+               "src/tactile/runtime/protobuf_context.cpp"
+               "src/tactile/runtime/runtime.cpp"
+               "src/tactile/runtime/sdl_context.cpp"
+               "src/tactile/runtime/tactile_app.cpp"
+               "src/tactile/runtime/window.cpp"
+
+               PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/runtime/api.hpp"
+               "inc/tactile/runtime/launcher.hpp"
+               "inc/tactile/runtime/plugin.hpp"
+               "inc/tactile/runtime/plugin_instance.hpp"
+               "inc/tactile/runtime/protobuf_context.hpp"
+               "inc/tactile/runtime/runtime.hpp"
+               "inc/tactile/runtime/sdl_context.hpp"
+               "inc/tactile/runtime/window.hpp"
+
+               PRIVATE FILE_SET "private_headers" TYPE "HEADERS" BASE_DIRS "src" FILES
+               "src/tactile/runtime/tactile_app.hpp"
                )
 
 tactile_prepare_target(tactile-runtime)
-
-target_include_directories(tactile-runtime
-                           PUBLIC
-                           "${PROJECT_SOURCE_DIR}/inc"
-
-                           PRIVATE
-                           "${PROJECT_SOURCE_DIR}/src"
-                           )
 
 target_compile_definitions(tactile-runtime
                            PRIVATE
