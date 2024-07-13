@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/id.hpp"
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -55,6 +56,15 @@ class IObjectView
    */
   [[nodiscard]]
   virtual auto get_type() const -> ObjectType = 0;
+
+  /**
+   * Returns the persistent identifier of the object.
+   *
+   * \return
+   * An object identifier.
+   */
+  [[nodiscard]]
+  virtual auto get_id() const -> ObjectID = 0;
 
   /**
    * Returns the position of the object.
