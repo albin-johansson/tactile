@@ -84,6 +84,7 @@ struct Runtime::Data final
   Optional<Window> window {};
   IRenderer* renderer {};
   HashMap<CompressionFormat, ICompressor*> compressors {};
+  HashMap<SaveFormatId, ISaveFormat*> save_formats {};
 
   Data()
     : protobuf_context {},
@@ -134,6 +135,16 @@ void Runtime::set_compression_provider(const CompressionFormat format,
   }
   else {
     mData->compressors.erase(format);
+  }
+}
+
+void Runtime::set_save_format(const SaveFormatId id, ISaveFormat* format)
+{
+  if (format != nullptr) {
+    mData->save_formats.insert_or_assign(id, format);
+  }
+  else {
+    mData->save_formats.erase(id);
   }
 }
 

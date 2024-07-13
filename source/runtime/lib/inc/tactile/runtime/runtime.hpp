@@ -8,6 +8,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
@@ -19,6 +20,7 @@ namespace tactile {
 class IWindow;
 class IRenderer;
 class ICompressor;
+class ISaveFormat;
 
 /**
  * Provides the primary API used by dynamic Tactile modules.
@@ -93,6 +95,15 @@ class TACTILE_RUNTIME_API Runtime final
    */
   void set_compression_provider(CompressionFormat format,
                                 ICompressor* compressor);
+
+  /**
+   * Sets the save format implementation for a given format.
+   *
+   * \param id     The save format identifier.
+   * \param format The save format implementation. The save format is
+   *               unregistered for the given format if the pointer is null.
+   */
+  void set_save_format(SaveFormatId id, ISaveFormat* format);
 
   /**
    * Returns the application window.
