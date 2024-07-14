@@ -2,6 +2,8 @@
 
 #include "tactile/core/document/tileset_view_impl.hpp"
 
+#include <algorithm>  // count_if
+
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/validation.hpp"
@@ -46,9 +48,9 @@ auto TilesetViewImpl::get_first_tile_id() const -> TileID
 auto TilesetViewImpl::tile_count() const -> usize
 {
   const auto& registry = mDocument->get_registry();
-  const auto& instance = registry.get<CTilesetInstance>(mTilesetId);
+  const auto& tileset = registry.get<CTileset>(mTilesetId);
 
-  return saturate_cast<usize>(instance.tile_range.count);
+  return tileset.tiles.size();
 }
 
 auto TilesetViewImpl::tile_definition_count() const -> usize
@@ -56,7 +58,10 @@ auto TilesetViewImpl::tile_definition_count() const -> usize
   const auto& registry = mDocument->get_registry();
   const auto& tileset = registry.get<CTileset>(mTilesetId);
 
-  return tileset.tiles.size();
+  return saturate_cast<usize>(
+      std::ranges::count_if(tileset.tiles, [&registry](const EntityID tile_id) {
+        return !is_tile_plain(registry, tile_id);
+      }));
 }
 
 auto TilesetViewImpl::column_count() const -> usize
@@ -66,7 +71,7 @@ auto TilesetViewImpl::column_count() const -> usize
   const auto& tileset = registry.get<CTileset>(mTilesetId);
   const auto& texture = registry.get<CTexture>(mTilesetId);
 
-  return texture.size.x() / tileset.tile_size.x();
+  return saturate_cast<usize>(texture.size.x() / tileset.tile_size.x());
 }
 
 auto TilesetViewImpl::get_tile_size() const -> Int2
