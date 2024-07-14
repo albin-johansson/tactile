@@ -12,6 +12,7 @@ target_sources(tactile-core-test
                "src/debug/validation_test.cpp"
                "src/debug/validation_test.cpp"
                "src/document/layer_view_impl_test.cpp"
+               "src/document/map_view_impl_test.cpp"
                "src/document/meta_view_impl_test.cpp"
                "src/document/tile_view_impl_test.cpp"
                "src/document/tileset_view_impl_test.cpp"
