@@ -5,15 +5,26 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/plugin.hpp"
 #include "tactile/tiled_tmj_format/api.hpp"
+#include "tactile/tiled_tmj_format/tiled_tmj_format.hpp"
 
 namespace tactile {
 
 class TACTILE_TMJ_FORMAT_API TiledTmjFormatPlugin final : public IPlugin
 {
  public:
+  TACTILE_DELETE_COPY(TiledTmjFormatPlugin);
+  TACTILE_DELETE_MOVE(TiledTmjFormatPlugin);
+
+  TiledTmjFormatPlugin() = default;
+
+  ~TiledTmjFormatPlugin() noexcept override = default;
+
   void load(Runtime& runtime) override;
 
   void unload(Runtime& runtime) override;
+
+ private:
+  TiledTmjFormat mFormat {};
 };
 
 extern "C"
