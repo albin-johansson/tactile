@@ -1,0 +1,94 @@
+// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
+
+#include "tactile/core/document/map_view_impl.hpp"
+
+#include "tactile/base/document/document_visitor.hpp"
+#include "tactile/core/debug/validation.hpp"
+#include "tactile/core/document/layer_view_impl.hpp"
+#include "tactile/core/document/map_document.hpp"
+#include "tactile/core/document/tileset_view_impl.hpp"
+#include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/map/map.hpp"
+
+namespace tactile {
+
+MapViewImpl::MapViewImpl(const MapDocument* document)
+  : mDocument {require_not_null(document, "null document")}
+{}
+
+void MapViewImpl::accept(IDocumentVisitor& visitor) const
+{
+  const auto& registry = mDocument->get_registry();
+
+  const auto& map = _get_map();
+  const auto& root_layer = registry.get<CGroupLayer>(map.root_layer);
+
+  visitor.visit(*this);
+
+  for (const auto tileset_id : map.attached_tilesets) {
+    const TilesetViewImpl tileset_view {mDocument, tileset_id};
+    tileset_view.accept(visitor);
+  }
+
+  for (const auto layer_id : root_layer.layers) {
+    const LayerViewImpl layer_view {mDocument, nullptr, layer_id};
+    layer_view.accept(visitor);
+  }
+
+  // TODO iterate component definitions
+}
+
+auto MapViewImpl::get_tile_size() const -> Int2
+{
+  return _get_map().tile_size;
+}
+
+auto MapViewImpl::get_extent() const -> MatrixExtent
+{
+  return _get_map().extent;
+}
+
+auto MapViewImpl::get_next_layer_id() const -> LayerID
+{
+  return _get_id_cache().next_layer_id;
+}
+
+auto MapViewImpl::get_next_object_id() const -> ObjectID
+{
+  return _get_id_cache().next_object_id;
+}
+
+auto MapViewImpl::layer_count() const -> usize
+{
+  const auto& registry = mDocument->get_registry();
+  const auto& map = _get_map();
+
+  return count_layers(registry, map.root_layer);
+}
+
+auto MapViewImpl::tileset_count() const -> usize
+{
+  return _get_map().attached_tilesets.size();
+}
+
+auto MapViewImpl::component_count() const -> usize
+{
+  return 0;  // TODO
+}
+
+auto MapViewImpl::_get_map() const -> const CMap&
+{
+  const auto& registry = mDocument->get_registry();
+  const auto map_id = mDocument->get_root_entity();
+  return registry.get<CMap>(map_id);
+}
+
+auto MapViewImpl::_get_id_cache() const -> const CMapIdCache&
+{
+  const auto& registry = mDocument->get_registry();
+  const auto map_id = mDocument->get_root_entity();
+  return registry.get<CMapIdCache>(map_id);
+}
+
+}  // namespace tactile

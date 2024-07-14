@@ -72,10 +72,10 @@ struct CMapIdCache final
   TileID next_tile_id;
 
   /** The next available object identifier. */
-  int32 next_object_id;
+  ObjectID next_object_id;
 
   /** The next available layer identifier. */
-  int32 next_layer_id;
+  LayerID next_layer_id;
 };
 
 /**
