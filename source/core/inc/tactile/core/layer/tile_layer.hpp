@@ -17,7 +17,7 @@ class Registry;
 /**
  * Tag component for tile layers.
  */
-struct CTileLayer final : CTag
+struct CTileLayer final
 {
   /** The associated tile data. */
   Variant<DenseTileMatrix, SparseTileMatrix> tiles;
