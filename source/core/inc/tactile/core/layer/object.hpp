@@ -4,10 +4,10 @@
 
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
+#include "tactile/base/layer/object_type.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/layer/object_type.hpp"
-#include "tactile/core/numeric/vec.hpp"
 
 namespace tactile {
 

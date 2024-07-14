@@ -7,10 +7,10 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/numeric/vec.hpp"
-#include "tactile/core/util/matrix_extent.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

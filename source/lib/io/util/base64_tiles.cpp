@@ -11,8 +11,8 @@
 #include "common/util/functional.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "tactile/core/debug/exception.hpp"
-#include "tactile/core/io/compress/zlib_compression_provider.hpp"
-#include "tactile/core/io/compress/zstd_compression_provider.hpp"
+#include "tactile/base/io/compress/zlib_compression_provider.hpp"
+#include "tactile/base/io/compress/zstd_compression_provider.hpp"
 #include "tactile/core/platform/bits.hpp"
 
 using Base64 = cppcodec::base64_rfc4648;

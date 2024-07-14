@@ -8,7 +8,7 @@
 
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/engine/engine_app.hpp"
+#include "tactile/base/engine/engine_app.hpp"
 #include "tactile/core/log/logger.hpp"
 
 namespace tactile {

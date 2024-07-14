@@ -4,13 +4,13 @@
 
 #include <magic_enum.hpp>
 
+#include "tactile/base/numeric/vec_format.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/dialog_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/map_events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
-#include "tactile/core/numeric/vec_format.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
 namespace tactile {

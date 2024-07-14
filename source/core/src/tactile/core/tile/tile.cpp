@@ -6,6 +6,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/meta/meta.hpp"
+#include "tactile/core/tile/animation.hpp"
 
 namespace tactile {
 
@@ -57,6 +58,19 @@ auto copy_tile(Registry& registry, const EntityID tile_entity) -> EntityID
 
   TACTILE_ASSERT(is_tile(registry, copy_entity));
   return copy_entity;
+}
+
+auto is_tile_plain(const Registry& registry, const EntityID tile_id) -> bool
+{
+  TACTILE_ASSERT(is_tile(registry, tile_id));
+
+  const auto& tile = registry.get<CTile>(tile_id);
+  const auto& meta = registry.get<CMeta>(tile_id);
+
+  return !registry.has<CAnimation>(tile_id) &&  //
+         tile.objects.empty() &&                //
+         meta.properties.empty() &&             //
+         meta.components.empty();
 }
 
 }  // namespace tactile

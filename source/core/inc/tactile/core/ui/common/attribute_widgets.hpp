@@ -3,9 +3,9 @@
 #pragma once
 
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/meta/attribute.hpp"
+#include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/meta/attribute.hpp"
-#include "tactile/core/meta/attribute_type.hpp"
 
 namespace tactile::ui {
 

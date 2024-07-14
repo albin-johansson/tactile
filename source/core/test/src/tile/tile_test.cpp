@@ -7,6 +7,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/meta/meta.hpp"
+#include "tactile/core/tile/animation.hpp"
 
 namespace tactile {
 
@@ -16,8 +17,8 @@ class TileTest : public testing::Test
   Registry mRegistry {};
 };
 
-/// \trace tactile::make_tile
-/// \trace tactile::is_tile
+// tactile::make_tile
+// tactile::is_tile
 TEST_F(TileTest, MakeTile)
 {
   const auto tile_entity = make_tile(mRegistry, TileIndex {42});
@@ -37,7 +38,7 @@ TEST_F(TileTest, MakeTile)
   EXPECT_EQ(tile.objects.size(), 0);
 }
 
-/// \trace tactile::destroy_tile
+// tactile::destroy_tile
 TEST_F(TileTest, DestroyTile)
 {
   const auto tile_entity = make_tile(mRegistry, TileIndex {10});
@@ -69,7 +70,7 @@ TEST_F(TileTest, DestroyTile)
   EXPECT_EQ(mRegistry.count<CObject>(), 0);
 }
 
-/// \trace tactile::copy_tile
+// tactile::copy_tile
 TEST_F(TileTest, CopyTile)
 {
   const auto e1 = make_tile(mRegistry, TileIndex {35});
@@ -99,6 +100,43 @@ TEST_F(TileTest, CopyTile)
   EXPECT_EQ(tile2.index, tile1.index);
   EXPECT_EQ(tile2.objects.size(), tile1.objects.size());
   EXPECT_NE(tile2.objects, tile1.objects);
+}
+
+// tactile::is_tile_plain
+TEST_F(TileTest, IsTilePlain)
+{
+  const auto id1 = make_tile(mRegistry, TileIndex {1});
+  const auto id2 = make_tile(mRegistry, TileIndex {2});
+  const auto id3 = make_tile(mRegistry, TileIndex {3});
+  const auto id4 = make_tile(mRegistry, TileIndex {4});
+  const auto id5 = make_tile(mRegistry, TileIndex {5});
+
+  {
+    const AnimationFrame frame {TileIndex {10}, Milliseconds {50}};
+    ASSERT_TRUE(add_animation_frame(mRegistry, id2, 0, frame));
+  }
+
+  {
+    auto& tile3 = mRegistry.get<CTile>(id3);
+    tile3.objects.push_back(
+        make_object(mRegistry, ObjectID {1}, ObjectType::kPoint));
+  }
+
+  {
+    auto& meta4 = mRegistry.get<CMeta>(id4);
+    meta4.properties["foo"] = Attribute {"bar"};
+  }
+
+  {
+    auto& meta5 = mRegistry.get<CMeta>(id5);
+    meta5.components[UUID::generate()];
+  }
+
+  EXPECT_TRUE(is_tile_plain(mRegistry, id1));
+  EXPECT_FALSE(is_tile_plain(mRegistry, id2));  // Animated
+  EXPECT_FALSE(is_tile_plain(mRegistry, id3));  // Has object
+  EXPECT_FALSE(is_tile_plain(mRegistry, id4));  // Has property
+  EXPECT_FALSE(is_tile_plain(mRegistry, id5));  // Has component
 }
 
 }  // namespace tactile

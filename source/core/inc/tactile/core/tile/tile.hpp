@@ -77,4 +77,23 @@ void destroy_tile(Registry& registry, EntityID tile_entity);
 [[nodiscard]]
 auto copy_tile(Registry& registry, EntityID tile_entity) -> EntityID;
 
+/**
+ * Indicates whether a tile is "plain".
+ *
+ * \pre The provided entity identifier must reference a tile.
+ *
+ * \details
+ * A tile is considered plain if it features no animation, nested objects,
+ * properties, nor components. This means that plain tiles don't need to be
+ * included in saved tilesets.
+ *
+ * \param registry The associated registry.
+ * \param tile_id  The identifier of the tile to check.
+ *
+ * \return
+ * True if the tile is plain; false otherwise.
+ */
+[[nodiscard]]
+auto is_tile_plain(const Registry& registry, EntityID tile_id) -> bool;
+
 }  // namespace tactile

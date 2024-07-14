@@ -4,6 +4,7 @@
 
 #include <imgui.h>
 
+#include "tactile/base/numeric/vec_format.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
@@ -11,7 +12,6 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/model/settings.hpp"
-#include "tactile/core/numeric/vec_format.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/viewport.hpp"
 

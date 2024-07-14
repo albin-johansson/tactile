@@ -6,8 +6,7 @@
 #include <exception>  // exception
 #include <iterator>   // back_inserter
 
-#include "tactile/core/util/format.hpp"
-#include "tactile/core/util/memory_buffer.hpp"
+#include "tactile/base/util/buffer.hpp"
 
 namespace tactile {
 inline namespace logger {
@@ -24,13 +23,13 @@ void Logger::_log(const LogLevel level,
     if (!mSinks.empty() && would_log(level)) {
       const auto log_instant = SteadyClock::now();
 
-      MemoryBuffer<char, 256> text_buffer;  // NOLINT default-initialization
-      std::vformat_to(std::back_inserter(text_buffer), fmt_string, args);
+      Buffer<char, 512> text_buffer;  // NOLINT uninitialized
+      vformat_to_buffer(text_buffer, fmt_string, args);
 
       const auto level_acronym = get_acronym(level);
       const auto elapsed_time = _to_elapsed_time(log_instant);
 
-      MemoryBuffer<char, 64> prefix_buffer;  // NOLINT default-initialization
+      Buffer<char, 64> prefix_buffer;  // NOLINT uninitialized
       format_to_buffer(prefix_buffer,
                        "[{} {:.>12%Q}]",
                        level_acronym,

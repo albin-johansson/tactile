@@ -4,10 +4,10 @@
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

@@ -6,8 +6,8 @@
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {

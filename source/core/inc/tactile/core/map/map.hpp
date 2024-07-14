@@ -7,13 +7,13 @@
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/layer/tile_encoding.hpp"
+#include "tactile/base/layer/tile_orientation.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/io/compress/compression_type.hpp"
-#include "tactile/core/map/map_orientation.hpp"
-#include "tactile/core/numeric/vec.hpp"
-#include "tactile/core/tile/tile_encoding.hpp"
-#include "tactile/core/util/matrix_extent.hpp"
 
 namespace tactile {
 
@@ -26,8 +26,8 @@ class Registry;
  */
 struct CMap final
 {
-  /** The orientation used by the map. */
-  MapOrientation orientation;
+  /** The tile orientation used by the map. */
+  TileOrientation orientation;
 
   /** The size of the map, in tiles. */
   MatrixExtent extent;
@@ -57,7 +57,7 @@ struct CTileFormat final
   TileEncoding encoding;
 
   /** The compression strategy. */
-  CompressionType compression;
+  Optional<CompressionFormat> compression;
 
   /** The compression level, if any. */
   Maybe<int> comp_level;
@@ -72,10 +72,10 @@ struct CMapIdCache final
   TileID next_tile_id;
 
   /** The next available object identifier. */
-  int32 next_object_id;
+  ObjectID next_object_id;
 
   /** The next available layer identifier. */
-  int32 next_layer_id;
+  LayerID next_layer_id;
 };
 
 /**

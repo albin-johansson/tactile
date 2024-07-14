@@ -61,6 +61,20 @@ auto make_group_layer(Registry& registry) -> EntityID;
 void destroy_group_layer(Registry& registry, EntityID group_layer_id);
 
 /**
+ * Returns the number of layers in a group layer hierarchy, excluding the root.
+ *
+ * \pre \c root_layer_id must reference a group layer.
+ *
+ * \param registry      The associated registry.
+ * \param root_layer_id The root group layer identifier.
+ *
+ * \return
+ * The number of layers stored in the hierarchy.
+ */
+[[nodiscard]]
+auto count_layers(const Registry& registry, EntityID root_layer_id) -> usize;
+
+/**
  * Attempts to find a layer parent within a group layer hierarchy.
  *
  * \pre \c root_layer_id must reference a group layer.

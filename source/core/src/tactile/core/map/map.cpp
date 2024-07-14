@@ -52,7 +52,7 @@ auto make_map(Registry& registry, const MapSpec& spec) -> EntityID
 
   auto& format = registry.add<CTileFormat>(map_entity);
   format.encoding = TileEncoding::kPlainText;
-  format.compression = CompressionType::kNone;
+  format.compression = kNone;
   format.comp_level = kNone;
 
   auto& id_cache = registry.add<CMapIdCache>(map_entity);

@@ -31,7 +31,7 @@ class MapTest : public testing::Test
 TEST_F(MapTest, IsMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {5, 5},
     .tile_size = Int2 {16, 16},
   };
@@ -47,7 +47,7 @@ TEST_F(MapTest, IsMap)
 TEST_F(MapTest, MakeMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {10, 8},
     .tile_size = Int2 {32, 36},
   };
@@ -82,7 +82,7 @@ TEST_F(MapTest, MakeMap)
   EXPECT_TRUE(is_group_layer(mRegistry, map.root_layer));
 
   EXPECT_EQ(format.encoding, TileEncoding::kPlainText);
-  EXPECT_EQ(format.compression, CompressionType::kNone);
+  EXPECT_EQ(format.compression, kNone);
   EXPECT_EQ(format.comp_level, kNone);
 
   EXPECT_EQ(id_cache.next_tile_id, TileID {1});
@@ -102,13 +102,13 @@ TEST_F(MapTest, MakeMap)
 TEST_F(MapTest, MakeMapWithInvalidSpec)
 {
   const MapSpec bad_extent {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {0, 0},
     .tile_size = Int2 {32, 32},
   };
 
   const MapSpec bad_tile_size {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {10, 10},
     .tile_size = Int2 {0, 0},
   };
@@ -121,7 +121,7 @@ TEST_F(MapTest, MakeMapWithInvalidSpec)
 TEST_F(MapTest, DestroyMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {5, 5},
     .tile_size = Int2 {32, 32},
   };
@@ -155,7 +155,7 @@ TEST_F(MapTest, DestroyMap)
 TEST_F(MapTest, AddTilesetToMap)
 {
   const MapSpec spec {
-    .orientation = MapOrientation::kOrthogonal,
+    .orientation = TileOrientation::kOrthogonal,
     .extent = MatrixExtent {10, 10},
     .tile_size = Int2 {32, 32},
   };

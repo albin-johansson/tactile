@@ -1,0 +1,28 @@
+project(tactile-zlib-compression-lib CXX)
+
+add_library(tactile-zlib-compression SHARED)
+add_library(tactile::zlib_compression ALIAS tactile-zlib-compression)
+
+target_sources(tactile-zlib-compression
+               PRIVATE
+               "src/tactile/zlib_compression/zlib_compression_plugin.cpp"
+               "src/tactile/zlib_compression/zlib_compressor.cpp"
+
+               PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/zlib_compression/api.hpp"
+               "inc/tactile/zlib_compression/zlib_compression_plugin.hpp"
+               "inc/tactile/zlib_compression/zlib_compressor.hpp"
+               )
+
+tactile_prepare_target(tactile-zlib-compression)
+
+target_compile_definitions(tactile-zlib-compression PRIVATE "TACTILE_BUILDING_ZLIB_COMPRESSION")
+
+target_link_libraries(tactile-zlib-compression
+                      PUBLIC
+                      tactile::base
+                      tactile::runtime
+
+                      PRIVATE
+                      ZLIB::ZLIB
+                      )

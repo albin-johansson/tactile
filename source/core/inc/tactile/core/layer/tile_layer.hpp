@@ -4,11 +4,11 @@
 
 #include "tactile/base/container/variant.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
+#include "tactile/base/util/matrix_index.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/layer/dense_tile_matrix.hpp"
 #include "tactile/core/layer/sparse_tile_matrix.hpp"
-#include "tactile/core/util/matrix_extent.hpp"
-#include "tactile/core/util/matrix_index.hpp"
 
 namespace tactile {
 
@@ -17,7 +17,7 @@ class Registry;
 /**
  * Tag component for tile layers.
  */
-struct CTileLayer final : CTag
+struct CTileLayer final
 {
   /** The associated tile data. */
   Variant<DenseTileMatrix, SparseTileMatrix> tiles;

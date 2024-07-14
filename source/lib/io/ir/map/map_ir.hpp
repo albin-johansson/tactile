@@ -21,8 +21,8 @@
 #include "tactile/base/container/variant.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/meta/attribute.hpp"
 #include "tactile/core/numeric/vec.hpp"
 #include "tactile/core/util/uuid.hpp"
 
