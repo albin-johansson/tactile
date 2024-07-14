@@ -7,11 +7,13 @@ target_sources(tactile-tiled-tmj-format
                PRIVATE
                "src/tactile/tiled_tmj_format/tiled_tmj_format.cpp"
                "src/tactile/tiled_tmj_format/tiled_tmj_format_plugin.cpp"
+               "src/tactile/tiled_tmj_format/tiled_tmj_format_save_visitor.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/tiled_tmj_format/api.hpp"
                "inc/tactile/tiled_tmj_format/tiled_tmj_format.hpp"
                "inc/tactile/tiled_tmj_format/tiled_tmj_format_plugin.hpp"
+               "inc/tactile/tiled_tmj_format/tiled_tmj_format_save_visitor.hpp"
                )
 
 tactile_prepare_target(tactile-tiled-tmj-format)
