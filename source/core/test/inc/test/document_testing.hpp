@@ -5,6 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/map/map_spec.hpp"
+#include "tactile/core/tile/tileset_spec.hpp"
 
 namespace tactile::test {
 
@@ -12,6 +13,17 @@ inline constexpr MapSpec kOrthogonalMapSpec {
   .orientation = TileOrientation::kOrthogonal,
   .extent = MatrixExtent {10, 10},
   .tile_size = Int2 {50, 50},
+};
+
+inline const TilesetSpec kDummyTilesetSpec {
+  .tile_size = Int2 {16, 16},
+  .texture =
+      CTexture {
+        .raw_handle = nullptr,
+        .id = TextureID {1},
+        .size = Int2 {96, 64},
+        .path = "assets/images/dummy.png",
+      },
 };
 
 }  // namespace tactile::test
