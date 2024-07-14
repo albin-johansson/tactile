@@ -14,6 +14,7 @@ target_sources(tactile-core-test
                "src/document/meta_view_impl_test.cpp"
                "src/document/tile_view_impl_test.cpp"
                "src/document/tileset_view_impl_test.cpp"
+               "src/document/object_view_impl_test.cpp"
                "src/entity/registry_test.cpp"
                "src/event/event_dispatcher_test.cpp"
                "src/io/ini_test.cpp"
