@@ -69,11 +69,6 @@ auto MapDocument::get_registry() const -> const Registry&
   return mData->registry;
 }
 
-auto MapDocument::get_root_entity() const -> EntityID
-{
-  return mData->map_entity;
-}
-
 auto MapDocument::get_content_size() const -> Float2
 {
   const auto map_entity = mData->map_entity;

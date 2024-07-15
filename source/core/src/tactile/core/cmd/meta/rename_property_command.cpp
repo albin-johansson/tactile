@@ -6,7 +6,7 @@
 
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/document/document.hpp"
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"

@@ -7,7 +7,7 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 
-#include "tactile/core/document/document.hpp"
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/property_events.hpp"

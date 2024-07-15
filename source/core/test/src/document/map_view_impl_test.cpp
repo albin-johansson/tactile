@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
@@ -35,8 +36,8 @@ class MapViewImplTest : public testing::Test
 // tactile::MapViewImpl::tileset_count
 TEST_F(MapViewImplTest, Getters)
 {
-  const auto map_id = mDocument.get_root_entity();
   auto& registry = mDocument.get_registry();
+  const auto map_id = registry.get<CDocumentInfo>().root;
 
   auto& map = registry.get<CMap>(map_id);
   map.attached_tilesets.push_back(registry.make_entity());

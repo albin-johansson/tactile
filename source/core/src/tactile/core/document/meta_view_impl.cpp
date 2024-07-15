@@ -6,7 +6,7 @@
 
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/document/document.hpp"
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
 

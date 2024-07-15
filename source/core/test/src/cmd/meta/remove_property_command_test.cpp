@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -19,9 +20,10 @@ TEST(RemovePropertyCommand, RedoUndo)
   const Attribute value {123};
 
   MapDocument document {kOrthogonalMapSpec};
-  const auto map_entity = document.get_root_entity();
 
   auto& registry = document.get_registry();
+  const auto map_entity = registry.get<CDocumentInfo>().root;
+
   auto& meta = registry.get<CMeta>(map_entity);
   meta.properties.insert_or_assign(name, value);
 

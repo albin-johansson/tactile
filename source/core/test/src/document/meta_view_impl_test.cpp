@@ -5,6 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/map/map_spec.hpp"
@@ -36,8 +37,8 @@ TEST_F(MetaViewImplTest, Constructor)
 // tactile::MetaViewImpl::get_name
 TEST_F(MetaViewImplTest, GetName)
 {
-  const auto map_id = mDocument.get_root_entity();
   auto& registry = mDocument.get_registry();
+  const auto map_id = registry.get<CDocumentInfo>().root;
 
   auto& meta = registry.get<CMeta>(map_id);
   meta.name = "foobar";
@@ -54,8 +55,8 @@ TEST_F(MetaViewImplTest, GetProperty)
   using testing::AnyOf;
   using testing::Eq;
 
-  const auto map_id = mDocument.get_root_entity();
   auto& registry = mDocument.get_registry();
+  const auto map_id = registry.get<CDocumentInfo>().root;
 
   const Attribute a {1};
   const Attribute b {2};

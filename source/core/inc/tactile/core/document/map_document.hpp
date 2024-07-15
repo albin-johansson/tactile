@@ -4,7 +4,7 @@
 
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/document/document.hpp"
+#include "tactile/base/document/document.hpp"
 
 namespace tactile {
 
@@ -40,9 +40,6 @@ class MapDocument final : public IDocument
 
   [[nodiscard]]
   auto get_registry() const -> const Registry& override;
-
-  [[nodiscard]]
-  auto get_root_entity() const -> EntityID override;
 
   [[nodiscard]]
   auto get_content_size() const -> Float2 override;

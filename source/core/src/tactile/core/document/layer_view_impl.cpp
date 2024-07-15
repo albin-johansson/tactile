@@ -5,6 +5,7 @@
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/document/object_view_impl.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -73,10 +74,10 @@ auto LayerViewImpl::is_visible() const -> bool
 
 auto LayerViewImpl::get_global_index() const -> usize
 {
-  const auto map_id = mDocument->get_root_entity();
-
   const auto& registry = mDocument->get_registry();
-  const auto& map = registry.get<CMap>(map_id);
+
+  const auto& document_info = registry.get<CDocumentInfo>();
+  const auto& map = registry.get<CMap>(document_info.root);
 
   return get_global_layer_index(registry, map.root_layer, mLayerId).value();
 }

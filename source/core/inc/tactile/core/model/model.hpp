@@ -5,7 +5,7 @@
 #include <utility>  // forward
 
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/document/document.hpp"
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/document/document_manager.hpp"
 #include "tactile/core/document/map_document.hpp"
 

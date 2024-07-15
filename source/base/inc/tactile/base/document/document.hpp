@@ -5,12 +5,11 @@
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/entity/entity.hpp"
 
 namespace tactile {
 
 class UUID;
-class Registry;
+class Registry;  // NB: This type is intentionally defined in core.
 
 /**
  * Provides the basic document API.
@@ -62,15 +61,6 @@ class IDocument
    */
   [[nodiscard]]
   virtual auto get_registry() const -> const Registry& = 0;
-
-  /**
-   * Returns the "root" entity identifier.
-   *
-   * \return
-   * An entity identifier.
-   */
-  [[nodiscard]]
-  virtual auto get_root_entity() const -> EntityID = 0;
 
   /**
    * Returns the graphical size of the associated content.

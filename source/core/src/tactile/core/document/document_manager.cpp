@@ -4,8 +4,9 @@
 
 #include <utility>  // move
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/debug/generic_error.hpp"
-#include "tactile/core/document/document.hpp"
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -98,7 +99,9 @@ auto DocumentManager::is_map_active() const -> bool
 {
   if (!mActiveDocument.is_null()) {
     const auto& document = get_document(mActiveDocument);
-    return is_map(document.get_registry(), document.get_root_entity());
+    const auto& registry = document.get_registry();
+    const auto& document_info = registry.get<CDocumentInfo>();
+    return is_map(registry, document_info.root);
   }
 
   return false;

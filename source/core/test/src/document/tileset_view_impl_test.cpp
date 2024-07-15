@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/io/texture.hpp"
@@ -39,7 +40,7 @@ TEST_F(TilesetViewImplTest, Getters)
 {
   auto& registry = mDocument.get_registry();
 
-  const auto map_id = mDocument.get_root_entity();
+  const auto map_id = registry.get<CDocumentInfo>().root;
   auto& map = registry.get<CMap>(map_id);
 
   add_tileset_to_map(registry, map_id, kDummyTilesetSpec).value();

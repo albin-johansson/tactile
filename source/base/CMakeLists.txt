@@ -24,6 +24,7 @@ target_sources(tactile-base
                "inc/tactile/base/container/variant.hpp"
                "inc/tactile/base/container/vector.hpp"
                "inc/tactile/base/document/component_view.hpp"
+               "inc/tactile/base/document/document.hpp"
                "inc/tactile/base/document/document_visitor.hpp"
                "inc/tactile/base/document/layer_view.hpp"
                "inc/tactile/base/document/map_view.hpp"

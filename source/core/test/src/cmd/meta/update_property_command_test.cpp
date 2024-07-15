@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -22,7 +23,7 @@ TEST(UpdatePropertyCommand, RedoUndo)
   MapDocument document {kOrthogonalMapSpec};
 
   auto& registry = document.get_registry();
-  const auto map_entity = document.get_root_entity();
+  const auto map_entity = registry.get<CDocumentInfo>().root;
 
   auto& meta = registry.get<CMeta>(map_entity);
   meta.properties[name] = old_value;
@@ -58,7 +59,7 @@ TEST(UpdatePropertyCommand, MergeWith)
   MapDocument document {kOrthogonalMapSpec};
 
   auto& registry = document.get_registry();
-  const auto map_entity = document.get_root_entity();
+  const auto map_entity = registry.get<CDocumentInfo>().root;
 
   auto& meta = registry.get<CMeta>(map_entity);
   meta.properties[name] = value0;

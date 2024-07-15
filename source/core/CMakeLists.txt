@@ -131,7 +131,6 @@ target_sources(tactile-core
                "inc/tactile/core/debug/stacktrace.hpp"
                "inc/tactile/core/debug/terminate.hpp"
                "inc/tactile/core/debug/validation.hpp"
-               "inc/tactile/core/document/document.hpp"
                "inc/tactile/core/document/document_info.hpp"
                "inc/tactile/core/document/document_manager.hpp"
                "inc/tactile/core/document/layer_view_impl.hpp"

@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -19,9 +20,10 @@ TEST(RenamePropertyCommand, RedoUndo)
   const String new_name {"bar"};
 
   MapDocument document {kOrthogonalMapSpec};
-  const auto map_entity = document.get_root_entity();
 
   auto& registry = document.get_registry();
+  const auto map_entity = registry.get<CDocumentInfo>().root;
+
   auto& meta = registry.get<CMeta>(map_entity);
   meta.properties.insert_or_assign(old_name, Attribute {42});
 
@@ -48,9 +50,10 @@ TEST(RenamePropertyCommand, MergeWith)
   const String name3 {"C"};
 
   MapDocument document {kOrthogonalMapSpec};
-  const auto map_entity = document.get_root_entity();
 
   auto& registry = document.get_registry();
+  const auto map_entity = registry.get<CDocumentInfo>().root;
+
   auto& meta = registry.get<CMeta>(map_entity);
   meta.properties.insert_or_assign(name1, Attribute {"attr"});
 

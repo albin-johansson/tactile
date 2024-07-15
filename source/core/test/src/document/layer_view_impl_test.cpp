@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
@@ -26,8 +27,8 @@ class LayerViewImplTest : public testing::Test
 
   void SetUp() override
   {
-    const auto map_id = mDocument.get_root_entity();
     auto& registry = mDocument.get_registry();
+    const auto map_id = registry.get<CDocumentInfo>().root;
 
     auto& map = registry.get<CMap>(map_id);
     auto& root_layer = registry.get<CGroupLayer>(map.root_layer);
@@ -63,7 +64,7 @@ TEST_F(LayerViewImplTest, Getters)
 {
   auto& registry = mDocument.get_registry();
 
-  const auto& map = registry.get<CMap>(mDocument.get_root_entity());
+  const auto& map = registry.get<CMap>(registry.get<CDocumentInfo>().root);
   const auto layer_id = mTileLayerId;
 
   auto& layer = registry.get<CLayer>(layer_id);

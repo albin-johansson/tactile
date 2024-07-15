@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -19,7 +20,7 @@ TEST(CreatePropertyCommand, RedoUndo)
   MapDocument document {kOrthogonalMapSpec};
 
   const auto& registry = document.get_registry();
-  const auto map_entity = document.get_root_entity();
+  const auto map_entity = registry.get<CDocumentInfo>().root;
 
   const auto& meta = registry.get<CMeta>(map_entity);
   ASSERT_EQ(meta.properties.size(), 0);

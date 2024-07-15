@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-#include "tactile/core/document/document.hpp"
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/i18n/language.hpp"

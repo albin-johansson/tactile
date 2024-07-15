@@ -4,7 +4,7 @@
 
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/document/document.hpp"
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 
