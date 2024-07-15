@@ -19,7 +19,8 @@ namespace tactile {
 TilesetViewImpl::TilesetViewImpl(const MapDocument* document,
                                  const EntityID tileset_id)
   : mDocument {require_not_null(document, "null document")},
-    mTilesetId {tileset_id}
+    mTilesetId {tileset_id},
+    mMeta {mDocument, mTilesetId}
 {}
 
 void TilesetViewImpl::accept(IDocumentVisitor& visitor) const
@@ -96,6 +97,11 @@ auto TilesetViewImpl::get_image_path() const -> const Path&
   const auto& texture = registry.get<CTexture>(mTilesetId);
 
   return texture.path;
+}
+
+auto TilesetViewImpl::get_meta() const -> const IMetaView&
+{
+  return mMeta;
 }
 
 }  // namespace tactile

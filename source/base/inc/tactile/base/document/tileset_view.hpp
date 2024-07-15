@@ -11,6 +11,7 @@ namespace tactile {
 
 class IDocumentVisitor;
 class ITileView;
+class IMetaView;
 
 /**
  * A read-only view of a tileset.
@@ -93,6 +94,15 @@ class ITilesetView
    */
   [[nodiscard]]
   virtual auto get_image_path() const -> const Path& = 0;
+
+  /**
+   * Returns a view of the associated metadata.
+   *
+   * \return
+   * A metadata view.
+   */
+  [[nodiscard]]
+  virtual auto get_meta() const -> const IMetaView& = 0;
 };
 
 }  // namespace tactile

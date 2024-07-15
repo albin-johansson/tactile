@@ -4,6 +4,7 @@
 
 #include "tactile/base/document/map_view.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/document/meta_view_impl.hpp"
 
 namespace tactile {
 
@@ -47,8 +48,12 @@ class MapViewImpl final : public IMapView
   [[nodiscard]]
   auto component_count() const -> usize override;
 
+  [[nodiscard]]
+  auto get_meta() const -> const IMetaView& override;
+
  private:
   const MapDocument* mDocument;
+  MetaViewImpl mMeta;
 
   [[nodiscard]]
   auto _get_map() const -> const CMap&;

@@ -14,7 +14,8 @@
 namespace tactile {
 
 MapViewImpl::MapViewImpl(const MapDocument* document)
-  : mDocument {require_not_null(document, "null document")}
+  : mDocument {require_not_null(document, "null document")},
+    mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
 {}
 
 void MapViewImpl::accept(IDocumentVisitor& visitor) const
@@ -77,18 +78,30 @@ auto MapViewImpl::component_count() const -> usize
   return 0;  // TODO
 }
 
+auto MapViewImpl::get_meta() const -> const IMetaView&
+{
+  return mMeta;
+}
+
 auto MapViewImpl::_get_map() const -> const CMap&
 {
   const auto& registry = mDocument->get_registry();
-  const auto map_id = mDocument->get_root_entity();
-  return registry.get<CMap>(map_id);
+  const auto& document_info = registry.get<CDocumentInfo>();
+  return registry.get<CMap>(document_info.root);
 }
 
 auto MapViewImpl::_get_id_cache() const -> const CMapIdCache&
 {
   const auto& registry = mDocument->get_registry();
-  const auto map_id = mDocument->get_root_entity();
-  return registry.get<CMapIdCache>(map_id);
+  const auto& document_info = registry.get<CDocumentInfo>();
+  return registry.get<CMapIdCache>(document_info.root);
+}
+
+auto MapViewImpl::_get_tile_format() const -> const CTileFormat&
+{
+  const auto& registry = mDocument->get_registry();
+  const auto& document_info = registry.get<CDocumentInfo>();
+  return registry.get<CTileFormat>(document_info.root);
 }
 
 }  // namespace tactile

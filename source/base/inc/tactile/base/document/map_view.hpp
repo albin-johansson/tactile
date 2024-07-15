@@ -11,6 +11,7 @@
 namespace tactile {
 
 class IDocumentVisitor;
+class IMetaView;
 
 /**
  * A read-only view of a map.
@@ -89,6 +90,15 @@ class IMapView
    */
   [[nodiscard]]
   virtual auto component_count() const -> usize = 0;
+
+  /**
+   * Returns a view of the associated metadata.
+   *
+   * \return
+   * A metadata view.
+   */
+  [[nodiscard]]
+  virtual auto get_meta() const -> const IMetaView& = 0;
 };
 
 }  // namespace tactile

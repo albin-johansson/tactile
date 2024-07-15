@@ -4,6 +4,7 @@
 
 #include "tactile/base/document/tileset_view.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/document/meta_view_impl.hpp"
 #include "tactile/core/entity/entity.hpp"
 
 namespace tactile {
@@ -47,9 +48,13 @@ class TilesetViewImpl final : public ITilesetView
   [[nodiscard]]
   auto get_image_path() const -> const Path& override;
 
+  [[nodiscard]]
+  auto get_meta() const -> const IMetaView& override;
+
  private:
   const MapDocument* mDocument;
   EntityID mTilesetId;
+  MetaViewImpl mMeta;
 };
 
 }  // namespace tactile
