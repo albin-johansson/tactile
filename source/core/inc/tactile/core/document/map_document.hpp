@@ -28,6 +28,8 @@ class MapDocument final : public IDocument
 
   ~MapDocument() noexcept override;
 
+  void accept(IDocumentVisitor& visitor) const override;
+
   void update() override;
 
   void set_path(Path path) override;

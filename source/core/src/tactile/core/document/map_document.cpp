@@ -7,6 +7,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/document/document_info.hpp"
+#include "tactile/core/document/map_view_impl.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/map/map_spec.hpp"
@@ -45,6 +46,12 @@ MapDocument::MapDocument(const MapSpec& spec)
 TACTILE_DEFINE_MOVE(MapDocument);
 
 MapDocument::~MapDocument() noexcept = default;
+
+void MapDocument::accept(IDocumentVisitor& visitor) const
+{
+  const MapViewImpl map_view {this};
+  map_view.accept(visitor);
+}
 
 void MapDocument::update()
 {}

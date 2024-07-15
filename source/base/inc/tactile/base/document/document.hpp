@@ -8,6 +8,7 @@
 
 namespace tactile {
 
+class IDocumentVisitor;
 class UUID;
 class Registry;  // NB: This type is intentionally defined in core.
 
@@ -18,6 +19,13 @@ class IDocument
 {
  public:
   TACTILE_INTERFACE_CLASS(IDocument);
+
+  /**
+   * Inspects the document.
+   *
+   * \param visitor The visitor to use.
+   */
+  virtual void accept(IDocumentVisitor& visitor) const = 0;
 
   /**
    * Updates the state of the document.
