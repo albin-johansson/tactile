@@ -4,6 +4,7 @@
 
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/layer_view_impl.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/document/tileset_view_impl.hpp"
@@ -58,6 +59,21 @@ auto MapViewImpl::get_next_layer_id() const -> LayerID
 auto MapViewImpl::get_next_object_id() const -> ObjectID
 {
   return _get_id_cache().next_object_id;
+}
+
+auto MapViewImpl::get_tile_encoding() const -> TileEncoding
+{
+  return _get_tile_format().encoding;
+}
+
+auto MapViewImpl::get_tile_compression() const -> Optional<CompressionFormat>
+{
+  return _get_tile_format().compression;
+}
+
+auto MapViewImpl::get_compression_level() const -> Optional<int>
+{
+  return _get_tile_format().comp_level;
 }
 
 auto MapViewImpl::layer_count() const -> usize

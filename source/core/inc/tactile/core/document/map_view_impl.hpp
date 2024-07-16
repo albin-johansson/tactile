@@ -10,6 +10,7 @@ namespace tactile {
 
 struct CMap;
 struct CMapIdCache;
+struct CTileFormat;
 class MapDocument;
 
 /**
@@ -40,6 +41,15 @@ class MapViewImpl final : public IMapView
   auto get_next_object_id() const -> ObjectID override;
 
   [[nodiscard]]
+  auto get_tile_encoding() const -> TileEncoding override;
+
+  [[nodiscard]]
+  auto get_tile_compression() const -> Optional<CompressionFormat> override;
+
+  [[nodiscard]]
+  auto get_compression_level() const -> Optional<int> override;
+
+  [[nodiscard]]
   auto layer_count() const -> usize override;
 
   [[nodiscard]]
@@ -60,6 +70,9 @@ class MapViewImpl final : public IMapView
 
   [[nodiscard]]
   auto _get_id_cache() const -> const CMapIdCache&;
+
+  [[nodiscard]]
+  auto _get_tile_format() const -> const CTileFormat&;
 };
 
 }  // namespace tactile

@@ -2,8 +2,11 @@
 
 #pragma once
 
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/matrix_extent.hpp"
@@ -63,6 +66,33 @@ class IMapView
    */
   [[nodiscard]]
   virtual auto get_next_object_id() const -> ObjectID = 0;
+
+  /**
+   * Returns the tile encoding format used by the map.
+   *
+   * \return
+   * A tile encoding format.
+   */
+  [[nodiscard]]
+  virtual auto get_tile_encoding() const -> TileEncoding = 0;
+
+  /**
+   * Returns the tile compression format used by the map, if any.
+   *
+   * \return
+   * A compression format if compression is used; an empty optional otherwise.
+   */
+  [[nodiscard]]
+  virtual auto get_tile_compression() const -> Optional<CompressionFormat> = 0;
+
+  /**
+   * Returns the compression level used by the map, if any.
+   *
+   * \return
+   * A compression level if compression is used; an empty optional otherwise.
+   */
+  [[nodiscard]]
+  virtual auto get_compression_level() const -> Optional<int> = 0;
 
   /**
    * Returns the number of layers in the map.
