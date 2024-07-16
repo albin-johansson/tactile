@@ -111,6 +111,8 @@ if (TACTILE_BUILD_ZSTD_COMPRESSION)
   add_subdirectory("source/zstd_compression")
 endif ()
 
+add_subdirectory("source/null_renderer")
+
 if (TACTILE_BUILD_OPENGL_RENDERER)
   add_subdirectory("source/opengl_renderer")
 endif ()
