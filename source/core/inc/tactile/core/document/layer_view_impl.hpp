@@ -35,6 +35,9 @@ class LayerViewImpl final : public ILayerView
   auto get_parent_layer() const -> const ILayerView* override;
 
   [[nodiscard]]
+  auto get_id() const -> LayerID override;
+
+  [[nodiscard]]
   auto get_type() const -> LayerType override;
 
   [[nodiscard]]

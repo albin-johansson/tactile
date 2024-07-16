@@ -40,6 +40,15 @@ class ILayerView
   virtual auto get_parent_layer() const -> const ILayerView* = 0;
 
   /**
+   * Returns the persistent identifier associated with the layer.
+   *
+   * \return
+   * A layer identifier.
+   */
+  [[nodiscard]]
+  virtual auto get_id() const -> LayerID = 0;
+
+  /**
    * Returns the type of the layer.
    *
    * \return

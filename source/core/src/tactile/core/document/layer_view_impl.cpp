@@ -56,6 +56,33 @@ auto LayerViewImpl::get_parent_layer() const -> const ILayerView*
   return mParentLayer;
 }
 
+auto LayerViewImpl::get_id() const -> LayerID
+{
+  const auto& registry = mDocument->get_registry();
+  const auto& layer = registry.get<CLayer>(mLayerId);
+
+  return layer.persistent_id.value();
+}
+
+auto LayerViewImpl::get_type() const -> LayerType
+{
+  const auto& registry = mDocument->get_registry();
+
+  if (is_tile_layer(registry, mLayerId)) {
+    return LayerType::kTileLayer;
+  }
+
+  if (is_object_layer(registry, mLayerId)) {
+    return LayerType::kObjectLayer;
+  }
+
+  if (is_group_layer(registry, mLayerId)) {
+    return LayerType::kGroupLayer;
+  }
+
+  throw Exception {"unexpected layer type"};
+}
+
 auto LayerViewImpl::get_opacity() const -> float
 {
   const auto& registry = mDocument->get_registry();
@@ -82,24 +109,6 @@ auto LayerViewImpl::get_global_index() const -> usize
   return get_global_layer_index(registry, map.root_layer, mLayerId).value();
 }
 
-auto LayerViewImpl::get_type() const -> LayerType
-{
-  const auto& registry = mDocument->get_registry();
-
-  if (is_tile_layer(registry, mLayerId)) {
-    return LayerType::kTileLayer;
-  }
-
-  if (is_object_layer(registry, mLayerId)) {
-    return LayerType::kObjectLayer;
-  }
-
-  if (is_group_layer(registry, mLayerId)) {
-    return LayerType::kGroupLayer;
-  }
-
-  throw Exception {"unexpected layer type"};
-}
 
 auto LayerViewImpl::get_tile(const MatrixIndex& index) const -> Optional<TileID>
 {
