@@ -66,6 +66,7 @@ target_sources(tactile-core
                "src/tactile/core/map/map_spec.cpp"
                "src/tactile/core/meta/attribute_type.cpp"
                "src/tactile/core/meta/color.cpp"
+               "src/tactile/core/meta/meta.cpp"
                "src/tactile/core/model/model.cpp"
                "src/tactile/core/model/settings.cpp"
                "src/tactile/core/numeric/random.cpp"

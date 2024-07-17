@@ -7,9 +7,16 @@
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/entity/entity.hpp"
 #include "tactile/core/util/uuid.hpp"
 
 namespace tactile {
+
+class Registry;
+
+namespace ir {
+struct Metadata;
+}  // namespace ir
 
 /**
  * Represents an attribute bundle.
@@ -34,5 +41,30 @@ struct CMeta final
   /** The attached attribute bundles. */
   HashMap<UUID, AttributeBundle> components;
 };
+
+/**
+ * Indicates whether an entity is a meta context.
+ *
+ * \param registry The associated registry.
+ * \param id       The target entity identifier.
+ *
+ * \return
+ * True if the entity is a meta context; false otherwise.
+ */
+[[nodiscard]]
+auto is_meta(const Registry& registry, EntityID id) -> bool;
+
+/**
+ * Converts IR metadata to the internal representation and adds it to a context.
+ *
+ * \pre The entity identifier must reference a meta context.
+ *
+ * \param registry    The associated registry.
+ * \param meta_id     The meta context entity identifier.
+ * \param ir_metadata The source metadata representation.
+ */
+void convert_ir_metadata(Registry& registry,
+                         EntityID meta_id,
+                         const ir::Metadata& ir_metadata);
 
 }  // namespace tactile

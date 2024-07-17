@@ -53,7 +53,7 @@ target_sources(tactile-core-test
 tactile_prepare_target(tactile-core-test)
 
 target_link_libraries(tactile-core-test
-                      PUBLIC
+                      PRIVATE
                       tactile::core
                       GTest::gtest
                       )
