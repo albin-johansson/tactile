@@ -25,9 +25,10 @@ auto make_ir_tile_matrix(const MatrixExtent& extent) -> Vector<Vector<TileID>>
   return tile_matrix;
 }
 
-auto make_ir_metadata() -> ir::Metadata
+auto make_ir_metadata(String name) -> ir::Metadata
 {
   return {
+    .name = std::move(name),
     .properties = {},
     .components = {},
   };
@@ -39,8 +40,7 @@ auto make_ir_object(const ObjectID id,
                     const Float2& size) -> ir::Object
 {
   return {
-    .meta = make_ir_metadata(),
-    .name = std::format("Object {}", id),
+    .meta = make_ir_metadata(std::format("Object {}", id)),
     .id = id,
     .type = type,
     .position = pos,
@@ -50,11 +50,11 @@ auto make_ir_object(const ObjectID id,
   };
 }
 
-auto make_ir_object_layer(const LayerID id, Vector<ir::Object> objects) -> ir::Layer
+auto make_ir_object_layer(const LayerID id,
+                          Vector<ir::Object> objects) -> ir::Layer
 {
   return {
-    .meta = make_ir_metadata(),
-    .name = std::format("Object Layer {}", id),
+    .meta = make_ir_metadata(std::format("Object Layer {}", id)),
     .id = id,
     .type = LayerType::kObjectLayer,
     .opacity = 1.0f,
@@ -66,11 +66,11 @@ auto make_ir_object_layer(const LayerID id, Vector<ir::Object> objects) -> ir::L
   };
 }
 
-auto make_ir_tile_layer(const LayerID id, const MatrixExtent& extent) -> ir::Layer
+auto make_ir_tile_layer(const LayerID id,
+                        const MatrixExtent& extent) -> ir::Layer
 {
   return {
-    .meta = make_ir_metadata(),
-    .name = std::format("Tile Layer {}", id),
+    .meta = make_ir_metadata(std::format("Tile Layer {}", id)),
     .id = id,
     .type = LayerType::kTileLayer,
     .opacity = 1.0f,
@@ -82,11 +82,11 @@ auto make_ir_tile_layer(const LayerID id, const MatrixExtent& extent) -> ir::Lay
   };
 }
 
-auto make_ir_group_layer(const LayerID id, Vector<ir::Layer> layers) -> ir::Layer
+auto make_ir_group_layer(const LayerID id,
+                         Vector<ir::Layer> layers) -> ir::Layer
 {
   return {
-    .meta = make_ir_metadata(),
-    .name = std::format("Group Layer {}", id),
+    .meta = make_ir_metadata(std::format("Group Layer {}", id)),
     .id = id,
     .type = LayerType::kGroupLayer,
     .opacity = 1.0f,
@@ -101,8 +101,7 @@ auto make_ir_group_layer(const LayerID id, Vector<ir::Layer> layers) -> ir::Laye
 auto make_ir_tileset() -> ir::Tileset
 {
   return {
-    .meta = make_ir_metadata(),
-    .name = "Dummy",
+    .meta = make_ir_metadata("Dummy"),
     .tile_size = {16, 16},
     .tile_count = 24,
     .column_count = 6,
@@ -133,8 +132,7 @@ auto make_ir_tile_format() -> ir::TileFormat
 auto make_ir_map(const MatrixExtent& extent) -> ir::Map
 {
   return {
-    .meta = make_ir_metadata(),
-    .name = "Map",
+    .meta = make_ir_metadata("Map"),
     .extent = extent,
     .tile_size = {50, 50},
     .next_layer_id = 1,

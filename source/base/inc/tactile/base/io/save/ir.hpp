@@ -91,9 +91,6 @@ struct Object final
   /** Metadata for the object. */
   Metadata meta;
 
-  /** The object name. */
-  String name;
-
   /** The associated identifier. */
   ObjectID id;
 
@@ -123,9 +120,6 @@ struct Layer final
 {
   /** Metadata for the layer. */
   Metadata meta;
-
-  /** The layer name. */
-  String name;
 
   /** The associated identifier. */
   ObjectID id;
@@ -201,9 +195,6 @@ struct Tileset final
   /** Metadata for the tileset. */
   Metadata meta;
 
-  /** The tileset name. */
-  String name;
-
   /** The size of tiles in the tileset. */
   Int2 tile_size;
 
@@ -269,9 +260,6 @@ struct Map final
 {
   /** Metadata for the map. */
   Metadata meta;
-
-  /** The map name. */
-  String name;
 
   /** The number of rows and columns in each tile layer. */
   MatrixExtent extent;
