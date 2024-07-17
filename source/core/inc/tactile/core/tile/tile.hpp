@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
@@ -10,6 +11,10 @@
 namespace tactile {
 
 class Registry;
+
+namespace ir {
+struct Tile;
+}  // namespace ir
 
 /**
  * A component that represents a tile definition.
@@ -51,6 +56,18 @@ auto is_tile(const Registry& registry, EntityID entity) -> bool;
  */
 [[nodiscard]]
 auto make_tile(Registry& registry, TileIndex index) -> EntityID;
+
+/**
+ * Creates a tile from an intermediate representation.
+ *
+ * \param registry The associated registry.
+ * \param tile     The intermediate tile representation.
+ *
+ * \return
+ * A tile entity identifier if successful; an error code otherwise.
+ */
+[[nodiscard]]
+auto make_tile(Registry& registry, const ir::Tile& ir_tile) -> Result<EntityID>;
 
 /**
  * Destroys a tile.

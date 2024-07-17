@@ -4,12 +4,14 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/base/test_util/ir_presets.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/meta/meta.hpp"
+#include "tactile/core/test/ir_comparison.hpp"
 #include "tactile/core/tile/animation.hpp"
 
-namespace tactile {
+namespace tactile::test {
 
 class TileTest : public testing::Test
 {
@@ -17,7 +19,7 @@ class TileTest : public testing::Test
   Registry mRegistry {};
 };
 
-// tactile::make_tile
+// tactile::make_tile [Registry&, TileIndex]
 // tactile::is_tile
 TEST_F(TileTest, MakeTile)
 {
@@ -38,6 +40,19 @@ TEST_F(TileTest, MakeTile)
   EXPECT_EQ(tile.objects.size(), 0);
 }
 
+// tactile::make_tile [Registry&, const ir::Tile&]
+TEST_F(TileTest, MakeTileFromIR)
+{
+  ObjectID next_object_id {30};
+  const auto ir_tile = make_complex_ir_tile(TileIndex {74}, next_object_id);
+
+  const auto tile_id = make_tile(mRegistry, ir_tile);
+  ASSERT_TRUE(tile_id.has_value());
+  ASSERT_TRUE(is_tile(mRegistry, *tile_id));
+
+  compare_tile(mRegistry, *tile_id, ir_tile);
+}
+
 // tactile::destroy_tile
 TEST_F(TileTest, DestroyTile)
 {
@@ -46,12 +61,9 @@ TEST_F(TileTest, DestroyTile)
 
   {
     auto& tile = mRegistry.get<CTile>(tile_entity);
-    tile.objects.push_back(
-        make_object(mRegistry, ObjectID {1}, ObjectType::kRect));
-    tile.objects.push_back(
-        make_object(mRegistry, ObjectID {2}, ObjectType::kEllipse));
-    tile.objects.push_back(
-        make_object(mRegistry, ObjectID {3}, ObjectType::kPoint));
+    tile.objects.push_back(make_object(mRegistry, ObjectID {1}, ObjectType::kRect));
+    tile.objects.push_back(make_object(mRegistry, ObjectID {2}, ObjectType::kEllipse));
+    tile.objects.push_back(make_object(mRegistry, ObjectID {3}, ObjectType::kPoint));
   }
 
   //   Tiles: 1 * (1 CMeta + 1 CTile)
@@ -81,12 +93,9 @@ TEST_F(TileTest, CopyTile)
   meta1.components[UUID::generate()];
 
   auto& tile1 = mRegistry.get<CTile>(e1);
-  tile1.objects.push_back(
-      make_object(mRegistry, ObjectID {1}, ObjectType::kPoint));
-  tile1.objects.push_back(
-      make_object(mRegistry, ObjectID {2}, ObjectType::kRect));
-  tile1.objects.push_back(
-      make_object(mRegistry, ObjectID {3}, ObjectType::kEllipse));
+  tile1.objects.push_back(make_object(mRegistry, ObjectID {1}, ObjectType::kPoint));
+  tile1.objects.push_back(make_object(mRegistry, ObjectID {2}, ObjectType::kRect));
+  tile1.objects.push_back(make_object(mRegistry, ObjectID {3}, ObjectType::kEllipse));
 
   const auto e2 = copy_tile(mRegistry, e1);
   EXPECT_TRUE(is_tile(mRegistry, e2));
@@ -118,8 +127,7 @@ TEST_F(TileTest, IsTilePlain)
 
   {
     auto& tile3 = mRegistry.get<CTile>(id3);
-    tile3.objects.push_back(
-        make_object(mRegistry, ObjectID {1}, ObjectType::kPoint));
+    tile3.objects.push_back(make_object(mRegistry, ObjectID {1}, ObjectType::kPoint));
   }
 
   {
@@ -139,4 +147,4 @@ TEST_F(TileTest, IsTilePlain)
   EXPECT_FALSE(is_tile_plain(mRegistry, id5));  // Has component
 }
 
-}  // namespace tactile
+}  // namespace tactile::test

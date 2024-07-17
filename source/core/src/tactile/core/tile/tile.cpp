@@ -2,6 +2,7 @@
 
 #include "tactile/core/tile/tile.hpp"
 
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
@@ -9,6 +10,30 @@
 #include "tactile/core/tile/animation.hpp"
 
 namespace tactile {
+namespace tile {
+
+[[nodiscard]]
+auto convert_animation(Registry& registry,
+                       const EntityID tile_id,
+                       const ir::Tile& ir_tile) -> Result<void>
+{
+  usize frame_index = 0;
+
+  for (const auto& ir_frame : ir_tile.animation) {
+    const AnimationFrame frame {ir_frame.tile_index, ir_frame.duration};
+
+    const auto add_frame_result = add_animation_frame(registry, tile_id, frame_index, frame);
+    if (!add_frame_result.has_value()) {
+      return propagate_unexpected(add_frame_result);
+    }
+
+    ++frame_index;
+  }
+
+  return kOK;
+}
+
+}  // namespace tile
 
 auto is_tile(const Registry& registry, const EntityID entity) -> bool
 {
@@ -25,6 +50,29 @@ auto make_tile(Registry& registry, const TileIndex index) -> EntityID
 
   TACTILE_ASSERT(is_tile(registry, tile_entity));
   return tile_entity;
+}
+
+auto make_tile(Registry& registry, const ir::Tile& ir_tile) -> Result<EntityID>
+{
+  const auto tile_id = make_tile(registry, ir_tile.index);
+
+  const auto convert_animation_result = tile::convert_animation(registry, tile_id, ir_tile);
+  if (!convert_animation_result.has_value()) {
+    destroy_tile(registry, tile_id);
+    return propagate_unexpected(convert_animation_result);
+  }
+
+  auto& tile = registry.get<CTile>(tile_id);
+  tile.objects.reserve(ir_tile.objects.size());
+
+  for (const auto& ir_object : ir_tile.objects) {
+    tile.objects.push_back(make_object(registry, ir_object));
+  }
+
+  convert_ir_metadata(registry, tile_id, ir_tile.meta);
+
+  TACTILE_ASSERT(is_tile(registry, tile_id));
+  return tile_id;
 }
 
 void destroy_tile(Registry& registry, const EntityID tile_entity)

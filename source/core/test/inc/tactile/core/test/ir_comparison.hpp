@@ -26,4 +26,6 @@ void compare_group_layer(const Registry& registry,
 
 void compare_layer(const Registry& registry, EntityID layer_id, const ir::Layer& ir_layer);
 
+void compare_tile(const Registry& registry, EntityID tile_id, const ir::Tile& ir_tile);
+
 }  // namespace tactile::test
