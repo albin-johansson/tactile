@@ -12,8 +12,10 @@
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/meta/attribute.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
 
 namespace tactile::ir {
 
@@ -68,6 +70,9 @@ struct AttachedComponent final
  */
 struct Metadata final
 {
+  /** The name of the context. */
+  String name;
+
   /** The attached properties. */
   Vector<NamedAttribute> properties;
 
@@ -95,17 +100,11 @@ struct Object final
   /** The type of the object. */
   ObjectType type;
 
-  /** The x-coordinate of the object. */
-  float x;
+  /** The position of the object. */
+  Float2 position;
 
-  /** The y-coordinate of the object. */
-  float y;
-
-  /** The width of the object. */
-  float width;
-
-  /** The height of the object. */
-  float height;
+  /** The size of the object. */
+  Float2 size;
 
   /** A user-provided label. */
   String tag;
@@ -129,7 +128,7 @@ struct Layer final
   String name;
 
   /** The associated identifier. */
-  int32 id;
+  ObjectID id;
 
   /** The type of the layer. */
   LayerType type;
@@ -137,11 +136,8 @@ struct Layer final
   /** The opacity of the layer content. */
   float opacity;
 
-  /** The number of tile rows (if tile layer). */
-  ssize row_count;
-
-  /** The number of tile columns (if tile layer). */
-  ssize col_count;
+  /** The number of tile rows and columns (if tile layer). */
+  MatrixExtent extent;
 
   /** The contained tiles (if tile layer). */
   Vector<Vector<TileID>> tiles;
@@ -208,11 +204,8 @@ struct Tileset final
   /** The tileset name. */
   String name;
 
-  /** The width of tiles in the tileset. */
-  int32 tile_width;
-
-  /** The height of tiles in the tileset. */
-  int32 tile_height;
+  /** The size of tiles in the tileset. */
+  Int2 tile_size;
 
   /** The total number of tiles in the tileset. */
   ssize tile_count;
@@ -220,11 +213,8 @@ struct Tileset final
   /** The number of tile columns in the tileset. */
   ssize column_count;
 
-  /** The width of the associated image. */
-  int32 image_width;
-
-  /** The height of the associated image. */
-  int32 image_height;
+  /** The size of the associated image. */
+  Int2 image_size;
 
   /** The file path to the associated image. */
   Path image_path;
@@ -283,23 +273,17 @@ struct Map final
   /** The map name. */
   String name;
 
-  /** The number of rows in each tile layer. */
-  ssize row_count;
+  /** The number of rows and columns in each tile layer. */
+  MatrixExtent extent;
 
-  /** The number of columns in each tile layer. */
-  ssize col_count;
-
-  /** The logical width of all tiles. */
-  int32 tile_width;
-
-  /** The logical height of all tiles. */
-  int32 tile_height;
+  /** The logical size of all tiles. */
+  Int2 tile_size;
 
   /** The next available layer identifier. */
-  int32 next_layer_id;
+  LayerID next_layer_id;
 
   /** The next available object identifier. */
-  int32 next_object_id;
+  ObjectID next_object_id;
 
   /** The tile format used by the map. */
   TileFormat tile_format;
