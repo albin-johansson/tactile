@@ -72,6 +72,18 @@ auto is_object(const Registry& registry, EntityID entity) -> bool;
 auto make_object(Registry& registry, ObjectID id, ObjectType type) -> EntityID;
 
 /**
+ * Creates an object from an intermediate representation.
+ *
+ * \param registry  The associated registry.
+ * \param ir_object The intermediate object representation.
+ *
+ * \return
+ * An object entity identifier.
+ */
+[[nodiscard]]
+auto make_object(Registry& registry, const ir::Object& ir_object) -> EntityID;
+
+/**
  * Destroys an object entity.
  *
  * \pre The provided entity must represent an object.
@@ -94,18 +106,5 @@ void destroy_object(Registry& registry, EntityID object_entity);
  */
 [[nodiscard]]
 auto copy_object(Registry& registry, EntityID object_entity) -> EntityID;
-
-/**
- * Converts an IR object to an internal object.
- *
- * \param registry  The associated registry.
- * \param ir_object The intermediate object representation.
- *
- * \return
- * An object entity identifier.
- */
-[[nodiscard]]
-auto convert_ir_object(Registry& registry,
-                       const ir::Object& ir_object) -> EntityID;
 
 }  // namespace tactile

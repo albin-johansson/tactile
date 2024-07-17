@@ -44,7 +44,7 @@ auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID
       object_layer.objects.reserve(ir_layer.objects.size());
 
       for (const auto& ir_object : ir_layer.objects) {
-        object_layer.objects.push_back(convert_ir_object(registry, ir_object));
+        object_layer.objects.push_back(make_object(registry, ir_object));
       }
 
       break;

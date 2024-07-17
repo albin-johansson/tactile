@@ -30,7 +30,7 @@ TEST_F(ObjectTest, IsObject)
   EXPECT_TRUE(is_object(mRegistry, entity));
 }
 
-// tactile::make_object
+// tactile::make_object [Registry&, ObjectID, ObjectType]
 TEST_F(ObjectTest, MakeObject)
 {
   const ObjectID object_id {42};
@@ -55,6 +55,17 @@ TEST_F(ObjectTest, MakeObject)
   EXPECT_EQ(object.size.y(), 0.0f);
   EXPECT_EQ(object.tag, "");
   EXPECT_EQ(object.is_visible, true);
+}
+
+// tactile::make_object [Registry&, const ir::Object&]
+TEST_F(ObjectTest, MakeObjectFromIR)
+{
+  const auto ir_object = make_complex_ir_object(ObjectID {42}, ObjectType::kEllipse);
+
+  const auto object_id = make_object(mRegistry, ir_object);
+  ASSERT_TRUE(is_object(mRegistry, object_id));
+
+  compare_object(mRegistry, object_id, ir_object);
 }
 
 // tactile::copy_object
@@ -89,17 +100,6 @@ TEST_F(ObjectTest, CopyObject)
   EXPECT_EQ(object1.type, object2.type);
   EXPECT_EQ(object1.tag, object2.tag);
   EXPECT_EQ(object1.is_visible, object2.is_visible);
-}
-
-// tactile::convert_ir_object
-TEST_F(ObjectTest, ConvertIrObject)
-{
-  const auto ir_object = make_complex_ir_object(ObjectID {42}, ObjectType::kEllipse);
-
-  const auto object_id = convert_ir_object(mRegistry, ir_object);
-  ASSERT_TRUE(is_object(mRegistry, object_id));
-
-  compare_object(mRegistry, object_id, ir_object);
 }
 
 }  // namespace tactile::test

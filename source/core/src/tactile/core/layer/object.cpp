@@ -14,9 +14,7 @@ auto is_object(const Registry& registry, const EntityID entity) -> bool
   return registry.has<CMeta>(entity) && registry.has<CObject>(entity);
 }
 
-auto make_object(Registry& registry,
-                 const ObjectID id,
-                 const ObjectType type) -> EntityID
+auto make_object(Registry& registry, const ObjectID id, const ObjectType type) -> EntityID
 {
   const auto object_entity = registry.make_entity();
 
@@ -31,6 +29,22 @@ auto make_object(Registry& registry,
 
   TACTILE_ASSERT(is_object(registry, object_entity));
   return object_entity;
+}
+
+auto make_object(Registry& registry, const ir::Object& ir_object) -> EntityID
+{
+  const auto object_id = make_object(registry, ir_object.id, ir_object.type);
+
+  auto& object = registry.get<CObject>(object_id);
+  object.position = ir_object.position;
+  object.size = ir_object.size;
+  object.tag = ir_object.tag;
+  object.is_visible = ir_object.visible;
+
+  convert_ir_metadata(registry, object_id, ir_object.meta);
+
+  TACTILE_ASSERT(is_object(registry, object_id));
+  return object_id;
 }
 
 void destroy_object(Registry& registry, const EntityID object_entity)
@@ -49,23 +63,6 @@ auto copy_object(Registry& registry, const EntityID object_entity) -> EntityID
 
   TACTILE_ASSERT(is_object(registry, copy_entity));
   return copy_entity;
-}
-
-auto convert_ir_object(Registry& registry,
-                       const ir::Object& ir_object) -> EntityID
-{
-  const auto object_id = make_object(registry, ir_object.id, ir_object.type);
-
-  auto& object = registry.get<CObject>(object_id);
-  object.position = ir_object.position;
-  object.size = ir_object.size;
-  object.tag = ir_object.tag;
-  object.is_visible = ir_object.visible;
-
-  convert_ir_metadata(registry, object_id, ir_object.meta);
-
-  TACTILE_ASSERT(is_object(registry, object_id));
-  return object_id;
 }
 
 }  // namespace tactile
