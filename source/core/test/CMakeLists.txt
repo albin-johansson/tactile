@@ -21,6 +21,7 @@ target_sources(tactile-core-test
                "src/event/event_dispatcher_test.cpp"
                "src/io/ini_test.cpp"
                "src/layer/group_layer_test.cpp"
+               "src/layer/layer_common_test.cpp"
                "src/layer/layer_test.cpp"
                "src/layer/object_layer_test.cpp"
                "src/layer/object_test.cpp"
