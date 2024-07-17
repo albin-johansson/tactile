@@ -35,10 +35,13 @@ auto make_ir_tile_layer(LayerID id, const MatrixExtent& extent) -> ir::Layer;
 auto make_ir_group_layer(LayerID id, Vector<ir::Layer> layers = {}) -> ir::Layer;
 
 [[nodiscard]]
+auto make_ir_tile(TileIndex index) -> ir::Tile;
+
+[[nodiscard]]
 auto make_ir_tileset() -> ir::Tileset;
 
 [[nodiscard]]
-auto make_ir_tileset_ref(TileID first_tile_id) -> ir::TilesetRef;
+auto make_ir_tileset_ref(TileID& next_tile_id) -> ir::TilesetRef;
 
 [[nodiscard]]
 auto make_ir_tile_format() -> ir::TileFormat;

@@ -50,8 +50,7 @@ auto make_ir_object(const ObjectID id,
   };
 }
 
-auto make_ir_object_layer(const LayerID id,
-                          Vector<ir::Object> objects) -> ir::Layer
+auto make_ir_object_layer(const LayerID id, Vector<ir::Object> objects) -> ir::Layer
 {
   return {
     .meta = make_ir_metadata(std::format("Object Layer {}", id)),
@@ -66,8 +65,7 @@ auto make_ir_object_layer(const LayerID id,
   };
 }
 
-auto make_ir_tile_layer(const LayerID id,
-                        const MatrixExtent& extent) -> ir::Layer
+auto make_ir_tile_layer(const LayerID id, const MatrixExtent& extent) -> ir::Layer
 {
   return {
     .meta = make_ir_metadata(std::format("Tile Layer {}", id)),
@@ -82,8 +80,7 @@ auto make_ir_tile_layer(const LayerID id,
   };
 }
 
-auto make_ir_group_layer(const LayerID id,
-                         Vector<ir::Layer> layers) -> ir::Layer
+auto make_ir_group_layer(const LayerID id, Vector<ir::Layer> layers) -> ir::Layer
 {
   return {
     .meta = make_ir_metadata(std::format("Group Layer {}", id)),
@@ -95,6 +92,16 @@ auto make_ir_group_layer(const LayerID id,
     .objects = {},
     .layers = std::move(layers),
     .visible = true,
+  };
+}
+
+auto make_ir_tile(const TileIndex index) -> ir::Tile
+{
+  return {
+    .meta = make_ir_metadata(std::format("Tile {}", index)),
+    .index = index,
+    .objects = {},
+    .animation = ir::TileAnimation {},
   };
 }
 
@@ -112,10 +119,15 @@ auto make_ir_tileset() -> ir::Tileset
   };
 }
 
-auto make_ir_tileset_ref(const TileID first_tile_id) -> ir::TilesetRef
+auto make_ir_tileset_ref(TileID& next_tile_id) -> ir::TilesetRef
 {
+  const auto first_tile_id = next_tile_id;
+  auto tileset = make_ir_tileset();
+
+  next_tile_id += saturate_cast<TileID>(tileset.tile_count);
+
   return {
-    .tileset = make_ir_tileset(),
+    .tileset = std::move(tileset),
     .first_tile_id = first_tile_id,
   };
 }
