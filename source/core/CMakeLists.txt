@@ -51,6 +51,7 @@ target_sources(tactile-core
                "src/tactile/core/io/compress/compression_error.cpp"
                "src/tactile/core/io/save/vec_serialization.cpp"
                "src/tactile/core/io/ini.cpp"
+               "src/tactile/core/io/texture.cpp"
                "src/tactile/core/layer/dense_tile_matrix.cpp"
                "src/tactile/core/layer/group_layer.cpp"
                "src/tactile/core/layer/layer.cpp"

@@ -2,12 +2,15 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
+
+class IRenderer;
 
 /**
  * A component that represents a loaded texture resource.
@@ -26,5 +29,17 @@ struct CTexture final
   /** The path to the file from which the texture was originally loaded. */
   Path path;
 };
+
+/**
+ * Attempts to load a texture from disk.
+ *
+ * \param renderer The associated renderer.
+ * \param path     The file path to the image file.
+ *
+ * \return
+ * A texture if successful; an error code otherwise.
+ */
+[[nodiscard]]
+auto load_texture(IRenderer& renderer, const Path& path) -> Result<CTexture>;
 
 }  // namespace tactile
