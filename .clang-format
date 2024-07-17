@@ -6,7 +6,7 @@ Standard: Latest
 
 # Basic
 UseTab: Never
-ColumnLimit: 80
+ColumnLimit: 95
 IndentWidth: 2
 ContinuationIndentWidth: 4
 MaxEmptyLinesToKeep: 1
