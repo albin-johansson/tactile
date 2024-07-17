@@ -1,6 +1,6 @@
 project(tactile-proto CXX)
 
-find_package(protobuf CONFIG REQUIRED)
+find_package(Protobuf CONFIG REQUIRED)
 
 add_library(tactile-proto STATIC)
 add_library(tactile::proto ALIAS tactile-proto)
