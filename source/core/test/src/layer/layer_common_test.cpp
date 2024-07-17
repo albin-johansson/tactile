@@ -24,8 +24,8 @@ TEST(LayerCommon, MakeLayerWithTileLayerIR)
   auto ir_layer = make_ir_tile_layer(LayerID {99}, MatrixExtent {8, 6});
   ir_layer.opacity = 0.75f;
   ir_layer.visible = false;
-  ir_layer.meta.properties.emplace_back("A", Attribute {1});
-  ir_layer.meta.properties.emplace_back("B", Attribute {2});
+  ir_layer.meta.properties.push_back(ir::NamedAttribute {"A", Attribute {1}});
+  ir_layer.meta.properties.push_back(ir::NamedAttribute {"B", Attribute {2}});
 
   {
     TileID tile_id {1};
@@ -50,7 +50,7 @@ TEST(LayerCommon, MakeLayerWithObjectLayerIR)
 
   auto ir_layer = make_ir_object_layer(LayerID {123});
   ir_layer.opacity = 0.50f;
-  ir_layer.meta.properties.emplace_back("foo", Attribute {"bar"});
+  ir_layer.meta.properties.push_back(ir::NamedAttribute {"foo", Attribute {"bar"}});
 
   ir_layer.objects = {
     make_ir_object(ObjectID {1}, ObjectType::kPoint),
@@ -70,9 +70,9 @@ TEST(LayerCommon, MakeLayerWithGroupLayerIR)
   Registry registry {};
 
   auto ir_layer = make_ir_group_layer(LayerID {1});
-  ir_layer.meta.properties.emplace_back("1", Attribute {1});
-  ir_layer.meta.properties.emplace_back("2", Attribute {2});
-  ir_layer.meta.properties.emplace_back("3", Attribute {3});
+  ir_layer.meta.properties.push_back(ir::NamedAttribute {"1", Attribute {1}});
+  ir_layer.meta.properties.push_back(ir::NamedAttribute {"2", Attribute {2}});
+  ir_layer.meta.properties.push_back(ir::NamedAttribute {"3", Attribute {3}});
 
   ir_layer.layers = {
     make_ir_group_layer(LayerID {1},

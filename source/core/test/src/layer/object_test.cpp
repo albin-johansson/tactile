@@ -98,7 +98,7 @@ TEST_F(ObjectTest, ConvertIrObject)
       make_ir_object(ObjectID {42}, ObjectType::kEllipse, {12, 34}, {56, 78});
   ir_object.tag = "tag";
   ir_object.visible = false;
-  ir_object.meta.properties.emplace_back("foo", Attribute {"bar"});
+  ir_object.meta.properties.push_back(ir::NamedAttribute{"foo", Attribute {"bar"}});
 
   const auto object_id = convert_ir_object(mRegistry, ir_object);
   ASSERT_TRUE(is_object(mRegistry, object_id));
