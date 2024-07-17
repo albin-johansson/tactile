@@ -13,6 +13,10 @@ namespace tactile {
 
 class Registry;
 
+namespace ir {
+struct Object;
+}  // namespace ir
+
 /**
  * A component for layer objects.
  */
@@ -90,5 +94,18 @@ void destroy_object(Registry& registry, EntityID object_entity);
  */
 [[nodiscard]]
 auto copy_object(Registry& registry, EntityID object_entity) -> EntityID;
+
+/**
+ * Converts an IR object to an internal object.
+ *
+ * \param registry  The associated registry.
+ * \param ir_object The intermediate object representation.
+ *
+ * \return
+ * An object entity identifier.
+ */
+[[nodiscard]]
+auto convert_ir_object(Registry& registry,
+                       const ir::Object& ir_object) -> EntityID;
 
 }  // namespace tactile

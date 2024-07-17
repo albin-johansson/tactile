@@ -55,5 +55,6 @@ tactile_prepare_target(tactile-core-test)
 target_link_libraries(tactile-core-test
                       PRIVATE
                       tactile::core
+                      tactile::base_test_util
                       GTest::gtest
                       )

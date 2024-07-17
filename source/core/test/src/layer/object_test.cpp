@@ -4,10 +4,12 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/base/io/save/ir.hpp"
+#include "tactile/base/test_util/ir.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::test {
 
 class ObjectTest : public testing::Test
 {
@@ -15,7 +17,7 @@ class ObjectTest : public testing::Test
   Registry mRegistry {};
 };
 
-/// \trace tactile::is_object
+// tactile::is_object
 TEST_F(ObjectTest, IsObject)
 {
   EXPECT_FALSE(is_object(mRegistry, kInvalidEntity));
@@ -28,7 +30,7 @@ TEST_F(ObjectTest, IsObject)
   EXPECT_TRUE(is_object(mRegistry, entity));
 }
 
-/// \trace tactile::make_object
+// tactile::make_object
 TEST_F(ObjectTest, MakeObject)
 {
   const ObjectID object_id {42};
@@ -55,7 +57,7 @@ TEST_F(ObjectTest, MakeObject)
   EXPECT_EQ(object.is_visible, true);
 }
 
-/// \trace tactile::copy_object
+// tactile::copy_object
 TEST_F(ObjectTest, CopyObject)
 {
   const auto e1 = make_object(mRegistry, ObjectID {1}, ObjectType::kEllipse);
@@ -89,4 +91,31 @@ TEST_F(ObjectTest, CopyObject)
   EXPECT_EQ(object1.is_visible, object2.is_visible);
 }
 
-}  // namespace tactile
+// tactile::convert_ir_object
+TEST_F(ObjectTest, ConvertIrObject)
+{
+  auto ir_object =
+      make_ir_object(ObjectID {42}, ObjectType::kEllipse, {12, 34}, {56, 78});
+  ir_object.tag = "tag";
+  ir_object.visible = false;
+  ir_object.meta.properties.emplace_back("foo", Attribute {"bar"});
+
+  const auto object_id = convert_ir_object(mRegistry, ir_object);
+  ASSERT_TRUE(is_object(mRegistry, object_id));
+
+  const auto& object = mRegistry.get<CObject>(object_id);
+  const auto& meta = mRegistry.get<CMeta>(object_id);
+
+  EXPECT_EQ(object.id, ir_object.id);
+  EXPECT_EQ(object.type, ir_object.type);
+  EXPECT_EQ(object.position, ir_object.position);
+  EXPECT_EQ(object.size, ir_object.size);
+  EXPECT_EQ(object.tag, ir_object.tag);
+  EXPECT_EQ(object.is_visible, ir_object.visible);
+
+  EXPECT_EQ(meta.name, ir_object.meta.name);
+  EXPECT_EQ(meta.properties.size(), ir_object.meta.properties.size());
+  EXPECT_EQ(meta.components.size(), ir_object.meta.components.size());
+}
+
+}  // namespace tactile::test
