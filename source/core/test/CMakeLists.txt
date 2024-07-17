@@ -44,9 +44,11 @@ target_sources(tactile-core-test
                "src/util/string_conv_test.cpp"
                "src/util/string_ops_test.cpp"
                "src/util/uuid_test.cpp"
+               "src/ir_comparison.cpp"
                "src/main.cpp"
 
                PRIVATE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/core/test/ir_comparison.hpp"
                "inc/test/document_testing.hpp"
                )
 
