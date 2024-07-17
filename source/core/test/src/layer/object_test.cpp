@@ -4,10 +4,10 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/io/save/ir.hpp"
-#include "tactile/base/test_util/ir.hpp"
+#include "tactile/base/test_util/ir_presets.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
+#include "tactile/core/test/ir_comparison.hpp"
 
 namespace tactile::test {
 
@@ -94,28 +94,12 @@ TEST_F(ObjectTest, CopyObject)
 // tactile::convert_ir_object
 TEST_F(ObjectTest, ConvertIrObject)
 {
-  auto ir_object =
-      make_ir_object(ObjectID {42}, ObjectType::kEllipse, {12, 34}, {56, 78});
-  ir_object.tag = "tag";
-  ir_object.visible = false;
-  ir_object.meta.properties.push_back(ir::NamedAttribute{"foo", Attribute {"bar"}});
+  const auto ir_object = make_complex_ir_object(ObjectID {42}, ObjectType::kEllipse);
 
   const auto object_id = convert_ir_object(mRegistry, ir_object);
   ASSERT_TRUE(is_object(mRegistry, object_id));
 
-  const auto& object = mRegistry.get<CObject>(object_id);
-  const auto& meta = mRegistry.get<CMeta>(object_id);
-
-  EXPECT_EQ(object.id, ir_object.id);
-  EXPECT_EQ(object.type, ir_object.type);
-  EXPECT_EQ(object.position, ir_object.position);
-  EXPECT_EQ(object.size, ir_object.size);
-  EXPECT_EQ(object.tag, ir_object.tag);
-  EXPECT_EQ(object.is_visible, ir_object.visible);
-
-  EXPECT_EQ(meta.name, ir_object.meta.name);
-  EXPECT_EQ(meta.properties.size(), ir_object.meta.properties.size());
-  EXPECT_EQ(meta.components.size(), ir_object.meta.components.size());
+  compare_object(mRegistry, object_id, ir_object);
 }
 
 }  // namespace tactile::test
