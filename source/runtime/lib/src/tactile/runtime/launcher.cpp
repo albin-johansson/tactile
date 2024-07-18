@@ -11,9 +11,9 @@
 #include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/platform/dynamic_library.hpp"
+#include "tactile/core/tactile_app.hpp"
 #include "tactile/runtime/plugin_instance.hpp"
 #include "tactile/runtime/runtime.hpp"
-#include "tactile/runtime/tactile_app.hpp"
 
 namespace tactile {
 namespace launcher_impl {
@@ -101,7 +101,7 @@ auto launch(const int, char*[]) -> int
       return EXIT_FAILURE;
     }
 
-    TactileApp app {window, renderer};
+    TactileApp app {&runtime};
 
     Engine engine {&app, renderer};
     engine.run();
@@ -109,9 +109,7 @@ auto launch(const int, char*[]) -> int
     return EXIT_SUCCESS;
   }
   catch (const Exception& exception) {
-    TACTILE_LOG_FATAL("Unhandled exception: {}\n{}",
-                      exception.what(),
-                      exception.trace());
+    TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", exception.what(), exception.trace());
   }
   catch (const std::exception& exception) {
     TACTILE_LOG_FATAL("Unhandled exception: {}", exception.what());

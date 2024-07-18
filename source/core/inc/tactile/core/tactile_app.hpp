@@ -22,6 +22,7 @@
 
 namespace tactile {
 
+class IRuntime;
 class IWindow;
 class IRenderer;
 
@@ -34,7 +35,7 @@ class TactileApp final : public IEngineApp
   TACTILE_DELETE_COPY(TactileApp);
   TACTILE_DELETE_MOVE(TactileApp);
 
-  TactileApp(IWindow* window, IRenderer* renderer);
+  explicit TactileApp(IRuntime* runtime);
 
   ~TactileApp() noexcept override;
 
@@ -49,6 +50,7 @@ class TactileApp final : public IEngineApp
   void on_framebuffer_scale_changed(float framebuffer_scale) override;
 
  private:
+  IRuntime* mRuntime;
   IWindow* mWindow;
   IRenderer* mRenderer;
 

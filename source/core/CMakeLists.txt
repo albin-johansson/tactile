@@ -119,6 +119,7 @@ target_sources(tactile-core
                "src/tactile/core/util/string_conv.cpp"
                "src/tactile/core/util/string_ops.cpp"
                "src/tactile/core/util/uuid.cpp"
+               "src/tactile/core/tactile_app.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/core/cmd/meta/create_property_command.hpp"
@@ -247,6 +248,7 @@ target_sources(tactile-core
                "inc/tactile/core/util/string_conv.hpp"
                "inc/tactile/core/util/string_ops.hpp"
                "inc/tactile/core/util/uuid.hpp"
+               "inc/tactile/core/tactile_app.hpp"
                )
 
 tactile_prepare_target(tactile-core)

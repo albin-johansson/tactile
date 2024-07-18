@@ -10,7 +10,6 @@ target_sources(tactile-runtime
                "src/tactile/runtime/protobuf_context.cpp"
                "src/tactile/runtime/runtime.cpp"
                "src/tactile/runtime/sdl_context.cpp"
-               "src/tactile/runtime/tactile_app.cpp"
                "src/tactile/runtime/window.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
@@ -22,9 +21,6 @@ target_sources(tactile-runtime
                "inc/tactile/runtime/runtime.hpp"
                "inc/tactile/runtime/sdl_context.hpp"
                "inc/tactile/runtime/window.hpp"
-
-               PRIVATE FILE_SET "private_headers" TYPE "HEADERS" BASE_DIRS "src" FILES
-               "src/tactile/runtime/tactile_app.hpp"
                )
 
 tactile_prepare_target(tactile-runtime)

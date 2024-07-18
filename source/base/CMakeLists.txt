@@ -67,6 +67,7 @@ target_sources(tactile-base
                "inc/tactile/base/id.hpp"
                "inc/tactile/base/int.hpp"
                "inc/tactile/base/prelude.hpp"
+               "inc/tactile/base/runtime.hpp"
                )
 
 if (TACTILE_BUILD_TESTS)

@@ -58,9 +58,8 @@ auto make_imgui_context() -> UniqueImGuiContext
   UniqueImGuiContext imgui_context {ImGui::CreateContext()};
 
   // NOLINTBEGIN(*-no-malloc)
-  ImGui::SetAllocatorFunctions(
-      [](const usize size, void*) { return std::malloc(size); },
-      [](void* ptr, void*) noexcept { std::free(ptr); });
+  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
+                               [](void* ptr, void*) noexcept { std::free(ptr); });
   ImGui::SetCurrentContext(imgui_context.get());
   // NOLINTEND(*-no-malloc)
 
@@ -83,7 +82,7 @@ struct Runtime::Data final
   runtime_impl::UniqueImGuiContext imgui_context {};
   Optional<Window> window {};
   IRenderer* renderer {};
-  HashMap<CompressionFormat, ICompressor*> compressors {};
+  HashMap<CompressionFormat, ICompressor*> compression_formats {};
   HashMap<SaveFormatId, ISaveFormat*> save_formats {};
 
   Data()
@@ -127,14 +126,13 @@ void Runtime::set_renderer(IRenderer* renderer)
   mData->renderer = renderer;
 }
 
-void Runtime::set_compression_provider(const CompressionFormat format,
-                                       ICompressor* provider)
+void Runtime::set_compression_format(const CompressionFormat id, ICompressor* format)
 {
-  if (provider != nullptr) {
-    mData->compressors.insert_or_assign(format, provider);
+  if (format != nullptr) {
+    mData->compression_formats.insert_or_assign(id, format);
   }
   else {
-    mData->compressors.erase(format);
+    mData->compression_formats.erase(id);
   }
 }
 
@@ -158,14 +156,34 @@ auto Runtime::get_renderer() -> IRenderer*
   return mData->renderer;
 }
 
+auto Runtime::get_compression_format(const CompressionFormat id) const -> const ICompressor*
+{
+  const auto iter = mData->compression_formats.find(id);
+
+  if (iter != mData->compression_formats.end()) {
+    return iter->second;
+  }
+
+  return nullptr;
+}
+
+auto Runtime::get_save_format(const SaveFormatId id) const -> const ISaveFormat*
+{
+  const auto iter = mData->save_formats.find(id);
+
+  if (iter != mData->save_formats.end()) {
+    return iter->second;
+  }
+
+  return nullptr;
+}
+
 auto Runtime::get_imgui_context() -> ImGuiContext*
 {
   return mData->imgui_context.get();
 }
 
-void Runtime::_log(const LogLevel level,
-                   const StringView fmt,
-                   std::format_args args)
+void Runtime::_log(const LogLevel level, const StringView fmt, std::format_args args)
 {
   Buffer<char, 256> buffer;  // NOLINT uninitialized
   vformat_to_buffer(buffer, fmt, args);
