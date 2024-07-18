@@ -17,7 +17,7 @@ namespace tactile::test {
 // tactile::CreatePropertyCommand::undo
 TEST(CreatePropertyCommand, RedoUndo)
 {
-  MapDocument document {kOrthogonalMapSpec};
+  auto document = MapDocument::make(kOrthogonalMapSpec).value();
 
   const auto& registry = document.get_registry();
   const auto map_entity = registry.get<CDocumentInfo>().root;
@@ -29,10 +29,7 @@ TEST(CreatePropertyCommand, RedoUndo)
   const String property_name {"foo"};
   const Attribute property_value {42};
 
-  CreatePropertyCommand command {&document,
-                                 map_entity,
-                                 property_name,
-                                 property_value};
+  CreatePropertyCommand command {&document, map_entity, property_name, property_value};
 
   EXPECT_FALSE(meta.properties.contains(property_name));
   EXPECT_EQ(meta.properties.size(), 0);

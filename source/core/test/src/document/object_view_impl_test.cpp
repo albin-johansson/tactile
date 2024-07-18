@@ -24,7 +24,7 @@ class ObjectViewImplTest : public testing::Test
  public:
   ObjectViewImplTest()
     : mMapSpec {kOrthogonalMapSpec},
-      mDocument {mMapSpec}
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:

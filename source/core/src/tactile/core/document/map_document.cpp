@@ -2,13 +2,15 @@
 
 #include "tactile/core/document/map_document.hpp"
 
-#include <utility>  // move
+#include <system_error>  // make_error_code, errc
+#include <utility>       // move
 
 #include "tactile/base/container/maybe.hpp"
-#include "tactile/core/debug/exception.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_view_impl.hpp"
 #include "tactile/core/entity/registry.hpp"
+#include "tactile/core/log/logger.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/tile/tileset.hpp"
@@ -16,31 +18,69 @@
 
 namespace tactile {
 
-struct MapDocument::Data final  // NOLINT(*-member-init)
+struct MapDocument::Data final
 {
   UUID uuid;
   Registry registry;
   EntityID map_entity;
   Maybe<Path> path;
+
+  Data()
+    : uuid {UUID::generate()},
+      registry {},
+      map_entity {kInvalidEntity},
+      path {kNone}
+  {
+    registry.add<CTileCache>();
+    registry.add<CDocumentInfo>();
+  }
 };
 
-MapDocument::MapDocument(const MapSpec& spec)
+MapDocument::MapDocument()
   : mData {std::make_unique<Data>()}
+{}
+
+auto MapDocument::make(const MapSpec& spec) -> Result<MapDocument>
 {
-  mData->uuid = UUID::generate();
+  MapDocument document {};
+  auto& registry = document.mData->registry;
 
-  auto& registry = mData->registry;
-  registry.add<CTileCache>();
-
-  mData->map_entity = make_map(registry, spec);
-  if (mData->map_entity == kInvalidEntity) {
-    throw Exception {"could not create map"};
+  const auto map_id = make_map(registry, spec);
+  if (map_id == kInvalidEntity) {
+    TACTILE_LOG_ERROR("Could not create map document");
+    return unexpected(std::make_error_code(std::errc::invalid_argument));
   }
 
-  auto& document_info = registry.add<CDocumentInfo>();
-  document_info.root = mData->map_entity;
-  document_info.active_context = document_info.root;
+  document.mData->map_entity = map_id;
+
+  auto& document_info = registry.get<CDocumentInfo>();
+  document_info.root = map_id;
+  document_info.active_context = map_id;
   document_info.tile_size = spec.tile_size;
+
+  return document;
+}
+
+auto MapDocument::make(IRenderer& renderer, const ir::Map& ir_map) -> Result<MapDocument>
+{
+  MapDocument document {};
+  auto& registry = document.mData->registry;
+
+  const auto map_id = make_map(registry, renderer, ir_map);
+  if (!map_id.has_value()) {
+    TACTILE_LOG_ERROR("Could not create map document: {}", map_id.error().message());
+    return propagate_unexpected(map_id);
+  }
+
+  document.mData->map_entity = *map_id;
+  const auto& map = registry.get<CMap>(*map_id);
+
+  auto& document_info = registry.get<CDocumentInfo>();
+  document_info.root = *map_id;
+  document_info.active_context = *map_id;
+  document_info.tile_size = map.tile_size;
+
+  return document;
 }
 
 TACTILE_DEFINE_MOVE(MapDocument);
@@ -83,8 +123,7 @@ auto MapDocument::get_content_size() const -> Float2
   const auto& map = mData->registry.get<CMap>(map_entity);
   const auto& viewport = mData->registry.get<CViewport>(map_entity);
 
-  return Float2 {static_cast<float>(map.extent.cols),
-                 static_cast<float>(map.extent.rows)} *
+  return Float2 {static_cast<float>(map.extent.cols), static_cast<float>(map.extent.rows)} *
          vec_cast<Float2>(map.tile_size) * viewport.scale;
 }
 

@@ -20,7 +20,7 @@ class MetaViewImplTest : public testing::Test
     : mMapSpec {TileOrientation::kOrthogonal,
                 MatrixExtent {5, 5},
                 Int2 {32, 32}},
-      mDocument {mMapSpec}
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:

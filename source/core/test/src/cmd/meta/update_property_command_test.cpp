@@ -20,7 +20,7 @@ TEST(UpdatePropertyCommand, RedoUndo)
   const Attribute old_value {42};
   const Attribute new_value {43};
 
-  MapDocument document {kOrthogonalMapSpec};
+  auto document = MapDocument::make(kOrthogonalMapSpec).value();
 
   auto& registry = document.get_registry();
   const auto map_entity = registry.get<CDocumentInfo>().root;
@@ -56,7 +56,7 @@ TEST(UpdatePropertyCommand, MergeWith)
   const Attribute value2 {"2"};
   const Attribute value3 {"3"};
 
-  MapDocument document {kOrthogonalMapSpec};
+  auto document = MapDocument::make(kOrthogonalMapSpec).value();
 
   auto& registry = document.get_registry();
   const auto map_entity = registry.get<CDocumentInfo>().root;

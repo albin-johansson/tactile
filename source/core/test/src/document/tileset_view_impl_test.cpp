@@ -21,7 +21,7 @@ class TilesetViewImplTest : public testing::Test
  public:
   TilesetViewImplTest()
     : mMapSpec {kOrthogonalMapSpec},
-      mDocument {mMapSpec}
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:

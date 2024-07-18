@@ -2,13 +2,19 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
-#include "tactile/base/prelude.hpp"
 #include "tactile/base/document/document.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
 struct MapSpec;
+class IRenderer;
+
+namespace ir {
+struct Map;
+}  // namespace ir
 
 /**
  * Represents a single map document.
@@ -23,8 +29,24 @@ class MapDocument final : public IDocument
    * Creates a map document.
    *
    * \param spec The map specification to use.
+   *
+   * \return
+   * A map document if successful; an error code otherwise.
    */
-  explicit MapDocument(const MapSpec& spec);
+  [[nodiscard]]
+  static auto make(const MapSpec& spec) -> Result<MapDocument>;
+
+  /**
+   * Creates a map document from an intermediate representation.
+   *
+   * \param renderer The renderer used to load textures.
+   * \param ir_map   The intermediate map representation.
+   *
+   * \return
+   * A map document if successful; an error code otherwise.
+   */
+  [[nodiscard]]
+  static auto make(IRenderer& renderer, const ir::Map& ir_map) -> Result<MapDocument>;
 
   ~MapDocument() noexcept override;
 
@@ -55,6 +77,8 @@ class MapDocument final : public IDocument
  private:
   struct Data;
   Unique<Data> mData;
+
+  MapDocument();
 };
 
 }  // namespace tactile

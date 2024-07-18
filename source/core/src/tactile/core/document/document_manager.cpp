@@ -17,11 +17,16 @@ namespace tactile {
 
 auto DocumentManager::create_and_open_map(const MapSpec& spec) -> Result<UUID>
 {
-  auto document = std::make_unique<MapDocument>(spec);
+  auto document = MapDocument::make(spec);
+  if (!document.has_value()) {
+    return propagate_unexpected(document);
+  }
+
   const auto document_uuid = document->get_uuid();
 
   auto [iter, did_insert] =
-      mDocuments.try_emplace(document_uuid, std::move(document));
+      mDocuments.try_emplace(document_uuid,
+                             std::make_unique<MapDocument>(std::move(*document)));
 
   // NB: A UUID collision should be exceptionally rare, but we check regardless.
   if (!did_insert) {

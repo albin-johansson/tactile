@@ -19,7 +19,7 @@ TEST(RenamePropertyCommand, RedoUndo)
   const String old_name {"foo"};
   const String new_name {"bar"};
 
-  MapDocument document {kOrthogonalMapSpec};
+  auto document = MapDocument::make(kOrthogonalMapSpec).value();
 
   auto& registry = document.get_registry();
   const auto map_entity = registry.get<CDocumentInfo>().root;
@@ -49,7 +49,7 @@ TEST(RenamePropertyCommand, MergeWith)
   const String name2 {"B"};
   const String name3 {"C"};
 
-  MapDocument document {kOrthogonalMapSpec};
+  auto document = MapDocument::make(kOrthogonalMapSpec).value();
 
   auto& registry = document.get_registry();
   const auto map_entity = registry.get<CDocumentInfo>().root;

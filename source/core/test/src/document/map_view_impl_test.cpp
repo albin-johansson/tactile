@@ -20,7 +20,7 @@ class MapViewImplTest : public testing::Test
  public:
   MapViewImplTest()
     : mMapSpec {kOrthogonalMapSpec},
-      mDocument {mMapSpec}
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:

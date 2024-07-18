@@ -23,7 +23,7 @@ class TileViewImplTest : public testing::Test
  public:
   TileViewImplTest()
     : mMapSpec {kOrthogonalMapSpec},
-      mDocument {mMapSpec}
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:

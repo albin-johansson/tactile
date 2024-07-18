@@ -19,7 +19,7 @@ TEST(RemovePropertyCommand, RedoUndo)
   const String name {"xyz"};
   const Attribute value {123};
 
-  MapDocument document {kOrthogonalMapSpec};
+  auto document = MapDocument::make(kOrthogonalMapSpec).value();
 
   auto& registry = document.get_registry();
   const auto map_entity = registry.get<CDocumentInfo>().root;

@@ -22,7 +22,7 @@ class LayerViewImplTest : public testing::Test
  public:
   LayerViewImplTest()
     : mMapSpec {kOrthogonalMapSpec},
-      mDocument {mMapSpec}
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
   void SetUp() override
