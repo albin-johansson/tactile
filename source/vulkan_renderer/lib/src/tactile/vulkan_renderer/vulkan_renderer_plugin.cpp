@@ -8,12 +8,12 @@
 
 namespace tactile {
 
-void VulkanRendererPlugin::load(Runtime& runtime)
+void VulkanRendererPlugin::load(IRuntime& runtime)
 {
   Runtime::log(LogLevel::kTrace, "Loading Vulkan renderer plugin");
 }
 
-void VulkanRendererPlugin::unload(Runtime& runtime)
+void VulkanRendererPlugin::unload(IRuntime& runtime)
 {
   Runtime::log(LogLevel::kTrace, "Unloading Vulkan renderer plugin");
 }

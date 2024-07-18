@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-class Runtime;
+class IRuntime;
 class IDynamicLibrary;
 
 /**
@@ -53,17 +53,16 @@ class TACTILE_RUNTIME_API PluginInstance final
    * A plugin instance if successful; an empty optional otherwise.
    */
   [[nodiscard]]
-  static auto load(Runtime* runtime,
-                   StringView plugin_name) -> Optional<PluginInstance>;
+  static auto load(IRuntime* runtime, StringView plugin_name) -> Optional<PluginInstance>;
 
  private:
-  Runtime* mRuntime;
+  IRuntime* mRuntime;
   Unique<IDynamicLibrary> mDLL;
   PluginDestructor* mPluginDestructor;
   IPlugin* mPlugin;
   bool mPrimed;
 
-  PluginInstance(Runtime* runtime,
+  PluginInstance(IRuntime* runtime,
                  Unique<IDynamicLibrary> dll,
                  PluginDestructor* plugin_destructor,
                  IPlugin* plugin);

@@ -11,9 +11,9 @@ namespace tactile {
 class TACTILE_TMX_FORMAT_API TiledTmxFormatPlugin final : public IPlugin
 {
  public:
-  void load(Runtime& runtime) override;
+  void load(IRuntime& runtime) override;
 
-  void unload(Runtime& runtime) override;
+  void unload(IRuntime& runtime) override;
 };
 
 extern "C"

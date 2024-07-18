@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-class Runtime;
+class IRuntime;
 
 /**
  * Interface for dynamically loaded modules, aka plugins.
@@ -21,14 +21,14 @@ class IPlugin
    *
    * \param runtime The associated runtime.
    */
-  virtual void load(Runtime& runtime) = 0;
+  virtual void load(IRuntime& runtime) = 0;
 
   /**
    * Releases any resources held by the plugin.
    *
    * \param runtime The associated runtime.
    */
-  virtual void unload(Runtime& runtime) = 0;
+  virtual void unload(IRuntime& runtime) = 0;
 };
 
 using PluginConstructor = IPlugin*();

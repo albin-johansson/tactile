@@ -32,7 +32,7 @@ void set_hints()
 
 }  // namespace opengl_renderer_plugin
 
-void OpenGLRendererPlugin::load(Runtime& runtime)
+void OpenGLRendererPlugin::load(IRuntime& runtime)
 {
   opengl_renderer_plugin::set_hints();
 
@@ -52,7 +52,7 @@ void OpenGLRendererPlugin::load(Runtime& runtime)
   }
 }
 
-void OpenGLRendererPlugin::unload(Runtime& runtime)
+void OpenGLRendererPlugin::unload(IRuntime& runtime)
 {
   runtime.set_renderer(nullptr);
   mRenderer.reset();

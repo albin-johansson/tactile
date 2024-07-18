@@ -8,12 +8,12 @@
 
 namespace tactile {
 
-void TiledTmxFormatPlugin::load(Runtime& runtime)
+void TiledTmxFormatPlugin::load(IRuntime& runtime)
 {
   Runtime::log(LogLevel::kTrace, "Loading Tiled TMX format plugin");
 }
 
-void TiledTmxFormatPlugin::unload(Runtime& runtime)
+void TiledTmxFormatPlugin::unload(IRuntime& runtime)
 {
   Runtime::log(LogLevel::kTrace, "Unloading Tiled TMX format plugin");
 }

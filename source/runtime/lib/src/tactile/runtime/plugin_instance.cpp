@@ -9,7 +9,7 @@
 
 namespace tactile {
 
-PluginInstance::PluginInstance(Runtime* runtime,
+PluginInstance::PluginInstance(IRuntime* runtime,
                                Unique<IDynamicLibrary> dll,
                                PluginDestructor* plugin_destructor,
                                IPlugin* plugin)
@@ -37,8 +37,8 @@ PluginInstance::PluginInstance(PluginInstance&& other) noexcept
     mPrimed {std::exchange(other.mPrimed, false)}
 {}
 
-auto PluginInstance::load(Runtime* runtime, const StringView plugin_name)
-    -> Optional<PluginInstance>
+auto PluginInstance::load(IRuntime* runtime,
+                          const StringView plugin_name) -> Optional<PluginInstance>
 {
   auto dll = load_library(plugin_name);
 
@@ -47,10 +47,8 @@ auto PluginInstance::load(Runtime* runtime, const StringView plugin_name)
     return kNone;
   }
 
-  auto* plugin_ctor =
-      find_symbol<PluginConstructor>(*dll, "tactile_make_plugin");
-  auto* plugin_dtor =
-      find_symbol<PluginDestructor>(*dll, "tactile_free_plugin");
+  auto* plugin_ctor = find_symbol<PluginConstructor>(*dll, "tactile_make_plugin");
+  auto* plugin_dtor = find_symbol<PluginDestructor>(*dll, "tactile_free_plugin");
 
   if (!plugin_ctor || !plugin_dtor) {
     TACTILE_LOG_ERROR("Plugin '{}' has incompatible API", plugin_name);

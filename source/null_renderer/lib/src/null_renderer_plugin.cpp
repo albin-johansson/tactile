@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-void NullRendererPlugin::load(Runtime& runtime)
+void NullRendererPlugin::load(IRuntime& runtime)
 {
   Runtime::log(LogLevel::kTrace, "Loading null renderer plugin");
 
@@ -24,7 +24,7 @@ void NullRendererPlugin::load(Runtime& runtime)
   runtime.set_renderer(mRenderer.get());
 }
 
-void NullRendererPlugin::unload(Runtime& runtime)
+void NullRendererPlugin::unload(IRuntime& runtime)
 {
   Runtime::log(LogLevel::kTrace, "Unloading null renderer plugin");
 

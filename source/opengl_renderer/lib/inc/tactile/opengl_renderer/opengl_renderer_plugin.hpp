@@ -16,9 +16,9 @@ namespace tactile {
 class TACTILE_OPENGL_API OpenGLRendererPlugin final : public IPlugin
 {
  public:
-  void load(Runtime& runtime) override;
+  void load(IRuntime& runtime) override;
 
-  void unload(Runtime& runtime) override;
+  void unload(IRuntime& runtime) override;
 
  private:
   Optional<OpenGLRenderer> mRenderer {};

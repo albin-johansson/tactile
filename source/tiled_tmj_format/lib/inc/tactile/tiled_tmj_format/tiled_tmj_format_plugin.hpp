@@ -19,9 +19,9 @@ class TACTILE_TMJ_FORMAT_API TiledTmjFormatPlugin final : public IPlugin
 
   ~TiledTmjFormatPlugin() noexcept override = default;
 
-  void load(Runtime& runtime) override;
+  void load(IRuntime& runtime) override;
 
-  void unload(Runtime& runtime) override;
+  void unload(IRuntime& runtime) override;
 
  private:
   TiledTmjFormat mFormat {};

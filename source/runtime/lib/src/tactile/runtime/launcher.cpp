@@ -59,7 +59,7 @@ auto get_plugin_names() -> Vector<StringView>
 }
 
 [[nodiscard]]
-auto load_plugins(Runtime& runtime) -> Vector<PluginInstance>
+auto load_plugins(IRuntime& runtime) -> Vector<PluginInstance>
 {
   const auto plugin_names = get_plugin_names();
 

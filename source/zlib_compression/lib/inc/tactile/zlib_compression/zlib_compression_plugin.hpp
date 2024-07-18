@@ -16,9 +16,9 @@ namespace tactile {
 class TACTILE_ZLIB_API ZlibCompressionPlugin final : public IPlugin
 {
  public:
-  void load(Runtime& runtime) override;
+  void load(IRuntime& runtime) override;
 
-  void unload(Runtime& runtime) override;
+  void unload(IRuntime& runtime) override;
 
  private:
   Unique<ZlibCompressor> mCompressor {};
