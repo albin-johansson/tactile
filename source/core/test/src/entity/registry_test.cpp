@@ -84,7 +84,6 @@ TEST_F(RegistryTest, AddToEntity)
 /// \trace tactile::Registry::erase
 TEST_F(RegistryTest, Erase)
 {
-  Registry mRegistry {};
   const auto entity = mRegistry.make_entity();
 
   mRegistry.add<int>(entity, 42);
