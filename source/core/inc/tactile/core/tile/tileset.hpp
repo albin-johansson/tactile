@@ -18,6 +18,11 @@ namespace tactile {
 struct CTexture;
 struct TilesetSpec;
 class Registry;
+class IRenderer;
+
+namespace ir {
+struct TilesetRef;
+}  // namespace ir
 
 /**
  * Represents an sequence of tile identifiers.
@@ -103,6 +108,23 @@ auto is_tileset(const Registry& registry, EntityID entity) -> bool;
  */
 [[nodiscard]]
 auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID;
+
+/**
+ * Creates a tileset instance from an intermediate representation.
+ *
+ * \pre The registry must feature a \c CTileCache context component.
+ *
+ * \param registry       The associated registry.
+ * \param renderer       The renderer to use for loading textures.
+ * \param ir_tileset_ref The intermediate tileset representation.
+ *
+ * \return
+ * A tileset entity identifier if successful; an error code otherwise.
+ */
+[[nodiscard]]
+auto make_tileset(Registry& registry,
+                  IRenderer& renderer,
+                  const ir::TilesetRef& ir_tileset_ref) -> Result<EntityID>;
 
 /**
  * Initializes a tileset "instance".
@@ -223,8 +245,7 @@ auto find_tileset(const Registry& registry, TileID tile_id) -> EntityID;
  * A tile index if successful; nothing otherwise.
  */
 [[nodiscard]]
-auto get_tile_index(const Registry& registry,
-                    TileID tile_id) -> Maybe<TileIndex>;
+auto get_tile_index(const Registry& registry, TileID tile_id) -> Maybe<TileIndex>;
 
 /**
  * Indicates whether the tiles in a tile range are available for use.
@@ -236,8 +257,7 @@ auto get_tile_index(const Registry& registry,
  * True if the tile range is available; false otherwise.
  */
 [[nodiscard]]
-auto is_tile_range_available(const Registry& registry,
-                             const TileRange& range) -> bool;
+auto is_tile_range_available(const Registry& registry, const TileRange& range) -> bool;
 
 /**
  * Indicates whether a tile range contains a given tile identifier.

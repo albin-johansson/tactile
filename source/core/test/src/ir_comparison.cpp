@@ -4,9 +4,10 @@
 
 #include <algorithm>  // find_if
 
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/core/io/texture.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/layer/object.hpp"
@@ -15,6 +16,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
+#include "tactile/core/tile/tileset.hpp"
 
 namespace tactile::test {
 namespace ir_comparison {
@@ -195,6 +197,56 @@ void compare_tile(const Registry& registry, const EntityID tile_id, const ir::Ti
 
   ir_comparison::compare_tile_animation(registry, tile_id, ir_tile);
   compare_meta(registry, tile_id, ir_tile.meta);
+}
+
+void compare_tileset(const Registry& registry,
+                     const EntityID tileset_id,
+                     const ir::TilesetRef& ir_tileset_ref)
+{
+  ASSERT_TRUE(is_tileset(registry, tileset_id));
+
+  const auto& ir_tileset = ir_tileset_ref.tileset;
+
+  const auto& tileset = registry.get<CTileset>(tileset_id);
+  const auto& tileset_instance = registry.get<CTilesetInstance>(tileset_id);
+  const auto& texture = registry.get<CTexture>(tileset_id);
+
+  EXPECT_EQ(tileset_instance.tile_range.first_id, ir_tileset_ref.first_tile_id);
+  EXPECT_EQ(tileset_instance.tile_range.count, ir_tileset.tile_count);
+  EXPECT_EQ(tileset_instance.is_embedded, ir_tileset.is_embedded);
+
+  EXPECT_EQ(tileset.tile_size, ir_tileset.tile_size);
+  EXPECT_EQ(tileset.extent.cols, ir_tileset.column_count);
+
+  EXPECT_NE(texture.id, TextureID {0});
+  EXPECT_EQ(texture.size, ir_tileset.image_size);
+  EXPECT_EQ(texture.path, ir_tileset.image_path);
+
+  ASSERT_EQ(tileset.tiles.size(), ir_tileset.tile_count);
+  EXPECT_EQ(tileset.tiles.capacity(), ir_tileset.tile_count);
+
+  const auto& tile_cache = registry.get<CTileCache>();
+
+  for (usize index = 0, count = tileset.tiles.size(); index < count; ++index) {
+    const auto tile_id = tileset.tiles.at(index);
+    EXPECT_NE(tile_id, kInvalidEntity) << "tile #" << index << " is invalid";
+    EXPECT_TRUE(is_tile(registry, tile_id));
+
+    const auto global_tile_id =
+        tileset_instance.tile_range.first_id + saturate_cast<TileID>(index);
+
+    ASSERT_TRUE(tile_cache.tileset_mapping.contains(global_tile_id))
+        << "tile " << global_tile_id << " is not in tile cache";
+    EXPECT_EQ(tile_cache.tileset_mapping.at(global_tile_id), tileset_id);
+  }
+
+  for (const auto& ir_tile : ir_tileset.tiles) {
+    const auto tile_index = saturate_cast<usize>(ir_tile.index);
+    const auto tile_id = tileset.tiles.at(tile_index);
+    compare_tile(registry, tile_id, ir_tile);
+  }
+
+  compare_meta(registry, tileset_id, ir_tileset.meta);
 }
 
 }  // namespace tactile::test
