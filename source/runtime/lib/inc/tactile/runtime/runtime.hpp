@@ -2,14 +2,10 @@
 
 #pragma once
 
-#include <format>  // format_args, make_format_args
-
 #include "tactile/base/container/smart_ptr.hpp"
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
-#include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/runtime.hpp"
 #include "tactile/runtime/api.hpp"
@@ -19,7 +15,7 @@ struct ImGuiContext;
 namespace tactile {
 
 /**
- * Provides the primary API used by dynamic Tactile modules.
+ * Implements the runtime interface.
  */
 class TACTILE_RUNTIME_API Runtime final : public IRuntime
 {
@@ -45,21 +41,6 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
   Runtime();
 
   ~Runtime() noexcept override;
-
-  /**
-   * Logs a message using the internal logger.
-   *
-   * \tparam Args The format argument types.
-   *
-   * \param level The severity of the message.
-   * \param fmt   The format string.
-   * \param args  The format arguments.
-   */
-  template <typename... Args>
-  static void log(const LogLevel level, const StringView fmt, const Args&... args)
-  {
-    _log(level, fmt, std::make_format_args(args...));
-  }
 
   void init_window(uint32 flags) override;
 
@@ -87,8 +68,6 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
  private:
   struct Data;
   Unique<Data> mData;
-
-  static void _log(LogLevel level, StringView fmt, std::format_args args);
 };
 
 }  // namespace tactile

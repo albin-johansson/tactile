@@ -12,7 +12,7 @@
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 namespace zlib_compressor {
@@ -65,9 +65,7 @@ auto init_stream(const ZlibCallbacks& callbacks,
 
   const auto init_stream_result = callbacks.init_stream(&stream);
   if (init_stream_result != Z_OK) {
-    Runtime::log(LogLevel::kError,
-                 "Could not initialize z_stream: {}",
-                 zError(init_stream_result));
+    log(LogLevel::kError, "Could not initialize z_stream: {}", zError(init_stream_result));
     return unexpected(std::make_error_code(std::errc::io_error));
   }
 
@@ -107,7 +105,7 @@ auto process_stream(const ZlibCallbacks& callbacks,
     }
 
     if (process_result == Z_OK || process_result == Z_BUF_ERROR) {
-      Runtime::log(LogLevel::kTrace, "Flushing and resetting output buffer");
+      log(LogLevel::kTrace, "Flushing and resetting output buffer");
 
       // We ran out of space in the staging buffer, so we need to flush and
       // reuse it.
@@ -116,9 +114,7 @@ auto process_stream(const ZlibCallbacks& callbacks,
       stream.avail_out = saturate_cast<z_uint>(staging_buffer.size());
     }
     else {
-      Runtime::log(LogLevel::kError,
-                   "Could not process Zlib chunk: {}",
-                   zError(process_result));
+      log(LogLevel::kError, "Could not process Zlib chunk: {}", zError(process_result));
       return unexpected(std::make_error_code(std::errc::io_error));
     }
   }
@@ -136,15 +132,12 @@ auto process_stream(const ZlibCallbacks& callbacks,
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto end_stream(const ZlibCallbacks& callbacks,
-                z_stream& stream) -> Result<void>
+auto end_stream(const ZlibCallbacks& callbacks, z_stream& stream) -> Result<void>
 {
   const auto end_stream_result = callbacks.end_stream(&stream);
 
   if (end_stream_result != Z_OK) {
-    Runtime::log(LogLevel::kError,
-                 "Could not finalize z_stream: {}",
-                 zError(end_stream_result));
+    log(LogLevel::kError, "Could not finalize z_stream: {}", zError(end_stream_result));
     return unexpected(std::make_error_code(std::errc::io_error));
   }
 
@@ -153,8 +146,7 @@ auto end_stream(const ZlibCallbacks& callbacks,
 
 }  // namespace zlib_compressor
 
-auto ZlibCompressor::compress(const ByteSpan input_data) const
-    -> Result<ByteStream>
+auto ZlibCompressor::compress(const ByteSpan input_data) const -> Result<ByteStream>
 {
   zlib_compressor::ZlibCallbacks callbacks {};
   callbacks.init_stream = [](z_stream* stream) {
@@ -168,14 +160,11 @@ auto ZlibCompressor::compress(const ByteSpan input_data) const
   zlib_compressor::StagingBuffer staging_buffer;  // NOLINT uninitialized
   ByteStream output_buffer {};
 
-  return zlib_compressor::init_stream(callbacks,
-                                      input_data,
-                                      staging_buffer,
-                                      stream)
+  return zlib_compressor::init_stream(callbacks, input_data, staging_buffer, stream)
       .and_then([&] {
-        const usize output_buffer_bound = deflateBound(
-            &stream,
-            saturate_cast<zlib_compressor::z_ulong>(input_data.size_bytes()));
+        const usize output_buffer_bound =
+            deflateBound(&stream,
+                         saturate_cast<zlib_compressor::z_ulong>(input_data.size_bytes()));
         output_buffer.reserve(output_buffer_bound);
         return zlib_compressor::process_stream(callbacks,
                                                stream,
@@ -186,13 +175,10 @@ auto ZlibCompressor::compress(const ByteSpan input_data) const
       .transform([&] { return std::move(output_buffer); });
 }
 
-auto ZlibCompressor::decompress(const ByteSpan input_data) const
-    -> Result<ByteStream>
+auto ZlibCompressor::decompress(const ByteSpan input_data) const -> Result<ByteStream>
 {
   zlib_compressor::ZlibCallbacks callbacks {};
-  callbacks.init_stream = [](z_stream* stream) {
-    return z_inflateInit(stream);
-  };
+  callbacks.init_stream = [](z_stream* stream) { return z_inflateInit(stream); };
   callbacks.process_stream = &inflate;
   callbacks.end_stream = &inflateEnd;
 
@@ -201,10 +187,7 @@ auto ZlibCompressor::decompress(const ByteSpan input_data) const
   zlib_compressor::StagingBuffer staging_buffer;  // NOLINT uninitialized
   ByteStream output_buffer {};
 
-  return zlib_compressor::init_stream(callbacks,
-                                      input_data,
-                                      staging_buffer,
-                                      stream)
+  return zlib_compressor::init_stream(callbacks, input_data, staging_buffer, stream)
       .and_then([&] {
         output_buffer.reserve(2'048);
         return zlib_compressor::process_stream(callbacks,

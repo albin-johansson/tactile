@@ -4,18 +4,18 @@
 
 #include <new>  // nothrow
 
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 
 void VulkanRendererPlugin::load(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Loading Vulkan renderer plugin");
+  log(LogLevel::kTrace, "Loading Vulkan renderer plugin");
 }
 
 void VulkanRendererPlugin::unload(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Unloading Vulkan renderer plugin");
+  log(LogLevel::kTrace, "Unloading Vulkan renderer plugin");
 }
 
 auto tactile_make_plugin() -> IPlugin*

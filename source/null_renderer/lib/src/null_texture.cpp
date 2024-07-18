@@ -8,7 +8,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 
@@ -26,10 +26,10 @@ auto NullTexture::load(Path path) -> Result<NullTexture>
       stbi_load(path_string.c_str(), &size.width, &size.height, nullptr, STBI_default);
 
   if (!pixels) {
-    Runtime::log(LogLevel::kError,
-                 "Could not load texture '{}': {}",
-                 path_string,
-                 stbi_failure_reason());
+    log(LogLevel::kError,
+        "Could not load texture '{}': {}",
+        path_string,
+        stbi_failure_reason());
     return unexpected(std::make_error_code(std::errc::io_error));
   }
 

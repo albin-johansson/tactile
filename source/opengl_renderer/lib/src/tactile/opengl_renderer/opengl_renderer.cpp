@@ -20,7 +20,7 @@
 #include "tactile/opengl_renderer/opengl_error.hpp"
 #include "tactile/opengl_renderer/opengl_imgui.hpp"
 #include "tactile/opengl_renderer/opengl_texture.hpp"
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 
@@ -43,8 +43,7 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
   TextureID next_texture_id;
 };
 
-auto OpenGLRenderer::make(IWindow* window,
-                          ImGuiContext* context) -> Result<OpenGLRenderer>
+auto OpenGLRenderer::make(IWindow* window, ImGuiContext* context) -> Result<OpenGLRenderer>
 {
   if (SDL_WasInit(SDL_INIT_VIDEO) != SDL_INIT_VIDEO) {
     return unexpected(make_error(OpenGLError::kNotReady));
@@ -65,9 +64,8 @@ auto OpenGLRenderer::make(IWindow* window,
   }
 
   // NOLINTBEGIN(*-no-malloc)
-  ImGui::SetAllocatorFunctions(
-      [](const usize size, void*) { return std::malloc(size); },
-      [](void* ptr, void*) { std::free(ptr); });
+  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
+                               [](void* ptr, void*) { std::free(ptr); });
   // NOLINTEND(*-no-malloc)
   ImGui::SetCurrentContext(context);
 
@@ -75,8 +73,7 @@ auto OpenGLRenderer::make(IWindow* window,
     return unexpected(make_error(OpenGLError::kLoaderError));
   }
 
-  if (auto imgui_backend =
-          GLImGuiBackendWrapper::init(window->get_handle(), context)) {
+  if (auto imgui_backend = GLImGuiBackendWrapper::init(window->get_handle(), context)) {
     renderer.mData->imgui_backend.emplace(std::move(*imgui_backend));
   }
   else {
@@ -101,8 +98,7 @@ OpenGLRenderer::OpenGLRenderer()
 
 OpenGLRenderer::OpenGLRenderer(OpenGLRenderer&& other) noexcept = default;
 
-auto OpenGLRenderer::operator=(OpenGLRenderer&& other) noexcept
-    -> OpenGLRenderer& = default;
+auto OpenGLRenderer::operator=(OpenGLRenderer&& other) noexcept -> OpenGLRenderer& = default;
 
 OpenGLRenderer::~OpenGLRenderer() noexcept = default;
 
@@ -113,10 +109,7 @@ auto OpenGLRenderer::begin_frame() -> bool
   ImGui::NewFrame();
 
   const auto& io = ImGui::GetIO();
-  glViewport(0,
-             0,
-             static_cast<int>(io.DisplaySize.x),
-             static_cast<int>(io.DisplaySize.y));
+  glViewport(0, 0, static_cast<int>(io.DisplaySize.x), static_cast<int>(io.DisplaySize.y));
 
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -162,8 +155,7 @@ void OpenGLRenderer::unload_texture(const TextureID id)
 
 auto OpenGLRenderer::find_texture(const TextureID id) const -> const ITexture*
 {
-  if (const auto iter = mData->textures.find(id);
-      iter != mData->textures.end()) {
+  if (const auto iter = mData->textures.find(id); iter != mData->textures.end()) {
     return &iter->second;
   }
 

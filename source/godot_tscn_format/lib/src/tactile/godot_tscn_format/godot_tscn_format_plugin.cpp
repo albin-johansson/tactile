@@ -4,18 +4,18 @@
 
 #include <new>  // nothrow
 
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 
 void GodotTscnFormatPlugin::load(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Loading Godot TSCN format plugin");
+  log(LogLevel::kTrace, "Loading Godot TSCN format plugin");
 }
 
 void GodotTscnFormatPlugin::unload(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Unloading Godot TSCN format plugin");
+  log(LogLevel::kTrace, "Unloading Godot TSCN format plugin");
 }
 
 auto tactile_make_plugin() -> IPlugin*

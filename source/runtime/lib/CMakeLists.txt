@@ -6,6 +6,7 @@ add_library(tactile::runtime ALIAS tactile-runtime)
 target_sources(tactile-runtime
                PRIVATE
                "src/tactile/runtime/launcher.cpp"
+               "src/tactile/runtime/logging.cpp"
                "src/tactile/runtime/plugin_instance.cpp"
                "src/tactile/runtime/protobuf_context.cpp"
                "src/tactile/runtime/runtime.cpp"
@@ -15,6 +16,7 @@ target_sources(tactile-runtime
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/runtime/api.hpp"
                "inc/tactile/runtime/launcher.hpp"
+               "inc/tactile/runtime/logging.hpp"
                "inc/tactile/runtime/plugin.hpp"
                "inc/tactile/runtime/plugin_instance.hpp"
                "inc/tactile/runtime/protobuf_context.hpp"

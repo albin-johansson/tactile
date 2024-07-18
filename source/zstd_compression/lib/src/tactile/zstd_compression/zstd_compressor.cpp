@@ -8,7 +8,7 @@
 #include <zstd.h>
 
 #include "tactile/base/container/smart_ptr.hpp"
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 namespace zstd_compressor_impl {
@@ -25,8 +25,7 @@ using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
 
 }  // namespace zstd_compressor_impl
 
-auto ZstdCompressor::compress(const ByteSpan input_data) const
-    -> Result<ByteStream>
+auto ZstdCompressor::compress(const ByteSpan input_data) const -> Result<ByteStream>
 {
   const auto compression_bound = ZSTD_compressBound(input_data.size_bytes());
 
@@ -40,9 +39,7 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const
                                                 ZSTD_CLEVEL_DEFAULT);
 
   if (ZSTD_isError(written_byte_count)) {
-    Runtime::log(LogLevel::kError,
-                 "Compression failed: {}",
-                 ZSTD_getErrorName(written_byte_count));
+    log(LogLevel::kError, "Compression failed: {}", ZSTD_getErrorName(written_byte_count));
     return unexpected(std::make_error_code(std::errc::io_error));
   }
 
@@ -52,20 +49,19 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const
   return compressed_data;
 }
 
-auto ZstdCompressor::decompress(const ByteSpan input_data) const
-    -> Result<ByteStream>
+auto ZstdCompressor::decompress(const ByteSpan input_data) const -> Result<ByteStream>
 {
   const zstd_compressor_impl::UniqueDStream stream {ZSTD_createDStream()};
   if (!stream) {
-    Runtime::log(LogLevel::kError, "Could not create stream");
+    log(LogLevel::kError, "Could not create stream");
     return unexpected(std::make_error_code(std::errc::not_enough_memory));
   }
 
   const auto init_stream_result = ZSTD_initDStream(stream.get());
   if (ZSTD_isError(init_stream_result)) {
-    Runtime::log(LogLevel::kError,
-                 "Could not initialize stream: {}",
-                 ZSTD_getErrorName(init_stream_result));
+    log(LogLevel::kError,
+        "Could not initialize stream: {}",
+        ZSTD_getErrorName(init_stream_result));
     return unexpected(std::make_error_code(std::errc::io_error));
   }
 
@@ -82,9 +78,7 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
 
   // Copies the contents of the staging buffer to the result byte stream.
   const auto flush_staging_buffer = [&] {
-    std::copy_n(staging_buffer.data(),
-                output_view.pos,
-                std::back_inserter(decompressed_data));
+    std::copy_n(staging_buffer.data(), output_view.pos, std::back_inserter(decompressed_data));
   };
 
   usize byte_write_count = 0;
@@ -103,9 +97,7 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
         ZSTD_decompressStream(stream.get(), &output_view, &input_view);
 
     if (ZSTD_isError(decompress_result)) {
-      Runtime::log(LogLevel::kError,
-                   "Decompression failed: {}",
-                   ZSTD_getErrorName(decompress_result));
+      log(LogLevel::kError, "Decompression failed: {}", ZSTD_getErrorName(decompress_result));
       return unexpected(std::make_error_code(std::errc::io_error));
     }
 

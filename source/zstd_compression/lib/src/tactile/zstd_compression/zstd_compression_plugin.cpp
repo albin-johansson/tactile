@@ -4,13 +4,14 @@
 
 #include <new>  // nothrow
 
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/base/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 
 void ZstdCompressionPlugin::load(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Loading Zstd compression plugin");
+  log(LogLevel::kTrace, "Loading Zstd compression plugin");
 
   mCompressor = std::make_unique<ZstdCompressor>();
   runtime.set_compression_format(CompressionFormat::kZstd, mCompressor.get());
@@ -18,7 +19,7 @@ void ZstdCompressionPlugin::load(IRuntime& runtime)
 
 void ZstdCompressionPlugin::unload(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Unloading Zstd compression plugin");
+  log(LogLevel::kTrace, "Unloading Zstd compression plugin");
 
   runtime.set_compression_format(CompressionFormat::kZstd, nullptr);
   mCompressor.reset();

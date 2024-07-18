@@ -6,7 +6,8 @@
 
 #include <SDL2/SDL.h>
 
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/base/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 namespace opengl_renderer_plugin {
@@ -14,8 +15,7 @@ namespace opengl_renderer_plugin {
 void set_hints()
 {
   if constexpr (kOnMacos) {
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
-                        SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   }
 
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -40,7 +40,7 @@ void OpenGLRendererPlugin::load(IRuntime& runtime)
   auto* window = runtime.get_window();
 
   if (!window) {
-    Runtime::log(LogLevel::kError, "Could not initialize OpenGL window");
+    log(LogLevel::kError, "Could not initialize OpenGL window");
     return;
   }
 

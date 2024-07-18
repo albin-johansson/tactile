@@ -4,18 +4,18 @@
 
 #include <new>  // nothrow
 
-#include "tactile/runtime/runtime.hpp"
+#include "tactile/runtime/logging.hpp"
 
 namespace tactile {
 
 void YamlFormatPlugin::load(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Loading Tactile YAML format plugin");
+  log(LogLevel::kTrace, "Loading Tactile YAML format plugin");
 }
 
 void YamlFormatPlugin::unload(IRuntime& runtime)
 {
-  Runtime::log(LogLevel::kTrace, "Unloading Tactile YAML format plugin");
+  log(LogLevel::kTrace, "Unloading Tactile YAML format plugin");
 }
 
 auto tactile_make_plugin() -> IPlugin*
