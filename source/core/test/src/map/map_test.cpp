@@ -4,16 +4,20 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/base/test_util/ir.hpp"
+#include "tactile/base/test_util/ir_presets.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/meta/meta.hpp"
+#include "tactile/core/test/ir_comparison.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "tactile/core/ui/viewport.hpp"
+#include "tactile/null_renderer/null_renderer.hpp"
 
-namespace tactile {
+namespace tactile::test {
 
 class MapTest : public testing::Test
 {
@@ -25,9 +29,10 @@ class MapTest : public testing::Test
 
  protected:
   Registry mRegistry {};
+  NullRenderer mRenderer {nullptr};
 };
 
-/// \trace tactile::is_map
+// tactile::is_map
 TEST_F(MapTest, IsMap)
 {
   const MapSpec spec {
@@ -43,7 +48,7 @@ TEST_F(MapTest, IsMap)
   EXPECT_TRUE(is_map(mRegistry, map_entity));
 }
 
-/// \trace tactile::make_map
+// tactile::make_map [Registry&, const MapSpec&]
 TEST_F(MapTest, MakeMap)
 {
   const MapSpec spec {
@@ -98,7 +103,19 @@ TEST_F(MapTest, MakeMap)
   EXPECT_EQ(viewport.scale, 1.0f);
 }
 
-/// \trace tactile::make_map
+// tactile::make_map [Registry&, IRenderer&, const ir::Map&]
+TEST_F(MapTest, MakeMapFromIR)
+{
+  const auto ir_map = make_complex_ir_map(make_ir_tile_format());
+
+  const auto map_id = make_map(mRegistry, mRenderer, ir_map);
+  ASSERT_TRUE(map_id.has_value());
+  ASSERT_TRUE(is_map(mRegistry, *map_id));
+
+  compare_map(mRegistry, *map_id, ir_map);
+}
+
+// tactile::make_map
 TEST_F(MapTest, MakeMapWithInvalidSpec)
 {
   const MapSpec bad_extent {
@@ -117,7 +134,7 @@ TEST_F(MapTest, MakeMapWithInvalidSpec)
   EXPECT_EQ(make_map(mRegistry, bad_tile_size), kInvalidEntity);
 }
 
-/// \trace tactile::destroy_map
+// tactile::destroy_map
 TEST_F(MapTest, DestroyMap)
 {
   const MapSpec spec {
@@ -151,7 +168,7 @@ TEST_F(MapTest, DestroyMap)
   EXPECT_EQ(mRegistry.count(), 0);
 }
 
-/// \trace tactile::add_tileset_to_map
+// tactile::add_tileset_to_map
 TEST_F(MapTest, AddTilesetToMap)
 {
   const MapSpec spec {
@@ -195,4 +212,4 @@ TEST_F(MapTest, AddTilesetToMap)
   EXPECT_EQ(mRegistry.count<CTilesetInstance>(), 1);
 }
 
-}  // namespace tactile
+}  // namespace tactile::test

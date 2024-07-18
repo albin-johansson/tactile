@@ -13,6 +13,7 @@
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/layer/tile_layer.hpp"
+#include "tactile/core/map/map.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
@@ -247,6 +248,46 @@ void compare_tileset(const Registry& registry,
   }
 
   compare_meta(registry, tileset_id, ir_tileset.meta);
+}
+
+void compare_map(const Registry& registry, const EntityID map_id, const ir::Map& ir_map)
+{
+  ASSERT_TRUE(is_map(registry, map_id));
+
+  const auto& map = registry.get<CMap>(map_id);
+  const auto& id_cache = registry.get<CMapIdCache>(map_id);
+  const auto& tile_format = registry.get<CTileFormat>(map_id);
+
+  EXPECT_EQ(map.orientation, TileOrientation::kOrthogonal);
+  EXPECT_EQ(map.tile_size, ir_map.tile_size);
+  EXPECT_EQ(map.extent, ir_map.extent);
+  EXPECT_EQ(map.active_tileset, kInvalidEntity);
+  EXPECT_EQ(map.active_layer, kInvalidEntity);
+  ASSERT_EQ(map.attached_tilesets.size(), ir_map.tilesets.size());
+  ASSERT_TRUE(is_group_layer(registry, map.root_layer));
+
+  // TODO next_tile_id
+  EXPECT_EQ(id_cache.next_layer_id, ir_map.next_layer_id);
+  EXPECT_EQ(id_cache.next_object_id, ir_map.next_object_id);
+
+  EXPECT_EQ(tile_format.encoding, TileEncoding::kPlainText);  // TODO
+  EXPECT_EQ(tile_format.compression, ir_map.tile_format.compression);
+  EXPECT_EQ(tile_format.comp_level, ir_map.tile_format.compression_level);
+
+  for (usize index = 0, count = map.attached_tilesets.size(); index < count; ++index) {
+    const auto tileset_id = map.attached_tilesets.at(index);
+    const auto& ir_tileset_ref = ir_map.tilesets.at(index);
+    compare_tileset(registry, tileset_id, ir_tileset_ref);
+  }
+
+  const auto& root_layer = registry.get<CGroupLayer>(map.root_layer);
+  for (usize index = 0, count = ir_map.layers.size(); index < count; ++index) {
+    const auto layer_id = root_layer.layers.at(index);
+    const auto& ir_layer = ir_map.layers.at(index);
+    compare_layer(registry, layer_id, ir_layer);
+  }
+
+  compare_meta(registry, map_id, ir_map.meta);
 }
 
 }  // namespace tactile::test

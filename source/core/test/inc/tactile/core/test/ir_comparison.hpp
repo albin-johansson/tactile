@@ -32,4 +32,6 @@ void compare_tileset(const Registry& registry,
                      EntityID tileset_id,
                      const ir::TilesetRef& ir_tileset_ref);
 
+void compare_map(const Registry& registry, EntityID map_id, const ir::Map& ir_map);
+
 }  // namespace tactile::test

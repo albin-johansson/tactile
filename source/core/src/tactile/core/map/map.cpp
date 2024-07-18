@@ -2,11 +2,13 @@
 
 #include "tactile/core/map/map.hpp"
 
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/layer/layer_common.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -72,6 +74,67 @@ auto make_map(Registry& registry, const MapSpec& spec) -> EntityID
 
   TACTILE_ASSERT(is_map(registry, map_entity));
   return map_entity;
+}
+
+auto make_map(Registry& registry,
+              IRenderer& renderer,
+              const ir::Map& ir_map) -> Result<EntityID>
+{
+  const auto map_id = registry.make_entity();
+
+  registry.add<CMeta>(map_id);
+  convert_ir_metadata(registry, map_id, ir_map.meta);
+
+  auto& map = registry.add<CMap>(map_id);
+  map.orientation = TileOrientation::kOrthogonal;  // TODO
+  map.extent = ir_map.extent;
+  map.tile_size = ir_map.tile_size;
+  map.root_layer = make_group_layer(registry);
+  map.active_layer = kInvalidEntity;
+  map.active_tileset = kInvalidEntity;
+
+  auto& format = registry.add<CTileFormat>(map_id);
+  format.encoding = ir_map.tile_format.encoding;
+  format.compression = ir_map.tile_format.compression;
+  format.comp_level = ir_map.tile_format.compression_level;
+
+  auto& id_cache = registry.add<CMapIdCache>(map_id);
+  id_cache.next_tile_id = TileID {1};  // TODO
+  id_cache.next_object_id = ir_map.next_object_id;
+  id_cache.next_layer_id = ir_map.next_layer_id;
+
+  auto& suffixes = registry.add<CLayerSuffixes>(map_id);
+  suffixes.tile_layer_suffix = 1;
+  suffixes.object_layer_suffix = 1;
+  suffixes.group_layer_suffix = 1;
+
+  auto& viewport = registry.add<CViewport>(map_id);
+  viewport.pos = Float2 {0, 0};
+  viewport.size = Float2 {0, 0};
+  viewport.scale = 1.0f;
+
+  // TODO components
+
+  map.attached_tilesets.reserve(ir_map.tilesets.size());
+  for (const auto& ir_tileset_ref : ir_map.tilesets) {
+    const auto tileset_id = make_tileset(registry, renderer, ir_tileset_ref);
+
+    if (!tileset_id.has_value()) {
+      return propagate_unexpected(tileset_id);
+    }
+
+    map.attached_tilesets.push_back(*tileset_id);
+  }
+
+  auto& root_layer = registry.get<CGroupLayer>(map.root_layer);
+  root_layer.layers.reserve(ir_map.layers.size());
+
+  for (const auto& ir_layer : ir_map.layers) {
+    root_layer.layers.push_back(make_layer(registry, ir_layer));
+  }
+
+  TACTILE_ASSERT(is_map(registry, map_id));
+  return map_id;
 }
 
 void destroy_map(Registry& registry, const EntityID map_entity)

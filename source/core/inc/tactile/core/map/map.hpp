@@ -20,6 +20,11 @@ namespace tactile {
 struct MapSpec;
 struct TilesetSpec;
 class Registry;
+class IRenderer;
+
+namespace ir {
+struct Map;
+}  // namespace ir
 
 /**
  * A component featured by all maps.
@@ -125,6 +130,21 @@ auto is_map(const Registry& registry, EntityID entity) -> bool;
  */
 [[nodiscard]]
 auto make_map(Registry& registry, const MapSpec& spec) -> EntityID;
+
+/**
+ * Creates a map based on an intermediate representation.
+ *
+ * \param registry The associated registry.
+ * \param renderer The renderer used to load textures.
+ * \param ir_map   The intermediate map representation.
+ *
+ * \return
+ * A map entity identifier if successful; an error code otherwise.
+ */
+[[nodiscard]]
+auto make_map(Registry& registry,
+              IRenderer& renderer,
+              const ir::Map& ir_map) -> Result<EntityID>;
 
 /**
  * Destroys a map.
