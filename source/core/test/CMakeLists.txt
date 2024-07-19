@@ -31,6 +31,7 @@ target_sources(tactile-core-test
                "src/map/map_test.cpp"
                "src/meta/attribute_type_test.cpp"
                "src/meta/color_test.cpp"
+               "src/meta/meta_test.cpp"
                "src/model/settings_test.cpp"
                "src/numeric/random_test.cpp"
                "src/platform/bits_test.cpp"
