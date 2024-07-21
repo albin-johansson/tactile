@@ -5,10 +5,18 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/runtime/runtime.hpp"
+
 namespace tactile::test {
 
+class TmjFormatAttributeParserTest : public testing::Test
+{
+ private:
+  Runtime mRuntime {};
+};
+
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParsePropertyWithoutName)
+TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithoutName)
 {
   const nlohmann::json property_json = {
     {"type", "int"},
@@ -22,7 +30,7 @@ TEST(TmjFormatAttributeParser, ParsePropertyWithoutName)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParsePropertyWithoutType)
+TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithoutType)
 {
   const nlohmann::json property_json = {
     {"name", "abc"},
@@ -36,7 +44,7 @@ TEST(TmjFormatAttributeParser, ParsePropertyWithoutType)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParsePropertyWithInvalidType)
+TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithInvalidType)
 {
   const nlohmann::json property_json = {
     {"name", "abc"},
@@ -51,7 +59,7 @@ TEST(TmjFormatAttributeParser, ParsePropertyWithInvalidType)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParsePropertyWithoutValue)
+TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithoutValue)
 {
   const nlohmann::json property_json = {
     {"name", "abc"},
@@ -65,7 +73,7 @@ TEST(TmjFormatAttributeParser, ParsePropertyWithoutValue)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParseValidString)
+TEST_F(TmjFormatAttributeParserTest, ParseValidString)
 {
   const nlohmann::json property_json = {
     {"name", "foo"},
@@ -82,7 +90,7 @@ TEST(TmjFormatAttributeParser, ParseValidString)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParseValidInt)
+TEST_F(TmjFormatAttributeParserTest, ParseValidInt)
 {
   const nlohmann::json property_json = {
     {"name", "foo"},
@@ -99,7 +107,7 @@ TEST(TmjFormatAttributeParser, ParseValidInt)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParseValidFloat)
+TEST_F(TmjFormatAttributeParserTest, ParseValidFloat)
 {
   const nlohmann::json property_json = {
     {"name", "foo"},
@@ -116,7 +124,7 @@ TEST(TmjFormatAttributeParser, ParseValidFloat)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParseValidBool)
+TEST_F(TmjFormatAttributeParserTest, ParseValidBool)
 {
   const nlohmann::json property_json = {
     {"name", "foo"},
@@ -133,7 +141,7 @@ TEST(TmjFormatAttributeParser, ParseValidBool)
 }
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParseValidPath)
+TEST_F(TmjFormatAttributeParserTest, ParseValidPath)
 {
   const nlohmann::json property_json = {
     {"name", "foo"},
@@ -149,10 +157,87 @@ TEST(TmjFormatAttributeParser, ParseValidPath)
   EXPECT_EQ(property->value, Attribute {Path {"b/a/r"}});
 }
 
-// TODO color
+// tactile::parse_tiled_tmj_property
+TEST_F(TmjFormatAttributeParserTest, ParseValidColorRGB)
+{
+  const nlohmann::json property_json = {
+    {"name", "foo"},
+    {"type", "color"},
+    {"value", "#ABCDEF"},
+  };
+
+  const auto property = parse_tiled_tmj_property(property_json);
+
+  ASSERT_TRUE(property.has_value());
+  EXPECT_EQ(property->name, "foo");
+  EXPECT_EQ(property->value.get_type(), AttributeType::kColor);
+  EXPECT_EQ(property->value, Attribute(UColor(0xAB, 0xCD, 0xEF, 0xFF)));
+}
 
 // tactile::parse_tiled_tmj_property
-TEST(TmjFormatAttributeParser, ParseValidObject)
+TEST_F(TmjFormatAttributeParserTest, ParseValidColorARGB)
+{
+  const nlohmann::json property_json = {
+    {"name", "foo"},
+    {"type", "color"},
+    {"value", "#1A2B3C4D"},
+  };
+
+  const auto property = parse_tiled_tmj_property(property_json);
+
+  ASSERT_TRUE(property.has_value());
+  EXPECT_EQ(property->name, "foo");
+  EXPECT_EQ(property->value.get_type(), AttributeType::kColor);
+  EXPECT_EQ(property->value, Attribute(UColor(0x2B, 0x3C, 0x4D, 0x1A)));
+}
+
+// tactile::parse_tiled_tmj_property
+TEST_F(TmjFormatAttributeParserTest, ParseMalformedColorARGB)
+{
+  const nlohmann::json property_json = {
+    {"name", "foo"},
+    {"type", "color"},
+    {"value", "#0000000G"},
+  };
+
+  const auto property = parse_tiled_tmj_property(property_json);
+
+  ASSERT_FALSE(property.has_value());
+  EXPECT_EQ(property.error(), SaveFormatParseError::kBadPropertyValue);
+}
+
+// tactile::parse_tiled_tmj_property
+TEST_F(TmjFormatAttributeParserTest, ParseTooShortColorARGB)
+{
+  const nlohmann::json property_json = {
+    {"name", "foo"},
+    {"type", "color"},
+    {"value", "#0000000"},
+  };
+
+  const auto property = parse_tiled_tmj_property(property_json);
+
+  ASSERT_FALSE(property.has_value());
+  EXPECT_EQ(property.error(), SaveFormatParseError::kBadPropertyValue);
+}
+
+// tactile::parse_tiled_tmj_property
+TEST_F(TmjFormatAttributeParserTest, ParseTooLongColorARGB)
+{
+  const nlohmann::json property_json = {
+    {"name", "foo"},
+    {"type", "color"},
+    {"value", "#000000000"},
+  };
+
+  const auto property = parse_tiled_tmj_property(property_json);
+
+  ASSERT_FALSE(property.has_value());
+  EXPECT_EQ(property.error(), SaveFormatParseError::kBadPropertyValue);
+}
+
+// tactile::parse_tiled_tmj_property
+TEST_F(TmjFormatAttributeParserTest, ParseValidObject)
 {
   const nlohmann::json property_json = {
     {"name", "foo"},
@@ -169,13 +254,12 @@ TEST(TmjFormatAttributeParser, ParseValidObject)
 }
 
 // tactile::parse_tiled_tmj_metadata
-TEST(TmjFormatAttributeParser, ParseTiledTmjMetadata)
+TEST_F(TmjFormatAttributeParserTest, ParseTiledTmjMetadata)
 {
   using namespace nlohmann::json_literals;
   using testing::Contains;
   using testing::Eq;
 
-  // TODO color
   const auto metadata_json = R"({
     "properties": [
       {
@@ -199,6 +283,11 @@ TEST(TmjFormatAttributeParser, ParseTiledTmjMetadata)
         "value": false
       },
       {
+        "name": "a_color",
+        "type": "color",
+        "value": "#1A2B3C4D"
+      },
+      {
         "name": "a_path",
         "type": "file",
         "value": "a/b/c"
@@ -215,7 +304,7 @@ TEST(TmjFormatAttributeParser, ParseTiledTmjMetadata)
   ASSERT_TRUE(metadata.has_value());
 
   EXPECT_EQ(metadata->name, "");
-  EXPECT_EQ(metadata->properties.size(), 6);
+  EXPECT_EQ(metadata->properties.size(), 7);
   EXPECT_EQ(metadata->components.size(), 0);
 
   EXPECT_THAT(metadata->properties,
@@ -227,13 +316,16 @@ TEST(TmjFormatAttributeParser, ParseTiledTmjMetadata)
   EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"a_bool", Attribute {false}})));
   EXPECT_THAT(metadata->properties,
+              Contains(Eq(ir::NamedAttribute {"a_color",
+                                              Attribute {UColor(0x2B, 0x3C, 0x4D, 0x1A)}})));
+  EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"a_path", Attribute {Path {"a/b/c"}}})));
   EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"an_object", Attribute {ObjectRef {123}}})));
 }
 
 // tactile::parse_tiled_tmj_metadata
-TEST(TmjFormatAttributeParser, ParseTiledTmjMetadataWithName)
+TEST_F(TmjFormatAttributeParserTest, ParseTiledTmjMetadataWithName)
 {
   using namespace nlohmann::json_literals;
 

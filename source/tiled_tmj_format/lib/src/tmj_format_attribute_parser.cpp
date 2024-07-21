@@ -4,6 +4,7 @@
 
 #include <utility>  // move
 
+#include "tactile/base/io/color_parser.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/runtime/logging.hpp"
 
@@ -92,9 +93,19 @@ auto parse_value(const nlohmann::json& value_json,
         const auto length = value->size();
         if (length != 0 && length != 7 && length != 9) {
           log(LogLevel::kError, "Invalid TMJ property color length: {}", length);
+          return unexpected(SaveFormatParseError::kBadPropertyValue);
         }
-        else if (!value->empty()) {
-          // TODO
+
+        if (!value->empty()) {
+          const auto color =
+              (length == 9) ? parse_color_argb(*value) : parse_color_rgb(*value);
+          if (color.has_value()) {
+            attribute = Attribute {*color};
+          }
+          else {
+            log(LogLevel::kError, "Invalid color property value: {}", *value);
+            return unexpected(SaveFormatParseError::kBadPropertyValue);
+          }
         }
 
         return attribute;
