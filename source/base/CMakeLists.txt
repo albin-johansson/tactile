@@ -41,6 +41,7 @@ target_sources(tactile-base
                "inc/tactile/base/io/save/save_format_parse_error.hpp"
                "inc/tactile/base/io/save/save_format_parse_result.hpp"
                "inc/tactile/base/io/byte_stream.hpp"
+               "inc/tactile/base/io/color_parser.hpp"
                "inc/tactile/base/io/int_parser.hpp"
                "inc/tactile/base/layer/layer_type.hpp"
                "inc/tactile/base/layer/object_type.hpp"

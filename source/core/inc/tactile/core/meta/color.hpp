@@ -39,39 +39,6 @@ auto make_color(Span<const float, 4> rgba) -> UColor;
 auto make_color(const FColor& fcolor) -> UColor;
 
 /**
- * Parses a color from a hexadecimal RGB color code.
- *
- * \param rgb An RGB color string, on the form \c "#RRGGBB".
- *
- * \return
- * A color if successful; an error code otherwise.
- */
-[[nodiscard]]
-auto parse_color_rgb(StringView rgb) -> Result<UColor>;
-
-/**
- * Parses a color from a hexadecimal RGBA color code.
- *
- * \param rgba An RGBA color string, on the form \c "#RRGGBBAA".
- *
- * \return
- * A color if successful; an error code otherwise.
- */
-[[nodiscard]]
-auto parse_color_rgba(StringView rgba) -> Result<UColor>;
-
-/**
- * Parses a color from a hexadecimal ARGB color code.
- *
- * \param argb An ARGB color string, on the form \c "#AARRGGBB".
- *
- * \return
- * A color if successful; an error code otherwise.
- */
-[[nodiscard]]
-auto parse_color_argb(StringView argb) -> Result<UColor>;
-
-/**
  * Converts the color to a hexadecimal RGB color code.
  *
  * \return

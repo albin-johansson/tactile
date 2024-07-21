@@ -31,68 +31,6 @@ auto make_color(const FColor& fcolor) -> UColor
   return make_color(fcolor.red, fcolor.green, fcolor.blue, fcolor.alpha);
 }
 
-auto parse_color_rgb(const StringView rgb) -> Result<UColor>
-{
-  if (rgb.length() != 7 || rgb.front() != '#') {
-    return unexpected(make_error(GenericError::kInvalidParam));
-  }
-
-  const auto r = parse<UColor::value_type>(rgb.substr(1, 2), 16);
-  const auto g = parse<UColor::value_type>(rgb.substr(3, 2), 16);
-  const auto b = parse<UColor::value_type>(rgb.substr(5, 2), 16);
-
-  if (r && g && b) {
-    return UColor {static_cast<uint8>(*r),
-                   static_cast<uint8>(*g),
-                   static_cast<uint8>(*b),
-                   0xFF};
-  }
-
-  return unexpected(make_error(GenericError::kInvalidParam));
-}
-
-auto parse_color_rgba(const StringView rgba) -> Result<UColor>
-{
-  if (rgba.length() != 9 || rgba.front() != '#') {
-    return unexpected(make_error(GenericError::kInvalidParam));
-  }
-
-  const auto r = parse<UColor::value_type>(rgba.substr(1, 2), 16);
-  const auto g = parse<UColor::value_type>(rgba.substr(3, 2), 16);
-  const auto b = parse<UColor::value_type>(rgba.substr(5, 2), 16);
-  const auto a = parse<UColor::value_type>(rgba.substr(7, 2), 16);
-
-  if (r && g && b && a) {
-    return UColor {static_cast<uint8>(*r),
-                   static_cast<uint8>(*g),
-                   static_cast<uint8>(*b),
-                   static_cast<uint8>(*a)};
-  }
-
-  return unexpected(make_error(GenericError::kInvalidParam));
-}
-
-auto parse_color_argb(const StringView argb) -> Result<UColor>
-{
-  if (argb.length() != 9 || argb.front() != '#') {
-    return unexpected(make_error(GenericError::kInvalidParam));
-  }
-
-  const auto a = parse<UColor::value_type>(argb.substr(1, 2), 16);
-  const auto r = parse<UColor::value_type>(argb.substr(3, 2), 16);
-  const auto g = parse<UColor::value_type>(argb.substr(5, 2), 16);
-  const auto b = parse<UColor::value_type>(argb.substr(7, 2), 16);
-
-  if (a && r && g && b) {
-    return UColor {static_cast<uint8>(*r),
-                   static_cast<uint8>(*g),
-                   static_cast<uint8>(*b),
-                   static_cast<uint8>(*a)};
-  }
-
-  return unexpected(make_error(GenericError::kInvalidParam));
-}
-
 auto to_string_rgb(const UColor& color) -> String
 {
   return std::format("#{:02X}{:02X}{:02X}", color.red, color.green, color.blue);
