@@ -17,6 +17,7 @@ enum class SaveFormatParseError : uint8
   kNoPropertyValue,
   kBadPropertyType,
   kBadPropertyValue,
+
   kNoObjectId,
   kNoObjectName,
   kNoObjectX,
@@ -24,6 +25,23 @@ enum class SaveFormatParseError : uint8
   kNoObjectWidth,
   kNoObjectHeight,
   kNoObjectVisibility,
+
+  kNoLayerId,
+  kNoLayerName,
+  kNoLayerOpacity,
+  kNoLayerVisibility,
+  kNoLayerType,
+  kBadLayerType,
+
+  kNoTileLayerWidth,
+  kNoTileLayerHeight,
+  kNoTileLayerData,
+  kBadTileLayerEncoding,
+  kBadTileLayerData,
+
+  kNoGroupLayerData,
+
+  kNoSuchCompressionFormat,
 };
 
 }  // namespace tactile

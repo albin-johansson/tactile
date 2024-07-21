@@ -6,6 +6,7 @@ target_sources(tactile-base-test
                PRIVATE
                "src/io/color_parser_test.cpp"
                "src/io/int_parser_test.cpp"
+               "src/io/tile_parser_test.cpp"
                "src/meta/attribute_test.cpp"
                "src/numeric/saturate_cast_test.cpp"
                "src/numeric/vec_common_test.cpp"
@@ -16,6 +17,7 @@ target_sources(tactile-base-test
                "src/util/format_test.cpp"
                "src/util/matrix_extent_test.cpp"
                "src/util/matrix_index_test.cpp"
+               "src/util/tile_matrix_test.cpp"
                "src/main.cpp"
                )
 

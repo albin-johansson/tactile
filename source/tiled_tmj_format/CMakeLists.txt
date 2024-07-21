@@ -1,6 +1,7 @@
 project(tactile-tiled-tmj-format CXX)
 
 find_package(nlohmann_json CONFIG REQUIRED)
+find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
 add_subdirectory("lib")
 
