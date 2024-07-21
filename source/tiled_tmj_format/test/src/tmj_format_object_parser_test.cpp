@@ -4,10 +4,18 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/runtime/runtime.hpp"
+
 namespace tactile::test {
 
+class TmjFormatObjectParserTest : public testing::Test
+{
+ private:
+  Runtime mRuntime {};
+};
+
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseValidRectangleObject)
+TEST_F(TmjFormatObjectParserTest, ParseValidRectangleObject)
 {
   const nlohmann::json object_json = {
     {"name", "R"},
@@ -36,7 +44,7 @@ TEST(TmjFormatObjectParser, ParseValidRectangleObject)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseValidEllipseObject)
+TEST_F(TmjFormatObjectParserTest, ParseValidEllipseObject)
 {
   const nlohmann::json object_json = {
     {"name", "E"},
@@ -66,7 +74,7 @@ TEST(TmjFormatObjectParser, ParseValidEllipseObject)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseValidPointObject)
+TEST_F(TmjFormatObjectParserTest, ParseValidPointObject)
 {
   const nlohmann::json object_json = {
     {"name", "P"},
@@ -97,7 +105,7 @@ TEST(TmjFormatObjectParser, ParseValidPointObject)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseObjectWithoutName)
+TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutName)
 {
   const nlohmann::json object_json = {
     {"id", 0},
@@ -115,7 +123,7 @@ TEST(TmjFormatObjectParser, ParseObjectWithoutName)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseObjectWithoutId)
+TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutId)
 {
   const nlohmann::json object_json = {
     {"name", ""},
@@ -133,7 +141,7 @@ TEST(TmjFormatObjectParser, ParseObjectWithoutId)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseObjectWithoutX)
+TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutX)
 {
   const nlohmann::json object_json = {
     {"name", ""},
@@ -151,7 +159,7 @@ TEST(TmjFormatObjectParser, ParseObjectWithoutX)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseObjectWithoutY)
+TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutY)
 {
   const nlohmann::json object_json = {
     {"name", ""},
@@ -169,7 +177,7 @@ TEST(TmjFormatObjectParser, ParseObjectWithoutY)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseObjectWithoutWidth)
+TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutWidth)
 {
   const nlohmann::json object_json = {
     {"name", ""},
@@ -187,7 +195,7 @@ TEST(TmjFormatObjectParser, ParseObjectWithoutWidth)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseObjectWithoutHeight)
+TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutHeight)
 {
   const nlohmann::json object_json = {
     {"name", ""},
@@ -205,7 +213,7 @@ TEST(TmjFormatObjectParser, ParseObjectWithoutHeight)
 }
 
 // tactile::parse_tiled_tmj_object
-TEST(TmjFormatObjectParser, ParseObjectWithoutVisibility)
+TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutVisibility)
 {
   const nlohmann::json object_json = {
     {"name", ""},
