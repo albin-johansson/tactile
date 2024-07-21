@@ -2,11 +2,13 @@
 
 #pragma once
 
+#include <concepts>    // integral
 #include <cstddef>     // size_t
 #include <format>      // formatter, format_to, formattable
 #include <functional>  // hash
 
 #include "tactile/base/int.hpp"
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/hash.hpp"
 
@@ -25,9 +27,26 @@ struct MatrixIndex final
   /** The column index. */
   value_type col;
 
-  [[nodiscard]] auto operator==(const MatrixIndex&) const noexcept
-      -> bool = default;
+  [[nodiscard]] auto operator==(const MatrixIndex&) const noexcept -> bool = default;
 };
+
+/**
+ * Converts a raw element index and column count into the corresponding matrix index.
+ *
+ * \tparam T Any integral type.
+ *
+ * \param index        The raw element index.
+ * \param column_count The number of columns in the underlying matrix.
+ *
+ * \return
+ */
+template <std::integral T>
+[[nodiscard]] constexpr auto make_matrix_index(const T index,
+                                               const T column_count) noexcept -> MatrixIndex
+{
+  return {saturate_cast<MatrixIndex::value_type>(index / column_count),
+          saturate_cast<MatrixIndex::value_type>(index % column_count)};
+}
 
 }  // namespace tactile
 
@@ -35,8 +54,7 @@ template <>
 struct std::hash<tactile::MatrixIndex> final
 {
   [[nodiscard]]
-  auto operator()(const tactile::MatrixIndex& index) const noexcept
-      -> std::size_t
+  auto operator()(const tactile::MatrixIndex& index) const noexcept -> std::size_t
   {
     return tactile::hash_combine(index.row, index.col);
   }
