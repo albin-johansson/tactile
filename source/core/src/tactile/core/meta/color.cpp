@@ -6,15 +6,13 @@
 #include <cmath>      // pow
 #include <format>     // format
 
+#include "tactile/base/io/int_parser.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/util/string_conv.hpp"
 
 namespace tactile {
 
-auto make_color(const float r,
-                const float g,
-                const float b,
-                const float a) -> UColor
+auto make_color(const float r, const float g, const float b, const float a) -> UColor
 {
   const auto to_u8 = [](const float val) {
     return static_cast<uint8>(std::clamp(val, 0.0f, 1.0f) * 255.0f);
@@ -39,9 +37,9 @@ auto parse_color_rgb(const StringView rgb) -> Result<UColor>
     return unexpected(make_error(GenericError::kInvalidParam));
   }
 
-  const auto r = parse_uint(rgb.substr(1, 2), 16);
-  const auto g = parse_uint(rgb.substr(3, 2), 16);
-  const auto b = parse_uint(rgb.substr(5, 2), 16);
+  const auto r = parse<UColor::value_type>(rgb.substr(1, 2), 16);
+  const auto g = parse<UColor::value_type>(rgb.substr(3, 2), 16);
+  const auto b = parse<UColor::value_type>(rgb.substr(5, 2), 16);
 
   if (r && g && b) {
     return UColor {static_cast<uint8>(*r),
@@ -59,10 +57,10 @@ auto parse_color_rgba(const StringView rgba) -> Result<UColor>
     return unexpected(make_error(GenericError::kInvalidParam));
   }
 
-  const auto r = parse_uint(rgba.substr(1, 2), 16);
-  const auto g = parse_uint(rgba.substr(3, 2), 16);
-  const auto b = parse_uint(rgba.substr(5, 2), 16);
-  const auto a = parse_uint(rgba.substr(7, 2), 16);
+  const auto r = parse<UColor::value_type>(rgba.substr(1, 2), 16);
+  const auto g = parse<UColor::value_type>(rgba.substr(3, 2), 16);
+  const auto b = parse<UColor::value_type>(rgba.substr(5, 2), 16);
+  const auto a = parse<UColor::value_type>(rgba.substr(7, 2), 16);
 
   if (r && g && b && a) {
     return UColor {static_cast<uint8>(*r),
@@ -80,10 +78,10 @@ auto parse_color_argb(const StringView argb) -> Result<UColor>
     return unexpected(make_error(GenericError::kInvalidParam));
   }
 
-  const auto a = parse_uint(argb.substr(1, 2), 16);
-  const auto r = parse_uint(argb.substr(3, 2), 16);
-  const auto g = parse_uint(argb.substr(5, 2), 16);
-  const auto b = parse_uint(argb.substr(7, 2), 16);
+  const auto a = parse<UColor::value_type>(argb.substr(1, 2), 16);
+  const auto r = parse<UColor::value_type>(argb.substr(3, 2), 16);
+  const auto g = parse<UColor::value_type>(argb.substr(5, 2), 16);
+  const auto b = parse<UColor::value_type>(argb.substr(7, 2), 16);
 
   if (a && r && g && b) {
     return UColor {static_cast<uint8>(*r),
@@ -129,14 +127,9 @@ auto to_uint32_abgr(const UColor& color) -> uint32
 
 auto normalize(const UColor& color) -> FColor
 {
-  const auto to_f = [](const uint8 val) {
-    return static_cast<float>(val) / 255.0f;
-  };
+  const auto to_f = [](const uint8 val) { return static_cast<float>(val) / 255.0f; };
 
-  return {to_f(color.red),
-          to_f(color.green),
-          to_f(color.blue),
-          to_f(color.alpha)};
+  return {to_f(color.red), to_f(color.green), to_f(color.blue), to_f(color.alpha)};
 }
 
 auto get_luminance(const UColor& color) -> float

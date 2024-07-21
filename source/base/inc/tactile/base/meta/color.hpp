@@ -14,10 +14,12 @@ namespace tactile {
  */
 struct UColor final
 {
-  uint8 red;
-  uint8 green;
-  uint8 blue;
-  uint8 alpha;
+  using value_type = uint8;
+
+  value_type red;
+  value_type green;
+  value_type blue;
+  value_type alpha;
 
   [[nodiscard]]
   constexpr auto operator==(const UColor&) const noexcept -> bool = default;
@@ -30,10 +32,12 @@ struct UColor final
  */
 struct FColor final
 {
-  float red;
-  float green;
-  float blue;
-  float alpha;
+  using value_type = float;
+
+  value_type red;
+  value_type green;
+  value_type blue;
+  value_type alpha;
 
   [[nodiscard]]
   constexpr auto operator==(const FColor&) const noexcept -> bool = default;

@@ -4,6 +4,7 @@
 
 #include <format>  // format
 
+#include "tactile/base/io/int_parser.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"

@@ -4,6 +4,7 @@ add_executable(tactile-base-test)
 
 target_sources(tactile-base-test
                PRIVATE
+               "src/io/int_parser_test.cpp"
                "src/meta/attribute_test.cpp"
                "src/numeric/saturate_cast_test.cpp"
                "src/numeric/vec_common_test.cpp"
