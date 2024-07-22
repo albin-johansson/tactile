@@ -11,6 +11,7 @@ target_sources(tactile-tiled-tmj-format
                "src/tmj_format_attribute_parser.cpp"
                "src/tmj_format_layer_parser.cpp"
                "src/tmj_format_object_parser.cpp"
+               "src/tmj_format_tileset_parser.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/tiled_tmj_format/api.hpp"
@@ -20,6 +21,7 @@ target_sources(tactile-tiled-tmj-format
                "inc/tactile/tiled_tmj_format/tmj_format_attribute_parser.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_layer_parser.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_object_parser.hpp"
+               "inc/tactile/tiled_tmj_format/tmj_format_tileset_parser.hpp"
                )
 
 tactile_prepare_target(tactile-tiled-tmj-format)

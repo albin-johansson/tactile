@@ -183,28 +183,6 @@ auto parse_tile_layer(const IRuntime& runtime,
 }
 
 [[nodiscard]]
-auto parse_object_layer(const nlohmann::json& layer_json,
-                        ir::Layer& layer) -> SaveFormatParseResult<void>
-{
-  const auto objects_iter = layer_json.find("objects");
-
-  if (objects_iter != layer_json.end()) {
-    layer.objects.reserve(objects_iter->size());
-
-    for (const auto& [_, object_json] : objects_iter->items()) {
-      if (auto object = parse_tiled_tmj_object(object_json)) {
-        layer.objects.push_back(std::move(*object));
-      }
-      else {
-        return propagate_unexpected(object);
-      }
-    }
-  }
-
-  return kParseResultOK;
-}
-
-[[nodiscard]]
 auto parse_group_layer(const IRuntime& runtime,
                        const nlohmann::json& layer_json,
                        ir::Layer& layer) -> SaveFormatParseResult<void>
@@ -229,6 +207,27 @@ auto parse_group_layer(const IRuntime& runtime,
 }
 
 }  // namespace tmj_format_layer_parser
+
+auto parse_tiled_tmj_object_layer(const nlohmann::json& layer_json,
+                                  ir::Layer& layer) -> SaveFormatParseResult<void>
+{
+  const auto objects_iter = layer_json.find("objects");
+
+  if (objects_iter != layer_json.end()) {
+    layer.objects.reserve(objects_iter->size());
+
+    for (const auto& [_, object_json] : objects_iter->items()) {
+      if (auto object = parse_tiled_tmj_object(object_json)) {
+        layer.objects.push_back(std::move(*object));
+      }
+      else {
+        return propagate_unexpected(object);
+      }
+    }
+  }
+
+  return kParseResultOK;
+}
 
 auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_json)
     -> SaveFormatParseResult<ir::Layer>
@@ -286,7 +285,7 @@ auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_
       break;
     }
     case LayerType::kObjectLayer: {
-      const auto result = tmj_format_layer_parser::parse_object_layer(layer_json, layer);
+      const auto result = parse_tiled_tmj_object_layer(layer_json, layer);
 
       if (!result.has_value()) {
         return propagate_unexpected(result);
