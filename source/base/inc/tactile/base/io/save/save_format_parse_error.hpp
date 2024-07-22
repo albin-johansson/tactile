@@ -58,6 +58,15 @@ enum class SaveFormatParseError : uint8
 
   kNoAnimationFrameTileIndex,
   kNoAnimationFrameDuration,
+
+  kNoMapOrientation,
+  kBadMapOrientation,
+  kNoMapWidth,
+  kNoMapHeight,
+  kNoMapTileWidth,
+  kNoMapTileHeight,
+  kNoMapNextLayerId,
+  kNoMapNextObjectId,
 };
 
 }  // namespace tactile
