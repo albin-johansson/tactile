@@ -151,7 +151,8 @@ auto parse_tiled_tmj_property(const nlohmann::json& property_json)
 
   name_iter->get_to(named_attribute.name);
 
-  const auto property_type = tmj_format_attribute_parser::parse_type(*type_iter);
+  const auto property_type =
+      tmj_format_attribute_parser::parse_type(type_iter->get_ref<const String&>());
   if (!property_type.has_value()) {
     return propagate_unexpected(property_type);
   }
