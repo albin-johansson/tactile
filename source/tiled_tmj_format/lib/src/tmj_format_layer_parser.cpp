@@ -8,7 +8,7 @@
 #include <cppcodec/base64_default_rfc4648.hpp>
 
 #include "tactile/base/io/compress/compressor.hpp"
-#include "tactile/base/io/tile_parser.hpp"
+#include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/runtime.hpp"
 #include "tactile/base/util/matrix_index.hpp"

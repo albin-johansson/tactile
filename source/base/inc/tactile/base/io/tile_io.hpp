@@ -5,12 +5,12 @@
 #include <bit>       // endian, byteswap
 #include <concepts>  // same_as
 #include <cstring>   // memcpy
-#include <utility>   // cmp_not_equal
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/byte_stream.hpp"
+#include "tactile/base/platform/bits.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/matrix_extent.hpp"
 #include "tactile/base/util/matrix_index.hpp"
@@ -58,10 +58,11 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
 {
   auto tile_matrix = make_tile_matrix(extent);
 
-  const auto expected_byte_count = extent.rows * extent.cols * sizeof(TileID);
+  const auto expected_byte_count =
+      saturate_cast<usize>(extent.rows * extent.cols) * sizeof(TileID);
   const auto real_byte_count = byte_stream.size();
 
-  if (std::cmp_not_equal(expected_byte_count, real_byte_count)) {
+  if (expected_byte_count != real_byte_count) {
     return kNone;
   }
 
@@ -87,6 +88,33 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
   }
 
   return tile_matrix;
+}
+
+[[nodiscard]]
+inline auto to_byte_stream(const TileMatrix& tile_matrix) -> ByteStream
+{
+  ByteStream bytes {};
+
+  const auto row_count = tile_matrix.size();
+  if (row_count < 1) {
+    return bytes;
+  }
+
+  const auto col_count = tile_matrix.front().size();
+  if (col_count < 1) {
+    return bytes;
+  }
+
+  bytes.reserve(row_count * col_count * sizeof(TileID));
+
+  for (usize row = 0; row < row_count; ++row) {
+    for (usize col = 0; col < col_count; ++col) {
+      const auto tile_id = to_little_endian(tile_matrix[row][col]);
+      each_byte(tile_id, [&](const uint8 byte) { bytes.push_back(byte); });
+    }
+  }
+
+  return bytes;
 }
 
 }  // namespace tactile

@@ -6,7 +6,7 @@ target_sources(tactile-base-test
                PRIVATE
                "src/io/color_parser_test.cpp"
                "src/io/int_parser_test.cpp"
-               "src/io/tile_parser_test.cpp"
+               "src/io/tile_io_test.cpp"
                "src/meta/attribute_test.cpp"
                "src/numeric/saturate_cast_test.cpp"
                "src/numeric/vec_common_test.cpp"
