@@ -1,12 +1,12 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/platform/bits.hpp"
+#include "tactile/base/platform/bits.hpp"
 
 #include <gtest/gtest.h>
 
 namespace tactile {
 
-/** \trace tactile::to_little_endian */
+// tactile::to_little_endian
 TEST(Bits, ToLittleEndian)
 {
   const uint32 native_value = 0xFFEE2211u;

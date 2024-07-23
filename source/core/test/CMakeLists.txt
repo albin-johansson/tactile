@@ -34,7 +34,6 @@ target_sources(tactile-core-test
                "src/meta/meta_test.cpp"
                "src/model/settings_test.cpp"
                "src/numeric/random_test.cpp"
-               "src/platform/bits_test.cpp"
                "src/platform/filesystem_test.cpp"
                "src/tile/animation_test.cpp"
                "src/tile/tile_test.cpp"

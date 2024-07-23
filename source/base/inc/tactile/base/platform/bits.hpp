@@ -3,11 +3,11 @@
 #pragma once
 
 #include <bit>       // byteswap, endian
+#include <cassert>   // assert
 #include <concepts>  // integral, invocable
 
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
 
@@ -25,7 +25,7 @@ namespace tactile {
 template <typename T>
 [[nodiscard]] auto nth_byte(const T& object, const usize n) noexcept -> uint8
 {
-  TACTILE_ASSERT_MSG(n < sizeof(T), "invalid byte index");
+  assert(n < sizeof(T));
   const auto* bytes = reinterpret_cast<const uint8*>(&object);
   return bytes[n];
 }
@@ -54,11 +54,9 @@ void each_byte(const IntType value, const CallableType& callable)
  * A little endian integer value.
  */
 template <std::integral IntType>
-[[nodiscard]] constexpr auto to_little_endian(const IntType value) noexcept
-    -> IntType
+[[nodiscard]] constexpr auto to_little_endian(const IntType value) noexcept -> IntType
 {
-  return (std::endian::native == std::endian::little) ? value
-                                                      : std::byteswap(value);
+  return (std::endian::native == std::endian::little) ? value : std::byteswap(value);
 }
 
 }  // namespace tactile

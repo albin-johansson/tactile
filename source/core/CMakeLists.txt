@@ -192,7 +192,6 @@ target_sources(tactile-core
                "inc/tactile/core/model/model.hpp"
                "inc/tactile/core/model/settings.hpp"
                "inc/tactile/core/numeric/random.hpp"
-               "inc/tactile/core/platform/bits.hpp"
                "inc/tactile/core/platform/dynamic_library.hpp"
                "inc/tactile/core/platform/environment.hpp"
                "inc/tactile/core/platform/file_dialog.hpp"
