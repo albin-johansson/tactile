@@ -171,7 +171,7 @@ TEST_F(TmjFormatAttributeParserTest, ParseValidColorRGB)
   ASSERT_TRUE(property.has_value());
   EXPECT_EQ(property->name, "foo");
   EXPECT_EQ(property->value.get_type(), AttributeType::kColor);
-  EXPECT_EQ(property->value, Attribute(UColor(0xAB, 0xCD, 0xEF, 0xFF)));
+  EXPECT_EQ(property->value, (Attribute {UColor {0xAB, 0xCD, 0xEF, 0xFF}}));
 }
 
 // tactile::parse_tiled_tmj_property
@@ -188,7 +188,7 @@ TEST_F(TmjFormatAttributeParserTest, ParseValidColorARGB)
   ASSERT_TRUE(property.has_value());
   EXPECT_EQ(property->name, "foo");
   EXPECT_EQ(property->value.get_type(), AttributeType::kColor);
-  EXPECT_EQ(property->value, Attribute(UColor(0x2B, 0x3C, 0x4D, 0x1A)));
+  EXPECT_EQ(property->value, (Attribute {UColor {0x2B, 0x3C, 0x4D, 0x1A}}));
 }
 
 // tactile::parse_tiled_tmj_property
@@ -317,7 +317,7 @@ TEST_F(TmjFormatAttributeParserTest, ParseTiledTmjMetadata)
               Contains(Eq(ir::NamedAttribute {"a_bool", Attribute {false}})));
   EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"a_color",
-                                              Attribute {UColor(0x2B, 0x3C, 0x4D, 0x1A)}})));
+                                              (Attribute {UColor {0x2B, 0x3C, 0x4D, 0x1A}})})));
   EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"a_path", Attribute {Path {"a/b/c"}}})));
   EXPECT_THAT(metadata->properties,
