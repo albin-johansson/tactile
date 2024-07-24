@@ -9,6 +9,7 @@ target_sources(tactile-tmj-format-test
                "src/tmj_format_layer_parser_test.cpp"
                "src/tmj_format_map_parser_test.cpp"
                "src/tmj_format_meta_emitter_test.cpp"
+               "src/tmj_format_object_emitter_test.cpp"
                "src/tmj_format_object_parser_test.cpp"
                "src/tmj_format_tileset_parser_test.cpp"
                )
