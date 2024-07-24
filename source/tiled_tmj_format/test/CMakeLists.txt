@@ -8,6 +8,7 @@ target_sources(tactile-tmj-format-test
                "src/tmj_format_attribute_parser_test.cpp"
                "src/tmj_format_layer_parser_test.cpp"
                "src/tmj_format_map_parser_test.cpp"
+               "src/tmj_format_meta_emitter_test.cpp"
                "src/tmj_format_object_parser_test.cpp"
                "src/tmj_format_tileset_parser_test.cpp"
                )
@@ -17,6 +18,7 @@ tactile_prepare_target(tactile-tmj-format-test)
 target_link_libraries(tactile-tmj-format-test
                       PRIVATE
                       tactile::tiled_tmj_format
+                      tactile::base_test_util
                       tactile::null_renderer
                       $<$<BOOL:TACTILE_BUILD_ZLIB_COMPRESSION>:tactile::zlib_compression>
                       $<$<BOOL:TACTILE_BUILD_ZSTD_COMPRESSION>:tactile::zstd_compression>

@@ -11,6 +11,7 @@ target_sources(tactile-tiled-tmj-format
                "src/tmj_format_attribute_parser.cpp"
                "src/tmj_format_layer_parser.cpp"
                "src/tmj_format_map_parser.cpp"
+               "src/tmj_format_meta_emitter.cpp"
                "src/tmj_format_object_parser.cpp"
                "src/tmj_format_tileset_parser.cpp"
 
@@ -22,6 +23,7 @@ target_sources(tactile-tiled-tmj-format
                "inc/tactile/tiled_tmj_format/tmj_format_attribute_parser.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_layer_parser.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_map_parser.hpp"
+               "inc/tactile/tiled_tmj_format/tmj_format_meta_emitter.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_object_parser.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_tileset_parser.hpp"
                )
