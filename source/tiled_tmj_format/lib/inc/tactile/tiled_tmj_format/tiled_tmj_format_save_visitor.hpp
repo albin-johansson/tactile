@@ -13,23 +13,29 @@ namespace tactile {
 
 class IMetaView;
 
-class TACTILE_TMJ_FORMAT_API TiledTmjFormatSaveVisitor final
-  : public IDocumentVisitor
+class TACTILE_TMJ_FORMAT_API TiledTmjFormatSaveVisitor final : public IDocumentVisitor
 {
  public:
   using JSON = nlohmann::json;
 
-  void visit(const IMapView& map) override;
 
-  void visit(const ITilesetView& tileset) override;
+  [[nodiscard]]
+  auto visit(const IMapView& map) -> Result<void> override;
 
-  void visit(const ITileView& tile) override;
+  [[nodiscard]]
+  auto visit(const ITilesetView& tileset) -> Result<void> override;
 
-  void visit(const ILayerView& layer) override;
+  [[nodiscard]]
+  auto visit(const ITileView& tile) -> Result<void> override;
 
-  void visit(const IObjectView& object) override;
+  [[nodiscard]]
+  auto visit(const ILayerView& layer) -> Result<void> override;
 
-  void visit(const IComponentView& component) override;
+  [[nodiscard]]
+  auto visit(const IObjectView& object) -> Result<void> override;
+
+  [[nodiscard]]
+  auto visit(const IComponentView& component) -> Result<void> override;
 
   void set_options(SaveFormatWriteOptions options);
 

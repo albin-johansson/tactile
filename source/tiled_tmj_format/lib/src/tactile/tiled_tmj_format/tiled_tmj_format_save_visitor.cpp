@@ -6,27 +6,35 @@
 
 namespace tactile {
 
-void TiledTmjFormatSaveVisitor::visit(const IMapView& map)
+auto TiledTmjFormatSaveVisitor::visit(const IMapView& map) -> Result<void>
 {
+  return kOK;
 }
 
-void TiledTmjFormatSaveVisitor::visit(const ITilesetView& tileset)
+auto TiledTmjFormatSaveVisitor::visit(const ITilesetView& tileset) -> Result<void>
 {
+  return kOK;
 }
 
-void TiledTmjFormatSaveVisitor::visit(const ITileView& tile)
+auto TiledTmjFormatSaveVisitor::visit(const ITileView& tile) -> Result<void>
 {
+  return kOK;
 }
 
-void TiledTmjFormatSaveVisitor::visit(const ILayerView& layer)
-{}
-
-void TiledTmjFormatSaveVisitor::visit(const IObjectView& object)
+auto TiledTmjFormatSaveVisitor::visit(const ILayerView& layer) -> Result<void>
 {
+  return kOK;
 }
 
-void TiledTmjFormatSaveVisitor::visit(const IComponentView& component)
-{}
+auto TiledTmjFormatSaveVisitor::visit(const IObjectView& object) -> Result<void>
+{
+  return kOK;
+}
+
+auto TiledTmjFormatSaveVisitor::visit(const IComponentView&) -> Result<void>
+{
+  return kOK;
+}
 
 void TiledTmjFormatSaveVisitor::set_options(SaveFormatWriteOptions options)
 {

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -35,43 +36,67 @@ class IDocumentVisitor
    * Visits a component.
    *
    * \param component A component view.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void visit(const IComponentView& component) = 0;
+  [[nodiscard]]
+  virtual auto visit(const IComponentView& component) -> Result<void> = 0;
 
   /**
    * Visits a map.
    *
    * \param map A map view.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void visit(const IMapView& map) = 0;
+  [[nodiscard]]
+  virtual auto visit(const IMapView& map) -> Result<void> = 0;
 
   /**
    * Visits a layer.
    *
    * \param layer A layer view.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void visit(const ILayerView& layer) = 0;
+  [[nodiscard]]
+  virtual auto visit(const ILayerView& layer) -> Result<void> = 0;
 
   /**
    * Visits an object.
    *
    * \param object An object view.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void visit(const IObjectView& object) = 0;
+  [[nodiscard]]
+  virtual auto visit(const IObjectView& object) -> Result<void> = 0;
 
   /**
    * Visits a tileset.
    *
    * \param tileset A tileset view.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void visit(const ITilesetView& tileset) = 0;
+  [[nodiscard]]
+  virtual auto visit(const ITilesetView& tileset) -> Result<void> = 0;
 
   /**
    * Visits a tile in a tileset.
    *
    * \param tile A tile view.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void visit(const ITileView& tile) = 0;
+  [[nodiscard]]
+  virtual auto visit(const ITileView& tile) -> Result<void> = 0;
 };
 
 }  // namespace tactile
