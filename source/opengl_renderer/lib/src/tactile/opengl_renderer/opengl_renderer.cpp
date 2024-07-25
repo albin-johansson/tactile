@@ -104,7 +104,7 @@ OpenGLRenderer::~OpenGLRenderer() noexcept = default;
 
 auto OpenGLRenderer::begin_frame() -> bool
 {
-  ImGui_ImplSDL2_NewFrame(mData->window->get_handle());
+  ImGui_ImplSDL2_NewFrame();
   ImGui_ImplOpenGL3_NewFrame();
   ImGui::NewFrame();
 

@@ -23,7 +23,7 @@ void DockSpace::update(const Language& language)
       require_not_null(ImGui::GetMainViewport(), "null viewport");
   const auto flags = ImGuiDockNodeFlags_NoDockingOverCentralNode;
 
-  mRootId = ImGui::DockSpaceOverViewport(viewport, flags);
+  mRootId = ImGui::DockSpaceOverViewport(0, viewport, flags);
 
   if (!mDidInit && viewport->Size.x > 0 && viewport->Size.y > 0) {
     if (!fs::exists(mImGuiIniPath)) {
