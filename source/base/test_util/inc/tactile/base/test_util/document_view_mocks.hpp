@@ -163,7 +163,17 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(usize, get_global_index, (), (const, override));
 
+  MOCK_METHOD(usize, layer_count, (), (const, override));
+
+  MOCK_METHOD(usize, object_count, (), (const, override));
+
   MOCK_METHOD(Optional<TileID>, get_tile, (const MatrixIndex&), (const, override));
+
+  MOCK_METHOD(TileEncoding, get_tile_encoding, (), (const, override));
+
+  MOCK_METHOD(Optional<CompressionFormat>, get_tile_compression, (), (const, override));
+
+  MOCK_METHOD(Optional<int>, get_compression_level, (), (const, override));
 
   MOCK_METHOD(Optional<MatrixExtent>, get_extent, (), (const, override));
 

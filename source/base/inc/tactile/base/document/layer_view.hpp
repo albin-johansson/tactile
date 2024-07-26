@@ -5,7 +5,9 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
+#include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/matrix_extent.hpp"
 #include "tactile/base/util/matrix_index.hpp"
@@ -85,6 +87,24 @@ class ILayerView
   virtual auto get_global_index() const -> usize = 0;
 
   /**
+   * Returns the number of contained layers (for group layers).
+   *
+   * \return
+   * A layer count.
+   */
+  [[nodiscard]]
+  virtual auto layer_count() const -> usize = 0;
+
+  /**
+   * Returns the number of contained objects (for object layers).
+   *
+   * \return
+   * An object count.
+   */
+  [[nodiscard]]
+  virtual auto object_count() const -> usize = 0;
+
+  /**
    * Returns a tile in the associated tile layer.
    *
    * \note
@@ -98,6 +118,33 @@ class ILayerView
    */
   [[nodiscard]]
   virtual auto get_tile(const MatrixIndex& index) const -> Optional<TileID> = 0;
+
+  /**
+   * Returns the tile encoding format used by the layer.
+   *
+   * \return
+   * A tile encoding format.
+   */
+  [[nodiscard]]
+  virtual auto get_tile_encoding() const -> TileEncoding = 0;
+
+  /**
+   * Returns the tile compression format used by the map, if any.
+   *
+   * \return
+   * A compression format if compression is used; an empty optional otherwise.
+   */
+  [[nodiscard]]
+  virtual auto get_tile_compression() const -> Optional<CompressionFormat> = 0;
+
+  /**
+   * Returns the compression level used by the map, if any.
+   *
+   * \return
+   * A compression level if compression is used; an empty optional otherwise.
+   */
+  [[nodiscard]]
+  virtual auto get_compression_level() const -> Optional<int> = 0;
 
   /**
    * Returns the extent of the associated tile layer.

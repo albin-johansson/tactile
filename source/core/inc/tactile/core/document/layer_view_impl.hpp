@@ -9,6 +9,7 @@
 
 namespace tactile {
 
+struct CTileFormat;
 class MapDocument;
 class ILayerView;
 
@@ -50,7 +51,22 @@ class LayerViewImpl final : public ILayerView
   auto get_global_index() const -> usize override;
 
   [[nodiscard]]
+  auto layer_count() const -> usize override;
+
+  [[nodiscard]]
+  auto object_count() const -> usize override;
+
+  [[nodiscard]]
   auto get_tile(const MatrixIndex& index) const -> Optional<TileID> override;
+
+  [[nodiscard]]
+  auto get_tile_encoding() const -> TileEncoding override;
+
+  [[nodiscard]]
+  auto get_tile_compression() const -> Optional<CompressionFormat> override;
+
+  [[nodiscard]]
+  auto get_compression_level() const -> Optional<int> override;
 
   [[nodiscard]]
   auto get_extent() const -> Optional<MatrixExtent> override;
@@ -63,6 +79,9 @@ class LayerViewImpl final : public ILayerView
   const ILayerView* mParentLayer;
   EntityID mLayerId;
   MetaViewImpl mMeta;
+
+  [[nodiscard]]
+  auto _get_tile_format() const -> const CTileFormat&;
 };
 
 }  // namespace tactile

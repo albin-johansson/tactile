@@ -109,6 +109,27 @@ auto LayerViewImpl::get_global_index() const -> usize
   return get_global_layer_index(registry, map.root_layer, mLayerId).value();
 }
 
+auto LayerViewImpl::layer_count() const -> usize
+{
+  const auto& registry = mDocument->get_registry();
+
+  if (const auto* group = registry.find<CGroupLayer>(mLayerId)) {
+    return group->layers.size();
+  }
+
+  return 0;
+}
+
+auto LayerViewImpl::object_count() const -> usize
+{
+  const auto& registry = mDocument->get_registry();
+
+  if (const auto* object_layer = registry.find<CObjectLayer>(mLayerId)) {
+    return object_layer->objects.size();
+  }
+
+  return 0;
+}
 
 auto LayerViewImpl::get_tile(const MatrixIndex& index) const -> Optional<TileID>
 {
@@ -119,6 +140,21 @@ auto LayerViewImpl::get_tile(const MatrixIndex& index) const -> Optional<TileID>
   }
 
   return get_tile_layer_data(registry, mLayerId).at(index);
+}
+
+auto LayerViewImpl::get_tile_encoding() const -> TileEncoding
+{
+  return _get_tile_format().encoding;
+}
+
+auto LayerViewImpl::get_tile_compression() const -> Optional<CompressionFormat>
+{
+  return _get_tile_format().compression;
+}
+
+auto LayerViewImpl::get_compression_level() const -> Optional<int>
+{
+  return _get_tile_format().comp_level;
 }
 
 auto LayerViewImpl::get_extent() const -> Optional<MatrixExtent>
@@ -135,6 +171,13 @@ auto LayerViewImpl::get_extent() const -> Optional<MatrixExtent>
 auto LayerViewImpl::get_meta() const -> const IMetaView&
 {
   return mMeta;
+}
+
+auto LayerViewImpl::_get_tile_format() const -> const CTileFormat&
+{
+  const auto& registry = mDocument->get_registry();
+  const auto& document_info = registry.get<CDocumentInfo>();
+  return registry.get<CTileFormat>(document_info.root);
 }
 
 }  // namespace tactile
