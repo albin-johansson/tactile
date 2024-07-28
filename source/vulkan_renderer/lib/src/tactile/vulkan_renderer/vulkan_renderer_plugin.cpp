@@ -8,14 +8,16 @@
 
 namespace tactile {
 
-void VulkanRendererPlugin::load(IRuntime& runtime)
+void VulkanRendererPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading Vulkan renderer plugin");
+  mRuntime = runtime;
 }
 
-void VulkanRendererPlugin::unload(IRuntime& runtime)
+void VulkanRendererPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading Vulkan renderer plugin");
+  mRuntime = nullptr;
 }
 
 auto tactile_make_plugin() -> IPlugin*

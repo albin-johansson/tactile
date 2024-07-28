@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/plugin.hpp"
 #include "tactile/tiled_tmj_format/api.hpp"
@@ -19,11 +20,12 @@ class TACTILE_TMJ_FORMAT_API TiledTmjFormatPlugin final : public IPlugin
 
   ~TiledTmjFormatPlugin() noexcept override = default;
 
-  void load(IRuntime& runtime) override;
+  void load(IRuntime* runtime) override;
 
-  void unload(IRuntime& runtime) override;
+  void unload() override;
 
  private:
+  IRuntime* mRuntime {};
   TiledTmjFormat mFormat {};
 };
 

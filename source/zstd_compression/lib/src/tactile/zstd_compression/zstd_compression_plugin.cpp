@@ -9,19 +9,22 @@
 
 namespace tactile {
 
-void ZstdCompressionPlugin::load(IRuntime& runtime)
+void ZstdCompressionPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading Zstd compression plugin");
+  mRuntime = runtime;
 
   mCompressor = std::make_unique<ZstdCompressor>();
-  runtime.set_compression_format(CompressionFormat::kZstd, mCompressor.get());
+  mRuntime->set_compression_format(CompressionFormat::kZstd, mCompressor.get());
 }
 
-void ZstdCompressionPlugin::unload(IRuntime& runtime)
+void ZstdCompressionPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading Zstd compression plugin");
 
-  runtime.set_compression_format(CompressionFormat::kZstd, nullptr);
+  mRuntime->set_compression_format(CompressionFormat::kZstd, nullptr);
+  mRuntime = nullptr;
+
   mCompressor.reset();
 }
 

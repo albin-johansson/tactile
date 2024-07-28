@@ -8,14 +8,16 @@
 
 namespace tactile {
 
-void GodotTscnFormatPlugin::load(IRuntime& runtime)
+void GodotTscnFormatPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading Godot TSCN format plugin");
+  mRuntime = runtime;
 }
 
-void GodotTscnFormatPlugin::unload(IRuntime& runtime)
+void GodotTscnFormatPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading Godot TSCN format plugin");
+  mRuntime = nullptr;
 }
 
 auto tactile_make_plugin() -> IPlugin*

@@ -16,11 +16,12 @@ namespace tactile {
 class TACTILE_ZSTD_API ZstdCompressionPlugin final : public IPlugin
 {
  public:
-  void load(IRuntime& runtime) override;
+  void load(IRuntime* runtime) override;
 
-  void unload(IRuntime& runtime) override;
+  void unload() override;
 
  private:
+  IRuntime* mRuntime {};
   Unique<ZstdCompressor> mCompressor {};
 };
 

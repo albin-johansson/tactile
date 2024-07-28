@@ -19,16 +19,15 @@ class IPlugin
   /**
    * Loads the resources associated with the plugin.
    *
-   * \param runtime The associated runtime.
+   * \param runtime A pointer to the associated runtime. This pointer is guaranteed to be
+   *                valid throughout the lifetime of the plugin, so it can safely be stored.
    */
-  virtual void load(IRuntime& runtime) = 0;
+  virtual void load(IRuntime* runtime) = 0;
 
   /**
    * Releases any resources held by the plugin.
-   *
-   * \param runtime The associated runtime.
    */
-  virtual void unload(IRuntime& runtime) = 0;
+  virtual void unload() = 0;
 };
 
 using PluginConstructor = IPlugin*();

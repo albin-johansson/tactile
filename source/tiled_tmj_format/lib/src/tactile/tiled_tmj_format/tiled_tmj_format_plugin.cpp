@@ -9,16 +9,20 @@
 
 namespace tactile {
 
-void TiledTmjFormatPlugin::load(IRuntime& runtime)
+void TiledTmjFormatPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading Tiled TMJ format plugin");
-  runtime.set_save_format(SaveFormatId::kTiledTmj, &mFormat);
+  mRuntime = runtime;
+
+  mRuntime->set_save_format(SaveFormatId::kTiledTmj, &mFormat);
 }
 
-void TiledTmjFormatPlugin::unload(IRuntime& runtime)
+void TiledTmjFormatPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading Tiled TMJ format plugin");
-  runtime.set_save_format(SaveFormatId::kTiledTmj, nullptr);
+
+  mRuntime->set_save_format(SaveFormatId::kTiledTmj, nullptr);
+  mRuntime = nullptr;
 }
 
 auto tactile_make_plugin() -> IPlugin*

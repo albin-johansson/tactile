@@ -8,14 +8,16 @@
 
 namespace tactile {
 
-void YamlFormatPlugin::load(IRuntime& runtime)
+void YamlFormatPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading Tactile YAML format plugin");
+  mRuntime = runtime;
 }
 
-void YamlFormatPlugin::unload(IRuntime& runtime)
+void YamlFormatPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading Tactile YAML format plugin");
+  mRuntime = nullptr;
 }
 
 auto tactile_make_plugin() -> IPlugin*

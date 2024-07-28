@@ -14,12 +14,12 @@ class OpenGLRendererTest : public testing::Test
  protected:
   void SetUp() override
   {
-    mPlugin.load(mRuntime);
+    mPlugin.load(&mRuntime);
   }
 
   void TearDown() override
   {
-    mPlugin.unload(mRuntime);
+    mPlugin.unload();
   }
 
   Runtime mRuntime {};

@@ -11,11 +11,12 @@ namespace tactile {
 class TACTILE_YAML_FORMAT_API YamlFormatPlugin final : public IPlugin
 {
  public:
-  void load(IRuntime& runtime) override;
+  void load(IRuntime* runtime) override;
 
-  void unload(IRuntime& runtime) override;
+  void unload() override;
 
  private:
+  IRuntime* mRuntime {};
 };
 
 extern "C"

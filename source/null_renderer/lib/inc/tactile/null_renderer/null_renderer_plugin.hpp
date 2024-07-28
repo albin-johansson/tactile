@@ -19,11 +19,12 @@ namespace tactile {
 class TACTILE_NULL_RENDERER_API NullRendererPlugin final : public IPlugin
 {
  public:
-  void load(IRuntime& runtime) override;
+  void load(IRuntime* runtime) override;
 
-  void unload(IRuntime& runtime) override;
+  void unload() override;
 
  private:
+  IRuntime* mRuntime {};
   Unique<NullRenderer> mRenderer {};
 };
 

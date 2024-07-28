@@ -9,12 +9,13 @@
 
 namespace tactile {
 
-void NullRendererPlugin::load(IRuntime& runtime)
+void NullRendererPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading null renderer plugin");
+  mRuntime = runtime;
 
-  runtime.init_window(0);
-  auto* window = runtime.get_window();
+  mRuntime->init_window(0);
+  auto* window = mRuntime->get_window();
 
   if (!window) {
     log(LogLevel::kError, "Could not initialize window");
@@ -22,14 +23,16 @@ void NullRendererPlugin::load(IRuntime& runtime)
   }
 
   mRenderer = std::make_unique<NullRenderer>(window);
-  runtime.set_renderer(mRenderer.get());
+  mRuntime->set_renderer(mRenderer.get());
 }
 
-void NullRendererPlugin::unload(IRuntime& runtime)
+void NullRendererPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading null renderer plugin");
 
-  runtime.set_renderer(nullptr);
+  mRuntime->set_renderer(nullptr);
+  mRuntime = nullptr;
+
   mRenderer.reset();
 }
 

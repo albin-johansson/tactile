@@ -23,7 +23,7 @@ PluginInstance::PluginInstance(IRuntime* runtime,
 PluginInstance::~PluginInstance() noexcept
 {
   if (mPrimed) {
-    mPlugin->unload(*mRuntime);
+    mPlugin->unload();
     mPluginDestructor(mPlugin);
     mPrimed = false;
   }
@@ -63,7 +63,7 @@ auto PluginInstance::load(IRuntime* runtime,
   }
 
   TACTILE_LOG_DEBUG("Loading plugin '{}'", plugin_name);
-  plugin->load(*runtime);
+  plugin->load(runtime);
 
   return PluginInstance {runtime, std::move(dll), plugin_dtor, plugin};
 }

@@ -11,9 +11,12 @@ namespace tactile {
 class TACTILE_TSCN_FORMAT_API GodotTscnFormatPlugin final : public IPlugin
 {
  public:
-  void load(IRuntime& runtime) override;
+  void load(IRuntime* runtime) override;
 
-  void unload(IRuntime& runtime) override;
+  void unload() override;
+
+ private:
+  IRuntime* mRuntime {};
 };
 
 extern "C"

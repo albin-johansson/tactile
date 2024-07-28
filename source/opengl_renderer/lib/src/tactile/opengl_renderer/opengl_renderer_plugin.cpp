@@ -32,29 +32,32 @@ void set_hints()
 
 }  // namespace opengl_renderer_plugin
 
-void OpenGLRendererPlugin::load(IRuntime& runtime)
+void OpenGLRendererPlugin::load(IRuntime* runtime)
 {
+  mRuntime = runtime;
   opengl_renderer_plugin::set_hints();
 
-  runtime.init_window(SDL_WINDOW_OPENGL);
-  auto* window = runtime.get_window();
+  mRuntime->init_window(SDL_WINDOW_OPENGL);
+  auto* window = mRuntime->get_window();
 
   if (!window) {
     log(LogLevel::kError, "Could not initialize OpenGL window");
     return;
   }
 
-  auto* imgui_context = runtime.get_imgui_context();
+  auto* imgui_context = mRuntime->get_imgui_context();
 
   if (auto renderer = OpenGLRenderer::make(window, imgui_context)) {
     mRenderer = std::move(*renderer);
-    runtime.set_renderer(&mRenderer.value());
+    mRuntime->set_renderer(&mRenderer.value());
   }
 }
 
-void OpenGLRendererPlugin::unload(IRuntime& runtime)
+void OpenGLRendererPlugin::unload()
 {
-  runtime.set_renderer(nullptr);
+  mRuntime->set_renderer(nullptr);
+  mRuntime = nullptr;
+
   mRenderer.reset();
 }
 

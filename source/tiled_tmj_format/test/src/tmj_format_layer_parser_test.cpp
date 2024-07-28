@@ -22,22 +22,22 @@ class TmjFormatLayerParserTest : public testing::Test
   void SetUp() override
   {
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
-    mZlibPlugin.load(mRuntime);
+    mZlibPlugin.load(&mRuntime);
 #endif  // TACTILE_HAS_ZLIB_COMPRESSION
 
 #ifdef TACTILE_HAS_ZSTD_COMPRESSION
-    mZstdPlugin.load(mRuntime);
+    mZstdPlugin.load(&mRuntime);
 #endif  // TACTILE_HAS_ZSTD_COMPRESSION
   }
 
   void TearDown() override
   {
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
-    mZlibPlugin.unload(mRuntime);
+    mZlibPlugin.unload();
 #endif  // TACTILE_HAS_ZLIB_COMPRESSION
 
 #ifdef TACTILE_HAS_ZSTD_COMPRESSION
-    mZstdPlugin.unload(mRuntime);
+    mZstdPlugin.unload();
 #endif  // TACTILE_HAS_ZSTD_COMPRESSION
   }
 
