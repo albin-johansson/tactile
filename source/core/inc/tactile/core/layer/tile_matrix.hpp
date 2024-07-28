@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/id.hpp"
+#include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -17,6 +18,8 @@ class ITileMatrix
 {
  public:
   TACTILE_INTERFACE_CLASS(ITileMatrix);
+
+  virtual void write_bytes(ByteStream& byte_stream) const = 0;
 
   /**
    * Changes the extent of the matrix.

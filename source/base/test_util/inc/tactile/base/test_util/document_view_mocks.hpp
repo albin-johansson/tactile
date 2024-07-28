@@ -153,6 +153,8 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(void, accept, (IDocumentVisitor&), (const, override));
 
+  MOCK_METHOD(void, write_tile_bytes, (ByteStream&), (const, override));
+
   MOCK_METHOD(const ILayerView*, get_parent_layer, (), (const, override));
 
   MOCK_METHOD(LayerID, get_id, (), (const, override));

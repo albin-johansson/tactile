@@ -51,6 +51,15 @@ void LayerViewImpl::accept(IDocumentVisitor& visitor) const
   }
 }
 
+void LayerViewImpl::write_tile_bytes(ByteStream& byte_stream) const
+{
+  const auto& registry = mDocument->get_registry();
+
+  if (is_tile_layer(registry, mLayerId)) {
+    get_tile_layer_data(registry, mLayerId).write_bytes(byte_stream);
+  }
+}
+
 auto LayerViewImpl::get_parent_layer() const -> const ILayerView*
 {
   return mParentLayer;

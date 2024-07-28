@@ -34,6 +34,8 @@ class DenseTileMatrix final : public ITileMatrix
 
   ~DenseTileMatrix() noexcept = default;
 
+  void write_bytes(ByteStream& byte_stream) const override;
+
   void resize(const MatrixExtent& new_extent) override;
 
   auto operator[](const MatrixIndex& index) noexcept -> TileID& override;

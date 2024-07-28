@@ -5,6 +5,7 @@
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
+#include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
@@ -31,6 +32,8 @@ class ILayerView
    * \param visitor The visitor to use.
    */
   virtual void accept(IDocumentVisitor& visitor) const = 0;
+
+  virtual void write_tile_bytes(ByteStream& byte_stream) const = 0;
 
   /**
    * Returns a view of the parent layer, if any.

@@ -34,6 +34,8 @@ class SparseTileMatrix final : public ITileMatrix
 
   ~SparseTileMatrix() noexcept = default;
 
+  void write_bytes(ByteStream& byte_stream) const override;
+
   void resize(const MatrixExtent& new_extent) override;
 
   [[nodiscard]]

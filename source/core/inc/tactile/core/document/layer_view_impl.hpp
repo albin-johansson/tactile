@@ -32,6 +32,8 @@ class LayerViewImpl final : public ILayerView
 
   void accept(IDocumentVisitor& visitor) const override;
 
+  void write_tile_bytes(ByteStream& byte_stream) const override;
+
   [[nodiscard]]
   auto get_parent_layer() const -> const ILayerView* override;
 

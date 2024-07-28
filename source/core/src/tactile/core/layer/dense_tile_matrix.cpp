@@ -3,15 +3,16 @@
 #include "tactile/core/layer/dense_tile_matrix.hpp"
 
 #include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/base/platform/bits.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
-inline namespace dense_tile_matrix {
+namespace dense_tile_matrix {
 
-void _add_rows(Vector<Vector<TileID>>& rows,
-               const MatrixExtent::value_type n,
-               const MatrixExtent::value_type cols)
+void add_rows(Vector<Vector<TileID>>& rows,
+              const MatrixExtent::value_type n,
+              const MatrixExtent::value_type cols)
 {
   rows.reserve(rows.size() + saturate_cast<usize>(n));
   for (MatrixExtent::value_type i = 0; i < n; ++i) {
@@ -19,8 +20,7 @@ void _add_rows(Vector<Vector<TileID>>& rows,
   }
 }
 
-void _add_columns(Vector<Vector<TileID>>& rows,
-                  const MatrixExtent::value_type n)
+void add_columns(Vector<Vector<TileID>>& rows, const MatrixExtent::value_type n)
 {
   for (auto& row : rows) {
     row.reserve(row.size() + saturate_cast<usize>(n));
@@ -30,8 +30,7 @@ void _add_columns(Vector<Vector<TileID>>& rows,
   }
 }
 
-void _remove_rows(Vector<Vector<TileID>>& rows,
-                  const MatrixExtent::value_type n)
+void remove_rows(Vector<Vector<TileID>>& rows, const MatrixExtent::value_type n)
 {
   for (MatrixExtent::value_type i = 0; i < n; ++i) {
     TACTILE_ASSERT(!rows.empty());
@@ -39,8 +38,7 @@ void _remove_rows(Vector<Vector<TileID>>& rows,
   }
 }
 
-void _remove_columns(Vector<Vector<TileID>>& rows,
-                     const MatrixExtent::value_type n)
+void remove_columns(Vector<Vector<TileID>>& rows, const MatrixExtent::value_type n)
 {
   for (auto& row : rows) {
     for (MatrixExtent::value_type i = 0; i < n; ++i) {
@@ -60,6 +58,21 @@ DenseTileMatrix::DenseTileMatrix(const MatrixExtent& extent)
                Vector<TileID>(saturate_cast<usize>(mExtent.cols), kEmptyTile));
 }
 
+void DenseTileMatrix::write_bytes(ByteStream& byte_stream) const
+{
+  const auto row_count = saturate_cast<usize>(mExtent.rows);
+  const auto col_count = saturate_cast<usize>(mExtent.cols);
+
+  byte_stream.reserve(row_count * col_count * sizeof(TileID));
+
+  for (usize row = 0; row < row_count; ++row) {
+    for (usize col = 0; col < col_count; ++col) {
+      const auto tile_id = to_little_endian(mRows[row][col]);
+      each_byte(tile_id, [&](const uint8 byte) { byte_stream.push_back(byte); });
+    }
+  }
+}
+
 void DenseTileMatrix::resize(const MatrixExtent& new_extent)
 {
   _set_column_count(new_extent.cols);
@@ -70,10 +83,10 @@ void DenseTileMatrix::_set_row_count(const MatrixExtent::value_type rows)
 {
   if (rows != mExtent.rows) {
     if (rows > mExtent.rows) {
-      _add_rows(mRows, rows - mExtent.rows, mExtent.cols);
+      dense_tile_matrix::add_rows(mRows, rows - mExtent.rows, mExtent.cols);
     }
     else {
-      _remove_rows(mRows, mExtent.rows - rows);
+      dense_tile_matrix::remove_rows(mRows, mExtent.rows - rows);
     }
 
     mExtent.rows = rows;
@@ -84,10 +97,10 @@ void DenseTileMatrix::_set_column_count(const MatrixExtent::value_type cols)
 {
   if (cols != mExtent.cols) {
     if (cols > mExtent.cols) {
-      _add_columns(mRows, cols - mExtent.cols);
+      dense_tile_matrix::add_columns(mRows, cols - mExtent.cols);
     }
     else {
-      _remove_columns(mRows, mExtent.cols - cols);
+      dense_tile_matrix::remove_columns(mRows, mExtent.cols - cols);
     }
 
     mExtent.cols = cols;

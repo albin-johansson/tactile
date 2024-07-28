@@ -6,6 +6,7 @@ target_sources(tactile-tmj-format-test
                PRIVATE
                "src/main.cpp"
                "src/tmj_format_attribute_parser_test.cpp"
+               "src/tmj_format_layer_emitter_test.cpp"
                "src/tmj_format_layer_parser_test.cpp"
                "src/tmj_format_map_parser_test.cpp"
                "src/tmj_format_meta_emitter_test.cpp"

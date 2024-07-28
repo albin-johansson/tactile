@@ -2,6 +2,7 @@
 
 #include "tactile/core/layer/sparse_tile_matrix.hpp"
 
+#include "tactile/base/platform/bits.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/util/lookup.hpp"
@@ -12,11 +13,27 @@ SparseTileMatrix::SparseTileMatrix(const MatrixExtent& extent)
   : mExtent {extent}
 {}
 
+void SparseTileMatrix::write_bytes(ByteStream& byte_stream) const
+{
+  const auto row_count = saturate_cast<usize>(mExtent.rows);
+  const auto col_count = saturate_cast<usize>(mExtent.cols);
+
+  byte_stream.reserve(row_count * col_count * sizeof(TileID));
+
+  for (ssize row = 0; row < mExtent.rows; ++row) {
+    for (ssize col = 0; col < mExtent.cols; ++col) {
+      const auto tile_iter = mTiles.find(MatrixIndex {row, col});
+      const auto tile_id =
+          to_little_endian((tile_iter != mTiles.end()) ? tile_iter->second : kEmptyTile);
+      each_byte(tile_id, [&](const uint8 byte) { byte_stream.push_back(byte); });
+    }
+  }
+}
+
 void SparseTileMatrix::resize(const MatrixExtent& new_extent)
 {
   mExtent = new_extent;
-  std::erase_if(mTiles,
-                [this](const auto& pair) { return !is_valid(pair.first); });
+  std::erase_if(mTiles, [this](const auto& pair) { return !is_valid(pair.first); });
 }
 
 auto SparseTileMatrix::at(const MatrixIndex& index) -> TileID
