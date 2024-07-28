@@ -51,6 +51,9 @@ class TilesetViewImpl final : public ITilesetView
   [[nodiscard]]
   auto get_meta() const -> const IMetaView& override;
 
+  [[nodiscard]]
+  auto get_filename() const -> String override;
+
  private:
   const MapDocument* mDocument;
   EntityID mTilesetId;

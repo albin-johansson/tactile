@@ -131,6 +131,8 @@ class TilesetViewMock : public ITilesetView
 
   MOCK_METHOD(const IMetaView&, get_meta, (), (const, override));
 
+  MOCK_METHOD(String, get_filename, (), (const, override));
+
   [[nodiscard]]
   auto get_meta_view_mock() -> MetaViewMock&
   {

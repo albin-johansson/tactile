@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/container/path.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -103,6 +104,15 @@ class ITilesetView
    */
   [[nodiscard]]
   virtual auto get_meta() const -> const IMetaView& = 0;
+
+  /**
+   * Returns the filename of the associated external tileset file (excluding the extension).
+   *
+   * \return
+   * A filename without a file extension.
+   */
+  [[nodiscard]]
+  virtual auto get_filename() const -> String = 0;
 };
 
 }  // namespace tactile
