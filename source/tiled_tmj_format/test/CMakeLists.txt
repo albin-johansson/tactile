@@ -1,8 +1,8 @@
 project(tactile-tiled-tmj-format-test CXX)
 
-add_executable(tactile-tmj-format-test)
+add_executable(tactile-tiled-tmj-format-test)
 
-target_sources(tactile-tmj-format-test
+target_sources(tactile-tiled-tmj-format-test
                PRIVATE
                "src/main.cpp"
                "src/tmj_format_attribute_parser_test.cpp"
@@ -17,9 +17,9 @@ target_sources(tactile-tmj-format-test
                "src/tmj_format_tileset_parser_test.cpp"
                )
 
-tactile_prepare_target(tactile-tmj-format-test)
+tactile_prepare_target(tactile-tiled-tmj-format-test)
 
-target_link_libraries(tactile-tmj-format-test
+target_link_libraries(tactile-tiled-tmj-format-test
                       PRIVATE
                       tactile::tiled_tmj_format
                       tactile::base_test_util
@@ -29,7 +29,7 @@ target_link_libraries(tactile-tmj-format-test
                       GTest::gtest
                       )
 
-target_compile_definitions(tactile-tmj-format-test
+target_compile_definitions(tactile-tiled-tmj-format-test
                            PRIVATE
                            "$<$<BOOL:TACTILE_BUILD_ZLIB_COMPRESSION>:TACTILE_HAS_ZLIB_COMPRESSION>"
                            "$<$<BOOL:TACTILE_BUILD_ZSTD_COMPRESSION>:TACTILE_HAS_ZSTD_COMPRESSION>"
