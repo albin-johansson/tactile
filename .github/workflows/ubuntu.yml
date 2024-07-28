@@ -128,3 +128,7 @@ jobs:
       - name: Run Zstd compression tests
         working-directory: ./build/debug
         run: ./tactile-zstd-compression-test
+
+      - name: Run Tiled TMJ format tests
+        working-directory: ./build/debug
+        run: ./tactile-tiled-tmj-format-test

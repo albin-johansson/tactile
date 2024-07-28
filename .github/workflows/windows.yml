@@ -95,3 +95,8 @@ jobs:
         working-directory: ./build/debug
         shell: cmd
         run: tactile-zstd-compression-test.exe
+
+      - name: Run Tiled TMJ format tests
+        working-directory: ./build/debug
+        shell: cmd
+        run: tactile-tiled-tmj-format-test.exe
