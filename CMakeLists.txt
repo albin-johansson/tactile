@@ -85,6 +85,7 @@ add_subdirectory("source/proto")
 add_subdirectory("source/base")
 add_subdirectory("source/core")
 add_subdirectory("source/runtime")
+add_subdirectory("source/json_util")
 add_subdirectory("source/main")
 
 if (TACTILE_BUILD_YAML_FORMAT)

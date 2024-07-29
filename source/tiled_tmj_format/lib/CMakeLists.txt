@@ -54,5 +54,6 @@ target_link_libraries(tactile-tiled-tmj-format
                       PUBLIC
                       tactile::base
                       tactile::runtime
+                      tactile::json_util
                       nlohmann_json::nlohmann_json
                       )
