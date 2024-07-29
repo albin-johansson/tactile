@@ -30,7 +30,8 @@ class LayerViewImpl final : public ILayerView
                 const ILayerView* parent_layer,
                 EntityID layer_id);
 
-  void accept(IDocumentVisitor& visitor) const override;
+  [[nodiscard]]
+  auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
 
   void write_tile_bytes(ByteStream& byte_stream) const override;
 

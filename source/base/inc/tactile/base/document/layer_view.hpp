@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
@@ -30,8 +31,12 @@ class ILayerView
    * Inspects the layer.
    *
    * \param visitor The visitor to use.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void accept(IDocumentVisitor& visitor) const = 0;
+  [[nodiscard]]
+  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
 
   virtual void write_tile_bytes(ByteStream& byte_stream) const = 0;
 

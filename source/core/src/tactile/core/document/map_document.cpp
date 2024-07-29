@@ -87,10 +87,10 @@ TACTILE_DEFINE_MOVE(MapDocument);
 
 MapDocument::~MapDocument() noexcept = default;
 
-void MapDocument::accept(IDocumentVisitor& visitor) const
+auto MapDocument::accept(IDocumentVisitor& visitor) const -> Result<void>
 {
   const MapViewImpl map_view {this};
-  map_view.accept(visitor);
+  return map_view.accept(visitor);
 }
 
 void MapDocument::update()

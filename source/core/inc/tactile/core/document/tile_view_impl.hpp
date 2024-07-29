@@ -31,7 +31,8 @@ class TileViewImpl final : public ITileView
                const ITilesetView* tileset_view,
                EntityID tile_id);
 
-  void accept(IDocumentVisitor& visitor) const override;
+  [[nodiscard]]
+  auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
 
   [[nodiscard]]
   auto get_parent_tileset() const -> const ITilesetView& override;

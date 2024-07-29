@@ -19,26 +19,35 @@ MapViewImpl::MapViewImpl(const MapDocument* document)
     mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
 {}
 
-void MapViewImpl::accept(IDocumentVisitor& visitor) const
+auto MapViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
 {
   const auto& registry = mDocument->get_registry();
 
   const auto& map = _get_map();
   const auto& root_layer = registry.get<CGroupLayer>(map.root_layer);
 
-  visitor.visit(*this);
+  if (const auto map_result = visitor.visit(*this); !map_result.has_value()) {
+    return propagate_unexpected(map_result);
+  }
 
   for (const auto tileset_id : map.attached_tilesets) {
     const TilesetViewImpl tileset_view {mDocument, tileset_id};
-    tileset_view.accept(visitor);
+    if (const auto tileset_result = tileset_view.accept(visitor);
+        !tileset_result.has_value()) {
+      return propagate_unexpected(tileset_result);
+    }
   }
 
   for (const auto layer_id : root_layer.layers) {
     const LayerViewImpl layer_view {mDocument, nullptr, layer_id};
-    layer_view.accept(visitor);
+    if (const auto layer_result = layer_view.accept(visitor); !layer_result.has_value()) {
+      return propagate_unexpected(layer_result);
+    }
   }
 
   // TODO iterate component definitions
+
+  return kOK;
 }
 
 auto MapViewImpl::get_tile_size() const -> Int2

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
@@ -28,8 +29,11 @@ class IMapView
    * Inspects the map.
    *
    * \param visitor The visitor to use.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void accept(IDocumentVisitor& visitor) const = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
 
   /**
    * Returns the logical size of tiles in the map.

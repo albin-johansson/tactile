@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -24,8 +25,12 @@ class IDocument
    * Inspects the document.
    *
    * \param visitor The visitor to use.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void accept(IDocumentVisitor& visitor) const = 0;
+  [[nodiscard]]
+  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
 
   /**
    * Updates the state of the document.

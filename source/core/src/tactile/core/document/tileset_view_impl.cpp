@@ -16,26 +16,33 @@
 
 namespace tactile {
 
-TilesetViewImpl::TilesetViewImpl(const MapDocument* document,
-                                 const EntityID tileset_id)
+TilesetViewImpl::TilesetViewImpl(const MapDocument* document, const EntityID tileset_id)
   : mDocument {require_not_null(document, "null document")},
     mTilesetId {tileset_id},
     mMeta {mDocument, mTilesetId}
 {}
 
-void TilesetViewImpl::accept(IDocumentVisitor& visitor) const
+auto TilesetViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
 {
-  visitor.visit(*this);
+  if (const auto tileset_result = visitor.visit(*this); !tileset_result.has_value()) {
+    return propagate_unexpected(tileset_result);
+  }
 
   const auto& registry = mDocument->get_registry();
   const auto& tileset = registry.get<CTileset>(mTilesetId);
 
   for (const auto tile_id : tileset.tiles) {
-    if (!is_tile_plain(registry, tile_id)) {
-      const TileViewImpl tile_view {mDocument, this, tile_id};
-      tile_view.accept(visitor);
+    if (is_tile_plain(registry, tile_id)) {
+      continue;
+    }
+
+    const TileViewImpl tile_view {mDocument, this, tile_id};
+    if (const auto tile_result = tile_view.accept(visitor); !tile_result.has_value()) {
+      return propagate_unexpected(tile_result);
     }
   }
+
+  return kOK;
 }
 
 auto TilesetViewImpl::get_first_tile_id() const -> TileID
@@ -59,10 +66,9 @@ auto TilesetViewImpl::tile_definition_count() const -> usize
   const auto& registry = mDocument->get_registry();
   const auto& tileset = registry.get<CTileset>(mTilesetId);
 
-  return saturate_cast<usize>(
-      std::ranges::count_if(tileset.tiles, [&registry](const EntityID tile_id) {
-        return !is_tile_plain(registry, tile_id);
-      }));
+  return saturate_cast<usize>(std::ranges::count_if(
+      tileset.tiles,
+      [&registry](const EntityID tile_id) { return !is_tile_plain(registry, tile_id); }));
 }
 
 auto TilesetViewImpl::column_count() const -> usize

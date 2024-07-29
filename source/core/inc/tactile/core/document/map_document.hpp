@@ -50,7 +50,8 @@ class MapDocument final : public IDocument
 
   ~MapDocument() noexcept override;
 
-  void accept(IDocumentVisitor& visitor) const override;
+  [[nodiscard]]
+  auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
 
   void update() override;
 

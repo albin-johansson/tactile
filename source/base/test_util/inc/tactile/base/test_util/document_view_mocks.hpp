@@ -57,12 +57,13 @@ class ObjectViewMock : public IObjectView
   {
     ON_CALL(*this, accept).WillByDefault([this](IDocumentVisitor& visitor) {
       visitor.visit(*this).value();
+      return kOK;
     });
 
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
   }
 
-  MOCK_METHOD(void, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
   MOCK_METHOD(const ILayerView*, get_parent_layer, (), (const, override));
 
@@ -100,7 +101,7 @@ class TileViewMock : public ITileView
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
   }
 
-  MOCK_METHOD(void, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
   MOCK_METHOD(const ITilesetView&, get_parent_tileset, (), (const, override));
 
@@ -135,7 +136,7 @@ class TilesetViewMock : public ITilesetView
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
   }
 
-  MOCK_METHOD(void, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
   MOCK_METHOD(TileID, get_first_tile_id, (), (const, override));
 
@@ -173,7 +174,7 @@ class LayerViewMock : public ILayerView
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
   }
 
-  MOCK_METHOD(void, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
   MOCK_METHOD(void, write_tile_bytes, (ByteStream&), (const, override));
 
@@ -242,7 +243,7 @@ class MapViewMock : public IMapView
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
   }
 
-  MOCK_METHOD(void, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
   MOCK_METHOD(Int2, get_tile_size, (), (const, override));
 

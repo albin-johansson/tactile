@@ -30,9 +30,9 @@ ObjectViewImpl::ObjectViewImpl(const IDocument* document,
     mMeta {document, object_id}
 {}
 
-void ObjectViewImpl::accept(IDocumentVisitor& visitor) const
+auto ObjectViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
 {
-  visitor.visit(*this);
+  return visitor.visit(*this);
 }
 
 auto ObjectViewImpl::get_parent_layer() const -> const ILayerView*

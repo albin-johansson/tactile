@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/layer/object_type.hpp"
@@ -27,8 +28,12 @@ class IObjectView
    * Inspects the object.
    *
    * \param visitor The visitor to use.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void accept(IDocumentVisitor& visitor) const = 0;
+  [[nodiscard]]
+  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
 
   /**
    * Returns a view of the parent object layer, if any.

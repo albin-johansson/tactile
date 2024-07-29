@@ -39,7 +39,8 @@ class ObjectViewImpl final : public IObjectView
                  const ITileView* parent_tile,
                  EntityID object_id);
 
-  void accept(IDocumentVisitor& visitor) const override;
+  [[nodiscard]]
+  auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
 
   [[nodiscard]]
   auto get_parent_layer() const -> const ILayerView* override;

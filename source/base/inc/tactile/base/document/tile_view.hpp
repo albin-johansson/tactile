@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/pair.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
@@ -25,8 +26,12 @@ class ITileView
    * Inspects the tile.
    *
    * \param visitor The visitor to use.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void accept(IDocumentVisitor& visitor) const = 0;
+  [[nodiscard]]
+  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
 
   /**
    * Returns the tileset that hosts the tile.
@@ -73,8 +78,7 @@ class ITileView
    * A tile index and frame duration pair.
    */
   [[nodiscard]]
-  virtual auto get_animation_frame(usize index) const
-      -> Pair<TileIndex, Milliseconds> = 0;
+  virtual auto get_animation_frame(usize index) const -> Pair<TileIndex, Milliseconds> = 0;
 
   /**
    * Returns a view of the associated metadata.

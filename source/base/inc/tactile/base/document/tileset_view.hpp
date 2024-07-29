@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
@@ -26,8 +27,12 @@ class ITilesetView
    * Inspects the tileset.
    *
    * \param visitor The visitor to use.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void accept(IDocumentVisitor& visitor) const = 0;
+  [[nodiscard]]
+  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
 
   /**
    * Returns the first global tile identifier associated with the tileset.

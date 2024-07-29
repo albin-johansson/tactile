@@ -2,9 +2,9 @@
 
 #include "tactile/core/document/tile_view_impl.hpp"
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/base/document/document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
@@ -21,17 +21,23 @@ TileViewImpl::TileViewImpl(const IDocument* document,
     mMeta {document, tile_id}
 {}
 
-void TileViewImpl::accept(IDocumentVisitor& visitor) const
+auto TileViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
 {
-  visitor.visit(*this);
+  if (const auto tile_result = visitor.visit(*this); !tile_result.has_value()) {
+    return propagate_unexpected(tile_result);
+  }
 
   const auto& registry = mDocument->get_registry();
   const auto& tile = registry.get<CTile>(mTileId);
 
   for (const auto object_id : tile.objects) {
     const ObjectViewImpl object_view {mDocument, this, object_id};
-    object_view.accept(visitor);
+    if (const auto object_result = object_view.accept(visitor); !object_result.has_value()) {
+      return propagate_unexpected(object_result);
+    }
   }
+
+  return kOK;
 }
 
 auto TileViewImpl::get_parent_tileset() const -> const ITilesetView&

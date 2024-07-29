@@ -26,7 +26,8 @@ class MapViewImpl final : public IMapView
    */
   MapViewImpl(const MapDocument* document);
 
-  void accept(IDocumentVisitor& visitor) const override;
+  [[nodiscard]]
+  auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
 
   [[nodiscard]]
   auto get_tile_size() const -> Int2 override;

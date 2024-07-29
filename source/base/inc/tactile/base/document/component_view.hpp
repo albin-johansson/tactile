@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/pair.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
@@ -24,8 +25,12 @@ class IComponentView
    * Inspects the component.
    *
    * \param visitor The visitor to use.
+   *
+   * \return
+   * Nothing if successful; an error code otherwise.
    */
-  virtual void accept(IDocumentVisitor& visitor) const = 0;
+  [[nodiscard]]
+  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
 
   /**
    * Returns the name of the component.
@@ -45,8 +50,7 @@ class IComponentView
    * An attribute key and value pair.
    */
   [[nodiscard]]
-  virtual auto get_attribute(usize index) const
-      -> Pair<const String&, const Attribute&> = 0;
+  virtual auto get_attribute(usize index) const -> Pair<const String&, const Attribute&> = 0;
 
   /**
    * Returns the number of attributes in the component.

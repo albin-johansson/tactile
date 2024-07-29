@@ -27,18 +27,23 @@ LayerViewImpl::LayerViewImpl(const MapDocument* document,
     mMeta {document, mLayerId}
 {}
 
-void LayerViewImpl::accept(IDocumentVisitor& visitor) const
+auto LayerViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
 {
   const auto& registry = mDocument->get_registry();
 
-  visitor.visit(*this);
+  if (const auto layer_result = visitor.visit(*this); !layer_result.has_value()) {
+    return propagate_unexpected(layer_result);
+  }
 
   if (is_group_layer(registry, mLayerId)) {
     const auto& group_layer = registry.get<CGroupLayer>(mLayerId);
 
     for (const auto sublayer_id : group_layer.layers) {
       const LayerViewImpl sublayer_view {mDocument, this, sublayer_id};
-      sublayer_view.accept(visitor);
+      if (const auto sublayer_result = sublayer_view.accept(visitor);
+          !sublayer_result.has_value()) {
+        return propagate_unexpected(sublayer_result);
+      }
     }
   }
   else if (is_object_layer(registry, mLayerId)) {
@@ -46,9 +51,13 @@ void LayerViewImpl::accept(IDocumentVisitor& visitor) const
 
     for (const auto object_id : object_layer.objects) {
       const ObjectViewImpl object_view {mDocument, this, object_id};
-      object_view.accept(visitor);
+      if (const auto object_result = object_view.accept(visitor); !object_result.has_value()) {
+        return propagate_unexpected(object_result);
+      }
     }
   }
+
+  return kOK;
 }
 
 void LayerViewImpl::write_tile_bytes(ByteStream& byte_stream) const
