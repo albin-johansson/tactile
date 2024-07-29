@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <utility>  // move
+
 #include <gmock/gmock.h>
 
 #include "tactile/base/document/document_visitor.hpp"
@@ -11,6 +13,7 @@
 #include "tactile/base/document/object_view.hpp"
 #include "tactile/base/document/tile_view.hpp"
 #include "tactile/base/document/tileset_view.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::test {
@@ -18,6 +21,22 @@ namespace tactile::test {
 class MetaViewMock : public IMetaView
 {
  public:
+  MetaViewMock() = default;
+
+  explicit MetaViewMock(ir::Metadata meta)
+    : mMeta {std::move(meta)}
+  {
+    ON_CALL(*this, get_name).WillByDefault([this] { return mMeta.name; });
+
+    ON_CALL(*this, get_property)
+        .WillByDefault([this](const usize index) -> Pair<const String&, const Attribute&> {
+          const auto& property = mMeta.properties.at(index);
+          return {property.name, property.value};
+        });
+
+    ON_CALL(*this, property_count).WillByDefault(testing::Return(mMeta.properties.size()));
+  }
+
   MOCK_METHOD(StringView, get_name, (), (const, override));
 
   MOCK_METHOD((Pair<const String&, const Attribute&>),
@@ -26,6 +45,9 @@ class MetaViewMock : public IMetaView
               (const, override));
 
   MOCK_METHOD(usize, property_count, (), (const, override));
+
+ private:
+  ir::Metadata mMeta {};
 };
 
 class ObjectViewMock : public IObjectView
@@ -34,7 +56,7 @@ class ObjectViewMock : public IObjectView
   ObjectViewMock()
   {
     ON_CALL(*this, accept).WillByDefault([this](IDocumentVisitor& visitor) {
-      visitor.visit(*this);
+      visitor.visit(*this).value();
     });
 
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
@@ -198,6 +220,25 @@ class MapViewMock : public IMapView
  public:
   MapViewMock()
   {
+    ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
+  }
+
+  explicit MapViewMock(const ir::Map& ir_map)
+    : mMeta {ir_map.meta}
+  {
+    using testing::Return;
+
+    ON_CALL(*this, get_tile_size).WillByDefault(Return(ir_map.tile_size));
+    ON_CALL(*this, get_extent).WillByDefault(Return(ir_map.extent));
+    ON_CALL(*this, get_next_layer_id).WillByDefault(Return(ir_map.next_layer_id));
+    ON_CALL(*this, get_next_object_id).WillByDefault(Return(ir_map.next_object_id));
+    ON_CALL(*this, get_tile_encoding).WillByDefault(Return(ir_map.tile_format.encoding));
+    ON_CALL(*this, get_tile_compression).WillByDefault(Return(ir_map.tile_format.compression));
+    ON_CALL(*this, get_compression_level)
+        .WillByDefault(Return(ir_map.tile_format.compression_level));
+    ON_CALL(*this, layer_count).WillByDefault(Return(ir_map.layers.size()));
+    ON_CALL(*this, tileset_count).WillByDefault(Return(ir_map.tilesets.size()));
+    ON_CALL(*this, component_count).WillByDefault(Return(ir_map.components.size()));
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
   }
 
