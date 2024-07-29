@@ -107,7 +107,6 @@ Runtime::Runtime()
   std::set_terminate(&on_terminate);
   mData = std::make_unique<Data>();
 
-  TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
   init_random_number_generator();
 }
 

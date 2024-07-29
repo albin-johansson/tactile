@@ -86,6 +86,8 @@ auto launch(const int, char*[]) -> int
   try {
     Runtime runtime {};
 
+    TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
+
     const auto plugins [[maybe_unused]] = launcher_impl::load_plugins(runtime);
 
     auto* window = runtime.get_window();
