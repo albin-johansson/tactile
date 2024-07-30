@@ -49,21 +49,26 @@ void save_basic_tileset_attributes(const ITilesetView& tileset,
 
 auto emit_tiled_tmj_tileset(const ITilesetView& tileset,
                             const SaveFormatWriteOptions& options,
-                            HashMap<TileID, nlohmann::json>& external_tilesets)
+                            HashMap<TileID, TmjFormatExternalTilesetData>& external_tilesets)
     -> nlohmann::json
 {
   auto tileset_json = nlohmann::json::object();
   tileset_json["firstgid"] = tileset.get_first_tile_id();
 
   if (options.use_external_tilesets) {
-    tileset_json["source"] = std::format("{}.tsj", tileset.get_filename());
+    const auto source_path = std::format("{}.tsj", tileset.get_filename());
+    tileset_json["source"] = source_path;
 
     auto external_tileset_json = nlohmann::json::object();
     tmj_format_tileset_emitter::save_basic_tileset_attributes(tileset,
                                                               external_tileset_json,
                                                               options);
 
-    external_tilesets[tileset.get_first_tile_id()] = std::move(external_tileset_json);
+    TmjFormatExternalTilesetData external_tileset {};
+    external_tileset.path = options.base_dir / source_path;
+    external_tileset.json = std::move(external_tileset_json);
+
+    external_tilesets[tileset.get_first_tile_id()] = std::move(external_tileset);
   }
   else {
     tmj_format_tileset_emitter::save_basic_tileset_attributes(tileset, tileset_json, options);

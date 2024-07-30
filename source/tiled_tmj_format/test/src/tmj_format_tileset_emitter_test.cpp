@@ -22,7 +22,7 @@ TEST(TmjFormatTilesetEmitter, EmitEmbeddedTileset)
     .fold_tile_layer_data = false,
   };
 
-  HashMap<TileID, nlohmann::json> external_tilesets {};
+  HashMap<TileID, TmjFormatExternalTilesetData> external_tilesets {};
   const TilesetViewMock tileset {};
 
   const TileID tile_id {42};
@@ -71,7 +71,7 @@ TEST(TmjFormatTilesetEmitter, EmitExternalTileset)
     .fold_tile_layer_data = false,
   };
 
-  HashMap<TileID, nlohmann::json> external_tilesets {};
+  HashMap<TileID, TmjFormatExternalTilesetData> external_tilesets {};
   const TilesetViewMock tileset {};
 
   const TileID tile_id {15};
@@ -97,8 +97,9 @@ TEST(TmjFormatTilesetEmitter, EmitExternalTileset)
   EXPECT_EQ(tileset_json.at("source"), "dummy_tileset.tsj");
 
   ASSERT_TRUE(external_tilesets.contains(tile_id));
-  const auto& external_tileset_json = external_tilesets.at(tile_id);
+  const auto& [external_tileset_path, external_tileset_json] = external_tilesets.at(tile_id);
 
+  EXPECT_EQ(external_tileset_path, options.base_dir / "dummy_tileset.tsj");
   EXPECT_EQ(external_tileset_json.at("columns"), column_count);
   EXPECT_EQ(external_tileset_json.at("tilewidth"), tile_size.x());
   EXPECT_EQ(external_tileset_json.at("tileheight"), tile_size.y());

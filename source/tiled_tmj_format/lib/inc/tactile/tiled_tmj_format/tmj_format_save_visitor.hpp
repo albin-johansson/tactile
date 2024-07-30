@@ -12,6 +12,7 @@
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/tiled_tmj_format/api.hpp"
+#include "tactile/tiled_tmj_format/tmj_format_tileset_emitter.hpp"
 
 namespace tactile {
 
@@ -53,11 +54,14 @@ class TACTILE_TMJ_FORMAT_API TmjFormatSaveVisitor final : public IDocumentVisito
   [[nodiscard]]
   auto get_map_json() const -> const nlohmann::json&;
 
+  [[nodiscard]]
+  auto get_external_tilesets() const -> const HashMap<TileID, TmjFormatExternalTilesetData>&;
+
  private:
   IRuntime* mRuntime;
   SaveFormatWriteOptions mOptions;
   nlohmann::json mMapNode {};
-  HashMap<TileID, nlohmann::json> mExternalTilesetNodes {};
+  HashMap<TileID, TmjFormatExternalTilesetData> mExternalTilesetNodes {};
   ByteStream mTileByteCache {};
 
   [[nodiscard]]

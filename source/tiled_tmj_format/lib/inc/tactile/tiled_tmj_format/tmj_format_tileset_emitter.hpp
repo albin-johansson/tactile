@@ -15,11 +15,23 @@ namespace tactile {
 class ITilesetView;
 
 /**
+ * Provides information about an external TMJ tileset.
+ */
+struct TmjFormatExternalTilesetData final
+{
+  /** The file path to the external tileset file. */
+  Path path;
+
+  /** The external tileset JSON. */
+  nlohmann::json json;
+};
+
+/**
  * Emits a single Tiled TMJ tileset JSON node.
  *
  * \param      tileset           The view of the tileset.
  * \param      options           The write options to use.
- * \param[out] external_tilesets A collection of external tileset nodes. Only used if external
+ * \param[out] external_tilesets A collection of external tilesets. Only used if external
  *                               tilesets are enabled.
  *
  * \return
@@ -31,6 +43,6 @@ class ITilesetView;
 TACTILE_TMJ_FORMAT_API auto emit_tiled_tmj_tileset(
     const ITilesetView& tileset,
     const SaveFormatWriteOptions& options,
-    HashMap<TileID, nlohmann::json>& external_tilesets) -> nlohmann::json;
+    HashMap<TileID, TmjFormatExternalTilesetData>& external_tilesets) -> nlohmann::json;
 
 }  // namespace tactile

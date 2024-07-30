@@ -47,11 +47,26 @@ auto TmjSaveFormat::save_map(const IMapView& map,
 
   TmjFormatSaveVisitor visitor {mRuntime, options};
 
-  // TODO save external tilesets
-  return map.accept(visitor).and_then([&] {
-    const auto& map_json = visitor.get_map_json();
-    return save_json(*map_path, map_json, options.use_indentation ? 2 : 0);
-  });
+  return map.accept(visitor)
+      .and_then([&] {
+        const auto& map_json = visitor.get_map_json();
+        return save_json(*map_path, map_json, options.use_indentation ? 2 : 0);
+      })
+      .and_then([&]() -> Result<void> {
+        const auto& external_tilesets = visitor.get_external_tilesets();
+
+        for (const auto& [first_tiled_id, external_tileset] : external_tilesets) {
+          const auto save_tileset_result = save_json(external_tileset.path,
+                                                     external_tileset.json,
+                                                     options.use_indentation ? 2 : 0);
+          if (!save_tileset_result.has_value()) {
+            log(LogLevel::kError, "Could not save external tileset");
+            return propagate_unexpected(save_tileset_result);
+          }
+        }
+
+        return kOK;
+      });
 }
 
 }  // namespace tactile

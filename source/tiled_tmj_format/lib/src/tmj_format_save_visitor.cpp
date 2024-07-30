@@ -106,6 +106,12 @@ auto TmjFormatSaveVisitor::get_map_json() const -> const nlohmann::json&
   return mMapNode;
 }
 
+auto TmjFormatSaveVisitor::get_external_tilesets() const
+    -> const HashMap<TileID, TmjFormatExternalTilesetData>&
+{
+  return mExternalTilesetNodes;
+}
+
 auto TmjFormatSaveVisitor::_get_tile_json(const ITileView& tile) -> nlohmann::json&
 {
   const auto& tileset = tile.get_parent_tileset();
