@@ -5,8 +5,6 @@ add_library(tactile::tiled_tmj_format ALIAS tactile-tiled-tmj-format)
 
 target_sources(tactile-tiled-tmj-format
                PRIVATE
-               "src/tactile/tiled_tmj_format/tiled_tmj_format.cpp"
-               "src/tactile/tiled_tmj_format/tiled_tmj_format_plugin.cpp"
                "src/tmj_format_attribute_parser.cpp"
                "src/tmj_format_layer_emitter.cpp"
                "src/tmj_format_layer_parser.cpp"
@@ -15,15 +13,15 @@ target_sources(tactile-tiled-tmj-format
                "src/tmj_format_meta_emitter.cpp"
                "src/tmj_format_object_emitter.cpp"
                "src/tmj_format_object_parser.cpp"
+               "src/tmj_format_plugin.cpp"
                "src/tmj_format_save_visitor.cpp"
                "src/tmj_format_tile_emitter.cpp"
                "src/tmj_format_tileset_emitter.cpp"
                "src/tmj_format_tileset_parser.cpp"
+               "src/tmj_save_format.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/tiled_tmj_format/api.hpp"
-               "inc/tactile/tiled_tmj_format/tiled_tmj_format.hpp"
-               "inc/tactile/tiled_tmj_format/tiled_tmj_format_plugin.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_attribute_parser.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_layer_emitter.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_layer_parser.hpp"
@@ -32,10 +30,12 @@ target_sources(tactile-tiled-tmj-format
                "inc/tactile/tiled_tmj_format/tmj_format_meta_emitter.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_object_emitter.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_object_parser.hpp"
+               "inc/tactile/tiled_tmj_format/tmj_format_plugin.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_save_visitor.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_tile_emitter.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_tileset_emitter.hpp"
                "inc/tactile/tiled_tmj_format/tmj_format_tileset_parser.hpp"
+               "inc/tactile/tiled_tmj_format/tmj_save_format.hpp"
                )
 
 tactile_prepare_target(tactile-tiled-tmj-format)

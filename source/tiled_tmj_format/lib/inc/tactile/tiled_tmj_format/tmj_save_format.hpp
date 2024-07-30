@@ -8,23 +8,28 @@
 
 namespace tactile {
 
+class IRuntime;
+
 /**
  * Implements the Tiled TMJ save format.
  *
  * \see https://doc.mapeditor.org/en/stable/reference/json-map-format/
  */
-class TACTILE_TMJ_FORMAT_API TiledTmjFormat final : public ISaveFormat
+class TACTILE_TMJ_FORMAT_API TmjSaveFormat final : public ISaveFormat
 {
  public:
-  [[nodiscard]]
-  auto load_map(const Path& map_path,  //
-                const SaveFormatReadOptions& options) const
-      -> Result<ir::Map> override;
+  TmjSaveFormat(IRuntime* runtime);
 
   [[nodiscard]]
-  auto save_map(const IMapView& map,  //
-                const SaveFormatWriteOptions& options) const
-      -> Result<void> override;
+  auto load_map(const Path& map_path,
+                const SaveFormatReadOptions& options) const -> Result<ir::Map> override;
+
+  [[nodiscard]]
+  auto save_map(const IMapView& map,
+                const SaveFormatWriteOptions& options) const -> Result<void> override;
+
+ private:
+  IRuntime* mRuntime;
 };
 
 }  // namespace tactile
