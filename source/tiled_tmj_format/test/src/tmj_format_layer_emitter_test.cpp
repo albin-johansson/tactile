@@ -157,7 +157,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitZlibCompressedTileLayer)
 
   const StringView name {"zlib_layer"};
   const LayerID id {824};
-  const MatrixExtent extent {4, 5};
+  const MatrixExtent extent {3, 3};
   const float opacity {1.0f};
   const bool visible {true};
   const TileEncoding encoding {TileEncoding::kBase64};
