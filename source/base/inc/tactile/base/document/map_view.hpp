@@ -4,6 +4,7 @@
 
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/path.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
@@ -34,6 +35,15 @@ class IMapView
    * Nothing if successful; an error code otherwise.
    */
   virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
+
+  /**
+   * Returns the file path of the associated save file, if any.
+   *
+   * \return
+   * A possibly null file path.
+   */
+  [[nodiscard]]
+  virtual auto get_path() const -> const Path* = 0;
 
   /**
    * Returns the logical size of tiles in the map.

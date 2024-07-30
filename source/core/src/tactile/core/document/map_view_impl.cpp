@@ -50,6 +50,11 @@ auto MapViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
   return kOK;
 }
 
+auto MapViewImpl::get_path() const -> const Path*
+{
+  return mDocument->get_path();
+}
+
 auto MapViewImpl::get_tile_size() const -> Int2
 {
   return _get_map().tile_size;

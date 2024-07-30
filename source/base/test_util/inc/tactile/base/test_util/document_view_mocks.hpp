@@ -245,6 +245,8 @@ class MapViewMock : public IMapView
 
   MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
+  MOCK_METHOD(const Path*, get_path, (), (const, override));
+
   MOCK_METHOD(Int2, get_tile_size, (), (const, override));
 
   MOCK_METHOD(MatrixExtent, get_extent, (), (const, override));

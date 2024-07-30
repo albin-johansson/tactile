@@ -30,6 +30,9 @@ class MapViewImpl final : public IMapView
   auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
 
   [[nodiscard]]
+  auto get_path() const -> const Path* override;
+
+  [[nodiscard]]
   auto get_tile_size() const -> Int2 override;
 
   [[nodiscard]]
