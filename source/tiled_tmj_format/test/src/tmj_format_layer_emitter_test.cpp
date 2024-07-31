@@ -8,6 +8,7 @@
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/platform/bits.hpp"
 #include "tactile/base/test_util/document_view_mocks.hpp"
+#include "tactile/base/test_util/ir.hpp"
 #include "tactile/runtime/runtime.hpp"
 
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
@@ -62,42 +63,60 @@ class TmjFormatLayerEmitterTest : public testing::Test
 // tactile::emit_tiled_tmj_layer
 TEST_F(TmjFormatLayerEmitterTest, EmitPlainTileLayer)
 {
-  using testing::Return;
+  const ir::Layer ir_layer {
+    .meta =
+        ir::Metadata {
+          .name = "plain",
+          .properties = {},
+          .components = {},
+        },
+    .id = LayerID {34},
+    .type = LayerType::kTileLayer,
+    .opacity = 0.1f,
+    .extent = MatrixExtent {3, 3},
+    .tiles =
+        TileMatrix {
+          {TileID {123}, TileID {123}, TileID {123}},
+          {TileID {123}, TileID {123}, TileID {123}},
+          {TileID {123}, TileID {123}, TileID {123}},
+        },
+    .objects = {},
+    .layers = {},
+    .visible = false,
+  };
 
-  const StringView name {"plain"};
-  const LayerID id {34};
-  const MatrixExtent extent {3, 3};
-  const TileID tile_id {123};
-  const float opacity {0.1f};
-  const bool visible {false};
-  const TileEncoding encoding {TileEncoding::kPlainText};
+  const ir::TileFormat ir_tile_format {
+    .encoding = TileEncoding::kPlainText,
+    .compression = kNone,
+    .compression_level = kNone,
+  };
 
-  testing::NiceMock<LayerViewMock> layer {};
+  testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
   EXPECT_CALL(layer, write_tile_bytes).Times(0);
-  EXPECT_CALL(layer, get_id).WillRepeatedly(Return(id));
-  EXPECT_CALL(layer, get_type).WillRepeatedly(Return(LayerType::kTileLayer));
-  EXPECT_CALL(layer, get_opacity).WillRepeatedly(Return(opacity));
-  EXPECT_CALL(layer, is_visible).WillRepeatedly(Return(visible));
+  EXPECT_CALL(layer, get_id);
+  EXPECT_CALL(layer, get_type);
+  EXPECT_CALL(layer, get_opacity);
+  EXPECT_CALL(layer, is_visible);
   EXPECT_CALL(layer, layer_count).Times(0);
   EXPECT_CALL(layer, object_count).Times(0);
-  EXPECT_CALL(layer, get_tile).WillRepeatedly(Return(tile_id));
-  EXPECT_CALL(layer, get_tile_encoding).WillRepeatedly(Return(encoding));
-  EXPECT_CALL(layer, get_extent).WillRepeatedly(Return(extent));
+  EXPECT_CALL(layer, get_tile).Times(9);
+  EXPECT_CALL(layer, get_tile_encoding);
+  EXPECT_CALL(layer, get_extent);
   EXPECT_CALL(layer, get_meta);
-  EXPECT_CALL(layer.get_meta_view_mock(), get_name).WillRepeatedly(Return(name));
+  EXPECT_CALL(layer.get_meta_view_mock(), get_name);
 
   const auto layer_json = emit_tiled_tmj_layer(mRuntime, layer, mTileByteStream);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("id"), id);
-  EXPECT_EQ(layer_json->at("name"), name);
+  EXPECT_EQ(layer_json->at("id"), ir_layer.id);
+  EXPECT_EQ(layer_json->at("name"), ir_layer.meta.name);
   EXPECT_EQ(layer_json->at("type"), "tilelayer");
-  EXPECT_EQ(layer_json->at("opacity"), opacity);
-  EXPECT_EQ(layer_json->at("visible"), visible);
+  EXPECT_EQ(layer_json->at("opacity"), ir_layer.opacity);
+  EXPECT_EQ(layer_json->at("visible"), ir_layer.visible);
   EXPECT_EQ(layer_json->at("x"), 0);
   EXPECT_EQ(layer_json->at("y"), 0);
-  EXPECT_EQ(layer_json->at("width"), extent.cols);
-  EXPECT_EQ(layer_json->at("height"), extent.rows);
+  EXPECT_EQ(layer_json->at("width"), ir_layer.extent.cols);
+  EXPECT_EQ(layer_json->at("height"), ir_layer.extent.rows);
 
   EXPECT_TRUE(layer_json->at("data").is_array());
   EXPECT_FALSE(layer_json->contains("encoding"));
@@ -106,236 +125,324 @@ TEST_F(TmjFormatLayerEmitterTest, EmitPlainTileLayer)
 // tactile::emit_tiled_tmj_layer
 TEST_F(TmjFormatLayerEmitterTest, EmitBase64TileLayer)
 {
-  using testing::Return;
+  const ir::Layer ir_layer {
+    .meta =
+        ir::Metadata {
+          .name = "b64",
+          .properties = {},
+          .components = {},
+        },
+    .id = LayerID {42},
+    .type = LayerType::kTileLayer,
+    .opacity = 0.5f,
+    .extent = MatrixExtent {4, 5},
+    .tiles =
+        TileMatrix {
+          {TileID {123}, TileID {123}, TileID {123}, TileID {123}, TileID {123}},
+          {TileID {123}, TileID {123}, TileID {123}, TileID {123}, TileID {123}},
+          {TileID {123}, TileID {123}, TileID {123}, TileID {123}, TileID {123}},
+          {TileID {123}, TileID {123}, TileID {123}, TileID {123}, TileID {123}},
+        },
+    .objects = {},
+    .layers = {},
+    .visible = true,
+  };
 
-  const StringView name {"b64"};
-  const LayerID id {42};
-  const MatrixExtent extent {4, 5};
-  const TileID tile_id {123};
-  const float opacity {0.5f};
-  const bool visible {true};
-  const TileEncoding encoding {TileEncoding::kBase64};
+  const ir::TileFormat ir_tile_format {
+    .encoding = TileEncoding::kBase64,
+    .compression = kNone,
+    .compression_level = kNone,
+  };
 
-  testing::NiceMock<LayerViewMock> layer {};
-  EXPECT_CALL(layer, write_tile_bytes).WillRepeatedly([](ByteStream& byte_stream) {
-    each_byte(to_little_endian(tile_id),
-              [&](const uint8 byte) { byte_stream.push_back(byte); });
-  });
-  EXPECT_CALL(layer, get_id).WillRepeatedly(Return(id));
-  EXPECT_CALL(layer, get_type).WillRepeatedly(Return(LayerType::kTileLayer));
-  EXPECT_CALL(layer, get_opacity).WillRepeatedly(Return(opacity));
-  EXPECT_CALL(layer, is_visible).WillRepeatedly(Return(visible));
+  testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
+  EXPECT_CALL(layer, write_tile_bytes);
+  EXPECT_CALL(layer, get_id);
+  EXPECT_CALL(layer, get_type);
+  EXPECT_CALL(layer, get_opacity);
+  EXPECT_CALL(layer, is_visible);
   EXPECT_CALL(layer, layer_count).Times(0);
   EXPECT_CALL(layer, object_count).Times(0);
-  EXPECT_CALL(layer, get_tile).WillRepeatedly(Return(tile_id));
-  EXPECT_CALL(layer, get_tile_encoding).WillRepeatedly(Return(encoding));
+  EXPECT_CALL(layer, get_tile).Times(0);
+  EXPECT_CALL(layer, get_tile_encoding);
   EXPECT_CALL(layer, get_tile_compression);
-  EXPECT_CALL(layer, get_extent).WillRepeatedly(Return(extent));
+  EXPECT_CALL(layer, get_extent);
   EXPECT_CALL(layer, get_meta);
-  EXPECT_CALL(layer.get_meta_view_mock(), get_name).WillRepeatedly(Return(name));
+  EXPECT_CALL(layer.get_meta_view_mock(), get_name);
 
   const auto layer_json = emit_tiled_tmj_layer(mRuntime, layer, mTileByteStream);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("id"), id);
-  EXPECT_EQ(layer_json->at("name"), name);
+  EXPECT_EQ(layer_json->at("id"), ir_layer.id);
+  EXPECT_EQ(layer_json->at("name"), ir_layer.meta.name);
   EXPECT_EQ(layer_json->at("type"), "tilelayer");
-  EXPECT_EQ(layer_json->at("opacity"), opacity);
-  EXPECT_EQ(layer_json->at("visible"), visible);
+  EXPECT_EQ(layer_json->at("opacity"), ir_layer.opacity);
+  EXPECT_EQ(layer_json->at("visible"), ir_layer.visible);
   EXPECT_EQ(layer_json->at("x"), 0);
   EXPECT_EQ(layer_json->at("y"), 0);
-  EXPECT_EQ(layer_json->at("width"), extent.cols);
-  EXPECT_EQ(layer_json->at("height"), extent.rows);
+  EXPECT_EQ(layer_json->at("width"), ir_layer.extent.cols);
+  EXPECT_EQ(layer_json->at("height"), ir_layer.extent.rows);
   EXPECT_EQ(layer_json->at("encoding"), "base64");
-  EXPECT_EQ(layer_json->at("data"), "ewAAAA==");
+  EXPECT_EQ(
+      layer_json->at("data"),
+      "ewAAAHsAAAB7AAAAewAAAHsAAAB7AAAAewAAAHsAAAB7AAAAewAAAHsAAAB7AAAAewAAAHsAAAB7AAAAewAAAHsAAAB7AAAAewAAAHsAAAA=");
 }
+
+#if TACTILE_HAS_ZLIB_COMPRESSION
 
 // tactile::emit_tiled_tmj_layer
 TEST_F(TmjFormatLayerEmitterTest, EmitZlibCompressedTileLayer)
 {
-  using testing::Return;
-
-  const StringView name {"zlib_layer"};
-  const LayerID id {824};
-  const MatrixExtent extent {3, 3};
-  const float opacity {1.0f};
-  const bool visible {true};
-  const TileEncoding encoding {TileEncoding::kBase64};
-
-  const TileMatrix tile_matrix {
-    {TileID {1}, TileID {2}, TileID {3}},
-    {TileID {4}, TileID {5}, TileID {6}},
+  const ir::Layer ir_layer {
+    .meta =
+        ir::Metadata {
+          .name = "zlib_layer",
+          .properties = {},
+          .components = {},
+        },
+    .id = LayerID {824},
+    .type = LayerType::kTileLayer,
+    .opacity = 1.0f,
+    .extent = MatrixExtent {3, 3},
+    .tiles =
+        TileMatrix {
+          {TileID {1}, TileID {2}, TileID {3}},
+          {TileID {4}, TileID {5}, TileID {6}},
+        },
+    .objects = {},
+    .layers = {},
+    .visible = true,
   };
 
-  testing::NiceMock<LayerViewMock> layer {};
-  EXPECT_CALL(layer, write_tile_bytes).WillRepeatedly([&](ByteStream& byte_stream) {
-    byte_stream = to_byte_stream(tile_matrix);
-  });
-  EXPECT_CALL(layer, get_id).WillRepeatedly(Return(id));
-  EXPECT_CALL(layer, get_type).WillRepeatedly(Return(LayerType::kTileLayer));
-  EXPECT_CALL(layer, get_opacity).WillRepeatedly(Return(opacity));
-  EXPECT_CALL(layer, is_visible).WillRepeatedly(Return(visible));
+  const ir::TileFormat ir_tile_format {
+    .encoding = TileEncoding::kBase64,
+    .compression = CompressionFormat::kZlib,
+    .compression_level = kNone,
+  };
+
+  testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
+  EXPECT_CALL(layer, write_tile_bytes);
+  EXPECT_CALL(layer, get_id);
+  EXPECT_CALL(layer, get_type);
+  EXPECT_CALL(layer, get_opacity);
+  EXPECT_CALL(layer, is_visible);
   EXPECT_CALL(layer, layer_count).Times(0);
   EXPECT_CALL(layer, object_count).Times(0);
-  EXPECT_CALL(layer, get_tile).WillRepeatedly([&](const MatrixIndex& index) {
-    return tile_matrix.at(saturate_cast<usize>(index.row)).at(saturate_cast<usize>(index.col));
-  });
-  EXPECT_CALL(layer, get_tile_encoding).WillRepeatedly(Return(encoding));
-  EXPECT_CALL(layer, get_tile_compression).WillRepeatedly(Return(CompressionFormat::kZlib));
-  EXPECT_CALL(layer, get_extent).WillRepeatedly(Return(extent));
+  EXPECT_CALL(layer, get_tile).Times(0);
+  EXPECT_CALL(layer, get_tile_encoding);
+  EXPECT_CALL(layer, get_tile_compression);
+  EXPECT_CALL(layer, get_extent);
   EXPECT_CALL(layer, get_meta);
-  EXPECT_CALL(layer.get_meta_view_mock(), get_name).WillRepeatedly(Return(name));
+  EXPECT_CALL(layer.get_meta_view_mock(), get_name);
 
   const auto layer_json = emit_tiled_tmj_layer(mRuntime, layer, mTileByteStream);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("id"), id);
-  EXPECT_EQ(layer_json->at("name"), name);
+  EXPECT_EQ(layer_json->at("id"), ir_layer.id);
+  EXPECT_EQ(layer_json->at("name"), ir_layer.meta.name);
   EXPECT_EQ(layer_json->at("type"), "tilelayer");
-  EXPECT_EQ(layer_json->at("opacity"), opacity);
-  EXPECT_EQ(layer_json->at("visible"), visible);
+  EXPECT_EQ(layer_json->at("opacity"), ir_layer.opacity);
+  EXPECT_EQ(layer_json->at("visible"), ir_layer.visible);
   EXPECT_EQ(layer_json->at("x"), 0);
   EXPECT_EQ(layer_json->at("y"), 0);
-  EXPECT_EQ(layer_json->at("width"), extent.cols);
-  EXPECT_EQ(layer_json->at("height"), extent.rows);
+  EXPECT_EQ(layer_json->at("width"), ir_layer.extent.cols);
+  EXPECT_EQ(layer_json->at("height"), ir_layer.extent.rows);
   EXPECT_EQ(layer_json->at("encoding"), "base64");
   EXPECT_EQ(layer_json->at("compression"), "zlib");
   EXPECT_EQ(layer_json->at("data"), "eJxjZGBgYAJiZiBmAWJWIGYDYgAA+AAW");
 }
 
+#endif  // TACTILE_HAS_ZLIB_COMPRESSION
+
+#if TACTILE_HAS_ZSTD_COMPRESSION
+
 // tactile::emit_tiled_tmj_layer
 TEST_F(TmjFormatLayerEmitterTest, EmitZstdCompressedTileLayer)
 {
-  using testing::Return;
-
-  const StringView name {"zstd_layer"};
-  const LayerID id {573};
-  const MatrixExtent extent {3, 3};
-  const float opacity {1.0f};
-  const bool visible {true};
-  const TileEncoding encoding {TileEncoding::kBase64};
-
-  const TileMatrix tile_matrix {
-    {TileID {1}, TileID {2}, TileID {3}},
-    {TileID {4}, TileID {5}, TileID {6}},
+  const ir::Layer ir_layer {
+    .meta =
+        ir::Metadata {
+          .name = "zstd_layer",
+          .properties = {},
+          .components = {},
+        },
+    .id = LayerID {573},
+    .type = LayerType::kTileLayer,
+    .opacity = 1.0f,
+    .extent = MatrixExtent {3, 3},
+    .tiles =
+        TileMatrix {
+          {TileID {1}, TileID {2}, TileID {3}},
+          {TileID {4}, TileID {5}, TileID {6}},
+        },
+    .objects = {},
+    .layers = {},
+    .visible = true,
   };
 
-  testing::NiceMock<LayerViewMock> layer {};
-  EXPECT_CALL(layer, write_tile_bytes).WillRepeatedly([&](ByteStream& byte_stream) {
-    byte_stream = to_byte_stream(tile_matrix);
-  });
-  EXPECT_CALL(layer, get_id).WillRepeatedly(Return(id));
-  EXPECT_CALL(layer, get_type).WillRepeatedly(Return(LayerType::kTileLayer));
-  EXPECT_CALL(layer, get_opacity).WillRepeatedly(Return(opacity));
-  EXPECT_CALL(layer, is_visible).WillRepeatedly(Return(visible));
+  const ir::TileFormat ir_tile_format {
+    .encoding = TileEncoding::kBase64,
+    .compression = CompressionFormat::kZstd,
+    .compression_level = kNone,
+  };
+
+  testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
+  EXPECT_CALL(layer, write_tile_bytes);
+  EXPECT_CALL(layer, get_id);
+  EXPECT_CALL(layer, get_type);
+  EXPECT_CALL(layer, get_opacity);
+  EXPECT_CALL(layer, is_visible);
   EXPECT_CALL(layer, layer_count).Times(0);
   EXPECT_CALL(layer, object_count).Times(0);
-  EXPECT_CALL(layer, get_tile).WillRepeatedly([&](const MatrixIndex& index) {
-    return tile_matrix.at(saturate_cast<usize>(index.row)).at(saturate_cast<usize>(index.col));
-  });
-  EXPECT_CALL(layer, get_tile_encoding).WillRepeatedly(Return(encoding));
-  EXPECT_CALL(layer, get_tile_compression).WillRepeatedly(Return(CompressionFormat::kZstd));
-  EXPECT_CALL(layer, get_extent).WillRepeatedly(Return(extent));
+  EXPECT_CALL(layer, get_tile).Times(0);
+  EXPECT_CALL(layer, get_tile_encoding);
+  EXPECT_CALL(layer, get_tile_compression);
+  EXPECT_CALL(layer, get_extent);
   EXPECT_CALL(layer, get_meta);
-  EXPECT_CALL(layer.get_meta_view_mock(), get_name).WillRepeatedly(Return(name));
+  EXPECT_CALL(layer.get_meta_view_mock(), get_name);
 
   const auto layer_json = emit_tiled_tmj_layer(mRuntime, layer, mTileByteStream);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("id"), id);
-  EXPECT_EQ(layer_json->at("name"), name);
+  EXPECT_EQ(layer_json->at("id"), ir_layer.id);
+  EXPECT_EQ(layer_json->at("name"), ir_layer.meta.name);
   EXPECT_EQ(layer_json->at("type"), "tilelayer");
-  EXPECT_EQ(layer_json->at("opacity"), opacity);
-  EXPECT_EQ(layer_json->at("visible"), visible);
+  EXPECT_EQ(layer_json->at("opacity"), ir_layer.opacity);
+  EXPECT_EQ(layer_json->at("visible"), ir_layer.visible);
   EXPECT_EQ(layer_json->at("x"), 0);
   EXPECT_EQ(layer_json->at("y"), 0);
-  EXPECT_EQ(layer_json->at("width"), extent.cols);
-  EXPECT_EQ(layer_json->at("height"), extent.rows);
+  EXPECT_EQ(layer_json->at("width"), ir_layer.extent.cols);
+  EXPECT_EQ(layer_json->at("height"), ir_layer.extent.rows);
   EXPECT_EQ(layer_json->at("encoding"), "base64");
   EXPECT_EQ(layer_json->at("compression"), "zstd");
-  EXPECT_EQ(layer_json->at("data"), "KLUv\/SAYwQAAAQAAAAIAAAADAAAABAAAAAUAAAAGAAAA");
+  EXPECT_EQ(layer_json->at("data"), "KLUv/SAYwQAAAQAAAAIAAAADAAAABAAAAAUAAAAGAAAA");
 }
+
+#endif  // TACTILE_HAS_ZSTD_COMPRESSION
 
 // tactile::emit_tiled_tmj_layer
 TEST_F(TmjFormatLayerEmitterTest, EmitObjectLayer)
 {
-  using testing::Return;
+  const ir::Layer ir_layer {
+    .meta =
+        ir::Metadata {
+          .name = "objects",
+          .properties = {},
+          .components = {},
+        },
+    .id = LayerID {1},
+    .type = LayerType::kObjectLayer,
+    .opacity = 1.0f,
+    .extent = MatrixExtent {0, 0},
+    .tiles = {},
+    .objects =
+        {
+          make_ir_object(ObjectID {1}),
+          make_ir_object(ObjectID {2}),
+          make_ir_object(ObjectID {3}),
+        },
+    .layers = {},
+    .visible = false,
+  };
 
-  const StringView name {"objects"};
-  const LayerID id {1};
-  const float opacity {1.0f};
-  const bool visible {false};
-  const usize object_count {3};
+  const ir::TileFormat ir_tile_format {
+    .encoding = TileEncoding::kPlainText,
+    .compression = kNone,
+    .compression_level = kNone,
+  };
 
-  testing::NiceMock<LayerViewMock> layer {};
+  testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
   EXPECT_CALL(layer, write_tile_bytes).Times(0);
-  EXPECT_CALL(layer, get_id).WillRepeatedly(Return(id));
-  EXPECT_CALL(layer, get_type).WillRepeatedly(Return(LayerType::kObjectLayer));
-  EXPECT_CALL(layer, get_opacity).WillRepeatedly(Return(opacity));
-  EXPECT_CALL(layer, is_visible).WillRepeatedly(Return(visible));
+  EXPECT_CALL(layer, get_id);
+  EXPECT_CALL(layer, get_type);
+  EXPECT_CALL(layer, get_opacity);
+  EXPECT_CALL(layer, is_visible);
   EXPECT_CALL(layer, layer_count).Times(0);
-  EXPECT_CALL(layer, object_count).WillRepeatedly(Return(object_count));
+  EXPECT_CALL(layer, object_count);
   EXPECT_CALL(layer, get_tile).Times(0);
   EXPECT_CALL(layer, get_tile_encoding).Times(0);
   EXPECT_CALL(layer, get_tile_compression).Times(0);
   EXPECT_CALL(layer, get_extent).Times(0);
   EXPECT_CALL(layer, get_meta);
-  EXPECT_CALL(layer.get_meta_view_mock(), get_name).WillRepeatedly(Return(name));
+  EXPECT_CALL(layer.get_meta_view_mock(), get_name);
 
   const auto layer_json = emit_tiled_tmj_layer(mRuntime, layer, mTileByteStream);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("id"), id);
-  EXPECT_EQ(layer_json->at("name"), name);
+  EXPECT_EQ(layer_json->at("id"), ir_layer.id);
+  EXPECT_EQ(layer_json->at("name"), ir_layer.meta.name);
   EXPECT_EQ(layer_json->at("type"), "objectgroup");
-  EXPECT_EQ(layer_json->at("opacity"), opacity);
-  EXPECT_EQ(layer_json->at("visible"), visible);
+  EXPECT_EQ(layer_json->at("opacity"), ir_layer.opacity);
+  EXPECT_EQ(layer_json->at("visible"), ir_layer.visible);
   EXPECT_EQ(layer_json->at("x"), 0);
   EXPECT_EQ(layer_json->at("y"), 0);
+
   ASSERT_TRUE(layer_json->contains("objects"));
   EXPECT_EQ(layer_json->at("objects").get_ref<const nlohmann::json::array_t&>().capacity(),
-            object_count);
+            ir_layer.objects.size());
 }
 
 // tactile::emit_tiled_tmj_layer
 TEST_F(TmjFormatLayerEmitterTest, EmitGroupLayer)
 {
-  using testing::Return;
+  const ir::Layer ir_layer {
+    .meta =
+        ir::Metadata {
+          .name = "group",
+          .properties = {},
+          .components = {},
+        },
+    .id = LayerID {58},
+    .type = LayerType::kGroupLayer,
+    .opacity = 0.2f,
+    .extent = MatrixExtent {0, 0},
+    .tiles = {},
+    .objects = {},
+    .layers =
+        {
+          make_ir_object_layer(LayerID {59}),
+          make_ir_object_layer(LayerID {60}),
+          make_ir_object_layer(LayerID {61}),
+          make_ir_object_layer(LayerID {62}),
+          make_ir_object_layer(LayerID {63}),
+        },
+    .visible = true,
+  };
 
-  const StringView name {"group"};
-  const LayerID id {58};
-  const float opacity {0.2f};
-  const bool visible {true};
-  const usize layer_count {5};
+  const ir::TileFormat ir_tile_format {
+    .encoding = TileEncoding::kPlainText,
+    .compression = kNone,
+    .compression_level = kNone,
+  };
 
-  testing::NiceMock<LayerViewMock> layer {};
+  testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
   EXPECT_CALL(layer, write_tile_bytes).Times(0);
-  EXPECT_CALL(layer, get_id).WillRepeatedly(Return(id));
-  EXPECT_CALL(layer, get_type).WillRepeatedly(Return(LayerType::kGroupLayer));
-  EXPECT_CALL(layer, get_opacity).WillRepeatedly(Return(opacity));
-  EXPECT_CALL(layer, is_visible).WillRepeatedly(Return(visible));
-  EXPECT_CALL(layer, layer_count).WillRepeatedly(Return(layer_count));
+  EXPECT_CALL(layer, get_id);
+  EXPECT_CALL(layer, get_type);
+  EXPECT_CALL(layer, get_opacity);
+  EXPECT_CALL(layer, is_visible);
+  EXPECT_CALL(layer, layer_count);
   EXPECT_CALL(layer, object_count).Times(0);
   EXPECT_CALL(layer, get_tile).Times(0);
   EXPECT_CALL(layer, get_tile_encoding).Times(0);
   EXPECT_CALL(layer, get_tile_compression).Times(0);
   EXPECT_CALL(layer, get_extent).Times(0);
   EXPECT_CALL(layer, get_meta);
-  EXPECT_CALL(layer.get_meta_view_mock(), get_name).WillRepeatedly(Return(name));
+  EXPECT_CALL(layer.get_meta_view_mock(), get_name);
 
   const auto layer_json = emit_tiled_tmj_layer(mRuntime, layer, mTileByteStream);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("id"), id);
-  EXPECT_EQ(layer_json->at("name"), name);
+  EXPECT_EQ(layer_json->at("id"), ir_layer.id);
+  EXPECT_EQ(layer_json->at("name"), ir_layer.meta.name);
   EXPECT_EQ(layer_json->at("type"), "group");
-  EXPECT_EQ(layer_json->at("opacity"), opacity);
-  EXPECT_EQ(layer_json->at("visible"), visible);
+  EXPECT_EQ(layer_json->at("opacity"), ir_layer.opacity);
+  EXPECT_EQ(layer_json->at("visible"), ir_layer.visible);
   EXPECT_EQ(layer_json->at("x"), 0);
   EXPECT_EQ(layer_json->at("y"), 0);
+
   ASSERT_TRUE(layer_json->contains("layers"));
   EXPECT_EQ(layer_json->at("layers").get_ref<const nlohmann::json::array_t&>().capacity(),
-            layer_count);
+            ir_layer.layers.size());
 }
 
 }  // namespace tactile::test

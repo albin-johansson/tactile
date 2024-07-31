@@ -5,6 +5,7 @@ add_library(tactile::base_test_util ALIAS tactile-base-test-util)
 
 target_sources(tactile-base-test-util
                PRIVATE
+               "src/document_view_mocks.cpp"
                "src/ir.cpp"
                "src/ir_eq.cpp"
                "src/ir_presets.cpp"

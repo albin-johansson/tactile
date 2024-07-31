@@ -13,28 +13,38 @@ namespace tactile::test {
 // tactile::emit_tiled_tmj_object
 TEST(TmjFormatObjectEmitter, EmitRectangleObject)
 {
-  ObjectViewMock object {};
+  const ir::Object object {
+    .meta = ir::Metadata {},
+    .id = ObjectID {42},
+    .type = ObjectType::kRect,
+    .position = Float2 {1.0f, 2.0f},
+    .size = Float2 {3.0f, 4.0f},
+    .tag = "RectangleTag",
+    .visible = false,
+  };
 
-  EXPECT_CALL(object, get_parent_layer).Times(0);
-  EXPECT_CALL(object, get_parent_tile).Times(0);
-  EXPECT_CALL(object, get_type).WillOnce(testing::Return(ObjectType::kRect));
-  EXPECT_CALL(object, get_id).WillOnce(testing::Return(42));
-  EXPECT_CALL(object, get_position).WillOnce(testing::Return(Float2 {1.0f, 2.0f}));
-  EXPECT_CALL(object, get_size).WillOnce(testing::Return(Float2 {3.0f, 4.0f}));
-  EXPECT_CALL(object, get_tag).WillOnce(testing::Return("RectangleTag"));
-  EXPECT_CALL(object, is_visible).WillOnce(testing::Return(false));
-  EXPECT_CALL(object, get_meta);
+  const ObjectViewMock object_view {object};
+  EXPECT_CALL(object_view, get_parent_layer).Times(0);
+  EXPECT_CALL(object_view, get_parent_tile).Times(0);
+  EXPECT_CALL(object_view, get_type);
+  EXPECT_CALL(object_view, get_id);
+  EXPECT_CALL(object_view, get_position);
+  EXPECT_CALL(object_view, get_size);
+  EXPECT_CALL(object_view, get_tag);
+  EXPECT_CALL(object_view, is_visible);
+  EXPECT_CALL(object_view, get_meta);
 
-  const auto object_json = emit_tiled_tmj_object(object);
+  const auto object_json = emit_tiled_tmj_object(object_view);
 
-  EXPECT_EQ(object_json["id"], 42);
-  EXPECT_EQ(object_json["x"], 1.0f);
-  EXPECT_EQ(object_json["y"], 2.0f);
-  EXPECT_EQ(object_json["width"], 3.0f);
-  EXPECT_EQ(object_json["height"], 4.0f);
-  EXPECT_EQ(object_json["type"], "RectangleTag");
-  EXPECT_EQ(object_json["visible"], false);
+  EXPECT_EQ(object_json["id"], object.id);
+  EXPECT_EQ(object_json["x"], object.position.x());
+  EXPECT_EQ(object_json["y"], object.position.y());
+  EXPECT_EQ(object_json["width"], object.size.x());
+  EXPECT_EQ(object_json["height"], object.size.y());
+  EXPECT_EQ(object_json["type"], object.tag);
+  EXPECT_EQ(object_json["visible"], object.visible);
   EXPECT_EQ(object_json["rotation"], 0);
+
   EXPECT_FALSE(object_json.contains("ellipse"));
   EXPECT_FALSE(object_json.contains("point"));
   EXPECT_FALSE(object_json.contains("properties"));
@@ -46,39 +56,49 @@ TEST(TmjFormatObjectEmitter, EmitEllipseObject)
   using testing::AnyOf;
   using testing::Eq;
 
-  ObjectViewMock object {};
-  auto& meta = object.get_meta_view_mock();
+  const ir::Object object {
+    .meta = ir::Metadata {},
+    .id = ObjectID {42},
+    .type = ObjectType::kEllipse,
+    .position = Float2 {1.0f, 2.0f},
+    .size = Float2 {3.0f, 4.0f},
+    .tag = "EllipseTag",
+    .visible = true,
+  };
 
   const String prop1_name {"P1"};
   const String prop2_name {"P2"};
   const Attribute prop1_value {42};
   const Attribute prop2_value {"demo"};
 
-  EXPECT_CALL(object, get_parent_layer).Times(0);
-  EXPECT_CALL(object, get_parent_tile).Times(0);
-  EXPECT_CALL(object, get_type).WillOnce(testing::Return(ObjectType::kEllipse));
-  EXPECT_CALL(object, get_id).WillOnce(testing::Return(42));
-  EXPECT_CALL(object, get_position).WillOnce(testing::Return(Float2 {1.0f, 2.0f}));
-  EXPECT_CALL(object, get_size).WillOnce(testing::Return(Float2 {3.0f, 4.0f}));
-  EXPECT_CALL(object, get_tag).WillOnce(testing::Return("EllipseTag"));
-  EXPECT_CALL(object, is_visible).WillOnce(testing::Return(true));
-  EXPECT_CALL(object, get_meta);
+  ObjectViewMock object_view {object};
+  EXPECT_CALL(object_view, get_parent_layer).Times(0);
+  EXPECT_CALL(object_view, get_parent_tile).Times(0);
+  EXPECT_CALL(object_view, get_type);
+  EXPECT_CALL(object_view, get_id);
+  EXPECT_CALL(object_view, get_position);
+  EXPECT_CALL(object_view, get_size);
+  EXPECT_CALL(object_view, get_tag);
+  EXPECT_CALL(object_view, is_visible);
+  EXPECT_CALL(object_view, get_meta);
 
-  EXPECT_CALL(meta, property_count).WillOnce(testing::Return(2));
-  EXPECT_CALL(meta, get_property)
+  auto& meta_view = object_view.get_meta_view_mock();
+  EXPECT_CALL(meta_view, property_count).WillOnce(testing::Return(2));
+  EXPECT_CALL(meta_view, get_property)
       .WillOnce(testing::Return(std::make_pair(prop1_name, prop1_value)))
       .WillOnce(testing::Return(std::make_pair(prop2_name, prop2_value)));
 
-  const auto object_json = emit_tiled_tmj_object(object);
+  const auto object_json = emit_tiled_tmj_object(object_view);
 
-  EXPECT_EQ(object_json["id"], 42);
-  EXPECT_EQ(object_json["x"], 1.0f);
-  EXPECT_EQ(object_json["y"], 2.0f);
-  EXPECT_EQ(object_json["width"], 3.0f);
-  EXPECT_EQ(object_json["height"], 4.0f);
-  EXPECT_EQ(object_json["type"], "EllipseTag");
-  EXPECT_EQ(object_json["visible"], true);
+  EXPECT_EQ(object_json["id"], object.id);
+  EXPECT_EQ(object_json["x"], object.position.x());
+  EXPECT_EQ(object_json["y"], object.position.y());
+  EXPECT_EQ(object_json["width"], object.size.x());
+  EXPECT_EQ(object_json["height"], object.size.y());
+  EXPECT_EQ(object_json["type"], object.tag);
+  EXPECT_EQ(object_json["visible"], object.visible);
   EXPECT_EQ(object_json["rotation"], 0);
+
   EXPECT_TRUE(object_json.contains("ellipse"));
   EXPECT_FALSE(object_json.contains("point"));
   EXPECT_TRUE(object_json.contains("properties"));
@@ -95,28 +115,38 @@ TEST(TmjFormatObjectEmitter, EmitEllipseObject)
 // tactile::emit_tiled_tmj_object
 TEST(TmjFormatObjectEmitter, EmitPointObject)
 {
-  ObjectViewMock object {};
+  const ir::Object object {
+    .meta = ir::Metadata {},
+    .id = ObjectID {42},
+    .type = ObjectType::kPoint,
+    .position = Float2 {10.0f, 20.0f},
+    .size = Float2 {30.0f, 40.0f},
+    .tag = "PointTag",
+    .visible = true,
+  };
 
-  EXPECT_CALL(object, get_parent_layer).Times(0);
-  EXPECT_CALL(object, get_parent_tile).Times(0);
-  EXPECT_CALL(object, get_type).WillOnce(testing::Return(ObjectType::kPoint));
-  EXPECT_CALL(object, get_id).WillOnce(testing::Return(42));
-  EXPECT_CALL(object, get_position).WillOnce(testing::Return(Float2 {10.0f, 20.0f}));
-  EXPECT_CALL(object, get_size).WillOnce(testing::Return(Float2 {30.0f, 40.0f}));
-  EXPECT_CALL(object, get_tag).WillOnce(testing::Return("PointTag"));
-  EXPECT_CALL(object, is_visible).WillOnce(testing::Return(true));
-  EXPECT_CALL(object, get_meta);
+  const ObjectViewMock object_view {object};
+  EXPECT_CALL(object_view, get_parent_layer).Times(0);
+  EXPECT_CALL(object_view, get_parent_tile).Times(0);
+  EXPECT_CALL(object_view, get_type);
+  EXPECT_CALL(object_view, get_id);
+  EXPECT_CALL(object_view, get_position);
+  EXPECT_CALL(object_view, get_size);
+  EXPECT_CALL(object_view, get_tag);
+  EXPECT_CALL(object_view, is_visible);
+  EXPECT_CALL(object_view, get_meta);
 
-  const auto object_json = emit_tiled_tmj_object(object);
+  const auto object_json = emit_tiled_tmj_object(object_view);
 
-  EXPECT_EQ(object_json["id"], 42);
-  EXPECT_EQ(object_json["x"], 10.0f);
-  EXPECT_EQ(object_json["y"], 20.0f);
-  EXPECT_EQ(object_json["width"], 30.0f);
-  EXPECT_EQ(object_json["height"], 40.0f);
-  EXPECT_EQ(object_json["type"], "PointTag");
-  EXPECT_EQ(object_json["visible"], true);
+  EXPECT_EQ(object_json["id"], object.id);
+  EXPECT_EQ(object_json["x"], object.position.x());
+  EXPECT_EQ(object_json["y"], object.position.y());
+  EXPECT_EQ(object_json["width"], object.size.x());
+  EXPECT_EQ(object_json["height"], object.size.y());
+  EXPECT_EQ(object_json["type"], object.tag);
+  EXPECT_EQ(object_json["visible"], object.visible);
   EXPECT_EQ(object_json["rotation"], 0);
+
   EXPECT_FALSE(object_json.contains("ellipse"));
   EXPECT_TRUE(object_json.contains("point"));
   EXPECT_FALSE(object_json.contains("properties"));

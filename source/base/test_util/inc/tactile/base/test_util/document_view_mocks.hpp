@@ -2,10 +2,12 @@
 
 #pragma once
 
-#include <utility>  // move
-
 #include <gmock/gmock.h>
 
+#include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/base/container/variant.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/document/layer_view.hpp"
 #include "tactile/base/document/map_view.hpp"
@@ -23,19 +25,7 @@ class MetaViewMock : public IMetaView
  public:
   MetaViewMock() = default;
 
-  explicit MetaViewMock(ir::Metadata meta)
-    : mMeta {std::move(meta)}
-  {
-    ON_CALL(*this, get_name).WillByDefault([this] { return mMeta.name; });
-
-    ON_CALL(*this, get_property)
-        .WillByDefault([this](const usize index) -> Pair<const String&, const Attribute&> {
-          const auto& property = mMeta.properties.at(index);
-          return {property.name, property.value};
-        });
-
-    ON_CALL(*this, property_count).WillByDefault(testing::Return(mMeta.properties.size()));
-  }
+  explicit MetaViewMock(ir::Metadata meta);
 
   MOCK_METHOD(StringView, get_name, (), (const, override));
 
@@ -53,15 +43,8 @@ class MetaViewMock : public IMetaView
 class ObjectViewMock : public IObjectView
 {
  public:
-  ObjectViewMock()
-  {
-    ON_CALL(*this, accept).WillByDefault([this](IDocumentVisitor& visitor) {
-      visitor.visit(*this).value();
-      return kOK;
-    });
-
-    ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
-  }
+  explicit ObjectViewMock(ir::Object object,
+                          Variant<const ILayerView*, const ITileView*> parent = {});
 
   MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
@@ -90,16 +73,15 @@ class ObjectViewMock : public IObjectView
   }
 
  private:
+  ir::Object mObject {};
+  Variant<const ILayerView*, const ITileView*> mParent {};
   testing::NiceMock<MetaViewMock> mMeta {};
 };
 
 class TileViewMock : public ITileView
 {
  public:
-  TileViewMock()
-  {
-    ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
-  }
+  TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile);
 
   MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
@@ -125,6 +107,8 @@ class TileViewMock : public ITileView
   }
 
  private:
+  const ITilesetView* mParentTileset {};
+  ir::Tile mTile {};
   testing::NiceMock<MetaViewMock> mMeta {};
 };
 
@@ -135,6 +119,8 @@ class TilesetViewMock : public ITilesetView
   {
     ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
   }
+
+  explicit TilesetViewMock(ir::TilesetRef tileset_ref);
 
   MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
@@ -163,16 +149,16 @@ class TilesetViewMock : public ITilesetView
   }
 
  private:
+  ir::TilesetRef mTilesetRef {};
   testing::NiceMock<MetaViewMock> mMeta {};
 };
 
 class LayerViewMock : public ILayerView
 {
  public:
-  LayerViewMock()
-  {
-    ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
-  }
+  LayerViewMock(ir::Layer layer,
+                const ir::TileFormat& tile_format,
+                const LayerViewMock* parent_layer = nullptr);
 
   MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
@@ -213,35 +199,16 @@ class LayerViewMock : public ILayerView
   }
 
  private:
+  ir::Layer mLayer {};
+  ir::TileFormat mTileFormat {};
+  const LayerViewMock* mParentLayer {};
   testing::NiceMock<MetaViewMock> mMeta {};
 };
 
 class MapViewMock : public IMapView
 {
  public:
-  MapViewMock()
-  {
-    ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
-  }
-
-  explicit MapViewMock(const ir::Map& ir_map)
-    : mMeta {ir_map.meta}
-  {
-    using testing::Return;
-
-    ON_CALL(*this, get_tile_size).WillByDefault(Return(ir_map.tile_size));
-    ON_CALL(*this, get_extent).WillByDefault(Return(ir_map.extent));
-    ON_CALL(*this, get_next_layer_id).WillByDefault(Return(ir_map.next_layer_id));
-    ON_CALL(*this, get_next_object_id).WillByDefault(Return(ir_map.next_object_id));
-    ON_CALL(*this, get_tile_encoding).WillByDefault(Return(ir_map.tile_format.encoding));
-    ON_CALL(*this, get_tile_compression).WillByDefault(Return(ir_map.tile_format.compression));
-    ON_CALL(*this, get_compression_level)
-        .WillByDefault(Return(ir_map.tile_format.compression_level));
-    ON_CALL(*this, layer_count).WillByDefault(Return(ir_map.layers.size()));
-    ON_CALL(*this, tileset_count).WillByDefault(Return(ir_map.tilesets.size()));
-    ON_CALL(*this, component_count).WillByDefault(Return(ir_map.components.size()));
-    ON_CALL(*this, get_meta).WillByDefault(testing::ReturnRef(mMeta));
-  }
+  explicit MapViewMock(const ir::Map& map);
 
   MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
 
@@ -277,6 +244,8 @@ class MapViewMock : public IMapView
 
  private:
   testing::NiceMock<MetaViewMock> mMeta {};
+  Vector<Unique<TilesetViewMock>> mTilesets {};
+  Vector<Unique<LayerViewMock>> mLayers {};
 };
 
 }  // namespace tactile::test

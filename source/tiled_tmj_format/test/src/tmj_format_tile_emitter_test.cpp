@@ -6,24 +6,30 @@
 #include <gtest/gtest.h>
 
 #include "tactile/base/test_util/document_view_mocks.hpp"
+#include "tactile/base/test_util/ir.hpp"
 
 namespace tactile::test {
 
 // tactile::emit_tiled_tmj_tile
 TEST(TmjFormatTileEmitter, EmitPlainTile)
 {
-  const TileIndex tile_index {54};
+  const ir::Tile tile {
+    .meta = ir::Metadata {},
+    .index = TileIndex {54},
+    .objects = {},
+    .animation = {},
+  };
 
-  const TileViewMock tile {};
+  const TileViewMock tile_view {nullptr, tile};
 
-  EXPECT_CALL(tile, get_index).WillOnce(testing::Return(tile_index));
-  EXPECT_CALL(tile, animation_frame_count);
-  EXPECT_CALL(tile, object_count);
-  EXPECT_CALL(tile, get_meta);
+  EXPECT_CALL(tile_view, get_index).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, animation_frame_count).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, object_count).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, get_meta).Times(testing::AtLeast(1));
 
-  const auto tile_json = emit_tiled_tmj_tile(tile);
+  const auto tile_json = emit_tiled_tmj_tile(tile_view);
 
-  EXPECT_EQ(tile_json.at("id"), tile_index);
+  EXPECT_EQ(tile_json.at("id"), tile.index);
   EXPECT_FALSE(tile_json.contains("animation"));
   EXPECT_FALSE(tile_json.contains("objectgroup"));
   EXPECT_FALSE(tile_json.contains("properties"));
@@ -32,51 +38,71 @@ TEST(TmjFormatTileEmitter, EmitPlainTile)
 // tactile::emit_tiled_tmj_tile
 TEST(TmjFormatTileEmitter, EmitAnimatedTile)
 {
-  const TileIndex tile_index {68};
+  const ir::Tile tile {
+    .meta = ir::Metadata {},
+    .index = TileIndex {68},
+    .objects = {},
+    .animation =
+        {
+          ir::AnimationFrame {TileIndex {68}, Milliseconds {1}},
+          ir::AnimationFrame {TileIndex {69}, Milliseconds {2}},
+          ir::AnimationFrame {TileIndex {70}, Milliseconds {3}},
+        },
+  };
 
-  const TileViewMock tile {};
+  const auto& frame1 = tile.animation.at(0);
+  const auto& frame2 = tile.animation.at(1);
+  const auto& frame3 = tile.animation.at(2);
 
-  EXPECT_CALL(tile, get_index).WillOnce(testing::Return(tile_index));
-  EXPECT_CALL(tile, animation_frame_count).WillRepeatedly(testing::Return(3));
-  EXPECT_CALL(tile, get_animation_frame)
-      .WillOnce(testing::Return(std::make_pair(TileIndex {68}, Milliseconds {1})))
-      .WillOnce(testing::Return(std::make_pair(TileIndex {69}, Milliseconds {2})))
-      .WillOnce(testing::Return(std::make_pair(TileIndex {70}, Milliseconds {3})));
-  EXPECT_CALL(tile, object_count);
-  EXPECT_CALL(tile, get_meta);
+  const TileViewMock tile_view {nullptr, tile};
 
-  const auto tile_json = emit_tiled_tmj_tile(tile);
+  EXPECT_CALL(tile_view, get_index).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, animation_frame_count).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, get_animation_frame).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, object_count).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, get_meta).Times(testing::AtLeast(1));
 
-  EXPECT_EQ(tile_json.at("id"), tile_index);
+  const auto tile_json = emit_tiled_tmj_tile(tile_view);
+
+  EXPECT_EQ(tile_json.at("id"), tile.index);
   EXPECT_FALSE(tile_json.contains("objectgroup"));
   EXPECT_FALSE(tile_json.contains("properties"));
   ASSERT_TRUE(tile_json.contains("animation"));
 
-  EXPECT_EQ(tile_json.at("animation").at(0).at("tileid"), TileIndex {68});
-  EXPECT_EQ(tile_json.at("animation").at(0).at("duration"), 1);
+  EXPECT_EQ(tile_json.at("animation").at(0).at("tileid"), frame1.tile_index);
+  EXPECT_EQ(tile_json.at("animation").at(0).at("duration"), frame1.duration.count());
 
-  EXPECT_EQ(tile_json.at("animation").at(1).at("tileid"), TileIndex {69});
-  EXPECT_EQ(tile_json.at("animation").at(1).at("duration"), 2);
+  EXPECT_EQ(tile_json.at("animation").at(1).at("tileid"), frame2.tile_index);
+  EXPECT_EQ(tile_json.at("animation").at(1).at("duration"), frame2.duration.count());
 
-  EXPECT_EQ(tile_json.at("animation").at(2).at("tileid"), TileIndex {70});
-  EXPECT_EQ(tile_json.at("animation").at(2).at("duration"), 3);
+  EXPECT_EQ(tile_json.at("animation").at(2).at("tileid"), frame3.tile_index);
+  EXPECT_EQ(tile_json.at("animation").at(2).at("duration"), frame3.duration.count());
 }
 
 // tactile::emit_tiled_tmj_tile
 TEST(TmjFormatTileEmitter, EmitTileWithObjects)
 {
-  const TileIndex tile_index {123};
+  const ir::Tile tile {
+    .meta = ir::Metadata {},
+    .index = TileIndex {123},
+    .objects =
+        {
+          make_ir_object(ObjectID {1}),
+          make_ir_object(ObjectID {2}),
+        },
+    .animation = {},
+  };
 
-  const TileViewMock tile {};
+  const TileViewMock tile_view {nullptr, tile};
 
-  EXPECT_CALL(tile, get_index).WillRepeatedly(testing::Return(tile_index));
-  EXPECT_CALL(tile, animation_frame_count);
-  EXPECT_CALL(tile, object_count).WillRepeatedly(testing::Return(2));
-  EXPECT_CALL(tile, get_meta);
+  EXPECT_CALL(tile_view, get_index).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, animation_frame_count).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, object_count).Times(testing::AtLeast(1));
+  EXPECT_CALL(tile_view, get_meta).Times(testing::AtLeast(1));
 
-  const auto tile_json = emit_tiled_tmj_tile(tile);
+  const auto tile_json = emit_tiled_tmj_tile(tile_view);
 
-  EXPECT_EQ(tile_json.at("id"), tile_index);
+  EXPECT_EQ(tile_json.at("id"), tile.index);
   EXPECT_FALSE(tile_json.contains("animation"));
   EXPECT_FALSE(tile_json.contains("properties"));
   ASSERT_TRUE(tile_json.contains("objectgroup"));
@@ -85,7 +111,7 @@ TEST(TmjFormatTileEmitter, EmitTileWithObjects)
                 .at("objects")
                 .get_ref<const nlohmann::json::array_t&>()
                 .capacity(),
-            2);
+            tile.objects.size());
 }
 
 }  // namespace tactile::test
