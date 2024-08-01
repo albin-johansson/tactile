@@ -9,6 +9,40 @@
 #include "tactile/tiled_tmj_format/tmj_format_tileset_parser.hpp"
 
 namespace tactile {
+namespace tmj_format_map_parser {
+
+void deduce_tile_format_from_layer(const nlohmann::json& layer_json,
+                                   ir::TileFormat& tile_format)
+{
+  if (const auto encoding_iter = layer_json.find("encoding");
+      encoding_iter != layer_json.end()) {
+    const auto& encoding = encoding_iter->get_ref<const String&>();
+
+    if (encoding == "base64") {
+      tile_format.encoding = TileEncoding::kBase64;
+    }
+    else {
+      tile_format.encoding = TileEncoding::kPlainText;
+    }
+  }
+
+  if (const auto compression_iter = layer_json.find("compression");
+      compression_iter != layer_json.end()) {
+    const auto& compression_name = compression_iter->get_ref<const String&>();
+
+    if (compression_name == "zlib") {
+      tile_format.compression = CompressionFormat::kZlib;
+    }
+    else if (compression_name == "zstd") {
+      tile_format.compression = CompressionFormat::kZstd;
+    }
+    else {
+      tile_format.compression = kNone;
+    }
+  }
+}
+
+}  // namespace tmj_format_map_parser
 
 auto parse_tiled_tmj_map(const IRuntime& runtime,
                          const nlohmann::json& map_json,
@@ -98,6 +132,8 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     map.layers.reserve(layers_iter->size());
 
     for (const auto& [_, layer_json] : layers_iter->items()) {
+      tmj_format_map_parser::deduce_tile_format_from_layer(layer_json, map.tile_format);
+
       if (auto layer = parse_tiled_tmj_layer(runtime, layer_json)) {
         map.layers.push_back(std::move(*layer));
       }

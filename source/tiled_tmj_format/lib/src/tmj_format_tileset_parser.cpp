@@ -171,7 +171,6 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
   }
 
   tileset.image_path = Path {relative_image_path};
-  tileset.is_embedded = !tileset_json.contains("source");
 
   if (const auto tiles_iter = tileset_json.find("tiles"); tiles_iter != tileset_json.end()) {
     tileset.tiles.reserve(tiles_iter->size());
@@ -218,6 +217,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
 
     if (auto tileset = tmj_format_tileset_parser::parse_tileset(external_tileset_json)) {
       tileset_ref.tileset = std::move(*tileset);
+      tileset_ref.tileset.is_embedded = false;
     }
     else {
       return propagate_unexpected(tileset);
@@ -226,6 +226,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
   else {
     if (auto tileset = tmj_format_tileset_parser::parse_tileset(tileset_json)) {
       tileset_ref.tileset = std::move(*tileset);
+      tileset_ref.tileset.is_embedded = true;
     }
     else {
       return propagate_unexpected(tileset);

@@ -164,9 +164,17 @@ auto TmjFormatSaveVisitor::_find_layer_json(nlohmann::json& root_node,
 
 auto TmjFormatSaveVisitor::_find_tileset_json(const TileID first_tile_id) -> nlohmann::json*
 {
-  for (const auto& [_, tileset_node] : mMapNode.at("tilesets").items()) {
-    if (tileset_node.at("firstgid") == first_tile_id) {
-      return &tileset_node;
+  if (mOptions.use_external_tilesets) {
+    const auto external_tileset_iter = mExternalTilesetNodes.find(first_tile_id);
+    if (external_tileset_iter != mExternalTilesetNodes.end()) {
+      return &external_tileset_iter->second.json;
+    }
+  }
+  else {
+    for (const auto& [_, tileset_node] : mMapNode.at("tilesets").items()) {
+      if (tileset_node.at("firstgid") == first_tile_id) {
+        return &tileset_node;
+      }
     }
   }
 

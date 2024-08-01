@@ -37,7 +37,7 @@ auto make_complex_ir_object(const ObjectID id, const ObjectType type) -> ir::Obj
 {
   auto object = make_ir_object(id, type, Float2 {12, 34}, Float2 {56, 78});
 
-  object.meta = make_complex_ir_metadata(std::format("Complex object {}", id));
+  object.meta = make_complex_ir_metadata(std::format("complex_object {}", id));
   object.tag = "this-is-a-tag";
 
   return object;
@@ -47,7 +47,7 @@ auto make_complex_ir_object_layer(const LayerID id, ObjectID& next_object_id) ->
 {
   auto object_layer = make_ir_object_layer(id);
 
-  object_layer.meta = make_complex_ir_metadata(std::format("Complex layer {}", id));
+  object_layer.meta = make_complex_ir_metadata(std::format("complex_layer {}", id));
   object_layer.opacity = 0.50f;
   object_layer.visible = false;
 
@@ -65,7 +65,7 @@ auto make_complex_ir_tile_layer(const LayerID id, const MatrixExtent& extent) ->
 {
   auto tile_layer = make_ir_tile_layer(id, extent);
 
-  tile_layer.meta = make_complex_ir_metadata(std::format("Complex layer {}", id));
+  tile_layer.meta = make_complex_ir_metadata(std::format("complex_layer {}", id));
   tile_layer.opacity = 1.0f;
   tile_layer.visible = true;
 
@@ -136,7 +136,7 @@ auto make_complex_ir_tile(const TileIndex index, ObjectID& next_object_id) -> ir
 {
   auto tile = make_ir_tile(index);
 
-  tile.meta = make_complex_ir_metadata(std::format("Complex tile {}", index));
+  tile.meta = make_complex_ir_metadata(std::format("complex_tile {}", index));
 
   tile.objects.reserve(3);
   tile.objects.push_back(make_complex_ir_object(next_object_id++, ObjectType::kPoint));
@@ -156,7 +156,7 @@ auto make_complex_ir_tileset(TileID& next_tile_id, ObjectID& next_object_id) -> 
 {
   auto tileset_ref = make_ir_tileset_ref(next_tile_id);
 
-  tileset_ref.tileset.meta = make_complex_ir_metadata("Complex tileset");
+  tileset_ref.tileset.meta = make_complex_ir_metadata("complex_tileset");
   tileset_ref.tileset.tiles.reserve(3);
   tileset_ref.tileset.tiles.push_back(make_complex_ir_tile(TileIndex {0}, next_object_id));
   tileset_ref.tileset.tiles.push_back(make_complex_ir_tile(TileIndex {1}, next_object_id));
@@ -171,7 +171,7 @@ auto make_complex_ir_map(const ir::TileFormat& tile_format) -> ir::Map
 
   auto map = make_ir_map(extent);
 
-  map.meta = make_complex_ir_metadata("Complex map");
+  map.meta = make_complex_ir_metadata("complex_map");
   map.tile_size = Int2 {40, 30};
   map.next_layer_id = 10;
   map.next_object_id = 100;

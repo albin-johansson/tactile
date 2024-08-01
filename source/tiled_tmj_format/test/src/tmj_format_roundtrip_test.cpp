@@ -1,10 +1,13 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
 #include <filesystem>  // current_path
+#include <ostream>     // ostream
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/test_util/document_view_mocks.hpp"
 #include "tactile/base/test_util/ir.hpp"
 #include "tactile/base/test_util/ir_eq.hpp"
@@ -22,7 +25,37 @@
 
 namespace tactile::test {
 
-class TmjFormatRoundtripTest : public testing::Test
+struct TmjRoundtripConfig final
+{
+  StringView map_filename;
+  TileEncoding encoding;
+  Optional<CompressionFormat> compression;
+  bool use_external_tilesets;
+};
+
+inline auto operator<<(std::ostream& stream, const TmjRoundtripConfig& config) -> std::ostream&
+{
+  stream << config.map_filename;
+
+  stream << " + " << (config.encoding == TileEncoding::kBase64 ? "base64" : "plain text")
+         << " encoding";
+
+  if (config.compression == CompressionFormat::kZlib) {
+    stream << " + zlib compression";
+  }
+  else if (config.compression == CompressionFormat::kZstd) {
+    stream << " + zstd compression";
+  }
+  else {
+    stream << " + no compression";
+  }
+
+  stream << " + " << (config.use_external_tilesets ? "external" : "embedded") << " tilesets";
+
+  return stream;
+}
+
+class TmjFormatRoundtripTest : public testing::TestWithParam<TmjRoundtripConfig>
 {
  public:
   void SetUp() override
@@ -65,29 +98,65 @@ class TmjFormatRoundtripTest : public testing::Test
   TmjFormatPlugin mTmjFormatPlugin {};
 };
 
-TEST_F(TmjFormatRoundtripTest, SaveAndLoadMapWithEmbeddedTilesets)
+INSTANTIATE_TEST_SUITE_P(TMJ,
+                         TmjFormatRoundtripTest,
+                         testing::Values(
+                             TmjRoundtripConfig {
+                               .map_filename = "map_with_embedded_tilesets.tmj",
+                               .encoding = TileEncoding::kPlainText,
+                               .compression = kNone,
+                               .use_external_tilesets = false,
+                             },
+                             TmjRoundtripConfig {
+                               .map_filename = "map_with_external_tilesets.tmj",
+                               .encoding = TileEncoding::kPlainText,
+                               .compression = kNone,
+                               .use_external_tilesets = true,
+                             },
+                             TmjRoundtripConfig {
+                               .map_filename = "map_with_base64_tiles.tmj",
+                               .encoding = TileEncoding::kBase64,
+                               .compression = kNone,
+                               .use_external_tilesets = false,
+                             },
+                             TmjRoundtripConfig {
+                               .map_filename = "map_with_base64_zlib_tiles.tmj",
+                               .encoding = TileEncoding::kBase64,
+                               .compression = CompressionFormat::kZlib,
+                               .use_external_tilesets = false,
+                             },
+                             TmjRoundtripConfig {
+                               .map_filename = "map_with_base64_zstd_tiles.tmj",
+                               .encoding = TileEncoding::kBase64,
+                               .compression = CompressionFormat::kZstd,
+                               .use_external_tilesets = false,
+                             }));
+
+TEST_P(TmjFormatRoundtripTest, SaveAndLoadMap)
 {
+  const auto& config = GetParam();
+
   const auto* save_format = mRuntime.get_save_format(SaveFormatId::kTiledTmj);
   ASSERT_NE(save_format, nullptr);
 
   auto ir_map = make_complex_ir_map(ir::TileFormat {
-    .encoding = TileEncoding::kPlainText,
-    .compression = kNone,
+    .encoding = config.encoding,
+    .compression = config.compression,
     .compression_level = kNone,
   });
 
   for (auto& ir_tileset_ref : ir_map.tilesets) {
-    ir_tileset_ref.tileset.is_embedded = true;
+    ir_tileset_ref.tileset.is_embedded = !config.use_external_tilesets;
   }
 
   const testing::NiceMock<MapViewMock> map_view {ir_map};
 
-  const auto map_path = std::filesystem::current_path() / "roundtrip.tmj";
+  const auto map_path = std::filesystem::current_path() / config.map_filename;
   EXPECT_CALL(map_view, get_path).WillRepeatedly(testing::Return(&map_path));
 
   const SaveFormatWriteOptions write_options {
     .base_dir = map_path.parent_path(),
-    .use_external_tilesets = false,
+    .use_external_tilesets = config.use_external_tilesets,
     .use_indentation = true,
     .fold_tile_layer_data = false,
   };
