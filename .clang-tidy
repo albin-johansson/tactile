@@ -29,6 +29,7 @@ Checks: "-*,
          misc-*,
          -misc-no-recursion,
          -misc-non-private-member-variables-in-classes,
+         -misc-include-cleaner,
 
          cppcoreguidelines-*,
          -cppcoreguidelines-avoid-magic-numbers,
