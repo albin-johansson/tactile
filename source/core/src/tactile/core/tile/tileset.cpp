@@ -45,8 +45,6 @@ auto add_tileset_component(Registry& registry,
     return unexpected(std::make_error_code(std::errc::invalid_argument));
   }
 
-  const auto tileset_entity = registry.make_entity();
-
   auto& tileset = registry.add<CTileset>(tileset_id);
   tileset.tile_size = tile_size;
   tileset.extent = extent;
