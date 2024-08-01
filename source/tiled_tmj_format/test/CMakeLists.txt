@@ -13,6 +13,7 @@ target_sources(tactile-tiled-tmj-format-test
                "src/tmj_format_meta_emitter_test.cpp"
                "src/tmj_format_object_emitter_test.cpp"
                "src/tmj_format_object_parser_test.cpp"
+               "src/tmj_format_roundtrip_test.cpp"
                "src/tmj_format_tile_emitter_test.cpp"
                "src/tmj_format_tileset_emitter_test.cpp"
                "src/tmj_format_tileset_parser_test.cpp"
