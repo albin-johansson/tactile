@@ -8,10 +8,10 @@
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
-#include "tactile/base/test_util/document_view_mocks.hpp"
-#include "tactile/base/test_util/ir.hpp"
-#include "tactile/base/test_util/ir_eq.hpp"
-#include "tactile/base/test_util/ir_presets.hpp"
+#include "tactile/test_util/document_view_mocks.hpp"
+#include "tactile/test_util/ir.hpp"
+#include "tactile/test_util/ir_eq.hpp"
+#include "tactile/test_util/ir_presets.hpp"
 #include "tactile/runtime/runtime.hpp"
 #include "tactile/tiled_tmj_format/tmj_format_plugin.hpp"
 

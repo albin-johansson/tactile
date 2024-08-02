@@ -24,7 +24,7 @@ tactile_prepare_target(tactile-tiled-tmj-format-test)
 target_link_libraries(tactile-tiled-tmj-format-test
                       PRIVATE
                       tactile::tiled_tmj_format
-                      tactile::base_test_util
+                      tactile::test_util
                       tactile::null_renderer
                       $<$<BOOL:TACTILE_BUILD_ZLIB_COMPRESSION>:tactile::zlib_compression>
                       $<$<BOOL:TACTILE_BUILD_ZSTD_COMPRESSION>:tactile::zstd_compression>

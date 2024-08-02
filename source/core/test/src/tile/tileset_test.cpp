@@ -5,7 +5,6 @@
 #include <gtest/gtest.h>
 
 #include "tactile/base/numeric/saturate_cast.hpp"
-#include "tactile/base/test_util/ir_presets.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/io/texture.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -15,6 +14,7 @@
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "tactile/core/ui/viewport.hpp"
 #include "tactile/null_renderer/null_renderer.hpp"
+#include "tactile/test_util/ir_presets.hpp"
 
 namespace tactile::test {
 

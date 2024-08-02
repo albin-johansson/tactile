@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/base/test_util/ir.hpp"
+#include "tactile/test_util/ir.hpp"
 
 #include <format>   // format
 #include <utility>  // move

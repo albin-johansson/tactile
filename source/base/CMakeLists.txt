@@ -80,5 +80,4 @@ target_sources(tactile-base
 
 if (TACTILE_BUILD_TESTS)
   add_subdirectory("test")
-  add_subdirectory("test_util")
 endif ()

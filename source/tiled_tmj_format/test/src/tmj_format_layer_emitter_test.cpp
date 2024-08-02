@@ -7,9 +7,9 @@
 
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/platform/bits.hpp"
-#include "tactile/base/test_util/document_view_mocks.hpp"
-#include "tactile/base/test_util/ir.hpp"
 #include "tactile/runtime/runtime.hpp"
+#include "tactile/test_util/document_view_mocks.hpp"
+#include "tactile/test_util/ir.hpp"
 
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
   #include "tactile/zlib_compression/zlib_compression_plugin.hpp"

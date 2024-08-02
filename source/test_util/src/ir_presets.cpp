@@ -1,10 +1,10 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/base/test_util/ir_presets.hpp"
+#include "tactile/test_util/ir_presets.hpp"
 
 #include <utility>  // move
 
-#include "tactile/base/test_util/ir.hpp"
+#include "tactile/test_util/ir.hpp"
 
 namespace tactile::test {
 

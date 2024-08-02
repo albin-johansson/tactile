@@ -4,8 +4,6 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/test_util/ir.hpp"
-#include "tactile/base/test_util/ir_presets.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/layer.hpp"
@@ -16,6 +14,8 @@
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "tactile/core/ui/viewport.hpp"
 #include "tactile/null_renderer/null_renderer.hpp"
+#include "tactile/test_util/ir.hpp"
+#include "tactile/test_util/ir_presets.hpp"
 
 namespace tactile::test {
 

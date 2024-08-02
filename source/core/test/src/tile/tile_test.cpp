@@ -4,12 +4,12 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/test_util/ir_presets.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/test/ir_comparison.hpp"
 #include "tactile/core/tile/animation.hpp"
+#include "tactile/test_util/ir_presets.hpp"
 
 namespace tactile::test {
 

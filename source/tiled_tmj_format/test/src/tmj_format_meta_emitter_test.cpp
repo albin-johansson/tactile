@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/base/meta/attribute.hpp"
-#include "tactile/base/test_util/document_view_mocks.hpp"
+#include "tactile/test_util/document_view_mocks.hpp"
 
 namespace tactile::test {
 
