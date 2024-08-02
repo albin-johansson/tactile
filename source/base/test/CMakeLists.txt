@@ -14,6 +14,7 @@ target_sources(tactile-base-test
                "src/numeric/vec_stream_test.cpp"
                "src/numeric/vec_test.cpp"
                "src/platform/bits_test.cpp"
+               "src/platform/filesystem_test.cpp"
                "src/util/buffer_test.cpp"
                "src/util/format_test.cpp"
                "src/util/matrix_extent_test.cpp"

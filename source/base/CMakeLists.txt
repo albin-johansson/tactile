@@ -59,6 +59,7 @@ target_sources(tactile-base
                "inc/tactile/base/numeric/vec_format.hpp"
                "inc/tactile/base/numeric/vec_stream.hpp"
                "inc/tactile/base/platform/bits.hpp"
+               "inc/tactile/base/platform/filesystem.hpp"
                "inc/tactile/base/render/renderer.hpp"
                "inc/tactile/base/render/texture.hpp"
                "inc/tactile/base/render/window.hpp"

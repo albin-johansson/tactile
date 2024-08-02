@@ -7,6 +7,7 @@
 #include <utility>     // move
 
 #include "tactile/base/document/tileset_view.hpp"
+#include "tactile/base/platform/filesystem.hpp"
 #include "tactile/tiled_tmj_format/tmj_format_meta_emitter.hpp"
 
 namespace tactile {
@@ -28,7 +29,7 @@ void save_basic_tileset_attributes(const ITilesetView& tileset,
   tileset_json["tileheight"] = tile_size.y();
   tileset_json["tilecount"] = tileset.tile_count();
 
-  tileset_json["image"] = relative_image_path.string();
+  tileset_json["image"] = normalize_path_separators(relative_image_path);
   tileset_json["imagewidth"] = image_size.x();
   tileset_json["imageheight"] = image_size.y();
 
