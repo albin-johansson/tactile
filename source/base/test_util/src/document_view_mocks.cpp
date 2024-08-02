@@ -14,7 +14,7 @@ MetaViewMock::MetaViewMock(ir::Metadata meta)
 {
   using testing::Return;
 
-  ON_CALL(*this, get_name).WillByDefault([this] { return mMeta.name; });
+  ON_CALL(*this, get_name).WillByDefault([this]() -> StringView { return mMeta.name; });
 
   ON_CALL(*this, get_property)
       .WillByDefault([this](const usize index) -> Pair<const String&, const Attribute&> {
