@@ -113,6 +113,21 @@ class Buffer final
   }
 
   /**
+   * Ensures that the final element in the buffer is a given value.
+   *
+   * \param terminator The value to use as the last element.
+   */
+  constexpr void set_terminator(const value_type terminator) noexcept
+  {
+    if (size() < capacity()) {
+      push_back(terminator);
+    }
+    else {
+      *(mEnd - 1) = terminator;
+    }
+  }
+
+  /**
    * Returns a pointer to the internal array.
    *
    * \return

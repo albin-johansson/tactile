@@ -40,8 +40,7 @@ void Language::add_icons()
   inject_icon(StringID::kRectangleTool, to_prefix_string(Icon::kRectangle));
   inject_icon(StringID::kEllipseTool, to_prefix_string(Icon::kEllipse));
   inject_icon(StringID::kPointTool, to_prefix_string(Icon::kPoint));
-  inject_icon(StringID::kOpenComponentEditor,
-              to_prefix_string(Icon::kComponent));
+  inject_icon(StringID::kOpenComponentEditor, to_prefix_string(Icon::kComponent));
   inject_icon(StringID::kOpenSettings, to_prefix_string(Icon::kSettings));
 
   // View
@@ -79,10 +78,14 @@ void Language::add_icons()
   inject_icon(StringID::kRemoveProperty, to_prefix_string(Icon::kRemove));
   inject_icon(StringID::kRenameProperty, to_prefix_string(Icon::kEdit));
 
-  inject_icon(StringID::kShowMetadata, to_prefix_string(Icon::kInfo));
-
   inject_icon(StringID::kCreateTileset, to_prefix_string(Icon::kCreate));
+  inject_icon(StringID::kCreateLayer, to_prefix_string(Icon::kCreate));
+
+  inject_icon(StringID::kShowMetadata, to_prefix_string(Icon::kInfo));
   inject_icon(StringID::kSelectImage, to_prefix_string(Icon::kImage));
+  inject_icon(StringID::kTileLayerItem, to_prefix_string(Icon::kTileLayer));
+  inject_icon(StringID::kObjectLayerItem, to_prefix_string(Icon::kObjectLayer));
+  inject_icon(StringID::kGroupLayerItem, to_prefix_string(Icon::kGroupLayer));
 }
 
 auto Language::get_id() const -> LanguageID

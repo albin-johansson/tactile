@@ -88,6 +88,7 @@ auto _get_action_names() -> HashMap<StringView, StringID>
   return {
     {"create_map", StringID::kCreateMap},
     {"create_tileset", StringID::kCreateTileset},
+    {"create_layer", StringID::kCreateLayer},
     {"open", StringID::kOpen},
     {"open_map", StringID::kOpenMap},
     {"open_tileset", StringID::kOpenTileset},
@@ -138,6 +139,9 @@ auto _get_action_names() -> HashMap<StringView, StringID>
     {"open_style_editor", StringID::kOpenStyleEditor},
     {"open_demo_window", StringID::kOpenDemoWindow},
     {"open_storage_dir", StringID::kOpenStorageDir},
+    {"tile_layer_item", StringID::kTileLayerItem},
+    {"object_layer_item", StringID::kObjectLayerItem},
+    {"group_layer_item", StringID::kGroupLayerItem},
   };
 }
 
@@ -201,8 +205,7 @@ void _parse_section(const StringMap<IniSection>& ini,
 }
 
 [[nodiscard]]
-auto _validate_strings(Vector<String>& strings,
-                       const Language* fallback) -> Result<void>
+auto _validate_strings(Vector<String>& strings, const Language* fallback) -> Result<void>
 {
   usize index {0};
 

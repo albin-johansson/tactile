@@ -61,6 +61,9 @@ enum class Icon : uint8
   kPerformance,
   kStorage,
   kEllipsis,
+  kTileLayer,
+  kObjectLayer,
+  kGroupLayer,
 };
 
 /**

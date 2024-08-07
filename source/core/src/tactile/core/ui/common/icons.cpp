@@ -54,6 +54,9 @@
 #define TACTILE_ICON_PERFORMANCE  ICON_FA_GAUGE_HIGH
 #define TACTILE_ICON_STORAGE      ICON_FA_DATABASE
 #define TACTILE_ICON_ELLIPSIS     ICON_FA_ELLIPSIS
+#define TACTILE_ICON_TILE_LAYER   ICON_FA_TABLE_CELLS
+#define TACTILE_ICON_OBJECT_LAYER ICON_FA_SHAPES
+#define TACTILE_ICON_GROUP_LAYER  ICON_FA_LAYER_GROUP
 // clang-format on
 
 namespace tactile::ui {
@@ -110,6 +113,9 @@ auto to_string(const Icon icon) noexcept -> const char*
     case Icon::kPerformance: return TACTILE_ICON_PERFORMANCE;
     case Icon::kStorage:     return TACTILE_ICON_STORAGE;
     case Icon::kEllipsis:    return TACTILE_ICON_ELLIPSIS;
+    case Icon::kTileLayer:   return TACTILE_ICON_TILE_LAYER;
+    case Icon::kObjectLayer: return TACTILE_ICON_OBJECT_LAYER;
+    case Icon::kGroupLayer:  return TACTILE_ICON_GROUP_LAYER;
   }
 
   return "";
@@ -167,6 +173,9 @@ auto to_prefix_string(const Icon icon) noexcept -> const char*
     case Icon::kPerformance: return TACTILE_ICON_PERFORMANCE " ";
     case Icon::kStorage:     return TACTILE_ICON_STORAGE " ";
     case Icon::kEllipsis:    return TACTILE_ICON_ELLIPSIS " ";
+    case Icon::kTileLayer:   return TACTILE_ICON_TILE_LAYER " ";
+    case Icon::kObjectLayer: return TACTILE_ICON_OBJECT_LAYER " ";
+    case Icon::kGroupLayer:  return TACTILE_ICON_GROUP_LAYER " ";
   }
 
   return "";

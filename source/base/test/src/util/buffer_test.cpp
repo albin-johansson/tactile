@@ -192,6 +192,47 @@ TEST(Buffer, AppendContainer)
   EXPECT_EQ(buffer.view()[7], 3);
 }
 
+// tactile::Buffer::set_terminator
+TEST(Buffer, SetTerminatorWithRemainingCapacity)
+{
+  Buffer<char, 4> buffer {};
+  buffer.push_back('A');
+  buffer.push_back('B');
+
+  ASSERT_EQ(buffer.size(), 2);
+  EXPECT_EQ(buffer.view()[0], 'A');
+  EXPECT_EQ(buffer.view()[1], 'B');
+
+  buffer.set_terminator('\0');
+
+  ASSERT_EQ(buffer.size(), 3);
+  EXPECT_EQ(buffer.view()[0], 'A');
+  EXPECT_EQ(buffer.view()[1], 'B');
+  EXPECT_EQ(buffer.view()[2], '\0');
+}
+
+// tactile::Buffer::set_terminator
+TEST(Buffer, SetTerminatorWithFullBuffer)
+{
+  Buffer<char, 4> buffer {};
+
+  std::fill_n(std::back_inserter(buffer), buffer.capacity(), '?');
+
+  ASSERT_EQ(buffer.size(), buffer.capacity());
+  EXPECT_EQ(buffer.view()[0], '?');
+  EXPECT_EQ(buffer.view()[1], '?');
+  EXPECT_EQ(buffer.view()[2], '?');
+  EXPECT_EQ(buffer.view()[3], '?');
+
+  buffer.set_terminator('!');
+
+  ASSERT_EQ(buffer.size(), buffer.capacity());
+  EXPECT_EQ(buffer.view()[0], '?');
+  EXPECT_EQ(buffer.view()[1], '?');
+  EXPECT_EQ(buffer.view()[2], '?');
+  EXPECT_EQ(buffer.view()[3], '!');
+}
+
 // tactile::Buffer::data
 TEST(Buffer, Data)
 {
