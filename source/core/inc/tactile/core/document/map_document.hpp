@@ -57,8 +57,13 @@ class MapDocument final : public IDocument
 
   void set_path(Path path) override;
 
+  void set_format(SaveFormatId format_id) override;
+
   [[nodiscard]]
   auto get_path() const -> const Path* override;
+
+  [[nodiscard]]
+  auto get_format() const -> SaveFormatId override;
 
   [[nodiscard]]
   auto get_registry() -> Registry& override;

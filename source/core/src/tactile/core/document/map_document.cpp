@@ -24,12 +24,14 @@ struct MapDocument::Data final
   Registry registry;
   EntityID map_entity;
   Maybe<Path> path;
+  SaveFormatId format;
 
   Data()
     : uuid {UUID::generate()},
       registry {},
       map_entity {kInvalidEntity},
-      path {kNone}
+      path {kNone},
+      format {SaveFormatId::kTactileYaml}
   {
     registry.add<CTileCache>();
     registry.add<CDocumentInfo>();
@@ -101,9 +103,19 @@ void MapDocument::set_path(Path path)
   mData->path = std::move(path);
 }
 
+void MapDocument::set_format(const SaveFormatId format_id)
+{
+  mData->format = format_id;
+}
+
 auto MapDocument::get_path() const -> const Path*
 {
   return mData->path.has_value() ? &mData->path.value() : nullptr;
+}
+
+auto MapDocument::get_format() const -> SaveFormatId
+{
+  return mData->format;
 }
 
 auto MapDocument::get_registry() -> Registry&

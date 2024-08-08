@@ -4,6 +4,7 @@
 
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/path.hpp"
+#include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -52,6 +53,13 @@ class IDocument
   virtual void set_path(Path path) = 0;
 
   /**
+   * Sets the save format used by the document.
+   *
+   * \param format_id The save format to use.
+   */
+  virtual void set_format(SaveFormatId format_id) = 0;
+
+  /**
    * Returns the associated save file path.
    *
    * \return
@@ -59,6 +67,15 @@ class IDocument
    */
   [[nodiscard]]
   virtual auto get_path() const -> const Path* = 0;
+
+  /**
+   * Returns the save format used by the document.
+   *
+   * \return
+   * A save format identifier.
+   */
+  [[nodiscard]]
+  virtual auto get_format() const -> SaveFormatId = 0;
 
   /**
    * Returns the associated entity registry.
