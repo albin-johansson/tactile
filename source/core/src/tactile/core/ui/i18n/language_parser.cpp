@@ -70,6 +70,8 @@ auto _get_noun_names() -> HashMap<StringView, StringID>
     {"tile_height", StringID::kTileHeight},
     {"light_themes", StringID::kLightThemes},
     {"dark_themes", StringID::kDarkThemes},
+    {"font", StringID::kFont},
+    {"default", StringID::kDefault},
   };
 }
 

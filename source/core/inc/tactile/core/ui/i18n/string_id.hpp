@@ -48,6 +48,8 @@ enum class StringID : usize
   kTileHeight,
   kLightThemes,
   kDarkThemes,
+  kFont,
+  kDefault,
 
   // Generic verbs.
   kCancel,

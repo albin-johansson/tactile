@@ -15,6 +15,12 @@ struct ResetLayoutEvent final
 {};
 
 /**
+ * Event for toggling the visibility of dock widgets.
+ */
+struct ToggleUiEvent final
+{};
+
+/**
  * Event for toggling the visibility of the property dock widget.
  */
 struct TogglePropertyDockEvent final

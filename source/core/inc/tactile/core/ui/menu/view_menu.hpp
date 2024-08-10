@@ -11,6 +11,8 @@ class EventDispatcher;
 
 namespace ui {
 
+class Language;
+
 /**
  * Represents the "View" menu.
  */
@@ -24,6 +26,13 @@ class ViewMenu final
    * \param dispatcher The event dispatcher to use.
    */
   void push(const Model& model, EventDispatcher& dispatcher);
+
+ private:
+  static void _push_widgets_menu(const Language& language, EventDispatcher& dispatcher);
+
+  static void _push_font_menu(const Language& language, EventDispatcher& dispatcher);
+
+  static void _push_theme_menu(const Language& language, EventDispatcher& dispatcher);
 };
 
 }  // namespace ui
