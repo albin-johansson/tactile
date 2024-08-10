@@ -13,42 +13,14 @@
 #include "tactile/core/ui/shortcuts.hpp"
 
 namespace tactile::ui {
-inline namespace file_menu {
-
-void _push_recent_files_menu(const Language& language,
-                             EventDispatcher& dispatcher)
-{
-  const MenuScope menu {language.get(StringID::kRecentFilesMenu)};
-  if (menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kReopenLastClosedFile),
-                        nullptr,
-                        false,
-                        false)) {
-      dispatcher.push<ReopenLastClosedFileEvent>();
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(language.get(StringID::kClearFileHistory),
-                        nullptr,
-                        false,
-                        false)) {
-      dispatcher.push<ClearFileHistoryEvent>();
-    }
-  }
-}
-
-}  // namespace file_menu
 
 void FileMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
   const auto* current_document = model.get_current_document();
 
-  const MenuScope menu {language.get(StringID::kFileMenu)};
-  if (menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kCreateMap),
-                        kCreateMapShortcut.hint)) {
+  if (const MenuScope menu {language.get(StringID::kFileMenu)}; menu.is_open()) {
+    if (ImGui::MenuItem(language.get(StringID::kCreateMap), kCreateMapShortcut.hint)) {
       dispatcher.push<ShowNewMapDialogEvent>();
     }
 
@@ -62,10 +34,7 @@ void FileMenu::push(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kSave),
-                        kSaveShortcut.hint,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kSave), kSaveShortcut.hint, false, false)) {
       dispatcher.push<SaveEvent>();
     }
 
@@ -89,6 +58,26 @@ void FileMenu::push(const Model& model, EventDispatcher& dispatcher)
 
     if (ImGui::MenuItem(language.get(StringID::kQuit))) {
       dispatcher.push<QuitEvent>();
+    }
+  }
+}
+
+void FileMenu::_push_recent_files_menu(const Language& language, EventDispatcher& dispatcher)
+{
+  if (const MenuScope menu {language.get(StringID::kRecentFilesMenu)}; menu.is_open()) {
+    if (ImGui::MenuItem(language.get(StringID::kReopenLastClosedFile),
+                        nullptr,
+                        false,
+                        false)) {
+      dispatcher.push<ReopenLastClosedFileEvent>();
+    }
+
+    ImGui::Separator();
+
+    // TODO iterate recent files
+
+    if (ImGui::MenuItem(language.get(StringID::kClearFileHistory), nullptr, false, false)) {
+      dispatcher.push<ClearFileHistoryEvent>();
     }
   }
 }

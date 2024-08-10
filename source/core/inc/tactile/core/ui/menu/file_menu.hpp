@@ -11,6 +11,8 @@ class EventDispatcher;
 
 namespace ui {
 
+class Language;
+
 /**
  * Represents the "File" menu.
  */
@@ -24,6 +26,9 @@ class FileMenu final
    * \param dispatcher The event dispatcher to use.
    */
   void push(const Model& model, EventDispatcher& dispatcher);
+
+ private:
+  static void _push_recent_files_menu(const Language& language, EventDispatcher& dispatcher);
 };
 
 }  // namespace ui
