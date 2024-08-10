@@ -18,20 +18,24 @@ namespace tactile::ui {
 void EditMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
+  const auto& document_manager = model.get_document_manager();
 
-  const MenuScope menu {language.get(StringID::kEditMenu)};
-  if (menu.is_open()) {
+  const auto* document = model.get_current_document();
+  const auto* history =
+      (document != nullptr) ? &document_manager.get_history(document->get_uuid()) : nullptr;
+
+  if (const MenuScope menu {language.get(StringID::kEditMenu)}; menu.is_open()) {
     if (ImGui::MenuItem(language.get(StringID::kUndo),
                         kUndoShortcut.hint,
                         false,
-                        false)) {
+                        (history != nullptr) && history->can_undo())) {
       dispatcher.push<UndoEvent>();
     }
 
     if (ImGui::MenuItem(language.get(StringID::kRedo),
                         kRedoShortcut.hint,
                         false,
-                        false)) {
+                        (history != nullptr) && history->can_redo())) {
       dispatcher.push<RedoEvent>();
     }
 
@@ -91,7 +95,7 @@ void EditMenu::push(const Model& model, EventDispatcher& dispatcher)
     if (ImGui::MenuItem(language.get(StringID::kOpenComponentEditor),
                         kOpenComponentEditorShortcut.hint,
                         false,
-                        false)) {
+                        document != nullptr)) {
       dispatcher.push<ShowComponentEditorDialogEvent>();
     }
 
