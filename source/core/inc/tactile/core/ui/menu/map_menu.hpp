@@ -11,6 +11,8 @@ class EventDispatcher;
 
 namespace ui {
 
+class Language;
+
 /**
  * Represents the "Map" menu.
  */
@@ -24,6 +26,9 @@ class MapMenu final
    * \param dispatcher The event dispatcher to use.
    */
   void push(const Model& model, EventDispatcher& dispatcher);
+
+ private:
+  void _push_export_as_menu(const Language& language, EventDispatcher& dispatcher);
 };
 
 }  // namespace ui
