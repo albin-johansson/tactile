@@ -13,19 +13,12 @@
 #include "tactile/core/ui/i18n/language.hpp"
 
 namespace tactile::ui {
-inline namespace help_menu {
-
-inline constexpr const char* kReportBugUrl =
-    "https://github.com/albin-johansson/tactile/issues/new";
-
-}  // namespace help_menu
 
 void HelpMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
 
-  const MenuScope menu {language.get(StringID::kHelpMenu)};
-  if (menu.is_open()) {
+  if (const MenuScope menu {language.get(StringID::kHelpMenu)}; menu.is_open()) {
     if (ImGui::MenuItem(language.get(StringID::kAboutTactile))) {
       dispatcher.push<ShowAboutDialogEvent>();
     }
@@ -33,7 +26,7 @@ void HelpMenu::push(const Model& model, EventDispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(language.get(StringID::kReportBug))) {
-      if (SDL_OpenURL(kReportBugUrl) != 0) {
+      if (SDL_OpenURL("https://github.com/albin-johansson/tactile/issues/new") != 0) {
         TACTILE_LOG_ERROR("Could not open issue URL: {}", SDL_GetError());
       }
     }
