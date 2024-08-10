@@ -90,6 +90,7 @@ enum class StringID : usize
   // "Action" strings. These often have embedded leading icons.
   kCreateMap,
   kCreateTileset,
+  kCreateLayer,
   kOpen,
   kOpenMap,
   kOpenTileset,
@@ -140,6 +141,9 @@ enum class StringID : usize
   kOpenStyleEditor,
   kOpenDemoWindow,
   kOpenStorageDir,
+  kTileLayerItem,
+  kObjectLayerItem,
+  kGroupLayerItem,
 
   // Hint strings.
   kContextHasNoProperties,

@@ -3,11 +3,16 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/buffer.hpp"
+#include "tactile/core/entity/entity.hpp"
 
 namespace tactile {
 
 class MapDocument;
 class EventDispatcher;
+class Registry;
+struct CMap;
+struct CGroupLayer;
 
 namespace ui {
 
@@ -29,6 +34,32 @@ class LayerDock final
   void update(const Language& language,
               const MapDocument& document,
               EventDispatcher& dispatcher);
+
+ private:
+  using NameBuffer = Buffer<char, 128>;
+
+  static constexpr const char* kNewLayerPopupId = "##NewLayerPopup";
+
+  void _push_side_button_group(const Registry& registry,
+                               const CMap& map,
+                               EventDispatcher& dispatcher);
+
+  void _push_layer_group(const Language& language, const Registry& registry, const CMap& map);
+
+  void _push_layer_list_box(const Language& language,
+                            const Registry& registry,
+                            const CGroupLayer& root_layer);
+
+  void _push_layer_item(const Language& language,
+                        const Registry& registry,
+                        EntityID layer_id,
+                        bool top_level = false);
+
+  void _push_tile_layer_item(const char* name);
+
+  void _push_object_layer_item(const char* name);
+
+  void _push_new_layer_popup(const Language& language, EventDispatcher& dispatcher);
 };
 
 }  // namespace ui
