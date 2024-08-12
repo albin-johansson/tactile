@@ -80,7 +80,8 @@ auto create_tiles(Registry& registry,
                   CTileset& tileset,
                   const ir::Tileset& ir_tileset) -> Result<void>
 {
-  tileset.tiles.resize(saturate_cast<usize>(ir_tileset.tile_count), kInvalidEntity);
+  const auto tile_count = saturate_cast<usize>(ir_tileset.tile_count);
+  tileset.tiles.resize(tile_count, kInvalidEntity);
 
   for (const auto& ir_tile : ir_tileset.tiles) {
     const auto tile_id = make_tile(registry, ir_tile);
@@ -96,13 +97,11 @@ auto create_tiles(Registry& registry,
     tileset.tiles[tile_index] = *tile_id;
   }
 
-  TileIndex tile_index {0};
-  for (auto& tile_id : tileset.tiles) {
-    if (tile_id == kInvalidEntity) {
-      tile_id = make_tile(registry, tile_index);
+  TACTILE_ASSERT(tileset.tiles.size() == tile_count);
+  for (usize tile_index = 0; tile_index < tile_count; ++tile_index) {
+    if (tileset.tiles[tile_index] == kInvalidEntity) {
+      tileset.tiles[tile_index] = make_tile(registry, saturate_cast<TileIndex>(tile_index));
     }
-
-    ++tile_index;
   }
 
   return kOK;
