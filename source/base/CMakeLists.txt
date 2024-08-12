@@ -42,6 +42,7 @@ target_sources(tactile-base
                "inc/tactile/base/io/save/save_format_parse_result.hpp"
                "inc/tactile/base/io/byte_stream.hpp"
                "inc/tactile/base/io/color_parser.hpp"
+               "inc/tactile/base/io/file_io.hpp"
                "inc/tactile/base/io/int_parser.hpp"
                "inc/tactile/base/io/tile_io.hpp"
                "inc/tactile/base/layer/layer_type.hpp"
