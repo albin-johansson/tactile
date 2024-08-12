@@ -2,10 +2,14 @@
 
 #pragma once
 
+#include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/path.hpp"
+#include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
+class IRuntime;
 class Model;
 class EventDispatcher;
 
@@ -28,8 +32,9 @@ class MapEventHandler final
    *
    * \param model          The associated model, cannot be null.
    * \param widget_manager The associated widget manager, cannot be null.
+   * \param runtime        The associated runtim, cannot be null.
    */
-  MapEventHandler(Model* model, ui::WidgetManager* widget_manager);
+  MapEventHandler(Model* model, ui::WidgetManager* widget_manager, IRuntime* runtime);
 
   /**
    * Installs the event handler to a given event dispatcher.
@@ -62,6 +67,10 @@ class MapEventHandler final
  private:
   Model* mModel;
   ui::WidgetManager* mWidgetManager;
+  IRuntime* mRuntime;
+
+  [[nodiscard]]
+  static auto _guess_save_format(const Path& path) -> Optional<SaveFormatId>;
 };
 
 }  // namespace tactile

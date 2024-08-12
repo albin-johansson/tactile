@@ -45,7 +45,7 @@ void TactileApp::on_startup()
   auto& view_event_handler = mViewEventHandler.emplace(&model, mRenderer, &mWidgetManager);
   auto& tileset_event_handler =
       mTilesetEventHandler.emplace(&model, mRenderer, &mWidgetManager);
-  auto& map_event_handler = mMapEventHandler.emplace(&model, &mWidgetManager);
+  auto& map_event_handler = mMapEventHandler.emplace(&model, &mWidgetManager, mRuntime);
   auto& layer_event_handler = mLayerEventHandler.emplace(&model);
   auto& component_event_handler = mComponentEventHandler.emplace(&model, &mWidgetManager);
   auto& property_event_handler = mPropertyEventHandler.emplace(&model, &mWidgetManager);
