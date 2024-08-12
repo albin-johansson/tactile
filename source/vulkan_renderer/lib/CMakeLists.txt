@@ -7,12 +7,14 @@ target_sources(tactile-vulkan-renderer
                PRIVATE
                "src/tactile/vulkan_renderer/vulkan_renderer_plugin.cpp"
                "src/vulkan_fence.cpp"
+               "src/vulkan_semaphore.cpp"
                "src/vulkan_util.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/vulkan_renderer/api.hpp"
                "inc/tactile/vulkan_renderer/vulkan_fence.hpp"
                "inc/tactile/vulkan_renderer/vulkan_renderer_plugin.hpp"
+               "inc/tactile/vulkan_renderer/vulkan_semaphore.hpp"
                "inc/tactile/vulkan_renderer/vulkan_util.hpp"
                )
 
