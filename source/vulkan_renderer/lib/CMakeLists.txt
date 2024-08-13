@@ -7,6 +7,7 @@ target_sources(tactile-vulkan-renderer
                PRIVATE
                "src/tactile/vulkan_renderer/vulkan_renderer_plugin.cpp"
                "src/vulkan_fence.cpp"
+               "src/vulkan_sampler.cpp"
                "src/vulkan_semaphore.cpp"
                "src/vulkan_shader_module.cpp"
                "src/vulkan_util.cpp"
@@ -15,6 +16,7 @@ target_sources(tactile-vulkan-renderer
                "inc/tactile/vulkan_renderer/api.hpp"
                "inc/tactile/vulkan_renderer/vulkan_fence.hpp"
                "inc/tactile/vulkan_renderer/vulkan_renderer_plugin.hpp"
+               "inc/tactile/vulkan_renderer/vulkan_sampler.hpp"
                "inc/tactile/vulkan_renderer/vulkan_semaphore.hpp"
                "inc/tactile/vulkan_renderer/vulkan_shader_module.hpp"
                "inc/tactile/vulkan_renderer/vulkan_util.hpp"
