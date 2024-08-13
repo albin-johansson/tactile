@@ -10,6 +10,7 @@ target_sources(tactile-vulkan-renderer
                "src/vulkan_sampler.cpp"
                "src/vulkan_semaphore.cpp"
                "src/vulkan_shader_module.cpp"
+               "src/vulkan_surface.cpp"
                "src/vulkan_util.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
@@ -19,6 +20,7 @@ target_sources(tactile-vulkan-renderer
                "inc/tactile/vulkan_renderer/vulkan_sampler.hpp"
                "inc/tactile/vulkan_renderer/vulkan_semaphore.hpp"
                "inc/tactile/vulkan_renderer/vulkan_shader_module.hpp"
+               "inc/tactile/vulkan_renderer/vulkan_surface.hpp"
                "inc/tactile/vulkan_renderer/vulkan_util.hpp"
                )
 
