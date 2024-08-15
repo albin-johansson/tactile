@@ -15,6 +15,11 @@ namespace tactile {
 
 struct MapSpec;
 class IDocument;
+class IRenderer;
+
+namespace ir {
+struct Map;
+}  // namespace ir
 
 /**
  * Manages a collection of documents.
@@ -36,6 +41,21 @@ class DocumentManager final
    */
   [[nodiscard]]
   auto create_and_open_map(const MapSpec& spec) -> Result<UUID>;
+
+  /**
+   * Restores a map document from an intermediate map representation.
+   *
+   * \details
+   * This function behaves just like \c create_and_open_map(const MapSpec&).
+   *
+   * \param renderer The renderer to use for loading textures.
+   * \param ir_map   The intermediate map representation.
+   *
+   * \return
+   * The UUID of the map document if successful; an error code otherwise.
+   */
+  [[nodiscard]]
+  auto create_and_open_map(IRenderer& renderer, const ir::Map& ir_map) -> Result<UUID>;
 
   /**
    * Returns the document associated with a given UUID.

@@ -42,6 +42,34 @@ auto DocumentManager::create_and_open_map(const MapSpec& spec) -> Result<UUID>
   return document_uuid;
 }
 
+auto DocumentManager::create_and_open_map(IRenderer& renderer,
+                                          const ir::Map& ir_map) -> Result<UUID>
+{
+  auto document = MapDocument::make(renderer, ir_map);
+  if (!document.has_value()) {
+    return propagate_unexpected(document);
+  }
+
+  const auto document_uuid = document->get_uuid();
+
+  auto [iter, did_insert] =
+      mDocuments.try_emplace(document_uuid,
+                             std::make_unique<MapDocument>(std::move(*document)));
+
+  // NB: A UUID collision should be exceptionally rare, but we check regardless.
+  if (!did_insert) {
+    TACTILE_LOG_ERROR("Could not store map document");
+    return unexpected(make_error(GenericError::kInvalidState));
+  }
+
+  mOpenDocuments.push_back(document_uuid);
+  mHistories.try_emplace(document_uuid, mCommandCapacity);
+
+  mActiveDocument = document_uuid;
+
+  return document_uuid;
+}
+
 auto DocumentManager::get_document(const UUID& uuid) -> IDocument&
 {
   return *lookup_in(mDocuments, uuid);
