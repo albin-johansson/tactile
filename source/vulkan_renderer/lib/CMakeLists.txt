@@ -10,6 +10,7 @@ add_library(tactile::vulkan_renderer ALIAS tactile-vulkan-renderer)
 target_sources(tactile-vulkan-renderer
                PRIVATE
                "src/tactile/vulkan_renderer/vulkan_renderer_plugin.cpp"
+               "src/vulkan_allocator.cpp"
                "src/vulkan_fence.cpp"
                "src/vulkan_instance.cpp"
                "src/vulkan_sampler.cpp"
@@ -20,6 +21,7 @@ target_sources(tactile-vulkan-renderer
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/vulkan_renderer/api.hpp"
+               "inc/tactile/vulkan_renderer/vulkan_allocator.hpp"
                "inc/tactile/vulkan_renderer/vulkan_fence.hpp"
                "inc/tactile/vulkan_renderer/vulkan_instance.hpp"
                "inc/tactile/vulkan_renderer/vulkan_renderer_plugin.hpp"
