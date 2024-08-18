@@ -46,7 +46,7 @@ void MapEventHandler::on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
 {
   TACTILE_LOG_TRACE("ShowOpenMapDialogEvent");
 
-  auto map_path = FileDialog::open_map();
+  const auto map_path = FileDialog::open_map();
   if (!map_path.has_value()) {
     return;
   }
@@ -96,6 +96,12 @@ void MapEventHandler::on_create_map(const CreateMapEvent& event)
                     magic_enum::enum_name(event.spec.orientation),
                     event.spec.extent,
                     event.spec.tile_size);
+
+  auto& document_manager = mModel->get_document_manager();
+  const auto document_uuid = document_manager.create_and_open_map(event.spec);
+  if (document_uuid.has_value()) {
+    TACTILE_LOG_DEBUG("Created map document (uuid: {})", *document_uuid);
+  }
 }
 
 auto MapEventHandler::_guess_save_format(const Path& path) -> Optional<SaveFormatId>
