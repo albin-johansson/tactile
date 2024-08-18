@@ -201,7 +201,7 @@ TEST_F(MapTest, AddTilesetToMap)
   EXPECT_EQ(mRegistry.count<CTileset>(), 0);
   EXPECT_EQ(mRegistry.count<CTilesetInstance>(), 0);
 
-  EXPECT_EQ(add_tileset_to_map(mRegistry, map_entity, tileset_spec), kOK);
+  EXPECT_TRUE(add_tileset_to_map(mRegistry, map_entity, tileset_spec).has_value());
 
   EXPECT_NE(map.active_tileset, kInvalidEntity);
   EXPECT_EQ(map.attached_tilesets.size(), 1);

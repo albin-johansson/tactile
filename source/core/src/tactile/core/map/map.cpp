@@ -161,38 +161,52 @@ void destroy_map(Registry& registry, const EntityID map_entity)
 }
 
 auto add_tileset_to_map(Registry& registry,
-                        const EntityID map_entity,
-                        const TilesetSpec& tileset_spec) -> Result<void>
+                        const EntityID map_id,
+                        const TilesetSpec& tileset_spec) -> Result<EntityID>
 {
-  TACTILE_ASSERT(is_map(registry, map_entity));
+  TACTILE_ASSERT(is_map(registry, map_id));
 
-  const SetLogScope log_scope {"Map"};
+  auto& map = registry.get<CMap>(map_id);
+  auto& id_cache = registry.get<CMapIdCache>(map_id);
 
-  auto& map = registry.get<CMap>(map_entity);
-  auto& id_cache = registry.get<CMapIdCache>(map_entity);
-
-  const auto tileset_entity = make_tileset(registry, tileset_spec);
-  if (tileset_entity == kInvalidEntity) {
-    TACTILE_LOG_ERROR("Could not create tileset");
-    return unexpected(make_error(GenericError::kInvalidState));
+  const auto tileset_id = make_tileset_instance(registry, tileset_spec, id_cache.next_tile_id);
+  if (!tileset_id.has_value()) {
+    return propagate_unexpected(tileset_id);
   }
 
-  const auto init_instance_result =
-      init_tileset_instance(registry, tileset_entity, id_cache.next_tile_id);
-  if (!init_instance_result) {
-    TACTILE_LOG_ERROR("Could not initialize tileset instance: {}",
-                      init_instance_result.error().message());
-    return propagate_unexpected(init_instance_result);
-  }
-
-  const auto& tileset = registry.get<CTileset>(tileset_entity);
+  const auto& tileset = registry.get<CTileset>(*tileset_id);
   id_cache.next_tile_id += saturate_cast<TileID>(tileset.tiles.size());
 
-  map.attached_tilesets.push_back(tileset_entity);
-  map.active_tileset = tileset_entity;
+  map.attached_tilesets.push_back(*tileset_id);
+  map.active_tileset = *tileset_id;
 
-  TACTILE_LOG_DEBUG("Created and added tileset to map");
-  return kOK;
+  TACTILE_LOG_DEBUG("Added tileset {} to map {}",
+                    entity_to_string(*tileset_id),
+                    entity_to_string(map_id));
+  return tileset_id;
+}
+
+void remove_tileset_from_map(Registry& registry,
+                             const EntityID map_id,
+                             const EntityID tileset_id)
+{
+  TACTILE_ASSERT(is_map(registry, map_id));
+  TACTILE_ASSERT(is_tileset_instance(registry, tileset_id));
+
+  TACTILE_LOG_DEBUG("Removing tileset {} from map {}",
+                    entity_to_string(tileset_id),
+                    entity_to_string(map_id));
+
+  // Note, the tile range used by the tileset is intentionally not returned to keep the logic
+  // as simple as possible. It also makes implementing tileset commands easier.
+
+  auto& map = registry.get<CMap>(map_id);
+  std::erase(map.attached_tilesets, tileset_id);
+
+  if (map.active_tileset == tileset_id) {
+    map.active_tileset = !map.attached_tilesets.empty() ? map.attached_tilesets.front()  //
+                                                        : kInvalidEntity;
+  }
 }
 
 }  // namespace tactile

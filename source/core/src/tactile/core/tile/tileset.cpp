@@ -117,6 +117,11 @@ auto is_tileset(const Registry& registry, const EntityID entity) -> bool
          registry.has<CViewport>(entity);
 }
 
+auto is_tileset_instance(const Registry& registry, const EntityID entity) -> bool
+{
+  return is_tileset(registry, entity) && registry.has<CTilesetInstance>(entity);
+}
+
 auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID
 {
   const auto tileset_id = registry.make_entity();
@@ -236,6 +241,27 @@ auto init_tileset_instance(Registry& registry,
                     tile_range.first_id,
                     tile_range.first_id + tile_range.count);
   return kOK;
+}
+
+auto make_tileset_instance(Registry& registry,
+                           const TilesetSpec& spec,
+                           const TileID first_tile_id) -> Result<EntityID>
+{
+  const auto tileset_id = make_tileset(registry, spec);
+
+  if (tileset_id == kInvalidEntity) {
+    TACTILE_LOG_ERROR("Could not create tileset");
+    return unexpected(make_error(GenericError::kInvalidState));
+  }
+
+  const auto init_instance_result = init_tileset_instance(registry, tileset_id, first_tile_id);
+  if (!init_instance_result) {
+    TACTILE_LOG_ERROR("Could not create tileset instance: {}",
+                      init_instance_result.error().message());
+    return propagate_unexpected(init_instance_result);
+  }
+
+  return tileset_id;
 }
 
 void destroy_tileset(Registry& registry, const EntityID tileset_entity)

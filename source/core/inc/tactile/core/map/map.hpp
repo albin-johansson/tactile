@@ -123,7 +123,7 @@ auto is_map(const Registry& registry, EntityID entity) -> bool;
  * Creates an empty map.
  *
  * \param registry The associated registry.
- * \param sec      The map specification.
+ * \param spec     The map specification.
  *
  * \return
  * A map entity if successful; an invalid entity otherwise.
@@ -167,17 +167,33 @@ void destroy_map(Registry& registry, EntityID map_entity);
  * \pre The specified entity must be a map.
  *
  * \param registry     The associated registry.
- * \param map_entity   The map that will host the tileset.
+ * \param map_id       The map that will host the tileset.
  * \param tileset_spec The tileset specification.
  *
  * \return
- * Nothing if successful; an error code otherwise.
+ * A tileset entity identifier if successful; an error code otherwise.
  */
 [[nodiscard]]
 auto add_tileset_to_map(Registry& registry,
-                        EntityID map_entity,
-                        const TilesetSpec& tileset_spec) -> Result<void>;
+                        EntityID map_id,
+                        const TilesetSpec& tileset_spec) -> Result<EntityID>;
 
-/// \}
+/**
+ * Removes a tileset from a map, but does not destroy it.
+ *
+ * \details
+ * The tileset identifier will be removed from the map. If the removed tileset is active,
+ * another tileset will be selected. Beware that the tileset is still kept in the registry, so
+ * subsequent tileset component queries will include the tileset removed from the map.
+ *
+ * \pre The map identifier must be valid.
+ * \pre The tileset identifier must be valid.
+ *
+ * \param registry   The associated registry.
+ * \param map_id     The host map entity identifier.
+ * \param tileset_id The target tileset entity identifier.
+ */
+void remove_tileset_from_map(Registry& registry, EntityID map_id, EntityID tileset_id);
+
 
 }  // namespace tactile

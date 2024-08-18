@@ -8,6 +8,8 @@ target_sources(tactile-core-test
                "src/cmd/meta/remove_property_command_test.cpp"
                "src/cmd/meta/rename_property_command_test.cpp"
                "src/cmd/meta/update_property_command_test.cpp"
+               "src/cmd/tile/add_tileset_command_test.cpp"
+               "src/cmd/tile/remove_tileset_command_test.cpp"
                "src/cmd/command_stack_test.cpp"
                "src/debug/validation_test.cpp"
                "src/debug/validation_test.cpp"

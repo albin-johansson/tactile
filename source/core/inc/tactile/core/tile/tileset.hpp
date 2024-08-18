@@ -95,6 +95,18 @@ struct CTilesetInstance final
 auto is_tileset(const Registry& registry, EntityID entity) -> bool;
 
 /**
+ * Indicates whether an entity is a tileset instance.
+ *
+ * \param registry The associated registry.
+ * \param entity   The entity identifier to check.
+ *
+ * \return
+ * True if the entity is a tileset instance; false otherwise.
+ */
+[[nodiscard]]
+auto is_tileset_instance(const Registry& registry, EntityID entity) -> bool;
+
+/**
  * Creates a tileset.
  *
  * \note
@@ -162,6 +174,23 @@ auto make_tileset(Registry& registry,
 auto init_tileset_instance(Registry& registry,
                            EntityID tileset_entity,
                            TileID first_tile_id) -> Result<void>;
+
+/**
+ * Creates a tileset instance.
+ *
+ * \param registry      The associated registry.
+ * \param spec          The tileset specification.
+ * \param first_tile_id The first global tile identifier to associate with the tileset.
+ *
+ * \return
+ * A tileset instance identifier if successful; an error code otherwise.
+ *
+ * \see \c make_tileset
+ * \see \c init_tileset_instance
+ */
+auto make_tileset_instance(Registry& registry,
+                           const TilesetSpec& spec,
+                           TileID first_tile_id) -> Result<EntityID>;
 
 /**
  * Destroys a tileset and all of its associated tiles.
