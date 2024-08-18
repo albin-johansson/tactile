@@ -2,6 +2,8 @@
 
 #include "tactile/core/cmd/tile/add_tileset_command.hpp"
 
+#include <utility>  // move
+
 #include <gtest/gtest.h>
 
 #include "tactile/base/container/maybe.hpp"

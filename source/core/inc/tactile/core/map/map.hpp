@@ -8,6 +8,7 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/layer/tile_orientation.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -195,5 +196,57 @@ auto add_tileset_to_map(Registry& registry,
  */
 void remove_tileset_from_map(Registry& registry, EntityID map_id, EntityID tileset_id);
 
+/**
+ * Creates a layer and adds it to a map.
+ *
+ * \pre The map identifier must be valid.
+ *
+ * \details
+ * This function automatically makes the new layer the active layer in the map.
+ *
+ * \param registry The associated registry.
+ * \param map_id   The target map identifier.
+ * \param type     The type of the new layer.
+ *
+ * \return
+ * A layer entity identifier if successful; an error code otherwise.
+ */
+[[nodiscard]]
+auto add_layer_to_map(Registry& registry, EntityID map_id, LayerType type) -> Result<EntityID>;
+
+/**
+ * Appends an existing layer to a map.
+ *
+ * \details
+ * If the currently active layer is a group layer, then the layer is appended to that group.
+ * Otherwise, the layer is appended to the root layer. The new layer is subsequently made
+ * active.
+ *
+ * \pre The map identifier must be valid.
+ * \pre The layer identifier must be valid.
+ *
+ * \param registry The associated registry.
+ * \param map_id   The host map identifier.
+ * \param layer_id The identifier of the layer that will be added.
+ */
+void append_layer_to_map(Registry& registry, EntityID map_id, EntityID layer_id);
+
+/**
+ * Removes a layer from a map, but does not destroy it.
+ *
+ * \pre The map identifier must be valid.
+ * \pre The layer identifier must be valid.
+ *
+ * \param registry The associated registry.
+ * \param map_id   The host map identifier.
+ * \param layer_id The target layer identifier.
+ *
+ * \return
+ * Nothing if the layer was removed; an error code otherwise.
+ */
+[[nodiscard]]
+auto remove_layer_from_map(Registry& registry,
+                           EntityID map_id,
+                           EntityID layer_id) -> Result<void>;
 
 }  // namespace tactile

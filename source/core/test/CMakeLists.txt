@@ -4,6 +4,7 @@ add_executable(tactile-core-test)
 
 target_sources(tactile-core-test
                PRIVATE
+               "src/cmd/layer/create_layer_command_test.cpp"
                "src/cmd/meta/create_property_command_test.cpp"
                "src/cmd/meta/remove_property_command_test.cpp"
                "src/cmd/meta/rename_property_command_test.cpp"
