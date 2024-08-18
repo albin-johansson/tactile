@@ -2,15 +2,20 @@
 
 #include "tactile/core/event/file_event_handler.hpp"
 
+#include "tactile/base/io/save/save_format.hpp"
+#include "tactile/base/runtime.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/document/map_view_impl.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/file_events.hpp"
 #include "tactile/core/log/logger.hpp"
+#include "tactile/core/model/model.hpp"
 
 namespace tactile {
 
-FileEventHandler::FileEventHandler(Model* model)
-  : mModel {require_not_null(model, "null model")}
+FileEventHandler::FileEventHandler(Model* model, IRuntime* runtime)
+  : mModel {require_not_null(model, "null model")},
+    mRuntime {require_not_null(runtime, "null runtime")}
 {}
 
 void FileEventHandler::install(EventDispatcher& dispatcher)
@@ -30,15 +35,56 @@ void FileEventHandler::install(EventDispatcher& dispatcher)
 void FileEventHandler::on_save(const SaveEvent& event)
 {
   TACTILE_LOG_TRACE("SaveEvent");
+
+  const auto* document = dynamic_cast<const MapDocument*>(mModel->get_current_document());
+  if (!document) {
+    TACTILE_LOG_ERROR("No map document is active");
+    return;
+  }
+
+  const auto* document_path = document->get_path();
+  if (!document_path) {
+    TACTILE_LOG_ERROR("Document has no associated path");
+    return;
+  }
+
+  const auto* save_format = mRuntime->get_save_format(document->get_format());
+  if (!save_format) {
+    TACTILE_LOG_ERROR("Could not find suitable save format");
+    return;
+  }
+
+  const MapViewImpl map_view {document};
+
+  // TODO
+  const SaveFormatWriteOptions options {
+    .base_dir = document_path->parent_path(),
+    .use_external_tilesets = false,
+    .use_indentation = true,
+    .fold_tile_layer_data = false,
+  };
+
+  const auto save_result = save_format->save_map(map_view, options);
+  if (!save_result.has_value()) {
+    TACTILE_LOG_ERROR("Could not save map: {}", save_result.error().message());
+  }
 }
 
 void FileEventHandler::on_save_as(const SaveAsEvent& event)
 {
-  TACTILE_LOG_TRACE("SaveAsEvent");
+  TACTILE_LOG_TRACE("SaveAsEvent(path: {})", event.path.string());
+
+  auto* document = dynamic_cast<MapDocument*>(mModel->get_current_document());
+  if (!document) {
+    TACTILE_LOG_ERROR("No map document is active");
+    return;
+  }
+
+  document->set_path(event.path);
+  on_save(SaveEvent {});
 }
 
-void FileEventHandler::on_reopen_last_closed_file(
-    const ReopenLastClosedFileEvent& event)
+void FileEventHandler::on_reopen_last_closed_file(const ReopenLastClosedFileEvent& event)
 {
   TACTILE_LOG_TRACE("ReopenLastClosedFileEvent");
 }

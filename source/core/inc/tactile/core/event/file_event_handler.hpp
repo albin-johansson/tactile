@@ -8,6 +8,7 @@ namespace tactile {
 
 class Model;
 class EventDispatcher;
+class IRuntime;
 
 struct SaveEvent;
 struct SaveAsEvent;
@@ -25,9 +26,10 @@ class FileEventHandler final
   /**
    * Creates an file event handler.
    *
-   * \param model The associated model, cannot be null.
+   * \param model   The associated model, cannot be null.
+   * \param runtime The associated runtime, cannot be null.
    */
-  explicit FileEventHandler(Model* model);
+  FileEventHandler(Model* model, IRuntime* runtime);
 
   /**
    * Installs the event handler to a given event dispatcher.
@@ -80,6 +82,7 @@ class FileEventHandler final
 
  private:
   Model* mModel;
+  IRuntime* mRuntime;
 };
 
 }  // namespace tactile

@@ -40,7 +40,7 @@ void TactileApp::on_startup()
 
   auto& model = mModel.emplace(&mSettings, &mLanguage.value());
 
-  auto& file_event_handler = mFileEventHandler.emplace(&model);
+  auto& file_event_handler = mFileEventHandler.emplace(&model, mRuntime);
   auto& edit_event_handler = mEditEventHandler.emplace(&model);
   auto& view_event_handler = mViewEventHandler.emplace(&model, mRenderer, &mWidgetManager);
   auto& tileset_event_handler =
