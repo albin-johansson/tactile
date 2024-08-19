@@ -25,4 +25,14 @@ struct Layer;
 [[nodiscard]]
 auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID;
 
+/**
+ * Destroys a layer entity.
+ *
+ * \pre The layer identifier must be valid.
+ *
+ * \param registry The associated registry.
+ * \param layer_id The identifier of the layer to destroy.
+ */
+void destroy_layer(Registry& registry, EntityID layer_id);
+
 }  // namespace tactile

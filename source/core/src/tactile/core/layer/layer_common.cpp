@@ -75,4 +75,21 @@ auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID
   return layer_id;
 }
 
+void destroy_layer(Registry& registry, const EntityID layer_id)
+{
+  TACTILE_ASSERT(is_tile_layer(registry, layer_id) ||    //
+                 is_object_layer(registry, layer_id) ||  //
+                 is_group_layer(registry, layer_id));
+
+  if (registry.has<CTileLayer>(layer_id)) {
+    destroy_tile_layer(registry, layer_id);
+  }
+  else if (registry.has<CObjectLayer>(layer_id)) {
+    destroy_object_layer(registry, layer_id);
+  }
+  else if (registry.has<CGroupLayer>(layer_id)) {
+    destroy_group_layer(registry, layer_id);
+  }
+}
+
 }  // namespace tactile
