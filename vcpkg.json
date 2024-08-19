@@ -6,7 +6,7 @@
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "6062c8fe02d38b10d5291411bc235ae4d02cfe6c",
+  "builtin-baseline": "2f210a9c13fcf2b0c36b1f2187366feec37e3390",
   "dependencies": [
     "argparse",
     "boost-stacktrace",
