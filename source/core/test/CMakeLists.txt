@@ -6,6 +6,8 @@ target_sources(tactile-core-test
                PRIVATE
                "src/cmd/layer/create_layer_command_test.cpp"
                "src/cmd/layer/remove_layer_command_test.cpp"
+               "src/cmd/layer/move_layer_down_command_test.cpp"
+               "src/cmd/layer/move_layer_up_command_test.cpp"
                "src/cmd/layer/set_layer_opacity_command_test.cpp"
                "src/cmd/layer/set_layer_visibility_command_test.cpp"
                "src/cmd/meta/create_property_command_test.cpp"
