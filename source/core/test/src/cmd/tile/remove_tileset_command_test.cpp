@@ -8,7 +8,9 @@
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/cmd/tile/add_tileset_command.hpp"
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
+#include "tactile/core/entity/registry.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "test/document_testing.hpp"

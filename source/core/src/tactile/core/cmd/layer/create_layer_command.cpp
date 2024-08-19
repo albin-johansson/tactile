@@ -6,9 +6,7 @@
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
-#include "tactile/core/layer/group_layer.hpp"
-#include "tactile/core/layer/layer.hpp"
-#include "tactile/core/layer/object_layer.hpp"
+#include "tactile/core/layer/layer_common.hpp"
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/map/map.hpp"
@@ -28,11 +26,7 @@ CreateLayerCommand::~CreateLayerCommand() noexcept
   try {
     if (!mWasLayerAdded && mLayerId != kInvalidEntity) {
       auto& registry = mDocument->get_registry();
-      switch (mType) {
-        case LayerType::kTileLayer:   destroy_tile_layer(registry, mLayerId); break;
-        case LayerType::kObjectLayer: destroy_object_layer(registry, mLayerId); break;
-        case LayerType::kGroupLayer:  destroy_group_layer(registry, mLayerId); break;
-      }
+      destroy_layer(registry, mLayerId);
     }
   }
   catch (const std::exception& error) {

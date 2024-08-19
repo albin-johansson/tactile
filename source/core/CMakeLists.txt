@@ -18,6 +18,7 @@ target_sources(tactile-core
                PRIVATE
                "src/tactile/core/cmd/layer/create_layer_command.cpp"
                "src/tactile/core/cmd/layer/remove_layer_command.cpp"
+               "src/tactile/core/cmd/layer/set_layer_opacity_command.cpp"
                "src/tactile/core/cmd/meta/create_property_command.cpp"
                "src/tactile/core/cmd/meta/remove_property_command.cpp"
                "src/tactile/core/cmd/meta/rename_property_command.cpp"
@@ -128,6 +129,7 @@ target_sources(tactile-core
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/core/cmd/layer/create_layer_command.hpp"
                "inc/tactile/core/cmd/layer/remove_layer_command.hpp"
+               "inc/tactile/core/cmd/layer/set_layer_opacity_command.hpp"
                "inc/tactile/core/cmd/meta/create_property_command.hpp"
                "inc/tactile/core/cmd/meta/remove_property_command.hpp"
                "inc/tactile/core/cmd/meta/rename_property_command.hpp"
