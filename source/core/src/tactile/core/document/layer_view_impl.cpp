@@ -65,7 +65,7 @@ void LayerViewImpl::write_tile_bytes(ByteStream& byte_stream) const
   const auto& registry = mDocument->get_registry();
 
   if (is_tile_layer(registry, mLayerId)) {
-    get_tile_layer_data(registry, mLayerId).write_bytes(byte_stream);
+    byte_stream = serialize_tile_layer(registry, mLayerId);
   }
 }
 
@@ -157,7 +157,7 @@ auto LayerViewImpl::get_tile(const MatrixIndex& index) const -> Optional<TileID>
     return kNone;
   }
 
-  return get_tile_layer_data(registry, mLayerId).at(index);
+  return get_layer_tile(registry, mLayerId, index);
 }
 
 auto LayerViewImpl::get_tile_encoding() const -> TileEncoding
@@ -178,12 +178,13 @@ auto LayerViewImpl::get_compression_level() const -> Optional<int>
 auto LayerViewImpl::get_extent() const -> Optional<MatrixExtent>
 {
   const auto& registry = mDocument->get_registry();
+  const auto* tile_layer = registry.find<CTileLayer>(mLayerId);
 
-  if (!is_tile_layer(registry, mLayerId)) {
+  if (!tile_layer) {
     return kNone;
   }
 
-  return get_tile_layer_data(registry, mLayerId).get_extent();
+  return tile_layer->extent;
 }
 
 auto LayerViewImpl::get_meta() const -> const IMetaView&

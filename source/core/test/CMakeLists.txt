@@ -34,7 +34,6 @@ target_sources(tactile-core-test
                "src/layer/object_layer_test.cpp"
                "src/layer/object_test.cpp"
                "src/layer/tile_layer_test.cpp"
-               "src/layer/tile_matrix_test.cpp"
                "src/map/map_spec_test.cpp"
                "src/map/map_test.cpp"
                "src/meta/attribute_type_test.cpp"

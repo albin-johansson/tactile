@@ -23,15 +23,11 @@ auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID
     case LayerType::kTileLayer: {
       layer_id = make_tile_layer(registry, ir_layer.extent);
 
-      auto& tile_data = get_tile_layer_data(registry, layer_id);
-
       for (ssize row = 0; row < ir_layer.extent.rows; ++row) {
         for (ssize col = 0; col < ir_layer.extent.cols; ++col) {
           const auto tile_id =
               ir_layer.tiles[static_cast<usize>(row)][static_cast<usize>(col)];
-          if (tile_id != kEmptyTile) {
-            tile_data[MatrixIndex {row, col}] = tile_id;
-          }
+          set_layer_tile(registry, layer_id, MatrixIndex {row, col}, tile_id);
         }
       }
 

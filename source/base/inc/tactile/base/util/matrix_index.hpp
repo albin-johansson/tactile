@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <compare>     // strong_ordering
 #include <concepts>    // integral
 #include <cstddef>     // size_t
 #include <format>      // formatter, format_to, formattable
@@ -27,7 +28,8 @@ struct MatrixIndex final
   /** The column index. */
   value_type col;
 
-  [[nodiscard]] auto operator==(const MatrixIndex&) const noexcept -> bool = default;
+  [[nodiscard]]
+  auto operator<=>(const MatrixIndex&) const noexcept -> std::strong_ordering = default;
 };
 
 /**

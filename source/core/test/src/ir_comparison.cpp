@@ -100,22 +100,19 @@ void compare_tile_layer(const Registry& registry,
   compare_meta(registry, layer_id, ir_layer.meta);
 
   const auto& layer = registry.get<CLayer>(layer_id);
-  const auto& tile_data = get_tile_layer_data(registry, layer_id);
+  const auto& tile_layer = registry.get<CTileLayer>(layer_id);
 
   EXPECT_EQ(layer.persistent_id, ir_layer.id);
   EXPECT_EQ(layer.opacity, ir_layer.opacity);
   EXPECT_EQ(layer.visible, ir_layer.visible);
 
-  ASSERT_EQ(tile_data.get_extent(), ir_layer.extent);
-  for (ssize row = 0; row < ir_layer.extent.rows; ++row) {
-    for (ssize col = 0; col < ir_layer.extent.cols; ++col) {
-      const MatrixIndex index {row, col};
-
-      const auto ir_tile_id = ir_layer.tiles[static_cast<usize>(row)][static_cast<usize>(col)];
-      EXPECT_EQ(tile_data.at(index), ir_tile_id)
-          << "tiles at (" << row << ';' << col << ") don't match";
-    }
-  }
+  ASSERT_EQ(tile_layer.extent, ir_layer.extent);
+  each_layer_tile(registry, layer_id, [&](const MatrixIndex& index, const TileID tile_id) {
+    const auto ir_tile_id =
+        ir_layer.tiles[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
+    EXPECT_EQ(tile_id, ir_tile_id)
+        << "tiles at (" << index.row << ';' << index.col << ") don't match";
+  });
 }
 
 void compare_object_layer(const Registry& registry,
