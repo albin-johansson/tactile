@@ -15,6 +15,12 @@ target_sources(tactile-core-test
                "src/cmd/meta/remove_property_command_test.cpp"
                "src/cmd/meta/rename_property_command_test.cpp"
                "src/cmd/meta/update_property_command_test.cpp"
+               "src/cmd/object/create_object_command_test.cpp"
+               "src/cmd/object/move_object_command_test.cpp"
+               "src/cmd/object/object_command_test.cpp"
+               "src/cmd/object/remove_object_command_test.cpp"
+               "src/cmd/object/set_object_tag_command_test.cpp"
+               "src/cmd/object/set_object_visibility_command_test.cpp"
                "src/cmd/tile/add_tileset_command_test.cpp"
                "src/cmd/tile/remove_tileset_command_test.cpp"
                "src/cmd/command_stack_test.cpp"
@@ -59,6 +65,7 @@ target_sources(tactile-core-test
                PRIVATE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/core/test/ir_comparison.hpp"
                "inc/test/document_testing.hpp"
+               "inc/test/object_command_test.hpp"
                )
 
 tactile_prepare_target(tactile-core-test)
