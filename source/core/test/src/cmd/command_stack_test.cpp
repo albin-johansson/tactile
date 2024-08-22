@@ -4,12 +4,10 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
-inline namespace command_stack_test {
+namespace tactile::test {
 
-class C1 final : public ICommand
+struct C1 final : ICommand
 {
- public:
   void undo() override
   {}
 
@@ -17,9 +15,8 @@ class C1 final : public ICommand
   {}
 };
 
-class C2 final : public ICommand
+struct C2 final : ICommand
 {
- public:
   void undo() override
   {}
 
@@ -27,9 +24,7 @@ class C2 final : public ICommand
   {}
 };
 
-}  // namespace command_stack_test
-
-/** \trace tactile::CommandStack::CommandStack */
+// tactile::CommandStack::CommandStack
 TEST(CommandStack, Constructor)
 {
   const CommandStack command_stack {64};
@@ -43,11 +38,9 @@ TEST(CommandStack, Constructor)
   EXPECT_FALSE(command_stack.clean_index().has_value());
 }
 
-/**
- * \trace tactile::CommandStack::push
- * \trace tactile::CommandStack::undo
- * \trace tactile::CommandStack::redo
- */
+// tactile::CommandStack::push
+// tactile::CommandStack::undo
+// tactile::CommandStack::redo
 TEST(CommandStack, MixedUsage)
 {
   CommandStack stack {64};
@@ -137,10 +130,8 @@ TEST(CommandStack, MixedUsage)
   EXPECT_FALSE(stack.can_redo());
 }
 
-/**
- * \trace tactile::CommandStack::mark_as_clean
- * \trace tactile::CommandStack::clean_index
- */
+// tactile::CommandStack::mark_as_clean
+// tactile::CommandStack::clean_index
 TEST(CommandStack, CleanIndexManagement)
 {
   CommandStack stack {32};
@@ -210,7 +201,7 @@ TEST(CommandStack, CleanIndexManagement)
   EXPECT_FALSE(stack.is_clean());
 }
 
-/** \trace tactile::CommandStack::push */
+// tactile::CommandStack::push
 TEST(CommandStack, CommandOverflowWithDefinedCleanIndex)
 {
   CommandStack stack {4};
@@ -251,7 +242,7 @@ TEST(CommandStack, CommandOverflowWithDefinedCleanIndex)
   EXPECT_FALSE(stack.is_clean());
 }
 
-/** \trace tactile::CommandStack::push */
+// tactile::CommandStack::push
 TEST(CommandStack, SimpleCommandOverflow)
 {
   CommandStack stack {100};
@@ -264,7 +255,7 @@ TEST(CommandStack, SimpleCommandOverflow)
   EXPECT_EQ(stack.index(), stack.capacity() - 1);
 }
 
-/** \trace tactile::CommandStack::set_capacity */
+// tactile::CommandStack::set_capacity
 TEST(CommandStack, DynamicCapacityChange)
 {
   CommandStack stack {50};
@@ -284,4 +275,4 @@ TEST(CommandStack, DynamicCapacityChange)
   EXPECT_EQ(stack.capacity(), 25);
 }
 
-}  // namespace tactile
+}  // namespace tactile::test

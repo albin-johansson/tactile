@@ -135,4 +135,32 @@ TEST_F(DuplicateLayerCommandTest, RedoUndoWithNestedLayer)
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), 2);
 }
 
+// tactile::DuplicateLayerCommand::dispose
+TEST_F(DuplicateLayerCommandTest, Dispose)
+{
+  auto& registry = mDocument->get_registry();
+  const auto& map = registry.get<CMap>(mMapId);
+
+  const auto source_layer_id = add_layer(LayerType::kObjectLayer);
+  ASSERT_EQ(count_layers(registry, map.root_layer), 1);
+
+  DuplicateLayerCommand duplicate_layer {&mDocument.value(), source_layer_id};
+  duplicate_layer.redo();
+
+  const auto layer_id = map.active_layer;
+  ASSERT_TRUE(is_layer(registry, layer_id));
+
+  duplicate_layer.dispose();
+  EXPECT_TRUE(registry.is_valid(layer_id));
+  EXPECT_TRUE(is_layer(registry, layer_id));
+
+  duplicate_layer.undo();
+  EXPECT_TRUE(registry.is_valid(layer_id));
+  EXPECT_TRUE(is_layer(registry, layer_id));
+
+  duplicate_layer.dispose();
+  EXPECT_FALSE(registry.is_valid(layer_id));
+  EXPECT_FALSE(is_layer(registry, layer_id));
+}
+
 }  // namespace tactile::test

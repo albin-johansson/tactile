@@ -121,20 +121,25 @@ TEST_F(RemoveLayerCommandTest, RedoUndoWithNestedLayer)
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
 }
 
-// tactile::RemoveLayerCommand::~RemoveLayerCommand
-TEST_F(RemoveLayerCommandTest, RemovedLayerShouldBeDestroyedByDestructor)
+// tactile::RemoveLayerCommand::dispose
+TEST_F(RemoveLayerCommandTest, Dispose)
 {
   const auto& registry = mDocument->get_registry();
   const auto layer_id = add_layer(LayerType::kTileLayer);
 
-  {
-    RemoveLayerCommand remove_layer {&mDocument.value(), layer_id};
-    remove_layer.redo();
+  RemoveLayerCommand remove_layer {&mDocument.value(), layer_id};
 
-    EXPECT_TRUE(registry.is_valid(layer_id));
-    EXPECT_TRUE(is_layer(registry, layer_id));
-  }
+  remove_layer.redo();
+  EXPECT_TRUE(registry.is_valid(layer_id));
+  EXPECT_TRUE(is_layer(registry, layer_id));
 
+  remove_layer.undo();
+  remove_layer.dispose();
+  EXPECT_TRUE(registry.is_valid(layer_id));
+  EXPECT_TRUE(is_layer(registry, layer_id));
+
+  remove_layer.redo();
+  remove_layer.dispose();
   EXPECT_FALSE(registry.is_valid(layer_id));
   EXPECT_FALSE(is_layer(registry, layer_id));
 }

@@ -16,9 +16,6 @@ class MapDocument;
 class RemoveLayerCommand final : public ICommand
 {
  public:
-  TACTILE_DELETE_COPY(RemoveLayerCommand);
-  TACTILE_DEFAULT_MOVE(RemoveLayerCommand);
-
   /**
    * Creates a command.
    *
@@ -29,11 +26,11 @@ class RemoveLayerCommand final : public ICommand
    */
   RemoveLayerCommand(MapDocument* document, EntityID layer_id);
 
-  ~RemoveLayerCommand() noexcept override;
-
   void undo() override;
 
   void redo() override;
+
+  void dispose() override;
 
  private:
   MapDocument* mDocument;

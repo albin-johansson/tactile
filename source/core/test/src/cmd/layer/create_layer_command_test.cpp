@@ -117,27 +117,27 @@ TEST_F(CreateLayerCommandTest, RedoUndoWithActiveGroupLayer)
   EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), 1);
 }
 
-// tactile::CreateLayerCommand::~CreateLayerCommand
-TEST_F(CreateLayerCommandTest, UnusedLayerShouldBeDestroyedByDestructor)
+// tactile::CreateLayerCommand::dispose
+TEST_F(CreateLayerCommandTest, Dispose)
 {
   auto& registry = mDocument->get_registry();
   const auto& map = registry.get<CMap>(mMapId);
 
-  EntityID layer_id {};
+  CreateLayerCommand add_layer {&mDocument.value(), LayerType::kTileLayer};
+  add_layer.redo();
 
-  {
-    CreateLayerCommand add_layer {&mDocument.value(), LayerType::kTileLayer};
-    add_layer.redo();
+  const auto layer_id = map.active_layer;
+  ASSERT_TRUE(is_layer(registry, layer_id));
 
-    layer_id = map.active_layer;
-    ASSERT_TRUE(is_layer(registry, layer_id));
+  add_layer.dispose();
+  EXPECT_TRUE(registry.is_valid(layer_id));
+  EXPECT_TRUE(is_layer(registry, layer_id));
 
-    add_layer.undo();
+  add_layer.undo();
+  EXPECT_TRUE(registry.is_valid(layer_id));
+  EXPECT_TRUE(is_layer(registry, layer_id));
 
-    EXPECT_TRUE(registry.is_valid(layer_id));
-    EXPECT_TRUE(is_layer(registry, layer_id));
-  }
-
+  add_layer.dispose();
   EXPECT_FALSE(registry.is_valid(layer_id));
   EXPECT_FALSE(is_layer(registry, layer_id));
 }

@@ -10,12 +10,6 @@ CommandStack::CommandStack(const usize capacity)
   : mCapacity {capacity}
 {}
 
-void CommandStack::clear()
-{
-  mCommands.clear();
-  mCurrentIndex.reset();
-}
-
 void CommandStack::mark_as_clean()
 {
   mCleanIndex = mCurrentIndex;
@@ -107,6 +101,7 @@ void CommandStack::_remove_oldest_command()
 {
   TACTILE_ASSERT(!mCommands.empty());
 
+  mCommands.front()->dispose();
   mCommands.pop_front();
   _reset_or_decrease_current_index();
   _reset_or_decrease_clean_index();
@@ -124,6 +119,7 @@ void CommandStack::_remove_commands_after_current_index()
 
   const auto command_count = mCommands.size();
   for (auto cmd_index = start_index; cmd_index < command_count; ++cmd_index) {
+    mCommands.back()->dispose();
     mCommands.pop_back();
   }
 }
@@ -159,7 +155,7 @@ void CommandStack::_increase_current_index()
 
 auto CommandStack::_get_next_command_index() const -> usize
 {
-  return mCurrentIndex.has_value() ? (*mCurrentIndex + 1) : 0;
+  return mCurrentIndex.has_value() ? *mCurrentIndex + 1 : 0;
 }
 
 }  // namespace tactile

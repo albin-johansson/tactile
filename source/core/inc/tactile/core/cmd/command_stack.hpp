@@ -58,11 +58,6 @@ class CommandStack final
   ~CommandStack() noexcept = default;
 
   /**
-   * Clears the command stack of all commands.
-   */
-  void clear();
-
-  /**
    * Marks the current command stack state as "clean".
    *
    * \details
@@ -154,7 +149,7 @@ class CommandStack final
   void set_capacity(usize capacity);
 
   /**
-   * Indicates whether or not the current command stack state is clean.
+   * Indicates whether the current command stack state is clean.
    */
   [[nodiscard]]
   auto is_clean() const -> bool;

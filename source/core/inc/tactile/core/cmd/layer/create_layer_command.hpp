@@ -17,9 +17,6 @@ class MapDocument;
 class CreateLayerCommand final : public ICommand
 {
  public:
-  TACTILE_DELETE_COPY(CreateLayerCommand);
-  TACTILE_DEFAULT_MOVE(CreateLayerCommand);
-
   /**
    * Creates a command.
    *
@@ -28,11 +25,11 @@ class CreateLayerCommand final : public ICommand
    */
   CreateLayerCommand(MapDocument* document, LayerType type);
 
-  ~CreateLayerCommand() noexcept override;
-
   void undo() override;
 
   void redo() override;
+
+  void dispose() override;
 
  private:
   MapDocument* mDocument;

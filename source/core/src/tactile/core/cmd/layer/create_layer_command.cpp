@@ -21,19 +21,6 @@ CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType ty
     mWasLayerAdded {false}
 {}
 
-CreateLayerCommand::~CreateLayerCommand() noexcept
-{
-  try {
-    if (!mWasLayerAdded && mLayerId != kInvalidEntity) {
-      auto& registry = mDocument->get_registry();
-      destroy_layer(registry, mLayerId);
-    }
-  }
-  catch (const std::exception& error) {
-    TACTILE_LOG_ERROR("CreateLayerCommand threw unexpected exception: {}", error.what());
-  }
-}
-
 void CreateLayerCommand::undo()
 {
   TACTILE_LOG_DEBUG("Removing layer {}", entity_to_string(mLayerId));
@@ -50,8 +37,6 @@ void CreateLayerCommand::undo()
 
 void CreateLayerCommand::redo()
 {
-  TACTILE_LOG_DEBUG("Creating layer...");
-
   auto& registry = mDocument->get_registry();
 
   const auto& document_info = registry.get<CDocumentInfo>();
@@ -72,7 +57,18 @@ void CreateLayerCommand::redo()
     map.active_layer = old_active_layer;
   }
 
+  TACTILE_LOG_DEBUG("Created layer {}", entity_to_string(mLayerId));
   mWasLayerAdded = true;
+}
+
+void CreateLayerCommand::dispose()
+{
+  if (!mWasLayerAdded && mLayerId != kInvalidEntity) {
+    auto& registry = mDocument->get_registry();
+    destroy_layer(registry, mLayerId);
+
+    mLayerId = kInvalidEntity;
+  }
 }
 
 }  // namespace tactile

@@ -16,9 +16,6 @@ class MapDocument;
 class DuplicateLayerCommand final : public ICommand
 {
  public:
-  TACTILE_DELETE_COPY(DuplicateLayerCommand);
-  TACTILE_DEFAULT_MOVE(DuplicateLayerCommand);
-
   /**
    * Creates a command.
    *
@@ -29,11 +26,11 @@ class DuplicateLayerCommand final : public ICommand
    */
   DuplicateLayerCommand(MapDocument* document, EntityID layer_id);
 
-  ~DuplicateLayerCommand() noexcept override;
-
   void undo() override;
 
   void redo() override;
+
+  void dispose() override;
 
  private:
   MapDocument* mDocument;

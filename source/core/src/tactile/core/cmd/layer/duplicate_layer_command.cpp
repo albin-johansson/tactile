@@ -2,8 +2,6 @@
 
 #include "tactile/core/cmd/layer/duplicate_layer_command.hpp"
 
-#include <exception>  // exception
-
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
@@ -20,19 +18,6 @@ DuplicateLayerCommand::DuplicateLayerCommand(MapDocument* document, const Entity
     mDuplicateLayerId {kInvalidEntity},
     mLayerWasAdded {false}
 {}
-
-DuplicateLayerCommand::~DuplicateLayerCommand() noexcept
-{
-  try {
-    if (!mLayerWasAdded && mDuplicateLayerId != kInvalidEntity) {
-      auto& registry = mDocument->get_registry();
-      destroy_layer(registry, mDuplicateLayerId);
-    }
-  }
-  catch (const std::exception& error) {
-    TACTILE_LOG_ERROR("DuplicateLayerCommand destructor threw exception: {}", error.what());
-  }
-}
 
 void DuplicateLayerCommand::undo()
 {
@@ -64,6 +49,16 @@ void DuplicateLayerCommand::redo()
 
   append_layer_to_map(registry, map_id, mDuplicateLayerId);
   mLayerWasAdded = true;
+}
+
+void DuplicateLayerCommand::dispose()
+{
+  if (!mLayerWasAdded && mDuplicateLayerId != kInvalidEntity) {
+    auto& registry = mDocument->get_registry();
+    destroy_layer(registry, mDuplicateLayerId);
+
+    mDuplicateLayerId = kInvalidEntity;
+  }
 }
 
 }  // namespace tactile

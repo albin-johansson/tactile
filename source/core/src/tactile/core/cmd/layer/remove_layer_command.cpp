@@ -2,8 +2,6 @@
 
 #include "tactile/core/cmd/layer/remove_layer_command.hpp"
 
-#include <exception>  // exception
-
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
@@ -23,21 +21,9 @@ RemoveLayerCommand::RemoveLayerCommand(MapDocument* document, const EntityID lay
     mLayerWasRemoved {false}
 {}
 
-RemoveLayerCommand::~RemoveLayerCommand() noexcept
-{
-  try {
-    if (mLayerWasRemoved) {
-      auto& registry = mDocument->get_registry();
-      destroy_layer(registry, mLayerId);
-    }
-  }
-  catch (const std::exception& error) {
-    TACTILE_LOG_ERROR("RemoveLayerCommand destructor threw exception: {}", error.what());
-  }
-}
-
 void RemoveLayerCommand::undo()
 {
+  TACTILE_LOG_TRACE("Restoring layer {}", entity_to_string(mLayerId));
   auto& registry = mDocument->get_registry();
 
   const auto map_id = registry.get<CDocumentInfo>().root;
@@ -51,6 +37,7 @@ void RemoveLayerCommand::undo()
 
 void RemoveLayerCommand::redo()
 {
+  TACTILE_LOG_TRACE("Removing layer {}", entity_to_string(mLayerId));
   auto& registry = mDocument->get_registry();
 
   const auto map_id = registry.get<CDocumentInfo>().root;
@@ -63,6 +50,16 @@ void RemoveLayerCommand::redo()
 
   remove_layer_from_map(registry, map_id, mLayerId).value();
   mLayerWasRemoved = true;
+}
+
+void RemoveLayerCommand::dispose()
+{
+  if (mLayerWasRemoved && mLayerId != kInvalidEntity) {
+    auto& registry = mDocument->get_registry();
+    destroy_layer(registry, mLayerId);
+
+    mLayerId = kInvalidEntity;
+  }
 }
 
 }  // namespace tactile

@@ -25,6 +25,20 @@ class ICommand
   virtual void redo() = 0;
 
   /**
+   * Frees any unused resources held by the command.
+   *
+   * \details
+   * This function is called just before commands are removed from a command stack and
+   * destroyed. The intention is that this function should be used to avoid unnecessary
+   * resource leaks, especially entity identifiers.
+   *
+   * \warning
+   * The command cannot be used after this function is called.
+   */
+  virtual void dispose()
+  {}
+
+  /**
    * Tries to merge with another command.
    *
    * \details
