@@ -17,6 +17,7 @@ add_library(tactile::core ALIAS tactile-core)
 target_sources(tactile-core
                PRIVATE
                "src/tactile/core/cmd/layer/create_layer_command.cpp"
+               "src/tactile/core/cmd/layer/duplicate_layer_command.cpp"
                "src/tactile/core/cmd/layer/move_layer_down_command.cpp"
                "src/tactile/core/cmd/layer/move_layer_up_command.cpp"
                "src/tactile/core/cmd/layer/remove_layer_command.cpp"
@@ -129,6 +130,7 @@ target_sources(tactile-core
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/core/cmd/layer/create_layer_command.hpp"
+               "inc/tactile/core/cmd/layer/duplicate_layer_command.hpp"
                "inc/tactile/core/cmd/layer/move_layer_down_command.hpp"
                "inc/tactile/core/cmd/layer/move_layer_up_command.hpp"
                "inc/tactile/core/cmd/layer/remove_layer_command.hpp"

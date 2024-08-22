@@ -5,6 +5,7 @@ add_executable(tactile-core-test)
 target_sources(tactile-core-test
                PRIVATE
                "src/cmd/layer/create_layer_command_test.cpp"
+               "src/cmd/layer/duplicate_layer_command_test.cpp"
                "src/cmd/layer/remove_layer_command_test.cpp"
                "src/cmd/layer/move_layer_down_command_test.cpp"
                "src/cmd/layer/move_layer_up_command_test.cpp"

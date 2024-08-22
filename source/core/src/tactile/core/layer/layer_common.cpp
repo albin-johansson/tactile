@@ -88,4 +88,65 @@ void destroy_layer(Registry& registry, const EntityID layer_id)
   }
 }
 
+auto copy_layer(Registry& registry,
+                const EntityID source_layer_id,
+                LayerID& next_layer_id) -> EntityID
+{
+  TACTILE_ASSERT(is_layer(registry, source_layer_id));
+
+  const auto& source_meta = registry.get<CMeta>(source_layer_id);
+  const auto& source_layer = registry.get<CLayer>(source_layer_id);
+
+  const auto new_layer_id = make_unspecialized_layer(registry);
+
+  auto& new_meta = registry.add<CMeta>(new_layer_id, source_meta);
+  new_meta.name += "*";
+
+  auto& new_layer = registry.add<CLayer>(new_layer_id, source_layer);
+  new_layer.persistent_id = next_layer_id++;
+
+  if (is_tile_layer(registry, source_layer_id)) {
+    const auto& source_tile_layer = registry.get<CTileLayer>(source_layer_id);
+    registry.add<CTileLayer>(new_layer_id, source_tile_layer);
+
+    if (registry.has<CDenseTileLayer>(source_layer_id)) {
+      const auto& source_dense_tile_layer = registry.get<CDenseTileLayer>(source_layer_id);
+      registry.add<CDenseTileLayer>(new_layer_id, source_dense_tile_layer);
+    }
+    else {
+      const auto& source_sparse_tile_layer = registry.get<CSparseTileLayer>(source_layer_id);
+      registry.add<CSparseTileLayer>(new_layer_id, source_sparse_tile_layer);
+    }
+  }
+  else if (is_object_layer(registry, source_layer_id)) {
+    const auto& source_object_layer = registry.get<CObjectLayer>(source_layer_id);
+
+    auto& new_object_layer = registry.add<CObjectLayer>(new_layer_id);
+    new_object_layer.objects.reserve(source_object_layer.objects.size());
+
+    for (const auto source_object_id : source_object_layer.objects) {
+      const auto new_object_id = copy_object(registry, source_object_id);
+      new_object_layer.objects.push_back(new_object_id);
+    }
+  }
+  else if (is_group_layer(registry, source_layer_id)) {
+    const auto& source_group_layer = registry.get<CGroupLayer>(source_layer_id);
+
+    auto& new_group_layer = registry.add<CGroupLayer>(new_layer_id);
+    new_group_layer.layers.reserve(source_group_layer.layers.size());
+
+    for (const auto source_nested_layer_id : source_group_layer.layers) {
+      const auto new_nested_layer_id =
+          copy_layer(registry, source_nested_layer_id, next_layer_id);
+      new_group_layer.layers.push_back(new_nested_layer_id);
+    }
+  }
+  else {
+    throw Exception {"invalid layer entity"};
+  }
+
+  TACTILE_ASSERT(is_layer(registry, new_layer_id));
+  return new_layer_id;
+}
+
 }  // namespace tactile

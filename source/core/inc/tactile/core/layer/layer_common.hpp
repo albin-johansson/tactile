@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
@@ -34,5 +35,22 @@ auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID;
  * \param layer_id The identifier of the layer to destroy.
  */
 void destroy_layer(Registry& registry, EntityID layer_id);
+
+/**
+ * Creates a deep copy of a layer.
+ *
+ * \pre The layer identifier must be valid.
+ *
+ * \param[in]     registry        The associated registry.
+ * \param[in]     source_layer_id The source layer identifier.
+ * \param[in,out] next_layer_id   The next available persistent layer identifier.
+ *
+ * \return
+ * A layer entity identifier.
+ */
+[[nodiscard]]
+auto copy_layer(Registry& registry,
+                EntityID source_layer_id,
+                LayerID& next_layer_id) -> EntityID;
 
 }  // namespace tactile
