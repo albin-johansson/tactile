@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string_view>  // string_view
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/log/log_sink.hpp"
 
@@ -14,18 +15,18 @@ namespace tactile {
 class TerminalLogSink final : public ILogSink
 {
  public:
-  inline static constexpr StringView kAnsiColorReset = "\x1B[0m";
-  inline static constexpr StringView kAnsiColorBold = "\x1B[1m";
-  inline static constexpr StringView kAnsiColorFgBlack = "\x1B[30m";
-  inline static constexpr StringView kAnsiColorFgBlackBold = "\x1B[30m\x1B[1m";
-  inline static constexpr StringView kAnsiColorFgRed = "\x1B[31m";
-  inline static constexpr StringView kAnsiColorFgRedBold = "\x1B[31m\x1B[1m";
-  inline static constexpr StringView kAnsiColorFgGreen = "\x1B[32m";
-  inline static constexpr StringView kAnsiColorFgYellow = "\x1B[33m";
-  inline static constexpr StringView kAnsiColorFgBlue = "\x1B[34m";
-  inline static constexpr StringView kAnsiColorFgMagenta = "\x1B[35m";
-  inline static constexpr StringView kAnsiColorFgCyan = "\x1B[36m";
-  inline static constexpr StringView kAnsiColorFgWhite = "\x1B[37m";
+  static constexpr std::string_view kAnsiColorReset = "\x1B[0m";
+  static constexpr std::string_view kAnsiColorBold = "\x1B[1m";
+  static constexpr std::string_view kAnsiColorFgBlack = "\x1B[30m";
+  static constexpr std::string_view kAnsiColorFgBlackBold = "\x1B[30m\x1B[1m";
+  static constexpr std::string_view kAnsiColorFgRed = "\x1B[31m";
+  static constexpr std::string_view kAnsiColorFgRedBold = "\x1B[31m\x1B[1m";
+  static constexpr std::string_view kAnsiColorFgGreen = "\x1B[32m";
+  static constexpr std::string_view kAnsiColorFgYellow = "\x1B[33m";
+  static constexpr std::string_view kAnsiColorFgBlue = "\x1B[34m";
+  static constexpr std::string_view kAnsiColorFgMagenta = "\x1B[35m";
+  static constexpr std::string_view kAnsiColorFgCyan = "\x1B[36m";
+  static constexpr std::string_view kAnsiColorFgWhite = "\x1B[37m";
 
   void log(const LogMessage& msg) override;
 
@@ -44,7 +45,7 @@ class TerminalLogSink final : public ILogSink
    * \param level The log level to query.
    */
   [[nodiscard]]
-  static auto get_fg_ansi_color(LogLevel level) -> StringView;
+  static auto get_fg_ansi_color(LogLevel level) -> std::string_view;
 
  private:
   bool mUseAnsiColors {false};

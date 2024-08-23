@@ -37,7 +37,7 @@ PluginInstance::PluginInstance(PluginInstance&& other) noexcept :
   mPrimed {std::exchange(other.mPrimed, false)}
 {}
 
-auto PluginInstance::load(IRuntime* runtime, const StringView plugin_name)
+auto PluginInstance::load(IRuntime* runtime, const std::string_view plugin_name)
     -> std::optional<PluginInstance>
 {
   auto dll = load_library(plugin_name);

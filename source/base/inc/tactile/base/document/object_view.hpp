@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <string_view>   // string_view
 #include <system_error>  // error_code
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -99,7 +99,7 @@ class IObjectView
    * A type tag.
    */
   [[nodiscard]]
-  virtual auto get_tag() const -> StringView = 0;
+  virtual auto get_tag() const -> std::string_view = 0;
 
   /**
    * Indicates whether the object is visible.

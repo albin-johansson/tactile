@@ -60,7 +60,7 @@ class ObjectViewImpl final : public IObjectView
   auto get_size() const -> Float2 override;
 
   [[nodiscard]]
-  auto get_tag() const -> StringView override;
+  auto get_tag() const -> std::string_view override;
 
   [[nodiscard]]
   auto is_visible() const -> bool override;

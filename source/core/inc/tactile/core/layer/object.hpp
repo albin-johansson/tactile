@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/id.hpp"
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -35,7 +36,7 @@ struct CObject final
   ObjectType type;
 
   /** Arbitrary user-provided tag. */
-  String tag;
+  std::string tag;
 
   /** Indicates whether the object is rendered. */
   bool is_visible;

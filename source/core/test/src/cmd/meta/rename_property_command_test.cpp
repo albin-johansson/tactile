@@ -16,8 +16,8 @@ namespace tactile::test {
 // tactile::RenamePropertyCommand::undo
 TEST(RenamePropertyCommand, RedoUndo)
 {
-  const String old_name {"foo"};
-  const String new_name {"bar"};
+  const std::string old_name {"foo"};
+  const std::string new_name {"bar"};
 
   auto document = MapDocument::make(kOrthogonalMapSpec).value();
 
@@ -45,9 +45,9 @@ TEST(RenamePropertyCommand, RedoUndo)
 // tactile::RenamePropertyCommand::merge_with
 TEST(RenamePropertyCommand, MergeWith)
 {
-  const String name1 {"A"};
-  const String name2 {"B"};
-  const String name3 {"C"};
+  const std::string name1 {"A"};
+  const std::string name2 {"B"};
+  const std::string name3 {"C"};
 
   auto document = MapDocument::make(kOrthogonalMapSpec).value();
 

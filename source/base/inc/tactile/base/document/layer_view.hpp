@@ -6,7 +6,6 @@
 #include <optional>      // optional
 #include <system_error>  // error_code
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"

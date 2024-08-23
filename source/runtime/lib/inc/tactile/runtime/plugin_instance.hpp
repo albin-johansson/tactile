@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <memory>    // unique_ptr
-#include <optional>  // optional
+#include <memory>       // unique_ptr
+#include <optional>     // optional
+#include <string_view>  // string_view
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
 #include "tactile/runtime/plugin.hpp"
@@ -54,7 +54,8 @@ class TACTILE_RUNTIME_API PluginInstance final
    * A plugin instance if successful; an empty optional otherwise.
    */
   [[nodiscard]]
-  static auto load(IRuntime* runtime, StringView plugin_name) -> std::optional<PluginInstance>;
+  static auto load(IRuntime* runtime, std::string_view plugin_name)
+      -> std::optional<PluginInstance>;
 
  private:
   IRuntime* mRuntime;

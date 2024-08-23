@@ -38,7 +38,7 @@ void TerminalLogSink::use_ansi_colors(const bool enabled)
   mUseAnsiColors = enabled;
 }
 
-auto TerminalLogSink::get_fg_ansi_color(const LogLevel level) -> StringView
+auto TerminalLogSink::get_fg_ansi_color(const LogLevel level) -> std::string_view
 {
   switch (level) {
     case LogLevel::kTrace: return kAnsiColorFgMagenta;

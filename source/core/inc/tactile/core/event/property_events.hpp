@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -27,7 +28,7 @@ struct ShowRenamePropertyDialogEvent final
   EntityID context_entity;
 
   /** The target property. */
-  String name;
+  std::string name;
 };
 
 /**
@@ -39,7 +40,7 @@ struct CreatePropertyEvent final
   EntityID context_entity;
 
   /** The new property name. */
-  String name;
+  std::string name;
 
   /** The initial value of the property. */
   Attribute value;
@@ -54,7 +55,7 @@ struct UpdatePropertyEvent final
   EntityID context_entity;
 
   /** The target property name. */
-  String name;
+  std::string name;
 
   /** The new value of the property. */
   Attribute value;
@@ -69,7 +70,7 @@ struct RemovePropertyEvent final
   EntityID context_entity;
 
   /** The target property name. */
-  String name;
+  std::string name;
 };
 
 /**
@@ -81,10 +82,10 @@ struct RenamePropertyEvent final
   EntityID context_entity;
 
   /** The old property name. */
-  String old_name;
+  std::string old_name;
 
   /** The new property name. */
-  String new_name;
+  std::string new_name;
 };
 
 }  // namespace tactile

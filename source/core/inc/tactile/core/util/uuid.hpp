@@ -8,8 +8,8 @@
 #include <format>      // format, format_to, formattable
 #include <functional>  // hash
 #include <ostream>     // ostream
+#include <string>      // string
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -70,7 +70,7 @@ class UUID final
  private:
   std::array<uint8, 16> mData {};
 
-  friend auto to_string(const UUID& uuid) -> String;
+  friend auto to_string(const UUID& uuid) -> std::string;
 };
 
 inline constexpr UUID kEmptyUuid = UUID {};
@@ -84,7 +84,7 @@ inline constexpr UUID kEmptyUuid = UUID {};
  * A string with the format `HHHH-HH-HH-HH-HHHHHH`, using hexadecimal digits.
  */
 [[nodiscard]]
-auto to_string(const UUID& uuid) -> String;
+auto to_string(const UUID& uuid) -> std::string;
 
 /**
  * Outputs a UUID value to a stream.

@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-SetLogScope::SetLogScope(const StringView scope) noexcept
+SetLogScope::SetLogScope(const std::string_view scope) noexcept
 {
   if (auto* logger = get_default_logger()) {
     mPrevScope = logger->get_scope();

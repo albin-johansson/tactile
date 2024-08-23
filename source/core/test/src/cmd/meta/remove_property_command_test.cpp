@@ -16,7 +16,7 @@ namespace tactile::test {
 // tactile::RemovePropertyCommand::undo
 TEST(RemovePropertyCommand, RedoUndo)
 {
-  const String name {"xyz"};
+  const std::string name {"xyz"};
   const Attribute value {123};
 
   auto document = MapDocument::make(kOrthogonalMapSpec).value();

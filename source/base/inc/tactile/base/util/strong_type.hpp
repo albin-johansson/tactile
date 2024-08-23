@@ -21,16 +21,16 @@
         -> std::strong_ordering = default;                                                 \
   };                                                                                       \
                                                                                            \
-  inline auto operator<<(std::ostream& stream, const Name obj)->std::ostream&              \
+  inline auto operator<<(std::ostream& stream, const Name obj) -> std::ostream&            \
   {                                                                                        \
     stream << obj.value;                                                                   \
     return stream;                                                                         \
   }                                                                                        \
   static_assert(true, "Missing semicolon")
 
-#define TACTILE_STRONG_TYPE_ADD_BINARY_OP(Type, Op)                            \
-  [[nodiscard]] constexpr auto operator Op(const Type t1, const Type t2)->Type \
-  {                                                                            \
-    return Type {t1.value Op t2.value};                                        \
-  }                                                                            \
+#define TACTILE_STRONG_TYPE_ADD_BINARY_OP(Type, Op)                              \
+  [[nodiscard]] constexpr auto operator Op(const Type t1, const Type t2) -> Type \
+  {                                                                              \
+    return Type {t1.value Op t2.value};                                          \
+  }                                                                              \
   static_assert(true, "Missing semicolon")

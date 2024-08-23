@@ -6,9 +6,9 @@
 #include <expected>      // expected
 #include <ostream>       // ostream
 #include <span>          // span
+#include <string>        // string
 #include <system_error>  // error_code
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/meta/color.hpp"
 #include "tactile/base/prelude.hpp"
@@ -46,7 +46,7 @@ auto make_color(const FColor& fcolor) -> UColor;
  * An RGB color code.
  */
 [[nodiscard]]
-auto to_string_rgb(const UColor& color) -> String;
+auto to_string_rgb(const UColor& color) -> std::string;
 
 /**
  * Converts the color to a hexadecimal RGBA color code.
@@ -55,7 +55,7 @@ auto to_string_rgb(const UColor& color) -> String;
  * An RGBA color code.
  */
 [[nodiscard]]
-auto to_string_rgba(const UColor& color) -> String;
+auto to_string_rgba(const UColor& color) -> std::string;
 
 /**
  * Converts the color to a hexadecimal ARGB color code.
@@ -64,7 +64,7 @@ auto to_string_rgba(const UColor& color) -> String;
  * An ARGB color code.
  */
 [[nodiscard]]
-auto to_string_argb(const UColor& color) -> String;
+auto to_string_argb(const UColor& color) -> std::string;
 
 /**
  * Encodes the color as an ABGR color packed into a 32-bit integer.

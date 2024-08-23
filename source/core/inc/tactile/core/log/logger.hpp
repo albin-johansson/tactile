@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include <format>    // make_format_args, format_args
-#include <memory>    // unique_ptr
-#include <optional>  // optional
-#include <vector>    // vector
+#include <format>       // make_format_args, format_args
+#include <memory>       // unique_ptr
+#include <optional>     // optional
+#include <string_view>  // string_view
+#include <vector>       // vector
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
@@ -110,7 +110,7 @@ class Logger final
    *
    * \param scope An arbitrary scope identifier.
    */
-  void set_scope(StringView scope) noexcept;
+  void set_scope(std::string_view scope) noexcept;
 
   /**
    * Returns the current scope identifier.
@@ -119,7 +119,7 @@ class Logger final
    * An arbitrary string.
    */
   [[nodiscard]]
-  auto get_scope() const noexcept -> StringView;
+  auto get_scope() const noexcept -> std::string_view;
 
   /**
    * Indicates whether a message with a specific severity will be logged.
@@ -152,16 +152,16 @@ class Logger final
    * A log level acronym.
    */
   [[nodiscard]]
-  static auto get_acronym(LogLevel level) noexcept -> StringView;
+  static auto get_acronym(LogLevel level) noexcept -> std::string_view;
 
  private:
   LogLevel mMinLevel {LogLevel::kInfo};
   LogLevel mFlushLevel {LogLevel::kError};
   std::vector<std::unique_ptr<ILogSink>> mSinks {};
   std::optional<SteadyClockInstant> mReferenceInstant {};
-  StringView mScope {};
+  std::string_view mScope {};
 
-  void _log(LogLevel level, StringView fmt_string, std::format_args args) noexcept;
+  void _log(LogLevel level, std::string_view fmt_string, std::format_args args) noexcept;
 
   [[nodiscard]]
   auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;

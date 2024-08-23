@@ -6,11 +6,11 @@
 #include <concepts>     // same_as, convertible_to
 #include <filesystem>   // path
 #include <stdexcept>    // logic_error
+#include <string>       // string
 #include <type_traits>  // decay_t
 #include <utility>      // move
 #include <variant>      // variant, visit
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/meta/color.hpp"
@@ -22,7 +22,7 @@ namespace tactile {
 
 template <typename T>
 concept AttributeValueType = std::same_as<T, bool> ||                          //
-                             std::convertible_to<T, String> ||                 //
+                             std::convertible_to<T, std::string> ||            //
                              std::convertible_to<T, int32> ||                  //
                              std::convertible_to<T, Int2> ||                   //
                              std::convertible_to<T, Int3> ||                   //
@@ -56,7 +56,7 @@ class Attribute final
   inline static constexpr usize kObjRefTypeIndex = 12;
 
  public:
-  using string_type = String;
+  using string_type = std::string;
   using int_type = int32;
   using int2_type = Int2;
   using int3_type = Int3;

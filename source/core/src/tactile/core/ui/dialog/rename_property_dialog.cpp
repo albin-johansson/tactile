@@ -63,7 +63,7 @@ void RenamePropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-void RenamePropertyDialog::open(const EntityID context_entity, String target_prop_name)
+void RenamePropertyDialog::open(const EntityID context_entity, std::string target_prop_name)
 {
   mContextEntity = context_entity;
   mTargetPropName = std::move(target_prop_name);

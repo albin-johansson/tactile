@@ -18,7 +18,7 @@ namespace tactile::test {
 auto make_ir_tile_matrix(const MatrixExtent& extent) -> std::vector<std::vector<TileID>>;
 
 [[nodiscard]]
-auto make_ir_metadata(String name) -> ir::Metadata;
+auto make_ir_metadata(std::string name) -> ir::Metadata;
 
 [[nodiscard]]
 auto make_ir_object(ObjectID id,

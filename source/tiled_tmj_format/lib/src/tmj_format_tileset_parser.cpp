@@ -161,7 +161,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     return std::unexpected {SaveFormatParseError::kNoTilesetImageHeight};
   }
 
-  String relative_image_path {};
+  std::string relative_image_path {};
   if (const auto image_path_iter = tileset_json.find("image");
       image_path_iter != tileset_json.end()) {
     image_path_iter->get_to(relative_image_path);
@@ -206,7 +206,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
 
   if (const auto source_iter = tileset_json.find("source");
       source_iter != tileset_json.end()) {
-    const auto& source = source_iter->get_ref<const String&>();
+    const auto& source = source_iter->get_ref<const std::string&>();
 
     const auto tileset_path = options.base_dir / source;
     log(LogLevel::kDebug, "Loading external tileset: {}", tileset_path.string());

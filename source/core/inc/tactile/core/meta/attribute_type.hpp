@@ -4,9 +4,9 @@
 
 #include <expected>      // expected
 #include <ostream>       // ostream
+#include <string_view>   // string_view
 #include <system_error>  // error_code
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/prelude.hpp"
@@ -22,7 +22,8 @@ namespace tactile {
  * An attribute type if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto parse_attribute_type(StringView name) -> std::expected<AttributeType, std::error_code>;
+auto parse_attribute_type(std::string_view name)
+    -> std::expected<AttributeType, std::error_code>;
 
 /**
  * Converts an attribute type to a string.
@@ -36,7 +37,7 @@ auto parse_attribute_type(StringView name) -> std::expected<AttributeType, std::
  * A string.
  */
 [[nodiscard]]
-auto serialize(AttributeType type) -> StringView;
+auto serialize(AttributeType type) -> std::string_view;
 
 /**
  * Outputs an attribute type to a stream for debugging purposes.

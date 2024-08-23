@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -14,6 +15,6 @@ namespace tactile {
  * The call stack encoded in a string.
  */
 [[nodiscard]]
-TACTILE_NOINLINE auto get_stacktrace() -> String;
+TACTILE_NOINLINE auto get_stacktrace() -> std::string;
 
 }  // namespace tactile

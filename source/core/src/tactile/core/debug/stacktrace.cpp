@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-auto get_stacktrace() -> String
+auto get_stacktrace() -> std::string
 {
   const boost::stacktrace::stacktrace trace {};
 

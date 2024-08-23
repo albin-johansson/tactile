@@ -28,7 +28,7 @@ auto parse_type(const nlohmann::json& layer_json)
     return std::unexpected {SaveFormatParseError::kNoLayerType};
   }
 
-  const auto* type_name = type_iter->get_ptr<const String*>();
+  const auto* type_name = type_iter->get_ptr<const std::string*>();
   if (type_name == nullptr) {
     return std::unexpected {SaveFormatParseError::kBadLayerType};
   }
@@ -54,7 +54,7 @@ auto parse_base64_tile_data(const IRuntime& runtime,
                             const std::optional<CompressionFormat> compression,
                             ir::Layer& layer) -> SaveFormatParseResult<void>
 {
-  const auto& encoded_tile_data = data_json.get_ref<const String&>();
+  const auto& encoded_tile_data = data_json.get_ref<const std::string&>();
   auto decoded_bytes = base64::decode(encoded_tile_data);
 
   if (compression.has_value()) {
@@ -133,7 +133,7 @@ auto parse_tile_layer(const IRuntime& runtime,
     return std::unexpected {SaveFormatParseError::kNoTileLayerHeight};
   }
 
-  String encoding {"csv"};
+  std::string encoding {"csv"};
   if (const auto encoding_iter = layer_json.find("encoding");
       encoding_iter != layer_json.end()) {
     encoding_iter->get_to(encoding);
@@ -142,7 +142,7 @@ auto parse_tile_layer(const IRuntime& runtime,
   std::optional<CompressionFormat> compression {};
   if (const auto compression_iter = layer_json.find("compression");
       compression_iter != layer_json.end()) {
-    const auto& compression_name = compression_iter->get_ref<const String&>();
+    const auto& compression_name = compression_iter->get_ref<const std::string&>();
     if (compression_name == "zlib") {
       compression = CompressionFormat::kZlib;
     }

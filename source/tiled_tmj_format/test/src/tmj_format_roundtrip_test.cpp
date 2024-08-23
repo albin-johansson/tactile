@@ -1,13 +1,13 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include <filesystem>  // current_path
-#include <optional>    // optional
-#include <ostream>     // ostream
+#include <filesystem>   // current_path
+#include <optional>     // optional
+#include <ostream>      // ostream
+#include <string_view>  // string_view
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/runtime/runtime.hpp"
 #include "tactile/test_util/document_view_mocks.hpp"
 #include "tactile/test_util/ir.hpp"
@@ -27,7 +27,7 @@ namespace tactile::test {
 
 struct TmjRoundtripConfig final
 {
-  StringView map_filename;
+  std::string_view map_filename;
   TileEncoding encoding;
   std::optional<CompressionFormat> compression;
   bool use_external_tilesets;

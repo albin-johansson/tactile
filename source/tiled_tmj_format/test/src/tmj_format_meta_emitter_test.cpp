@@ -31,9 +31,10 @@ TEST(TmjFormatMetaEmitter, EmitStringProperty)
 {
   MetaViewMock meta {};
 
-  const String property_name {"s"};
+  const std::string property_name {"s"};
   const Attribute property_value {"foo"};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -56,9 +57,10 @@ TEST(TmjFormatMetaEmitter, EmitIntProperty)
 {
   MetaViewMock meta {};
 
-  const String property_name {"i"};
+  const std::string property_name {"i"};
   const Attribute property_value {42};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -81,9 +83,10 @@ TEST(TmjFormatMetaEmitter, EmitInt2Property)
 {
   MetaViewMock meta {};
 
-  const String property_name {"i2"};
+  const std::string property_name {"i2"};
   const Attribute property_value {Int2 {1, 2}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -106,9 +109,10 @@ TEST(TmjFormatMetaEmitter, EmitInt3Property)
 {
   MetaViewMock meta {};
 
-  const String property_name {"i3"};
+  const std::string property_name {"i3"};
   const Attribute property_value {Int3 {1, 2, 3}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -131,9 +135,10 @@ TEST(TmjFormatMetaEmitter, EmitInt4Property)
 {
   MetaViewMock meta {};
 
-  const String property_name {"i4"};
+  const std::string property_name {"i4"};
   const Attribute property_value {Int4 {1, 2, 3, 4}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -156,9 +161,10 @@ TEST(TmjFormatMetaEmitter, EmitFloatProperty)
 {
   MetaViewMock meta {};
 
-  const String property_name {"f"};
+  const std::string property_name {"f"};
   const Attribute property_value {1.5f};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -181,9 +187,10 @@ TEST(TmjFormatMetaEmitter, EmitFloat2Property)
 {
   MetaViewMock meta {};
 
-  const String property_name {"f2"};
+  const std::string property_name {"f2"};
   const Attribute property_value {Float2 {1, 2}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -206,9 +213,10 @@ TEST(TmjFormatMetaEmitter, EmitFloat3Property)
 {
   MetaViewMock meta {};
 
-  const String property_name {"f3"};
+  const std::string property_name {"f3"};
   const Attribute property_value {Float3 {1, 2, 3}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -231,9 +239,10 @@ TEST(TmjFormatMetaEmitter, EmitFloat4Property)
 {
   MetaViewMock meta {};
 
-  const String property_name {"f4"};
+  const std::string property_name {"f4"};
   const Attribute property_value {Float4 {1, 2, 3, 4}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -256,9 +265,10 @@ TEST(TmjFormatMetaEmitter, EmitBoolProperty)
 {
   MetaViewMock meta {};
 
-  const String property_name {"b"};
+  const std::string property_name {"b"};
   const Attribute property_value {true};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -281,9 +291,10 @@ TEST(TmjFormatMetaEmitter, EmitColorProperty)
 {
   MetaViewMock meta {};
 
-  const String property_name {"c"};
+  const std::string property_name {"c"};
   const Attribute property_value {UColor {0x1A, 0x3B, 0x5C, 0x7D}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -306,9 +317,10 @@ TEST(TmjFormatMetaEmitter, EmitPathProperty)
 {
   MetaViewMock meta {};
 
-  const String property_name {"p"};
+  const std::string property_name {"p"};
   const Attribute property_value {std::filesystem::path {"a/b/c"}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -331,9 +343,10 @@ TEST(TmjFormatMetaEmitter, EmitObjectProperty)
 {
   MetaViewMock meta {};
 
-  const String property_name {"o"};
+  const std::string property_name {"o"};
   const Attribute property_value {ObjectRef {99}};
-  const std::pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const std::string&, const Attribute&> property {property_name,
+                                                                  property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));

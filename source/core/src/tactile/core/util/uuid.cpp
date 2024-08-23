@@ -39,7 +39,7 @@ auto UUID::is_null() const -> bool
   return std::ranges::all_of(mData, [](const uint8 byte) { return byte == 0; });
 }
 
-auto to_string(const UUID& uuid) -> String
+auto to_string(const UUID& uuid) -> std::string
 {
   return std::format(
       "{:02X}{:02X}{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",

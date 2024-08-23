@@ -8,7 +8,7 @@
 
 namespace tactile::test {
 
-auto make_complex_ir_metadata(String name) -> ir::Metadata
+auto make_complex_ir_metadata(std::string name) -> ir::Metadata
 {
   auto meta = make_ir_metadata(std::move(name));
 

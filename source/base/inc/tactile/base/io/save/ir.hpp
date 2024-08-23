@@ -4,9 +4,9 @@
 
 #include <filesystem>  // path
 #include <optional>    // optional
+#include <string>      // string
 #include <vector>      // vector
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
@@ -26,13 +26,14 @@ namespace tactile::ir {
 struct NamedAttribute final
 {
   /** The attribute name. */
-  String name;
+  std::string name;
 
   /** The attribute value. */
   Attribute value;
 
   [[nodiscard]]
-  auto operator==(const NamedAttribute&) const -> bool = default;
+  auto
+  operator==(const NamedAttribute&) const -> bool = default;
 };
 
 /**
@@ -41,13 +42,14 @@ struct NamedAttribute final
 struct Component final
 {
   /** The component name. */
-  String name;
+  std::string name;
 
   /** The component attribute defaults. */
   std::vector<NamedAttribute> attributes;
 
   [[nodiscard]]
-  auto operator==(const Component&) const -> bool = default;
+  auto
+  operator==(const Component&) const -> bool = default;
 };
 
 /**
@@ -57,13 +59,14 @@ struct Component final
 struct AttachedComponent final
 {
   /** The component type name. */
-  String type;
+  std::string type;
 
   /** The component attributes. */
   std::vector<NamedAttribute> attributes;
 
   [[nodiscard]]
-  auto operator==(const AttachedComponent&) const -> bool = default;
+  auto
+  operator==(const AttachedComponent&) const -> bool = default;
 };
 
 /**
@@ -72,7 +75,7 @@ struct AttachedComponent final
 struct Metadata final
 {
   /** The name of the context. */
-  String name;
+  std::string name;
 
   /** The attached properties. */
   std::vector<NamedAttribute> properties;
@@ -81,7 +84,8 @@ struct Metadata final
   std::vector<AttachedComponent> components;
 
   [[nodiscard]]
-  auto operator==(const Metadata&) const -> bool = default;
+  auto
+  operator==(const Metadata&) const -> bool = default;
 };
 
 /**
@@ -105,13 +109,14 @@ struct Object final
   Float2 size;
 
   /** A user-provided label. */
-  String tag;
+  std::string tag;
 
   /** Whether the object is rendered. */
   bool visible;
 
   [[nodiscard]]
-  auto operator==(const Object&) const -> bool = default;
+  auto
+  operator==(const Object&) const -> bool = default;
 };
 
 /**
@@ -147,7 +152,8 @@ struct Layer final
   bool visible {};
 
   [[nodiscard]]
-  auto operator==(const Layer&) const -> bool = default;
+  auto
+  operator==(const Layer&) const -> bool = default;
 };
 
 /**
@@ -162,7 +168,8 @@ struct AnimationFrame final
   Milliseconds duration;
 
   [[nodiscard]]
-  auto operator==(const AnimationFrame&) const -> bool = default;
+  auto
+  operator==(const AnimationFrame&) const -> bool = default;
 };
 
 using TileAnimation = std::vector<AnimationFrame>;
@@ -185,7 +192,8 @@ struct Tile final
   TileAnimation animation;
 
   [[nodiscard]]
-  auto operator==(const Tile&) const -> bool = default;
+  auto
+  operator==(const Tile&) const -> bool = default;
 };
 
 /**
@@ -218,7 +226,8 @@ struct Tileset final
   bool is_embedded;
 
   [[nodiscard]]
-  auto operator==(const Tileset&) const -> bool = default;
+  auto
+  operator==(const Tileset&) const -> bool = default;
 };
 
 /**
@@ -233,7 +242,8 @@ struct TilesetRef final
   TileID first_tile_id;
 
   [[nodiscard]]
-  auto operator==(const TilesetRef&) const -> bool = default;
+  auto
+  operator==(const TilesetRef&) const -> bool = default;
 };
 
 /**
@@ -251,7 +261,8 @@ struct TileFormat final
   std::optional<int32> compression_level;
 
   [[nodiscard]]
-  auto operator==(const TileFormat&) const -> bool = default;
+  auto
+  operator==(const TileFormat&) const -> bool = default;
 };
 
 /**
@@ -287,7 +298,8 @@ struct Map final
   std::vector<Layer> layers;
 
   [[nodiscard]]
-  auto operator==(const Map&) const -> bool = default;
+  auto
+  operator==(const Map&) const -> bool = default;
 };
 
 }  // namespace tactile::ir

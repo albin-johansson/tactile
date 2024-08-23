@@ -111,7 +111,7 @@ auto TilesetViewImpl::get_meta() const -> const IMetaView&
   return mMeta;
 }
 
-auto TilesetViewImpl::get_filename() const -> String
+auto TilesetViewImpl::get_filename() const -> std::string
 {
   return get_image_path().stem().string();
 }

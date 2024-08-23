@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include <string>  // string
+
 #include <entt/entity/entity.hpp>
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -30,6 +31,6 @@ struct CTag
  * A string describing an entity identifier.
  */
 [[nodiscard]]
-auto entity_to_string(EntityID entity) -> String;
+auto entity_to_string(EntityID entity) -> std::string;
 
 }  // namespace tactile

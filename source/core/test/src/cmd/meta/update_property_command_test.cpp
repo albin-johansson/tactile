@@ -16,7 +16,7 @@ namespace tactile::test {
 // tactile::UpdatePropertyCommand::undo
 TEST(UpdatePropertyCommand, RedoUndo)
 {
-  const String name {"abc"};
+  const std::string name {"abc"};
   const Attribute old_value {42};
   const Attribute new_value {43};
 
@@ -49,7 +49,7 @@ TEST(UpdatePropertyCommand, RedoUndo)
 // tactile::UpdatePropertyCommand::merge_with
 TEST(UpdatePropertyCommand, MergeWith)
 {
-  const String name {"abc"};
+  const std::string name {"abc"};
 
   const Attribute value0 {"0"};
   const Attribute value1 {"1"};

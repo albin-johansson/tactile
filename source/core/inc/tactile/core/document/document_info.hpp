@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -15,7 +16,7 @@ namespace tactile {
 struct CDocumentInfo final
 {
   /** The human-readable name of the document. */
-  String name;
+  std::string name;
 
   /** The "root" entity, basically a map or a tileset. */
   EntityID root;

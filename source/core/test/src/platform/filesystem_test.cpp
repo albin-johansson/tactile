@@ -35,8 +35,8 @@ TEST(Filesystem, StripHomeDirectoryPrefix)
 {
   const auto home_dir = get_user_home_directory().value();
 
-  const String abc {"/a/b/c"};
-  const String foobar {"/foobar"};
+  const std::string abc {"/a/b/c"};
+  const std::string foobar {"/foobar"};
 
   EXPECT_EQ(strip_home_directory_prefix(home_dir + abc, home_dir), "~" + abc);
   EXPECT_EQ(strip_home_directory_prefix(home_dir + foobar, home_dir), "~" + foobar);

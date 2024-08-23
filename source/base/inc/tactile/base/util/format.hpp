@@ -4,11 +4,12 @@
 
 #include <format>       // format_to_n, vformat_to, make_format_args, format_args
 #include <iterator>     // back_inserter
+#include <string>       // string
+#include <string_view>  // string_view
 #include <type_traits>  // type_identity_t
 #include <utility>      // forward
 #include <version>      // __cpp_lib_format
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/buffer.hpp"
@@ -36,7 +37,7 @@ using FormatString = std::format_string<std::type_identity_t<Args>...>;
 #else
 
 template <typename... Args>
-using FormatString = StringView;
+using FormatString = std::string_view;
 
 #endif
 
@@ -53,7 +54,9 @@ using FormatString = StringView;
  * \param args   The format arguments.
  */
 template <usize N>
-void vformat_to_buffer(Buffer<char, N>& buffer, const StringView fmt, std::format_args args)
+void vformat_to_buffer(Buffer<char, N>& buffer,
+                       const std::string_view fmt,
+                       std::format_args args)
 {
   const auto remaining_chars = buffer.capacity() - buffer.size();
   if (remaining_chars < 1) {

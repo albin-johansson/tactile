@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-auto parse_attribute_type(StringView name) -> std::expected<AttributeType, std::error_code>
+auto parse_attribute_type(std::string_view name)
+    -> std::expected<AttributeType, std::error_code>
 {
   if (name == "string") {
     return AttributeType::kStr;
@@ -52,7 +53,7 @@ auto parse_attribute_type(StringView name) -> std::expected<AttributeType, std::
   return std::unexpected {make_error(GenericError::kInvalidParam)};
 }
 
-auto serialize(const AttributeType type) -> StringView
+auto serialize(const AttributeType type) -> std::string_view
 {
   switch (type) {
     case AttributeType::kStr:    return "string";

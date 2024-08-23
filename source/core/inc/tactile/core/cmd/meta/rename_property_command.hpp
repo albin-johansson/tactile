@@ -47,7 +47,7 @@ class RenamePropertyCommand final : public ICommand
   std::string m_old_name;
   std::string m_new_name;
 
-  void _rename_property(StringView from, String to);
+  void _rename_property(std::string_view from, std::string to);
 };
 
 }  // namespace tactile

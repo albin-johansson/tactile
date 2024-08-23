@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -18,7 +19,7 @@ struct ShowComponentEditorDialogEvent final
  */
 struct CreateComponentEvent final
 {
-  String name;
+  std::string name;
 };
 
 }  // namespace tactile

@@ -16,7 +16,7 @@ constinit Logger* gDefaultLogger = nullptr;  // NOLINT
 }  // namespace logger
 
 void Logger::_log(const LogLevel level,
-                  const StringView fmt_string,
+                  const std::string_view fmt_string,
                   const std::format_args args) noexcept
 {
   try {
@@ -81,12 +81,12 @@ void Logger::set_reference_instant(const std::optional<SteadyClockInstant> insta
   mReferenceInstant = instant;
 }
 
-void Logger::set_scope(const StringView scope) noexcept
+void Logger::set_scope(const std::string_view scope) noexcept
 {
   mScope = scope;
 }
 
-auto Logger::get_scope() const noexcept -> StringView
+auto Logger::get_scope() const noexcept -> std::string_view
 {
   return mScope;
 }
@@ -101,7 +101,7 @@ auto Logger::would_flush(const LogLevel level) const noexcept -> bool
   return level >= mFlushLevel;
 }
 
-auto Logger::get_acronym(const LogLevel level) noexcept -> StringView
+auto Logger::get_acronym(const LogLevel level) noexcept -> std::string_view
 {
   switch (level) {
     case LogLevel::kTrace: return "TRC";

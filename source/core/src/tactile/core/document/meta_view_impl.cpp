@@ -17,7 +17,7 @@ MetaViewImpl::MetaViewImpl(const IDocument* document, const EntityID meta_id) :
   mMetaId {meta_id}
 {}
 
-auto MetaViewImpl::get_name() const -> StringView
+auto MetaViewImpl::get_name() const -> std::string_view
 {
   const auto& registry = mDocument->get_registry();
   const auto& meta = registry.get<CMeta>(mMetaId);
@@ -26,7 +26,7 @@ auto MetaViewImpl::get_name() const -> StringView
 }
 
 auto MetaViewImpl::get_property(const usize index) const
-    -> std::pair<const String&, const Attribute&>
+    -> std::pair<const std::string&, const Attribute&>
 {
   const auto& registry = mDocument->get_registry();
   const auto& meta = registry.get<CMeta>(mMetaId);

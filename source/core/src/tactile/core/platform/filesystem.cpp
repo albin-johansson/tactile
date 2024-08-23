@@ -53,7 +53,7 @@ auto get_persistent_storage_directory()
   return std::unexpected {make_error(GenericError::kInvalidState)};
 }
 
-auto get_user_home_directory() -> std::expected<String, std::error_code>
+auto get_user_home_directory() -> std::expected<std::string, std::error_code>
 {
   // On Unix platforms, HOME is something like '/Users/username'.
   // On Windows, USERPROFILE is something like 'C:\Users\username'.
@@ -66,24 +66,25 @@ auto get_imgui_ini_file_path() -> std::filesystem::path
   return "imgui.ini";
 }
 
-auto normalize_path(const std::filesystem::path& path) -> String
+auto normalize_path(const std::filesystem::path& path) -> std::string
 {
   auto str = path.string();
   std::ranges::replace(str, '\\', '/');
   return str;
 }
 
-auto has_prefix(const std::filesystem::path& path, const StringView prefix) -> bool
+auto has_prefix(const std::filesystem::path& path, const std::string_view prefix) -> bool
 {
 #if TACTILE_OS_WINDOWS
-  return StringView {path.string().c_str()}.starts_with(prefix);
+  return std::string_view {path.string().c_str()}.starts_with(prefix);
 #else
-  return StringView {path.c_str()}.starts_with(prefix);
+  return std::string_view {path.c_str()}.starts_with(prefix);
 #endif
 }
 
-auto strip_home_directory_prefix(const std::filesystem::path& path, const StringView home_dir)
-    -> std::expected<String, std::error_code>
+auto strip_home_directory_prefix(const std::filesystem::path& path,
+                                 const std::string_view home_dir)
+    -> std::expected<std::string, std::error_code>
 {
   if (has_prefix(path, home_dir)) {
     const NativeStringView path_view {path.c_str()};

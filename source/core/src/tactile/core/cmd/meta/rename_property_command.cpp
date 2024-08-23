@@ -17,8 +17,8 @@ namespace tactile {
 
 RenamePropertyCommand::RenamePropertyCommand(IDocument* document,
                                              const EntityID context_id,
-                                             String old_name,
-                                             String new_name) :
+                                             std::string old_name,
+                                             std::string new_name) :
   m_document {require_not_null(document, "null document")},
   m_context_id {context_id},
   m_old_name {std::move(old_name)},
@@ -54,7 +54,7 @@ auto RenamePropertyCommand::merge_with(const ICommand* cmd) -> bool
   return true;
 }
 
-void RenamePropertyCommand::_rename_property(const StringView from, String to)
+void RenamePropertyCommand::_rename_property(const std::string_view from, std::string to)
 {
   TACTILE_LOG_TRACE("Renaming property '{}' to '{}'", from, to);
 

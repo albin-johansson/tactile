@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/layer/object_type.hpp"
@@ -12,7 +13,7 @@
 namespace tactile::test {
 
 [[nodiscard]]
-auto make_complex_ir_metadata(String name) -> ir::Metadata;
+auto make_complex_ir_metadata(std::string name) -> ir::Metadata;
 
 [[nodiscard]]
 auto make_complex_ir_object(ObjectID id, ObjectType type) -> ir::Object;

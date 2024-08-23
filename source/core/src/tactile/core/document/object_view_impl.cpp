@@ -78,7 +78,7 @@ auto ObjectViewImpl::get_size() const -> Float2
   return object.size;
 }
 
-auto ObjectViewImpl::get_tag() const -> StringView
+auto ObjectViewImpl::get_tag() const -> std::string_view
 {
   const auto& registry = mDocument->get_registry();
   const auto& object = registry.get<CObject>(mObjectId);

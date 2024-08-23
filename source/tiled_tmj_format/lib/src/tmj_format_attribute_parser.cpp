@@ -12,7 +12,8 @@ namespace tactile {
 namespace tmj_format_attribute_parser {
 
 [[nodiscard]]
-auto parse_type(const StringView type) -> std::expected<AttributeType, SaveFormatParseError>
+auto parse_type(const std::string_view type)
+    -> std::expected<AttributeType, SaveFormatParseError>
 {
   if (type == "string") {
     return AttributeType::kStr;
@@ -152,7 +153,7 @@ auto parse_tiled_tmj_property(const nlohmann::json& property_json)
   name_iter->get_to(named_attribute.name);
 
   const auto property_type =
-      tmj_format_attribute_parser::parse_type(type_iter->get_ref<const String&>());
+      tmj_format_attribute_parser::parse_type(type_iter->get_ref<const std::string&>());
   if (!property_type.has_value()) {
     return std::unexpected {property_type.error()};
   }

@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -39,7 +40,7 @@ class NewPropertyDialog final
 
  private:
   EntityID mContextEntity {kInvalidEntity};
-  String mName {};
+  std::string mName {};
   Attribute mValue {};
   bool mShouldOpen {false};
 };

@@ -4,11 +4,11 @@
 
 #include <functional>     // less
 #include <map>            // map
+#include <string>         // string
 #include <unordered_map>  // unordered_map
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/core/debug/exception.hpp"
 
@@ -20,7 +20,7 @@ namespace tactile {
 TEST(Lookup, EmptyMap)
 {
   const StringMap<int> hash_map {};
-  const std::map<String, int, std::less<>> tree_map {};
+  const std::map<std::string, int, std::less<>> tree_map {};
 
   EXPECT_FALSE(exists_in(hash_map, "foo"));
   EXPECT_FALSE(exists_in(tree_map, "foo"));
@@ -35,7 +35,7 @@ TEST(Lookup, EmptyMap)
 /// \trace tactile::find_in
 TEST(Lookup, FindIn)
 {
-  std::map<int, String> map {};
+  std::map<int, std::string> map {};
   map[0] = "0";
   map[1] = "1";
 
@@ -52,7 +52,7 @@ TEST(Lookup, FindIn)
 /// \trace tactile::lookup_in
 TEST(Lookup, LookupIn)
 {
-  StringMap<String> map {};
+  StringMap<std::string> map {};
   map["A"] = "1";
   map["B"] = "2";
 

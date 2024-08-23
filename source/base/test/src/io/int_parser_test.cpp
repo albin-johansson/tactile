@@ -2,6 +2,8 @@
 
 #include "tactile/base/io/int_parser.hpp"
 
+#include <string_view>  // string_view
+
 #include <gtest/gtest.h>
 
 #include "tactile/base/int.hpp"
@@ -36,8 +38,8 @@ TEST(StringConv, ParseValidInt)
   EXPECT_EQ(parse<int64>("F", 16), int64 {0xF});
   EXPECT_EQ(parse<int64>("10", 8), int64 {010});
   EXPECT_EQ(parse<int64>("7FFFFFFFFFFFFFFF", 16), std::numeric_limits<int64>::max());
-  EXPECT_EQ(parse<int64>(StringView {"1234"}.substr(0, 2)), int64 {12});
-  EXPECT_EQ(parse<int64>(StringView {"1234"}.substr(2, 2)), int64 {34});
+  EXPECT_EQ(parse<int64>(std::string_view {"1234"}.substr(0, 2)), int64 {12});
+  EXPECT_EQ(parse<int64>(std::string_view {"1234"}.substr(2, 2)), int64 {34});
 }
 
 // tactile::parse [integral]
@@ -67,8 +69,8 @@ TEST(StringConv, ParseValidUint)
   EXPECT_EQ(parse<uint64>("F", 16), uint64 {0xF});
   EXPECT_EQ(parse<uint64>("10", 8), uint64 {010});
   EXPECT_EQ(parse<uint64>("FFFFFFFFFFFFFFFF", 16), std::numeric_limits<uint64>::max());
-  EXPECT_EQ(parse<uint64>(StringView {"1234"}.substr(0, 2)), uint64 {12});
-  EXPECT_EQ(parse<uint64>(StringView {"1234"}.substr(2, 2)), uint64 {34});
+  EXPECT_EQ(parse<uint64>(std::string_view {"1234"}.substr(0, 2)), uint64 {12});
+  EXPECT_EQ(parse<uint64>(std::string_view {"1234"}.substr(2, 2)), uint64 {34});
 }
 
 }  // namespace tactile::test

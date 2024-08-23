@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
@@ -35,12 +36,12 @@ class RenamePropertyDialog final
    * \param context_entity   The associated meta context.
    * \param target_prop_name The target property in the context.
    */
-  void open(EntityID context_entity, String target_prop_name);
+  void open(EntityID context_entity, std::string target_prop_name);
 
  private:
   EntityID mContextEntity {kInvalidEntity};
-  String mTargetPropName {};
-  String mNewPropName {};
+  std::string mTargetPropName {};
+  std::string mNewPropName {};
   bool mShouldOpen {false};
 };
 

@@ -4,6 +4,7 @@
 
 #include <charconv>      // from_chars
 #include <concepts>      // invocable, integral, floating_point, same_as
+#include <filesystem>    // path
 #include <system_error>  // errc
 
 #if TACTILE_OS_WINDOWS
@@ -19,12 +20,12 @@ inline namespace string_conv {
 
 #if TACTILE_OS_WINDOWS
 // Windows is the only platform that we support that uses wchar_t paths.
-static_assert(std::same_as<NativeChar, wchar_t>);
+static_assert(std::same_as<std::filesystem::path::value_type, wchar_t>);
 #endif  // TACTILE_OS_WINDOWS
 
 template <typename T, std::invocable<const char*, const char*, T&> Parser>
-[[nodiscard]] auto _parse_impl(const StringView str,
-                               const Parser& parser) -> std::expected<T, std::error_code>
+[[nodiscard]] auto _parse_impl(const std::string_view str, const Parser& parser)
+    -> std::expected<T, std::error_code>
 {
   const auto* begin = str.data();
   const auto* end = begin + str.size();
@@ -40,8 +41,8 @@ template <typename T, std::invocable<const char*, const char*, T&> Parser>
 }
 
 template <std::integral T>
-[[nodiscard]] auto _parse_number(const StringView str,
-                                 const int base) -> std::expected<T, std::error_code>
+[[nodiscard]] auto _parse_number(const std::string_view str, const int base)
+    -> std::expected<T, std::error_code>
 {
   return _parse_impl<T>(str, [base](const char* begin, const char* end, T& number) {
     return std::from_chars(begin, end, number, base);
@@ -49,7 +50,8 @@ template <std::integral T>
 }
 
 template <std::floating_point T>
-[[nodiscard]] auto _parse_number(const StringView str) -> std::expected<T, std::error_code>
+[[nodiscard]] auto _parse_number(const std::string_view str)
+    -> std::expected<T, std::error_code>
 {
   return _parse_impl<T>(str, [](const char* begin, const char* end, T& number) {
     return fast_float::from_chars(begin, end, number);
@@ -58,7 +60,8 @@ template <std::floating_point T>
 
 }  // namespace string_conv
 
-auto to_native_string(const StringView str) -> std::expected<NativeString, std::error_code>
+auto to_native_string(const std::string_view str)
+    -> std::expected<NativeString, std::error_code>
 {
 #if TACTILE_OS_WINDOWS
   if (str.empty()) {
@@ -95,7 +98,8 @@ auto to_native_string(const StringView str) -> std::expected<NativeString, std::
 #endif  // TACTILE_OS_WINDOWS
 }
 
-auto from_native_string(const NativeStringView str) -> std::expected<String, std::error_code>
+auto from_native_string(const NativeStringView str)
+    -> std::expected<std::string, std::error_code>
 {
 #if TACTILE_OS_WINDOWS
   if (str.empty()) {
@@ -119,7 +123,7 @@ auto from_native_string(const NativeStringView str) -> std::expected<String, std
   }
 
   // Create string of appropriate size.
-  String output_str {};
+  std::string output_str {};
   output_str.resize(static_cast<usize>(char_count));
 
   if (WideCharToMultiByte(CP_UTF8,
@@ -135,21 +139,23 @@ auto from_native_string(const NativeStringView str) -> std::expected<String, std
 
   return std::unexpected {make_error(GenericError::kUnknown)};
 #else
-  return String {str};
+  return std::string {str};
 #endif  // TACTILE_OS_WINDOWS
 }
 
-auto parse_int(const StringView str, const int base) -> std::expected<int64, std::error_code>
+auto parse_int(const std::string_view str, const int base)
+    -> std::expected<int64, std::error_code>
 {
   return _parse_number<int64>(str, base);
 }
 
-auto parse_uint(const StringView str, const int base) -> std::expected<uint64, std::error_code>
+auto parse_uint(const std::string_view str, const int base)
+    -> std::expected<uint64, std::error_code>
 {
   return _parse_number<uint64>(str, base);
 }
 
-auto parse_float(const StringView str) -> std::expected<double, std::error_code>
+auto parse_float(const std::string_view str) -> std::expected<double, std::error_code>
 {
   return _parse_number<double>(str);
 }

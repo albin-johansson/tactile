@@ -6,7 +6,6 @@
 #include <utility>    // move
 #include <vector>     // vector
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -19,9 +18,9 @@ namespace tactile {
 namespace launcher_impl {
 
 [[nodiscard]]
-auto get_plugin_names() -> std::vector<StringView>
+auto get_plugin_names() -> std::vector<std::string_view>
 {
-  std::vector<StringView> plugin_names {};
+  std::vector<std::string_view> plugin_names {};
 
 #ifdef TACTILE_ENABLE_ZLIB_COMPRESSION
   plugin_names.emplace_back("tactile-zlib-compression" TACTILE_DLL_EXT);

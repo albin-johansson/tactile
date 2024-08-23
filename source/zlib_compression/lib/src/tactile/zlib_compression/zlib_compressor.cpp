@@ -3,13 +3,12 @@
 #include "tactile/zlib_compression/zlib_compressor.hpp"
 
 #include <array>         // array
+#include <expected>      // expected
 #include <system_error>  // errc, make_error_code
+#include <system_error>  // error_code
 #include <utility>       // move
 
 #define Z_PREFIX_SET
-#include <expected>      // expected
-#include <system_error>  // error_code
-
 #include <zlib.h>
 
 #include "tactile/base/io/byte_stream.hpp"

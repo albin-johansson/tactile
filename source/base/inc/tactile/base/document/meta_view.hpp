@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include <utility>  // pair
+#include <string>       // string
+#include <string_view>  // string_view
+#include <utility>      // pair
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -27,7 +28,7 @@ class IMetaView
    * A context name.
    */
   [[nodiscard]]
-  virtual auto get_name() const -> StringView = 0;
+  virtual auto get_name() const -> std::string_view = 0;
 
   /**
    * Returns a property attached to the context.
@@ -39,7 +40,7 @@ class IMetaView
    */
   [[nodiscard]]
   virtual auto get_property(usize index) const
-      -> std::pair<const String&, const Attribute&> = 0;
+      -> std::pair<const std::string&, const Attribute&> = 0;
 
   /**
    * Returns the number of properties attached to the context.

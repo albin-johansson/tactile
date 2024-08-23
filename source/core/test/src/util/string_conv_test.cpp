@@ -20,7 +20,7 @@ TEST(StringConv, ToNativeString)
   EXPECT_EQ(to_native_string("foo/bar.txt"), TACTILE_NATIVE_STR("foo/bar.txt"));
   EXPECT_EQ(to_native_string("\0"), TACTILE_NATIVE_STR("\0"));
 
-  const StringView foo {"foobar", 3};
+  const std::string_view foo {"foobar", 3};
   EXPECT_EQ(to_native_string(foo), TACTILE_NATIVE_STR("foo"));
 }
 
@@ -60,8 +60,8 @@ TEST(StringConv, ParseFloat)
   EXPECT_EQ(parse_float("1.0"), 1.0);
   EXPECT_EQ(parse_float("3.2"), 3.2);
   EXPECT_EQ(parse_float("-1.0"), -1.0);
-  EXPECT_EQ(parse_float(StringView {"1234"}.substr(0, 2)), 12.0);
-  EXPECT_EQ(parse_float(StringView {"1234"}.substr(2, 2)), 34.0);
+  EXPECT_EQ(parse_float(std::string_view {"1234"}.substr(0, 2)), 12.0);
+  EXPECT_EQ(parse_float(std::string_view {"1234"}.substr(2, 2)), 34.0);
 }
 
 }  // namespace tactile

@@ -4,15 +4,15 @@
 
 #include <expected>      // expected
 #include <filesystem>    // path
+#include <string>        // string
 #include <system_error>  // error_code
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
-using IniSection = StringMap<String>;
+using IniSection = StringMap<std::string>;
 using IniData = StringMap<IniSection>;
 
 /**

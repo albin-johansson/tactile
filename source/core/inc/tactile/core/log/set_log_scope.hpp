@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string_view>  // string_view
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -17,7 +18,7 @@ class SetLogScope final
    * \param scope The new scope identifier.
    */
   [[nodiscard]]
-  explicit SetLogScope(StringView scope) noexcept;
+  explicit SetLogScope(std::string_view scope) noexcept;
 
   /** Restores the previous logger scope identifier. */
   ~SetLogScope() noexcept;
@@ -26,7 +27,7 @@ class SetLogScope final
   TACTILE_DEFAULT_MOVE(SetLogScope);
 
  private:
-  StringView mPrevScope;
+  std::string_view mPrevScope;
 };
 
 }  // namespace tactile

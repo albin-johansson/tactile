@@ -23,8 +23,8 @@ inline constexpr char kSectionOpenToken = '[';
 inline constexpr char kSectionCloseToken = ']';
 
 [[nodiscard]]
-auto _parse_section_header_name(const StringView current_line, const int line_number)
-    -> std::expected<String, std::error_code>
+auto _parse_section_header_name(const std::string_view current_line, const int line_number)
+    -> std::expected<std::string, std::error_code>
 {
   TACTILE_ASSERT(current_line.starts_with(kSectionOpenToken));
 
@@ -34,17 +34,17 @@ auto _parse_section_header_name(const StringView current_line, const int line_nu
   }
 
   TACTILE_ASSERT(current_line.size() >= 2);
-  return String {current_line.substr(1, current_line.size() - 2)};
+  return std::string {current_line.substr(1, current_line.size() - 2)};
 }
 
 [[nodiscard]]
-auto _parse_key_value_pair(const StringView current_line,
+auto _parse_key_value_pair(const std::string_view current_line,
                            const int line_number,
                            IniSection& section) -> std::expected<void, std::error_code>
 {
   const auto eq_pos = current_line.find_first_of(kAssignmentToken);
 
-  if (eq_pos == String::npos || eq_pos == 0) {
+  if (eq_pos == std::string::npos || eq_pos == 0) {
     TACTILE_LOG_ERROR("Detected missing assignment ('{}') operator (line {})",
                       kAssignmentToken,
                       line_number);
@@ -88,8 +88,8 @@ auto parse_ini(const std::filesystem::path& path) -> std::expected<IniData, std:
   }
 
   int line_number {0};
-  String current_section {};
-  String current_line {};
+  std::string current_section {};
+  std::string current_line {};
 
   current_line.reserve(64);
   while (std::getline(stream, current_line)) {

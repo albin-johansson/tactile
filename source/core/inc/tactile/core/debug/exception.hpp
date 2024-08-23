@@ -3,8 +3,8 @@
 #pragma once
 
 #include <exception>  // exception
+#include <string>     // string
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -13,17 +13,17 @@ namespace tactile {
 class Exception final : public std::exception
 {
  public:
-  TACTILE_NOINLINE explicit Exception(String message);
+  TACTILE_NOINLINE explicit Exception(std::string message);
 
   [[nodiscard]]
   auto what() const noexcept -> const char* override;
 
   [[nodiscard]]
-  auto trace() const -> const String&;
+  auto trace() const -> const std::string&;
 
  private:
-  String mMessage;
-  String mTrace;
+  std::string mMessage;
+  std::string mTrace;
 };
 
 }  // namespace tactile

@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string_view>  // string_view
+
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -79,7 +80,7 @@ enum class SaveFormatParseError : uint8
  * An error description.
  */
 [[nodiscard]]
-constexpr auto to_string(const SaveFormatParseError error) noexcept -> StringView
+constexpr auto to_string(const SaveFormatParseError error) noexcept -> std::string_view
 {
   switch (error) {
     case SaveFormatParseError::kNoPropertyName:          return "missing property name";

@@ -4,8 +4,8 @@
 
 #include <algorithm>   // replace
 #include <filesystem>  // path
+#include <string>      // string
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -19,7 +19,7 @@ namespace tactile {
  * A string that represents the provided path but using forward slashes.
  */
 [[nodiscard]]
-inline auto normalize_path_separators(const std::filesystem::path& path) -> String
+inline auto normalize_path_separators(const std::filesystem::path& path) -> std::string
 {
   auto path_str = path.string();
 

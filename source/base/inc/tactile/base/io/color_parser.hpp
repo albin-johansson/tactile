@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include <optional>  // optional, nullopt
+#include <optional>     // optional, nullopt
+#include <string>       // string
+#include <string_view>  // string_view
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/io/int_parser.hpp"
 #include "tactile/base/meta/color.hpp"
 #include "tactile/base/prelude.hpp"
@@ -20,7 +21,7 @@ namespace tactile {
  * A color if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-constexpr auto parse_color_rgb(const StringView rgb) noexcept -> std::optional<UColor>
+constexpr auto parse_color_rgb(const std::string_view rgb) noexcept -> std::optional<UColor>
 {
   if (rgb.length() != 7 || rgb.front() != '#') {
     return std::nullopt;
@@ -49,7 +50,7 @@ constexpr auto parse_color_rgb(const StringView rgb) noexcept -> std::optional<U
  * A color if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-constexpr auto parse_color_rgba(const StringView rgba) noexcept -> std::optional<UColor>
+constexpr auto parse_color_rgba(const std::string_view rgba) noexcept -> std::optional<UColor>
 {
   if (rgba.length() != 9 || rgba.front() != '#') {
     return std::nullopt;
@@ -79,7 +80,7 @@ constexpr auto parse_color_rgba(const StringView rgba) noexcept -> std::optional
  * A color if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-constexpr auto parse_color_argb(const StringView argb) noexcept -> std::optional<UColor>
+constexpr auto parse_color_argb(const std::string_view argb) noexcept -> std::optional<UColor>
 {
   if (argb.length() != 9 || argb.front() != '#') {
     return std::nullopt;

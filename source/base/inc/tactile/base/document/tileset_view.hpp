@@ -4,9 +4,9 @@
 
 #include <expected>      // expected
 #include <filesystem>    // path
+#include <string>        // string
 #include <system_error>  // error_code
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -120,7 +120,7 @@ class ITilesetView
    * A filename without a file extension.
    */
   [[nodiscard]]
-  virtual auto get_filename() const -> String = 0;
+  virtual auto get_filename() const -> std::string = 0;
 };
 
 }  // namespace tactile

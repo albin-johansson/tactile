@@ -31,12 +31,12 @@ auto make_color(const FColor& fcolor) -> UColor
   return make_color(fcolor.red, fcolor.green, fcolor.blue, fcolor.alpha);
 }
 
-auto to_string_rgb(const UColor& color) -> String
+auto to_string_rgb(const UColor& color) -> std::string
 {
   return std::format("#{:02X}{:02X}{:02X}", color.red, color.green, color.blue);
 }
 
-auto to_string_rgba(const UColor& color) -> String
+auto to_string_rgba(const UColor& color) -> std::string
 {
   return std::format("#{:02X}{:02X}{:02X}{:02X}",
                      color.red,
@@ -45,7 +45,7 @@ auto to_string_rgba(const UColor& color) -> String
                      color.alpha);
 }
 
-auto to_string_argb(const UColor& color) -> String
+auto to_string_argb(const UColor& color) -> std::string
 {
   return std::format("#{:02X}{:02X}{:02X}{:02X}",
                      color.alpha,

@@ -23,7 +23,7 @@ inline namespace property_dock {
 
 void _push_property_table_context_menu_content(const Language& language,
                                                const EntityID context_entity,
-                                               const String* prop_name,
+                                               const std::string* prop_name,
                                                EventDispatcher& dispatcher)
 {
   if (const DisabledScope disable_if {prop_name != nullptr};

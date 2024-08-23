@@ -14,13 +14,14 @@ MetaViewMock::MetaViewMock(ir::Metadata meta) :
 {
   using testing::Return;
 
-  ON_CALL(*this, get_name).WillByDefault([this]() -> StringView { return mMeta.name; });
+  ON_CALL(*this, get_name).WillByDefault([this]() -> std::string_view { return mMeta.name; });
 
   ON_CALL(*this, get_property)
-      .WillByDefault([this](const usize index) -> std::pair<const String&, const Attribute&> {
-        const auto& property = mMeta.properties.at(index);
-        return {property.name, property.value};
-      });
+      .WillByDefault(
+          [this](const usize index) -> std::pair<const std::string&, const Attribute&> {
+            const auto& property = mMeta.properties.at(index);
+            return {property.name, property.value};
+          });
 
   ON_CALL(*this, property_count).WillByDefault(testing::Return(mMeta.properties.size()));
 }

@@ -13,7 +13,7 @@
 
 namespace tactile {
 
-auto get_env(const char* name) -> std::expected<String, std::error_code>
+auto get_env(const char* name) -> std::expected<std::string, std::error_code>
 {
   if (name) {
 #if TACTILE_OS_WINDOWS
@@ -22,11 +22,11 @@ auto get_env(const char* name) -> std::expected<String, std::error_code>
 
     if (value) {
       const ScopeGuard value_deleter {[=] { std::free(value); }};
-      return String {value};
+      return std::string {value};
     }
 #else
     if (const auto* value = std::getenv(name)) {
-      return String {value};
+      return std::string {value};
     }
 #endif  // TACTILE_OS_WINDOWS
   }

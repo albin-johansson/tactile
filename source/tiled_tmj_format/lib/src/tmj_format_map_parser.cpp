@@ -16,7 +16,7 @@ void deduce_tile_format_from_layer(const nlohmann::json& layer_json,
 {
   if (const auto encoding_iter = layer_json.find("encoding");
       encoding_iter != layer_json.end()) {
-    const auto& encoding = encoding_iter->get_ref<const String&>();
+    const auto& encoding = encoding_iter->get_ref<const std::string&>();
 
     if (encoding == "base64") {
       tile_format.encoding = TileEncoding::kBase64;
@@ -28,7 +28,7 @@ void deduce_tile_format_from_layer(const nlohmann::json& layer_json,
 
   if (const auto compression_iter = layer_json.find("compression");
       compression_iter != layer_json.end()) {
-    const auto& compression_name = compression_iter->get_ref<const String&>();
+    const auto& compression_name = compression_iter->get_ref<const std::string&>();
 
     if (compression_name == "zlib") {
       tile_format.compression = CompressionFormat::kZlib;
@@ -53,7 +53,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
 
   if (const auto orientation_iter = map_json.find("orientation");
       orientation_iter != map_json.end()) {
-    const auto& orientation = orientation_iter->get_ref<const String&>();
+    const auto& orientation = orientation_iter->get_ref<const std::string&>();
     if (orientation != "orthogonal") {
       return std::unexpected {SaveFormatParseError::kBadMapOrientation};
     }

@@ -11,8 +11,8 @@ namespace tactile {
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringEmpty)
 {
-  std::vector<String> tokens {};
-  split_string("", '!', [&tokens](const StringView token) {
+  std::vector<std::string> tokens {};
+  split_string("", '!', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -23,8 +23,8 @@ TEST(StringOps, SplitStringEmpty)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringLetters)
 {
-  std::vector<String> tokens {};
-  split_string("a:b:c:d", ':', [&tokens](const StringView token) {
+  std::vector<std::string> tokens {};
+  split_string("a:b:c:d", ':', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -39,8 +39,8 @@ TEST(StringOps, SplitStringLetters)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringNumbers)
 {
-  std::vector<String> tokens {};
-  split_string("1 200 30 4000", ' ', [&tokens](const StringView token) {
+  std::vector<std::string> tokens {};
+  split_string("1 200 30 4000", ' ', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -55,8 +55,8 @@ TEST(StringOps, SplitStringNumbers)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringWithLeadingSeparator)
 {
-  std::vector<String> tokens {};
-  split_string(".woah", '.', [&tokens](const StringView token) {
+  std::vector<std::string> tokens {};
+  split_string(".woah", '.', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -69,8 +69,8 @@ TEST(StringOps, SplitStringWithLeadingSeparator)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringWithTrailingSeparator)
 {
-  std::vector<String> tokens {};
-  split_string("foobar!", '!', [&tokens](const StringView token) {
+  std::vector<std::string> tokens {};
+  split_string("foobar!", '!', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -82,8 +82,8 @@ TEST(StringOps, SplitStringWithTrailingSeparator)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringWithEmptyTokens)
 {
-  std::vector<String> tokens {};
-  split_string("aaa::a:bb::c", ':', [&tokens](const StringView token) {
+  std::vector<std::string> tokens {};
+  split_string("aaa::a:bb::c", ':', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });

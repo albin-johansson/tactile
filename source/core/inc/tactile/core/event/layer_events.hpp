@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -64,7 +65,7 @@ struct RenameLayerEvent final
   EntityID layer_entity;
 
   /** The new layer name. */
-  String name;
+  std::string name;
 };
 
 /**

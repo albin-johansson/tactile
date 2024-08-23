@@ -18,7 +18,7 @@ namespace tactile::ui {
 inline namespace language_parser {
 
 [[nodiscard]]
-auto _get_misc_names() -> std::unordered_map<StringView, StringID>
+auto _get_misc_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"ok", StringID::kOK},
@@ -26,7 +26,7 @@ auto _get_misc_names() -> std::unordered_map<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_verb_names() -> std::unordered_map<StringView, StringID>
+auto _get_verb_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"cancel", StringID::kCancel},
@@ -42,7 +42,7 @@ auto _get_verb_names() -> std::unordered_map<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_noun_names() -> std::unordered_map<StringView, StringID>
+auto _get_noun_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"int", StringID::kInt},
@@ -76,7 +76,7 @@ auto _get_noun_names() -> std::unordered_map<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_adjective_names() -> std::unordered_map<StringView, StringID>
+auto _get_adjective_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"orthogonal", StringID::kOrthogonal},
@@ -85,7 +85,7 @@ auto _get_adjective_names() -> std::unordered_map<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_action_names() -> std::unordered_map<StringView, StringID>
+auto _get_action_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"create_map", StringID::kCreateMap},
@@ -148,7 +148,7 @@ auto _get_action_names() -> std::unordered_map<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_hint_names() -> std::unordered_map<StringView, StringID>
+auto _get_hint_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"context_has_no_properties", StringID::kContextHasNoProperties},
@@ -160,7 +160,7 @@ auto _get_hint_names() -> std::unordered_map<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_menu_names() -> std::unordered_map<StringView, StringID>
+auto _get_menu_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"file", StringID::kFileMenu},
@@ -178,7 +178,7 @@ auto _get_menu_names() -> std::unordered_map<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_widget_names() -> std::unordered_map<StringView, StringID>
+auto _get_widget_names() -> std::unordered_map<std::string_view, StringID>
 {
   return {
     {"document_dock", StringID::kDocumentDock},
@@ -193,9 +193,9 @@ auto _get_widget_names() -> std::unordered_map<StringView, StringID>
 }
 
 void _parse_section(const StringMap<IniSection>& ini,
-                    const StringView section_name,
-                    const std::unordered_map<StringView, StringID>& name_mapping,
-                    std::vector<String>& strings)
+                    const std::string_view section_name,
+                    const std::unordered_map<std::string_view, StringID>& name_mapping,
+                    std::vector<std::string>& strings)
 {
   if (const auto* section = find_in(ini, section_name)) {
     for (const auto& [key, value] : *section) {
@@ -207,7 +207,7 @@ void _parse_section(const StringMap<IniSection>& ini,
 }
 
 [[nodiscard]]
-auto _validate_strings(std::vector<String>& strings,
+auto _validate_strings(std::vector<std::string>& strings,
                        const Language* fallback) -> std::expected<void, std::error_code>
 {
   usize index {0};
@@ -220,7 +220,7 @@ auto _validate_strings(std::vector<String>& strings,
         string = fallback->get(string_id);
       }
       else {
-        TACTILE_LOG_ERROR("String with ID {} ('{}') is not translated",
+        TACTILE_LOG_ERROR("std::string with ID {} ('{}') is not translated",
                           index,
                           magic_enum::enum_name(string_id));
         return std::unexpected {make_error(GenericError::kInvalidFile)};
@@ -256,7 +256,7 @@ auto LanguageParser::parse(const LanguageID id,
 
   return parse_ini(path)
       .transform([this](const IniData& ini) {
-        std::vector<String> strings {};
+        std::vector<std::string> strings {};
         strings.resize(std::to_underlying(StringID::kMAX));
 
         _parse_section(ini, "misc", mMiscNames, strings);
@@ -270,7 +270,7 @@ auto LanguageParser::parse(const LanguageID id,
 
         return strings;
       })
-      .and_then([id, fallback](std::vector<String>&& strings) {
+      .and_then([id, fallback](std::vector<std::string>&& strings) {
         return _validate_strings(strings, fallback).transform([id, &strings] {
           return Language {id, std::move(strings)};
         });

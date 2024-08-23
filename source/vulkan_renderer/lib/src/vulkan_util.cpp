@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-auto to_string(const VkResult result) noexcept -> StringView
+auto to_string(const VkResult result) noexcept -> std::string_view
 {
   return magic_enum::enum_name(result);
 }

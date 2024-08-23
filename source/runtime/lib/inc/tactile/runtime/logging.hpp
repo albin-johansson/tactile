@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <format>  // make_format_args, format_args
+#include <format>       // make_format_args, format_args
+#include <string_view>  // string_view
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
@@ -12,7 +12,7 @@
 namespace tactile {
 namespace internal {
 
-TACTILE_RUNTIME_API void log(LogLevel level, StringView fmt, std::format_args args);
+TACTILE_RUNTIME_API void log(LogLevel level, std::string_view fmt, std::format_args args);
 
 }  // namespace internal
 
@@ -26,7 +26,7 @@ TACTILE_RUNTIME_API void log(LogLevel level, StringView fmt, std::format_args ar
  * \param args  The format arguments.
  */
 template <typename... Args>
-void log(const LogLevel level, const StringView fmt, const Args&... args)
+void log(const LogLevel level, const std::string_view fmt, const Args&... args)
 {
   internal::log(level, fmt, std::make_format_args(args...));
 }

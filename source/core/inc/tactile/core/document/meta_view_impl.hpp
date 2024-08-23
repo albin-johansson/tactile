@@ -25,10 +25,11 @@ class MetaViewImpl final : public IMetaView
   MetaViewImpl(const IDocument* document, EntityID meta_id);
 
   [[nodiscard]]
-  auto get_name() const -> StringView override;
+  auto get_name() const -> std::string_view override;
 
   [[nodiscard]]
-  auto get_property(usize index) const -> std::pair<const String&, const Attribute&> override;
+  auto get_property(usize index) const
+      -> std::pair<const std::string&, const Attribute&> override;
 
   [[nodiscard]]
   auto property_count() const -> usize override;

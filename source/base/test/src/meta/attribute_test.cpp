@@ -2,6 +2,8 @@
 
 #include "tactile/base/meta/attribute.hpp"
 
+#include <string>  // string
+
 #include <gtest/gtest.h>
 
 namespace tactile {
@@ -17,7 +19,7 @@ TEST(Attribute, DefaultConstructor)
 // tactile::Attribute::Attribute [AttributeType]
 TEST(Attribute, ExplicitTypeConstructor)
 {
-  EXPECT_EQ(Attribute {AttributeType::kStr}, Attribute {String {}});
+  EXPECT_EQ(Attribute {AttributeType::kStr}, Attribute {std::string {}});
   EXPECT_EQ(Attribute {AttributeType::kInt}, Attribute {int32 {}});
   EXPECT_EQ(Attribute {AttributeType::kInt2}, Attribute {Int2 {}});
   EXPECT_EQ(Attribute {AttributeType::kInt3}, Attribute {Int3 {}});
@@ -37,7 +39,7 @@ TEST(Attribute, ImplicitValueConstructor)
 {
   {
     const Attribute str1 {"foo"};
-    const Attribute str2 {String {"bar"}};
+    const Attribute str2 {std::string {"bar"}};
 
     EXPECT_EQ(str1.get_type(), AttributeType::kStr);
     EXPECT_EQ(str2.get_type(), AttributeType::kStr);
@@ -106,7 +108,7 @@ TEST(Attribute, Reset)
 
   attribute.reset(AttributeType::kStr);
   EXPECT_TRUE(attribute.has_default_value());
-  EXPECT_EQ(attribute, Attribute {String {}});
+  EXPECT_EQ(attribute, Attribute {std::string {}});
 
   attribute.reset(AttributeType::kInt);
   EXPECT_TRUE(attribute.has_default_value());

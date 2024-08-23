@@ -3,10 +3,11 @@
 #pragma once
 
 #include <expected>      // expected
+#include <string>        // string
+#include <string_view>   // string_view
 #include <system_error>  // error_code
 #include <utility>       // pair
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -42,7 +43,7 @@ class IComponentView
    * A component name.
    */
   [[nodiscard]]
-  virtual auto get_name() const -> StringView = 0;
+  virtual auto get_name() const -> std::string_view = 0;
 
   /**
    * Returns an attribute in the component.
@@ -54,7 +55,7 @@ class IComponentView
    */
   [[nodiscard]]
   virtual auto get_attribute(usize index) const
-      -> std::pair<const String&, const Attribute&> = 0;
+      -> std::pair<const std::string&, const Attribute&> = 0;
 
   /**
    * Returns the number of attributes in the component.

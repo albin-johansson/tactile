@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include <string>         // string
 #include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
@@ -34,7 +34,7 @@ using AttributeBundle = StringMap<Attribute>;
 struct CMeta final
 {
   /** The name associated with the context. */
-  String name;
+  std::string name;
 
   /** The attached properties. */
   StringMap<Attribute> properties;

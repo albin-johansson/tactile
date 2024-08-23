@@ -86,7 +86,7 @@
 
 #define TACTILE_INIT_COPY(Name, Op) \
   Name(const Name&) = Op;           \
-  auto operator=(const Name&)->Name& = Op
+  auto operator=(const Name&) -> Name& = Op
 
 #define TACTILE_INIT_MOVE(Name, Op) \
   Name(Name&&) noexcept = Op;       \
@@ -100,7 +100,7 @@
 
 #define TACTILE_DECLARE_COPY(Name) \
   Name(const Name&);               \
-  auto operator=(const Name&)->Name&
+  auto operator=(const Name&) -> Name&
 
 #define TACTILE_DECLARE_MOVE(Name) \
   Name(Name&&) noexcept;           \

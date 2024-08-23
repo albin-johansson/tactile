@@ -25,7 +25,7 @@ auto make_ir_tile_matrix(const MatrixExtent& extent) -> std::vector<std::vector<
   return tile_matrix;
 }
 
-auto make_ir_metadata(String name) -> ir::Metadata
+auto make_ir_metadata(std::string name) -> ir::Metadata
 {
   return {
     .name = std::move(name),

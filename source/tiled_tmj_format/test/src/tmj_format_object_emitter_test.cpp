@@ -66,8 +66,8 @@ TEST(TmjFormatObjectEmitter, EmitEllipseObject)
     .visible = true,
   };
 
-  const String prop1_name {"P1"};
-  const String prop2_name {"P2"};
+  const std::string prop1_name {"P1"};
+  const std::string prop2_name {"P2"};
   const Attribute prop1_value {42};
   const Attribute prop2_value {"demo"};
 

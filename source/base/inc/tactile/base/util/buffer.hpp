@@ -2,14 +2,15 @@
 
 #pragma once
 
-#include <algorithm>  // min, copy_n
-#include <array>      // array
-#include <concepts>   // same_as, input_iterator
-#include <cstdlib>    // abs
-#include <iterator>   // distance
-#include <span>       // span
+#include <algorithm>    // min, copy_n
+#include <array>        // array
+#include <concepts>     // same_as, input_iterator
+#include <cstdlib>      // abs
+#include <iterator>     // distance
+#include <span>         // span
+#include <string>       // string
+#include <string_view>  // string_view
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/numeric/sign_cast.hpp"
@@ -247,7 +248,7 @@ class Buffer final
    */
   [[nodiscard]]
   constexpr auto view() const noexcept -> std::span<const value_type>
-    requires(!std::same_as<value_type, StringView::value_type>)
+    requires(!std::same_as<value_type, std::string_view::value_type>)
   {
     return std::span<const value_type> {data(), size()};
   }
@@ -259,10 +260,10 @@ class Buffer final
    * A string view.
    */
   [[nodiscard]]
-  constexpr auto view() const noexcept -> StringView
-    requires(std::same_as<value_type, StringView::value_type>)
+  constexpr auto view() const noexcept -> std::string_view
+    requires(std::same_as<value_type, std::string_view::value_type>)
   {
-    return StringView {data(), size()};
+    return std::string_view {data(), size()};
   }
 
  private:

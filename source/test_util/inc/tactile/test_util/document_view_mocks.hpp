@@ -28,9 +28,9 @@ class MetaViewMock : public IMetaView
 
   explicit MetaViewMock(ir::Metadata meta);
 
-  MOCK_METHOD(StringView, get_name, (), (const, override));
+  MOCK_METHOD(std::string_view, get_name, (), (const, override));
 
-  MOCK_METHOD((std::pair<const String&, const Attribute&>),
+  MOCK_METHOD((std::pair<const std::string&, const Attribute&>),
               get_property,
               (usize),
               (const, override));
@@ -64,7 +64,7 @@ class ObjectViewMock : public IObjectView
 
   MOCK_METHOD(Float2, get_size, (), (const, override));
 
-  MOCK_METHOD(StringView, get_tag, (), (const, override));
+  MOCK_METHOD(std::string_view, get_tag, (), (const, override));
 
   MOCK_METHOD(bool, is_visible, (), (const, override));
 
@@ -150,7 +150,7 @@ class TilesetViewMock : public ITilesetView
 
   MOCK_METHOD(const IMetaView&, get_meta, (), (const, override));
 
-  MOCK_METHOD(String, get_filename, (), (const, override));
+  MOCK_METHOD(std::string, get_filename, (), (const, override));
 
   [[nodiscard]]
   auto get_meta_view_mock() -> MetaViewMock&

@@ -8,9 +8,9 @@
 
 namespace tactile {
 
-auto trim_string(const StringView str) -> String
+auto trim_string(const std::string_view str) -> std::string
 {
-  String copy {str};
+  std::string copy {str};
 
   const auto find_first_non_space = [](const auto begin, const auto end) {
     return std::find_if(begin, end, [](const char ch) {

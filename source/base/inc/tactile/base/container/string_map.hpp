@@ -3,10 +3,11 @@
 #pragma once
 
 #include <functional>     // hash, equal_to
+#include <string>         // string
+#include <string_view>    // string_view
 #include <type_traits>    // true_type
 #include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -14,7 +15,7 @@ namespace tactile {
 /** Custom hash object capable of hashing several string types. */
 struct StringHash final
 {
-  using hash_type = std::hash<StringView>;
+  using hash_type = std::hash<std::string_view>;
   using is_transparent [[maybe_unused]] = std::true_type;
 
   [[nodiscard]] auto operator()(const char* str) const -> usize
@@ -22,12 +23,12 @@ struct StringHash final
     return hash_type {}(str);
   }
 
-  [[nodiscard]] auto operator()(StringView str) const -> usize
+  [[nodiscard]] auto operator()(const std::string_view str) const -> usize
   {
     return hash_type {}(str);
   }
 
-  [[nodiscard]] auto operator()(const String& str) const -> usize
+  [[nodiscard]] auto operator()(const std::string& str) const -> usize
   {
     return hash_type {}(str);
   }
@@ -35,6 +36,6 @@ struct StringHash final
 
 /** A hash map optimized for string keys, using heterogeneous lookups. */
 template <typename T>
-using StringMap = std::unordered_map<String, T, StringHash, std::equal_to<>>;
+using StringMap = std::unordered_map<std::string, T, StringHash, std::equal_to<>>;
 
 }  // namespace tactile

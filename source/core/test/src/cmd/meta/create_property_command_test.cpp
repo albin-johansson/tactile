@@ -27,7 +27,7 @@ TEST(CreatePropertyCommand, RedoUndo)
   ASSERT_EQ(meta.properties.size(), 0);
   ASSERT_EQ(meta.components.size(), 0);
 
-  const String property_name {"foo"};
+  const std::string property_name {"foo"};
   const Attribute property_value {42};
 
   CreatePropertyCommand command {&document, map_entity, property_name, property_value};
