@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include <unordered_map>  // unordered_map
+
 #include <nlohmann/json.hpp>
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
@@ -55,13 +56,14 @@ class TACTILE_TMJ_FORMAT_API TmjFormatSaveVisitor final : public IDocumentVisito
   auto get_map_json() const -> const nlohmann::json&;
 
   [[nodiscard]]
-  auto get_external_tilesets() const -> const HashMap<TileID, TmjFormatExternalTilesetData>&;
+  auto get_external_tilesets() const
+      -> const std::unordered_map<TileID, TmjFormatExternalTilesetData>&;
 
  private:
   IRuntime* mRuntime;
   SaveFormatWriteOptions mOptions;
   nlohmann::json mMapNode {};
-  HashMap<TileID, TmjFormatExternalTilesetData> mExternalTilesetNodes {};
+  std::unordered_map<TileID, TmjFormatExternalTilesetData> mExternalTilesetNodes {};
   ByteStream mTileByteCache {};
 
   [[nodiscard]]

@@ -2,10 +2,11 @@
 
 #include "tactile/opengl_renderer/opengl_renderer.hpp"
 
-#include <cstdlib>  // malloc, free
-#include <list>     // list
-#include <memory>   // nothrow
-#include <utility>  // move
+#include <cstdlib>        // malloc, free
+#include <list>           // list
+#include <memory>         // nothrow
+#include <unordered_map>  // unordered_map
+#include <utility>        // move
 
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
@@ -13,7 +14,6 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/render/window.hpp"
@@ -39,7 +39,7 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
   Unique<void, GLContextDeleter> gl_context;
   Maybe<GLImGuiBackendWrapper> imgui_backend;
   Maybe<GLImGuiRendererWrapper> imgui_renderer;
-  HashMap<TextureID, OpenGLTexture> textures;
+  std::unordered_map<TextureID, OpenGLTexture> textures;
   TextureID next_texture_id;
 };
 

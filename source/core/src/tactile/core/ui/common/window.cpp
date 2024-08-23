@@ -2,7 +2,8 @@
 
 #include "tactile/core/ui/common/window.hpp"
 
-#include "tactile/base/container/hash_map.hpp"
+#include <unordered_map>  // unordered_map
+
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/util/lookup.hpp"
@@ -23,7 +24,7 @@ struct WindowData final
 };
 
 // We only allow a single language per editor session, so this is fine.
-inline HashMap<const char*, WindowData> gWindowData {};
+inline std::unordered_map<const char*, WindowData> gWindowData {};
 
 }  // namespace window
 

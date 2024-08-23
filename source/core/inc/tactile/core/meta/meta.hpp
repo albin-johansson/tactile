@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/hash_map.hpp"
+#include <unordered_map>  // unordered_map
+
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/meta/attribute.hpp"
@@ -39,7 +40,7 @@ struct CMeta final
   StringMap<Attribute> properties;
 
   /** The attached attribute bundles. */
-  HashMap<UUID, AttributeBundle> components;
+  std::unordered_map<UUID, AttributeBundle> components;
 };
 
 /**

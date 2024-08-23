@@ -18,7 +18,7 @@ namespace tactile::ui {
 inline namespace language_parser {
 
 [[nodiscard]]
-auto _get_misc_names() -> HashMap<StringView, StringID>
+auto _get_misc_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"ok", StringID::kOK},
@@ -26,7 +26,7 @@ auto _get_misc_names() -> HashMap<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_verb_names() -> HashMap<StringView, StringID>
+auto _get_verb_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"cancel", StringID::kCancel},
@@ -42,7 +42,7 @@ auto _get_verb_names() -> HashMap<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_noun_names() -> HashMap<StringView, StringID>
+auto _get_noun_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"int", StringID::kInt},
@@ -76,7 +76,7 @@ auto _get_noun_names() -> HashMap<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_adjective_names() -> HashMap<StringView, StringID>
+auto _get_adjective_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"orthogonal", StringID::kOrthogonal},
@@ -85,7 +85,7 @@ auto _get_adjective_names() -> HashMap<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_action_names() -> HashMap<StringView, StringID>
+auto _get_action_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"create_map", StringID::kCreateMap},
@@ -148,7 +148,7 @@ auto _get_action_names() -> HashMap<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_hint_names() -> HashMap<StringView, StringID>
+auto _get_hint_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"context_has_no_properties", StringID::kContextHasNoProperties},
@@ -160,7 +160,7 @@ auto _get_hint_names() -> HashMap<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_menu_names() -> HashMap<StringView, StringID>
+auto _get_menu_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"file", StringID::kFileMenu},
@@ -178,7 +178,7 @@ auto _get_menu_names() -> HashMap<StringView, StringID>
 }
 
 [[nodiscard]]
-auto _get_widget_names() -> HashMap<StringView, StringID>
+auto _get_widget_names() -> std::unordered_map<StringView, StringID>
 {
   return {
     {"document_dock", StringID::kDocumentDock},
@@ -194,7 +194,7 @@ auto _get_widget_names() -> HashMap<StringView, StringID>
 
 void _parse_section(const StringMap<IniSection>& ini,
                     const StringView section_name,
-                    const HashMap<StringView, StringID>& name_mapping,
+                    const std::unordered_map<StringView, StringID>& name_mapping,
                     Vector<String>& strings)
 {
   if (const auto* section = find_in(ini, section_name)) {

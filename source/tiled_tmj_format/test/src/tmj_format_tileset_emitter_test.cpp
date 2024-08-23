@@ -22,7 +22,7 @@ TEST(TmjFormatTilesetEmitter, EmitEmbeddedTileset)
     .fold_tile_layer_data = false,
   };
 
-  HashMap<TileID, TmjFormatExternalTilesetData> external_tilesets {};
+  std::unordered_map<TileID, TmjFormatExternalTilesetData> external_tilesets {};
   const TilesetViewMock tileset {};
 
   const TileID tile_id {42};
@@ -71,7 +71,7 @@ TEST(TmjFormatTilesetEmitter, EmitExternalTileset)
     .fold_tile_layer_data = false,
   };
 
-  HashMap<TileID, TmjFormatExternalTilesetData> external_tilesets {};
+  std::unordered_map<TileID, TmjFormatExternalTilesetData> external_tilesets {};
   const TilesetViewMock tileset {};
 
   const TileID tile_id {15};

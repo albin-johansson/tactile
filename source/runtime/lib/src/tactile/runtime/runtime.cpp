@@ -2,13 +2,13 @@
 
 #include "tactile/runtime/runtime.hpp"
 
-#include <cstdlib>    // malloc, free, EXIT_SUCCESS, EXIT_FAILURE
-#include <exception>  // exception, set_terminate
-#include <utility>    // move
+#include <cstdlib>        // malloc, free, EXIT_SUCCESS, EXIT_FAILURE
+#include <exception>      // exception, set_terminate
+#include <unordered_map>  // unordered_map
+#include <utility>        // move
 
 #include <imgui.h>
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/debug/terminate.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -81,8 +81,8 @@ struct Runtime::Data final
   runtime_impl::UniqueImGuiContext imgui_context {};
   Optional<Window> window {};
   IRenderer* renderer {};
-  HashMap<CompressionFormat, ICompressor*> compression_formats {};
-  HashMap<SaveFormatId, ISaveFormat*> save_formats {};
+  std::unordered_map<CompressionFormat, ICompressor*> compression_formats {};
+  std::unordered_map<SaveFormatId, ISaveFormat*> save_formats {};
 
   Data() :
     protobuf_context {},

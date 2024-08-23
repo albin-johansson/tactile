@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>       // expected
+#include <system_error>   // error_code
+#include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
@@ -44,7 +44,7 @@ struct TileRange final
 struct CTileCache final
 {
   /** Maps tile identifiers to the associated tilesets. */
-  HashMap<TileID, EntityID> tileset_mapping;
+  std::unordered_map<TileID, EntityID> tileset_mapping;
 };
 
 /**

@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/hash_map.hpp"
+#include <unordered_map>  // unordered_map
+
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
@@ -51,7 +52,7 @@ class TACTILE_NULL_RENDERER_API NullRenderer final : public IRenderer
 
  private:
   IWindow* mWindow;
-  HashMap<TextureID, NullTexture> mTextures {};
+  std::unordered_map<TextureID, NullTexture> mTextures {};
   TextureID mNextTextureId {1};
 };
 

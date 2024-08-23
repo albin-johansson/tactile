@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>       // expected
+#include <system_error>   // error_code
+#include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
@@ -43,14 +43,14 @@ class LanguageParser final
       -> std::expected<Language, std::error_code>;
 
  private:
-  HashMap<StringView, StringID> mMiscNames {};
-  HashMap<StringView, StringID> mVerbNames {};
-  HashMap<StringView, StringID> mNounNames {};
-  HashMap<StringView, StringID> mAdjectiveNames {};
-  HashMap<StringView, StringID> mActionNames {};
-  HashMap<StringView, StringID> mHintNames {};
-  HashMap<StringView, StringID> mMenuNames {};
-  HashMap<StringView, StringID> mWidgetNames {};
+  std::unordered_map<StringView, StringID> mMiscNames {};
+  std::unordered_map<StringView, StringID> mVerbNames {};
+  std::unordered_map<StringView, StringID> mNounNames {};
+  std::unordered_map<StringView, StringID> mAdjectiveNames {};
+  std::unordered_map<StringView, StringID> mActionNames {};
+  std::unordered_map<StringView, StringID> mHintNames {};
+  std::unordered_map<StringView, StringID> mMenuNames {};
+  std::unordered_map<StringView, StringID> mWidgetNames {};
 };
 
 /**

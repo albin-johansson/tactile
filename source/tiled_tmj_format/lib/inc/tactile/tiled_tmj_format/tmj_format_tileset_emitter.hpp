@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include <unordered_map>  // unordered_map
+
 #include <nlohmann/json.hpp>
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/base/prelude.hpp"
@@ -43,6 +44,7 @@ struct TmjFormatExternalTilesetData final
 TACTILE_TMJ_FORMAT_API auto emit_tiled_tmj_tileset(
     const ITilesetView& tileset,
     const SaveFormatWriteOptions& options,
-    HashMap<TileID, TmjFormatExternalTilesetData>& external_tilesets) -> nlohmann::json;
+    std::unordered_map<TileID, TmjFormatExternalTilesetData>& external_tilesets)
+    -> nlohmann::json;
 
 }  // namespace tactile

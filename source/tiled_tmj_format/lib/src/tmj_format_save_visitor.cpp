@@ -110,7 +110,7 @@ auto TmjFormatSaveVisitor::get_map_json() const -> const nlohmann::json&
 }
 
 auto TmjFormatSaveVisitor::get_external_tilesets() const
-    -> const HashMap<TileID, TmjFormatExternalTilesetData>&
+    -> const std::unordered_map<TileID, TmjFormatExternalTilesetData>&
 {
   return mExternalTilesetNodes;
 }

@@ -2,12 +2,11 @@
 
 #include "tactile/core/entity/registry.hpp"
 
-#include <array>  // array
+#include <array>          // array
+#include <unordered_map>  // unordered_map
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include "tactile/base/container/hash_map.hpp"
 
 namespace tactile {
 
@@ -189,7 +188,7 @@ TEST_F(RegistryTest, Each)
   mRegistry.add<int>(entities[2], 3);
   mRegistry.add<float>(entities[3], 4.0f);
 
-  HashMap<EntityID, int> observed_ints {};
+  std::unordered_map<EntityID, int> observed_ints {};
 
   for (auto [entity, value] : mRegistry.each<int>()) {
     observed_ints[entity] = value;

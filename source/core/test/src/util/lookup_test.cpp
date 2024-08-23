@@ -2,9 +2,10 @@
 
 #include "tactile/core/util/lookup.hpp"
 
+#include <unordered_map>  // unordered_map
+
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/container/tree_map.hpp"

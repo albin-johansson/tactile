@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>       // expected
+#include <system_error>   // error_code
+#include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
@@ -144,10 +144,10 @@ class DocumentManager final
   auto is_map_active() const -> bool;
 
  private:
-  HashMap<UUID, Unique<IDocument>> mDocuments {};
+  std::unordered_map<UUID, Unique<IDocument>> mDocuments {};
   Vector<UUID> mOpenDocuments {};
   UUID mActiveDocument {};
-  HashMap<UUID, CommandStack> mHistories {};
+  std::unordered_map<UUID, CommandStack> mHistories {};
   usize mCommandCapacity {100};
 };
 
