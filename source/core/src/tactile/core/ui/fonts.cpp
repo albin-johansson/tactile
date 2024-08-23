@@ -2,10 +2,11 @@
 
 #include "tactile/core/ui/fonts.hpp"
 
+#include <array>  // array
+
 #include <IconsFontAwesome6.h>
 #include <imgui.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/settings.hpp"
@@ -13,13 +14,11 @@
 namespace tactile::ui {
 inline namespace fonts {
 
-inline constexpr Array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
+inline constexpr std::array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 }  // namespace fonts
 
-void reload_fonts(IRenderer& renderer,
-                  const Settings& settings,
-                  const float framebuffer_scale)
+void reload_fonts(IRenderer& renderer, const Settings& settings, const float framebuffer_scale)
 {
   if (renderer.can_reload_fonts()) {
     TACTILE_LOG_DEBUG("Reloading fonts (size: {})", settings.font_size);
@@ -62,8 +61,7 @@ void reload_fonts(IRenderer& renderer,
     ImGui::GetStyle().ScaleAllSizes(1.0f);
   }
   else {
-    TACTILE_LOG_WARN(
-        "Tried to reload fonts, but the renderer didn't support it");
+    TACTILE_LOG_WARN("Tried to reload fonts, but the renderer didn't support it");
   }
 }
 

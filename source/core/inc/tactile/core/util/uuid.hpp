@@ -2,13 +2,13 @@
 
 #pragma once
 
+#include <array>       // array
 #include <cstddef>     // size_t
 #include <cstring>     // memcmp
 #include <format>      // format, format_to, formattable
 #include <functional>  // hash
 #include <ostream>     // ostream
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 
@@ -60,17 +60,15 @@ class UUID final
   [[nodiscard]]
   auto is_null() const -> bool;
 
-  [[nodiscard]] friend auto operator<(const UUID& lhs,
-                                      const UUID& rhs) noexcept -> bool
+  [[nodiscard]] friend auto operator<(const UUID& lhs, const UUID& rhs) noexcept -> bool
   {
-    return std::memcmp(lhs.mData.data(), rhs.mData.data(), sizeof lhs.mData) <
-           0;
+    return std::memcmp(lhs.mData.data(), rhs.mData.data(), sizeof lhs.mData) < 0;
   }
 
   [[nodiscard]] auto operator==(const UUID&) const noexcept -> bool = default;
 
  private:
-  Array<uint8, 16> mData {};
+  std::array<uint8, 16> mData {};
 
   friend auto to_string(const UUID& uuid) -> String;
 };
@@ -104,8 +102,7 @@ auto operator<<(std::ostream& stream, const UUID& uuid) -> std::ostream&;
 template <>
 struct std::hash<tactile::UUID> final
 {
-  [[nodiscard]] auto operator()(const tactile::UUID& uuid) const noexcept
-      -> std::size_t
+  [[nodiscard]] auto operator()(const tactile::UUID& uuid) const noexcept -> std::size_t
   {
     return uuid.hash_code();
   }

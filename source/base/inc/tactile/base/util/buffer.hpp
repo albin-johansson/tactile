@@ -3,11 +3,11 @@
 #pragma once
 
 #include <algorithm>  // min, copy_n
+#include <array>      // array
 #include <concepts>   // same_as, input_iterator
 #include <cstdlib>    // abs
 #include <iterator>   // distance
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/container/span.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
@@ -267,7 +267,7 @@ class Buffer final
 
  private:
   // The buffer is not initialized by default, to avoid expensive dead writes.
-  Array<value_type, Capacity> mBuf;
+  std::array<value_type, Capacity> mBuf;
   iterator mBegin {mBuf.data()};
   iterator mEnd {mBegin};
 };

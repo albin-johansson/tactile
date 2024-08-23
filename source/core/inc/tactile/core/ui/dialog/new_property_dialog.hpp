@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"

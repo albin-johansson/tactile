@@ -2,10 +2,11 @@
 
 #include "tactile/core/entity/registry.hpp"
 
+#include <array>  // array
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/container/hash_map.hpp"
 
 namespace tactile {
@@ -176,7 +177,7 @@ TEST_F(RegistryTest, FindInEntity)
 /// \trace tactile::Registry::each
 TEST_F(RegistryTest, Each)
 {
-  const Array<EntityID, 4> entities = {
+  const std::array<EntityID, 4> entities = {
     mRegistry.make_entity(),
     mRegistry.make_entity(),
     mRegistry.make_entity(),

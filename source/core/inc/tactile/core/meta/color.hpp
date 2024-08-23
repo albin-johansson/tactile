@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include <array>    // array
 #include <ostream>  // ostream
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/span.hpp"
 #include "tactile/base/container/string.hpp"

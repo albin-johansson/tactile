@@ -3,10 +3,10 @@
 #include "tactile/core/numeric/random.hpp"
 
 #include <algorithm>  // generate, count
+#include <array>      // array
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/core/log/logger.hpp"
 
 using namespace tactile;
@@ -54,7 +54,7 @@ TEST(Random, GetRandomFloatNormalized)
 /// \trace tactile::get_random_bool
 TEST(Random, GetRandomBool)
 {
-  Array<bool, 2'000> values;
+  std::array<bool, 2'000> values;
   std::ranges::generate(values, &get_random_bool);
 
   const auto true_count = std::ranges::count(values, true);
@@ -65,8 +65,7 @@ TEST(Random, GetRandomBool)
                     false_count);
 
   // This is far from perfect, but detects suspicious (unlikely) ratios.
-  const auto ratio =
-      static_cast<double>(true_count) / static_cast<double>(false_count);
+  const auto ratio = static_cast<double>(true_count) / static_cast<double>(false_count);
   EXPECT_GT(ratio, 0.80);
   EXPECT_LT(ratio, 1.20);
 }

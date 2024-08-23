@@ -2,13 +2,13 @@
 
 #include "tactile/zlib_compression/zlib_compressor.hpp"
 
+#include <array>         // array
 #include <system_error>  // errc, make_error_code
 #include <utility>       // move
 
 #define Z_PREFIX_SET
 #include <zlib.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/container/expected.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
@@ -25,7 +25,7 @@ using z_ulong = ::uLong;
 /**
  * Type used for local "staging" buffers, used to batch data processing.
  */
-using StagingBuffer = Array<z_byte, 16'384>;
+using StagingBuffer = std::array<z_byte, 16'384>;
 
 /**
  * Provides callbacks that controls the behavior of stream processing functions.

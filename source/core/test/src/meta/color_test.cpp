@@ -2,9 +2,10 @@
 
 #include "tactile/core/meta/color.hpp"
 
+#include <array>  // array
+
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/io/color_parser.hpp"
 
 namespace tactile {
@@ -19,7 +20,7 @@ inline constexpr UColor kHotPink {0xFF, 0x69, 0xB4, 0xFF};
 // tactile::make_color
 TEST(UColor, MakeColor)
 {
-  const Array<float, 4> values {1.0f, 0.0f, 0.2f, 0.4f};
+  const std::array<float, 4> values {1.0f, 0.0f, 0.2f, 0.4f};
   const auto color = make_color(values);
 
   EXPECT_EQ(color.red, 0xFF);

@@ -3,12 +3,12 @@
 #include "tactile/base/util/buffer.hpp"
 
 #include <algorithm>  // fill_n
+#include <array>      // array
 #include <iterator>   // distance, back_inserter
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/container/vector.hpp"
 
 namespace tactile::test {
@@ -136,7 +136,7 @@ TEST(Buffer, BackInserterCompatibility)
 // tactile::Buffer::append [iterator version]
 TEST(Buffer, AppendIteratorRange)
 {
-  const Array<char, 4> values = {'!', '?', '+', '-'};
+  const std::array<char, 4> values = {'!', '?', '+', '-'};
   Buffer<char, 7> buffer;  // NOLINT
 
   buffer.append(values.begin(), values.end());

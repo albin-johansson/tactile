@@ -2,9 +2,10 @@
 
 #include "tactile/core/platform/file_dialog.hpp"
 
+#include <array>  // array
+
 #include <tinyfiledialogs.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
@@ -13,7 +14,7 @@ inline namespace file_dialog {
 inline constexpr const char* kMapPatternDescriptor = "Map files";
 inline constexpr const char* kImagePatternDescriptor = "Image files";
 
-inline constexpr Array<const char*, 6> kMapPatterns {
+inline constexpr std::array<const char*, 6> kMapPatterns {
   "*.yaml",
   "*.yml",
   "*.json",
@@ -22,7 +23,7 @@ inline constexpr Array<const char*, 6> kMapPatterns {
   "*.xml",
 };
 
-inline constexpr Array<const char*, 3> kImagePatterns {
+inline constexpr std::array<const char*, 3> kImagePatterns {
   "*.png",
   "*.jpg",
   "*.jpeg",
@@ -41,12 +42,8 @@ auto FileDialog::open_folder() -> Result<Path>
 
 auto FileDialog::open_file() -> Result<Path>
 {
-  if (const auto* path = tinyfd_openFileDialog("Open File",
-                                               nullptr,
-                                               0,
-                                               nullptr,
-                                               "Any file",
-                                               0)) {
+  if (const auto* path =
+          tinyfd_openFileDialog("Open File", nullptr, 0, nullptr, "Any file", 0)) {
     return path;
   }
 

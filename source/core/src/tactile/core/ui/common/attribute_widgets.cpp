@@ -3,12 +3,12 @@
 #include "tactile/core/ui/common/attribute_widgets.hpp"
 
 #include <algorithm>  // copy_n, min
+#include <array>      // array
 #include <cstring>    // strlen
 #include <utility>    // to_underlying
 
 #include <imgui.h>
 
-#include "tactile/base/container/array.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/core/meta/color.hpp"
 #include "tactile/core/platform/file_dialog.hpp"
@@ -19,7 +19,7 @@
 namespace tactile::ui {
 inline namespace attribute_widgets {
 
-using AttributeTypeNameArray = Array<const char*, 13>;
+using AttributeTypeNameArray = std::array<const char*, 13>;
 
 inline constexpr usize kStringCharLimit = 128;
 
@@ -41,13 +41,13 @@ auto _push_attribute_type_selectable(const AttributeTypeNameArray& names,
 
 }  // namespace attribute_widgets
 
-auto push_string_input(const char* id, const Attribute::string_type& str)
-    -> Optional<Attribute::string_type>
+auto push_string_input(const char* id,
+                       const Attribute::string_type& str) -> Optional<Attribute::string_type>
 {
   const IdScope scope {id};
   Optional<Attribute::string_type> new_str {};
 
-  Array<char, kStringCharLimit + 1> buffer;  // NOLINT
+  std::array<char, kStringCharLimit + 1> buffer;  // NOLINT
 
   // Make sure we leave one character available for the NUL terminator.
   const auto copy_count = std::min(str.size(), buffer.size() - 1);
@@ -64,8 +64,7 @@ auto push_string_input(const char* id, const Attribute::string_type& str)
   return new_str;
 }
 
-auto push_int_input(const char* id,
-                    Attribute::int_type value) -> Optional<Attribute::int_type>
+auto push_int_input(const char* id, Attribute::int_type value) -> Optional<Attribute::int_type>
 {
   const IdScope scope {id};
   Optional<Attribute::int_type> new_value {};
@@ -78,8 +77,8 @@ auto push_int_input(const char* id,
   return new_value;
 }
 
-auto push_int2_input(const char* id, Attribute::int2_type value)
-    -> Optional<Attribute::int2_type>
+auto push_int2_input(const char* id,
+                     Attribute::int2_type value) -> Optional<Attribute::int2_type>
 {
   const IdScope scope {id};
   Optional<Attribute::int2_type> new_value {};
@@ -92,8 +91,8 @@ auto push_int2_input(const char* id, Attribute::int2_type value)
   return new_value;
 }
 
-auto push_int3_input(const char* id, Attribute::int3_type value)
-    -> Optional<Attribute::int3_type>
+auto push_int3_input(const char* id,
+                     Attribute::int3_type value) -> Optional<Attribute::int3_type>
 {
   const IdScope scope {id};
   Optional<Attribute::int3_type> new_value {};
@@ -106,8 +105,8 @@ auto push_int3_input(const char* id, Attribute::int3_type value)
   return new_value;
 }
 
-auto push_int4_input(const char* id, Attribute::int4_type value)
-    -> Optional<Attribute::int4_type>
+auto push_int4_input(const char* id,
+                     Attribute::int4_type value) -> Optional<Attribute::int4_type>
 {
   const IdScope scope {id};
   Optional<Attribute::int4_type> new_value {};
@@ -120,8 +119,8 @@ auto push_int4_input(const char* id, Attribute::int4_type value)
   return new_value;
 }
 
-auto push_float_input(const char* id, Attribute::float_type value)
-    -> Optional<Attribute::float_type>
+auto push_float_input(const char* id,
+                      Attribute::float_type value) -> Optional<Attribute::float_type>
 {
   const IdScope scope {id};
   Optional<Attribute::float_type> new_value {};
@@ -134,8 +133,8 @@ auto push_float_input(const char* id, Attribute::float_type value)
   return new_value;
 }
 
-auto push_float2_input(const char* id, Attribute::float2_type value)
-    -> Optional<Attribute::float2_type>
+auto push_float2_input(const char* id,
+                       Attribute::float2_type value) -> Optional<Attribute::float2_type>
 {
   const IdScope scope {id};
   Optional<Attribute::float2_type> new_value {};
@@ -148,8 +147,8 @@ auto push_float2_input(const char* id, Attribute::float2_type value)
   return new_value;
 }
 
-auto push_float3_input(const char* id, Attribute::float3_type value)
-    -> Optional<Attribute::float3_type>
+auto push_float3_input(const char* id,
+                       Attribute::float3_type value) -> Optional<Attribute::float3_type>
 {
   const IdScope scope {id};
   Optional<Attribute::float3_type> new_value {};
@@ -162,8 +161,8 @@ auto push_float3_input(const char* id, Attribute::float3_type value)
   return new_value;
 }
 
-auto push_float4_input(const char* id, Attribute::float4_type value)
-    -> Optional<Attribute::float4_type>
+auto push_float4_input(const char* id,
+                       Attribute::float4_type value) -> Optional<Attribute::float4_type>
 {
   const IdScope scope {id};
   Optional<Attribute::float4_type> new_value {};
@@ -188,8 +187,8 @@ auto push_bool_input(const char* id, bool value) -> Optional<bool>
   return new_value;
 }
 
-auto push_path_input(const char* id, const Attribute::path_type& path)
-    -> Optional<Attribute::path_type>
+auto push_path_input(const char* id,
+                     const Attribute::path_type& path) -> Optional<Attribute::path_type>
 {
   const IdScope scope {id};
   Optional<Attribute::path_type> new_path {};
@@ -215,14 +214,14 @@ auto push_path_input(const char* id, const Attribute::path_type& path)
   return new_path;
 }
 
-auto push_color_input(const char* id, const Attribute::color_type& color)
-    -> Optional<Attribute::color_type>
+auto push_color_input(const char* id,
+                      const Attribute::color_type& color) -> Optional<Attribute::color_type>
 {
   const IdScope scope {id};
   Optional<Attribute::color_type> new_color {};
 
-  const auto flags = ImGuiColorEditFlags_NoInputs |
-                     ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_AlphaBar;
+  const auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
+                     ImGuiColorEditFlags_AlphaBar;
 
   auto rgba_array = normalize(color);
   if (ImGui::ColorEdit4("##Color", &rgba_array.red, flags)) {
@@ -245,8 +244,7 @@ auto push_objref_input(const char* id, const Attribute::objref_type& object)
 }
 
 // NOLINTNEXTLINE(*-cognitive-complexity)
-auto push_attribute_input(const char* id,
-                          const Attribute& attribute) -> Optional<Attribute>
+auto push_attribute_input(const char* id, const Attribute& attribute) -> Optional<Attribute>
 {
   switch (attribute.get_type()) {
     case AttributeType::kStr: {
