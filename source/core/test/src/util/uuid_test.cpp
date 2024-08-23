@@ -4,11 +4,10 @@
 
 #include <algorithm>    // count, count_if
 #include <cctype>       // isxdigit
+#include <map>          // map
 #include <type_traits>  // ...
 
 #include <gtest/gtest.h>
-
-#include "tactile/base/container/tree_map.hpp"
 
 namespace tactile {
 
@@ -101,7 +100,7 @@ TEST(UUID, LessThanOperator)
   EXPECT_NO_THROW((void) (a < b));
   EXPECT_NO_THROW((void) (b < a));
 
-  TreeMap<UUID, int> map {};
+  std::map<UUID, int> map {};
   EXPECT_EQ(map.size(), 0);
   EXPECT_FALSE(map.contains(a));
   EXPECT_FALSE(map.contains(b));

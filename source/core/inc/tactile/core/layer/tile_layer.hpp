@@ -2,10 +2,11 @@
 
 #pragma once
 
-#include <concepts>  // invocable
-#include <optional>  // optional
+#include <concepts>    // invocable
+#include <functional>  // less
+#include <map>         // map
+#include <optional>    // optional
 
-#include "tactile/base/container/tree_map.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/prelude.hpp"
@@ -19,7 +20,7 @@
 
 namespace tactile {
 
-using SparseTileMatrix = TreeMap<MatrixIndex, TileID>;
+using SparseTileMatrix = std::map<MatrixIndex, TileID, std::less<>>;
 
 /**
  * Base component for tile layers.
@@ -174,9 +175,8 @@ void set_layer_tile(Registry& registry,
  * A tile identifier if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-auto get_layer_tile(const Registry& registry,
-                    EntityID layer_id,
-                    const MatrixIndex& index) -> std::optional<TileID>;
+auto get_layer_tile(const Registry& registry, EntityID layer_id, const MatrixIndex& index)
+    -> std::optional<TileID>;
 
 /**
  * Indicates whether a matrix index is within the interval [{0, 0}, {rows, columns}).
@@ -188,8 +188,8 @@ auto get_layer_tile(const Registry& registry,
  * True if the index is within the region; false otherwise.
  */
 [[nodiscard]]
-auto is_index_within_extent(const MatrixExtent& extent,
-                            const MatrixIndex& index) noexcept -> bool;
+auto is_index_within_extent(const MatrixExtent& extent, const MatrixIndex& index) noexcept
+    -> bool;
 
 /**
  * Visits each tile in a tile layer within a given region.
