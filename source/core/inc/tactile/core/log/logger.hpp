@@ -3,10 +3,10 @@
 #pragma once
 
 #include <format>    // make_format_args, format_args
+#include <memory>    // unique_ptr
 #include <optional>  // optional
 #include <vector>    // vector
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
@@ -96,7 +96,7 @@ class Logger final
    *
    * \param sink A logger sink implementation.
    */
-  void add_sink(Unique<ILogSink> sink);
+  void add_sink(std::unique_ptr<ILogSink> sink);
 
   /**
    * Sets a reference time point to use as a relative baseline for timestamps.
@@ -157,7 +157,7 @@ class Logger final
  private:
   LogLevel mMinLevel {LogLevel::kInfo};
   LogLevel mFlushLevel {LogLevel::kError};
-  std::vector<Unique<ILogSink>> mSinks {};
+  std::vector<std::unique_ptr<ILogSink>> mSinks {};
   std::optional<SteadyClockInstant> mReferenceInstant {};
   StringView mScope {};
 

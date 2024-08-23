@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/smart_ptr.hpp"
+#include <memory>  // unique_ptr
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/plugin.hpp"
 #include "tactile/zlib_compression/api.hpp"
@@ -22,7 +23,7 @@ class TACTILE_ZLIB_API ZlibCompressionPlugin final : public IPlugin
 
  private:
   IRuntime* mRuntime {};
-  Unique<ZlibCompressor> mCompressor {};
+  std::unique_ptr<ZlibCompressor> mCompressor {};
 };
 
 extern "C"

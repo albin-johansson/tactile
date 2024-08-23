@@ -5,7 +5,6 @@ add_library(tactile::base ALIAS tactile-base)
 
 target_sources(tactile-base
                INTERFACE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
-               "inc/tactile/base/container/smart_ptr.hpp"
                "inc/tactile/base/container/string.hpp"
                "inc/tactile/base/container/string_map.hpp"
                "inc/tactile/base/container/tree_map.hpp"

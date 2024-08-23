@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/smart_ptr.hpp"
+#include <memory>  // unique_ptr
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/plugin.hpp"
 #include "tactile/tiled_tmj_format/api.hpp"
@@ -19,7 +20,7 @@ class TACTILE_TMJ_FORMAT_API TmjFormatPlugin final : public IPlugin
 
  private:
   IRuntime* mRuntime {};
-  Unique<TmjSaveFormat> mFormat {};
+  std::unique_ptr<TmjSaveFormat> mFormat {};
 };
 
 extern "C"

@@ -32,7 +32,7 @@ struct ImGuiContextDeleter final
   }
 };
 
-using UniqueImGuiContext = Unique<ImGuiContext, ImGuiContextDeleter>;
+using UniqueImGuiContext = std::unique_ptr<ImGuiContext, ImGuiContextDeleter>;
 
 [[nodiscard]]
 auto make_logger() -> Logger

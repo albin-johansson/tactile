@@ -4,10 +4,10 @@
 
 #include <algorithm>  // copy_n
 #include <iterator>   // back_inserter
+#include <memory>     // unique_ptr
 
 #include <zstd.h>
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile {
@@ -21,7 +21,7 @@ struct DStreamDeleter final
   }
 };
 
-using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
+using UniqueDStream = std::unique_ptr<ZSTD_DStream, DStreamDeleter>;
 
 }  // namespace zstd_compressor_impl
 

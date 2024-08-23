@@ -3,11 +3,11 @@
 #pragma once
 
 #include <expected>      // expected
+#include <memory>        // unique_ptr
 #include <system_error>  // error_code
 
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
 
@@ -20,7 +20,7 @@ struct TACTILE_VULKAN_API VulkanInstanceDeleter final
   void operator()(VkInstance instance) noexcept;
 };
 
-using VulkanInstance = Unique<VkInstance_T, VulkanInstanceDeleter>;
+using VulkanInstance = std::unique_ptr<VkInstance_T, VulkanInstanceDeleter>;
 
 /**
  * Creates a Vulkan instance.

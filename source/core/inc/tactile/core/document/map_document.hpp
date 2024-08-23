@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <memory>        // unique_ptr
 #include <system_error>  // error_code
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/document/document.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -48,8 +48,8 @@ class MapDocument final : public IDocument
    * A map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(IRenderer& renderer,
-                   const ir::Map& ir_map) -> std::expected<MapDocument, std::error_code>;
+  static auto make(IRenderer& renderer, const ir::Map& ir_map)
+      -> std::expected<MapDocument, std::error_code>;
 
   ~MapDocument() noexcept override;
 
@@ -86,7 +86,7 @@ class MapDocument final : public IDocument
 
  private:
   struct Data;
-  Unique<Data> mData;
+  std::unique_ptr<Data> mData;
 
   MapDocument();
 };

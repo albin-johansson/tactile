@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <memory>        // unique_ptr
 #include <system_error>  // error_code
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/window.hpp"
@@ -60,7 +60,7 @@ class TACTILE_RUNTIME_API Window final : public IWindow
   auto get_handle() -> SDL_Window* override;
 
  private:
-  Unique<SDL_Window, WindowHandleDeleter> mWindow {};
+  std::unique_ptr<SDL_Window, WindowHandleDeleter> mWindow {};
 
   explicit Window(SDL_Window* window);
 };

@@ -10,7 +10,7 @@
 namespace tactile {
 
 PluginInstance::PluginInstance(IRuntime* runtime,
-                               Unique<IDynamicLibrary> dll,
+                               std::unique_ptr<IDynamicLibrary> dll,
                                PluginDestructor* plugin_destructor,
                                IPlugin* plugin) :
   mRuntime {runtime},
@@ -37,8 +37,8 @@ PluginInstance::PluginInstance(PluginInstance&& other) noexcept :
   mPrimed {std::exchange(other.mPrimed, false)}
 {}
 
-auto PluginInstance::load(IRuntime* runtime,
-                          const StringView plugin_name) -> std::optional<PluginInstance>
+auto PluginInstance::load(IRuntime* runtime, const StringView plugin_name)
+    -> std::optional<PluginInstance>
 {
   auto dll = load_library(plugin_name);
 

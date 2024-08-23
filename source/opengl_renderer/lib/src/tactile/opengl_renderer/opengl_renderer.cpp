@@ -4,7 +4,7 @@
 
 #include <cstdlib>        // malloc, free
 #include <list>           // list
-#include <memory>         // nothrow
+#include <memory>         // unique_ptr, nothrow
 #include <optional>       // optional
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
@@ -15,7 +15,6 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/opengl_renderer/opengl_error.hpp"
 #include "tactile/opengl_renderer/opengl_imgui.hpp"
@@ -36,7 +35,7 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
 {
   ImGuiContext* context;
   IWindow* window;
-  Unique<void, GLContextDeleter> gl_context;
+  std::unique_ptr<void, GLContextDeleter> gl_context;
   std::optional<GLImGuiBackendWrapper> imgui_backend;
   std::optional<GLImGuiRendererWrapper> imgui_renderer;
   std::unordered_map<TextureID, OpenGLTexture> textures;

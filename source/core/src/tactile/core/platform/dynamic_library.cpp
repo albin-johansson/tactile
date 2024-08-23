@@ -36,7 +36,7 @@ class UnixDynamicLibrary final : public IDynamicLibrary
   }
 
   [[nodiscard]]
-  static auto load(const std::filesystem::path& path) -> Unique<UnixDynamicLibrary>
+  static auto load(const std::filesystem::path& path) -> std::unique_ptr<UnixDynamicLibrary>
   {
     void* handle = dlopen(path.c_str(), RTLD_LAZY);
 
@@ -81,7 +81,7 @@ class Win32DynamicLibrary final : public IDynamicLibrary
   }
 
   [[nodiscard]]
-  static auto load(const std::filesystem::path& path) -> Unique<Win32DynamicLibrary>
+  static auto load(const std::filesystem::path& path) -> std::unique_ptr<Win32DynamicLibrary>
   {
     const auto handle = LoadLibraryA(path.string().c_str());
 
@@ -107,7 +107,7 @@ class Win32DynamicLibrary final : public IDynamicLibrary
 
 }  // namespace dynamic_library
 
-auto load_library(const std::filesystem::path& path) -> Unique<IDynamicLibrary>
+auto load_library(const std::filesystem::path& path) -> std::unique_ptr<IDynamicLibrary>
 {
 #if TACTILE_OS_LINUX || TACTILE_OS_APPLE
   return UnixDynamicLibrary::load(path);

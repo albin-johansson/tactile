@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include <memory>    // unique_ptr
 #include <optional>  // optional
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
@@ -58,13 +58,13 @@ class TACTILE_RUNTIME_API PluginInstance final
 
  private:
   IRuntime* mRuntime;
-  Unique<IDynamicLibrary> mDLL;
+  std::unique_ptr<IDynamicLibrary> mDLL;
   PluginDestructor* mPluginDestructor;
   IPlugin* mPlugin;
   bool mPrimed;
 
   PluginInstance(IRuntime* runtime,
-                 Unique<IDynamicLibrary> dll,
+                 std::unique_ptr<IDynamicLibrary> dll,
                  PluginDestructor* plugin_destructor,
                  IPlugin* plugin);
 };

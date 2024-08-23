@@ -69,7 +69,7 @@ void Logger::flush_on(const LogLevel level) noexcept
   mFlushLevel = level;
 }
 
-void Logger::add_sink(Unique<ILogSink> sink)
+void Logger::add_sink(std::unique_ptr<ILogSink> sink)
 {
   if (sink) {
     mSinks.push_back(std::move(sink));

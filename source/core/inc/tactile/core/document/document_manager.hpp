@@ -3,11 +3,11 @@
 #pragma once
 
 #include <expected>       // expected
+#include <memory>         // unique_ptr
 #include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 #include <vector>         // vector
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command_stack.hpp"
@@ -57,8 +57,8 @@ class DocumentManager final
    * The UUID of the map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto create_and_open_map(IRenderer& renderer,
-                           const ir::Map& ir_map) -> std::expected<UUID, std::error_code>;
+  auto create_and_open_map(IRenderer& renderer, const ir::Map& ir_map)
+      -> std::expected<UUID, std::error_code>;
 
   /**
    * Returns the document associated with a given UUID.
@@ -144,7 +144,7 @@ class DocumentManager final
   auto is_map_active() const -> bool;
 
  private:
-  std::unordered_map<UUID, Unique<IDocument>> mDocuments {};
+  std::unordered_map<UUID, std::unique_ptr<IDocument>> mDocuments {};
   std::vector<UUID> mOpenDocuments {};
   UUID mActiveDocument {};
   std::unordered_map<UUID, CommandStack> mHistories {};

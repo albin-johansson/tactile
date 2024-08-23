@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <memory>        // unique_ptr
 #include <system_error>  // error_code
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/opengl_renderer/api.hpp"
@@ -30,8 +30,8 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
    * An OpenGL renderer if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(IWindow* window,
-                   ImGuiContext* context) -> std::expected<OpenGLRenderer, std::error_code>;
+  static auto make(IWindow* window, ImGuiContext* context)
+      -> std::expected<OpenGLRenderer, std::error_code>;
 
   OpenGLRenderer(OpenGLRenderer&& other) noexcept;
 
@@ -66,7 +66,7 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 
  private:
   struct Data;
-  Unique<Data> mData;
+  std::unique_ptr<Data> mData;
 
   OpenGLRenderer();
 };

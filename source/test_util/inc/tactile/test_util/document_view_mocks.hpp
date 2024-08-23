@@ -2,13 +2,13 @@
 
 #pragma once
 
+#include <memory>    // unique_ptr
 #include <optional>  // optional
 #include <variant>   // variant
 #include <vector>    // vector
 
 #include <gmock/gmock.h>
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/document/layer_view.hpp"
 #include "tactile/base/document/map_view.hpp"
@@ -260,8 +260,8 @@ class MapViewMock : public IMapView
 
  private:
   testing::NiceMock<MetaViewMock> mMeta {};
-  std::vector<Unique<TilesetViewMock>> mTilesets {};
-  std::vector<Unique<LayerViewMock>> mLayers {};
+  std::vector<std::unique_ptr<TilesetViewMock>> mTilesets {};
+  std::vector<std::unique_ptr<LayerViewMock>> mLayers {};
 };
 
 }  // namespace tactile::test

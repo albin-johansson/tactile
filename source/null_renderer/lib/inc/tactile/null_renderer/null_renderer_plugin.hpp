@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/smart_ptr.hpp"
+#include <memory>  // unique_ptr
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/null_renderer/api.hpp"
 #include "tactile/null_renderer/null_renderer.hpp"
@@ -25,7 +26,7 @@ class TACTILE_NULL_RENDERER_API NullRendererPlugin final : public IPlugin
 
  private:
   IRuntime* mRuntime {};
-  Unique<NullRenderer> mRenderer {};
+  std::unique_ptr<NullRenderer> mRenderer {};
 };
 
 extern "C"

@@ -3,8 +3,8 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <memory>      // unique_ptr
 
-#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
 #if TACTILE_OS_WINDOWS
@@ -64,7 +64,7 @@ class IDynamicLibrary
  * The loaded library if successful; a null pointer otherwise.
  */
 [[nodiscard]]
-auto load_library(const std::filesystem::path& path) -> Unique<IDynamicLibrary>;
+auto load_library(const std::filesystem::path& path) -> std::unique_ptr<IDynamicLibrary>;
 
 /**
  * Attempts to find a symbol in a dynamic library.

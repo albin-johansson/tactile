@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/smart_ptr.hpp"
+#include <memory>  // unique_ptr
+
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
@@ -67,7 +68,7 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
 
  private:
   struct Data;
-  Unique<Data> mData;
+  std::unique_ptr<Data> mData;
 };
 
 }  // namespace tactile
