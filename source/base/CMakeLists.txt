@@ -10,7 +10,6 @@ target_sources(tactile-base
                "inc/tactile/base/container/path.hpp"
                "inc/tactile/base/container/queue.hpp"
                "inc/tactile/base/container/ref.hpp"
-               "inc/tactile/base/container/set.hpp"
                "inc/tactile/base/container/smart_ptr.hpp"
                "inc/tactile/base/container/span.hpp"
                "inc/tactile/base/container/string.hpp"
