@@ -4,11 +4,10 @@
 
 #include <utility>  // move
 
-#include "tactile/core/debug/validation.hpp"
 #include "tactile/base/document/document.hpp"
+#include "tactile/core/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/log/logger.hpp"
-#include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/util/lookup.hpp"
 
@@ -16,37 +15,31 @@ namespace tactile {
 
 RemovePropertyCommand::RemovePropertyCommand(IDocument* document,
                                              const EntityID context_entity,
-                                             String name)
-  : mDocument {require_not_null(document, "null document")},
-    mContextEntity {context_entity},
-    mName {std::move(name)},
-    mValue {kNone}
+                                             std::string name) :
+  m_document {require_not_null(document, "null document")},
+  m_context_id {context_entity},
+  m_name {std::move(name)},
+  m_value {}
 {}
 
 void RemovePropertyCommand::undo()
 {
-  TACTILE_SET_LOG_SCOPE("RemovePropertyCommand");
-  TACTILE_LOG_DEBUG("Restoring property '{}' to {}",
-                    mName,
-                    entity_to_string(mContextEntity));
+  TACTILE_LOG_TRACE("Restoring property '{}' to {}", m_name, entity_to_string(m_context_id));
 
-  auto& registry = mDocument->get_registry();
-  auto& meta = registry.get<CMeta>(mContextEntity);
+  auto& registry = m_document->get_registry();
+  auto& meta = registry.get<CMeta>(m_context_id);
 
-  meta.properties.insert_or_assign(mName, mValue.value());
+  meta.properties.insert_or_assign(m_name, m_value);
 }
 
 void RemovePropertyCommand::redo()
 {
-  TACTILE_SET_LOG_SCOPE("RemovePropertyCommand");
-  TACTILE_LOG_DEBUG("Removing property '{}' from {}",
-                    mName,
-                    entity_to_string(mContextEntity));
+  TACTILE_LOG_TRACE("Removing property '{}' from {}", m_name, entity_to_string(m_context_id));
 
-  auto& registry = mDocument->get_registry();
-  auto& meta = registry.get<CMeta>(mContextEntity);
+  auto& registry = m_document->get_registry();
+  auto& meta = registry.get<CMeta>(m_context_id);
 
-  mValue = take_from(meta.properties, mName);
+  m_value = take_from(meta.properties, m_name).value();
 }
 
 }  // namespace tactile

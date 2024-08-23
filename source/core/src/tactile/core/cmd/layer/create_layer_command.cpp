@@ -13,61 +13,61 @@
 
 namespace tactile {
 
-CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType type)
-  : mDocument {require_not_null(document, "null document")},
-    mType {type},
-    mParentLayerId {kInvalidEntity},
-    mLayerId {kInvalidEntity},
-    mWasLayerAdded {false}
+CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType type) :
+  m_document {require_not_null(document, "null document")},
+  m_type {type},
+  m_parent_layer_id {kInvalidEntity},
+  m_layer_id {kInvalidEntity},
+  m_layer_was_added {false}
 {}
 
 void CreateLayerCommand::undo()
 {
-  TACTILE_LOG_DEBUG("Removing layer {}", entity_to_string(mLayerId));
+  TACTILE_LOG_DEBUG("Removing layer {}", entity_to_string(m_layer_id));
 
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
 
   const auto& document_info = registry.get<CDocumentInfo>();
   const auto map_id = document_info.root;
 
-  remove_layer_from_map(registry, map_id, mLayerId).value();
+  remove_layer_from_map(registry, map_id, m_layer_id).value();
 
-  mWasLayerAdded = false;
+  m_layer_was_added = false;
 }
 
 void CreateLayerCommand::redo()
 {
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
 
   const auto& document_info = registry.get<CDocumentInfo>();
   const auto map_id = document_info.root;
 
   auto& map = registry.get<CMap>(map_id);
 
-  if (mLayerId == kInvalidEntity) {
-    mParentLayerId = map.active_layer;
-    mLayerId = add_layer_to_map(registry, map_id, mType).value();
+  if (m_layer_id == kInvalidEntity) {
+    m_parent_layer_id = map.active_layer;
+    m_layer_id = add_layer_to_map(registry, map_id, m_type).value();
   }
   else {
     const auto old_active_layer = map.active_layer;
-    map.active_layer = mParentLayerId;
+    map.active_layer = m_parent_layer_id;
 
-    append_layer_to_map(registry, map_id, mLayerId);
+    append_layer_to_map(registry, map_id, m_layer_id);
 
     map.active_layer = old_active_layer;
   }
 
-  TACTILE_LOG_DEBUG("Created layer {}", entity_to_string(mLayerId));
-  mWasLayerAdded = true;
+  TACTILE_LOG_DEBUG("Created layer {}", entity_to_string(m_layer_id));
+  m_layer_was_added = true;
 }
 
 void CreateLayerCommand::dispose()
 {
-  if (!mWasLayerAdded && mLayerId != kInvalidEntity) {
-    auto& registry = mDocument->get_registry();
-    destroy_layer(registry, mLayerId);
+  if (!m_layer_was_added && m_layer_id != kInvalidEntity) {
+    auto& registry = m_document->get_registry();
+    destroy_layer(registry, m_layer_id);
 
-    mLayerId = kInvalidEntity;
+    m_layer_id = kInvalidEntity;
   }
 }
 

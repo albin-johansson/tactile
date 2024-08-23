@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
-#include "tactile/base/container/string.hpp"
+#include <optional>
+#include <string>
+
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
@@ -23,14 +24,16 @@ class CreatePropertyCommand final : public ICommand
   /**
    * Creates a command.
    *
-   * \param document       The parent document.
-   * \param context_entity The target meta context entity.
-   * \param name           The name of the property.
-   * \param value          The value of the property.
+   * \pre The meta context identifier must be valid.
+   *
+   * \param document   The host document, cannot be null.
+   * \param context_id The target meta context identifier.
+   * \param name       The name of the property.
+   * \param value      The value of the property.
    */
   CreatePropertyCommand(IDocument* document,
-                        EntityID context_entity,
-                        String name,
+                        EntityID context_id,
+                        std::string name,
                         Attribute value);
 
   void undo() override;
@@ -38,10 +41,10 @@ class CreatePropertyCommand final : public ICommand
   void redo() override;
 
  private:
-  IDocument* mDocument;
-  EntityID mContextEntity;
-  String mName;
-  Attribute mValue;
+  IDocument* m_document;
+  EntityID m_context_id;
+  std::string m_name;
+  Attribute m_value;
 };
 
 }  // namespace tactile

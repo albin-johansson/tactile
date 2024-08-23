@@ -13,30 +13,30 @@
 namespace tactile {
 
 MoveLayerUpCommand::MoveLayerUpCommand(MapDocument* document, const EntityID layer_id)
-  : mDocument {require_not_null(document, "null document")},
-    mLayerId {layer_id}
+  : m_document {require_not_null(document, "null document")},
+    m_layer_id {layer_id}
 {}
 
 void MoveLayerUpCommand::undo()
 {
-  TACTILE_LOG_TRACE("Moving layer {} down", entity_to_string(mLayerId));
-  auto& registry = mDocument->get_registry();
+  TACTILE_LOG_TRACE("Moving layer {} down", entity_to_string(m_layer_id));
+  auto& registry = m_document->get_registry();
 
   const auto map_id = registry.get<CDocumentInfo>().root;
   const auto& map = registry.get<CMap>(map_id);
 
-  move_layer_down(registry, map.root_layer, mLayerId);
+  move_layer_down(registry, map.root_layer, m_layer_id);
 }
 
 void MoveLayerUpCommand::redo()
 {
-  TACTILE_LOG_TRACE("Moving layer {} up", entity_to_string(mLayerId));
-  auto& registry = mDocument->get_registry();
+  TACTILE_LOG_TRACE("Moving layer {} up", entity_to_string(m_layer_id));
+  auto& registry = m_document->get_registry();
 
   const auto map_id = registry.get<CDocumentInfo>().root;
   const auto& map = registry.get<CMap>(map_id);
 
-  move_layer_up(registry, map.root_layer, mLayerId);
+  move_layer_up(registry, map.root_layer, m_layer_id);
 }
 
 }  // namespace tactile

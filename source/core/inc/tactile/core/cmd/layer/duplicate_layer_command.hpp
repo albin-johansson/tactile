@@ -11,7 +11,7 @@ namespace tactile {
 class MapDocument;
 
 /**
- * A command for duplicating a layer in a map.
+ * A command for duplicating layers in maps.
  */
 class DuplicateLayerCommand final : public ICommand
 {
@@ -21,7 +21,7 @@ class DuplicateLayerCommand final : public ICommand
    *
    * \pre The layer identifier must be valid.
    *
-   * \param document The host document, cannot be nul.
+   * \param document The host document, cannot be null.
    * \param layer_id The target layer identifier.
    */
   DuplicateLayerCommand(MapDocument* document, EntityID layer_id);
@@ -33,10 +33,10 @@ class DuplicateLayerCommand final : public ICommand
   void dispose() override;
 
  private:
-  MapDocument* mDocument;
-  EntityID mLayerId;
-  EntityID mDuplicateLayerId;
-  bool mLayerWasAdded;
+  MapDocument* m_document;
+  EntityID m_layer_id;
+  EntityID m_duplicate_layer_id;
+  bool m_layer_was_added;
 };
 
 }  // namespace tactile

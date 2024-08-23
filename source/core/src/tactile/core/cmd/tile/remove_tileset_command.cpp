@@ -12,18 +12,18 @@
 
 namespace tactile {
 
-RemoveTilesetCommand::RemoveTilesetCommand(MapDocument* document, const EntityID tileset_id)
-  : mDocument {require_not_null(document, "null document")},
-    mTilesetId {tileset_id},
-    mTilesetWasRemoved {false}
+RemoveTilesetCommand::RemoveTilesetCommand(MapDocument* document, const EntityID tileset_id) :
+  m_document {require_not_null(document, "null document")},
+  m_tileset_id {tileset_id},
+  m_tileset_was_removed {false}
 {}
 
 RemoveTilesetCommand::~RemoveTilesetCommand() noexcept
 {
   try {
-    if (mTilesetWasRemoved) {
-      auto& registry = mDocument->get_registry();
-      destroy_tileset(registry, mTilesetId);
+    if (m_tileset_was_removed) {
+      auto& registry = m_document->get_registry();
+      destroy_tileset(registry, m_tileset_id);
     }
   }
   catch (const std::exception& error) {
@@ -34,27 +34,27 @@ RemoveTilesetCommand::~RemoveTilesetCommand() noexcept
 
 void RemoveTilesetCommand::undo()
 {
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
 
   const auto& document_info = registry.get<CDocumentInfo>();
   const auto map_id = document_info.root;
 
   auto& map = registry.get<CMap>(map_id);
-  map.attached_tilesets.push_back(mTilesetId);
-  map.active_tileset = mTilesetId;
+  map.attached_tilesets.push_back(m_tileset_id);
+  map.active_tileset = m_tileset_id;
 
-  mTilesetWasRemoved = false;
+  m_tileset_was_removed = false;
 }
 
 void RemoveTilesetCommand::redo()
 {
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
 
   const auto& document_info = registry.get<CDocumentInfo>();
   const auto map_id = document_info.root;
 
-  remove_tileset_from_map(registry, map_id, mTilesetId);
-  mTilesetWasRemoved = true;
+  remove_tileset_from_map(registry, map_id, m_tileset_id);
+  m_tileset_was_removed = true;
 }
 
 }  // namespace tactile

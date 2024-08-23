@@ -14,51 +14,51 @@
 
 namespace tactile {
 
-RemoveLayerCommand::RemoveLayerCommand(MapDocument* document, const EntityID layer_id)
-  : mDocument {require_not_null(document, "null document")},
-    mLayerId {layer_id},
-    mParentLayerId {kInvalidEntity},
-    mLayerWasRemoved {false}
+RemoveLayerCommand::RemoveLayerCommand(MapDocument* document, const EntityID layer_id) :
+  m_document {require_not_null(document, "null document")},
+  m_layer_id {layer_id},
+  m_parent_layer_id {kInvalidEntity},
+  m_layer_was_removed {false}
 {}
 
 void RemoveLayerCommand::undo()
 {
-  TACTILE_LOG_TRACE("Restoring layer {}", entity_to_string(mLayerId));
-  auto& registry = mDocument->get_registry();
+  TACTILE_LOG_TRACE("Restoring layer {}", entity_to_string(m_layer_id));
+  auto& registry = m_document->get_registry();
 
   const auto map_id = registry.get<CDocumentInfo>().root;
   auto& map = registry.get<CMap>(map_id);
 
-  map.active_layer = mParentLayerId;
-  append_layer_to_map(registry, map_id, mLayerId);
+  map.active_layer = m_parent_layer_id;
+  append_layer_to_map(registry, map_id, m_layer_id);
 
-  mLayerWasRemoved = false;
+  m_layer_was_removed = false;
 }
 
 void RemoveLayerCommand::redo()
 {
-  TACTILE_LOG_TRACE("Removing layer {}", entity_to_string(mLayerId));
-  auto& registry = mDocument->get_registry();
+  TACTILE_LOG_TRACE("Removing layer {}", entity_to_string(m_layer_id));
+  auto& registry = m_document->get_registry();
 
   const auto map_id = registry.get<CDocumentInfo>().root;
   const auto& map = registry.get<CMap>(map_id);
 
-  mParentLayerId = find_parent_layer(registry, map.root_layer, mLayerId);
-  if (mParentLayerId == kInvalidEntity) {
+  m_parent_layer_id = find_parent_layer(registry, map.root_layer, m_layer_id);
+  if (m_parent_layer_id == kInvalidEntity) {
     throw Exception {"No parent layer found for target layer"};
   }
 
-  remove_layer_from_map(registry, map_id, mLayerId).value();
-  mLayerWasRemoved = true;
+  remove_layer_from_map(registry, map_id, m_layer_id).value();
+  m_layer_was_removed = true;
 }
 
 void RemoveLayerCommand::dispose()
 {
-  if (mLayerWasRemoved && mLayerId != kInvalidEntity) {
-    auto& registry = mDocument->get_registry();
-    destroy_layer(registry, mLayerId);
+  if (m_layer_was_removed && m_layer_id != kInvalidEntity) {
+    auto& registry = m_document->get_registry();
+    destroy_layer(registry, m_layer_id);
 
-    mLayerId = kInvalidEntity;
+    m_layer_id = kInvalidEntity;
   }
 }
 

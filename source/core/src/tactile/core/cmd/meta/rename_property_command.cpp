@@ -4,9 +4,9 @@
 
 #include <utility>  // move
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/base/document/document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
@@ -16,52 +16,50 @@
 namespace tactile {
 
 RenamePropertyCommand::RenamePropertyCommand(IDocument* document,
-                                             const EntityID context_entity,
+                                             const EntityID context_id,
                                              String old_name,
-                                             String new_name)
-  : mDocument {require_not_null(document, "null document")},
-    mContextEntity {context_entity},
-    mOldName {std::move(old_name)},
-    mNewName {std::move(new_name)}
+                                             String new_name) :
+  m_document {require_not_null(document, "null document")},
+  m_context_id {context_id},
+  m_old_name {std::move(old_name)},
+  m_new_name {std::move(new_name)}
 {}
 
 void RenamePropertyCommand::undo()
 {
-  TACTILE_SET_LOG_SCOPE("RenamePropertyCommand");
-  _rename_property(mNewName, mOldName);
+  _rename_property(m_new_name, m_old_name);
 }
 
 void RenamePropertyCommand::redo()
 {
-  TACTILE_SET_LOG_SCOPE("RenamePropertyCommand");
-  _rename_property(mOldName, mNewName);
+  _rename_property(m_old_name, m_new_name);
 }
 
 auto RenamePropertyCommand::merge_with(const ICommand* cmd) -> bool
 {
-  const auto* that = dynamic_cast<const RenamePropertyCommand*>(cmd);
-  if (!that) {
+  const auto* other = dynamic_cast<const RenamePropertyCommand*>(cmd);
+  if (!other) {
     return false;
   }
 
-  const auto can_merge = (this->mDocument == that->mDocument) &&
-                         (this->mContextEntity == that->mContextEntity) &&
-                         (this->mNewName == that->mOldName);
+  const auto can_merge = m_document == other->m_document &&
+                         m_context_id == other->m_context_id &&
+                         m_new_name == other->m_old_name;
   if (!can_merge) {
     return false;
   }
 
-  this->mNewName = that->mNewName;
+  m_new_name = other->m_new_name;
 
   return true;
 }
 
 void RenamePropertyCommand::_rename_property(const StringView from, String to)
 {
-  TACTILE_LOG_DEBUG("Renaming property '{}' to '{}'", from, to);
+  TACTILE_LOG_TRACE("Renaming property '{}' to '{}'", from, to);
 
-  auto& registry = mDocument->get_registry();
-  auto& meta = registry.get<CMeta>(mContextEntity);
+  auto& registry = m_document->get_registry();
+  auto& meta = registry.get<CMeta>(m_context_id);
 
   TACTILE_ASSERT(exists_in(meta.properties, from));
   TACTILE_ASSERT(!exists_in(meta.properties, to));

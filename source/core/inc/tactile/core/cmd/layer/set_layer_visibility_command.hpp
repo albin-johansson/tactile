@@ -32,10 +32,10 @@ class SetLayerVisibilityCommand final : public ICommand
   void redo() override;
 
  private:
-  MapDocument* mDocument;
-  EntityID mLayerId;
-  bool mNewVisibility;
-  bool mOldVisibility;
+  MapDocument* m_document;
+  EntityID m_layer_id;
+  bool m_new_visibility;
+  bool m_old_visibility;
 };
 
 }  // namespace tactile

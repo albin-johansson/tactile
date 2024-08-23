@@ -42,11 +42,10 @@ class ICommand
    * Tries to merge with another command.
    *
    * \details
-   * This function allows commands of the same type that target the same objects
-   * to be combined in order to drastically reduce the amount of near identical
-   * consecutive commands. This is especially noticeable for high-frequency
-   * commands, such as color picker updates. The provided command is discarded
-   * if a merge is performed.
+   * This function allows commands of the same type that target the same objects to be combined
+   * to drastically reduce the amount of near identical consecutive commands. This is
+   * especially noticeable for high-frequency commands, such as color picker updates. The
+   * provided command is discarded if a merge is performed.
    *
    * \param cmd A command to try to merge into this command, never null.
    *

@@ -7,57 +7,58 @@
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/layer/layer_common.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/map/map.hpp"
 
 namespace tactile {
 
-DuplicateLayerCommand::DuplicateLayerCommand(MapDocument* document, const EntityID layer_id)
-  : mDocument {require_not_null(document, "null document")},
-    mLayerId {layer_id},
-    mDuplicateLayerId {kInvalidEntity},
-    mLayerWasAdded {false}
+DuplicateLayerCommand::DuplicateLayerCommand(MapDocument* document, const EntityID layer_id) :
+  m_document {require_not_null(document, "null document")},
+  m_layer_id {layer_id},
+  m_duplicate_layer_id {kInvalidEntity},
+  m_layer_was_added {false}
 {}
 
 void DuplicateLayerCommand::undo()
 {
   TACTILE_LOG_TRACE("Removing layer {} (duplicated from {})",
-                    entity_to_string(mDuplicateLayerId),
-                    entity_to_string(mLayerId));
+                    entity_to_string(m_duplicate_layer_id),
+                    entity_to_string(m_layer_id));
 
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
   const auto map_id = registry.get<CDocumentInfo>().root;
 
-  remove_layer_from_map(registry, map_id, mDuplicateLayerId).value();
-  mLayerWasAdded = false;
+  remove_layer_from_map(registry, map_id, m_duplicate_layer_id).value();
+  m_layer_was_added = false;
 }
 
 void DuplicateLayerCommand::redo()
 {
-  TACTILE_LOG_TRACE("Duplicating layer {}", entity_to_string(mLayerId));
+  TACTILE_LOG_TRACE("Duplicating layer {}", entity_to_string(m_layer_id));
 
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
   const auto map_id = registry.get<CDocumentInfo>().root;
 
   auto& map = registry.get<CMap>(map_id);
-  map.active_layer = find_parent_layer(registry, map.root_layer, mLayerId);
+  map.active_layer = find_parent_layer(registry, map.root_layer, m_layer_id);
 
-  if (mDuplicateLayerId == kInvalidEntity) {
+  if (m_duplicate_layer_id == kInvalidEntity) {
     auto& id_cache = registry.get<CMapIdCache>(map_id);
-    mDuplicateLayerId = copy_layer(registry, mLayerId, id_cache.next_layer_id);
+    m_duplicate_layer_id = copy_layer(registry, m_layer_id, id_cache.next_layer_id);
   }
 
-  append_layer_to_map(registry, map_id, mDuplicateLayerId);
-  mLayerWasAdded = true;
+  append_layer_to_map(registry, map_id, m_duplicate_layer_id);
+  m_layer_was_added = true;
 }
 
 void DuplicateLayerCommand::dispose()
 {
-  if (!mLayerWasAdded && mDuplicateLayerId != kInvalidEntity) {
-    auto& registry = mDocument->get_registry();
-    destroy_layer(registry, mDuplicateLayerId);
+  if (!m_layer_was_added && m_duplicate_layer_id != kInvalidEntity) {
+    auto& registry = m_document->get_registry();
+    destroy_layer(registry, m_duplicate_layer_id);
 
-    mDuplicateLayerId = kInvalidEntity;
+    m_duplicate_layer_id = kInvalidEntity;
   }
 }
 

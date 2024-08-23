@@ -14,35 +14,35 @@ namespace tactile {
 
 SetLayerVisibilityCommand::SetLayerVisibilityCommand(MapDocument* document,
                                                      const EntityID layer_id,
-                                                     const bool visibility)
-  : mDocument {require_not_null(document, "null document")},
-    mLayerId {layer_id},
-    mNewVisibility {visibility},
-    mOldVisibility {false}
+                                                     const bool visibility) :
+  m_document {require_not_null(document, "null document")},
+  m_layer_id {layer_id},
+  m_new_visibility {visibility},
+  m_old_visibility {false}
 {}
 
 void SetLayerVisibilityCommand::undo()
 {
   TACTILE_LOG_TRACE("Changing visibility of layer {} to {}",
-                    entity_to_string(mLayerId),
-                    mOldVisibility);
+                    entity_to_string(m_layer_id),
+                    m_old_visibility);
 
-  auto& registry = mDocument->get_registry();
-  auto& layer = registry.get<CLayer>(mLayerId);
+  auto& registry = m_document->get_registry();
+  auto& layer = registry.get<CLayer>(m_layer_id);
 
-  layer.visible = mOldVisibility;
+  layer.visible = m_old_visibility;
 }
 
 void SetLayerVisibilityCommand::redo()
 {
   TACTILE_LOG_TRACE("Changing visibility of layer {} to {}",
-                    entity_to_string(mLayerId),
-                    mNewVisibility);
+                    entity_to_string(m_layer_id),
+                    m_new_visibility);
 
-  auto& registry = mDocument->get_registry();
-  auto& layer = registry.get<CLayer>(mLayerId);
+  auto& registry = m_document->get_registry();
+  auto& layer = registry.get<CLayer>(m_layer_id);
 
-  mOldVisibility = std::exchange(layer.visible, mNewVisibility);
+  m_old_visibility = std::exchange(layer.visible, m_new_visibility);
 }
 
 }  // namespace tactile

@@ -33,10 +33,10 @@ class RemoveLayerCommand final : public ICommand
   void dispose() override;
 
  private:
-  MapDocument* mDocument;
-  EntityID mLayerId;
-  EntityID mParentLayerId;
-  bool mLayerWasRemoved;
+  MapDocument* m_document;
+  EntityID m_layer_id;
+  EntityID m_parent_layer_id;
+  bool m_layer_was_removed;
 };
 
 }  // namespace tactile

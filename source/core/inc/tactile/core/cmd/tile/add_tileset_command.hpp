@@ -12,7 +12,7 @@ namespace tactile {
 class MapDocument;
 
 /**
- * A command for adding a tileset to a map document.
+ * A command for adding tilesets to map documents.
  */
 class AddTilesetCommand final : public ICommand
 {
@@ -23,7 +23,7 @@ class AddTilesetCommand final : public ICommand
   /**
    * Creates a command.
    *
-   * \param document The target map document.
+   * \param document The target map document, cannot be null.
    * \param spec     The tileset specification.
    */
   AddTilesetCommand(MapDocument* document, TilesetSpec spec);
@@ -35,10 +35,10 @@ class AddTilesetCommand final : public ICommand
   void redo() override;
 
  private:
-  MapDocument* mDocument;
-  TilesetSpec mSpec;
-  EntityID mTilesetId;
-  bool mTilesetWasAdded;
+  MapDocument* m_document;
+  TilesetSpec m_spec;
+  EntityID m_tileset_id;
+  bool m_tileset_was_added;
 };
 
 }  // namespace tactile

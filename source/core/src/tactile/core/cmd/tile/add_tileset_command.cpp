@@ -15,19 +15,19 @@
 
 namespace tactile {
 
-AddTilesetCommand::AddTilesetCommand(MapDocument* document, TilesetSpec spec)
-  : mDocument {require_not_null(document, "null document")},
-    mSpec {std::move(spec)},
-    mTilesetId {kInvalidEntity},
-    mTilesetWasAdded {false}
+AddTilesetCommand::AddTilesetCommand(MapDocument* document, TilesetSpec spec) :
+  m_document {require_not_null(document, "null document")},
+  m_spec {std::move(spec)},
+  m_tileset_id {kInvalidEntity},
+  m_tileset_was_added {false}
 {}
 
 AddTilesetCommand::~AddTilesetCommand() noexcept
 {
   try {
-    if (!mTilesetWasAdded && mTilesetId != kInvalidEntity) {
-      auto& registry = mDocument->get_registry();
-      destroy_tileset(registry, mTilesetId);
+    if (!m_tileset_was_added && m_tileset_id != kInvalidEntity) {
+      auto& registry = m_document->get_registry();
+      destroy_tileset(registry, m_tileset_id);
     }
   }
   catch (const std::exception& error) {
@@ -38,33 +38,33 @@ AddTilesetCommand::~AddTilesetCommand() noexcept
 
 void AddTilesetCommand::undo()
 {
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
 
   const auto& document_info = registry.get<CDocumentInfo>();
   const auto map_id = document_info.root;
 
-  remove_tileset_from_map(registry, map_id, mTilesetId);
+  remove_tileset_from_map(registry, map_id, m_tileset_id);
 
-  mTilesetWasAdded = false;
+  m_tileset_was_added = false;
 }
 
 void AddTilesetCommand::redo()
 {
-  auto& registry = mDocument->get_registry();
+  auto& registry = m_document->get_registry();
 
   const auto& document_info = registry.get<CDocumentInfo>();
   const auto map_id = document_info.root;
 
-  if (mTilesetId == kInvalidEntity) {
-    mTilesetId = add_tileset_to_map(registry, map_id, mSpec).value();
+  if (m_tileset_id == kInvalidEntity) {
+    m_tileset_id = add_tileset_to_map(registry, map_id, m_spec).value();
   }
   else {
     auto& map = registry.get<CMap>(map_id);
-    map.attached_tilesets.push_back(mTilesetId);
-    map.active_tileset = mTilesetId;
+    map.attached_tilesets.push_back(m_tileset_id);
+    map.active_tileset = m_tileset_id;
   }
 
-  mTilesetWasAdded = true;
+  m_tileset_was_added = true;
 }
 
 }  // namespace tactile

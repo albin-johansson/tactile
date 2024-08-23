@@ -4,8 +4,8 @@
 
 #include <utility>  // move, exchange
 
-#include "tactile/core/debug/validation.hpp"
 #include "tactile/base/document/document.hpp"
+#include "tactile/core/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
@@ -15,57 +15,53 @@
 namespace tactile {
 
 UpdatePropertyCommand::UpdatePropertyCommand(IDocument* document,
-                                             const EntityID context_entity,
-                                             String property_name,
-                                             Attribute property_value)
-  : mDocument {require_not_null(document, "null document")},
-    mContextEntity {context_entity},
-    mPropertyName {std::move(property_name)},
-    mNewPropertyValue {std::move(property_value)}
+                                             const EntityID context_id,
+                                             std::string property_name,
+                                             Attribute property_value) :
+  m_document {require_not_null(document, "null document")},
+  m_context_id {context_id},
+  m_property_name {std::move(property_name)},
+  m_new_property_value {std::move(property_value)},
+  m_old_property_value {}
 {}
 
 void UpdatePropertyCommand::undo()
 {
-  TACTILE_SET_LOG_SCOPE("UpdatePropertyCommand");
-  TACTILE_LOG_DEBUG("Reverting update of property '{}'", mPropertyName);
+  TACTILE_LOG_TRACE("Reverting update of property '{}'", m_property_name);
 
-  auto& registry = mDocument->get_registry();
-  auto& meta = registry.get<CMeta>(mContextEntity);
+  auto& registry = m_document->get_registry();
+  auto& meta = registry.get<CMeta>(m_context_id);
 
-  auto& value = lookup_in(meta.properties, mPropertyName);
-  value = mOldPropertyValue.value();
+  auto& value = lookup_in(meta.properties, m_property_name);
+  value = m_old_property_value;
 }
 
 void UpdatePropertyCommand::redo()
 {
-  TACTILE_SET_LOG_SCOPE("UpdatePropertyCommand");
-  TACTILE_LOG_DEBUG("Updating the value of property '{}'", mPropertyName);
+  TACTILE_LOG_TRACE("Updating the value of property '{}'", m_property_name);
 
-  auto& registry = mDocument->get_registry();
-  auto& meta = registry.get<CMeta>(mContextEntity);
+  auto& registry = m_document->get_registry();
+  auto& meta = registry.get<CMeta>(m_context_id);
 
-  auto& value = lookup_in(meta.properties, mPropertyName);
-  mOldPropertyValue = std::exchange(value, mNewPropertyValue);
+  auto& value = lookup_in(meta.properties, m_property_name);
+  m_old_property_value = std::exchange(value, m_new_property_value);
 }
 
 auto UpdatePropertyCommand::merge_with(const ICommand* cmd) -> bool
 {
-  const auto* that = dynamic_cast<const UpdatePropertyCommand*>(cmd);
-  if (!that) {
+  const auto* other = dynamic_cast<const UpdatePropertyCommand*>(cmd);
+  if (!other) {
     return false;
   }
 
-  const auto same_target = this->mDocument == that->mDocument &&
-                           this->mContextEntity == that->mContextEntity &&
-                           this->mPropertyName == that->mPropertyName;
+  const auto same_target = m_document == other->m_document &&
+                           m_context_id == other->m_context_id &&
+                           m_property_name == other->m_property_name;
   if (!same_target) {
     return false;
   }
 
-  TACTILE_SET_LOG_SCOPE("UpdatePropertyCommand");
-  TACTILE_LOG_TRACE("Merging update command for property '{}'", mPropertyName);
-
-  this->mNewPropertyValue = that->mNewPropertyValue;
+  m_new_property_value = other->m_new_property_value;
   return true;
 }
 

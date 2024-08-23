@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
@@ -14,7 +14,7 @@ namespace tactile {
 class IDocument;
 
 /**
- * A command for removing a property from a meta context.
+ * A command for removing properties from meta contexts.
  */
 class RemovePropertyCommand final : public ICommand
 {
@@ -22,23 +22,23 @@ class RemovePropertyCommand final : public ICommand
   /**
    * Creates a command.
    *
-   * \param document       The parent document.
-   * \param context_entity The target meta context.
-   * \param name           The name of the property to remove.
+   * \pre The meta context identifier must be valid.
+   *
+   * \param document   The host document, cannot be null.
+   * \param context_id The target meta context identifier.
+   * \param name       The name of the target property.
    */
-  RemovePropertyCommand(IDocument* document,
-                        EntityID context_entity,
-                        String name);
+  RemovePropertyCommand(IDocument* document, EntityID context_id, std::string name);
 
   void undo() override;
 
   void redo() override;
 
  private:
-  IDocument* mDocument;
-  EntityID mContextEntity;
-  String mName;
-  Optional<Attribute> mValue;
+  IDocument* m_document;
+  EntityID m_context_id;
+  std::string m_name;
+  Attribute m_value;
 };
 
 }  // namespace tactile

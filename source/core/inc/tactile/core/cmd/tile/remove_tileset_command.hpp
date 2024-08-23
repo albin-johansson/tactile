@@ -11,7 +11,7 @@ namespace tactile {
 class MapDocument;
 
 /**
- * A command for removing a tileset from a map document.
+ * A command for removing tilesets from map documents.
  */
 class RemoveTilesetCommand final : public ICommand
 {
@@ -24,8 +24,8 @@ class RemoveTilesetCommand final : public ICommand
    *
    * \pre The tileset identifier must be valid.
    *
-   * \param document   The target map document.
-   * \param tileset_id The entity identifier of the tileset to remove.
+   * \param document   The target map document, cannot be null.
+   * \param tileset_id The target tileset identifier.
    */
   RemoveTilesetCommand(MapDocument* document, EntityID tileset_id);
 
@@ -36,9 +36,9 @@ class RemoveTilesetCommand final : public ICommand
   void redo() override;
 
  private:
-  MapDocument* mDocument;
-  EntityID mTilesetId;
-  bool mTilesetWasRemoved;
+  MapDocument* m_document;
+  EntityID m_tileset_id;
+  bool m_tileset_was_removed;
 };
 
 }  // namespace tactile

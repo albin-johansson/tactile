@@ -3,14 +3,12 @@
 #pragma once
 
 #include <concepts>  // derived_from
-#include <memory>    // make_unique
+#include <cstdint>   // size_t
+#include <deque>     // deque
+#include <memory>    // unique_ptr, make_unique
+#include <optional>  // optional
 #include <utility>   // move, forward
 
-#include "tactile/base/container/deque.hpp"
-#include "tactile/base/container/maybe.hpp"
-#include "tactile/base/container/smart_ptr.hpp"
-#include "tactile/base/container/string.hpp"
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 
@@ -53,7 +51,7 @@ class CommandStack final
    *
    * \param capacity The maximum amount of stored commands.
    */
-  explicit CommandStack(usize capacity);
+  explicit CommandStack(std::size_t capacity);
 
   ~CommandStack() noexcept = default;
 
@@ -128,12 +126,12 @@ class CommandStack final
     // if there are commands on the stack, we try to merge the command into the
     // top of the stack. If that succeeds, we discard the temporary command.
     // Otherwise, just add the command to the stack as per usual.
-    if (mCommands.empty() || !mCommands.back()->merge_with(&cmd)) {
-      mCommands.push_back(std::make_unique<T>(std::move(cmd)));
+    if (m_commands.empty() || !m_commands.back()->merge_with(&cmd)) {
+      m_commands.push_back(std::make_unique<T>(std::move(cmd)));
       _increase_current_index();
     }
     else {
-      mCleanIndex.reset();
+      m_clean_index.reset();
     }
   }
 
@@ -146,7 +144,7 @@ class CommandStack final
    *
    * \param capacity The maximum amount of stored commands.
    */
-  void set_capacity(usize capacity);
+  void set_capacity(std::size_t capacity);
 
   /**
    * Indicates whether the current command stack state is clean.
@@ -170,34 +168,34 @@ class CommandStack final
    * Returns the number of commands on the stack.
    */
   [[nodiscard]]
-  auto size() const -> usize;
+  auto size() const -> std::size_t;
 
   /**
    * Returns the maximum amount of commands that the stack can hold.
    */
   [[nodiscard]]
-  auto capacity() const -> usize;
+  auto capacity() const -> std::size_t;
 
   /**
    * Returns the current command index, if there is one.
    */
   [[nodiscard]]
-  auto index() const -> Optional<usize>;
+  auto index() const -> std::optional<std::size_t>;
 
   /**
    * Returns the clean index, if there is one.
    */
   [[nodiscard]]
-  auto clean_index() const -> Optional<usize>;
+  auto clean_index() const -> std::optional<std::size_t>;
 
  private:
-  Deque<Unique<ICommand>> mCommands {};
-  Optional<usize> mCurrentIndex {};
-  Optional<usize> mCleanIndex {};
-  usize mCapacity {};
+  std::deque<std::unique_ptr<ICommand>> m_commands {};
+  std::optional<std::size_t> m_current_index {};
+  std::optional<std::size_t> m_clean_index {};
+  std::size_t m_capacity {};
 
   // Pushes a command onto the stack, but does not execute it.
-  void _store(Unique<ICommand> cmd);
+  void _store(std::unique_ptr<ICommand> cmd);
 
   // Removes the oldest command from the stack, i.e., the one at the bottom.
   void _remove_oldest_command();
@@ -214,7 +212,7 @@ class CommandStack final
   void _increase_current_index();
 
   [[nodiscard]]
-  auto _get_next_command_index() const -> usize;
+  auto _get_next_command_index() const -> std::size_t;
 };
 
 }  // namespace tactile

@@ -11,7 +11,7 @@ namespace tactile {
 class MapDocument;
 
 /**
- * A command for moving a layer upwards in a map layer hierarchy.
+ * A command for moving layers upward in map layer hierarchies.
  */
 class MoveLayerUpCommand final : public ICommand
 {
@@ -31,8 +31,8 @@ class MoveLayerUpCommand final : public ICommand
   void redo() override;
 
  private:
-  MapDocument* mDocument;
-  EntityID mLayerId;
+  MapDocument* m_document;
+  EntityID m_layer_id;
 };
 
 }  // namespace tactile

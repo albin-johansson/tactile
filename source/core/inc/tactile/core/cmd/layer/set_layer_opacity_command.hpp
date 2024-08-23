@@ -35,10 +35,10 @@ class SetLayerOpacityCommand final : public ICommand
   auto merge_with(const ICommand* cmd) -> bool override;
 
  private:
-  MapDocument* mDocument;
-  EntityID mLayerId;
-  float mNewOpacity;
-  float mOldOpacity;
+  MapDocument* m_document;
+  EntityID m_layer_id;
+  float m_new_opacity;
+  float m_old_opacity;
 };
 
 }  // namespace tactile

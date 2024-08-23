@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/string.hpp"
+#include <string>  // string
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -12,7 +13,7 @@ namespace tactile {
 class IDocument;
 
 /**
- * A command for renaming a property attached to a meta context.
+ * A command for renaming properties attached to meta contexts.
  */
 class RenamePropertyCommand final : public ICommand
 {
@@ -20,17 +21,18 @@ class RenamePropertyCommand final : public ICommand
   /**
    * Creates a command.
    *
+   * \pre The meta context identifier must be valid.
    * \pre The new name must not be used by another property in the context.
    *
-   * \param document       The parent document.
-   * \param context_entity The target meta context.
-   * \param old_name       The name of the target property.
-   * \param new_name       The new name of the property.
+   * \param document   The host document, cannot be null.
+   * \param context_id The target meta context identifier.
+   * \param old_name   The name of the target property.
+   * \param new_name   The new name of the property.
    */
   RenamePropertyCommand(IDocument* document,
-                        EntityID context_entity,
-                        String old_name,
-                        String new_name);
+                        EntityID context_id,
+                        std::string old_name,
+                        std::string new_name);
 
   void undo() override;
 
@@ -40,10 +42,10 @@ class RenamePropertyCommand final : public ICommand
   auto merge_with(const ICommand* cmd) -> bool override;
 
  private:
-  IDocument* mDocument;
-  EntityID mContextEntity;
-  String mOldName;
-  String mNewName;
+  IDocument* m_document;
+  EntityID m_context_id;
+  std::string m_old_name;
+  std::string m_new_name;
 
   void _rename_property(StringView from, String to);
 };

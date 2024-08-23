@@ -20,7 +20,7 @@ class CreateLayerCommand final : public ICommand
   /**
    * Creates a command.
    *
-   * \param document The parent map document.
+   * \param document The parent map document, cannot be null.
    * \param type     The type of the new layer.
    */
   CreateLayerCommand(MapDocument* document, LayerType type);
@@ -32,11 +32,11 @@ class CreateLayerCommand final : public ICommand
   void dispose() override;
 
  private:
-  MapDocument* mDocument;
-  LayerType mType;
-  EntityID mParentLayerId;
-  EntityID mLayerId;
-  bool mWasLayerAdded;
+  MapDocument* m_document;
+  LayerType m_type;
+  EntityID m_parent_layer_id;
+  EntityID m_layer_id;
+  bool m_layer_was_added;
 };
 
 }  // namespace tactile
