@@ -6,6 +6,7 @@
 #include <system_error>  // error_code, error_category
 #include <utility>       // to_underlying
 
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/opengl_renderer/api.hpp"
 
