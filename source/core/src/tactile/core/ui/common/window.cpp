@@ -86,13 +86,13 @@ auto Window::get_size() const -> Float2
   return to_float2(mSize);
 }
 
-auto Window::get_local_mouse_pos() const -> Maybe<Float2>
+auto Window::get_local_mouse_pos() const -> std::optional<Float2>
 {
   if (has_mouse()) {
     return to_float2(ImGui::GetMousePos() - mPos);
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 void center_next_window(const ImGuiCond condition)

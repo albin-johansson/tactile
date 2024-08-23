@@ -3,10 +3,10 @@
 #pragma once
 
 #include <expected>       // expected
+#include <optional>       // optional
 #include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -277,7 +277,7 @@ auto find_tileset(const Registry& registry, TileID tile_id) -> EntityID;
  * A tile index if successful; nothing otherwise.
  */
 [[nodiscard]]
-auto get_tile_index(const Registry& registry, TileID tile_id) -> Maybe<TileIndex>;
+auto get_tile_index(const Registry& registry, TileID tile_id) -> std::optional<TileIndex>;
 
 /**
  * Indicates whether the tiles in a tile range are available for use.

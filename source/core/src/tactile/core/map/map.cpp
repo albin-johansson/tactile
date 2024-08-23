@@ -57,8 +57,8 @@ auto make_map(Registry& registry, const MapSpec& spec) -> EntityID
 
   auto& format = registry.add<CTileFormat>(map_entity);
   format.encoding = TileEncoding::kPlainText;
-  format.compression = kNone;
-  format.comp_level = kNone;
+  format.compression = std::nullopt;
+  format.comp_level = std::nullopt;
 
   auto& id_cache = registry.add<CMapIdCache>(map_entity);
   id_cache.next_tile_id = TileID {1};

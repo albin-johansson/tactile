@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional
+
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -108,7 +109,7 @@ auto find_parent_layer(const Registry& registry,
 [[nodiscard]]
 auto get_local_layer_index(const Registry& registry,
                            EntityID root_layer_id,
-                           EntityID target_layer_id) -> Optional<usize>;
+                           EntityID target_layer_id) -> std::optional<usize>;
 
 /**
  * Returns the global index of a layer within a group layer hierarchy.
@@ -126,7 +127,7 @@ auto get_local_layer_index(const Registry& registry,
 [[nodiscard]]
 auto get_global_layer_index(const Registry& registry,
                             EntityID root_layer_id,
-                            EntityID target_layer_id) -> Optional<usize>;
+                            EntityID target_layer_id) -> std::optional<usize>;
 
 /**
  * Moves a layer up within a group layer hierarchy.

@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <optional>      // optional
 #include <system_error>  // error_code
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/byte_stream.hpp"
@@ -128,7 +128,7 @@ class ILayerView
    * optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_tile(const MatrixIndex& index) const -> Optional<TileID> = 0;
+  virtual auto get_tile(const MatrixIndex& index) const -> std::optional<TileID> = 0;
 
   /**
    * Returns the tile encoding format used by the layer.
@@ -146,7 +146,7 @@ class ILayerView
    * A compression format if compression is used; an empty optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_tile_compression() const -> Optional<CompressionFormat> = 0;
+  virtual auto get_tile_compression() const -> std::optional<CompressionFormat> = 0;
 
   /**
    * Returns the compression level used by the map, if any.
@@ -155,7 +155,7 @@ class ILayerView
    * A compression level if compression is used; an empty optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_compression_level() const -> Optional<int> = 0;
+  virtual auto get_compression_level() const -> std::optional<int> = 0;
 
   /**
    * Returns the extent of the associated tile layer.
@@ -164,7 +164,7 @@ class ILayerView
    * The extent of the layer if it's a tile layer; an empty optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_extent() const -> Optional<MatrixExtent> = 0;
+  virtual auto get_extent() const -> std::optional<MatrixExtent> = 0;
 
   /**
    * Returns a view of the associated metadata.

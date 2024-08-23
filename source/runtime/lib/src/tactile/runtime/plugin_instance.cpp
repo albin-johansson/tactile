@@ -38,13 +38,13 @@ PluginInstance::PluginInstance(PluginInstance&& other) noexcept :
 {}
 
 auto PluginInstance::load(IRuntime* runtime,
-                          const StringView plugin_name) -> Optional<PluginInstance>
+                          const StringView plugin_name) -> std::optional<PluginInstance>
 {
   auto dll = load_library(plugin_name);
 
   if (!dll) {
     TACTILE_LOG_ERROR("Could not load plugin '{}'", plugin_name);
-    return kNone;
+    return std::nullopt;
   }
 
   auto* plugin_ctor = find_symbol<PluginConstructor>(*dll, "tactile_make_plugin");
@@ -52,14 +52,14 @@ auto PluginInstance::load(IRuntime* runtime,
 
   if (!plugin_ctor || !plugin_dtor) {
     TACTILE_LOG_ERROR("Plugin '{}' has incompatible API", plugin_name);
-    return kNone;
+    return std::nullopt;
   }
 
   auto* plugin = plugin_ctor();
 
   if (!plugin) {
     TACTILE_LOG_ERROR("Could not initialize plugin '{}'", plugin_name);
-    return kNone;
+    return std::nullopt;
   }
 
   TACTILE_LOG_DEBUG("Loading plugin '{}'", plugin_name);

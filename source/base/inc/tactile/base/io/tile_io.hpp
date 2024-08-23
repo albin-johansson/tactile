@@ -5,8 +5,8 @@
 #include <bit>       // endian, byteswap
 #include <concepts>  // same_as
 #include <cstring>   // memcpy
+#include <optional>  // optional
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/byte_stream.hpp"
@@ -54,7 +54,8 @@ inline constexpr uint32 kTiledTileFlippingMask =
  */
 constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
                                      const MatrixExtent& extent,
-                                     const TileIdFormat tile_id_format) -> Optional<TileMatrix>
+                                     const TileIdFormat tile_id_format)
+    -> std::optional<TileMatrix>
 {
   auto tile_matrix = make_tile_matrix(extent);
 
@@ -63,7 +64,7 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
   const auto real_byte_count = byte_stream.size();
 
   if (expected_byte_count != real_byte_count) {
-    return kNone;
+    return std::nullopt;
   }
 
   const auto tile_count = byte_stream.size() / sizeof(TileID);

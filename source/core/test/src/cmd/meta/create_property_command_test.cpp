@@ -2,9 +2,10 @@
 
 #include "tactile/core/cmd/meta/create_property_command.hpp"
 
+#include <optional>  // optional
+
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"

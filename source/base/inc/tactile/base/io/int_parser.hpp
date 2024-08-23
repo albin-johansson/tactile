@@ -3,9 +3,9 @@
 #pragma once
 
 #include <charconv>      // from_chars
+#include <optional>      // optional
 #include <system_error>  // errc
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -24,7 +24,8 @@ namespace tactile {
  * An integer if successful; an empty optional otherwise.
  */
 template <std::integral T>
-[[nodiscard]] constexpr auto parse(StringView str, const int base = 10) noexcept -> Optional<T>
+[[nodiscard]] constexpr auto parse(StringView str,
+                                   const int base = 10) noexcept -> std::optional<T>
 {
   const auto* const begin = str.data();
   const auto* const end = begin + str.size();
@@ -36,7 +37,7 @@ template <std::integral T>
     return value;
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 }  // namespace tactile

@@ -4,12 +4,12 @@
 
 #include <cstdlib>        // malloc, free, EXIT_SUCCESS, EXIT_FAILURE
 #include <exception>      // exception, set_terminate
+#include <optional>       // optional
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
 
 #include <imgui.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/debug/terminate.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
@@ -79,7 +79,7 @@ struct Runtime::Data final
   SDLContext sdl_context;
   Logger logger;
   runtime_impl::UniqueImGuiContext imgui_context {};
-  Optional<Window> window {};
+  std::optional<Window> window {};
   IRenderer* renderer {};
   std::unordered_map<CompressionFormat, ICompressor*> compression_formats {};
   std::unordered_map<SaveFormatId, ISaveFormat*> save_formats {};

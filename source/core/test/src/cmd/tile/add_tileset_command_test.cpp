@@ -2,11 +2,11 @@
 
 #include "tactile/core/cmd/tile/add_tileset_command.hpp"
 
-#include <utility>  // move
+#include <optional>  // optional
+#include <utility>   // move
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -33,7 +33,7 @@ class AddTilesetCommandTest : public testing::Test
     mMapId = document_info.root;
   }
 
-  Optional<MapDocument> mDocument;
+  std::optional<MapDocument> mDocument;
   EntityID mMapId {kInvalidEntity};
 };
 

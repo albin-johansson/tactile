@@ -18,7 +18,7 @@ auto make_unspecialized_layer(Registry& registry) -> EntityID
   const auto layer_entity = registry.make_entity();
 
   auto& layer = registry.add<CLayer>(layer_entity);
-  layer.persistent_id = nothing;
+  layer.persistent_id = std::nullopt;
   layer.opacity = 1.0f;
   layer.visible = true;
 

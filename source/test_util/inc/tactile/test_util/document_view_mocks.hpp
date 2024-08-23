@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include <variant>  // variant
+#include <optional>  // optional
+#include <variant>   // variant
 
 #include <gmock/gmock.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/document/document_visitor.hpp"
@@ -193,15 +193,15 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(usize, object_count, (), (const, override));
 
-  MOCK_METHOD(Optional<TileID>, get_tile, (const MatrixIndex&), (const, override));
+  MOCK_METHOD(std::optional<TileID>, get_tile, (const MatrixIndex&), (const, override));
 
   MOCK_METHOD(TileEncoding, get_tile_encoding, (), (const, override));
 
-  MOCK_METHOD(Optional<CompressionFormat>, get_tile_compression, (), (const, override));
+  MOCK_METHOD(std::optional<CompressionFormat>, get_tile_compression, (), (const, override));
 
-  MOCK_METHOD(Optional<int>, get_compression_level, (), (const, override));
+  MOCK_METHOD(std::optional<int>, get_compression_level, (), (const, override));
 
-  MOCK_METHOD(Optional<MatrixExtent>, get_extent, (), (const, override));
+  MOCK_METHOD(std::optional<MatrixExtent>, get_extent, (), (const, override));
 
   MOCK_METHOD(const IMetaView&, get_meta, (), (const, override));
 
@@ -240,9 +240,9 @@ class MapViewMock : public IMapView
 
   MOCK_METHOD(TileEncoding, get_tile_encoding, (), (const, override));
 
-  MOCK_METHOD(Optional<CompressionFormat>, get_tile_compression, (), (const, override));
+  MOCK_METHOD(std::optional<CompressionFormat>, get_tile_compression, (), (const, override));
 
-  MOCK_METHOD(Optional<int>, get_compression_level, (), (const, override));
+  MOCK_METHOD(std::optional<int>, get_compression_level, (), (const, override));
 
   MOCK_METHOD(usize, layer_count, (), (const, override));
 

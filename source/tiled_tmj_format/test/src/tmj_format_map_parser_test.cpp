@@ -41,8 +41,8 @@ TEST_F(TmjFormatMapParserTest, ParseEmptyMap)
   EXPECT_EQ(map->next_layer_id, 10);
   EXPECT_EQ(map->next_object_id, 20);
   EXPECT_EQ(map->tile_format.encoding, TileEncoding::kPlainText);
-  EXPECT_EQ(map->tile_format.compression, kNone);
-  EXPECT_EQ(map->tile_format.compression_level, kNone);
+  EXPECT_EQ(map->tile_format.compression, std::nullopt);
+  EXPECT_EQ(map->tile_format.compression_level, std::nullopt);
   EXPECT_EQ(map->components.size(), 0);
   EXPECT_EQ(map->tilesets.size(), 0);
   EXPECT_EQ(map->layers.size(), 0);
@@ -115,8 +115,8 @@ TEST_F(TmjFormatMapParserTest, ParseOrthogonalMap)
   EXPECT_EQ(map->next_layer_id, 3);
   EXPECT_EQ(map->next_object_id, 1);
   EXPECT_EQ(map->tile_format.encoding, TileEncoding::kPlainText);
-  EXPECT_EQ(map->tile_format.compression, kNone);
-  EXPECT_EQ(map->tile_format.compression_level, kNone);
+  EXPECT_EQ(map->tile_format.compression, std::nullopt);
+  EXPECT_EQ(map->tile_format.compression_level, std::nullopt);
   ASSERT_EQ(map->components.size(), 0);
   ASSERT_EQ(map->tilesets.size(), 1);
   ASSERT_EQ(map->layers.size(), 2);

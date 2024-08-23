@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional
+
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/common/window.hpp"
@@ -35,7 +36,7 @@ class OverlayScope final
   auto is_open() const -> bool;
 
  private:
-  Optional<Window> mWindow;
+  std::optional<Window> mWindow;
 };
 
 }  // namespace tactile::ui

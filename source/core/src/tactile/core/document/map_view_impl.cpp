@@ -81,12 +81,12 @@ auto MapViewImpl::get_tile_encoding() const -> TileEncoding
   return _get_tile_format().encoding;
 }
 
-auto MapViewImpl::get_tile_compression() const -> Optional<CompressionFormat>
+auto MapViewImpl::get_tile_compression() const -> std::optional<CompressionFormat>
 {
   return _get_tile_format().compression;
 }
 
-auto MapViewImpl::get_compression_level() const -> Optional<int>
+auto MapViewImpl::get_compression_level() const -> std::optional<int>
 {
   return _get_tile_format().comp_level;
 }

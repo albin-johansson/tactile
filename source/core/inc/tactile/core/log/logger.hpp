@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <format>  // make_format_args, format_args
+#include <format>    // make_format_args, format_args
+#include <optional>  // optional
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
@@ -103,7 +103,7 @@ class Logger final
    *
    * \param instant The new reference instant; or nothing to use the default.
    */
-  void set_reference_instant(Maybe<SteadyClockInstant> instant);
+  void set_reference_instant(std::optional<SteadyClockInstant> instant);
 
   /**
    * Sets a custom scope identifier to use.
@@ -158,7 +158,7 @@ class Logger final
   LogLevel mMinLevel {LogLevel::kInfo};
   LogLevel mFlushLevel {LogLevel::kError};
   Vector<Unique<ILogSink>> mSinks {};
-  Maybe<SteadyClockInstant> mReferenceInstant {};
+  std::optional<SteadyClockInstant> mReferenceInstant {};
   StringView mScope {};
 
   void _log(LogLevel level, StringView fmt_string, std::format_args args) noexcept;

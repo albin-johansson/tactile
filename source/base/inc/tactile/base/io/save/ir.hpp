@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional
+
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/vector.hpp"
@@ -244,10 +245,10 @@ struct TileFormat final
   TileEncoding encoding;
 
   /** The tile compression strategy. */
-  Optional<CompressionFormat> compression;
+  std::optional<CompressionFormat> compression;
 
   /** The compression level. */
-  Optional<int32> compression_level;
+  std::optional<int32> compression_level;
 
   [[nodiscard]]
   auto operator==(const TileFormat&) const -> bool = default;

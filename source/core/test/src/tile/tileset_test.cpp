@@ -323,8 +323,8 @@ TEST_F(TilesetTest, FindTileset)
 // tactile::get_tile_index
 TEST_F(TilesetTest, GetTileIndex)
 {
-  EXPECT_EQ(get_tile_index(mRegistry, kEmptyTile), kNone);
-  EXPECT_EQ(get_tile_index(mRegistry, TileID {1}), kNone);
+  EXPECT_EQ(get_tile_index(mRegistry, kEmptyTile), std::nullopt);
+  EXPECT_EQ(get_tile_index(mRegistry, TileID {1}), std::nullopt);
 
   const auto ts1_entity = make_dummy_tileset_with_100_tiles();
   const auto ts2_entity = make_dummy_tileset_with_100_tiles();
@@ -343,8 +343,8 @@ TEST_F(TilesetTest, GetTileIndex)
   EXPECT_EQ(get_tile_index(mRegistry, TileID {137}), 27);
   EXPECT_EQ(get_tile_index(mRegistry, TileID {209}), 99);
 
-  EXPECT_EQ(get_tile_index(mRegistry, TileID {9}), kNone);
-  EXPECT_EQ(get_tile_index(mRegistry, TileID {210}), kNone);
+  EXPECT_EQ(get_tile_index(mRegistry, TileID {9}), std::nullopt);
+  EXPECT_EQ(get_tile_index(mRegistry, TileID {210}), std::nullopt);
 }
 
 // tactile::is_tile_range_available

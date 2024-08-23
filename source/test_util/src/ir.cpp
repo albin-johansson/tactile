@@ -136,8 +136,8 @@ auto make_ir_tile_format() -> ir::TileFormat
 {
   return {
     .encoding = TileEncoding::kPlainText,
-    .compression = kNone,
-    .compression_level = kNone,
+    .compression = std::nullopt,
+    .compression_level = std::nullopt,
   };
 }
 

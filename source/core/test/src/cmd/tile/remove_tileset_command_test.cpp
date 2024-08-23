@@ -2,11 +2,11 @@
 
 #include "tactile/core/cmd/tile/remove_tileset_command.hpp"
 
-#include <utility>  // move
+#include <optional>  // optional
+#include <utility>   // move
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/cmd/tile/add_tileset_command.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
@@ -44,7 +44,7 @@ class RemoveTilesetCommandTest : public testing::Test
     ASSERT_EQ(map.attached_tilesets.size(), 1);
   }
 
-  Optional<MapDocument> mDocument;
+  std::optional<MapDocument> mDocument;
   EntityID mMapId {kInvalidEntity};
   EntityID mTilesetId {kInvalidEntity};
 };

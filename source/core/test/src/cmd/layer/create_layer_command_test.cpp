@@ -2,11 +2,11 @@
 
 #include "tactile/core/cmd/layer/create_layer_command.hpp"
 
-#include <utility>  // move
+#include <optional>  // optional
+#include <utility>   // move
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -37,7 +37,7 @@ class CreateLayerCommandTest : public testing::Test
     mMapId = document_info.root;
   }
 
-  Optional<MapDocument> mDocument;
+  std::optional<MapDocument> mDocument;
   EntityID mMapId {kInvalidEntity};
 };
 
@@ -63,7 +63,7 @@ TEST_F(CreateLayerCommandTest, RedoUndoWithNoActiveLayer)
   create_layer.undo();
 
   EXPECT_EQ(count_layers(registry, map.root_layer), 0);
-  EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), kNone);
+  EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), std::nullopt);
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
 
   create_layer.redo();
@@ -107,7 +107,7 @@ TEST_F(CreateLayerCommandTest, RedoUndoWithActiveGroupLayer)
   EXPECT_EQ(count_layers(registry, map.root_layer), 1);
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
   EXPECT_EQ(get_global_layer_index(registry, map.root_layer, group_layer_id), 0);
-  EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), kNone);
+  EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), std::nullopt);
 
   add_object_layer.redo();
 

@@ -33,7 +33,7 @@ TEST(Layer, MakeUnspecializedLayer)
   EXPECT_EQ(meta.properties.size(), 0);
   EXPECT_EQ(meta.components.size(), 0);
 
-  EXPECT_EQ(layer.persistent_id, kNone);
+  EXPECT_EQ(layer.persistent_id, std::nullopt);
   EXPECT_EQ(layer.opacity, 1.0f);
   EXPECT_TRUE(layer.visible);
 }

@@ -163,18 +163,19 @@ LayerViewMock::LayerViewMock(ir::Layer layer,
   });
 
   ON_CALL(*this, get_extent).WillByDefault(Return(mLayer.extent));
-  ON_CALL(*this, get_tile).WillByDefault([this](const MatrixIndex& index) -> Optional<TileID> {
-    if (index.row >= 0 &&                  //
-        index.col >= 0 &&                  //
-        index.row < mLayer.extent.rows &&  //
-        index.col < mLayer.extent.cols) {
-      const auto u_row = saturate_cast<usize>(index.row);
-      const auto u_col = saturate_cast<usize>(index.col);
-      return mLayer.tiles.at(u_row).at(u_col);
-    }
+  ON_CALL(*this, get_tile)
+      .WillByDefault([this](const MatrixIndex& index) -> std::optional<TileID> {
+        if (index.row >= 0 &&                  //
+            index.col >= 0 &&                  //
+            index.row < mLayer.extent.rows &&  //
+            index.col < mLayer.extent.cols) {
+          const auto u_row = saturate_cast<usize>(index.row);
+          const auto u_col = saturate_cast<usize>(index.col);
+          return mLayer.tiles.at(u_row).at(u_col);
+        }
 
-    return kNone;
-  });
+        return std::nullopt;
+      });
 
   ON_CALL(*this, get_tile_encoding).WillByDefault(Return(mTileFormat.encoding));
   ON_CALL(*this, get_tile_compression).WillByDefault(Return(mTileFormat.compression));

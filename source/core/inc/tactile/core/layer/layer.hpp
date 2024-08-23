@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional
+
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -17,7 +18,7 @@ class Registry;
 struct CLayer final
 {
   /** The associated identifier used in save files. */
-  Maybe<int32> persistent_id;
+  std::optional<int32> persistent_id;
 
   /** The opacity of the layer when rendered. */
   float opacity;

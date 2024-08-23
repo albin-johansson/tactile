@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <optional>      // optional
 #include <system_error>  // error_code
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
@@ -65,10 +65,10 @@ struct CTileFormat final
   TileEncoding encoding;
 
   /** The compression strategy. */
-  Optional<CompressionFormat> compression;
+  std::optional<CompressionFormat> compression;
 
   /** The compression level, if any. */
-  Maybe<int> comp_level;
+  std::optional<int> comp_level;
 };
 
 /**

@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <utility>  // move
+#include <optional>  // optional, nullopt
+#include <utility>   // move
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/debug/exception.hpp"
 
 namespace tactile {
@@ -112,7 +112,7 @@ constexpr void erase_from(T& map, const auto& key)
  * The removed element if successful; nothing if the element wasn't found.
  */
 template <MapLikeType T>
-constexpr auto take_from(T& map, const auto& key) -> Maybe<typename T::mapped_type>
+constexpr auto take_from(T& map, const auto& key) -> std::optional<typename T::mapped_type>
 {
   if (const auto iter = map.find(key); iter != map.end()) {
     auto elem = std::move(iter->second);
@@ -120,7 +120,7 @@ constexpr auto take_from(T& map, const auto& key) -> Maybe<typename T::mapped_ty
     return elem;
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 /**

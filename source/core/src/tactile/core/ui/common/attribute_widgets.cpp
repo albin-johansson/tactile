@@ -41,11 +41,11 @@ auto _push_attribute_type_selectable(const AttributeTypeNameArray& names,
 
 }  // namespace attribute_widgets
 
-auto push_string_input(const char* id,
-                       const Attribute::string_type& str) -> Optional<Attribute::string_type>
+auto push_string_input(const char* id, const Attribute::string_type& str)
+    -> std::optional<Attribute::string_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::string_type> new_str {};
+  std::optional<Attribute::string_type> new_str {};
 
   std::array<char, kStringCharLimit + 1> buffer;  // NOLINT
 
@@ -64,10 +64,11 @@ auto push_string_input(const char* id,
   return new_str;
 }
 
-auto push_int_input(const char* id, Attribute::int_type value) -> Optional<Attribute::int_type>
+auto push_int_input(const char* id,
+                    Attribute::int_type value) -> std::optional<Attribute::int_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::int_type> new_value {};
+  std::optional<Attribute::int_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragInt("##Int", &value)) {
@@ -78,10 +79,10 @@ auto push_int_input(const char* id, Attribute::int_type value) -> Optional<Attri
 }
 
 auto push_int2_input(const char* id,
-                     Attribute::int2_type value) -> Optional<Attribute::int2_type>
+                     Attribute::int2_type value) -> std::optional<Attribute::int2_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::int2_type> new_value {};
+  std::optional<Attribute::int2_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragInt2("##Int2", value.data())) {
@@ -92,10 +93,10 @@ auto push_int2_input(const char* id,
 }
 
 auto push_int3_input(const char* id,
-                     Attribute::int3_type value) -> Optional<Attribute::int3_type>
+                     Attribute::int3_type value) -> std::optional<Attribute::int3_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::int3_type> new_value {};
+  std::optional<Attribute::int3_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragInt3("##Int3", value.data())) {
@@ -106,10 +107,10 @@ auto push_int3_input(const char* id,
 }
 
 auto push_int4_input(const char* id,
-                     Attribute::int4_type value) -> Optional<Attribute::int4_type>
+                     Attribute::int4_type value) -> std::optional<Attribute::int4_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::int4_type> new_value {};
+  std::optional<Attribute::int4_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragInt4("##Int4", value.data())) {
@@ -120,10 +121,10 @@ auto push_int4_input(const char* id,
 }
 
 auto push_float_input(const char* id,
-                      Attribute::float_type value) -> Optional<Attribute::float_type>
+                      Attribute::float_type value) -> std::optional<Attribute::float_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::float_type> new_value {};
+  std::optional<Attribute::float_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragFloat("##Float", &value)) {
@@ -134,10 +135,10 @@ auto push_float_input(const char* id,
 }
 
 auto push_float2_input(const char* id,
-                       Attribute::float2_type value) -> Optional<Attribute::float2_type>
+                       Attribute::float2_type value) -> std::optional<Attribute::float2_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::float2_type> new_value {};
+  std::optional<Attribute::float2_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragFloat2("##Float2", value.data())) {
@@ -148,10 +149,10 @@ auto push_float2_input(const char* id,
 }
 
 auto push_float3_input(const char* id,
-                       Attribute::float3_type value) -> Optional<Attribute::float3_type>
+                       Attribute::float3_type value) -> std::optional<Attribute::float3_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::float3_type> new_value {};
+  std::optional<Attribute::float3_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragFloat3("##Float3", value.data())) {
@@ -162,10 +163,10 @@ auto push_float3_input(const char* id,
 }
 
 auto push_float4_input(const char* id,
-                       Attribute::float4_type value) -> Optional<Attribute::float4_type>
+                       Attribute::float4_type value) -> std::optional<Attribute::float4_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::float4_type> new_value {};
+  std::optional<Attribute::float4_type> new_value {};
 
   ImGui::SetNextItemWidth(-1.0f);
   if (ImGui::DragFloat4("##Float4", value.data())) {
@@ -175,10 +176,10 @@ auto push_float4_input(const char* id,
   return new_value;
 }
 
-auto push_bool_input(const char* id, bool value) -> Optional<bool>
+auto push_bool_input(const char* id, bool value) -> std::optional<bool>
 {
   const IdScope scope {id};
-  Optional<bool> new_value {};
+  std::optional<bool> new_value {};
 
   if (ImGui::Checkbox("##Bool", &value)) {
     new_value = value;
@@ -188,10 +189,10 @@ auto push_bool_input(const char* id, bool value) -> Optional<bool>
 }
 
 auto push_path_input(const char* id,
-                     const Attribute::path_type& path) -> Optional<Attribute::path_type>
+                     const Attribute::path_type& path) -> std::optional<Attribute::path_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::path_type> new_path {};
+  std::optional<Attribute::path_type> new_path {};
 
 #if TACTILE_OS_WINDOWS
   const auto path_string = path.string();
@@ -214,11 +215,11 @@ auto push_path_input(const char* id,
   return new_path;
 }
 
-auto push_color_input(const char* id,
-                      const Attribute::color_type& color) -> Optional<Attribute::color_type>
+auto push_color_input(const char* id, const Attribute::color_type& color)
+    -> std::optional<Attribute::color_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::color_type> new_color {};
+  std::optional<Attribute::color_type> new_color {};
 
   const auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                      ImGuiColorEditFlags_AlphaBar;
@@ -232,10 +233,10 @@ auto push_color_input(const char* id,
 }
 
 auto push_objref_input(const char* id, const Attribute::objref_type& object)
-    -> Optional<Attribute::objref_type>
+    -> std::optional<Attribute::objref_type>
 {
   const IdScope scope {id};
-  Optional<Attribute::objref_type> new_object {};
+  std::optional<Attribute::objref_type> new_object {};
 
   // TODO
   ImGui::Text("%i", object.value);
@@ -244,7 +245,8 @@ auto push_objref_input(const char* id, const Attribute::objref_type& object)
 }
 
 // NOLINTNEXTLINE(*-cognitive-complexity)
-auto push_attribute_input(const char* id, const Attribute& attribute) -> Optional<Attribute>
+auto push_attribute_input(const char* id,
+                          const Attribute& attribute) -> std::optional<Attribute>
 {
   switch (attribute.get_type()) {
     case AttributeType::kStr: {
@@ -327,7 +329,7 @@ auto push_attribute_input(const char* id, const Attribute& attribute) -> Optiona
     }
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 auto push_attribute_type_combo(const Language& language,

@@ -104,7 +104,7 @@ void MapEventHandler::on_create_map(const CreateMapEvent& event)
   }
 }
 
-auto MapEventHandler::_guess_save_format(const Path& path) -> Optional<SaveFormatId>
+auto MapEventHandler::_guess_save_format(const Path& path) -> std::optional<SaveFormatId>
 {
   const auto extension = path.extension();
 
@@ -120,7 +120,7 @@ auto MapEventHandler::_guess_save_format(const Path& path) -> Optional<SaveForma
     return SaveFormatId::kTiledTmx;
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 }  // namespace tactile

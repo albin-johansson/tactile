@@ -2,11 +2,11 @@
 
 #include "tactile/core/cmd/layer/set_layer_visibility_command.hpp"
 
-#include <utility>  // move
+#include <optional>  // optional
+#include <utility>   // move
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/cmd/layer/create_layer_command.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
@@ -38,7 +38,7 @@ class SetLayerVisibilityCommandTest : public testing::Test
     mLayerId = map.active_layer;
   }
 
-  Optional<MapDocument> mDocument;
+  std::optional<MapDocument> mDocument;
   EntityID mMapId {kInvalidEntity};
   EntityID mLayerId {kInvalidEntity};
 };

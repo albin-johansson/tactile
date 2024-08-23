@@ -115,7 +115,7 @@ TEST_P(TileLayerTest, MakeTileLayer)
   EXPECT_EQ(meta.properties.size(), 0);
   EXPECT_EQ(meta.components.size(), 0);
 
-  EXPECT_EQ(layer.persistent_id, nothing);
+  EXPECT_EQ(layer.persistent_id, std::nullopt);
   EXPECT_EQ(layer.opacity, 1.0f);
   EXPECT_TRUE(layer.visible);
 

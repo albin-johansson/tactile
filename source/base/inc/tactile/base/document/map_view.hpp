@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <optional>      // optional
 #include <system_error>  // error_code
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
@@ -100,7 +100,7 @@ class IMapView
    * A compression format if compression is used; an empty optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_tile_compression() const -> Optional<CompressionFormat> = 0;
+  virtual auto get_tile_compression() const -> std::optional<CompressionFormat> = 0;
 
   /**
    * Returns the compression level used by the map, if any.
@@ -109,7 +109,7 @@ class IMapView
    * A compression level if compression is used; an empty optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_compression_level() const -> Optional<int> = 0;
+  virtual auto get_compression_level() const -> std::optional<int> = 0;
 
   /**
    * Returns the number of layers in the map.

@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional
+
 #include "tactile/base/engine/engine_app.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/event/component_event_handler.hpp"
@@ -58,10 +59,10 @@ class TactileApp final : public IEngineApp
   Settings mSettings {};
 
   /** The language that will be used throughout the session. */
-  Optional<ui::Language> mLanguage {};
+  std::optional<ui::Language> mLanguage {};
 
   /** The core document model. */
-  Optional<Model> mModel {};
+  std::optional<Model> mModel {};
 
   /** The UI manager. */
   ui::WidgetManager mWidgetManager {};
@@ -70,31 +71,31 @@ class TactileApp final : public IEngineApp
   EventDispatcher mEventDispatcher {};
 
   /** Delegate for general "file" events. */
-  Optional<FileEventHandler> mFileEventHandler {};
+  std::optional<FileEventHandler> mFileEventHandler {};
 
   /** Delegate for general "edit" events. */
-  Optional<EditEventHandler> mEditEventHandler {};
+  std::optional<EditEventHandler> mEditEventHandler {};
 
   /** Delegate for general "view" events. */
-  Optional<ViewEventHandler> mViewEventHandler {};
+  std::optional<ViewEventHandler> mViewEventHandler {};
 
   /** Delegate for tileset events. */
-  Optional<TilesetEventHandler> mTilesetEventHandler {};
+  std::optional<TilesetEventHandler> mTilesetEventHandler {};
 
   /** Delegate for map events. */
-  Optional<MapEventHandler> mMapEventHandler {};
+  std::optional<MapEventHandler> mMapEventHandler {};
 
   /** Delegate for layer events. */
-  Optional<LayerEventHandler> mLayerEventHandler {};
+  std::optional<LayerEventHandler> mLayerEventHandler {};
 
   /** Delegate for component events. */
-  Optional<ComponentEventHandler> mComponentEventHandler {};
+  std::optional<ComponentEventHandler> mComponentEventHandler {};
 
   /** Delegate for property events. */
-  Optional<PropertyEventHandler> mPropertyEventHandler {};
+  std::optional<PropertyEventHandler> mPropertyEventHandler {};
 
   /** Delegate for viewport events. */
-  Optional<ViewportEventHandler> mViewportEventHandler {};
+  std::optional<ViewportEventHandler> mViewportEventHandler {};
 };
 
 }  // namespace tactile

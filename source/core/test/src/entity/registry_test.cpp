@@ -107,7 +107,7 @@ TEST_F(RegistryTest, Detach)
   EXPECT_EQ(mRegistry.detach<float>(entity), 1.5f);
   EXPECT_FALSE(mRegistry.has<float>(entity));
 
-  EXPECT_EQ(mRegistry.detach<float>(entity), nothing);
+  EXPECT_EQ(mRegistry.detach<float>(entity), std::nullopt);
 }
 
 /// \trace tactile::Registry::get

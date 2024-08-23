@@ -76,7 +76,7 @@ void Logger::add_sink(Unique<ILogSink> sink)
   }
 }
 
-void Logger::set_reference_instant(const Maybe<SteadyClockInstant> instant)
+void Logger::set_reference_instant(const std::optional<SteadyClockInstant> instant)
 {
   mReferenceInstant = instant;
 }

@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/opengl_renderer/api.hpp"
 #include "tactile/opengl_renderer/opengl_renderer.hpp"
@@ -22,7 +23,7 @@ class TACTILE_OPENGL_API OpenGLRendererPlugin final : public IPlugin
 
  private:
   IRuntime* mRuntime {};
-  Optional<OpenGLRenderer> mRenderer {};
+  std::optional<OpenGLRenderer> mRenderer {};
 };
 
 extern "C"

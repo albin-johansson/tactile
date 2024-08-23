@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional, nullopt
+
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/io/int_parser.hpp"
 #include "tactile/base/meta/color.hpp"
@@ -19,10 +20,10 @@ namespace tactile {
  * A color if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-constexpr auto parse_color_rgb(const StringView rgb) noexcept -> Optional<UColor>
+constexpr auto parse_color_rgb(const StringView rgb) noexcept -> std::optional<UColor>
 {
   if (rgb.length() != 7 || rgb.front() != '#') {
-    return kNone;
+    return std::nullopt;
   }
 
   const auto r = parse<UColor::value_type>(rgb.substr(1, 2), 16);
@@ -36,7 +37,7 @@ constexpr auto parse_color_rgb(const StringView rgb) noexcept -> Optional<UColor
                    0xFF};
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 /**
@@ -48,10 +49,10 @@ constexpr auto parse_color_rgb(const StringView rgb) noexcept -> Optional<UColor
  * A color if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-constexpr auto parse_color_rgba(const StringView rgba) noexcept -> Optional<UColor>
+constexpr auto parse_color_rgba(const StringView rgba) noexcept -> std::optional<UColor>
 {
   if (rgba.length() != 9 || rgba.front() != '#') {
-    return kNone;
+    return std::nullopt;
   }
 
   const auto r = parse<UColor::value_type>(rgba.substr(1, 2), 16);
@@ -66,7 +67,7 @@ constexpr auto parse_color_rgba(const StringView rgba) noexcept -> Optional<UCol
                    static_cast<uint8>(*a)};
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 /**
@@ -78,10 +79,10 @@ constexpr auto parse_color_rgba(const StringView rgba) noexcept -> Optional<UCol
  * A color if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-constexpr auto parse_color_argb(const StringView argb) noexcept -> Optional<UColor>
+constexpr auto parse_color_argb(const StringView argb) noexcept -> std::optional<UColor>
 {
   if (argb.length() != 9 || argb.front() != '#') {
-    return kNone;
+    return std::nullopt;
   }
 
   const auto a = parse<UColor::value_type>(argb.substr(1, 2), 16);
@@ -96,7 +97,7 @@ constexpr auto parse_color_argb(const StringView argb) noexcept -> Optional<UCol
                    static_cast<uint8>(*a)};
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 }  // namespace tactile

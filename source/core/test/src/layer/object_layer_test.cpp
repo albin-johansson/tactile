@@ -41,7 +41,7 @@ TEST(ObjectLayer, MakeObjectLayer)
   EXPECT_EQ(meta.components.size(), 0);
 
   EXPECT_EQ(layer.opacity, 1.0f);
-  EXPECT_EQ(layer.persistent_id, kNone);
+  EXPECT_EQ(layer.persistent_id, std::nullopt);
   EXPECT_TRUE(layer.visible);
 
   EXPECT_EQ(object_layer.objects.size(), 0);

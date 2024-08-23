@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include <optional>  // optional
+
 #include <imgui.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -118,7 +119,7 @@ class Window final
    * nothing otherwise.
    */
   [[nodiscard]]
-  auto get_local_mouse_pos() const -> Maybe<Float2>;
+  auto get_local_mouse_pos() const -> std::optional<Float2>;
 
  private:
   const char* mName;

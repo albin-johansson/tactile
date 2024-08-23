@@ -250,13 +250,13 @@ void set_layer_tile(Registry& registry,
 
 auto get_layer_tile(const Registry& registry,
                     const EntityID layer_id,
-                    const MatrixIndex& index) -> Optional<TileID>
+                    const MatrixIndex& index) -> std::optional<TileID>
 {
   TACTILE_ASSERT(is_tile_layer(registry, layer_id));
 
   if (const auto& tile_layer = registry.get<CTileLayer>(layer_id);
       !is_index_within_extent(tile_layer.extent, index)) {
-    return kNone;
+    return std::nullopt;
   }
 
   if (const auto* dense = registry.find<CDenseTileLayer>(layer_id)) {

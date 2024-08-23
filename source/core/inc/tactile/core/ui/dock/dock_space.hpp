@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/maybe.hpp"
+#include <optional>  // optional
+
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -38,7 +39,7 @@ class DockSpace final
 
  private:
   Path mImGuiIniPath;
-  Maybe<uint> mRootId {};
+  std::optional<uint> mRootId {};
   bool mDidInit {false};
 };
 

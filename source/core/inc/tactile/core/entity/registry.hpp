@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include <utility>  // forward, move
+#include <optional>  // optional, nullopt
+#include <utility>   // forward, move
 
 #include <entt/entity/registry.hpp>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/assert.hpp"
@@ -104,15 +104,15 @@ class Registry final
    * The removed component; nothing if the entity didn't feature the component.
    */
   template <typename T>
-  [[nodiscard]] auto detach(const EntityID entity) -> Maybe<T>
+  [[nodiscard]] auto detach(const EntityID entity) -> std::optional<T>
   {
     if (has<T>(entity)) {
       auto component = get<T>(entity);
       mRegistry.erase<T>(entity);
-      return some(std::move(component));
+      return std::optional {std::move(component)};
     }
 
-    return kNone;
+    return std::nullopt;
   }
 
   /**

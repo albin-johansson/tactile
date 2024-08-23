@@ -87,8 +87,8 @@ TEST_F(TmjFormatLayerEmitterTest, EmitPlainTileLayer)
 
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kPlainText,
-    .compression = kNone,
-    .compression_level = kNone,
+    .compression = std::nullopt,
+    .compression_level = std::nullopt,
   };
 
   testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
@@ -150,8 +150,8 @@ TEST_F(TmjFormatLayerEmitterTest, EmitBase64TileLayer)
 
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kBase64,
-    .compression = kNone,
-    .compression_level = kNone,
+    .compression = std::nullopt,
+    .compression_level = std::nullopt,
   };
 
   testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
@@ -216,7 +216,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitZlibCompressedTileLayer)
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kBase64,
     .compression = CompressionFormat::kZlib,
-    .compression_level = kNone,
+    .compression_level = std::nullopt,
   };
 
   testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
@@ -282,7 +282,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitZstdCompressedTileLayer)
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kBase64,
     .compression = CompressionFormat::kZstd,
-    .compression_level = kNone,
+    .compression_level = std::nullopt,
   };
 
   testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
@@ -346,8 +346,8 @@ TEST_F(TmjFormatLayerEmitterTest, EmitObjectLayer)
 
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kPlainText,
-    .compression = kNone,
-    .compression_level = kNone,
+    .compression = std::nullopt,
+    .compression_level = std::nullopt,
   };
 
   testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};
@@ -410,8 +410,8 @@ TEST_F(TmjFormatLayerEmitterTest, EmitGroupLayer)
 
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kPlainText,
-    .compression = kNone,
-    .compression_level = kNone,
+    .compression = std::nullopt,
+    .compression_level = std::nullopt,
   };
 
   testing::NiceMock<LayerViewMock> layer {ir_layer, ir_tile_format};

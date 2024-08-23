@@ -61,19 +61,19 @@ class LayerViewImpl final : public ILayerView
   auto object_count() const -> usize override;
 
   [[nodiscard]]
-  auto get_tile(const MatrixIndex& index) const -> Optional<TileID> override;
+  auto get_tile(const MatrixIndex& index) const -> std::optional<TileID> override;
 
   [[nodiscard]]
   auto get_tile_encoding() const -> TileEncoding override;
 
   [[nodiscard]]
-  auto get_tile_compression() const -> Optional<CompressionFormat> override;
+  auto get_tile_compression() const -> std::optional<CompressionFormat> override;
 
   [[nodiscard]]
-  auto get_compression_level() const -> Optional<int> override;
+  auto get_compression_level() const -> std::optional<int> override;
 
   [[nodiscard]]
-  auto get_extent() const -> Optional<MatrixExtent> override;
+  auto get_extent() const -> std::optional<MatrixExtent> override;
 
   [[nodiscard]]
   auto get_meta() const -> const IMetaView& override;

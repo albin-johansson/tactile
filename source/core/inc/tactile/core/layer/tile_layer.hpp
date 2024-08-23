@@ -3,8 +3,8 @@
 #pragma once
 
 #include <concepts>  // invocable
+#include <optional>  // optional
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/tree_map.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/byte_stream.hpp"
@@ -176,7 +176,7 @@ void set_layer_tile(Registry& registry,
 [[nodiscard]]
 auto get_layer_tile(const Registry& registry,
                     EntityID layer_id,
-                    const MatrixIndex& index) -> Optional<TileID>;
+                    const MatrixIndex& index) -> std::optional<TileID>;
 
 /**
  * Indicates whether a matrix index is within the interval [{0, 0}, {rows, columns}).

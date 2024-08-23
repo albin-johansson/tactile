@@ -96,10 +96,10 @@ TEST(Lookup, TakeFrom)
   map["B"] = 0xB;
 
   EXPECT_EQ(take_from(map, "A"), 0xA);
-  EXPECT_EQ(take_from(map, "A"), nothing);
+  EXPECT_EQ(take_from(map, "A"), std::nullopt);
 
   EXPECT_EQ(take_from(map, "B"), 0xB);
-  EXPECT_EQ(take_from(map, "B"), nothing);
+  EXPECT_EQ(take_from(map, "B"), std::nullopt);
 
   EXPECT_EQ(map.size(), 0);
 }

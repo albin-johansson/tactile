@@ -33,12 +33,12 @@ struct FindLayerConstResult final
 [[nodiscard]]
 auto find_layer(Registry& registry,
                 const EntityID root_layer_id,
-                const EntityID target_layer_id) -> Optional<FindLayerResult>
+                const EntityID target_layer_id) -> std::optional<FindLayerResult>
 {
   const auto parent_id = find_parent_layer(registry, root_layer_id, target_layer_id);
 
   if (parent_id == kInvalidEntity) {
-    return kNone;
+    return std::nullopt;
   }
 
   auto& parent_layer = registry.get<CGroupLayer>(parent_id);
@@ -58,12 +58,12 @@ auto find_layer(Registry& registry,
 [[nodiscard]]
 auto find_layer(const Registry& registry,
                 const EntityID root_layer_id,
-                const EntityID target_layer_id) -> Optional<FindLayerConstResult>
+                const EntityID target_layer_id) -> std::optional<FindLayerConstResult>
 {
   const auto parent_id = find_parent_layer(registry, root_layer_id, target_layer_id);
 
   if (parent_id == kInvalidEntity) {
-    return kNone;
+    return std::nullopt;
   }
 
   const auto& parent_layer = registry.get<CGroupLayer>(parent_id);
@@ -211,7 +211,7 @@ auto find_parent_layer(const Registry& registry,
 
 auto get_local_layer_index(const Registry& registry,
                            const EntityID root_layer_id,
-                           const EntityID target_layer_id) -> Optional<usize>
+                           const EntityID target_layer_id) -> std::optional<usize>
 {
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
@@ -224,7 +224,7 @@ auto get_local_layer_index(const Registry& registry,
 
 auto get_global_layer_index(const Registry& registry,
                             const EntityID root_layer_id,
-                            const EntityID target_layer_id) -> Optional<usize>
+                            const EntityID target_layer_id) -> std::optional<usize>
 {
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
@@ -238,7 +238,7 @@ auto get_global_layer_index(const Registry& registry,
     return index;
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 void move_layer_down(Registry& registry,

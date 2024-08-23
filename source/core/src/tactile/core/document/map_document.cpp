@@ -2,10 +2,10 @@
 
 #include "tactile/core/document/map_document.hpp"
 
+#include <optional>      // optional
 #include <system_error>  // make_error_code, errc
 #include <utility>       // move
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_view_impl.hpp"
@@ -23,14 +23,14 @@ struct MapDocument::Data final
   UUID uuid;
   Registry registry;
   EntityID map_entity;
-  Maybe<Path> path;
+  std::optional<Path> path;
   SaveFormatId format;
 
   Data() :
     uuid {UUID::generate()},
     registry {},
     map_entity {kInvalidEntity},
-    path {kNone},
+    path {std::nullopt},
     format {SaveFormatId::kTactileYaml}
   {
     registry.add<CTileCache>();

@@ -340,7 +340,7 @@ auto find_tileset(const Registry& registry, const TileID tile_id) -> EntityID
   return kInvalidEntity;
 }
 
-auto get_tile_index(const Registry& registry, const TileID tile_id) -> Maybe<TileIndex>
+auto get_tile_index(const Registry& registry, const TileID tile_id) -> std::optional<TileIndex>
 {
   TACTILE_ASSERT(registry.has<CTileCache>());
 
@@ -351,7 +351,7 @@ auto get_tile_index(const Registry& registry, const TileID tile_id) -> Maybe<Til
     return TileIndex {tile_id - instance->tile_range.first_id};
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 auto is_tile_range_available(const Registry& registry, const TileRange& range) -> bool

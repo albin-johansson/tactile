@@ -49,10 +49,10 @@ class MapViewImpl final : public IMapView
   auto get_tile_encoding() const -> TileEncoding override;
 
   [[nodiscard]]
-  auto get_tile_compression() const -> Optional<CompressionFormat> override;
+  auto get_tile_compression() const -> std::optional<CompressionFormat> override;
 
   [[nodiscard]]
-  auto get_compression_level() const -> Optional<int> override;
+  auto get_compression_level() const -> std::optional<int> override;
 
   [[nodiscard]]
   auto layer_count() const -> usize override;

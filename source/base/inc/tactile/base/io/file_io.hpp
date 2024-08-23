@@ -5,8 +5,8 @@
 #include <fstream>   // ifstream
 #include <ios>       // ios
 #include <iterator>  // istreambuf_iterator
+#include <optional>  // optional
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
@@ -21,7 +21,7 @@ namespace tactile {
  * \return
  * The file content if successful; an empty optional otherwise.
  */
-inline auto read_binary_file(const Path& path) -> Optional<String>
+inline auto read_binary_file(const Path& path) -> std::optional<String>
 {
   std::ifstream stream {path, std::ios::in | std::ios::binary};
 
@@ -29,7 +29,7 @@ inline auto read_binary_file(const Path& path) -> Optional<String>
     return String {std::istreambuf_iterator<char> {stream}, std::istreambuf_iterator<char> {}};
   }
 
-  return kNone;
+  return std::nullopt;
 }
 
 }  // namespace tactile

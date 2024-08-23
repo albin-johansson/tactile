@@ -37,7 +37,7 @@ void deduce_tile_format_from_layer(const nlohmann::json& layer_json,
       tile_format.compression = CompressionFormat::kZstd;
     }
     else {
-      tile_format.compression = kNone;
+      tile_format.compression = std::nullopt;
     }
   }
 }

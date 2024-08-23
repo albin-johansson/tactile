@@ -1,12 +1,12 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
 #include <filesystem>  // current_path
+#include <optional>    // optional
 #include <ostream>     // ostream
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/runtime/runtime.hpp"
 #include "tactile/test_util/document_view_mocks.hpp"
@@ -29,7 +29,7 @@ struct TmjRoundtripConfig final
 {
   StringView map_filename;
   TileEncoding encoding;
-  Optional<CompressionFormat> compression;
+  std::optional<CompressionFormat> compression;
   bool use_external_tilesets;
 };
 
@@ -104,19 +104,19 @@ INSTANTIATE_TEST_SUITE_P(TMJ,
                              TmjRoundtripConfig {
                                .map_filename = "map_with_embedded_tilesets.tmj",
                                .encoding = TileEncoding::kPlainText,
-                               .compression = kNone,
+                               .compression = std::nullopt,
                                .use_external_tilesets = false,
                              },
                              TmjRoundtripConfig {
                                .map_filename = "map_with_external_tilesets.tmj",
                                .encoding = TileEncoding::kPlainText,
-                               .compression = kNone,
+                               .compression = std::nullopt,
                                .use_external_tilesets = true,
                              },
                              TmjRoundtripConfig {
                                .map_filename = "map_with_base64_tiles.tmj",
                                .encoding = TileEncoding::kBase64,
-                               .compression = kNone,
+                               .compression = std::nullopt,
                                .use_external_tilesets = false,
                              },
                              TmjRoundtripConfig {
@@ -142,7 +142,7 @@ TEST_P(TmjFormatRoundtripTest, SaveAndLoadMap)
   auto ir_map = make_complex_ir_map(ir::TileFormat {
     .encoding = config.encoding,
     .compression = config.compression,
-    .compression_level = kNone,
+    .compression_level = std::nullopt,
   });
 
   for (auto& ir_tileset_ref : ir_map.tilesets) {

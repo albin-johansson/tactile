@@ -51,7 +51,7 @@ auto parse_type(const nlohmann::json& layer_json)
 [[nodiscard]]
 auto parse_base64_tile_data(const IRuntime& runtime,
                             const nlohmann::json& data_json,
-                            const Optional<CompressionFormat> compression,
+                            const std::optional<CompressionFormat> compression,
                             ir::Layer& layer) -> SaveFormatParseResult<void>
 {
   const auto& encoded_tile_data = data_json.get_ref<const String&>();
@@ -139,7 +139,7 @@ auto parse_tile_layer(const IRuntime& runtime,
     encoding_iter->get_to(encoding);
   }
 
-  Optional<CompressionFormat> compression {};
+  std::optional<CompressionFormat> compression {};
   if (const auto compression_iter = layer_json.find("compression");
       compression_iter != layer_json.end()) {
     const auto& compression_name = compression_iter->get_ref<const String&>();

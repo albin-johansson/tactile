@@ -2,11 +2,11 @@
 
 #include "tactile/core/cmd/layer/duplicate_layer_command.hpp"
 
-#include <utility>  // move
+#include <optional>  // optional
+#include <utility>   // move
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/maybe.hpp"
 #include "tactile/core/cmd/layer/create_layer_command.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
@@ -47,7 +47,7 @@ class DuplicateLayerCommandTest : public testing::Test
     return map.active_layer;
   }
 
-  Optional<MapDocument> mDocument;
+  std::optional<MapDocument> mDocument;
   EntityID mMapId {kInvalidEntity};
 };
 
@@ -80,7 +80,7 @@ TEST_F(DuplicateLayerCommandTest, RedoUndoWithTopLevelLayer)
   EXPECT_EQ(count_layers(registry, map.root_layer), 1);
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, new_layer_id), kInvalidEntity);
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, source_layer_id), 0);
-  EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), kNone);
+  EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), std::nullopt);
 
   duplicate_layer.redo();
 
@@ -129,7 +129,7 @@ TEST_F(DuplicateLayerCommandTest, RedoUndoWithNestedLayer)
   EXPECT_EQ(count_layers(registry, map.root_layer), 4);
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, new_layer_id), kInvalidEntity);
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, source_layer_id), 1);
-  EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), kNone);
+  EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), std::nullopt);
 
   duplicate_layer.redo();
 
