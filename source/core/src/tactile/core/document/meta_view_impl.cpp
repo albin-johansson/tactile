@@ -26,7 +26,7 @@ auto MetaViewImpl::get_name() const -> StringView
 }
 
 auto MetaViewImpl::get_property(const usize index) const
-    -> Pair<const String&, const Attribute&>
+    -> std::pair<const String&, const Attribute&>
 {
   const auto& registry = mDocument->get_registry();
   const auto& meta = registry.get<CMeta>(mMetaId);

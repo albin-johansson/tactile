@@ -74,7 +74,7 @@ auto TileViewImpl::animation_frame_count() const -> usize
 }
 
 auto TileViewImpl::get_animation_frame(const usize index) const
-    -> Pair<TileIndex, Milliseconds>
+    -> std::pair<TileIndex, Milliseconds>
 {
   const auto& registry = mDocument->get_registry();
 

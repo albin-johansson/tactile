@@ -4,8 +4,8 @@
 
 #include <expected>      // expected
 #include <system_error>  // error_code
+#include <utility>       // pair
 
-#include "tactile/base/container/pair.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
@@ -81,7 +81,8 @@ class ITileView
    * A tile index and frame duration pair.
    */
   [[nodiscard]]
-  virtual auto get_animation_frame(usize index) const -> Pair<TileIndex, Milliseconds> = 0;
+  virtual auto get_animation_frame(usize index) const
+      -> std::pair<TileIndex, Milliseconds> = 0;
 
   /**
    * Returns a view of the associated metadata.

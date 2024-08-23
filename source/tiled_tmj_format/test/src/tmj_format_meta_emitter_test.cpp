@@ -33,7 +33,7 @@ TEST(TmjFormatMetaEmitter, EmitStringProperty)
 
   const String property_name {"s"};
   const Attribute property_value {"foo"};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -58,7 +58,7 @@ TEST(TmjFormatMetaEmitter, EmitIntProperty)
 
   const String property_name {"i"};
   const Attribute property_value {42};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -83,7 +83,7 @@ TEST(TmjFormatMetaEmitter, EmitInt2Property)
 
   const String property_name {"i2"};
   const Attribute property_value {Int2 {1, 2}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -108,7 +108,7 @@ TEST(TmjFormatMetaEmitter, EmitInt3Property)
 
   const String property_name {"i3"};
   const Attribute property_value {Int3 {1, 2, 3}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -133,7 +133,7 @@ TEST(TmjFormatMetaEmitter, EmitInt4Property)
 
   const String property_name {"i4"};
   const Attribute property_value {Int4 {1, 2, 3, 4}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -158,7 +158,7 @@ TEST(TmjFormatMetaEmitter, EmitFloatProperty)
 
   const String property_name {"f"};
   const Attribute property_value {1.5f};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -183,7 +183,7 @@ TEST(TmjFormatMetaEmitter, EmitFloat2Property)
 
   const String property_name {"f2"};
   const Attribute property_value {Float2 {1, 2}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -208,7 +208,7 @@ TEST(TmjFormatMetaEmitter, EmitFloat3Property)
 
   const String property_name {"f3"};
   const Attribute property_value {Float3 {1, 2, 3}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -233,7 +233,7 @@ TEST(TmjFormatMetaEmitter, EmitFloat4Property)
 
   const String property_name {"f4"};
   const Attribute property_value {Float4 {1, 2, 3, 4}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -258,7 +258,7 @@ TEST(TmjFormatMetaEmitter, EmitBoolProperty)
 
   const String property_name {"b"};
   const Attribute property_value {true};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -283,7 +283,7 @@ TEST(TmjFormatMetaEmitter, EmitColorProperty)
 
   const String property_name {"c"};
   const Attribute property_value {UColor {0x1A, 0x3B, 0x5C, 0x7D}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -308,7 +308,7 @@ TEST(TmjFormatMetaEmitter, EmitPathProperty)
 
   const String property_name {"p"};
   const Attribute property_value {Path {"a/b/c"}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));
@@ -333,7 +333,7 @@ TEST(TmjFormatMetaEmitter, EmitObjectProperty)
 
   const String property_name {"o"};
   const Attribute property_value {ObjectRef {99}};
-  const Pair<const String&, const Attribute&> property {property_name, property_value};
+  const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);
   EXPECT_CALL(meta, get_property).WillOnce(testing::Return(property));

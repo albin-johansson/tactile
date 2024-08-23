@@ -4,8 +4,8 @@
 
 #include <expected>      // expected
 #include <system_error>  // error_code
+#include <utility>       // pair
 
-#include "tactile/base/container/pair.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -53,7 +53,8 @@ class IComponentView
    * An attribute key and value pair.
    */
   [[nodiscard]]
-  virtual auto get_attribute(usize index) const -> Pair<const String&, const Attribute&> = 0;
+  virtual auto get_attribute(usize index) const
+      -> std::pair<const String&, const Attribute&> = 0;
 
   /**
    * Returns the number of attributes in the component.

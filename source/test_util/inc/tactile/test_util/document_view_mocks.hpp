@@ -29,7 +29,7 @@ class MetaViewMock : public IMetaView
 
   MOCK_METHOD(StringView, get_name, (), (const, override));
 
-  MOCK_METHOD((Pair<const String&, const Attribute&>),
+  MOCK_METHOD((std::pair<const String&, const Attribute&>),
               get_property,
               (usize),
               (const, override));
@@ -99,7 +99,7 @@ class TileViewMock : public ITileView
 
   MOCK_METHOD(usize, animation_frame_count, (), (const, override));
 
-  MOCK_METHOD((Pair<TileIndex, Milliseconds>),
+  MOCK_METHOD((std::pair<TileIndex, Milliseconds>),
               get_animation_frame,
               (usize),
               (const, override));

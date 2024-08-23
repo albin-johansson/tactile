@@ -8,7 +8,6 @@ target_sources(tactile-base
                "inc/tactile/base/container/function.hpp"
                "inc/tactile/base/container/hash_map.hpp"
                "inc/tactile/base/container/maybe.hpp"
-               "inc/tactile/base/container/pair.hpp"
                "inc/tactile/base/container/path.hpp"
                "inc/tactile/base/container/queue.hpp"
                "inc/tactile/base/container/ref.hpp"
