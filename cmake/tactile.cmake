@@ -101,7 +101,6 @@ function(tactile_set_properties target)
                         CXX_EXTENSIONS "OFF"
                         CXX_STANDARD_REQUIRED "ON"
                         POSITION_INDEPENDENT_CODE "ON"
-                        UNITY_BUILD "${TACTILE_UNITY_BUILD}"
                         INTERPROCEDURAL_OPTIMIZATION "${TACTILE_USE_LTO}"
                         PREFIX ""
                         )

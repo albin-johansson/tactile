@@ -68,7 +68,6 @@ jobs:
                    -DTACTILE_BUILD_ZSTD_COMPRESSION=ON \
                    -DTACTILE_BUILD_OPENGL_RENDERER=ON \
                    -DTACTILE_BUILD_VULKAN_RENDERER=OFF \
-                   -DTACTILE_UNITY_BUILD=OFF \
                    -DTACTILE_USE_LTO=OFF \
                    -DTACTILE_USE_PRECOMPILED_HEADERS=ON \
                    --log-level=DEBUG
