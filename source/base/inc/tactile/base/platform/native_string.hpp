@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <filesystem>   // path
 #include <string>       // basic_string
 #include <string_view>  // basic_string_view
 
@@ -17,7 +18,7 @@
 
 namespace tactile {
 
-using NativeString = std::basic_string<wchar_t>;
-using NativeStringView = std::basic_string_view<wchar_t>;
+using NativeString = std::basic_string<std::filesystem::path::value_type>;
+using NativeStringView = std::basic_string_view<std::filesystem::path::value_type>;
 
 }  // namespace tactile

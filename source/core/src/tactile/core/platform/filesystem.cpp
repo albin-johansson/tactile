@@ -8,6 +8,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "tactile/base/platform/native_string.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/platform/environment.hpp"
