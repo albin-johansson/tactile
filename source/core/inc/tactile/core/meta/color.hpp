@@ -5,9 +5,9 @@
 #include <array>         // array
 #include <expected>      // expected
 #include <ostream>       // ostream
+#include <span>          // span
 #include <system_error>  // error_code
 
-#include "tactile/base/container/span.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/meta/color.hpp"
@@ -34,7 +34,7 @@ namespace tactile {
 auto make_color(float r, float g, float b, float a) -> UColor;
 
 [[nodiscard]]
-auto make_color(Span<const float, 4> rgba) -> UColor;
+auto make_color(std::span<const float, 4> rgba) -> UColor;
 
 [[nodiscard]]
 auto make_color(const FColor& fcolor) -> UColor;

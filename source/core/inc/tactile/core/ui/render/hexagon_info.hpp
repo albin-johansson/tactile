@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/span.hpp"
+#include <span>  // span
+
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/matrix_index.hpp"
@@ -67,7 +68,7 @@ auto get_hexagon_info(float side_length) noexcept -> HexagonInfo;
  */
 void get_hexagon_vertices(const Float2& center_pos,
                           const HexagonInfo& hexagon_info,
-                          Span<Float2> hexagon_vertices);
+                          std::span<Float2> hexagon_vertices);
 
 /**
  * Computes the bounding box for a hexagon at a given position.

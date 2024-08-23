@@ -3,15 +3,15 @@
 #pragma once
 
 #include <ranges>  // contiguous_range
+#include <span>    // span
 
-#include "tactile/base/container/span.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
 
 /** A contiguous sequence of arbitrary bytes. */
-using ByteSpan = Span<const uint8>;
+using ByteSpan = std::span<const uint8>;
 
 /** A contiguous stream of arbitrary bytes. */
 using ByteStream = Vector<uint8>;

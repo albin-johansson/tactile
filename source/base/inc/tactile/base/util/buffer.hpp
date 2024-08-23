@@ -7,8 +7,8 @@
 #include <concepts>   // same_as, input_iterator
 #include <cstdlib>    // abs
 #include <iterator>   // distance
+#include <span>       // span
 
-#include "tactile/base/container/span.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
@@ -246,10 +246,10 @@ class Buffer final
    * A span.
    */
   [[nodiscard]]
-  constexpr auto view() const noexcept -> Span<const value_type>
+  constexpr auto view() const noexcept -> std::span<const value_type>
     requires(!std::same_as<value_type, StringView::value_type>)
   {
-    return Span<const value_type> {data(), size()};
+    return std::span<const value_type> {data(), size()};
   }
 
   /**

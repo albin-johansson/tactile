@@ -21,7 +21,7 @@ auto make_color(const float r, const float g, const float b, const float a) -> U
   return {to_u8(r), to_u8(g), to_u8(b), to_u8(a)};
 }
 
-auto make_color(const Span<const float, 4> rgba) -> UColor
+auto make_color(const std::span<const float, 4> rgba) -> UColor
 {
   return make_color(rgba[0], rgba[1], rgba[2], rgba[3]);
 }

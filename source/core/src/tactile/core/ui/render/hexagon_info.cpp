@@ -26,7 +26,7 @@ auto get_hexagon_info(const float side_length) noexcept -> HexagonInfo
 
 void get_hexagon_vertices(const Float2& center_pos,
                           const HexagonInfo& hexagon_info,
-                          const Span<Float2> hexagon_vertices)
+                          const std::span<Float2> hexagon_vertices)
 {
   TACTILE_ASSERT(hexagon_vertices.size() >= 6);
 
