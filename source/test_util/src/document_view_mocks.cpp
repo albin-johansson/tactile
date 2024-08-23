@@ -26,7 +26,7 @@ MetaViewMock::MetaViewMock(ir::Metadata meta) :
 }
 
 ObjectViewMock::ObjectViewMock(ir::Object object,
-                               Variant<const ILayerView*, const ITileView*> parent) :
+                               std::variant<const ILayerView*, const ITileView*> parent) :
   mObject {std::move(object)},
   mParent {parent},
   mMeta {mObject.meta}

@@ -2,11 +2,12 @@
 
 #pragma once
 
+#include <variant>  // variant
+
 #include <gmock/gmock.h>
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
-#include "tactile/base/container/variant.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/document/layer_view.hpp"
@@ -44,7 +45,7 @@ class ObjectViewMock : public IObjectView
 {
  public:
   explicit ObjectViewMock(ir::Object object,
-                          Variant<const ILayerView*, const ITileView*> parent = {});
+                          std::variant<const ILayerView*, const ITileView*> parent = {});
 
   MOCK_METHOD((std::expected<void, std::error_code>),
               accept,
@@ -77,7 +78,7 @@ class ObjectViewMock : public IObjectView
 
  private:
   ir::Object mObject {};
-  Variant<const ILayerView*, const ITileView*> mParent {};
+  std::variant<const ILayerView*, const ITileView*> mParent {};
   testing::NiceMock<MetaViewMock> mMeta {};
 };
 

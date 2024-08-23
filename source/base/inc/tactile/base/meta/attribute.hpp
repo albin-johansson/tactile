@@ -7,11 +7,10 @@
 #include <stdexcept>    // logic_error
 #include <type_traits>  // decay_t
 #include <utility>      // move
-#include <variant>      // visit
+#include <variant>      // variant, visit
 
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
-#include "tactile/base/container/variant.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/meta/color.hpp"
@@ -71,19 +70,19 @@ class Attribute final
   using objref_type = ObjectRef;
 
   // Remember to update the type indices if the type order changes.
-  using variant_type = Variant<string_type,
-                               int_type,
-                               int2_type,
-                               int3_type,
-                               int4_type,
-                               float_type,
-                               float2_type,
-                               float3_type,
-                               float4_type,
-                               bool,
-                               color_type,
-                               path_type,
-                               objref_type>;
+  using variant_type = std::variant<string_type,
+                                    int_type,
+                                    int2_type,
+                                    int3_type,
+                                    int4_type,
+                                    float_type,
+                                    float2_type,
+                                    float3_type,
+                                    float4_type,
+                                    bool,
+                                    color_type,
+                                    path_type,
+                                    objref_type>;
 
   /**
    * Creates an empty string attribute.
