@@ -99,7 +99,7 @@ auto DocumentManager::get_current_document() const -> const IDocument*
   return nullptr;
 }
 
-auto DocumentManager::get_open_documents() const -> const Vector<UUID>&
+auto DocumentManager::get_open_documents() const -> const std::vector<UUID>&
 {
   return mOpenDocuments;
 }

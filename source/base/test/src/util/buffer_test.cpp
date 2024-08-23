@@ -9,7 +9,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/vector.hpp"
+#include <vector> // vector
 
 namespace tactile::test {
 
@@ -162,7 +162,7 @@ TEST(Buffer, AppendIteratorRange)
 // tactile::Buffer::append [container version]
 TEST(Buffer, AppendContainer)
 {
-  const Vector<uint32> values = {1, 2, 3, 4, 5};
+  const std::vector<uint32> values = {1, 2, 3, 4, 5};
   Buffer<uint32, 8> buffer;  // NOLINT
   ASSERT_EQ(buffer.size(), 0);
 

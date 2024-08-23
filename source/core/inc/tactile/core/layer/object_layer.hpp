@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/vector.hpp"
+#include <vector>  // vector
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
@@ -16,7 +17,7 @@ class Registry;
 struct CObjectLayer final
 {
   /** The associated objects. */
-  Vector<EntityID> objects;
+  std::vector<EntityID> objects;
 };
 
 /**

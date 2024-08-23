@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/vector.hpp"
+#include <vector>  // vector
+
 #include "tactile/base/document/tile_view.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/document/meta_view_impl.hpp"

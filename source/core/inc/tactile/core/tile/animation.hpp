@@ -4,8 +4,8 @@
 
 #include <expected>      // expected
 #include <system_error>  // error_code
+#include <vector>        // vector
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -40,7 +40,7 @@ struct CAnimation final
   usize frame_index;
 
   /** The sequence of frames the animation cycles through. */
-  Vector<AnimationFrame> frames;
+  std::vector<AnimationFrame> frames;
 };
 
 /**

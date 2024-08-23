@@ -6,8 +6,8 @@
 #include <concepts>  // same_as
 #include <cstring>   // memcpy
 #include <optional>  // optional
+#include <vector>    // vector
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/platform/bits.hpp"

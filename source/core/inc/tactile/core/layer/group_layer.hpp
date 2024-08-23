@@ -3,8 +3,8 @@
 #pragma once
 
 #include <optional>  // optional
+#include <vector>    // vector
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -19,7 +19,7 @@ class Registry;
 struct CGroupLayer final
 {
   /** The stored layers. */
-  Vector<EntityID> layers;
+  std::vector<EntityID> layers;
 };
 
 /**

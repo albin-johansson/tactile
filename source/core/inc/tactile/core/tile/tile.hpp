@@ -4,8 +4,8 @@
 
 #include <expected>      // expected
 #include <system_error>  // error_code
+#include <vector>        // vector
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -27,7 +27,7 @@ struct CTile final
   TileIndex index;
 
   /** The embedded objects, if any. */
-  Vector<EntityID> objects;
+  std::vector<EntityID> objects;
 };
 
 /**

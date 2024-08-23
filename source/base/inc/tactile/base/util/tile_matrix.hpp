@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/vector.hpp"
+#include <vector>  // vector
+
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/prelude.hpp"
@@ -10,8 +11,8 @@
 
 namespace tactile {
 
-using TileRow = Vector<TileID>;
-using TileMatrix = Vector<TileRow>;
+using TileRow = std::vector<TileID>;
+using TileMatrix = std::vector<TileRow>;
 
 /**
  * Creates a tile matrix of a given size with empty tile identifiers.

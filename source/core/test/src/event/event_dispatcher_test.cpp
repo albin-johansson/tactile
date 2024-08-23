@@ -2,9 +2,9 @@
 
 #include "tactile/core/event/event_dispatcher.hpp"
 
-#include <gtest/gtest.h>
+#include <vector>  // vector
 
-#include "tactile/base/container/vector.hpp"
+#include <gtest/gtest.h>
 
 namespace tactile {
 
@@ -23,8 +23,8 @@ class EventDispatcherTest : public testing::Test
 
  protected:
   EventDispatcher mDispatcher {};
-  Vector<int> mInts {};
-  Vector<float> mFloats {};
+  std::vector<int> mInts {};
+  std::vector<float> mFloats {};
 };
 
 /**

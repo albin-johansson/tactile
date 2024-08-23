@@ -3,10 +3,10 @@
 #include "tactile/core/ui/i18n/language_parser.hpp"
 
 #include <utility>  // move, to_underlying
+#include <vector>   // vector
 
 #include <magic_enum.hpp>
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/debug/performance.hpp"
 #include "tactile/core/io/ini.hpp"
@@ -195,7 +195,7 @@ auto _get_widget_names() -> std::unordered_map<StringView, StringID>
 void _parse_section(const StringMap<IniSection>& ini,
                     const StringView section_name,
                     const std::unordered_map<StringView, StringID>& name_mapping,
-                    Vector<String>& strings)
+                    std::vector<String>& strings)
 {
   if (const auto* section = find_in(ini, section_name)) {
     for (const auto& [key, value] : *section) {
@@ -207,7 +207,7 @@ void _parse_section(const StringMap<IniSection>& ini,
 }
 
 [[nodiscard]]
-auto _validate_strings(Vector<String>& strings,
+auto _validate_strings(std::vector<String>& strings,
                        const Language* fallback) -> std::expected<void, std::error_code>
 {
   usize index {0};
@@ -254,7 +254,7 @@ auto LanguageParser::parse(const LanguageID id, const Path& path, const Language
 
   return parse_ini(path)
       .transform([this](const IniData& ini) {
-        Vector<String> strings {};
+        std::vector<String> strings {};
         strings.resize(std::to_underlying(StringID::kMAX));
 
         _parse_section(ini, "misc", mMiscNames, strings);
@@ -268,7 +268,7 @@ auto LanguageParser::parse(const LanguageID id, const Path& path, const Language
 
         return strings;
       })
-      .and_then([id, fallback](Vector<String>&& strings) {
+      .and_then([id, fallback](std::vector<String>&& strings) {
         return _validate_strings(strings, fallback).transform([id, &strings] {
           return Language {id, std::move(strings)};
         });

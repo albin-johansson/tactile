@@ -3,10 +3,10 @@
 #pragma once
 
 #include <optional>  // optional
+#include <vector>    // vector
 
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
@@ -44,7 +44,7 @@ struct Component final
   String name;
 
   /** The component attribute defaults. */
-  Vector<NamedAttribute> attributes;
+  std::vector<NamedAttribute> attributes;
 
   [[nodiscard]]
   auto operator==(const Component&) const -> bool = default;
@@ -60,7 +60,7 @@ struct AttachedComponent final
   String type;
 
   /** The component attributes. */
-  Vector<NamedAttribute> attributes;
+  std::vector<NamedAttribute> attributes;
 
   [[nodiscard]]
   auto operator==(const AttachedComponent&) const -> bool = default;
@@ -75,10 +75,10 @@ struct Metadata final
   String name;
 
   /** The attached properties. */
-  Vector<NamedAttribute> properties;
+  std::vector<NamedAttribute> properties;
 
   /** The attached components. */
-  Vector<AttachedComponent> components;
+  std::vector<AttachedComponent> components;
 
   [[nodiscard]]
   auto operator==(const Metadata&) const -> bool = default;
@@ -135,13 +135,13 @@ struct Layer final
   MatrixExtent extent;
 
   /** The contained tiles (if tile layer). */
-  Vector<Vector<TileID>> tiles;
+  std::vector<std::vector<TileID>> tiles;
 
   /** The contained objects (if object layer). */
-  Vector<Object> objects;
+  std::vector<Object> objects;
 
   /** The contained layers (if group layer). */
-  Vector<Layer> layers;
+  std::vector<Layer> layers;
 
   /** Whether the layer is rendered. */
   bool visible {};
@@ -165,7 +165,7 @@ struct AnimationFrame final
   auto operator==(const AnimationFrame&) const -> bool = default;
 };
 
-using TileAnimation = Vector<AnimationFrame>;
+using TileAnimation = std::vector<AnimationFrame>;
 
 /**
  * Intermediate representation of a tile definition.
@@ -179,7 +179,7 @@ struct Tile final
   TileIndex index;
 
   /** The contained objects, if any. */
-  Vector<Object> objects;
+  std::vector<Object> objects;
 
   /** The associated animation frames, if any. */
   TileAnimation animation;
@@ -212,7 +212,7 @@ struct Tileset final
   Path image_path;
 
   /** The associated tile descriptors. */
-  Vector<Tile> tiles;
+  std::vector<Tile> tiles;
 
   /** Indicates whether the tileset is embedded. */
   bool is_embedded;
@@ -278,13 +278,13 @@ struct Map final
   TileFormat tile_format;
 
   /** The associated component definitions. */
-  Vector<Component> components;
+  std::vector<Component> components;
 
   /** The associated tilesets. */
-  Vector<TilesetRef> tilesets;
+  std::vector<TilesetRef> tilesets;
 
   /** The associated layers. */
-  Vector<Layer> layers;
+  std::vector<Layer> layers;
 
   [[nodiscard]]
   auto operator==(const Map&) const -> bool = default;

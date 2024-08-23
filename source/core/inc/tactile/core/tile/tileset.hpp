@@ -6,8 +6,8 @@
 #include <optional>       // optional
 #include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
+#include <vector>         // vector
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -59,7 +59,7 @@ struct CTileset final
   MatrixExtent extent;
 
   /** Tracks the associated tiles. Indexed using \c TileIndex values. */
-  Vector<EntityID> tiles;
+  std::vector<EntityID> tiles;
 };
 
 /**

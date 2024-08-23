@@ -2,9 +2,10 @@
 
 #include "tactile/vulkan_renderer/vulkan_instance.hpp"
 
+#include <vector>  // vector
+
 #include <SDL2/SDL_vulkan.h>
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
@@ -13,12 +14,12 @@ namespace tactile {
 namespace vulkan_instance {
 
 [[nodiscard]]
-auto get_required_extensions(IWindow& window) -> Vector<const char*>
+auto get_required_extensions(IWindow& window) -> std::vector<const char*>
 {
   uint32 extension_count = 0;
   SDL_Vulkan_GetInstanceExtensions(window.get_handle(), &extension_count, nullptr);
 
-  Vector<const char*> extensions {};
+  std::vector<const char*> extensions {};
   extensions.resize(extension_count);
 
   SDL_Vulkan_GetInstanceExtensions(window.get_handle(), &extension_count, extensions.data());
@@ -52,7 +53,7 @@ auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, Vk
     .apiVersion = VK_API_VERSION_1_2,
   };
 
-  Vector<const char*> enabled_layers {};
+  std::vector<const char*> enabled_layers {};
   if constexpr (kIsDebugBuild) {
     enabled_layers.push_back("VK_LAYER_KHRONOS_validation");
   }

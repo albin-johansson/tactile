@@ -4,8 +4,8 @@
 
 #include <ranges>  // contiguous_range
 #include <span>    // span
+#include <vector>  // vector
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -14,7 +14,7 @@ namespace tactile {
 using ByteSpan = std::span<const uint8>;
 
 /** A contiguous stream of arbitrary bytes. */
-using ByteStream = Vector<uint8>;
+using ByteStream = std::vector<uint8>;
 
 /**
  * Creates a byte span from a container.

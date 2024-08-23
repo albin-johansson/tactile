@@ -2,16 +2,16 @@
 
 #include "tactile/core/util/string_ops.hpp"
 
-#include <gtest/gtest.h>
+#include <vector>  // vector
 
-#include "tactile/base/container/vector.hpp"
+#include <gtest/gtest.h>
 
 namespace tactile {
 
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringEmpty)
 {
-  Vector<String> tokens {};
+  std::vector<String> tokens {};
   split_string("", '!', [&tokens](const StringView token) {
     tokens.emplace_back(token);
     return true;
@@ -23,7 +23,7 @@ TEST(StringOps, SplitStringEmpty)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringLetters)
 {
-  Vector<String> tokens {};
+  std::vector<String> tokens {};
   split_string("a:b:c:d", ':', [&tokens](const StringView token) {
     tokens.emplace_back(token);
     return true;
@@ -39,7 +39,7 @@ TEST(StringOps, SplitStringLetters)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringNumbers)
 {
-  Vector<String> tokens {};
+  std::vector<String> tokens {};
   split_string("1 200 30 4000", ' ', [&tokens](const StringView token) {
     tokens.emplace_back(token);
     return true;
@@ -55,7 +55,7 @@ TEST(StringOps, SplitStringNumbers)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringWithLeadingSeparator)
 {
-  Vector<String> tokens {};
+  std::vector<String> tokens {};
   split_string(".woah", '.', [&tokens](const StringView token) {
     tokens.emplace_back(token);
     return true;
@@ -69,7 +69,7 @@ TEST(StringOps, SplitStringWithLeadingSeparator)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringWithTrailingSeparator)
 {
-  Vector<String> tokens {};
+  std::vector<String> tokens {};
   split_string("foobar!", '!', [&tokens](const StringView token) {
     tokens.emplace_back(token);
     return true;
@@ -82,7 +82,7 @@ TEST(StringOps, SplitStringWithTrailingSeparator)
 /// \trace tactile::split_string
 TEST(StringOps, SplitStringWithEmptyTokens)
 {
-  Vector<String> tokens {};
+  std::vector<String> tokens {};
   split_string("aaa::a:bb::c", ':', [&tokens](const StringView token) {
     tokens.emplace_back(token);
     return true;

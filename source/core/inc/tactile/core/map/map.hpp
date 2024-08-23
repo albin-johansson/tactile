@@ -5,8 +5,8 @@
 #include <expected>      // expected
 #include <optional>      // optional
 #include <system_error>  // error_code
+#include <vector>        // vector
 
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
@@ -53,7 +53,7 @@ struct CMap final
   EntityID active_tileset;
 
   /** The attached tilesets. */
-  Vector<EntityID> attached_tilesets;
+  std::vector<EntityID> attached_tilesets;
 };
 
 /**

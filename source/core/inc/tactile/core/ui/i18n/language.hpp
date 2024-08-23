@@ -3,9 +3,9 @@
 #pragma once
 
 #include <utility>  // to_underlying
+#include <vector>   // vector
 
 #include "tactile/base/container/string.hpp"
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/ui/i18n/language_id.hpp"
@@ -63,9 +63,9 @@ class Language final
 
  private:
   LanguageID mID;
-  Vector<String> mStrings {};
+  std::vector<String> mStrings {};
 
-  Language(LanguageID id, Vector<String> strings);
+  Language(LanguageID id, std::vector<String> strings);
 };
 
 }  // namespace tactile::ui

@@ -5,9 +5,9 @@
 #include <expected>       // expected
 #include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
+#include <vector>         // vector
 
 #include "tactile/base/container/smart_ptr.hpp"
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command_stack.hpp"
@@ -99,7 +99,7 @@ class DocumentManager final
    * The UUIDs of the open documents.
    */
   [[nodiscard]]
-  auto get_open_documents() const -> const Vector<UUID>&;
+  auto get_open_documents() const -> const std::vector<UUID>&;
 
   /**
    * Sets the maximum number of commands tracked by each document.
@@ -145,7 +145,7 @@ class DocumentManager final
 
  private:
   std::unordered_map<UUID, Unique<IDocument>> mDocuments {};
-  Vector<UUID> mOpenDocuments {};
+  std::vector<UUID> mOpenDocuments {};
   UUID mActiveDocument {};
   std::unordered_map<UUID, CommandStack> mHistories {};
   usize mCommandCapacity {100};

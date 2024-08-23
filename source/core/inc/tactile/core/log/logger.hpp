@@ -4,10 +4,10 @@
 
 #include <format>    // make_format_args, format_args
 #include <optional>  // optional
+#include <vector>    // vector
 
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
-#include "tactile/base/container/vector.hpp"
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
@@ -157,7 +157,7 @@ class Logger final
  private:
   LogLevel mMinLevel {LogLevel::kInfo};
   LogLevel mFlushLevel {LogLevel::kError};
-  Vector<Unique<ILogSink>> mSinks {};
+  std::vector<Unique<ILogSink>> mSinks {};
   std::optional<SteadyClockInstant> mReferenceInstant {};
   StringView mScope {};
 
