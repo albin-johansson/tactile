@@ -44,6 +44,7 @@ target_link_libraries(tactile-vulkan-renderer
                       tactile::base
                       tactile::runtime
                       Vulkan::Vulkan
+                      GPUOpen::VulkanMemoryAllocator
                       SDL2::SDL2
 
                       PRIVATE
