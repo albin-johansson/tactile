@@ -111,10 +111,10 @@ EmptyLineAfterAccessModifier: Never
 PackConstructorInitializers: Never
 SpaceBeforeCtorInitializerColon: true
 ConstructorInitializerIndentWidth: 2
-BreakConstructorInitializers: BeforeColon
+BreakConstructorInitializers: AfterColon
 
 # Inheritance
-BreakInheritanceList: BeforeColon
+BreakInheritanceList: AfterColon
 SpaceBeforeInheritanceColon: true
 
 # Enums
