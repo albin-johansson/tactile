@@ -4,6 +4,8 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/object.hpp"
 #include "test/object_command_test.hpp"
 
 namespace tactile::test {

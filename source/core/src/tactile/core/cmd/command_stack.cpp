@@ -36,7 +36,7 @@ void CommandStack::redo()
   _increase_current_index();
 }
 
-void CommandStack::_store(Unique<ICommand> cmd)
+void CommandStack::_store(std::unique_ptr<ICommand> cmd)
 {
   if (size() == capacity()) {
     _remove_oldest_command();
@@ -87,12 +87,12 @@ auto CommandStack::capacity() const -> std::size_t
   return m_capacity;
 }
 
-auto CommandStack::index() const -> Optional<std::size_t>
+auto CommandStack::index() const -> std::optional<std::size_t>
 {
   return m_current_index;
 }
 
-auto CommandStack::clean_index() const -> Optional<std::size_t>
+auto CommandStack::clean_index() const -> std::optional<std::size_t>
 {
   return m_clean_index;
 }
@@ -128,7 +128,7 @@ void CommandStack::_reset_or_decrease_clean_index()
 {
   if (m_clean_index.has_value()) {
     if (m_clean_index == 0) {
-      m_clean_index = kNone;
+      m_clean_index.reset();
     }
     else {
       m_clean_index = *m_clean_index - 1;
@@ -140,7 +140,7 @@ void CommandStack::_reset_or_decrease_current_index()
 {
   if (m_current_index.has_value()) {
     if (m_current_index == 0) {
-      m_current_index = kNone;
+      m_current_index.reset();
     }
     else {
       m_current_index = *m_current_index - 1;

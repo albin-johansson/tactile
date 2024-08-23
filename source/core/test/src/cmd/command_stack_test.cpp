@@ -51,7 +51,7 @@ TEST(CommandStack, MixedUsage)
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 1);
   EXPECT_EQ(stack.index(), 0);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.can_undo());
   EXPECT_FALSE(stack.can_redo());
 
@@ -60,7 +60,7 @@ TEST(CommandStack, MixedUsage)
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 2);
   EXPECT_EQ(stack.index(), 1);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.can_undo());
   EXPECT_FALSE(stack.can_redo());
 
@@ -69,7 +69,7 @@ TEST(CommandStack, MixedUsage)
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 2);
   EXPECT_EQ(stack.index(), 0);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.can_undo());
   EXPECT_TRUE(stack.can_redo());
 
@@ -77,8 +77,8 @@ TEST(CommandStack, MixedUsage)
   stack.undo();
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 2);
-  EXPECT_EQ(stack.index(), kNone);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.index(), std::nullopt);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_FALSE(stack.can_undo());
   EXPECT_TRUE(stack.can_redo());
 
@@ -87,7 +87,7 @@ TEST(CommandStack, MixedUsage)
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 2);
   EXPECT_EQ(stack.index(), 0);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.can_undo());
   EXPECT_TRUE(stack.can_redo());
 
@@ -96,7 +96,7 @@ TEST(CommandStack, MixedUsage)
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 2);
   EXPECT_EQ(stack.index(), 1);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.can_undo());
   EXPECT_FALSE(stack.can_redo());
 
@@ -105,7 +105,7 @@ TEST(CommandStack, MixedUsage)
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 3);
   EXPECT_EQ(stack.index(), 2);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.can_undo());
   EXPECT_FALSE(stack.can_redo());
 
@@ -115,8 +115,8 @@ TEST(CommandStack, MixedUsage)
   stack.undo();
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 3);
-  EXPECT_EQ(stack.index(), kNone);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.index(), std::nullopt);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_FALSE(stack.can_undo());
   EXPECT_TRUE(stack.can_redo());
 
@@ -125,7 +125,7 @@ TEST(CommandStack, MixedUsage)
   EXPECT_EQ(stack.capacity(), 64);
   EXPECT_EQ(stack.size(), 1);
   EXPECT_EQ(stack.index(), 0);
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.can_undo());
   EXPECT_FALSE(stack.can_redo());
 }
@@ -136,28 +136,28 @@ TEST(CommandStack, CleanIndexManagement)
 {
   CommandStack stack {32};
 
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.is_clean());
 
   // This should be a no-op in this case.
   stack.mark_as_clean();
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.is_clean());
 
   // Adding a command should make the command stack dirty.
   stack.push<C1>();
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_FALSE(stack.is_clean());
 
   // No clean index is set yet, but this should make the stack clean again.
   stack.undo();
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_TRUE(stack.is_clean());
 
   // [] -push-> [ current:C1 ] -push-> [ C1, current:C2 ]
   stack.push<C1>();
   stack.push<C2>();
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_EQ(stack.index(), 1);
   EXPECT_FALSE(stack.is_clean());
 
@@ -184,7 +184,7 @@ TEST(CommandStack, CleanIndexManagement)
   // current:C1 ]
   stack.undo();
   stack.push<C1>();
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_EQ(stack.index(), 1);
   EXPECT_FALSE(stack.is_clean());
 
@@ -196,7 +196,7 @@ TEST(CommandStack, CleanIndexManagement)
 
   // [ C1, current|clean:C1 ] -reset-clean-index-> [ C1, current:C1 ]
   stack.reset_clean_index();
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_EQ(stack.index(), 1);
   EXPECT_FALSE(stack.is_clean());
 }
@@ -237,7 +237,7 @@ TEST(CommandStack, CommandOverflowWithDefinedCleanIndex)
   stack.push<C2>();
 
   EXPECT_EQ(stack.size(), stack.capacity());
-  EXPECT_EQ(stack.clean_index(), kNone);
+  EXPECT_EQ(stack.clean_index(), std::nullopt);
   EXPECT_EQ(stack.index(), 3);
   EXPECT_FALSE(stack.is_clean());
 }

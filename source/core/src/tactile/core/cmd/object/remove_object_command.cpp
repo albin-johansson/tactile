@@ -2,6 +2,7 @@
 
 #include "tactile/core/cmd/object/remove_object_command.hpp"
 
+#include "tactile/core/debug/validation.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"

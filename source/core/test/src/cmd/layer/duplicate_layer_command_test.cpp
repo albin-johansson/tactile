@@ -8,7 +8,12 @@
 
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/core/cmd/layer/create_layer_command.hpp"
+#include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
+#include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/layer/layer.hpp"
+#include "tactile/core/map/map.hpp"
 #include "test/document_testing.hpp"
 
 namespace tactile::test {

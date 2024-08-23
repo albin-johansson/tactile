@@ -5,6 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/map/map.hpp"
