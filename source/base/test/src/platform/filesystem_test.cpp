@@ -9,7 +9,7 @@ namespace tactile::test {
 // tactile::normalize_path_separators
 TEST(Filesystem, NormalizePathSeparators)
 {
-  const auto path = Path {"f"} / "o" / "o" / "b" / "a" / "r";
+  const auto path = std::filesystem::path {"f"} / "o" / "o" / "b" / "a" / "r";
   EXPECT_EQ(normalize_path_separators(path), "f/o/o/b/a/r");
 }
 

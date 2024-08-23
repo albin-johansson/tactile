@@ -104,7 +104,8 @@ void MapEventHandler::on_create_map(const CreateMapEvent& event)
   }
 }
 
-auto MapEventHandler::_guess_save_format(const Path& path) -> std::optional<SaveFormatId>
+auto MapEventHandler::_guess_save_format(const std::filesystem::path& path)
+    -> std::optional<SaveFormatId>
 {
   const auto extension = path.extension();
 

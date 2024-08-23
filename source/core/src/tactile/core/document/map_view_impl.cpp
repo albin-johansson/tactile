@@ -51,7 +51,7 @@ auto MapViewImpl::accept(IDocumentVisitor& visitor) const
   return {};
 }
 
-auto MapViewImpl::get_path() const -> const Path*
+auto MapViewImpl::get_path() const -> const std::filesystem::path*
 {
   return mDocument->get_path();
 }

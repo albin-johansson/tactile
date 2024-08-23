@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <system_error>  // error_code
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -19,7 +19,7 @@ class IMapView;
 struct SaveFormatReadOptions final
 {
   /** The parent directory of the map or tileset file. */
-  Path base_dir;
+  std::filesystem::path base_dir;
 
   /** Whether strict parsing is to be enforced. */
   bool strict_mode : 1;
@@ -31,7 +31,7 @@ struct SaveFormatReadOptions final
 struct SaveFormatWriteOptions final
 {
   /** The parent directory of the map or tileset file. */
-  Path base_dir;
+  std::filesystem::path base_dir;
 
   /** Whether tilesets are saved in separate files. */
   bool use_external_tilesets : 1;
@@ -66,7 +66,8 @@ class ISaveFormat
    * An intermediate map if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto load_map(const Path& map_path, const SaveFormatReadOptions& options) const
+  virtual auto load_map(const std::filesystem::path& map_path,
+                        const SaveFormatReadOptions& options) const
       -> std::expected<ir::Map, std::error_code> = 0;
 
   /**

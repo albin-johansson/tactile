@@ -10,8 +10,8 @@
 
 namespace tactile {
 
-auto load_texture(IRenderer& renderer,
-                  const Path& path) -> std::expected<CTexture, std::error_code>
+auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
+    -> std::expected<CTexture, std::error_code>
 {
   const auto path_string = path.string();
 

@@ -29,7 +29,7 @@ class TACTILE_NULL_RENDERER_API NullTexture final : public ITexture
    * A texture if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto load(Path path) -> std::expected<NullTexture, std::error_code>;
+  static auto load(std::filesystem::path path) -> std::expected<NullTexture, std::error_code>;
 
   [[nodiscard]]
   auto get_handle() const -> void* override;
@@ -38,13 +38,13 @@ class TACTILE_NULL_RENDERER_API NullTexture final : public ITexture
   auto get_size() const -> TextureSize override;
 
   [[nodiscard]]
-  auto get_path() const -> const Path& override;
+  auto get_path() const -> const std::filesystem::path& override;
 
  private:
   TextureSize mSize;
-  Path mPath;
+  std::filesystem::path mPath;
 
-  NullTexture(TextureSize size, Path path);
+  NullTexture(TextureSize size, std::filesystem::path path);
 };
 
 }  // namespace tactile

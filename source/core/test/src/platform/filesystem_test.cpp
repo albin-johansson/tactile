@@ -18,7 +18,7 @@ TEST(Filesystem, GetPersistentStorageDirectory)
 /// \trace tactile::get_user_home_directory
 TEST(Filesystem, GetUserHomeDirectory)
 {
-  const Path home_path {get_env(kOnWindows ? "USERPROFILE" : "HOME").value()};
+  const std::filesystem::path home_path {get_env(kOnWindows ? "USERPROFILE" : "HOME").value()};
   const auto dir = get_user_home_directory();
   EXPECT_EQ(dir, home_path);
 }

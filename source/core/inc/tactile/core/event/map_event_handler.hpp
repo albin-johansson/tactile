@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <optional>  // optional
+#include <filesystem>  // path
+#include <optional>    // optional
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -71,7 +71,8 @@ class MapEventHandler final
   IRuntime* mRuntime;
 
   [[nodiscard]]
-  static auto _guess_save_format(const Path& path) -> std::optional<SaveFormatId>;
+  static auto _guess_save_format(const std::filesystem::path& path)
+      -> std::optional<SaveFormatId>;
 };
 
 }  // namespace tactile

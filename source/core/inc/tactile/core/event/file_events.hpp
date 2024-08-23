@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/path.hpp"
+#include <filesystem>  // path
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -19,7 +20,7 @@ struct SaveEvent final
 struct SaveAsEvent final
 {
   /** The chosen file path. */
-  Path path;
+  std::filesystem::path path;
 };
 
 /**

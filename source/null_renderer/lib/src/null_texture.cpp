@@ -12,12 +12,13 @@
 
 namespace tactile {
 
-NullTexture::NullTexture(const TextureSize size, Path path) :
+NullTexture::NullTexture(const TextureSize size, std::filesystem::path path) :
   mSize {size},
   mPath {std::move(path)}
 {}
 
-auto NullTexture::load(Path path) -> std::expected<NullTexture, std::error_code>
+auto NullTexture::load(std::filesystem::path path)
+    -> std::expected<NullTexture, std::error_code>
 {
   TextureSize size {};
 
@@ -48,7 +49,7 @@ auto NullTexture::get_size() const -> TextureSize
   return mSize;
 }
 
-auto NullTexture::get_path() const -> const Path&
+auto NullTexture::get_path() const -> const std::filesystem::path&
 {
   return mPath;
 }

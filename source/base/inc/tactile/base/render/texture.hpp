@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/path.hpp"
+#include <filesystem>  // path
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -45,7 +46,7 @@ class ITexture
    *    A file path.
    */
   [[nodiscard]]
-  virtual auto get_path() const -> const Path& = 0;
+  virtual auto get_path() const -> const std::filesystem::path& = 0;
 };
 
 }  // namespace tactile

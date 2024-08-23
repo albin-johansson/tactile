@@ -146,7 +146,7 @@ class TilesetViewMock : public ITilesetView
 
   MOCK_METHOD(Int2, get_image_size, (), (const, override));
 
-  MOCK_METHOD(const Path&, get_image_path, (), (const, override));
+  MOCK_METHOD(const std::filesystem::path&, get_image_path, (), (const, override));
 
   MOCK_METHOD(const IMetaView&, get_meta, (), (const, override));
 
@@ -228,7 +228,7 @@ class MapViewMock : public IMapView
               (IDocumentVisitor&),
               (const, override));
 
-  MOCK_METHOD(const Path*, get_path, (), (const, override));
+  MOCK_METHOD(const std::filesystem::path*, get_path, (), (const, override));
 
   MOCK_METHOD(Int2, get_tile_size, (), (const, override));
 

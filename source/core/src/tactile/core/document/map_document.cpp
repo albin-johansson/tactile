@@ -23,7 +23,7 @@ struct MapDocument::Data final
   UUID uuid;
   Registry registry;
   EntityID map_entity;
-  std::optional<Path> path;
+  std::optional<std::filesystem::path> path;
   SaveFormatId format;
 
   Data() :
@@ -100,7 +100,7 @@ auto MapDocument::accept(IDocumentVisitor& visitor) const
 void MapDocument::update()
 {}
 
-void MapDocument::set_path(Path path)
+void MapDocument::set_path(std::filesystem::path path)
 {
   mData->path = std::move(path);
 }
@@ -110,7 +110,7 @@ void MapDocument::set_format(const SaveFormatId format_id)
   mData->format = format_id;
 }
 
-auto MapDocument::get_path() const -> const Path*
+auto MapDocument::get_path() const -> const std::filesystem::path*
 {
   return mData->path.has_value() ? &mData->path.value() : nullptr;
 }

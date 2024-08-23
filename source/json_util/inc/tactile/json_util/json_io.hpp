@@ -4,6 +4,7 @@
 
 #include <exception>     // exception
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <fstream>       // ifstream, ofstream
 #include <iomanip>       // setw
 #include <ios>           // ios
@@ -13,7 +14,6 @@
 
 #include <nlohmann/json.hpp>
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile {
@@ -27,7 +27,7 @@ namespace tactile {
  * A JSON object if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-inline auto load_json(const Path& path) -> std::optional<nlohmann::json>
+inline auto load_json(const std::filesystem::path& path) -> std::optional<nlohmann::json>
 {
   log(LogLevel::kDebug, "Parsing JSON: {}", path.string());
 
@@ -63,7 +63,7 @@ inline auto load_json(const Path& path) -> std::optional<nlohmann::json>
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-inline auto save_json(const Path& path,
+inline auto save_json(const std::filesystem::path& path,
                       const nlohmann::json& json,
                       const int indentation) -> std::expected<void, std::error_code>
 {

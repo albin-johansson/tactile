@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/path.hpp"
+#include <filesystem>  // path
+
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -36,7 +37,7 @@ class NewTilesetDialog final
 
  private:
   String mTexturePathPreview {};
-  Path mTexturePath {};
+  std::filesystem::path mTexturePath {};
   Int2 mTileSize {};
   bool mShouldOpen {false};
 };

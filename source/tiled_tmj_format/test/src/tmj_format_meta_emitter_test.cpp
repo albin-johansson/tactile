@@ -307,7 +307,7 @@ TEST(TmjFormatMetaEmitter, EmitPathProperty)
   MetaViewMock meta {};
 
   const String property_name {"p"};
-  const Attribute property_value {Path {"a/b/c"}};
+  const Attribute property_value {std::filesystem::path {"a/b/c"}};
   const std::pair<const String&, const Attribute&> property {property_name, property_value};
 
   EXPECT_CALL(meta, get_name);

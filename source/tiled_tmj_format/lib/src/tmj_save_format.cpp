@@ -16,7 +16,8 @@ TmjSaveFormat::TmjSaveFormat(IRuntime* runtime) :
   mRuntime {runtime}
 {}
 
-auto TmjSaveFormat::load_map(const Path& map_path, const SaveFormatReadOptions& options) const
+auto TmjSaveFormat::load_map(const std::filesystem::path& map_path,
+                             const SaveFormatReadOptions& options) const
     -> std::expected<ir::Map, std::error_code>
 {
   log(LogLevel::kDebug, "Loading TMJ map from {}", map_path.string());

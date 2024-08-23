@@ -154,7 +154,7 @@ TEST_F(TmjFormatAttributeParserTest, ParseValidPath)
   ASSERT_TRUE(property.has_value());
   EXPECT_EQ(property->name, "foo");
   EXPECT_EQ(property->value.get_type(), AttributeType::kPath);
-  EXPECT_EQ(property->value, Attribute {Path {"b/a/r"}});
+  EXPECT_EQ(property->value, Attribute {std::filesystem::path {"b/a/r"}});
 }
 
 // tactile::parse_tiled_tmj_property
@@ -320,7 +320,8 @@ TEST_F(TmjFormatAttributeParserTest, ParseTiledTmjMetadata)
       Contains(
           Eq(ir::NamedAttribute {"a_color", (Attribute {UColor {0x2B, 0x3C, 0x4D, 0x1A}})})));
   EXPECT_THAT(metadata->properties,
-              Contains(Eq(ir::NamedAttribute {"a_path", Attribute {Path {"a/b/c"}}})));
+              Contains(Eq(ir::NamedAttribute {"a_path",
+                                              Attribute {std::filesystem::path {"a/b/c"}}})));
   EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"an_object", Attribute {ObjectRef {123}}})));
 }

@@ -246,8 +246,10 @@ LanguageParser::LanguageParser() :
   mWidgetNames {_get_widget_names()}
 {}
 
-auto LanguageParser::parse(const LanguageID id, const Path& path, const Language* fallback)
-    const -> std::expected<Language, std::error_code>
+auto LanguageParser::parse(const LanguageID id,
+                           const std::filesystem::path& path,
+                           const Language* fallback) const
+    -> std::expected<Language, std::error_code>
 {
   const SetLogScope log_scope {"LanguageParser"};
   const ScopeProfiler profiler {"parse"};
@@ -279,7 +281,7 @@ auto parse_language_from_disk(const LanguageID id) -> std::expected<Language, st
 {
   LanguageParser parser {};
 
-  Path path {};
+  std::filesystem::path path {};
   switch (id) {
     case LanguageID::kAmericanEnglish: path = "assets/lang/en.ini"; break;
     case LanguageID::kBritishEnglish:  path = "assets/lang/en_GB.ini"; break;

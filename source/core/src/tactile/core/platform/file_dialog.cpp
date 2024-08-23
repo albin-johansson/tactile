@@ -31,7 +31,7 @@ inline constexpr std::array<const char*, 3> kImagePatterns {
 
 }  // namespace file_dialog
 
-auto FileDialog::open_folder() -> std::expected<Path, std::error_code>
+auto FileDialog::open_folder() -> std::expected<std::filesystem::path, std::error_code>
 {
   if (const auto* path = tinyfd_selectFolderDialog("Open Folder", nullptr)) {
     return path;
@@ -40,7 +40,7 @@ auto FileDialog::open_folder() -> std::expected<Path, std::error_code>
   return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::open_file() -> std::expected<Path, std::error_code>
+auto FileDialog::open_file() -> std::expected<std::filesystem::path, std::error_code>
 {
   if (const auto* path =
           tinyfd_openFileDialog("Open File", nullptr, 0, nullptr, "Any file", 0)) {
@@ -50,7 +50,7 @@ auto FileDialog::open_file() -> std::expected<Path, std::error_code>
   return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::open_map() -> std::expected<Path, std::error_code>
+auto FileDialog::open_map() -> std::expected<std::filesystem::path, std::error_code>
 {
   if (const auto* path = tinyfd_openFileDialog("Open Map",
                                                nullptr,
@@ -64,7 +64,7 @@ auto FileDialog::open_map() -> std::expected<Path, std::error_code>
   return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::open_image() -> std::expected<Path, std::error_code>
+auto FileDialog::open_image() -> std::expected<std::filesystem::path, std::error_code>
 {
   if (const auto* path = tinyfd_openFileDialog("Open Image",
                                                nullptr,
@@ -78,7 +78,7 @@ auto FileDialog::open_image() -> std::expected<Path, std::error_code>
   return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::save_map() -> std::expected<Path, std::error_code>
+auto FileDialog::save_map() -> std::expected<std::filesystem::path, std::error_code>
 {
   if (const auto* path = tinyfd_saveFileDialog("Save Map",
                                                nullptr,
@@ -91,7 +91,7 @@ auto FileDialog::save_map() -> std::expected<Path, std::error_code>
   return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::save_image() -> std::expected<Path, std::error_code>
+auto FileDialog::save_image() -> std::expected<std::filesystem::path, std::error_code>
 {
   if (const auto* path = tinyfd_saveFileDialog("Save Image",
                                                nullptr,

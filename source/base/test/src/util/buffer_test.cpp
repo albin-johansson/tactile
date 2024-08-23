@@ -5,11 +5,10 @@
 #include <algorithm>  // fill_n
 #include <array>      // array
 #include <iterator>   // distance, back_inserter
+#include <vector>     // vector
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include <vector> // vector
 
 namespace tactile::test {
 

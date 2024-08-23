@@ -170,7 +170,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     return std::unexpected {SaveFormatParseError::kNoTilesetImage};
   }
 
-  tileset.image_path = Path {relative_image_path};
+  tileset.image_path = std::filesystem::path {relative_image_path};
 
   if (const auto tiles_iter = tileset_json.find("tiles"); tiles_iter != tileset_json.end()) {
     tileset.tiles.reserve(tiles_iter->size());

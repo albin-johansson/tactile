@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <system_error>  // error_code
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -29,7 +29,7 @@ class FileDialog final
    * The selected folder; or an error code if none was selected.
    */
   [[nodiscard]]
-  static auto open_folder() -> std::expected<Path, std::error_code>;
+  static auto open_folder() -> std::expected<std::filesystem::path, std::error_code>;
 
   /**
    * Shows a file dialog that can be used for selecting files.
@@ -38,7 +38,7 @@ class FileDialog final
    * The selected file; or an error code if none was selected.
    */
   [[nodiscard]]
-  static auto open_file() -> std::expected<Path, std::error_code>;
+  static auto open_file() -> std::expected<std::filesystem::path, std::error_code>;
 
   /**
    * Shows a file dialog that can be used for selecting map files.
@@ -47,7 +47,7 @@ class FileDialog final
    * The selected map file; or an error code if none was selected.
    */
   [[nodiscard]]
-  static auto open_map() -> std::expected<Path, std::error_code>;
+  static auto open_map() -> std::expected<std::filesystem::path, std::error_code>;
 
   /**
    * Shows a file dialog that can be used for selecting image files.
@@ -56,7 +56,7 @@ class FileDialog final
    * The selected image file; or an error code if none was selected.
    */
   [[nodiscard]]
-  static auto open_image() -> std::expected<Path, std::error_code>;
+  static auto open_image() -> std::expected<std::filesystem::path, std::error_code>;
 
   /**
    * Shows a file dialog that can be used for selecting map file paths.
@@ -65,7 +65,7 @@ class FileDialog final
    * The chosen map file path; or an error code if none was picked.
    */
   [[nodiscard]]
-  static auto save_map() -> std::expected<Path, std::error_code>;
+  static auto save_map() -> std::expected<std::filesystem::path, std::error_code>;
 
   /**
    * Shows a file dialog that can be used for selecting image file paths.
@@ -74,7 +74,7 @@ class FileDialog final
    * The chosen image file path; or an error code if none was picked.
    */
   [[nodiscard]]
-  static auto save_image() -> std::expected<Path, std::error_code>;
+  static auto save_image() -> std::expected<std::filesystem::path, std::error_code>;
 };
 
 }  // namespace tactile

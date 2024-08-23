@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <system_error>  // error_code
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -29,7 +29,7 @@ struct CTexture final
   Int2 size;
 
   /** The path to the file from which the texture was originally loaded. */
-  Path path;
+  std::filesystem::path path;
 };
 
 /**
@@ -42,7 +42,7 @@ struct CTexture final
  * A texture if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto load_texture(IRenderer& renderer,
-                  const Path& path) -> std::expected<CTexture, std::error_code>;
+auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
+    -> std::expected<CTexture, std::error_code>;
 
 }  // namespace tactile

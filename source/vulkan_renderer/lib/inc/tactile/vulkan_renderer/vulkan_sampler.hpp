@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include <expected>  // expected
+#include <expected>    // expected
+#include <filesystem>  // path
 
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
 

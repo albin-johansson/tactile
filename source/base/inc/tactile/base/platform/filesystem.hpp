@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <algorithm>  // replace
+#include <algorithm>   // replace
+#include <filesystem>  // path
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -19,12 +19,12 @@ namespace tactile {
  * A string that represents the provided path but using forward slashes.
  */
 [[nodiscard]]
-inline auto normalize_path_separators(const Path& path) -> String
+inline auto normalize_path_separators(const std::filesystem::path& path) -> String
 {
   auto path_str = path.string();
 
-  if constexpr (Path::preferred_separator != '/') {
-    std::ranges::replace(path_str, Path::preferred_separator, '/');
+  if constexpr (std::filesystem::path::preferred_separator != '/') {
+    std::ranges::replace(path_str, std::filesystem::path::preferred_separator, '/');
   }
 
   return path_str;

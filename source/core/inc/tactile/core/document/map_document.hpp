@@ -59,12 +59,12 @@ class MapDocument final : public IDocument
 
   void update() override;
 
-  void set_path(Path path) override;
+  void set_path(std::filesystem::path path) override;
 
   void set_format(SaveFormatId format_id) override;
 
   [[nodiscard]]
-  auto get_path() const -> const Path* override;
+  auto get_path() const -> const std::filesystem::path* override;
 
   [[nodiscard]]
   auto get_format() const -> SaveFormatId override;

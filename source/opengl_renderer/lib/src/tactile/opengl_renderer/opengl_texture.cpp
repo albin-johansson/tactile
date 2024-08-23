@@ -14,7 +14,7 @@
 
 namespace tactile {
 
-auto OpenGLTexture::load(const Path& image_path)
+auto OpenGLTexture::load(const std::filesystem::path& image_path)
     -> std::expected<OpenGLTexture, std::error_code>
 {
   uint texture_id {};
@@ -58,7 +58,9 @@ auto OpenGLTexture::load(const Path& image_path)
   return OpenGLTexture {texture_id, texture_size, image_path};
 }
 
-OpenGLTexture::OpenGLTexture(const id_type id, const TextureSize size, Path path) :
+OpenGLTexture::OpenGLTexture(const id_type id,
+                             const TextureSize size,
+                             std::filesystem::path path) :
   mID {id},
   mSize {size},
   mPath {std::move(path)}
@@ -67,7 +69,7 @@ OpenGLTexture::OpenGLTexture(const id_type id, const TextureSize size, Path path
 OpenGLTexture::OpenGLTexture(OpenGLTexture&& other) noexcept :
   mID {std::exchange(other.mID, 0)},
   mSize {std::exchange(other.mSize, TextureSize {})},
-  mPath {std::exchange(other.mPath, Path {})}
+  mPath {std::exchange(other.mPath, std::filesystem::path {})}
 {}
 
 auto OpenGLTexture::operator=(OpenGLTexture&& other) noexcept -> OpenGLTexture&
@@ -77,7 +79,7 @@ auto OpenGLTexture::operator=(OpenGLTexture&& other) noexcept -> OpenGLTexture&
 
     mID = std::exchange(other.mID, 0);
     mSize = std::exchange(other.mSize, TextureSize {});
-    mPath = std::exchange(other.mPath, Path {});
+    mPath = std::exchange(other.mPath, std::filesystem::path {});
   }
 
   return *this;
@@ -106,7 +108,7 @@ auto OpenGLTexture::get_size() const -> TextureSize
   return mSize;
 }
 
-auto OpenGLTexture::get_path() const -> const Path&
+auto OpenGLTexture::get_path() const -> const std::filesystem::path&
 {
   return mPath;
 }

@@ -30,7 +30,7 @@ TEST(TmjFormatTilesetEmitter, EmitEmbeddedTileset)
   const usize tile_count {16};
   const Int2 tile_size {16, 16};
   const Int2 image_size {96, 64};
-  const Path image_path {"assets/images/dummy.png"};
+  const std::filesystem::path image_path {"assets/images/dummy.png"};
 
   EXPECT_CALL(tileset, get_first_tile_id).WillRepeatedly(Return(tile_id));
   EXPECT_CALL(tileset, tile_count).WillRepeatedly(Return(tile_count));
@@ -79,7 +79,7 @@ TEST(TmjFormatTilesetEmitter, EmitExternalTileset)
   const usize tile_count {16};
   const Int2 tile_size {16, 16};
   const Int2 image_size {96, 64};
-  const Path image_path {"assets/images/dummy.png"};
+  const std::filesystem::path image_path {"assets/images/dummy.png"};
 
   EXPECT_CALL(tileset, get_first_tile_id).WillRepeatedly(Return(tile_id));
   EXPECT_CALL(tileset, tile_count).WillRepeatedly(Return(tile_count));

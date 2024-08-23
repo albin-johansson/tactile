@@ -15,9 +15,10 @@
 
 namespace tactile {
 
-auto open_directory_in_finder(const Path& dir) -> std::expected<void, std::error_code>
+auto open_directory_in_finder(const std::filesystem::path& dir)
+    -> std::expected<void, std::error_code>
 {
-  if (!fs::is_directory(dir)) {
+  if (!std::filesystem::is_directory(dir)) {
     return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
@@ -41,10 +42,11 @@ auto open_directory_in_finder(const Path& dir) -> std::expected<void, std::error
   return {};
 }
 
-auto get_persistent_storage_directory() -> std::expected<Path, std::error_code>
+auto get_persistent_storage_directory()
+    -> std::expected<std::filesystem::path, std::error_code>
 {
   if (const auto* path = SDL_GetPrefPath("albin-johansson", "tactile")) {
-    return Path {path};
+    return std::filesystem::path {path};
   }
 
   TACTILE_LOG_ERROR("Could not determine persistent storage directory: {}", SDL_GetError());
@@ -59,19 +61,19 @@ auto get_user_home_directory() -> std::expected<String, std::error_code>
   return get_env(var_name);
 }
 
-auto get_imgui_ini_file_path() -> Path
+auto get_imgui_ini_file_path() -> std::filesystem::path
 {
   return "imgui.ini";
 }
 
-auto normalize_path(const Path& path) -> String
+auto normalize_path(const std::filesystem::path& path) -> String
 {
   auto str = path.string();
   std::ranges::replace(str, '\\', '/');
   return str;
 }
 
-auto has_prefix(const Path& path, const StringView prefix) -> bool
+auto has_prefix(const std::filesystem::path& path, const StringView prefix) -> bool
 {
 #if TACTILE_OS_WINDOWS
   return StringView {path.string().c_str()}.starts_with(prefix);
@@ -80,7 +82,7 @@ auto has_prefix(const Path& path, const StringView prefix) -> bool
 #endif
 }
 
-auto strip_home_directory_prefix(const Path& path, const StringView home_dir)
+auto strip_home_directory_prefix(const std::filesystem::path& path, const StringView home_dir)
     -> std::expected<String, std::error_code>
 {
   if (has_prefix(path, home_dir)) {

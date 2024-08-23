@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <system_error>  // error_code
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -102,7 +102,7 @@ class ITilesetView
    * An image path.
    */
   [[nodiscard]]
-  virtual auto get_image_path() const -> const Path& = 0;
+  virtual auto get_image_path() const -> const std::filesystem::path& = 0;
 
   /**
    * Returns a view of the associated metadata.

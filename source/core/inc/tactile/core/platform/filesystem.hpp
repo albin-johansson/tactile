@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <system_error>  // error_code
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -19,7 +19,8 @@ namespace tactile {
  * \return
  * Nothing if the function tried to open the directory; an error code otherwise.
  */
-auto open_directory_in_finder(const Path& dir) -> std::expected<void, std::error_code>;
+auto open_directory_in_finder(const std::filesystem::path& dir)
+    -> std::expected<void, std::error_code>;
 
 /**
  * Returns the file path to the persistent storage directory associated with the
@@ -29,7 +30,8 @@ auto open_directory_in_finder(const Path& dir) -> std::expected<void, std::error
  * A directory path if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto get_persistent_storage_directory() -> std::expected<Path, std::error_code>;
+auto get_persistent_storage_directory()
+    -> std::expected<std::filesystem::path, std::error_code>;
 
 /**
  * Returns the file path to the user home directory.
@@ -47,7 +49,7 @@ auto get_user_home_directory() -> std::expected<String, std::error_code>;
  * A file path.
  */
 [[nodiscard]]
-auto get_imgui_ini_file_path() -> Path;
+auto get_imgui_ini_file_path() -> std::filesystem::path;
 
 /**
  * Converts a path to a string that is guaranteed to use forward slash
@@ -64,7 +66,7 @@ auto get_imgui_ini_file_path() -> Path;
  * A file path string that uses forward slashes.
  */
 [[nodiscard]]
-auto normalize_path(const Path& path) -> String;
+auto normalize_path(const std::filesystem::path& path) -> String;
 
 /**
  * Indicates whether a path features a given prefix.
@@ -76,7 +78,7 @@ auto normalize_path(const Path& path) -> String;
  * True if the path features the specified prefix; false otherwise.
  */
 [[nodiscard]]
-auto has_prefix(const Path& path, StringView prefix) -> bool;
+auto has_prefix(const std::filesystem::path& path, StringView prefix) -> bool;
 
 /**
  * Replaces the user home directory prefix in a file path with '~'.
@@ -89,7 +91,7 @@ auto has_prefix(const Path& path, StringView prefix) -> bool;
  * applicable.
  */
 [[nodiscard]]
-auto strip_home_directory_prefix(const Path& path, StringView home_dir)
+auto strip_home_directory_prefix(const std::filesystem::path& path, StringView home_dir)
     -> std::expected<String, std::error_code>;
 
 }  // namespace tactile

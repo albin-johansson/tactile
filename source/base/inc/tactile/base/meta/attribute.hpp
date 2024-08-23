@@ -4,12 +4,12 @@
 
 #include <cassert>      // assert
 #include <concepts>     // same_as, convertible_to
+#include <filesystem>   // path
 #include <stdexcept>    // logic_error
 #include <type_traits>  // decay_t
 #include <utility>      // move
 #include <variant>      // variant, visit
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/meta/attribute_type.hpp"
@@ -21,18 +21,18 @@
 namespace tactile {
 
 template <typename T>
-concept AttributeValueType = std::same_as<T, bool> ||           //
-                             std::convertible_to<T, String> ||  //
-                             std::convertible_to<T, int32> ||   //
-                             std::convertible_to<T, Int2> ||    //
-                             std::convertible_to<T, Int3> ||    //
-                             std::convertible_to<T, Int4> ||    //
-                             std::convertible_to<T, float> ||   //
-                             std::convertible_to<T, Float2> ||  //
-                             std::convertible_to<T, Float3> ||  //
-                             std::convertible_to<T, Float4> ||  //
-                             std::convertible_to<T, UColor> ||  //
-                             std::convertible_to<T, Path> ||    //
+concept AttributeValueType = std::same_as<T, bool> ||                          //
+                             std::convertible_to<T, String> ||                 //
+                             std::convertible_to<T, int32> ||                  //
+                             std::convertible_to<T, Int2> ||                   //
+                             std::convertible_to<T, Int3> ||                   //
+                             std::convertible_to<T, Int4> ||                   //
+                             std::convertible_to<T, float> ||                  //
+                             std::convertible_to<T, Float2> ||                 //
+                             std::convertible_to<T, Float3> ||                 //
+                             std::convertible_to<T, Float4> ||                 //
+                             std::convertible_to<T, UColor> ||                 //
+                             std::convertible_to<T, std::filesystem::path> ||  //
                              std::convertible_to<T, ObjectRef>;
 
 /**
@@ -66,7 +66,7 @@ class Attribute final
   using float3_type = Float3;
   using float4_type = Float4;
   using color_type = UColor;
-  using path_type = Path;
+  using path_type = std::filesystem::path;
   using objref_type = ObjectRef;
 
   // Remember to update the type indices if the type order changes.

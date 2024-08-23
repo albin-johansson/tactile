@@ -98,7 +98,7 @@ auto TilesetViewImpl::get_image_size() const -> Int2
   return texture.size;
 }
 
-auto TilesetViewImpl::get_image_path() const -> const Path&
+auto TilesetViewImpl::get_image_path() const -> const std::filesystem::path&
 {
   const auto& registry = mDocument->get_registry();
   const auto& texture = registry.get<CTexture>(mTilesetId);

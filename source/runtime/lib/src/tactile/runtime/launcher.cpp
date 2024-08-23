@@ -4,9 +4,9 @@
 
 #include <exception>  // exception
 #include <utility>    // move
+#include <vector>     // vector
 
 #include "tactile/base/container/string.hpp"
-#include <vector> // vector
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"

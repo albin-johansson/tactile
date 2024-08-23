@@ -21,7 +21,7 @@ class ITilesetView;
 struct TmjFormatExternalTilesetData final
 {
   /** The file path to the external tileset file. */
-  Path path;
+  std::filesystem::path path;
 
   /** The external tileset JSON. */
   nlohmann::json json;

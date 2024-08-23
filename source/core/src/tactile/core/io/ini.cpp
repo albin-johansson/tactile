@@ -74,7 +74,7 @@ auto _parse_key_value_pair(const StringView current_line,
 
 }  // namespace ini
 
-auto parse_ini(const Path& path) -> std::expected<IniData, std::error_code>
+auto parse_ini(const std::filesystem::path& path) -> std::expected<IniData, std::error_code>
 {
   const SetLogScope log_scope {"INI"};
   TACTILE_LOG_DEBUG("Parsing INI from {}", path.string());

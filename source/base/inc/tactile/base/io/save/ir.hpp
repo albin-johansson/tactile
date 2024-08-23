@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <optional>  // optional
-#include <vector>    // vector
+#include <filesystem>  // path
+#include <optional>    // optional
+#include <vector>      // vector
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
@@ -209,7 +209,7 @@ struct Tileset final
   Int2 image_size;
 
   /** The file path to the associated image. */
-  Path image_path;
+  std::filesystem::path image_path;
 
   /** The associated tile descriptors. */
   std::vector<Tile> tiles;

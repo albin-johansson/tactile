@@ -28,7 +28,7 @@ TEST(Attribute, ExplicitTypeConstructor)
   EXPECT_EQ(Attribute {AttributeType::kFloat4}, Attribute {Float4 {}});
   EXPECT_EQ(Attribute {AttributeType::kBool}, Attribute {bool {}});
   EXPECT_EQ(Attribute {AttributeType::kColor}, Attribute {UColor {}});
-  EXPECT_EQ(Attribute {AttributeType::kPath}, Attribute {Path {}});
+  EXPECT_EQ(Attribute {AttributeType::kPath}, Attribute {std::filesystem::path {}});
   EXPECT_EQ(Attribute {AttributeType::kObject}, Attribute {ObjectRef {}});
 }
 
@@ -76,7 +76,7 @@ TEST(Attribute, ImplicitValueConstructor)
   }
 
   {
-    const Attribute path {Path {"foo/bar"}};
+    const Attribute path {std::filesystem::path {"foo/bar"}};
     EXPECT_EQ(path.get_type(), AttributeType::kPath);
     EXPECT_EQ(path.as_path(), "foo/bar");
   }
@@ -150,7 +150,7 @@ TEST(Attribute, Reset)
 
   attribute.reset(AttributeType::kPath);
   EXPECT_TRUE(attribute.has_default_value());
-  EXPECT_EQ(attribute, Attribute {Path {}});
+  EXPECT_EQ(attribute, Attribute {std::filesystem::path {}});
 
   attribute.reset(AttributeType::kObject);
   EXPECT_TRUE(attribute.has_default_value());
@@ -259,7 +259,7 @@ TEST(Attribute, AsColor)
 // tactile::Attribute::as_path
 TEST(Attribute, AsPath)
 {
-  EXPECT_EQ(Attribute {AttributeType::kPath}.as_path(), Path {});
+  EXPECT_EQ(Attribute {AttributeType::kPath}.as_path(), std::filesystem::path {});
   EXPECT_ANY_THROW((void) Attribute {AttributeType::kStr}.as_path());
 }
 

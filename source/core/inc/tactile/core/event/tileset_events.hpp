@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/path.hpp"
+#include <filesystem>  // path
+
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -20,7 +21,7 @@ struct ShowNewTilesetDialogEvent final
 struct AddTilesetEvent final
 {
   /** The path to the tileset texture. */
-  Path texture_path;
+  std::filesystem::path texture_path;
 
   /** The size of tiles in the tileset texture. */
   Int2 tile_size;

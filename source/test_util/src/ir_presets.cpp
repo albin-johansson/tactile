@@ -14,7 +14,7 @@ auto make_complex_ir_metadata(String name) -> ir::Metadata
 
   meta.properties = {
     {"p_str", Attribute {"foobar"}},
-    {"p_path", Attribute {Path {"foo/bar.txt"}}},
+    {"p_path", Attribute {std::filesystem::path {"foo/bar.txt"}}},
     {"p_int", Attribute {42}},
     {"p_int2", Attribute {Int2 {1, 2}}},
     {"p_int3", Attribute {Int3 {1, 2, 3}}},

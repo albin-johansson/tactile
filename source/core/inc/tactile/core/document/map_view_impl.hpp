@@ -31,7 +31,7 @@ class MapViewImpl final : public IMapView
       -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
-  auto get_path() const -> const Path* override;
+  auto get_path() const -> const std::filesystem::path* override;
 
   [[nodiscard]]
   auto get_tile_size() const -> Int2 override;

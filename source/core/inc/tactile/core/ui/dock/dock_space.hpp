@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <optional>  // optional
+#include <filesystem>  // path
+#include <optional>    // optional
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -38,7 +38,7 @@ class DockSpace final
   void reset_layout(const Language& language);
 
  private:
-  Path mImGuiIniPath;
+  std::filesystem::path mImGuiIniPath;
   std::optional<uint> mRootId {};
   bool mDidInit {false};
 };

@@ -3,10 +3,10 @@
 #pragma once
 
 #include <expected>       // expected
+#include <filesystem>     // path
 #include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
@@ -39,7 +39,9 @@ class LanguageParser final
    * A language if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto parse(LanguageID id, const Path& path, const Language* fallback = nullptr) const
+  auto parse(LanguageID id,
+             const std::filesystem::path& path,
+             const Language* fallback = nullptr) const
       -> std::expected<Language, std::error_code>;
 
  private:

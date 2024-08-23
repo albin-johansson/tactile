@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/path.hpp"
+#include <filesystem>  // path
+
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -25,7 +26,7 @@ namespace tactile {
  * can be used to obtain pointers to symbols with C linkage in such files at
  * runtime.
  *
- * \see load_library(const Path&)
+ * \see load_library(const std::filesystem::path&)
  */
 class IDynamicLibrary
 {
@@ -63,7 +64,7 @@ class IDynamicLibrary
  * The loaded library if successful; a null pointer otherwise.
  */
 [[nodiscard]]
-auto load_library(const Path& path) -> Unique<IDynamicLibrary>;
+auto load_library(const std::filesystem::path& path) -> Unique<IDynamicLibrary>;
 
 /**
  * Attempts to find a symbol in a dynamic library.

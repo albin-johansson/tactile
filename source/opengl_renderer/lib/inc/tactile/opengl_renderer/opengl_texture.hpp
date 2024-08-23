@@ -29,7 +29,8 @@ class TACTILE_OPENGL_API OpenGLTexture final : public ITexture
    *    A texture if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto load(const Path& image_path) -> std::expected<OpenGLTexture, std::error_code>;
+  static auto load(const std::filesystem::path& image_path)
+      -> std::expected<OpenGLTexture, std::error_code>;
 
   OpenGLTexture() = delete;
 
@@ -48,14 +49,14 @@ class TACTILE_OPENGL_API OpenGLTexture final : public ITexture
   auto get_size() const -> TextureSize override;
 
   [[nodiscard]]
-  auto get_path() const -> const Path& override;
+  auto get_path() const -> const std::filesystem::path& override;
 
  private:
   id_type mID;
   TextureSize mSize;
-  Path mPath;
+  std::filesystem::path mPath;
 
-  OpenGLTexture(id_type id, TextureSize size, Path path);
+  OpenGLTexture(id_type id, TextureSize size, std::filesystem::path path);
 
   void _dispose() noexcept;
 };

@@ -3,10 +3,10 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <optional>      // optional
 #include <system_error>  // error_code
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
@@ -46,7 +46,7 @@ class IMapView
    * A possibly null file path.
    */
   [[nodiscard]]
-  virtual auto get_path() const -> const Path* = 0;
+  virtual auto get_path() const -> const std::filesystem::path* = 0;
 
   /**
    * Returns the logical size of tiles in the map.

@@ -3,9 +3,9 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <system_error>  // error_code
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -53,7 +53,7 @@ class IDocument
    *
    * \param path A save file path.
    */
-  virtual void set_path(Path path) = 0;
+  virtual void set_path(std::filesystem::path path) = 0;
 
   /**
    * Sets the save format used by the document.
@@ -69,7 +69,7 @@ class IDocument
    * The associated file path, if any.
    */
   [[nodiscard]]
-  virtual auto get_path() const -> const Path* = 0;
+  virtual auto get_path() const -> const std::filesystem::path* = 0;
 
   /**
    * Returns the save format used by the document.

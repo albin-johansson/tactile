@@ -46,7 +46,7 @@ auto VulkanShaderModule::operator=(VulkanShaderModule&& other) noexcept -> Vulka
   return *this;
 }
 
-auto VulkanShaderModule::load(VkDevice device, const Path& shader_path)
+auto VulkanShaderModule::load(VkDevice device, const std::filesystem::path& shader_path)
     -> std::expected<VulkanShaderModule, VkResult>
 {
   const auto shader_code = read_binary_file(shader_path);

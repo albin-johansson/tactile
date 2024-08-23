@@ -48,7 +48,7 @@ class TilesetViewImpl final : public ITilesetView
   auto get_image_size() const -> Int2 override;
 
   [[nodiscard]]
-  auto get_image_path() const -> const Path& override;
+  auto get_image_path() const -> const std::filesystem::path& override;
 
   [[nodiscard]]
   auto get_meta() const -> const IMetaView& override;

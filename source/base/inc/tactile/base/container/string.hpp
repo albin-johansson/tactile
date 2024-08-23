@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include <filesystem>   // path
 #include <string>       // basic_string, string
 #include <string_view>  // basic_string_view, string_view, wstring_view
 #include <type_traits>  // conditional_t
 
-#include "tactile/base/container/path.hpp"
 #include "tactile/base/prelude.hpp"
 
 #if TACTILE_OS_WINDOWS

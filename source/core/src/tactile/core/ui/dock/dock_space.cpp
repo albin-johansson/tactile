@@ -25,7 +25,7 @@ void DockSpace::update(const Language& language)
   mRootId = ImGui::DockSpaceOverViewport(0, viewport, flags);
 
   if (!mDidInit && viewport->Size.x > 0 && viewport->Size.y > 0) {
-    if (!fs::exists(mImGuiIniPath)) {
+    if (!std::filesystem::exists(mImGuiIniPath)) {
       reset_layout(language);
     }
 
