@@ -5,7 +5,6 @@ add_library(tactile::base ALIAS tactile-base)
 
 target_sources(tactile-base
                INTERFACE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
-               "inc/tactile/base/container/deque.hpp"
                "inc/tactile/base/container/expected.hpp"
                "inc/tactile/base/container/function.hpp"
                "inc/tactile/base/container/hash_map.hpp"
