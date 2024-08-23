@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
@@ -145,7 +147,7 @@ auto make_map(Registry& registry, const MapSpec& spec) -> EntityID;
 [[nodiscard]]
 auto make_map(Registry& registry,
               IRenderer& renderer,
-              const ir::Map& ir_map) -> Result<EntityID>;
+              const ir::Map& ir_map) -> std::expected<EntityID, std::error_code>;
 
 /**
  * Destroys a map.
@@ -175,9 +177,8 @@ void destroy_map(Registry& registry, EntityID map_entity);
  * A tileset entity identifier if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto add_tileset_to_map(Registry& registry,
-                        EntityID map_id,
-                        const TilesetSpec& tileset_spec) -> Result<EntityID>;
+auto add_tileset_to_map(Registry& registry, EntityID map_id, const TilesetSpec& tileset_spec)
+    -> std::expected<EntityID, std::error_code>;
 
 /**
  * Removes a tileset from a map, but does not destroy it.
@@ -212,7 +213,9 @@ void remove_tileset_from_map(Registry& registry, EntityID map_id, EntityID tiles
  * A layer entity identifier if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto add_layer_to_map(Registry& registry, EntityID map_id, LayerType type) -> Result<EntityID>;
+auto add_layer_to_map(Registry& registry,
+                      EntityID map_id,
+                      LayerType type) -> std::expected<EntityID, std::error_code>;
 
 /**
  * Appends an existing layer to a map.
@@ -247,6 +250,6 @@ void append_layer_to_map(Registry& registry, EntityID map_id, EntityID layer_id)
 [[nodiscard]]
 auto remove_layer_from_map(Registry& registry,
                            EntityID map_id,
-                           EntityID layer_id) -> Result<void>;
+                           EntityID layer_id) -> std::expected<void, std::error_code>;
 
 }  // namespace tactile

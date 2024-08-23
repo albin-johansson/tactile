@@ -15,10 +15,10 @@
 
 namespace tactile {
 
-auto open_directory_in_finder(const Path& dir) -> Result<void>
+auto open_directory_in_finder(const Path& dir) -> std::expected<void, std::error_code>
 {
   if (!fs::is_directory(dir)) {
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   if constexpr (kOnMacos) {
@@ -35,24 +35,23 @@ auto open_directory_in_finder(const Path& dir) -> Result<void>
   }
   else {
     TACTILE_LOG_ERROR("Cannot open finder on this platform");
-    return unexpected(make_error(GenericError::kUnsupported));
+    return std::unexpected {make_error(GenericError::kUnsupported)};
   }
 
-  return kOK;
+  return {};
 }
 
-auto get_persistent_storage_directory() -> Result<Path>
+auto get_persistent_storage_directory() -> std::expected<Path, std::error_code>
 {
   if (const auto* path = SDL_GetPrefPath("albin-johansson", "tactile")) {
     return Path {path};
   }
 
-  TACTILE_LOG_ERROR("Could not determine persistent storage directory: {}",
-                    SDL_GetError());
-  return unexpected(make_error(GenericError::kInvalidState));
+  TACTILE_LOG_ERROR("Could not determine persistent storage directory: {}", SDL_GetError());
+  return std::unexpected {make_error(GenericError::kInvalidState)};
 }
 
-auto get_user_home_directory() -> Result<String>
+auto get_user_home_directory() -> std::expected<String, std::error_code>
 {
   // On Unix platforms, HOME is something like '/Users/username'.
   // On Windows, USERPROFILE is something like 'C:\Users\username'.
@@ -81,8 +80,8 @@ auto has_prefix(const Path& path, const StringView prefix) -> bool
 #endif
 }
 
-auto strip_home_directory_prefix(const Path& path,
-                                 const StringView home_dir) -> Result<String>
+auto strip_home_directory_prefix(const Path& path, const StringView home_dir)
+    -> std::expected<String, std::error_code>
 {
   if (has_prefix(path, home_dir)) {
     const NativeStringView path_view {path.c_str()};
@@ -91,9 +90,7 @@ auto strip_home_directory_prefix(const Path& path,
     NativeString str {};
     str.reserve(1 + path_without_home_dir.size());
     str.push_back(TACTILE_NATIVE_CHAR('~'));
-    str.insert(str.end(),
-               path_without_home_dir.begin(),
-               path_without_home_dir.end());
+    str.insert(str.end(), path_without_home_dir.begin(), path_without_home_dir.end());
 
 #if TACTILE_OS_WINDOWS
     return from_native_string(str);
@@ -102,7 +99,7 @@ auto strip_home_directory_prefix(const Path& path,
 #endif
   }
 
-  return unexpected(make_error(GenericError::kInvalidParam));
+  return std::unexpected {make_error(GenericError::kInvalidParam)};
 }
 
 }  // namespace tactile

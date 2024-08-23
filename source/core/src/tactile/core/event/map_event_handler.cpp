@@ -20,10 +20,10 @@ namespace tactile {
 
 MapEventHandler::MapEventHandler(Model* model,
                                  ui::WidgetManager* widget_manager,
-                                 IRuntime* runtime)
-  : mModel {require_not_null(model, "null model")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")},
-    mRuntime {require_not_null(runtime, "null runtime")}
+                                 IRuntime* runtime) :
+  mModel {require_not_null(model, "null model")},
+  mWidgetManager {require_not_null(widget_manager, "null widget manager")},
+  mRuntime {require_not_null(runtime, "null runtime")}
 {}
 
 void MapEventHandler::install(EventDispatcher& dispatcher)

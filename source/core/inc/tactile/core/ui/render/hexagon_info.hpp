@@ -83,8 +83,7 @@ void get_hexagon_vertices(const Float2& center_pos,
  */
 [[nodiscard]]
 auto get_hexagon_bounding_box(const Float2& center_pos,
-                              const HexagonInfo& hexagon_info) noexcept
-    -> Float4;
+                              const HexagonInfo& hexagon_info) noexcept -> Float4;
 
 /**
  * Returns the center of a hexagon located at a given matrix index.

@@ -9,8 +9,8 @@
 
 namespace tactile::test {
 
-MetaViewMock::MetaViewMock(ir::Metadata meta)
-  : mMeta {std::move(meta)}
+MetaViewMock::MetaViewMock(ir::Metadata meta) :
+  mMeta {std::move(meta)}
 {
   using testing::Return;
 
@@ -26,17 +26,17 @@ MetaViewMock::MetaViewMock(ir::Metadata meta)
 }
 
 ObjectViewMock::ObjectViewMock(ir::Object object,
-                               Variant<const ILayerView*, const ITileView*> parent)
-  : mObject {std::move(object)},
-    mParent {parent},
-    mMeta {mObject.meta}
+                               Variant<const ILayerView*, const ITileView*> parent) :
+  mObject {std::move(object)},
+  mParent {parent},
+  mMeta {mObject.meta}
 {
   using testing::Return;
   using testing::ReturnRef;
 
   ON_CALL(*this, accept).WillByDefault([this](IDocumentVisitor& visitor) {
     EXPECT_TRUE(visitor.visit(*this).has_value());
-    return kOK;
+    return std::expected<void, std::error_code> {};
   });
 
   ON_CALL(*this, get_parent_layer).WillByDefault([this] {
@@ -61,10 +61,10 @@ ObjectViewMock::ObjectViewMock(ir::Object object,
   ON_CALL(*this, get_meta).WillByDefault(ReturnRef(mMeta));
 }
 
-TileViewMock::TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile)
-  : mParentTileset {parent_tileset},
-    mTile {std::move(tile)},
-    mMeta {mTile.meta}
+TileViewMock::TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile) :
+  mParentTileset {parent_tileset},
+  mTile {std::move(tile)},
+  mMeta {mTile.meta}
 {
   using testing::Return;
   using testing::ReturnRef;
@@ -77,7 +77,7 @@ TileViewMock::TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile)
       EXPECT_TRUE(object_view.accept(visitor).has_value());
     }
 
-    return kOK;
+    return std::expected<void, std::error_code> {};
   });
   ON_CALL(*this, get_parent_tileset).WillByDefault(ReturnRef(*mParentTileset));
   ON_CALL(*this, get_index).WillByDefault(Return(mTile.index));
@@ -90,9 +90,9 @@ TileViewMock::TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile)
   ON_CALL(*this, get_meta).WillByDefault(ReturnRef(mMeta));
 }
 
-TilesetViewMock::TilesetViewMock(ir::TilesetRef tileset_ref)
-  : mTilesetRef {std::move(tileset_ref)},
-    mMeta {mTilesetRef.tileset.meta}
+TilesetViewMock::TilesetViewMock(ir::TilesetRef tileset_ref) :
+  mTilesetRef {std::move(tileset_ref)},
+  mMeta {mTilesetRef.tileset.meta}
 {
   using testing::Return;
   using testing::ReturnRef;
@@ -105,7 +105,7 @@ TilesetViewMock::TilesetViewMock(ir::TilesetRef tileset_ref)
       EXPECT_TRUE(tile_view.accept(visitor).has_value());
     }
 
-    return kOK;
+    return std::expected<void, std::error_code> {};
   });
 
   const auto& tileset = mTilesetRef.tileset;
@@ -123,11 +123,11 @@ TilesetViewMock::TilesetViewMock(ir::TilesetRef tileset_ref)
 
 LayerViewMock::LayerViewMock(ir::Layer layer,
                              const ir::TileFormat& tile_format,
-                             const LayerViewMock* parent_layer)
-  : mLayer {std::move(layer)},
-    mTileFormat {tile_format},
-    mParentLayer {parent_layer},
-    mMeta {mLayer.meta}
+                             const LayerViewMock* parent_layer) :
+  mLayer {std::move(layer)},
+  mTileFormat {tile_format},
+  mParentLayer {parent_layer},
+  mMeta {mLayer.meta}
 {
   using testing::NiceMock;
   using testing::Return;
@@ -146,7 +146,7 @@ LayerViewMock::LayerViewMock(ir::Layer layer,
       EXPECT_TRUE(subobject_view.accept(visitor).has_value());
     }
 
-    return kOK;
+    return std::expected<void, std::error_code> {};
   });
 
   ON_CALL(*this, get_parent_layer).WillByDefault(Return(mParentLayer));
@@ -183,8 +183,8 @@ LayerViewMock::LayerViewMock(ir::Layer layer,
   ON_CALL(*this, get_meta).WillByDefault(ReturnRef(mMeta));
 }
 
-MapViewMock::MapViewMock(const ir::Map& map)
-  : mMeta {map.meta}
+MapViewMock::MapViewMock(const ir::Map& map) :
+  mMeta {map.meta}
 {
   using testing::NiceMock;
   using testing::Return;
@@ -217,7 +217,7 @@ MapViewMock::MapViewMock(const ir::Map& map)
 
     // TODO components
 
-    return kOK;
+    return std::expected<void, std::error_code> {};
   });
 
   ON_CALL(*this, get_tile_size).WillByDefault(Return(map.tile_size));

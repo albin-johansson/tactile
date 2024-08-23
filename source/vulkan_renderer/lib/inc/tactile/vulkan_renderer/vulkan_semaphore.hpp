@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
 
@@ -43,7 +45,7 @@ class TACTILE_VULKAN_API VulkanSemaphore final
    * A Vulkan semaphore if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto create(VkDevice device) -> Expected<VulkanSemaphore, VkResult>;
+  static auto create(VkDevice device) -> std::expected<VulkanSemaphore, VkResult>;
 
   [[nodiscard]]
   auto device() noexcept -> VkDevice

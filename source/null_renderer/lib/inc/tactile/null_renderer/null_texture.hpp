@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/texture.hpp"
 #include "tactile/null_renderer/api.hpp"
@@ -27,7 +29,7 @@ class TACTILE_NULL_RENDERER_API NullTexture final : public ITexture
    * A texture if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto load(Path path) -> Result<NullTexture>;
+  static auto load(Path path) -> std::expected<NullTexture, std::error_code>;
 
   [[nodiscard]]
   auto get_handle() const -> void* override;

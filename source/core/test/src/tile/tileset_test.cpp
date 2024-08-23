@@ -122,7 +122,7 @@ TEST_F(TilesetTest, InitTilesetInstance)
 
   // [42, 142)
   const TileID first_tile {42};
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts_entity, first_tile), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts_entity, first_tile).has_value());
   ASSERT_TRUE(mRegistry.has<CTilesetInstance>(ts_entity));
 
   const auto& tileset = mRegistry.get<CTileset>(ts_entity);
@@ -147,8 +147,8 @@ TEST_F(TilesetTest, InitTilesetInstance)
 TEST_F(TilesetTest, InitTilesetInstanceWithInvalidTileIdentifier)
 {
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
-  EXPECT_NE(init_tileset_instance(mRegistry, ts_entity, kEmptyTile), kOK);
-  EXPECT_NE(init_tileset_instance(mRegistry, ts_entity, TileID {-1}), kOK);
+  EXPECT_FALSE(init_tileset_instance(mRegistry, ts_entity, kEmptyTile).has_value());
+  EXPECT_FALSE(init_tileset_instance(mRegistry, ts_entity, TileID {-1}).has_value());
   EXPECT_EQ(mRegistry.count<CTilesetInstance>(), 0);
 }
 
@@ -156,8 +156,8 @@ TEST_F(TilesetTest, InitTilesetInstanceWithInvalidTileIdentifier)
 TEST_F(TilesetTest, InitTilesetInstanceMoreThanOnce)
 {
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
-  EXPECT_EQ(init_tileset_instance(mRegistry, ts_entity, TileID {1}), kOK);
-  EXPECT_NE(init_tileset_instance(mRegistry, ts_entity, TileID {101}), kOK);
+  EXPECT_TRUE(init_tileset_instance(mRegistry, ts_entity, TileID {1}).has_value());
+  EXPECT_FALSE(init_tileset_instance(mRegistry, ts_entity, TileID {101}).has_value());
 }
 
 // tactile::init_tileset_instance
@@ -170,15 +170,15 @@ TEST_F(TilesetTest, InitTilesetInstanceTileRangeCollisionDetection)
   const auto ts2_entity = make_dummy_tileset_with_100_tiles();
 
   // [1, 101)
-  EXPECT_EQ(init_tileset_instance(mRegistry, ts1_entity, TileID {1}), kOK);
+  EXPECT_TRUE(init_tileset_instance(mRegistry, ts1_entity, TileID {1}).has_value());
 
   // These tile ranges would overlap with the existing tileset.
-  EXPECT_NE(init_tileset_instance(mRegistry, ts2_entity, TileID {1}), kOK);
-  EXPECT_NE(init_tileset_instance(mRegistry, ts2_entity, TileID {50}), kOK);
-  EXPECT_NE(init_tileset_instance(mRegistry, ts2_entity, TileID {100}), kOK);
+  EXPECT_FALSE(init_tileset_instance(mRegistry, ts2_entity, TileID {1}).has_value());
+  EXPECT_FALSE(init_tileset_instance(mRegistry, ts2_entity, TileID {50}).has_value());
+  EXPECT_FALSE(init_tileset_instance(mRegistry, ts2_entity, TileID {100}).has_value());
 
   // [101, 201)
-  EXPECT_EQ(init_tileset_instance(mRegistry, ts2_entity, TileID {101}), kOK);
+  EXPECT_TRUE(init_tileset_instance(mRegistry, ts2_entity, TileID {101}).has_value());
 }
 
 // tactile::destroy_tileset
@@ -211,7 +211,7 @@ TEST_F(TilesetTest, DestroyTilesetInstance)
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
 
   const TileID first_tile {25};
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts_entity, first_tile), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts_entity, first_tile).has_value());
 
   const auto& tile_cache = mRegistry.get<CTileCache>();
 
@@ -251,21 +251,21 @@ TEST_F(TilesetTest, GetTileAppearance)
   EXPECT_EQ(get_tile_appearance(mRegistry, ts_entity, index12), index12);
 
   const auto tile10_entity = tileset.tiles.at(10);
-  ASSERT_EQ(add_animation_frame(mRegistry,
-                                tile10_entity,
-                                0,
-                                AnimationFrame {index10, Milliseconds::zero()}),
-            kOK);
-  ASSERT_EQ(add_animation_frame(mRegistry,
-                                tile10_entity,
-                                1,
-                                AnimationFrame {index11, Milliseconds::zero()}),
-            kOK);
-  ASSERT_EQ(add_animation_frame(mRegistry,
-                                tile10_entity,
-                                2,
-                                AnimationFrame {index12, Milliseconds::zero()}),
-            kOK);
+  ASSERT_TRUE(add_animation_frame(mRegistry,
+                                  tile10_entity,
+                                  0,
+                                  AnimationFrame {index10, Milliseconds::zero()})
+                  .has_value());
+  ASSERT_TRUE(add_animation_frame(mRegistry,
+                                  tile10_entity,
+                                  1,
+                                  AnimationFrame {index11, Milliseconds::zero()})
+                  .has_value());
+  ASSERT_TRUE(add_animation_frame(mRegistry,
+                                  tile10_entity,
+                                  2,
+                                  AnimationFrame {index12, Milliseconds::zero()})
+                  .has_value());
 
   EXPECT_EQ(get_tile_appearance(mRegistry, ts_entity, index10), index10);
   EXPECT_EQ(get_tile_appearance(mRegistry, ts_entity, index11), index11);
@@ -301,13 +301,13 @@ TEST_F(TilesetTest, FindTileset)
   const auto ts3_entity = make_dummy_tileset_with_100_tiles();
 
   // [1, 101)
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts1_entity, TileID {1}), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts1_entity, TileID {1}).has_value());
 
   // [101, 201)
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts2_entity, TileID {101}), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts2_entity, TileID {101}).has_value());
 
   // [201, 301)
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts3_entity, TileID {201}), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts3_entity, TileID {201}).has_value());
 
   EXPECT_EQ(find_tileset(mRegistry, TileID {001}), ts1_entity);
   EXPECT_EQ(find_tileset(mRegistry, TileID {100}), ts1_entity);
@@ -330,10 +330,10 @@ TEST_F(TilesetTest, GetTileIndex)
   const auto ts2_entity = make_dummy_tileset_with_100_tiles();
 
   // [10, 110)
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts1_entity, TileID {10}), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts1_entity, TileID {10}).has_value());
 
   // [110, 210)
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts2_entity, TileID {110}), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts2_entity, TileID {110}).has_value());
 
   EXPECT_EQ(get_tile_index(mRegistry, TileID {10}), 0);
   EXPECT_EQ(get_tile_index(mRegistry, TileID {53}), 43);
@@ -356,7 +356,7 @@ TEST_F(TilesetTest, IsTileRangeAvailable)
 
   // [5, 105)
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
-  ASSERT_EQ(init_tileset_instance(mRegistry, ts_entity, TileID {5}), kOK);
+  ASSERT_TRUE(init_tileset_instance(mRegistry, ts_entity, TileID {5}).has_value());
 
   // Identical range
   EXPECT_FALSE(is_tile_range_available(mRegistry, {TileID {5}, 100}));

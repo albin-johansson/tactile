@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include <expected>  // expected
+
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
@@ -46,7 +47,7 @@ class TACTILE_VULKAN_API VulkanSampler final
    */
   [[nodiscard]]
   static auto create(VkDevice device, const VkSamplerCreateInfo& create_info)
-      -> Expected<VulkanSampler, VkResult>;
+      -> std::expected<VulkanSampler, VkResult>;
 
   [[nodiscard]]
   auto device() noexcept -> VkDevice

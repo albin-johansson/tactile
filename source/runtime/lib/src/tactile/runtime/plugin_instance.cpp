@@ -12,12 +12,12 @@ namespace tactile {
 PluginInstance::PluginInstance(IRuntime* runtime,
                                Unique<IDynamicLibrary> dll,
                                PluginDestructor* plugin_destructor,
-                               IPlugin* plugin)
-  : mRuntime {runtime},
-    mDLL {std::move(dll)},
-    mPluginDestructor {plugin_destructor},
-    mPlugin {plugin},
-    mPrimed {true}
+                               IPlugin* plugin) :
+  mRuntime {runtime},
+  mDLL {std::move(dll)},
+  mPluginDestructor {plugin_destructor},
+  mPlugin {plugin},
+  mPrimed {true}
 {}
 
 PluginInstance::~PluginInstance() noexcept
@@ -29,12 +29,12 @@ PluginInstance::~PluginInstance() noexcept
   }
 }
 
-PluginInstance::PluginInstance(PluginInstance&& other) noexcept
-  : mRuntime {std::exchange(other.mRuntime, nullptr)},
-    mDLL {std::exchange(other.mDLL, nullptr)},
-    mPluginDestructor {std::exchange(other.mPluginDestructor, nullptr)},
-    mPlugin {std::exchange(other.mPlugin, nullptr)},
-    mPrimed {std::exchange(other.mPrimed, false)}
+PluginInstance::PluginInstance(PluginInstance&& other) noexcept :
+  mRuntime {std::exchange(other.mRuntime, nullptr)},
+  mDLL {std::exchange(other.mDLL, nullptr)},
+  mPluginDestructor {std::exchange(other.mPluginDestructor, nullptr)},
+  mPlugin {std::exchange(other.mPlugin, nullptr)},
+  mPrimed {std::exchange(other.mPrimed, false)}
 {}
 
 auto PluginInstance::load(IRuntime* runtime,

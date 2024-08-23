@@ -485,8 +485,7 @@ TEST(Vec, Apply2)
 {
   const Int4 a {2, 24, 8, 12};
   const Int4 b {4, 24, 5, 16};
-  const Int4 c =
-      apply2(a, b, [](const int i1, const int i2) { return i1 % i2; });
+  const Int4 c = apply2(a, b, [](const int i1, const int i2) { return i1 % i2; });
 
   EXPECT_EQ(c.x(), 2);
   EXPECT_EQ(c.y(), 0);

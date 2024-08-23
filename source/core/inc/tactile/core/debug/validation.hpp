@@ -31,8 +31,7 @@ namespace tactile {
  */
 template <typename PointerType>
 [[nodiscard]] auto require_not_null(PointerType ptr,
-                                    const char* error_message = "null pointer")
-    -> PointerType
+                                    const char* error_message = "null pointer") -> PointerType
 {
   if (ptr == nullptr) [[unlikely]] {
     throw Exception {error_message};

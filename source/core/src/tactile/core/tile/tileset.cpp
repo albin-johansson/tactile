@@ -28,11 +28,11 @@ namespace tileset {
 auto add_tileset_component(Registry& registry,
                            const EntityID tileset_id,
                            const Int2& texture_size,
-                           const Int2& tile_size) -> Result<void>
+                           const Int2& tile_size) -> std::expected<void, std::error_code>
 {
   if (tile_size.x() <= 0 || tile_size.y() <= 0) {
     TACTILE_LOG_ERROR("Invalid tileset tile size: {}", tile_size);
-    return unexpected(std::make_error_code(std::errc::invalid_argument));
+    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
   }
 
   const MatrixExtent extent {
@@ -42,14 +42,14 @@ auto add_tileset_component(Registry& registry,
 
   if (extent.rows <= 0 || extent.cols <= 0) {
     TACTILE_LOG_ERROR("Invalid tileset extent: {}", extent);
-    return unexpected(std::make_error_code(std::errc::invalid_argument));
+    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
   }
 
   auto& tileset = registry.add<CTileset>(tileset_id);
   tileset.tile_size = tile_size;
   tileset.extent = extent;
 
-  return kOK;
+  return {};
 }
 
 void add_viewport_component(Registry& registry,
@@ -78,7 +78,7 @@ void create_tiles(Registry& registry, CTileset& tileset)
 [[nodiscard]]
 auto create_tiles(Registry& registry,
                   CTileset& tileset,
-                  const ir::Tileset& ir_tileset) -> Result<void>
+                  const ir::Tileset& ir_tileset) -> std::expected<void, std::error_code>
 {
   const auto tile_count = saturate_cast<usize>(ir_tileset.tile_count);
   tileset.tiles.resize(tile_count, kInvalidEntity);
@@ -86,12 +86,12 @@ auto create_tiles(Registry& registry,
   for (const auto& ir_tile : ir_tileset.tiles) {
     const auto tile_id = make_tile(registry, ir_tile);
     if (!tile_id.has_value()) {
-      return propagate_unexpected(tile_id);
+      return std::unexpected {tile_id.error()};
     }
 
     const auto tile_index = saturate_cast<usize>(ir_tile.index);
     if (tile_index >= tileset.tiles.size()) {
-      return unexpected(std::make_error_code(std::errc::result_out_of_range));
+      return std::unexpected {std::make_error_code(std::errc::result_out_of_range)};
     }
 
     tileset.tiles[tile_index] = *tile_id;
@@ -104,7 +104,7 @@ auto create_tiles(Registry& registry,
     }
   }
 
-  return kOK;
+  return {};
 }
 
 }  // namespace tileset
@@ -148,11 +148,12 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID
 
 auto make_tileset(Registry& registry,
                   IRenderer& renderer,
-                  const ir::TilesetRef& ir_tileset_ref) -> Result<EntityID>
+                  const ir::TilesetRef& ir_tileset_ref)
+    -> std::expected<EntityID, std::error_code>
 {
   auto texture_result = load_texture(renderer, ir_tileset_ref.tileset.image_path);
   if (!texture_result.has_value()) {
-    return propagate_unexpected(texture_result);
+    return std::unexpected {texture_result.error()};
   }
 
   const auto tileset_id = registry.make_entity();
@@ -176,13 +177,13 @@ auto make_tileset(Registry& registry,
   const auto create_tiles_result =
       tileset::create_tiles(registry, tileset, ir_tileset_ref.tileset);
   if (!create_tiles_result.has_value()) {
-    return propagate_unexpected(create_tiles_result);
+    return std::unexpected {create_tiles_result.error()};
   }
 
   const auto init_instance_result =
       init_tileset_instance(registry, tileset_id, ir_tileset_ref.first_tile_id);
   if (!init_instance_result.has_value()) {
-    return propagate_unexpected(init_instance_result);
+    return std::unexpected {init_instance_result.error()};
   }
 
   auto& tileset_instance = registry.get<CTilesetInstance>(tileset_id);
@@ -196,19 +197,19 @@ auto make_tileset(Registry& registry,
 
 auto init_tileset_instance(Registry& registry,
                            const EntityID tileset_entity,
-                           const TileID first_tile_id) -> Result<void>
+                           const TileID first_tile_id) -> std::expected<void, std::error_code>
 {
   TACTILE_ASSERT(is_tileset(registry, tileset_entity));
   const SetLogScope log_scope {"Tileset"};
 
   if (first_tile_id < TileID {1}) {
     TACTILE_LOG_ERROR("Tried to use invalid first tile identifier: {}", first_tile_id);
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   if (registry.has<CTilesetInstance>(tileset_entity)) {
     TACTILE_LOG_ERROR("Tried to initialize tileset instance more than once");
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   const auto& tileset = registry.get<CTileset>(tileset_entity);
@@ -222,7 +223,7 @@ auto init_tileset_instance(Registry& registry,
     TACTILE_LOG_ERROR("Requested tile range is unavailable: [{}, {})",
                       tile_range.first_id,
                       tile_range.first_id + tile_range.count);
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   auto& instance = registry.add<CTilesetInstance>(tileset_entity);
@@ -240,25 +241,26 @@ auto init_tileset_instance(Registry& registry,
   TACTILE_LOG_DEBUG("Initialized tileset instance with tile range [{}, {})",
                     tile_range.first_id,
                     tile_range.first_id + tile_range.count);
-  return kOK;
+  return {};
 }
 
 auto make_tileset_instance(Registry& registry,
                            const TilesetSpec& spec,
-                           const TileID first_tile_id) -> Result<EntityID>
+                           const TileID first_tile_id)
+    -> std::expected<EntityID, std::error_code>
 {
   const auto tileset_id = make_tileset(registry, spec);
 
   if (tileset_id == kInvalidEntity) {
     TACTILE_LOG_ERROR("Could not create tileset");
-    return unexpected(make_error(GenericError::kInvalidState));
+    return std::unexpected {make_error(GenericError::kInvalidState)};
   }
 
   const auto init_instance_result = init_tileset_instance(registry, tileset_id, first_tile_id);
   if (!init_instance_result) {
     TACTILE_LOG_ERROR("Could not create tileset instance: {}",
                       init_instance_result.error().message());
-    return propagate_unexpected(init_instance_result);
+    return std::unexpected {init_instance_result.error()};
   }
 
   return tileset_id;

@@ -30,9 +30,7 @@ class TilesetEventHandler final
    * \param renderer       The associated renderer, cannot be null.
    * \param widget_manager The associated widget manager, cannot be null.
    */
-  TilesetEventHandler(Model* model,
-                      IRenderer* renderer,
-                      ui::WidgetManager* widget_manager);
+  TilesetEventHandler(Model* model, IRenderer* renderer, ui::WidgetManager* widget_manager);
 
   /**
    * Installs the event handler to a given event dispatcher.

@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include <concepts>  // integral, signed_integral, unsigned_integral, floating_point
+#include <concepts>      // integral, signed_integral, unsigned_integral, floating_point
+#include <expected>      // expected
+#include <system_error>  // error_code
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
@@ -20,7 +21,7 @@ namespace tactile {
  * A native string if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto to_native_string(StringView str) -> Result<NativeString>;
+auto to_native_string(StringView str) -> std::expected<NativeString, std::error_code>;
 
 /**
  * Converts a native string to a normal string.
@@ -31,7 +32,7 @@ auto to_native_string(StringView str) -> Result<NativeString>;
  * A normal string if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto from_native_string(NativeStringView str) -> Result<String>;
+auto from_native_string(NativeStringView str) -> std::expected<String, std::error_code>;
 
 /**
  * Attempts to convert a string to a floating-point value.
@@ -42,7 +43,7 @@ auto from_native_string(NativeStringView str) -> Result<String>;
  * A float if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto parse_float(StringView str) -> Result<double>;
+auto parse_float(StringView str) -> std::expected<double, std::error_code>;
 
 /**
  * Attempts to convert a string to a float.
@@ -55,7 +56,7 @@ auto parse_float(StringView str) -> Result<double>;
  * A float if successful; an error code otherwise.
  */
 template <std::floating_point T>
-[[nodiscard]] auto parse(const StringView str) -> Result<T>
+[[nodiscard]] auto parse(const StringView str) -> std::expected<T, std::error_code>
 {
   return parse_float(str).transform([](double value) { return static_cast<T>(value); });
 }

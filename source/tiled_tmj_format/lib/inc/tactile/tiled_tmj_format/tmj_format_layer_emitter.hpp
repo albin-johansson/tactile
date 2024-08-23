@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <nlohmann/json.hpp>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/tiled_tmj_format/api.hpp"
@@ -31,6 +33,6 @@ class ILayerView;
 TACTILE_TMJ_FORMAT_API auto emit_tiled_tmj_layer(const IRuntime& runtime,
                                                  const ILayerView& layer,
                                                  ByteStream& tile_byte_stream)
-    -> Result<nlohmann::json>;
+    -> std::expected<nlohmann::json, std::error_code>;
 
 }  // namespace tactile

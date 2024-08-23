@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
@@ -73,7 +75,7 @@ void update_animations(Registry& registry);
 auto add_animation_frame(Registry& registry,
                          EntityID tile_entity,
                          usize frame_index,
-                         const AnimationFrame& frame) -> Result<void>;
+                         const AnimationFrame& frame) -> std::expected<void, std::error_code>;
 
 /**
  * Removes an animation frame from a given tile.
@@ -96,6 +98,6 @@ auto add_animation_frame(Registry& registry,
  */
 auto remove_animation_frame(Registry& registry,
                             EntityID tile_entity,
-                            usize frame_index) -> Result<void>;
+                            usize frame_index) -> std::expected<void, std::error_code>;
 
 }  // namespace tactile

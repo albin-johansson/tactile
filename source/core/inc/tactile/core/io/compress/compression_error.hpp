@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include <utility>  // to_underlying
+#include <expected>      // expected
+#include <system_error>  // error_code, error_category
+#include <utility>       // to_underlying
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -28,7 +29,7 @@ enum class CompressionError : int
  * An error category.
  */
 [[nodiscard]]
-auto get_compression_error_category() noexcept -> const ErrorCategory&;
+auto get_compression_error_category() noexcept -> const std::error_category&;
 
 /**
  * Creates a generic error code.
@@ -38,10 +39,9 @@ auto get_compression_error_category() noexcept -> const ErrorCategory&;
  * \return
  * An error code.
  */
-inline auto make_error(const CompressionError error) noexcept -> ErrorCode
+inline auto make_error(const CompressionError error) noexcept -> std::error_code
 {
-  return ErrorCode {std::to_underlying(error),
-                    get_compression_error_category()};
+  return std::error_code {std::to_underlying(error), get_compression_error_category()};
 }
 
 }  // namespace tactile

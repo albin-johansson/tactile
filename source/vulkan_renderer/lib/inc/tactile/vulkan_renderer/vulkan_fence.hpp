@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
 
@@ -45,7 +47,7 @@ class TACTILE_VULKAN_API VulkanFence final
    */
   [[nodiscard]]
   static auto create(VkDevice device,
-                     VkFenceCreateFlags flags) -> Expected<VulkanFence, VkResult>;
+                     VkFenceCreateFlags flags) -> std::expected<VulkanFence, VkResult>;
 
   [[nodiscard]]
   auto device() noexcept -> VkDevice

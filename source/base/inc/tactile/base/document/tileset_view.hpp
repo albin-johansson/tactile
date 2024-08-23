@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
@@ -32,7 +34,8 @@ class ITilesetView
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const
+      -> std::expected<void, std::error_code> = 0;
 
   /**
    * Returns the first global tile identifier associated with the tileset.

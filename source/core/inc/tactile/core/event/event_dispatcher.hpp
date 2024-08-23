@@ -68,8 +68,7 @@ class EventDispatcher final
   template <typename Event, auto Slot, typename... Args>
   void bind(Args&&... args)
   {
-    mDispatcher.sink<Event>().template connect<Slot>(
-        std::forward<Args>(args)...);
+    mDispatcher.sink<Event>().template connect<Slot>(std::forward<Args>(args)...);
   }
 
  private:

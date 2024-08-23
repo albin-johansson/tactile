@@ -14,7 +14,8 @@
 
 namespace tactile {
 
-auto OpenGLTexture::load(const Path& image_path) -> Result<OpenGLTexture>
+auto OpenGLTexture::load(const Path& image_path)
+    -> std::expected<OpenGLTexture, std::error_code>
 {
   uint texture_id {};
 
@@ -26,7 +27,7 @@ auto OpenGLTexture::load(const Path& image_path) -> Result<OpenGLTexture>
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
   if (const auto err = glGetError(); err != GL_NONE) {
-    return unexpected(make_error(map_opengl_error_code(err)));
+    return std::unexpected {make_error(map_opengl_error_code(err))};
   }
 
   TextureSize texture_size {};
@@ -36,7 +37,7 @@ auto OpenGLTexture::load(const Path& image_path) -> Result<OpenGLTexture>
                                nullptr,
                                STBI_rgb_alpha);
   if (!pixel_data) {
-    return unexpected(make_error(OpenGLError::kBadImage));
+    return std::unexpected {make_error(OpenGLError::kBadImage)};
   }
 
   glTexImage2D(GL_TEXTURE_2D,
@@ -51,24 +52,22 @@ auto OpenGLTexture::load(const Path& image_path) -> Result<OpenGLTexture>
   stbi_image_free(pixel_data);
 
   if (const auto err = glGetError(); err != GL_NONE) {
-    return unexpected(make_error(map_opengl_error_code(err)));
+    return std::unexpected {make_error(map_opengl_error_code(err))};
   }
 
   return OpenGLTexture {texture_id, texture_size, image_path};
 }
 
-OpenGLTexture::OpenGLTexture(const id_type id,
-                             const TextureSize size,
-                             Path path)
-  : mID {id},
-    mSize {size},
-    mPath {std::move(path)}
+OpenGLTexture::OpenGLTexture(const id_type id, const TextureSize size, Path path) :
+  mID {id},
+  mSize {size},
+  mPath {std::move(path)}
 {}
 
-OpenGLTexture::OpenGLTexture(OpenGLTexture&& other) noexcept
-  : mID {std::exchange(other.mID, 0)},
-    mSize {std::exchange(other.mSize, TextureSize {})},
-    mPath {std::exchange(other.mPath, Path {})}
+OpenGLTexture::OpenGLTexture(OpenGLTexture&& other) noexcept :
+  mID {std::exchange(other.mID, 0)},
+  mSize {std::exchange(other.mSize, TextureSize {})},
+  mPath {std::exchange(other.mPath, Path {})}
 {}
 
 auto OpenGLTexture::operator=(OpenGLTexture&& other) noexcept -> OpenGLTexture&

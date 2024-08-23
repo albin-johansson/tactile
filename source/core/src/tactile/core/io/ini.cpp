@@ -24,13 +24,13 @@ inline constexpr char kSectionCloseToken = ']';
 
 [[nodiscard]]
 auto _parse_section_header_name(const StringView current_line, const int line_number)
-    -> Result<String>
+    -> std::expected<String, std::error_code>
 {
   TACTILE_ASSERT(current_line.starts_with(kSectionOpenToken));
 
   if (!current_line.ends_with(kSectionCloseToken)) {
     TACTILE_LOG_ERROR("Detected unterminated section (line {})", line_number);
-    return unexpected(make_error(GenericError::kInvalidFile));
+    return std::unexpected {make_error(GenericError::kInvalidFile)};
   }
 
   TACTILE_ASSERT(current_line.size() >= 2);
@@ -40,7 +40,7 @@ auto _parse_section_header_name(const StringView current_line, const int line_nu
 [[nodiscard]]
 auto _parse_key_value_pair(const StringView current_line,
                            const int line_number,
-                           IniSection& section) -> Result<void>
+                           IniSection& section) -> std::expected<void, std::error_code>
 {
   const auto eq_pos = current_line.find_first_of(kAssignmentToken);
 
@@ -48,13 +48,13 @@ auto _parse_key_value_pair(const StringView current_line,
     TACTILE_LOG_ERROR("Detected missing assignment ('{}') operator (line {})",
                       kAssignmentToken,
                       line_number);
-    return unexpected(make_error(GenericError::kInvalidFile));
+    return std::unexpected {make_error(GenericError::kInvalidFile)};
   }
 
   auto key = trim_string(current_line.substr(0, eq_pos));
   if (key.empty()) {
     TACTILE_LOG_ERROR("Detected empty key (line {})", line_number);
-    return unexpected(make_error(GenericError::kInvalidFile));
+    return std::unexpected {make_error(GenericError::kInvalidFile)};
   }
 
   auto value = trim_string(current_line.substr(eq_pos + 1));
@@ -65,16 +65,16 @@ auto _parse_key_value_pair(const StringView current_line,
 
   if (value.empty() || value_is_just_whitespace) {
     TACTILE_LOG_ERROR("Detected empty value (line {})", line_number);
-    return unexpected(make_error(GenericError::kInvalidFile));
+    return std::unexpected {make_error(GenericError::kInvalidFile)};
   }
 
   section.insert_or_assign(std::move(key), std::move(value));
-  return kOK;
+  return {};
 }
 
 }  // namespace ini
 
-auto parse_ini(const Path& path) -> Result<IniData>
+auto parse_ini(const Path& path) -> std::expected<IniData, std::error_code>
 {
   const SetLogScope log_scope {"INI"};
   TACTILE_LOG_DEBUG("Parsing INI from {}", path.string());
@@ -84,7 +84,7 @@ auto parse_ini(const Path& path) -> Result<IniData>
   std::ifstream stream {path, std::ios::in};
   if (!stream.good()) {
     TACTILE_LOG_ERROR("Could not read file");
-    return unexpected(make_error(GenericError::kInvalidFile));
+    return std::unexpected {make_error(GenericError::kInvalidFile)};
   }
 
   int line_number {0};
@@ -108,19 +108,19 @@ auto parse_ini(const Path& path) -> Result<IniData>
         ini_data[current_section];
       }
       else {
-        return propagate_unexpected(section_name);
+        return std::unexpected {section_name.error()};
       }
     }
     else {
       if (current_section.empty()) {
         TACTILE_LOG_ERROR("Detected entry without parent section (line {})", line_number);
-        return unexpected(make_error(GenericError::kInvalidFile));
+        return std::unexpected {make_error(GenericError::kInvalidFile)};
       }
 
       const auto result =
           _parse_key_value_pair(current_line, line_number, ini_data[current_section]);
       if (!result) {
-        return propagate_unexpected(result);
+        return std::unexpected {result.error()};
       }
     }
 

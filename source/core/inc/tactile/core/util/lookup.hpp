@@ -30,8 +30,7 @@ concept MapLikeType = requires {
  * The found element; or a null pointer if none was found.
  */
 template <MapLikeType T>
-[[nodiscard]] constexpr auto find_in(T& map, const auto& key) ->
-    typename T::mapped_type*
+[[nodiscard]] constexpr auto find_in(T& map, const auto& key) -> typename T::mapped_type*
 {
   const auto iter = map.find(key);
   return (iter != map.end()) ? &iter->second : nullptr;
@@ -62,8 +61,7 @@ template <MapLikeType T>
  * \throw Exception if no element is found.
  */
 template <MapLikeType T>
-[[nodiscard]] constexpr auto lookup_in(T& map, const auto& key) ->
-    typename T::mapped_type&
+[[nodiscard]] constexpr auto lookup_in(T& map, const auto& key) -> typename T::mapped_type&
 {
   if (auto* elem = find_in(map, key)) {
     return *elem;
@@ -114,8 +112,7 @@ constexpr void erase_from(T& map, const auto& key)
  * The removed element if successful; nothing if the element wasn't found.
  */
 template <MapLikeType T>
-constexpr auto take_from(T& map,
-                         const auto& key) -> Maybe<typename T::mapped_type>
+constexpr auto take_from(T& map, const auto& key) -> Maybe<typename T::mapped_type>
 {
   if (const auto iter = map.find(key); iter != map.end()) {
     auto elem = std::move(iter->second);

@@ -15,11 +15,11 @@ void WindowHandleDeleter::operator()(SDL_Window* window) noexcept
   SDL_DestroyWindow(window);
 }
 
-Window::Window(SDL_Window* window)
-  : mWindow {require_not_null(window, "null window")}
+Window::Window(SDL_Window* window) :
+  mWindow {require_not_null(window, "null window")}
 {}
 
-auto Window::create(const uint32 extra_flags) -> Result<Window>
+auto Window::create(const uint32 extra_flags) -> std::expected<Window, std::error_code>
 {
   const uint32 basic_flags =
       SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
@@ -33,7 +33,7 @@ auto Window::create(const uint32 extra_flags) -> Result<Window>
 
   if (!handle) {
     TACTILE_LOG_ERROR("Could not create window: {}", SDL_GetError());
-    return unexpected(make_error(GenericError::kInvalidState));
+    return std::unexpected {make_error(GenericError::kInvalidState)};
   }
 
   return Window {handle};

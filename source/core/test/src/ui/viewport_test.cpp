@@ -103,10 +103,7 @@ TEST_F(ViewportTest, TranslateViewportWithLimits)
   EXPECT_EQ(viewport.pos, (Float2 {max_x, max_y}));
 
   // Resetting the limits should clamp any existing offset.
-  set_viewport_limits(mRegistry,
-                      viewport_entity,
-                      Float2 {-1.0f, -1.0f},
-                      Float2 {1.0f, 1.0f});
+  set_viewport_limits(mRegistry, viewport_entity, Float2 {-1.0f, -1.0f}, Float2 {1.0f, 1.0f});
   EXPECT_EQ(viewport.pos, (Float2 {1.0f, 1.0f}));
 }
 

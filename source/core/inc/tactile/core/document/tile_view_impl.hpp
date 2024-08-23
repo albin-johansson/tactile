@@ -27,12 +27,11 @@ class TileViewImpl final : public ITileView
    * \param tileset_view A view of the parent tileset.
    * \param tile_id      The tile entity identifier.
    */
-  TileViewImpl(const IDocument* document,
-               const ITilesetView* tileset_view,
-               EntityID tile_id);
+  TileViewImpl(const IDocument* document, const ITilesetView* tileset_view, EntityID tile_id);
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
+  auto accept(IDocumentVisitor& visitor) const
+      -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
   auto get_parent_tileset() const -> const ITilesetView& override;
@@ -47,8 +46,7 @@ class TileViewImpl final : public ITileView
   auto animation_frame_count() const -> usize override;
 
   [[nodiscard]]
-  auto get_animation_frame(usize index) const
-      -> Pair<TileIndex, Milliseconds> override;
+  auto get_animation_frame(usize index) const -> Pair<TileIndex, Milliseconds> override;
 
   [[nodiscard]]
   auto get_meta() const -> const IMetaView& override;

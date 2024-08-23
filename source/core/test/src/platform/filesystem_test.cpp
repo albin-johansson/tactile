@@ -39,8 +39,7 @@ TEST(Filesystem, StripHomeDirectoryPrefix)
   const String foobar {"/foobar"};
 
   EXPECT_EQ(strip_home_directory_prefix(home_dir + abc, home_dir), "~" + abc);
-  EXPECT_EQ(strip_home_directory_prefix(home_dir + foobar, home_dir),
-            "~" + foobar);
+  EXPECT_EQ(strip_home_directory_prefix(home_dir + foobar, home_dir), "~" + foobar);
 
   EXPECT_FALSE(strip_home_directory_prefix(abc, home_dir).has_value());
 }

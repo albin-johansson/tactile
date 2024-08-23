@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
@@ -46,7 +48,7 @@ class TACTILE_VULKAN_API VulkanShaderModule final
    */
   [[nodiscard]]
   static auto load(VkDevice device,
-                   const Path& shader_path) -> Expected<VulkanShaderModule, VkResult>;
+                   const Path& shader_path) -> std::expected<VulkanShaderModule, VkResult>;
 
   [[nodiscard]]
   auto device() noexcept -> VkDevice

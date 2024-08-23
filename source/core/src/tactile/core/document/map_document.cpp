@@ -26,23 +26,23 @@ struct MapDocument::Data final
   Maybe<Path> path;
   SaveFormatId format;
 
-  Data()
-    : uuid {UUID::generate()},
-      registry {},
-      map_entity {kInvalidEntity},
-      path {kNone},
-      format {SaveFormatId::kTactileYaml}
+  Data() :
+    uuid {UUID::generate()},
+    registry {},
+    map_entity {kInvalidEntity},
+    path {kNone},
+    format {SaveFormatId::kTactileYaml}
   {
     registry.add<CTileCache>();
     registry.add<CDocumentInfo>();
   }
 };
 
-MapDocument::MapDocument()
-  : mData {std::make_unique<Data>()}
+MapDocument::MapDocument() :
+  mData {std::make_unique<Data>()}
 {}
 
-auto MapDocument::make(const MapSpec& spec) -> Result<MapDocument>
+auto MapDocument::make(const MapSpec& spec) -> std::expected<MapDocument, std::error_code>
 {
   MapDocument document {};
   auto& registry = document.mData->registry;
@@ -50,7 +50,7 @@ auto MapDocument::make(const MapSpec& spec) -> Result<MapDocument>
   const auto map_id = make_map(registry, spec);
   if (map_id == kInvalidEntity) {
     TACTILE_LOG_ERROR("Could not create map document");
-    return unexpected(std::make_error_code(std::errc::invalid_argument));
+    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
   }
 
   document.mData->map_entity = map_id;
@@ -63,7 +63,8 @@ auto MapDocument::make(const MapSpec& spec) -> Result<MapDocument>
   return document;
 }
 
-auto MapDocument::make(IRenderer& renderer, const ir::Map& ir_map) -> Result<MapDocument>
+auto MapDocument::make(IRenderer& renderer,
+                       const ir::Map& ir_map) -> std::expected<MapDocument, std::error_code>
 {
   MapDocument document {};
   auto& registry = document.mData->registry;
@@ -71,7 +72,7 @@ auto MapDocument::make(IRenderer& renderer, const ir::Map& ir_map) -> Result<Map
   const auto map_id = make_map(registry, renderer, ir_map);
   if (!map_id.has_value()) {
     TACTILE_LOG_ERROR("Could not create map document: {}", map_id.error().message());
-    return propagate_unexpected(map_id);
+    return std::unexpected {map_id.error()};
   }
 
   document.mData->map_entity = *map_id;
@@ -89,7 +90,8 @@ TACTILE_DEFINE_MOVE(MapDocument);
 
 MapDocument::~MapDocument() noexcept = default;
 
-auto MapDocument::accept(IDocumentVisitor& visitor) const -> Result<void>
+auto MapDocument::accept(IDocumentVisitor& visitor) const
+    -> std::expected<void, std::error_code>
 {
   const MapViewImpl map_view {this};
   return map_view.accept(visitor);

@@ -30,10 +30,7 @@ void Logger::_log(const LogLevel level,
       const auto elapsed_time = _to_elapsed_time(log_instant);
 
       Buffer<char, 64> prefix_buffer;  // NOLINT uninitialized
-      format_to_buffer(prefix_buffer,
-                       "[{} {:.>12%Q}]",
-                       level_acronym,
-                       elapsed_time);
+      format_to_buffer(prefix_buffer, "[{} {:.>12%Q}]", level_acronym, elapsed_time);
 
       const LogMessage msg {
         .level = level,
@@ -118,8 +115,7 @@ auto Logger::get_acronym(const LogLevel level) noexcept -> StringView
   return "";
 }
 
-auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const
-    -> Microseconds
+auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const -> Microseconds
 {
   if (mReferenceInstant.has_value()) {
     return duration_cast<Microseconds>(instant - *mReferenceInstant);

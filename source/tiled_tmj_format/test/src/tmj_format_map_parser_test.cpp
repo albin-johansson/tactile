@@ -122,7 +122,6 @@ TEST_F(TmjFormatMapParserTest, ParseOrthogonalMap)
   ASSERT_EQ(map->layers.size(), 2);
 }
 
-
 // tactile::parse_tiled_tmj_map
 TEST_F(TmjFormatMapParserTest, MapWithoutOrientation)
 {

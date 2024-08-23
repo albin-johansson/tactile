@@ -106,9 +106,7 @@ class CanvasRenderer final
    * \param size       The rectangle size.
    * \param color      The fill color.
    */
-  static void fill_rect(const Float2& screen_pos,
-                        const Float2& size,
-                        const UColor& color);
+  static void fill_rect(const Float2& screen_pos, const Float2& size, const UColor& color);
 
   /**
    * Renders an N-sided polygon.

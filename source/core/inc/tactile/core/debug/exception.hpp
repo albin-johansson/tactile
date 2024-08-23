@@ -10,7 +10,8 @@
 namespace tactile {
 
 /** The exception type used for all explicitly thrown exceptions in the codebase. */
-class Exception final : public std::exception {
+class Exception final : public std::exception
+{
  public:
   TACTILE_NOINLINE explicit Exception(String message);
 

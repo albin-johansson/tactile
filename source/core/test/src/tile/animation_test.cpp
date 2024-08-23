@@ -16,23 +16,22 @@ TEST(Animation, UpdateAnimations)
 {
   Registry registry {};
 
-  auto add_frame = [&registry](EntityID tile_entity,
-                               const usize frame_index,
-                               const TileIndex tile_index) {
-    const AnimationFrame frame {tile_index, Milliseconds::zero()};
-    return add_animation_frame(registry, tile_entity, frame_index, frame);
-  };
+  auto add_frame =
+      [&registry](EntityID tile_entity, const usize frame_index, const TileIndex tile_index) {
+        const AnimationFrame frame {tile_index, Milliseconds::zero()};
+        return add_animation_frame(registry, tile_entity, frame_index, frame);
+      };
 
   const auto tile1_entity = make_tile(registry, TileIndex {1});
   const auto tile2_entity = make_tile(registry, TileIndex {2});
   const auto tile3_entity = make_tile(registry, TileIndex {3});
 
-  EXPECT_EQ(add_frame(tile1_entity, 0, TileIndex {10}), kOK);
-  EXPECT_EQ(add_frame(tile1_entity, 1, TileIndex {11}), kOK);
-  EXPECT_EQ(add_frame(tile1_entity, 2, TileIndex {12}), kOK);
-  EXPECT_EQ(add_frame(tile2_entity, 0, TileIndex {20}), kOK);
-  EXPECT_EQ(add_frame(tile2_entity, 1, TileIndex {21}), kOK);
-  EXPECT_EQ(add_frame(tile3_entity, 0, TileIndex {30}), kOK);
+  EXPECT_TRUE(add_frame(tile1_entity, 0, TileIndex {10}).has_value());
+  EXPECT_TRUE(add_frame(tile1_entity, 1, TileIndex {11}).has_value());
+  EXPECT_TRUE(add_frame(tile1_entity, 2, TileIndex {12}).has_value());
+  EXPECT_TRUE(add_frame(tile2_entity, 0, TileIndex {20}).has_value());
+  EXPECT_TRUE(add_frame(tile2_entity, 1, TileIndex {21}).has_value());
+  EXPECT_TRUE(add_frame(tile3_entity, 0, TileIndex {30}).has_value());
 
   EXPECT_EQ(registry.get<CAnimation>(tile1_entity).frame_index, 0);
   EXPECT_EQ(registry.get<CAnimation>(tile2_entity).frame_index, 0);
@@ -74,24 +73,24 @@ TEST(Animation, AddAnimationFrame)
   ASSERT_FALSE(registry.has<CAnimation>(tile_entity));
 
   // Bad frame index
-  EXPECT_NE(add_animation_frame(registry, tile_entity, 1, frame1), kOK);
+  EXPECT_FALSE(add_animation_frame(registry, tile_entity, 1, frame1).has_value());
   EXPECT_FALSE(registry.has<CAnimation>(tile_entity));
 
   // Create animation
-  EXPECT_EQ(add_animation_frame(registry, tile_entity, 0, frame1), kOK);
+  EXPECT_TRUE(add_animation_frame(registry, tile_entity, 0, frame1).has_value());
   EXPECT_TRUE(registry.has<CAnimation>(tile_entity));
 
   // Prepend
-  EXPECT_EQ(add_animation_frame(registry, tile_entity, 0, frame2), kOK);
+  EXPECT_TRUE(add_animation_frame(registry, tile_entity, 0, frame2).has_value());
 
   // Insert
-  EXPECT_EQ(add_animation_frame(registry, tile_entity, 1, frame3), kOK);
+  EXPECT_TRUE(add_animation_frame(registry, tile_entity, 1, frame3).has_value());
 
   // Append
-  EXPECT_EQ(add_animation_frame(registry, tile_entity, 3, frame4), kOK);
+  EXPECT_TRUE(add_animation_frame(registry, tile_entity, 3, frame4).has_value());
 
   // Bad index
-  EXPECT_NE(add_animation_frame(registry, tile_entity, 5, frame5), kOK);
+  EXPECT_FALSE(add_animation_frame(registry, tile_entity, 5, frame5).has_value());
 
   const auto& animation = registry.get<CAnimation>(tile_entity);
 
@@ -123,9 +122,9 @@ TEST(Animation, RemoveAnimationFrame)
   const AnimationFrame frame2 {TileIndex {2}, Milliseconds {20}};
   const AnimationFrame frame3 {TileIndex {3}, Milliseconds {30}};
 
-  ASSERT_EQ(add_animation_frame(registry, tile_entity, 0, frame1), kOK);
-  ASSERT_EQ(add_animation_frame(registry, tile_entity, 1, frame2), kOK);
-  ASSERT_EQ(add_animation_frame(registry, tile_entity, 2, frame3), kOK);
+  ASSERT_TRUE(add_animation_frame(registry, tile_entity, 0, frame1).has_value());
+  ASSERT_TRUE(add_animation_frame(registry, tile_entity, 1, frame2).has_value());
+  ASSERT_TRUE(add_animation_frame(registry, tile_entity, 2, frame3).has_value());
 
   const auto& animation = registry.get<CAnimation>(tile_entity);
 
@@ -139,7 +138,7 @@ TEST(Animation, RemoveAnimationFrame)
   EXPECT_EQ(animation.frames[2].duration, frame3.duration);
 
   // => [ frame1, frame2 ]
-  EXPECT_EQ(remove_animation_frame(registry, tile_entity, 2), kOK);
+  EXPECT_TRUE(remove_animation_frame(registry, tile_entity, 2).has_value());
   ASSERT_EQ(animation.frames.size(), 2);
   EXPECT_EQ(animation.frames[0].tile_index, frame1.tile_index);
   EXPECT_EQ(animation.frames[0].duration, frame1.duration);
@@ -147,14 +146,14 @@ TEST(Animation, RemoveAnimationFrame)
   EXPECT_EQ(animation.frames[1].duration, frame2.duration);
 
   // => [ frame2 ]
-  EXPECT_EQ(remove_animation_frame(registry, tile_entity, 0), kOK);
+  EXPECT_TRUE(remove_animation_frame(registry, tile_entity, 0).has_value());
   ASSERT_EQ(animation.frames.size(), 1);
   EXPECT_EQ(animation.frames[0].tile_index, frame2.tile_index);
   EXPECT_EQ(animation.frames[0].duration, frame2.duration);
 
   // => [ ]
   EXPECT_TRUE(registry.has<CAnimation>(tile_entity));
-  EXPECT_EQ(remove_animation_frame(registry, tile_entity, 0), kOK);
+  EXPECT_TRUE(remove_animation_frame(registry, tile_entity, 0).has_value());
   EXPECT_FALSE(registry.has<CAnimation>(tile_entity));
 }
 

@@ -12,17 +12,17 @@
 namespace tactile {
 
 auto GLImGuiBackendWrapper::init(SDL_Window* window, ImGuiContext* context)
-    -> Result<GLImGuiBackendWrapper>
+    -> std::expected<GLImGuiBackendWrapper, std::error_code>
 {
   if (!ImGui_ImplSDL2_InitForOpenGL(window, context)) {
-    return unexpected(make_error(OpenGLError::kImGuiError));
+    return std::unexpected {make_error(OpenGLError::kImGuiError)};
   }
 
   return GLImGuiBackendWrapper {};
 }
 
-GLImGuiBackendWrapper::GLImGuiBackendWrapper() noexcept
-  : mActive {true}
+GLImGuiBackendWrapper::GLImGuiBackendWrapper() noexcept :
+  mActive {true}
 {}
 
 GLImGuiBackendWrapper::~GLImGuiBackendWrapper() noexcept
@@ -33,22 +33,21 @@ GLImGuiBackendWrapper::~GLImGuiBackendWrapper() noexcept
   }
 }
 
-GLImGuiBackendWrapper::GLImGuiBackendWrapper(
-    GLImGuiBackendWrapper&& other) noexcept
-  : mActive {std::exchange(other.mActive, false)}
+GLImGuiBackendWrapper::GLImGuiBackendWrapper(GLImGuiBackendWrapper&& other) noexcept :
+  mActive {std::exchange(other.mActive, false)}
 {}
 
-auto GLImGuiRendererWrapper::init() -> Result<GLImGuiRendererWrapper>
+auto GLImGuiRendererWrapper::init() -> std::expected<GLImGuiRendererWrapper, std::error_code>
 {
   if (!ImGui_ImplOpenGL3_Init("#version 410 core")) {
-    return unexpected(make_error(OpenGLError::kImGuiError));
+    return std::unexpected {make_error(OpenGLError::kImGuiError)};
   }
 
   return GLImGuiRendererWrapper {};
 }
 
-GLImGuiRendererWrapper::GLImGuiRendererWrapper() noexcept
-  : mActive {true}
+GLImGuiRendererWrapper::GLImGuiRendererWrapper() noexcept :
+  mActive {true}
 {}
 
 GLImGuiRendererWrapper::~GLImGuiRendererWrapper() noexcept
@@ -59,9 +58,8 @@ GLImGuiRendererWrapper::~GLImGuiRendererWrapper() noexcept
   }
 }
 
-GLImGuiRendererWrapper::GLImGuiRendererWrapper(
-    GLImGuiRendererWrapper&& other) noexcept
-  : mActive {std::exchange(other.mActive, false)}
+GLImGuiRendererWrapper::GLImGuiRendererWrapper(GLImGuiRendererWrapper&& other) noexcept :
+  mActive {std::exchange(other.mActive, false)}
 {}
 
 }  // namespace tactile

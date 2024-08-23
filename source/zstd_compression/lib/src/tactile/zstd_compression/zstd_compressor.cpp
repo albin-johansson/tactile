@@ -25,7 +25,8 @@ using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
 
 }  // namespace zstd_compressor_impl
 
-auto ZstdCompressor::compress(const ByteSpan input_data) const -> Result<ByteStream>
+auto ZstdCompressor::compress(const ByteSpan input_data) const
+    -> std::expected<ByteStream, std::error_code>
 {
   const auto compression_bound = ZSTD_compressBound(input_data.size_bytes());
 
@@ -40,7 +41,7 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const -> Result<ByteStr
 
   if (ZSTD_isError(written_byte_count)) {
     log(LogLevel::kError, "Compression failed: {}", ZSTD_getErrorName(written_byte_count));
-    return unexpected(std::make_error_code(std::errc::io_error));
+    return std::unexpected {std::make_error_code(std::errc::io_error)};
   }
 
   compressed_data.resize(written_byte_count);
@@ -49,12 +50,13 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const -> Result<ByteStr
   return compressed_data;
 }
 
-auto ZstdCompressor::decompress(const ByteSpan input_data) const -> Result<ByteStream>
+auto ZstdCompressor::decompress(const ByteSpan input_data) const
+    -> std::expected<ByteStream, std::error_code>
 {
   const zstd_compressor_impl::UniqueDStream stream {ZSTD_createDStream()};
   if (!stream) {
     log(LogLevel::kError, "Could not create stream");
-    return unexpected(std::make_error_code(std::errc::not_enough_memory));
+    return std::unexpected {std::make_error_code(std::errc::not_enough_memory)};
   }
 
   const auto init_stream_result = ZSTD_initDStream(stream.get());
@@ -62,7 +64,7 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const -> Result<ByteS
     log(LogLevel::kError,
         "Could not initialize stream: {}",
         ZSTD_getErrorName(init_stream_result));
-    return unexpected(std::make_error_code(std::errc::io_error));
+    return std::unexpected {std::make_error_code(std::errc::io_error)};
   }
 
   const auto staging_buffer_size = ZSTD_DStreamOutSize();
@@ -98,7 +100,7 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const -> Result<ByteS
 
     if (ZSTD_isError(decompress_result)) {
       log(LogLevel::kError, "Decompression failed: {}", ZSTD_getErrorName(decompress_result));
-      return unexpected(std::make_error_code(std::errc::io_error));
+      return std::unexpected {std::make_error_code(std::errc::io_error)};
     }
 
     byte_write_count += output_view.pos;

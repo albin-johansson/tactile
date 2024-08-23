@@ -13,7 +13,8 @@ namespace tactile {
 inline namespace vec_serialization {
 
 template <typename VecType>
-[[nodiscard]] auto _deserialize_vec(const StringView str) -> Result<VecType>
+[[nodiscard]] auto _deserialize_vec(const StringView str)
+    -> std::expected<VecType, std::error_code>
 {
   VecType vec {};
   usize index = 0;
@@ -35,7 +36,7 @@ template <typename VecType>
   });
 
   if (!ok) {
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   return vec;
@@ -73,32 +74,32 @@ auto serialize(const Float4& vec) -> String
   return std::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
-auto deserialize_int2(const StringView str) -> Result<Int2>
+auto deserialize_int2(const StringView str) -> std::expected<Int2, std::error_code>
 {
   return _deserialize_vec<Int2>(str);
 }
 
-auto deserialize_int3(const StringView str) -> Result<Int3>
+auto deserialize_int3(const StringView str) -> std::expected<Int3, std::error_code>
 {
   return _deserialize_vec<Int3>(str);
 }
 
-auto deserialize_int4(const StringView str) -> Result<Int4>
+auto deserialize_int4(const StringView str) -> std::expected<Int4, std::error_code>
 {
   return _deserialize_vec<Int4>(str);
 }
 
-auto deserialize_float2(const StringView str) -> Result<Float2>
+auto deserialize_float2(const StringView str) -> std::expected<Float2, std::error_code>
 {
   return _deserialize_vec<Float2>(str);
 }
 
-auto deserialize_float3(const StringView str) -> Result<Float3>
+auto deserialize_float3(const StringView str) -> std::expected<Float3, std::error_code>
 {
   return _deserialize_vec<Float3>(str);
 }
 
-auto deserialize_float4(const StringView str) -> Result<Float4>
+auto deserialize_float4(const StringView str) -> std::expected<Float4, std::error_code>
 {
   return _deserialize_vec<Float4>(str);
 }

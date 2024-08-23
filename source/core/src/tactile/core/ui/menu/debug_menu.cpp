@@ -20,25 +20,19 @@ void DebugMenu::push(const Model& model)
 
   const MenuScope menu {language.get(StringID::kDebugMenu)};
   if (menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kOpenDebugger),
-                        nullptr,
-                        mShowDebugger)) {
+    if (ImGui::MenuItem(language.get(StringID::kOpenDebugger), nullptr, mShowDebugger)) {
       mShowDebugger = !mShowDebugger;
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenStyleEditor),
-                        nullptr,
-                        mShowStyle)) {
+    if (ImGui::MenuItem(language.get(StringID::kOpenStyleEditor), nullptr, mShowStyle)) {
       mShowStyle = !mShowStyle;
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenDemoWindow),
-                        nullptr,
-                        mShowDemo)) {
+    if (ImGui::MenuItem(language.get(StringID::kOpenDemoWindow), nullptr, mShowDemo)) {
       mShowDemo = !mShowDemo;
     }
 

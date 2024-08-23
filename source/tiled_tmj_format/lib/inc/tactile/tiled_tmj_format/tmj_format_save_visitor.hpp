@@ -34,22 +34,22 @@ class TACTILE_TMJ_FORMAT_API TmjFormatSaveVisitor final : public IDocumentVisito
   TmjFormatSaveVisitor(IRuntime* runtime, SaveFormatWriteOptions options);
 
   [[nodiscard]]
-  auto visit(const IMapView& map) -> Result<void> override;
+  auto visit(const IMapView& map) -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
-  auto visit(const ITilesetView& tileset) -> Result<void> override;
+  auto visit(const ITilesetView& tileset) -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
-  auto visit(const ITileView& tile) -> Result<void> override;
+  auto visit(const ITileView& tile) -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
-  auto visit(const ILayerView& layer) -> Result<void> override;
+  auto visit(const ILayerView& layer) -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
-  auto visit(const IObjectView& object) -> Result<void> override;
+  auto visit(const IObjectView& object) -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
-  auto visit(const IComponentView& component) -> Result<void> override;
+  auto visit(const IComponentView& component) -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
   auto get_map_json() const -> const nlohmann::json&;

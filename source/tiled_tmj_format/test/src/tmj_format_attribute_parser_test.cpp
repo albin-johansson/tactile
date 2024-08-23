@@ -315,9 +315,10 @@ TEST_F(TmjFormatAttributeParserTest, ParseTiledTmjMetadata)
               Contains(Eq(ir::NamedAttribute {"a_float", Attribute {10.0f}})));
   EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"a_bool", Attribute {false}})));
-  EXPECT_THAT(metadata->properties,
-              Contains(Eq(ir::NamedAttribute {"a_color",
-                                              (Attribute {UColor {0x2B, 0x3C, 0x4D, 0x1A}})})));
+  EXPECT_THAT(
+      metadata->properties,
+      Contains(
+          Eq(ir::NamedAttribute {"a_color", (Attribute {UColor {0x2B, 0x3C, 0x4D, 0x1A}})})));
   EXPECT_THAT(metadata->properties,
               Contains(Eq(ir::NamedAttribute {"a_path", Attribute {Path {"a/b/c"}}})));
   EXPECT_THAT(metadata->properties,

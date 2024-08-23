@@ -29,9 +29,7 @@ class Window final
    *                     button.
    */
   [[nodiscard]]
-  explicit Window(const char* name,
-                  ImGuiWindowFlags flags = 0,
-                  bool* is_open = nullptr);
+  explicit Window(const char* name, ImGuiWindowFlags flags = 0, bool* is_open = nullptr);
 
   /**
    * Pops the window from the widget stack.

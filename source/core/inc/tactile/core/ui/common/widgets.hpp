@@ -147,9 +147,7 @@ class TableScope final
    * \param columns The number of columns in the table.
    * \param flags   The flags to use.
    */
-  TableScope(const char* label,
-             int columns,
-             ImGuiTableFlags flags = ImGuiTableFlags_None);
+  TableScope(const char* label, int columns, ImGuiTableFlags flags = ImGuiTableFlags_None);
 
   ~TableScope() noexcept;
 
@@ -213,8 +211,7 @@ class TabItemScope final
    * \param label The associated label.
    * \param flags The flags to use.
    */
-  TabItemScope(const char* label,
-               ImGuiTabItemFlags flags = ImGuiTabItemFlags_None);
+  TabItemScope(const char* label, ImGuiTabItemFlags flags = ImGuiTabItemFlags_None);
 
   ~TabItemScope() noexcept;
 
@@ -293,9 +290,7 @@ void push_centered_label(const char* text);
  * \see get_alignment_offset
  */
 template <typename T>
-auto push_scalar_input_row(const char* label,
-                           T& value,
-                           const float input_offset = 0) -> bool
+auto push_scalar_input_row(const char* label, T& value, const float input_offset = 0) -> bool
 {
   const IdScope scope {label};
 

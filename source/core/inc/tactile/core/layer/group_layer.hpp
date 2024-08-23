@@ -141,9 +141,7 @@ auto get_global_layer_index(const Registry& registry,
  *
  * \see \c can_move_layer_up
  */
-void move_layer_up(Registry& registry,
-                   EntityID root_layer_id,
-                   EntityID target_layer_id);
+void move_layer_up(Registry& registry, EntityID root_layer_id, EntityID target_layer_id);
 
 /**
  * Moves a layer down within a group layer hierarchy.
@@ -158,9 +156,7 @@ void move_layer_up(Registry& registry,
  *
  * \see \c can_move_layer_down
  */
-void move_layer_down(Registry& registry,
-                     EntityID root_layer_id,
-                     EntityID target_layer_id);
+void move_layer_down(Registry& registry, EntityID root_layer_id, EntityID target_layer_id);
 
 /**
  * Indicates whether a layer can be moved up in a group layer hierarchy.

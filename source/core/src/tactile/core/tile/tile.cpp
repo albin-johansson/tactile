@@ -15,7 +15,7 @@ namespace tile {
 [[nodiscard]]
 auto convert_animation(Registry& registry,
                        const EntityID tile_id,
-                       const ir::Tile& ir_tile) -> Result<void>
+                       const ir::Tile& ir_tile) -> std::expected<void, std::error_code>
 {
   usize frame_index = 0;
 
@@ -24,13 +24,13 @@ auto convert_animation(Registry& registry,
 
     const auto add_frame_result = add_animation_frame(registry, tile_id, frame_index, frame);
     if (!add_frame_result.has_value()) {
-      return propagate_unexpected(add_frame_result);
+      return std::unexpected {add_frame_result.error()};
     }
 
     ++frame_index;
   }
 
-  return kOK;
+  return {};
 }
 
 }  // namespace tile
@@ -52,14 +52,15 @@ auto make_tile(Registry& registry, const TileIndex index) -> EntityID
   return tile_entity;
 }
 
-auto make_tile(Registry& registry, const ir::Tile& ir_tile) -> Result<EntityID>
+auto make_tile(Registry& registry,
+               const ir::Tile& ir_tile) -> std::expected<EntityID, std::error_code>
 {
   const auto tile_id = make_tile(registry, ir_tile.index);
 
   const auto convert_animation_result = tile::convert_animation(registry, tile_id, ir_tile);
   if (!convert_animation_result.has_value()) {
     destroy_tile(registry, tile_id);
-    return propagate_unexpected(convert_animation_result);
+    return std::unexpected {convert_animation_result.error()};
   }
 
   auto& tile = registry.get<CTile>(tile_id);

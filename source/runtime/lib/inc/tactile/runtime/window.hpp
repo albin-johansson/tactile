@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
@@ -44,7 +46,7 @@ class TACTILE_RUNTIME_API Window final : public IWindow
    * A window if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto create(uint32 extra_flags) -> Result<Window>;
+  static auto create(uint32 extra_flags) -> std::expected<Window, std::error_code>;
 
   ~Window() noexcept override = default;
 

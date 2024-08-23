@@ -46,7 +46,10 @@ class ObjectViewMock : public IObjectView
   explicit ObjectViewMock(ir::Object object,
                           Variant<const ILayerView*, const ITileView*> parent = {});
 
-  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD((std::expected<void, std::error_code>),
+              accept,
+              (IDocumentVisitor&),
+              (const, override));
 
   MOCK_METHOD(const ILayerView*, get_parent_layer, (), (const, override));
 
@@ -83,7 +86,10 @@ class TileViewMock : public ITileView
  public:
   TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile);
 
-  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD((std::expected<void, std::error_code>),
+              accept,
+              (IDocumentVisitor&),
+              (const, override));
 
   MOCK_METHOD(const ITilesetView&, get_parent_tileset, (), (const, override));
 
@@ -122,7 +128,10 @@ class TilesetViewMock : public ITilesetView
 
   explicit TilesetViewMock(ir::TilesetRef tileset_ref);
 
-  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD((std::expected<void, std::error_code>),
+              accept,
+              (IDocumentVisitor&),
+              (const, override));
 
   MOCK_METHOD(TileID, get_first_tile_id, (), (const, override));
 
@@ -160,7 +169,10 @@ class LayerViewMock : public ILayerView
                 const ir::TileFormat& tile_format,
                 const LayerViewMock* parent_layer = nullptr);
 
-  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD((std::expected<void, std::error_code>),
+              accept,
+              (IDocumentVisitor&),
+              (const, override));
 
   MOCK_METHOD(void, write_tile_bytes, (ByteStream&), (const, override));
 
@@ -210,7 +222,10 @@ class MapViewMock : public IMapView
  public:
   explicit MapViewMock(const ir::Map& map);
 
-  MOCK_METHOD(Result<void>, accept, (IDocumentVisitor&), (const, override));
+  MOCK_METHOD((std::expected<void, std::error_code>),
+              accept,
+              (IDocumentVisitor&),
+              (const, override));
 
   MOCK_METHOD(const Path*, get_path, (), (const, override));
 

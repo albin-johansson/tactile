@@ -17,8 +17,8 @@
 
 namespace tactile {
 
-ViewportEventHandler::ViewportEventHandler(Model* model)
-  : mModel {require_not_null(model, "null model")}
+ViewportEventHandler::ViewportEventHandler(Model* model) :
+  mModel {require_not_null(model, "null model")}
 {}
 
 void ViewportEventHandler::install(EventDispatcher& dispatcher)
@@ -60,8 +60,7 @@ void ViewportEventHandler::on_offset_viewport(const OffsetViewportEvent& event)
   }
 }
 
-void ViewportEventHandler::on_update_viewport_size(
-    const UpdateViewportSizeEvent& event)
+void ViewportEventHandler::on_update_viewport_size(const UpdateViewportSizeEvent& event)
 {
   if (mModel->get_settings().log_verbose_events) {
     TACTILE_LOG_TRACE("UpdateViewportSizeEvent(viewport: {}, size: {})",
@@ -76,15 +75,13 @@ void ViewportEventHandler::on_update_viewport_size(
   }
 }
 
-void ViewportEventHandler::on_update_viewport_limits(
-    const UpdateViewportLimitsEvent& event)
+void ViewportEventHandler::on_update_viewport_limits(const UpdateViewportLimitsEvent& event)
 {
   if (mModel->get_settings().log_verbose_events) {
-    TACTILE_LOG_TRACE(
-        "UpdateViewportLimitsEvent(viewport: {}, min: {}, max: {})",
-        entity_to_string(event.viewport_entity),
-        event.min_pos,
-        event.max_pos);
+    TACTILE_LOG_TRACE("UpdateViewportLimitsEvent(viewport: {}, min: {}, max: {})",
+                      entity_to_string(event.viewport_entity),
+                      event.min_pos,
+                      event.max_pos);
   }
 
   if (auto* document = mModel->get_current_document()) {
@@ -98,8 +95,7 @@ void ViewportEventHandler::on_update_viewport_limits(
   }
 }
 
-void ViewportEventHandler::on_increase_viewport_zoom(
-    const IncreaseViewportZoomEvent& event)
+void ViewportEventHandler::on_increase_viewport_zoom(const IncreaseViewportZoomEvent& event)
 {
   if (mModel->get_settings().log_verbose_events) {
     TACTILE_LOG_TRACE("IncreaseViewportZoomEvent(viewport: {})",
@@ -116,8 +112,7 @@ void ViewportEventHandler::on_increase_viewport_zoom(
   }
 }
 
-void ViewportEventHandler::on_decrease_viewport_zoom(
-    const DecreaseViewportZoomEvent& event)
+void ViewportEventHandler::on_decrease_viewport_zoom(const DecreaseViewportZoomEvent& event)
 {
   if (mModel->get_settings().log_verbose_events) {
     TACTILE_LOG_TRACE("DecreaseViewportZoomEvent(viewport: {})",
@@ -134,8 +129,7 @@ void ViewportEventHandler::on_decrease_viewport_zoom(
   }
 }
 
-void ViewportEventHandler::on_reset_viewport_zoom(
-    const ResetViewportZoomEvent& event)
+void ViewportEventHandler::on_reset_viewport_zoom(const ResetViewportZoomEvent& event)
 {
   TACTILE_LOG_TRACE("ResetViewportZoomEvent(viewport: {})",
                     entity_to_string(event.viewport_entity));
@@ -172,8 +166,7 @@ void ViewportEventHandler::on_pan_viewport_up(const PanViewportUpEvent& event)
   _pan_viewport(event.viewport_entity, Float2 {0.0f, -1.0f});
 }
 
-void ViewportEventHandler::on_pan_viewport_down(
-    const PanViewportDownEvent& event)
+void ViewportEventHandler::on_pan_viewport_down(const PanViewportDownEvent& event)
 {
   if (mModel->get_settings().log_verbose_events) {
     TACTILE_LOG_TRACE("PanViewportDownEvent(viewport: {})",
@@ -182,8 +175,7 @@ void ViewportEventHandler::on_pan_viewport_down(
   _pan_viewport(event.viewport_entity, Float2 {0.0f, 1.0f});
 }
 
-void ViewportEventHandler::on_pan_viewport_left(
-    const PanViewportLeftEvent& event)
+void ViewportEventHandler::on_pan_viewport_left(const PanViewportLeftEvent& event)
 {
   if (mModel->get_settings().log_verbose_events) {
     TACTILE_LOG_TRACE("PanViewportLeftEvent(viewport: {})",
@@ -192,8 +184,7 @@ void ViewportEventHandler::on_pan_viewport_left(
   _pan_viewport(event.viewport_entity, Float2 {-1.0f, 0.0f});
 }
 
-void ViewportEventHandler::on_pan_viewport_right(
-    const PanViewportRightEvent& event)
+void ViewportEventHandler::on_pan_viewport_right(const PanViewportRightEvent& event)
 {
   if (mModel->get_settings().log_verbose_events) {
     TACTILE_LOG_TRACE("PanViewportRightEvent(viewport: {})",

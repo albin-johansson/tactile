@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/texture.hpp"
@@ -27,7 +29,7 @@ class TACTILE_OPENGL_API OpenGLTexture final : public ITexture
    *    A texture if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto load(const Path& image_path) -> Result<OpenGLTexture>;
+  static auto load(const Path& image_path) -> std::expected<OpenGLTexture, std::error_code>;
 
   OpenGLTexture() = delete;
 

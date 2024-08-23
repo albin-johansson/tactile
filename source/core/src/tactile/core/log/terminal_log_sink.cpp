@@ -43,8 +43,8 @@ auto TerminalLogSink::get_fg_ansi_color(const LogLevel level) -> StringView
   switch (level) {
     case LogLevel::kTrace: return kAnsiColorFgMagenta;
     case LogLevel::kDebug: return kAnsiColorFgCyan;
-    case LogLevel::kInfo: return kAnsiColorFgWhite;
-    case LogLevel::kWarn: return kAnsiColorFgYellow;
+    case LogLevel::kInfo:  return kAnsiColorFgWhite;
+    case LogLevel::kWarn:  return kAnsiColorFgYellow;
     case LogLevel::kError: [[fallthrough]];
     case LogLevel::kFatal: return kAnsiColorFgRedBold;
   }

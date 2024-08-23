@@ -9,14 +9,14 @@
 
 namespace tactile {
 
-VulkanSemaphore::VulkanSemaphore(VkDevice device, VkSemaphore semaphore)
-  : mDevice {device},
-    mSemaphore {semaphore}
+VulkanSemaphore::VulkanSemaphore(VkDevice device, VkSemaphore semaphore) :
+  mDevice {device},
+  mSemaphore {semaphore}
 {}
 
-VulkanSemaphore::VulkanSemaphore(VulkanSemaphore&& other) noexcept
-  : mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
-    mSemaphore {std::exchange(other.mSemaphore, VK_NULL_HANDLE)}
+VulkanSemaphore::VulkanSemaphore(VulkanSemaphore&& other) noexcept :
+  mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
+  mSemaphore {std::exchange(other.mSemaphore, VK_NULL_HANDLE)}
 {}
 
 VulkanSemaphore::~VulkanSemaphore() noexcept
@@ -44,7 +44,7 @@ auto VulkanSemaphore::operator=(VulkanSemaphore&& other) noexcept -> VulkanSemap
   return *this;
 }
 
-auto VulkanSemaphore::create(VkDevice device) -> Expected<VulkanSemaphore, VkResult>
+auto VulkanSemaphore::create(VkDevice device) -> std::expected<VulkanSemaphore, VkResult>
 {
   const VkSemaphoreCreateInfo create_info {
     .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
@@ -57,7 +57,7 @@ auto VulkanSemaphore::create(VkDevice device) -> Expected<VulkanSemaphore, VkRes
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan semaphore: {}", to_string(result));
-    return unexpected(result);
+    return std::unexpected {result};
   }
 
   return VulkanSemaphore {device, semaphore};

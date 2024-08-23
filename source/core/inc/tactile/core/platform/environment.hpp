@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -17,6 +19,6 @@ namespace tactile {
  * The environment variable value; or an error code if something went wrong.
  */
 [[nodiscard]]
-auto get_env(const char* name) -> Result<String>;
+auto get_env(const char* name) -> std::expected<String, std::error_code>;
 
 }  // namespace tactile

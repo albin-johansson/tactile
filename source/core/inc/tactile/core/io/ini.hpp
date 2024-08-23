@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/string_map.hpp"
@@ -51,6 +53,6 @@ using IniData = StringMap<IniSection>;
  * \see https://en.m.wikipedia.org/wiki/INI_file
  */
 [[nodiscard]]
-auto parse_ini(const Path& path) -> Result<IniData>;
+auto parse_ini(const Path& path) -> std::expected<IniData, std::error_code>;
 
 }  // namespace tactile

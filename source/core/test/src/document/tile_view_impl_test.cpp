@@ -21,9 +21,9 @@ namespace tactile::test {
 class TileViewImplTest : public testing::Test
 {
  public:
-  TileViewImplTest()
-    : mMapSpec {kOrthogonalMapSpec},
-      mDocument {MapDocument::make(mMapSpec).value()}
+  TileViewImplTest() :
+    mMapSpec {kOrthogonalMapSpec},
+    mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:
@@ -51,15 +51,9 @@ TEST_F(TileViewImplTest, Getters)
   const auto tile_id = tileset.tiles.front();
   const auto& tile = registry.get<CTile>(tile_id);
 
-  add_animation_frame(registry,
-                      tile_id,
-                      0,
-                      AnimationFrame {tile.index, Milliseconds {1}})
+  add_animation_frame(registry, tile_id, 0, AnimationFrame {tile.index, Milliseconds {1}})
       .value();
-  add_animation_frame(registry,
-                      tile_id,
-                      1,
-                      AnimationFrame {tile.index + 1, Milliseconds {2}})
+  add_animation_frame(registry, tile_id, 1, AnimationFrame {tile.index + 1, Milliseconds {2}})
       .value();
 
   const auto& animation = registry.get<CAnimation>(tile_id);
@@ -77,8 +71,7 @@ TEST_F(TileViewImplTest, Getters)
   EXPECT_EQ(tile_view.get_animation_frame(0).second, Milliseconds {1});
   EXPECT_EQ(tile_view.get_animation_frame(1).second, Milliseconds {2});
 
-  EXPECT_ANY_THROW(
-      (void) tile_view.get_animation_frame(tile_view.animation_frame_count()));
+  EXPECT_ANY_THROW((void) tile_view.get_animation_frame(tile_view.animation_frame_count()));
 }
 
 }  // namespace tactile::test

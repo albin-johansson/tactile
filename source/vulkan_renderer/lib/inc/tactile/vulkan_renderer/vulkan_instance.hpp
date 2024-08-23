@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
@@ -30,6 +32,6 @@ using VulkanInstance = Unique<VkInstance_T, VulkanInstanceDeleter>;
  */
 [[nodiscard]]
 TACTILE_VULKAN_API auto create_vulkan_instance(IWindow& window)
-    -> Expected<VulkanInstance, VkResult>;
+    -> std::expected<VulkanInstance, VkResult>;
 
 }  // namespace tactile

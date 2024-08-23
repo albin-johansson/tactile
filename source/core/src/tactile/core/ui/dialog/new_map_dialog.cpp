@@ -19,8 +19,7 @@
 namespace tactile::ui {
 inline namespace new_map_dialog {
 
-void _push_map_orientation_combo(const Language& language,
-                                 TileOrientation& orientation)
+void _push_map_orientation_combo(const Language& language, TileOrientation& orientation)
 {
   const auto* orthogonal = language.get(StringID::kOrthogonal);
   const auto* hexagonal = language.get(StringID::kHexagonal);
@@ -58,23 +57,18 @@ void NewMapDialog::push(const Model& model, EventDispatcher& dispatcher)
                                        dialog_name,
                                        ImGuiWindowFlags_AlwaysAutoResize};
       new_map_dialog.is_open()) {
-    const auto widget_offset =
-        get_alignment_offset(language.get(StringID::kOrientation),
-                             language.get(StringID::kRows),
-                             language.get(StringID::kColumns),
-                             language.get(StringID::kTileWidth),
-                             language.get(StringID::kTileHeight));
+    const auto widget_offset = get_alignment_offset(language.get(StringID::kOrientation),
+                                                    language.get(StringID::kRows),
+                                                    language.get(StringID::kColumns),
+                                                    language.get(StringID::kTileWidth),
+                                                    language.get(StringID::kTileHeight));
 
     _push_map_orientation_combo(language, mSpec.orientation);
 
     ImGui::Spacing();
 
-    push_scalar_input_row(language.get(StringID::kRows),
-                          mSpec.extent.rows,
-                          widget_offset);
-    push_scalar_input_row(language.get(StringID::kColumns),
-                          mSpec.extent.cols,
-                          widget_offset);
+    push_scalar_input_row(language.get(StringID::kRows), mSpec.extent.rows, widget_offset);
+    push_scalar_input_row(language.get(StringID::kColumns), mSpec.extent.cols, widget_offset);
 
     ImGui::Spacing();
 
@@ -85,11 +79,10 @@ void NewMapDialog::push(const Model& model, EventDispatcher& dispatcher)
                           mSpec.tile_size[1],
                           widget_offset);
 
-    const auto status =
-        push_dialog_control_buttons(language.get(StringID::kCancel),
-                                    language.get(StringID::kCreate),
-                                    nullptr,
-                                    is_valid(mSpec));
+    const auto status = push_dialog_control_buttons(language.get(StringID::kCancel),
+                                                    language.get(StringID::kCreate),
+                                                    nullptr,
+                                                    is_valid(mSpec));
     if (status == DialogStatus::kAccepted) {
       dispatcher.push<CreateMapEvent>(mSpec);
     }

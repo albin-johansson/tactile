@@ -7,9 +7,9 @@
 
 namespace tactile {
 
-Model::Model(Settings* settings, const ui::Language* language)
-  : mSettings {require_not_null(settings, "null settings")},
-    mLanguage {require_not_null(language, "null language")}
+Model::Model(Settings* settings, const ui::Language* language) :
+  mSettings {require_not_null(settings, "null settings")},
+  mLanguage {require_not_null(language, "null language")}
 {
   mDocuments.set_command_capacity(mSettings->command_capacity);
 }

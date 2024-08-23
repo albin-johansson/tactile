@@ -14,17 +14,18 @@ namespace tactile {
 
 TileViewImpl::TileViewImpl(const IDocument* document,
                            const ITilesetView* tileset_view,
-                           const EntityID tile_id)
-  : mDocument {require_not_null(document, "null document")},
-    mTilesetView {require_not_null(tileset_view, "null tileset view")},
-    mTileId {tile_id},
-    mMeta {document, tile_id}
+                           const EntityID tile_id) :
+  mDocument {require_not_null(document, "null document")},
+  mTilesetView {require_not_null(tileset_view, "null tileset view")},
+  mTileId {tile_id},
+  mMeta {document, tile_id}
 {}
 
-auto TileViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
+auto TileViewImpl::accept(IDocumentVisitor& visitor) const
+    -> std::expected<void, std::error_code>
 {
   if (const auto tile_result = visitor.visit(*this); !tile_result.has_value()) {
-    return propagate_unexpected(tile_result);
+    return std::unexpected {tile_result.error()};
   }
 
   const auto& registry = mDocument->get_registry();
@@ -33,11 +34,11 @@ auto TileViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
   for (const auto object_id : tile.objects) {
     const ObjectViewImpl object_view {mDocument, this, object_id};
     if (const auto object_result = object_view.accept(visitor); !object_result.has_value()) {
-      return propagate_unexpected(object_result);
+      return std::unexpected {object_result.error()};
     }
   }
 
-  return kOK;
+  return {};
 }
 
 auto TileViewImpl::get_parent_tileset() const -> const ITilesetView&

@@ -38,15 +38,13 @@ TEST(ZlibCompressor, CompressAndDecompressString)
   const StringView original_string =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi bibendum neque egestas congue quisque egestas diam in arcu. Varius duis at consectetur lorem. Ultricies tristique nulla aliquet enim tortor at auctor. Nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque. Venenatis urna cursus eget nunc scelerisque. Mattis molestie a iaculis at erat pellentesque adipiscing commodo elit. Commodo ullamcorper a lacus vestibulum sed arcu non odio euismod. Vivamus arcu felis bibendum ut. Libero enim sed faucibus turpis in eu mi bibendum neque. Blandit volutpat maecenas volutpat blandit aliquam etiam.";
 
-  const auto compressed_bytes =
-      compressor.compress(make_byte_span(original_string));
+  const auto compressed_bytes = compressor.compress(make_byte_span(original_string));
   ASSERT_TRUE(compressed_bytes.has_value());
 
   const auto decompressed_bytes = compressor.decompress(*compressed_bytes);
   ASSERT_TRUE(decompressed_bytes.has_value());
 
-  const String restored_string {decompressed_bytes->begin(),
-                                decompressed_bytes->end()};
+  const String restored_string {decompressed_bytes->begin(), decompressed_bytes->end()};
   EXPECT_EQ(restored_string, original_string);
 }
 

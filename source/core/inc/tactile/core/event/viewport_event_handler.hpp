@@ -123,8 +123,7 @@ class ViewportEventHandler final
  private:
   Model* mModel;
 
-  void _pan_viewport(EntityID viewport_entity,
-                     const Float2& tile_offset_factor);
+  void _pan_viewport(EntityID viewport_entity, const Float2& tile_offset_factor);
 };
 
 }  // namespace tactile

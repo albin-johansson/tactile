@@ -35,11 +35,7 @@ struct std::formatter<tactile::Vec<T, 3>> final
   template <typename FormatContext>
   auto format(const tactile::Vec<T, 3>& vec, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(),
-                          "{{{}, {}, {}}}",
-                          vec.x(),
-                          vec.y(),
-                          vec.z());
+    return std::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x(), vec.y(), vec.z());
   }
 };
 
@@ -55,12 +51,7 @@ struct std::formatter<tactile::Vec<T, 4>> final
   template <typename FormatContext>
   auto format(const tactile::Vec<T, 4>& vec, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(),
-                          "{{{}, {}, {}, {}}}",
-                          vec.x(),
-                          vec.y(),
-                          vec.z(),
-                          vec.w());
+    return std::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x(), vec.y(), vec.z(), vec.w());
   }
 };
 

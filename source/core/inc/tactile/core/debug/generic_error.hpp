@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <utility>  // to_underlying
-
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code, error_category
+#include <utility>       // to_underlying
 
 namespace tactile {
 
@@ -27,7 +27,7 @@ enum class GenericError : int
  * An error category.
  */
 [[nodiscard]]
-auto get_generic_error_category() noexcept -> const ErrorCategory&;
+auto get_generic_error_category() noexcept -> const std::error_category&;
 
 /**
  * Creates a generic error code.
@@ -37,9 +37,9 @@ auto get_generic_error_category() noexcept -> const ErrorCategory&;
  * \return
  * An error code.
  */
-inline auto make_error(const GenericError error) noexcept -> ErrorCode
+inline auto make_error(const GenericError error) noexcept -> std::error_code
 {
-  return ErrorCode {std::to_underlying(error), get_generic_error_category()};
+  return std::error_code {std::to_underlying(error), get_generic_error_category()};
 }
 
 }  // namespace tactile

@@ -14,10 +14,10 @@ namespace tactile {
 
 TilesetEventHandler::TilesetEventHandler(Model* model,
                                          IRenderer* renderer,
-                                         ui::WidgetManager* widget_manager)
-  : mModel {require_not_null(model, "null model")},
-    mRenderer {require_not_null(renderer, "null renderer")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+                                         ui::WidgetManager* widget_manager) :
+  mModel {require_not_null(model, "null model")},
+  mRenderer {require_not_null(renderer, "null renderer")},
+  mWidgetManager {require_not_null(widget_manager, "null widget manager")}
 {}
 
 void TilesetEventHandler::install(EventDispatcher& dispatcher)
@@ -30,8 +30,7 @@ void TilesetEventHandler::install(EventDispatcher& dispatcher)
   // clang-format on
 }
 
-void TilesetEventHandler::on_show_new_tileset_dialog(
-    const ShowNewTilesetDialogEvent&)
+void TilesetEventHandler::on_show_new_tileset_dialog(const ShowNewTilesetDialogEvent&)
 {
   TACTILE_LOG_TRACE("ShowNewTilesetDialogEvent");
   mWidgetManager->get_new_tileset_dialog().open();

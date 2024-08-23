@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-auto parse_attribute_type(StringView name) -> Result<AttributeType>
+auto parse_attribute_type(StringView name) -> std::expected<AttributeType, std::error_code>
 {
   if (name == "string") {
     return AttributeType::kStr;
@@ -49,26 +49,26 @@ auto parse_attribute_type(StringView name) -> Result<AttributeType>
     return AttributeType::kObject;
   }
 
-  return unexpected(make_error(GenericError::kInvalidParam));
+  return std::unexpected {make_error(GenericError::kInvalidParam)};
 }
 
 auto serialize(const AttributeType type) -> StringView
 {
   switch (type) {
-    case AttributeType::kStr: return "string";
-    case AttributeType::kInt: return "int";
-    case AttributeType::kInt2: return "int2";
-    case AttributeType::kInt3: return "int3";
-    case AttributeType::kInt4: return "int4";
-    case AttributeType::kFloat: return "float";
+    case AttributeType::kStr:    return "string";
+    case AttributeType::kInt:    return "int";
+    case AttributeType::kInt2:   return "int2";
+    case AttributeType::kInt3:   return "int3";
+    case AttributeType::kInt4:   return "int4";
+    case AttributeType::kFloat:  return "float";
     case AttributeType::kFloat2: return "float2";
     case AttributeType::kFloat3: return "float3";
     case AttributeType::kFloat4: return "float4";
-    case AttributeType::kBool: return "bool";
-    case AttributeType::kPath: return "path";
-    case AttributeType::kColor: return "color";
+    case AttributeType::kBool:   return "bool";
+    case AttributeType::kPath:   return "path";
+    case AttributeType::kColor:  return "color";
     case AttributeType::kObject: return "object";
-    default: throw Exception {"bad attribute type"};
+    default:                     throw Exception {"bad attribute type"};
   }
 }
 

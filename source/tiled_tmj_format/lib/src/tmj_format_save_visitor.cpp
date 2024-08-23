@@ -21,12 +21,12 @@
 
 namespace tactile {
 
-TmjFormatSaveVisitor::TmjFormatSaveVisitor(IRuntime* runtime, SaveFormatWriteOptions options)
-  : mRuntime {runtime},
-    mOptions {std::move(options)}
+TmjFormatSaveVisitor::TmjFormatSaveVisitor(IRuntime* runtime, SaveFormatWriteOptions options) :
+  mRuntime {runtime},
+  mOptions {std::move(options)}
 {}
 
-auto TmjFormatSaveVisitor::visit(const IMapView& map) -> Result<void>
+auto TmjFormatSaveVisitor::visit(const IMapView& map) -> std::expected<void, std::error_code>
 {
   mMapNode = emit_tiled_tmj_map(map);
 
@@ -34,19 +34,20 @@ auto TmjFormatSaveVisitor::visit(const IMapView& map) -> Result<void>
     mExternalTilesetNodes.reserve(map.tileset_count());
   }
 
-  return kOK;
+  return {};
 }
 
-auto TmjFormatSaveVisitor::visit(const ITilesetView& tileset) -> Result<void>
+auto TmjFormatSaveVisitor::visit(const ITilesetView& tileset)
+    -> std::expected<void, std::error_code>
 {
   auto tileset_json = emit_tiled_tmj_tileset(tileset, mOptions, mExternalTilesetNodes);
 
   mMapNode.at("tilesets").push_back(std::move(tileset_json));
 
-  return kOK;
+  return {};
 }
 
-auto TmjFormatSaveVisitor::visit(const ITileView& tile) -> Result<void>
+auto TmjFormatSaveVisitor::visit(const ITileView& tile) -> std::expected<void, std::error_code>
 {
   auto tile_json = emit_tiled_tmj_tile(tile);
 
@@ -54,15 +55,16 @@ auto TmjFormatSaveVisitor::visit(const ITileView& tile) -> Result<void>
   auto& tileset_json = _get_tileset_json(tileset);
   tileset_json.at("tiles").push_back(std::move(tile_json));
 
-  return kOK;
+  return {};
 }
 
-auto TmjFormatSaveVisitor::visit(const ILayerView& layer) -> Result<void>
+auto TmjFormatSaveVisitor::visit(const ILayerView& layer)
+    -> std::expected<void, std::error_code>
 {
   auto layer_json = emit_tiled_tmj_layer(*mRuntime, layer, mTileByteCache);
 
   if (!layer_json.has_value()) {
-    return propagate_unexpected(layer_json);
+    return std::unexpected {layer_json.error()};
   }
 
   if (const auto* parent_layer = layer.get_parent_layer()) {
@@ -73,10 +75,11 @@ auto TmjFormatSaveVisitor::visit(const ILayerView& layer) -> Result<void>
     mMapNode.at("layers").push_back(std::move(*layer_json));
   }
 
-  return kOK;
+  return {};
 }
 
-auto TmjFormatSaveVisitor::visit(const IObjectView& object) -> Result<void>
+auto TmjFormatSaveVisitor::visit(const IObjectView& object)
+    -> std::expected<void, std::error_code>
 {
   auto object_json = emit_tiled_tmj_object(object);
 
@@ -90,15 +93,15 @@ auto TmjFormatSaveVisitor::visit(const IObjectView& object) -> Result<void>
   }
   else {
     log(LogLevel::kError, "Object {} has no parent layer or tile", object.get_id());
-    return unexpected(std::make_error_code(std::errc::invalid_argument));
+    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
   }
 
-  return kOK;
+  return {};
 }
 
-auto TmjFormatSaveVisitor::visit(const IComponentView&) -> Result<void>
+auto TmjFormatSaveVisitor::visit(const IComponentView&) -> std::expected<void, std::error_code>
 {
-  return kOK;
+  return {};
 }
 
 auto TmjFormatSaveVisitor::get_map_json() const -> const nlohmann::json&

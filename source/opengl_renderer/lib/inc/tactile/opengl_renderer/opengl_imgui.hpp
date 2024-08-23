@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/opengl_renderer/api.hpp"
 
@@ -29,8 +31,8 @@ class TACTILE_OPENGL_API GLImGuiBackendWrapper final
    * An RAII object if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto init(SDL_Window* window,
-                   ImGuiContext* context) -> Result<GLImGuiBackendWrapper>;
+  static auto init(SDL_Window* window, ImGuiContext* context)
+      -> std::expected<GLImGuiBackendWrapper, std::error_code>;
 
   /**
    * Shuts down the backend.
@@ -63,7 +65,7 @@ class TACTILE_OPENGL_API GLImGuiRendererWrapper final
    * An RAII object if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto init() -> Result<GLImGuiRendererWrapper>;
+  static auto init() -> std::expected<GLImGuiRendererWrapper, std::error_code>;
 
   /**
    * Shuts down the renderer.

@@ -37,14 +37,11 @@ void NewPropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
 
   const auto* dialog_name = language.get(StringID::kCreateProperty);
 
-  if (const PopupScope dialog {kModalPopup,
-                               dialog_name,
-                               ImGuiWindowFlags_AlwaysAutoResize};
+  if (const PopupScope dialog {kModalPopup, dialog_name, ImGuiWindowFlags_AlwaysAutoResize};
       dialog.is_open()) {
     const auto* name_str = language.get(StringID::kName);
     const auto* type_str = language.get(StringID::kType);
-    const auto label_alignment_offset =
-        get_alignment_offset(name_str, type_str);
+    const auto label_alignment_offset = get_alignment_offset(name_str, type_str);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(name_str);
@@ -54,20 +51,17 @@ void NewPropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(type_str);
     ImGui::SameLine(label_alignment_offset);
-    if (auto type = mValue.get_type();
-        push_attribute_type_combo(language, "##Type", type)) {
+    if (auto type = mValue.get_type(); push_attribute_type_combo(language, "##Type", type)) {
       mValue.reset(type);
     }
 
     const auto& meta = registry.get<CMeta>(mContextEntity);
-    const auto can_accept =
-        !mName.empty() && !exists_in(meta.properties, mName);
+    const auto can_accept = !mName.empty() && !exists_in(meta.properties, mName);
 
-    const auto action =
-        push_dialog_control_buttons(language.get(StringID::kCancel),
-                                    language.get(StringID::kCreate),
-                                    nullptr,
-                                    can_accept);
+    const auto action = push_dialog_control_buttons(language.get(StringID::kCancel),
+                                                    language.get(StringID::kCreate),
+                                                    nullptr,
+                                                    can_accept);
 
     if (action == DialogStatus::kAccepted) {
       dispatcher.push<CreatePropertyEvent>(mContextEntity, mName, mValue);

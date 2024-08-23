@@ -8,11 +8,10 @@
 
 namespace tactile {
 
-ScopeProfiler::ScopeProfiler(const char* description) noexcept
-    : mDescription {description ? description : "?"},
-      mStartInstant {SteadyClock::now()}
-{
-}
+ScopeProfiler::ScopeProfiler(const char* description) noexcept :
+  mDescription {description ? description : "?"},
+  mStartInstant {SteadyClock::now()}
+{}
 
 ScopeProfiler::~ScopeProfiler() noexcept
 {
@@ -22,8 +21,7 @@ ScopeProfiler::~ScopeProfiler() noexcept
     TACTILE_LOG_DEBUG("Scope '{}' took {}", mDescription, duration);
   }
   catch (const std::exception& e) {
-    TACTILE_LOG_ERROR("Scope profiler destructor threw unexpected exception: {}",
-                      e.what());
+    TACTILE_LOG_ERROR("Scope profiler destructor threw unexpected exception: {}", e.what());
   }
 }
 

@@ -12,18 +12,18 @@
 
 namespace tactile {
 
-TmjSaveFormat::TmjSaveFormat(IRuntime* runtime)
-  : mRuntime {runtime}
+TmjSaveFormat::TmjSaveFormat(IRuntime* runtime) :
+  mRuntime {runtime}
 {}
 
-auto TmjSaveFormat::load_map(const Path& map_path,
-                             const SaveFormatReadOptions& options) const -> Result<ir::Map>
+auto TmjSaveFormat::load_map(const Path& map_path, const SaveFormatReadOptions& options) const
+    -> std::expected<ir::Map, std::error_code>
 {
   log(LogLevel::kDebug, "Loading TMJ map from {}", map_path.string());
 
   const auto map_json = load_json(map_path);
   if (!map_json.has_value()) {
-    return unexpected(std::make_error_code(std::errc::io_error));
+    return std::unexpected {std::make_error_code(std::errc::io_error)};
   }
 
   return parse_tiled_tmj_map(*mRuntime, *map_json, options)
@@ -33,14 +33,14 @@ auto TmjSaveFormat::load_map(const Path& map_path,
       });
 }
 
-auto TmjSaveFormat::save_map(const IMapView& map,
-                             const SaveFormatWriteOptions& options) const -> Result<void>
+auto TmjSaveFormat::save_map(const IMapView& map, const SaveFormatWriteOptions& options) const
+    -> std::expected<void, std::error_code>
 {
   const auto* map_path = map.get_path();
 
   if (!map_path) {
     log(LogLevel::kError, "Map has no associated file path");
-    return unexpected(std::make_error_code(std::errc::invalid_argument));
+    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
   }
 
   log(LogLevel::kDebug, "Saving TMJ map to {}", map_path->string());
@@ -52,7 +52,7 @@ auto TmjSaveFormat::save_map(const IMapView& map,
         const auto& map_json = visitor.get_map_json();
         return save_json(*map_path, map_json, options.use_indentation ? 2 : 0);
       })
-      .and_then([&]() -> Result<void> {
+      .and_then([&]() -> std::expected<void, std::error_code> {
         const auto& external_tilesets = visitor.get_external_tilesets();
 
         for (const auto& [first_tiled_id, external_tileset] : external_tilesets) {
@@ -61,11 +61,11 @@ auto TmjSaveFormat::save_map(const IMapView& map,
                                                      options.use_indentation ? 2 : 0);
           if (!save_tileset_result.has_value()) {
             log(LogLevel::kError, "Could not save external tileset");
-            return propagate_unexpected(save_tileset_result);
+            return std::unexpected {save_tileset_result.error()};
           }
         }
 
-        return kOK;
+        return {};
       });
 }
 

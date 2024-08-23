@@ -23,8 +23,8 @@ class UnixDynamicLibrary final : public IDynamicLibrary
   TACTILE_DELETE_COPY(UnixDynamicLibrary);
   TACTILE_DELETE_MOVE(UnixDynamicLibrary);
 
-  explicit UnixDynamicLibrary(void* handle) noexcept
-    : mHandle {handle}
+  explicit UnixDynamicLibrary(void* handle) noexcept :
+    mHandle {handle}
   {}
 
   ~UnixDynamicLibrary() noexcept override
@@ -68,8 +68,8 @@ class Win32DynamicLibrary final : public IDynamicLibrary
   TACTILE_DELETE_COPY(Win32DynamicLibrary);
   TACTILE_DELETE_MOVE(Win32DynamicLibrary);
 
-  explicit Win32DynamicLibrary(HMODULE handle)
-    : mHandle {handle}
+  explicit Win32DynamicLibrary(HMODULE handle) :
+    mHandle {handle}
   {}
 
   ~Win32DynamicLibrary() noexcept override

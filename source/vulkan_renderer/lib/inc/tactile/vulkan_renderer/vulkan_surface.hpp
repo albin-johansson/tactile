@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
 
@@ -41,7 +43,7 @@ class TACTILE_VULKAN_API VulkanSurface final
    */
   [[nodiscard]]
   static auto create(VkInstance instance,
-                     IWindow* window) -> Expected<VulkanSurface, VkResult>;
+                     IWindow* window) -> std::expected<VulkanSurface, VkResult>;
 
   [[nodiscard]]
   auto instance() noexcept -> VkInstance

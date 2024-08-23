@@ -31,26 +31,26 @@ inline constexpr std::array<const char*, 3> kImagePatterns {
 
 }  // namespace file_dialog
 
-auto FileDialog::open_folder() -> Result<Path>
+auto FileDialog::open_folder() -> std::expected<Path, std::error_code>
 {
   if (const auto* path = tinyfd_selectFolderDialog("Open Folder", nullptr)) {
     return path;
   }
 
-  return unexpected(make_error(GenericError::kInvalidFile));
+  return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::open_file() -> Result<Path>
+auto FileDialog::open_file() -> std::expected<Path, std::error_code>
 {
   if (const auto* path =
           tinyfd_openFileDialog("Open File", nullptr, 0, nullptr, "Any file", 0)) {
     return path;
   }
 
-  return unexpected(make_error(GenericError::kInvalidFile));
+  return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::open_map() -> Result<Path>
+auto FileDialog::open_map() -> std::expected<Path, std::error_code>
 {
   if (const auto* path = tinyfd_openFileDialog("Open Map",
                                                nullptr,
@@ -61,10 +61,10 @@ auto FileDialog::open_map() -> Result<Path>
     return path;
   }
 
-  return unexpected(make_error(GenericError::kInvalidFile));
+  return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::open_image() -> Result<Path>
+auto FileDialog::open_image() -> std::expected<Path, std::error_code>
 {
   if (const auto* path = tinyfd_openFileDialog("Open Image",
                                                nullptr,
@@ -75,10 +75,10 @@ auto FileDialog::open_image() -> Result<Path>
     return path;
   }
 
-  return unexpected(make_error(GenericError::kInvalidFile));
+  return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::save_map() -> Result<Path>
+auto FileDialog::save_map() -> std::expected<Path, std::error_code>
 {
   if (const auto* path = tinyfd_saveFileDialog("Save Map",
                                                nullptr,
@@ -88,10 +88,10 @@ auto FileDialog::save_map() -> Result<Path>
     return path;
   }
 
-  return unexpected(make_error(GenericError::kInvalidFile));
+  return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
-auto FileDialog::save_image() -> Result<Path>
+auto FileDialog::save_image() -> std::expected<Path, std::error_code>
 {
   if (const auto* path = tinyfd_saveFileDialog("Save Image",
                                                nullptr,
@@ -101,7 +101,7 @@ auto FileDialog::save_image() -> Result<Path>
     return path;
   }
 
-  return unexpected(make_error(GenericError::kInvalidFile));
+  return std::unexpected {make_error(GenericError::kInvalidFile)};
 }
 
 }  // namespace tactile

@@ -35,8 +35,7 @@ class PopupScope final
    * \param flags The window flags to use.
    */
   [[nodiscard]]
-  explicit PopupScope(const char* id,
-                      ImGuiWindowFlags flags = ImGuiWindowFlags_None);
+  explicit PopupScope(const char* id, ImGuiWindowFlags flags = ImGuiWindowFlags_None);
 
   /**
    * Pushes a modal popup to the widget stack.
@@ -45,9 +44,7 @@ class PopupScope final
    * \param flags The window flags to use.
    */
   [[nodiscard]]
-  PopupScope(ModalPopupTag,
-             const char* id,
-             ImGuiWindowFlags flags = ImGuiWindowFlags_None);
+  PopupScope(ModalPopupTag, const char* id, ImGuiWindowFlags flags = ImGuiWindowFlags_None);
 
   /**
    * Pops the popup from the widget stack.

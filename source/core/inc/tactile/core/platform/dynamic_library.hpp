@@ -79,8 +79,7 @@ auto load_library(const Path& path) -> Unique<IDynamicLibrary>;
  * A pointer to the symbol if successful; a null pointer otherwise.
  */
 template <typename T>
-[[nodiscard]] auto find_symbol(const IDynamicLibrary& lib,
-                               const char* name) -> T*
+[[nodiscard]] auto find_symbol(const IDynamicLibrary& lib, const char* name) -> T*
 {
   return reinterpret_cast<T*>(lib.find_symbol(name));
 }

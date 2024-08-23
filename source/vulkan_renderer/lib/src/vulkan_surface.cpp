@@ -11,14 +11,14 @@
 
 namespace tactile {
 
-VulkanSurface::VulkanSurface(VkInstance instance, VkSurfaceKHR surface)
-  : mInstance {instance},
-    mSurface {surface}
+VulkanSurface::VulkanSurface(VkInstance instance, VkSurfaceKHR surface) :
+  mInstance {instance},
+  mSurface {surface}
 {}
 
-VulkanSurface::VulkanSurface(VulkanSurface&& other) noexcept
-  : mInstance {std::exchange(other.mInstance, VK_NULL_HANDLE)},
-    mSurface {std::exchange(other.mSurface, VK_NULL_HANDLE)}
+VulkanSurface::VulkanSurface(VulkanSurface&& other) noexcept :
+  mInstance {std::exchange(other.mInstance, VK_NULL_HANDLE)},
+  mSurface {std::exchange(other.mSurface, VK_NULL_HANDLE)}
 {}
 
 VulkanSurface::~VulkanSurface() noexcept
@@ -47,13 +47,13 @@ auto VulkanSurface::operator=(VulkanSurface&& other) noexcept -> VulkanSurface&
 }
 
 auto VulkanSurface::create(VkInstance instance,
-                           IWindow* window) -> Expected<VulkanSurface, VkResult>
+                           IWindow* window) -> std::expected<VulkanSurface, VkResult>
 {
   VkSurfaceKHR surface {};
 
   if (SDL_Vulkan_CreateSurface(window->get_handle(), instance, &surface) == SDL_FALSE) {
     log(LogLevel::kError, "Could not create Vulkan surface: {}", SDL_GetError());
-    return unexpected(VK_ERROR_UNKNOWN);
+    return std::unexpected {VK_ERROR_UNKNOWN};
   }
 
   return VulkanSurface {instance, surface};

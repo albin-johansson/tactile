@@ -37,9 +37,8 @@ void NewTilesetDialog::push(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::SameLine();
 
-    auto input_offset =
-        get_alignment_offset(language.get(StringID::kTileWidth),
-                             language.get(StringID::kTileHeight));
+    auto input_offset = get_alignment_offset(language.get(StringID::kTileWidth),
+                                             language.get(StringID::kTileHeight));
     input_offset = std::max(input_offset, ImGui::GetCursorPosX());
 
     {
@@ -51,23 +50,18 @@ void NewTilesetDialog::push(const Model& model, EventDispatcher& dispatcher)
                        ImGuiInputTextFlags_ReadOnly);
     }
 
-    push_scalar_input_row(language.get(StringID::kTileWidth),
-                          mTileSize[0],
-                          input_offset);
+    push_scalar_input_row(language.get(StringID::kTileWidth), mTileSize[0], input_offset);
 
-    push_scalar_input_row(language.get(StringID::kTileHeight),
-                          mTileSize[1],
-                          input_offset);
+    push_scalar_input_row(language.get(StringID::kTileHeight), mTileSize[1], input_offset);
 
     const auto can_accept = !mTexturePath.empty() &&  //
                             (mTileSize.x() > 0) &&    //
                             (mTileSize.y() > 0);
 
-    const auto status =
-        push_dialog_control_buttons(language.get(StringID::kCancel),
-                                    language.get(StringID::kCreate),
-                                    nullptr,
-                                    can_accept);
+    const auto status = push_dialog_control_buttons(language.get(StringID::kCancel),
+                                                    language.get(StringID::kCreate),
+                                                    nullptr,
+                                                    can_accept);
     if (status == DialogStatus::kAccepted) {
       dispatcher.push<AddTilesetEvent>(std::move(mTexturePath), mTileSize);
     }

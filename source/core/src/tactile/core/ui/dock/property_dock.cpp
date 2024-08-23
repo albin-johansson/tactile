@@ -38,8 +38,7 @@ void _push_property_table_context_menu_content(const Language& language,
 
     if (ImGui::Selectable(language.get(StringID::kRenameProperty))) {
       TACTILE_ASSERT(prop_name != nullptr);
-      dispatcher.push<ShowRenamePropertyDialogEvent>(context_entity,
-                                                     *prop_name);
+      dispatcher.push<ShowRenamePropertyDialogEvent>(context_entity, *prop_name);
     }
 
     ImGui::Separator();
@@ -57,10 +56,8 @@ void _push_property_table(const Language& language,
                           EventDispatcher& dispatcher)
 {
   const auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
-                           ImGuiTableFlags_ScrollY |
-                           ImGuiTableFlags_BordersInner;
-  if (const TableScope table {"##Properties", 2, table_flags};
-      table.is_open()) {
+                           ImGuiTableFlags_ScrollY | ImGuiTableFlags_BordersInner;
+  if (const TableScope table {"##Properties", 2, table_flags}; table.is_open()) {
     ImGui::TableSetupColumn(language.get(StringID::kName));
     ImGui::TableSetupColumn(language.get(StringID::kValue));
 
@@ -71,8 +68,8 @@ void _push_property_table(const Language& language,
         ImGui::AlignTextToFramePadding();
         ImGui::Selectable(prop_name.c_str());
 
-        const auto item_popup_flags = ImGuiPopupFlags_MouseButtonRight |
-                                      ImGuiPopupFlags_NoOpenOverExistingPopup;
+        const auto item_popup_flags =
+            ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
         if (ImGui::BeginPopupContextItem(nullptr, item_popup_flags)) {
           _push_property_table_context_menu_content(language,
                                                     context_entity,
@@ -95,10 +92,7 @@ void _push_property_table(const Language& language,
                                     ImGuiPopupFlags_NoOpenOverExistingPopup |
                                     ImGuiPopupFlags_NoOpenOverItems;
     if (ImGui::BeginPopupContextWindow(nullptr, window_popup_flags)) {
-      _push_property_table_context_menu_content(language,
-                                                context_entity,
-                                                nullptr,
-                                                dispatcher);
+      _push_property_table_context_menu_content(language, context_entity, nullptr, dispatcher);
       ImGui::EndPopup();
     }
   }
@@ -112,8 +106,7 @@ void _push_no_properties_view(const Language& language,
 
   push_centered_label(language.get(StringID::kContextHasNoProperties));
 
-  if (push_horizontally_centered_button(
-          language.get(StringID::kCreateProperty))) {
+  if (push_horizontally_centered_button(language.get(StringID::kCreateProperty))) {
     dispatcher.push<ShowNewPropertyDialogEvent>(context_entity);
   }
 }

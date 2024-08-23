@@ -2,14 +2,16 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/io/save/save_format_parse_error.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
 template <typename T>
-using SaveFormatParseResult = Expected<T, SaveFormatParseError>;
+using SaveFormatParseResult = std::expected<T, SaveFormatParseError>;
 
 inline constexpr SaveFormatParseResult<void> kParseResultOK {};
 

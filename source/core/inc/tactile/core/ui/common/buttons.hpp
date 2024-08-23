@@ -56,8 +56,6 @@ auto push_horizontally_centered_button(const char* label,
  * True if the button was pressed; false otherwise.
  */
 [[nodiscard]]
-auto push_icon_button(Icon icon,
-                      const char* tooltip = nullptr,
-                      bool enabled = true) -> bool;
+auto push_icon_button(Icon icon, const char* tooltip = nullptr, bool enabled = true) -> bool;
 
 }  // namespace tactile::ui

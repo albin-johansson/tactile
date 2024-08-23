@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/pair.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
@@ -30,7 +32,8 @@ class IComponentView
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto accept(IDocumentVisitor& visitor) const -> Result<void> = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const
+      -> std::expected<void, std::error_code> = 0;
 
   /**
    * Returns the name of the component.

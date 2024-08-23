@@ -21,12 +21,12 @@ class TACTILE_TMJ_FORMAT_API TmjSaveFormat final : public ISaveFormat
   TmjSaveFormat(IRuntime* runtime);
 
   [[nodiscard]]
-  auto load_map(const Path& map_path,
-                const SaveFormatReadOptions& options) const -> Result<ir::Map> override;
+  auto load_map(const Path& map_path, const SaveFormatReadOptions& options) const
+      -> std::expected<ir::Map, std::error_code> override;
 
   [[nodiscard]]
-  auto save_map(const IMapView& map,
-                const SaveFormatWriteOptions& options) const -> Result<void> override;
+  auto save_map(const IMapView& map, const SaveFormatWriteOptions& options) const
+      -> std::expected<void, std::error_code> override;
 
  private:
   IRuntime* mRuntime;

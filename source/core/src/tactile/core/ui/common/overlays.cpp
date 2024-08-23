@@ -19,8 +19,7 @@ void _prepare_overlay_position(const Float2& anchor)
   const auto frame_padding = ImGui::GetStyle().FramePadding;
   const auto next_pivot = to_imvec2(anchor);
 
-  auto next_pos =
-      ImGui::GetCursorScreenPos() + ImGui::GetContentRegionAvail() * next_pivot;
+  auto next_pos = ImGui::GetCursorScreenPos() + ImGui::GetContentRegionAvail() * next_pivot;
 
   next_pos.x += frame_padding.x * ((next_pivot.x < 0.5f) ? 1.0f : -1.0f);
   next_pos.y += frame_padding.y * ((next_pivot.y < 0.5f) ? 1.0f : -1.0f);
@@ -30,9 +29,7 @@ void _prepare_overlay_position(const Float2& anchor)
 
 }  // namespace overlays
 
-OverlayScope::OverlayScope(const char* id,
-                           const Float2& anchor,
-                           const float opacity)
+OverlayScope::OverlayScope(const char* id, const Float2& anchor, const float opacity)
 {
   _prepare_overlay_position(anchor);
   ImGui::SetNextWindowBgAlpha(opacity);

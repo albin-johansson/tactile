@@ -84,11 +84,11 @@ struct Runtime::Data final
   HashMap<CompressionFormat, ICompressor*> compression_formats {};
   HashMap<SaveFormatId, ISaveFormat*> save_formats {};
 
-  Data()
-    : protobuf_context {},
-      sdl_context {},
-      logger {runtime_impl::make_logger()},
-      imgui_context {runtime_impl::make_imgui_context()}
+  Data() :
+    protobuf_context {},
+    sdl_context {},
+    logger {runtime_impl::make_logger()},
+    imgui_context {runtime_impl::make_imgui_context()}
   {
     set_default_logger(&logger);
   }

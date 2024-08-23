@@ -35,8 +35,7 @@ auto find_layer(Registry& registry,
                 const EntityID root_layer_id,
                 const EntityID target_layer_id) -> Optional<FindLayerResult>
 {
-  const auto parent_id =
-      find_parent_layer(registry, root_layer_id, target_layer_id);
+  const auto parent_id = find_parent_layer(registry, root_layer_id, target_layer_id);
 
   if (parent_id == kInvalidEntity) {
     return kNone;
@@ -59,11 +58,9 @@ auto find_layer(Registry& registry,
 [[nodiscard]]
 auto find_layer(const Registry& registry,
                 const EntityID root_layer_id,
-                const EntityID target_layer_id)
-    -> Optional<FindLayerConstResult>
+                const EntityID target_layer_id) -> Optional<FindLayerConstResult>
 {
-  const auto parent_id =
-      find_parent_layer(registry, root_layer_id, target_layer_id);
+  const auto parent_id = find_parent_layer(registry, root_layer_id, target_layer_id);
 
   if (parent_id == kInvalidEntity) {
     return kNone;
@@ -168,8 +165,7 @@ void destroy_group_layer(Registry& registry, const EntityID group_layer_id)
   registry.destroy(group_layer_id);
 }
 
-auto count_layers(const Registry& registry,
-                  const EntityID root_layer_id) -> usize
+auto count_layers(const Registry& registry, const EntityID root_layer_id) -> usize
 {
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
 
@@ -204,8 +200,7 @@ auto find_parent_layer(const Registry& registry,
       continue;
     }
 
-    const auto found_id =
-        find_parent_layer(registry, layer_id, target_layer_id);
+    const auto found_id = find_parent_layer(registry, layer_id, target_layer_id);
     if (found_id != kInvalidEntity) {
       return found_id;
     }
@@ -254,17 +249,16 @@ void move_layer_down(Registry& registry,
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
   TACTILE_ASSERT(can_move_layer_down(registry, root_layer_id, target_layer_id));
 
-  std::ignore =
-      group_layer_impl::find_layer(registry, root_layer_id, target_layer_id)
-          .transform([](const group_layer_impl::FindLayerResult& result) {
-            const auto layers_begin = result.parent_layer->layers.begin();
+  std::ignore = group_layer_impl::find_layer(registry, root_layer_id, target_layer_id)
+                    .transform([](const group_layer_impl::FindLayerResult& result) {
+                      const auto layers_begin = result.parent_layer->layers.begin();
 
-            const auto curr_pos = layers_begin + result.layer_index;
-            const auto new_pos = curr_pos + 1;
+                      const auto curr_pos = layers_begin + result.layer_index;
+                      const auto new_pos = curr_pos + 1;
 
-            std::iter_swap(curr_pos, new_pos);
-            return 0;
-          });
+                      std::iter_swap(curr_pos, new_pos);
+                      return 0;
+                    });
 }
 
 void move_layer_up(Registry& registry,
@@ -275,17 +269,16 @@ void move_layer_up(Registry& registry,
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
   TACTILE_ASSERT(can_move_layer_up(registry, root_layer_id, target_layer_id));
 
-  std::ignore =
-      group_layer_impl::find_layer(registry, root_layer_id, target_layer_id)
-          .transform([](const group_layer_impl::FindLayerResult& result) {
-            const auto layers_begin = result.parent_layer->layers.begin();
+  std::ignore = group_layer_impl::find_layer(registry, root_layer_id, target_layer_id)
+                    .transform([](const group_layer_impl::FindLayerResult& result) {
+                      const auto layers_begin = result.parent_layer->layers.begin();
 
-            const auto curr_pos = layers_begin + result.layer_index;
-            const auto new_pos = curr_pos - 1;
+                      const auto curr_pos = layers_begin + result.layer_index;
+                      const auto new_pos = curr_pos - 1;
 
-            std::iter_swap(curr_pos, new_pos);
-            return 0;
-          });
+                      std::iter_swap(curr_pos, new_pos);
+                      return 0;
+                    });
 }
 
 auto can_move_layer_up(const Registry& registry,
@@ -295,10 +288,7 @@ auto can_move_layer_up(const Registry& registry,
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
 
-  return group_layer_impl::can_move_layer(registry,
-                                          root_layer_id,
-                                          target_layer_id,
-                                          -1);
+  return group_layer_impl::can_move_layer(registry, root_layer_id, target_layer_id, -1);
 }
 
 auto can_move_layer_down(const Registry& registry,
@@ -308,10 +298,7 @@ auto can_move_layer_down(const Registry& registry,
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
 
-  return group_layer_impl::can_move_layer(registry,
-                                          root_layer_id,
-                                          target_layer_id,
-                                          1);
+  return group_layer_impl::can_move_layer(registry, root_layer_id, target_layer_id, 1);
 }
 
 }  // namespace tactile

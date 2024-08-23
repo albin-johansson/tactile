@@ -14,12 +14,13 @@
 
 namespace tactile {
 
-MapViewImpl::MapViewImpl(const MapDocument* document)
-  : mDocument {require_not_null(document, "null document")},
-    mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
+MapViewImpl::MapViewImpl(const MapDocument* document) :
+  mDocument {require_not_null(document, "null document")},
+  mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
 {}
 
-auto MapViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
+auto MapViewImpl::accept(IDocumentVisitor& visitor) const
+    -> std::expected<void, std::error_code>
 {
   const auto& registry = mDocument->get_registry();
 
@@ -27,27 +28,27 @@ auto MapViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
   const auto& root_layer = registry.get<CGroupLayer>(map.root_layer);
 
   if (const auto map_result = visitor.visit(*this); !map_result.has_value()) {
-    return propagate_unexpected(map_result);
+    return std::unexpected {map_result.error()};
   }
 
   for (const auto tileset_id : map.attached_tilesets) {
     const TilesetViewImpl tileset_view {mDocument, tileset_id};
     if (const auto tileset_result = tileset_view.accept(visitor);
         !tileset_result.has_value()) {
-      return propagate_unexpected(tileset_result);
+      return std::unexpected {tileset_result.error()};
     }
   }
 
   for (const auto layer_id : root_layer.layers) {
     const LayerViewImpl layer_view {mDocument, nullptr, layer_id};
     if (const auto layer_result = layer_view.accept(visitor); !layer_result.has_value()) {
-      return propagate_unexpected(layer_result);
+      return std::unexpected {layer_result.error()};
     }
   }
 
   // TODO iterate component definitions
 
-  return kOK;
+  return {};
 }
 
 auto MapViewImpl::get_path() const -> const Path*

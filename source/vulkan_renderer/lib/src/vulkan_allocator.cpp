@@ -12,12 +12,12 @@
 
 namespace tactile {
 
-VulkanAllocator::VulkanAllocator(VmaAllocator allocator)
-  : mAllocator {allocator}
+VulkanAllocator::VulkanAllocator(VmaAllocator allocator) :
+  mAllocator {allocator}
 {}
 
-VulkanAllocator::VulkanAllocator(VulkanAllocator&& other) noexcept
-  : mAllocator {std::exchange(other.mAllocator, VK_NULL_HANDLE)}
+VulkanAllocator::VulkanAllocator(VulkanAllocator&& other) noexcept :
+  mAllocator {std::exchange(other.mAllocator, VK_NULL_HANDLE)}
 {}
 
 VulkanAllocator::~VulkanAllocator() noexcept
@@ -46,7 +46,7 @@ auto VulkanAllocator::operator=(VulkanAllocator&& other) noexcept -> VulkanAlloc
 
 auto VulkanAllocator::create(VkInstance instance,
                              VkPhysicalDevice physical_device,
-                             VkDevice device) -> Expected<VulkanAllocator, VkResult>
+                             VkDevice device) -> std::expected<VulkanAllocator, VkResult>
 {
   const VmaAllocatorCreateInfo create_info {
     .flags = 0,
@@ -67,7 +67,7 @@ auto VulkanAllocator::create(VkInstance instance,
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan allocator: {}", to_string(result));
-    return unexpected(result);
+    return std::unexpected {result};
   }
 
   return VulkanAllocator {allocator};

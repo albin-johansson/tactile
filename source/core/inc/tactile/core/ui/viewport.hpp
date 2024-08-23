@@ -128,7 +128,6 @@ void center_viewport_over_content(CViewport& viewport,
  * A position using world coordinates.
  */
 [[nodiscard]]
-auto to_world_pos(const CViewport& viewport,
-                  const Float2& screen_pos) noexcept -> Float2;
+auto to_world_pos(const CViewport& viewport, const Float2& screen_pos) noexcept -> Float2;
 
 }  // namespace tactile

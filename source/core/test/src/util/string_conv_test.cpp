@@ -33,8 +33,7 @@ TEST(StringConv, FromNativeString)
   EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo\0")), "foo");
   EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("bar.txt")), "bar.txt");
   EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo/bar")), "foo/bar");
-  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo/bar.txt")),
-            "foo/bar.txt");
+  EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("foo/bar.txt")), "foo/bar.txt");
   EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("\0")), "\0");
 
   const NativeStringView foo {TACTILE_NATIVE_STR("foobar"), 3};

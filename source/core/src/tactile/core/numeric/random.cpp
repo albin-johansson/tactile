@@ -21,9 +21,7 @@ auto _make_random_engine() -> RandomEngine
   std::random_device entropy_source {};
   const auto seed = entropy_source();
 
-  TACTILE_LOG_DEBUG("Thread {} uses RNG seed {}",
-                    std::this_thread::get_id(),
-                    seed);
+  TACTILE_LOG_DEBUG("Thread {} uses RNG seed {}", std::this_thread::get_id(), seed);
 
   return RandomEngine {seed};
 }

@@ -13,9 +13,9 @@
 
 namespace tactile {
 
-FileEventHandler::FileEventHandler(Model* model, IRuntime* runtime)
-  : mModel {require_not_null(model, "null model")},
-    mRuntime {require_not_null(runtime, "null runtime")}
+FileEventHandler::FileEventHandler(Model* model, IRuntime* runtime) :
+  mModel {require_not_null(model, "null model")},
+  mRuntime {require_not_null(runtime, "null runtime")}
 {}
 
 void FileEventHandler::install(EventDispatcher& dispatcher)

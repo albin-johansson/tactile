@@ -37,7 +37,7 @@ void VulkanInstanceDeleter::operator()(VkInstance instance) noexcept
   vkDestroyInstance(instance, nullptr);
 }
 
-auto create_vulkan_instance(IWindow& window) -> Expected<VulkanInstance, VkResult>
+auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, VkResult>
 {
   const auto tactile_version =
       VK_MAKE_VERSION(TACTILE_MAJOR_VERSION, TACTILE_MINOR_VERSION, TACTILE_PATCH_VERSION);
@@ -79,7 +79,7 @@ auto create_vulkan_instance(IWindow& window) -> Expected<VulkanInstance, VkResul
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan instance: {}", to_string(result));
-    return unexpected(result);
+    return std::unexpected {result};
   }
 
   return VulkanInstance {instance};

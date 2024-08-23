@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -41,7 +43,8 @@ class IDocumentVisitor
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto visit(const IComponentView& component) -> Result<void> = 0;
+  virtual auto visit(const IComponentView& component)
+      -> std::expected<void, std::error_code> = 0;
 
   /**
    * Visits a map.
@@ -52,7 +55,7 @@ class IDocumentVisitor
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto visit(const IMapView& map) -> Result<void> = 0;
+  virtual auto visit(const IMapView& map) -> std::expected<void, std::error_code> = 0;
 
   /**
    * Visits a layer.
@@ -63,7 +66,7 @@ class IDocumentVisitor
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto visit(const ILayerView& layer) -> Result<void> = 0;
+  virtual auto visit(const ILayerView& layer) -> std::expected<void, std::error_code> = 0;
 
   /**
    * Visits an object.
@@ -74,7 +77,7 @@ class IDocumentVisitor
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto visit(const IObjectView& object) -> Result<void> = 0;
+  virtual auto visit(const IObjectView& object) -> std::expected<void, std::error_code> = 0;
 
   /**
    * Visits a tileset.
@@ -85,7 +88,7 @@ class IDocumentVisitor
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto visit(const ITilesetView& tileset) -> Result<void> = 0;
+  virtual auto visit(const ITilesetView& tileset) -> std::expected<void, std::error_code> = 0;
 
   /**
    * Visits a tile in a tileset.
@@ -96,7 +99,7 @@ class IDocumentVisitor
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto visit(const ITileView& tile) -> Result<void> = 0;
+  virtual auto visit(const ITileView& tile) -> std::expected<void, std::error_code> = 0;
 };
 
 }  // namespace tactile

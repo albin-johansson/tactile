@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include <utility>  // to_underlying
+#include <expected>      // expected
+#include <system_error>  // error_code, error_category
+#include <utility>       // to_underlying
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/opengl_renderer/api.hpp"
 
@@ -39,8 +40,7 @@ enum class OpenGLError : int
  * An error category.
  */
 [[nodiscard]]
-TACTILE_OPENGL_API auto get_opengl_error_category() noexcept
-    -> const ErrorCategory&;
+TACTILE_OPENGL_API auto get_opengl_error_category() noexcept -> const std::error_category&;
 
 /**
  * Translates an OpenGL error code, e.g. \c GL_INVALID_ENUM, to a Tactile OpenGL
@@ -52,8 +52,7 @@ TACTILE_OPENGL_API auto get_opengl_error_category() noexcept
  * An OpenGL error code.
  */
 [[nodiscard]]
-TACTILE_OPENGL_API auto map_opengl_error_code(uint error) noexcept
-    -> OpenGLError;
+TACTILE_OPENGL_API auto map_opengl_error_code(uint error) noexcept -> OpenGLError;
 
 /**
  * Creates an OpenGL error code.
@@ -64,9 +63,9 @@ TACTILE_OPENGL_API auto map_opengl_error_code(uint error) noexcept
  * An error code.
  */
 [[nodiscard]]
-inline auto make_error(const OpenGLError error) noexcept -> ErrorCode
+inline auto make_error(const OpenGLError error) noexcept -> std::error_code
 {
-  return ErrorCode {std::to_underlying(error), get_opengl_error_category()};
+  return std::error_code {std::to_underlying(error), get_opengl_error_category()};
 }
 
 }  // namespace tactile

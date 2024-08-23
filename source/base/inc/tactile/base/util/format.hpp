@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include <format>    // format_to_n, vformat_to, make_format_args, format_args
-#include <iterator>  // back_inserter
+#include <format>       // format_to_n, vformat_to, make_format_args, format_args
+#include <iterator>     // back_inserter
 #include <type_traits>  // type_identity_t
 #include <utility>      // forward
 #include <version>      // __cpp_lib_format
@@ -53,9 +53,7 @@ using FormatString = StringView;
  * \param args   The format arguments.
  */
 template <usize N>
-void vformat_to_buffer(Buffer<char, N>& buffer,
-                       const StringView fmt,
-                       std::format_args args)
+void vformat_to_buffer(Buffer<char, N>& buffer, const StringView fmt, std::format_args args)
 {
   const auto remaining_chars = buffer.capacity() - buffer.size();
   if (remaining_chars < 1) {

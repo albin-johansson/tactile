@@ -6,16 +6,16 @@
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 
+#include "tactile/base/engine/engine_app.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/base/engine/engine_app.hpp"
 #include "tactile/core/log/logger.hpp"
 
 namespace tactile {
 
-Engine::Engine(IEngineApp* app, IRenderer* renderer)
-  : mApp {require_not_null(app, "null app")},
-    mRenderer {require_not_null(renderer, "null renderer")}
+Engine::Engine(IEngineApp* app, IRenderer* renderer) :
+  mApp {require_not_null(app, "null app")},
+  mRenderer {require_not_null(renderer, "null renderer")}
 {}
 
 void Engine::run()

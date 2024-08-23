@@ -55,32 +55,32 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
       orientation_iter != map_json.end()) {
     const auto& orientation = orientation_iter->get_ref<const String&>();
     if (orientation != "orthogonal") {
-      return unexpected(SaveFormatParseError::kBadMapOrientation);
+      return std::unexpected {SaveFormatParseError::kBadMapOrientation};
     }
   }
   else {
-    return unexpected(SaveFormatParseError::kNoMapOrientation);
+    return std::unexpected {SaveFormatParseError::kNoMapOrientation};
   }
 
   if (auto metadata = parse_tiled_tmj_metadata(map_json)) {
     map.meta = std::move(*metadata);
   }
   else {
-    return propagate_unexpected(metadata);
+    return std::unexpected {metadata.error()};
   }
 
   if (const auto width_iter = map_json.find("width"); width_iter != map_json.end()) {
     width_iter->get_to(map.extent.cols);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoMapWidth);
+    return std::unexpected {SaveFormatParseError::kNoMapWidth};
   }
 
   if (const auto height_iter = map_json.find("height"); height_iter != map_json.end()) {
     height_iter->get_to(map.extent.rows);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoMapHeight);
+    return std::unexpected {SaveFormatParseError::kNoMapHeight};
   }
 
   if (const auto tile_width_iter = map_json.find("tilewidth");
@@ -88,7 +88,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     tile_width_iter->get_to(map.tile_size[0]);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoMapTileWidth);
+    return std::unexpected {SaveFormatParseError::kNoMapTileWidth};
   }
 
   if (const auto tile_height_iter = map_json.find("tileheight");
@@ -96,7 +96,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     tile_height_iter->get_to(map.tile_size[1]);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoMapTileHeight);
+    return std::unexpected {SaveFormatParseError::kNoMapTileHeight};
   }
 
   if (const auto next_layer_id_iter = map_json.find("nextlayerid");
@@ -104,7 +104,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     next_layer_id_iter->get_to(map.next_layer_id);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoMapNextLayerId);
+    return std::unexpected {SaveFormatParseError::kNoMapNextLayerId};
   }
 
   if (const auto next_object_id_iter = map_json.find("nextobjectid");
@@ -112,7 +112,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     next_object_id_iter->get_to(map.next_object_id);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoMapNextObjectId);
+    return std::unexpected {SaveFormatParseError::kNoMapNextObjectId};
   }
 
   if (const auto tilesets_iter = map_json.find("tilesets"); tilesets_iter != map_json.end()) {
@@ -123,7 +123,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
         map.tilesets.push_back(std::move(*tileset));
       }
       else {
-        return propagate_unexpected(tileset);
+        return std::unexpected {tileset.error()};
       }
     }
   }
@@ -138,7 +138,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
         map.layers.push_back(std::move(*layer));
       }
       else {
-        return propagate_unexpected(layer);
+        return std::unexpected {layer.error()};
       }
     }
   }

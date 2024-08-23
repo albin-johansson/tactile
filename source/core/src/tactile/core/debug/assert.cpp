@@ -8,16 +8,9 @@
 
 namespace tactile {
 
-void on_assertion_failed(const char* expr,
-                         const char* msg,
-                         const char* file,
-                         const int line)
+void on_assertion_failed(const char* expr, const char* msg, const char* file, const int line)
 {
-  TACTILE_LOG_FATAL("{}:{} expression '{}' is false: {}",
-                    file,
-                    line,
-                    expr,
-                    msg ? msg : "?");
+  TACTILE_LOG_FATAL("{}:{} expression '{}' is false: {}", file, line, expr, msg ? msg : "?");
   std::terminate();
 }
 

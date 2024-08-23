@@ -121,18 +121,14 @@ class GroupLayerTest : public testing::Test
 
     {
       auto& group4 = mRegistry.get<CGroupLayer>(hierarchy.group4_id);
-      group4.layers = {hierarchy.layer8_id,
-                       hierarchy.group5_id,
-                       hierarchy.group6_id};
+      group4.layers = {hierarchy.layer8_id, hierarchy.group5_id, hierarchy.group6_id};
     }
 
     // Note, group 5 is empty.
 
     {
       auto& group6 = mRegistry.get<CGroupLayer>(hierarchy.group6_id);
-      group6.layers = {hierarchy.layer9_id,
-                       hierarchy.layer10_id,
-                       hierarchy.layer11_id};
+      group6.layers = {hierarchy.layer9_id, hierarchy.layer10_id, hierarchy.layer11_id};
     }
 
     return hierarchy;
@@ -207,8 +203,7 @@ TEST_F(GroupLayerTest, DestroyGroupLayerWithStoredLayers)
     auto& group_layer = mRegistry.get<CGroupLayer>(group_layer_entity);
 
     const auto other_group_layer_entity = make_group_layer(mRegistry);
-    auto& other_group_layer =
-        mRegistry.get<CGroupLayer>(other_group_layer_entity);
+    auto& other_group_layer = mRegistry.get<CGroupLayer>(other_group_layer_entity);
     other_group_layer.layers.push_back(make_tile_layer(mRegistry, extent));
 
     group_layer.layers.push_back(make_tile_layer(mRegistry, extent));
@@ -257,56 +252,36 @@ TEST_F(GroupLayerTest, FindParentLayer)
   const auto tree = make_test_hierarchy();
 
   // Root
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer1_id),
-            tree.root_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group1_id),
-            tree.root_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group3_id),
-            tree.root_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer14_id),
-            tree.root_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer1_id), tree.root_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group1_id), tree.root_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group3_id), tree.root_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer14_id), tree.root_id);
 
   // Group 1
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer2_id),
-            tree.group1_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer3_id),
-            tree.group1_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer4_id),
-            tree.group1_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group2_id),
-            tree.group1_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer2_id), tree.group1_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer3_id), tree.group1_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer4_id), tree.group1_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group2_id), tree.group1_id);
 
   // Group 2
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer5_id),
-            tree.group2_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer6_id),
-            tree.group2_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer5_id), tree.group2_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer6_id), tree.group2_id);
 
   // Group 3
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer7_id),
-            tree.group3_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group4_id),
-            tree.group3_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer12_id),
-            tree.group3_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer13_id),
-            tree.group3_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer7_id), tree.group3_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group4_id), tree.group3_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer12_id), tree.group3_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer13_id), tree.group3_id);
 
   // Group 4
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer8_id),
-            tree.group4_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group5_id),
-            tree.group4_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group6_id),
-            tree.group4_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer8_id), tree.group4_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group5_id), tree.group4_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.group6_id), tree.group4_id);
 
   // Group 6
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer9_id),
-            tree.group6_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer10_id),
-            tree.group6_id);
-  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer11_id),
-            tree.group6_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer9_id), tree.group6_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer10_id), tree.group6_id);
+  EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer11_id), tree.group6_id);
 }
 
 // tactile::get_local_layer_index

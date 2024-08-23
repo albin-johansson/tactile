@@ -26,9 +26,7 @@ class ComponentDock final
    * \param document   The currently active document.
    * \param dispatcher The event dispatcher to use.
    */
-  void push(const Language& language,
-            const IDocument& document,
-            EventDispatcher& dispatcher);
+  void push(const Language& language, const IDocument& document, EventDispatcher& dispatcher);
 };
 
 }  // namespace ui

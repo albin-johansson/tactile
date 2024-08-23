@@ -12,7 +12,7 @@ namespace tactile {
 namespace tmj_format_attribute_parser {
 
 [[nodiscard]]
-auto parse_type(const StringView type) -> Expected<AttributeType, SaveFormatParseError>
+auto parse_type(const StringView type) -> std::expected<AttributeType, SaveFormatParseError>
 {
   if (type == "string") {
     return AttributeType::kStr;
@@ -43,12 +43,12 @@ auto parse_type(const StringView type) -> Expected<AttributeType, SaveFormatPars
   }
 
   log(LogLevel::kError, "Invalid TMJ property type: {}", type);
-  return unexpected(SaveFormatParseError::kBadPropertyType);
+  return std::unexpected {SaveFormatParseError::kBadPropertyType};
 }
 
 [[nodiscard]]
 auto parse_value(const nlohmann::json& value_json,
-                 const AttributeType type) -> Expected<Attribute, SaveFormatParseError>
+                 const AttributeType type) -> std::expected<Attribute, SaveFormatParseError>
 {
   switch (type) {
     case AttributeType::kStr: {
@@ -93,7 +93,7 @@ auto parse_value(const nlohmann::json& value_json,
         const auto length = value->size();
         if (length != 0 && length != 7 && length != 9) {
           log(LogLevel::kError, "Invalid TMJ property color length: {}", length);
-          return unexpected(SaveFormatParseError::kBadPropertyValue);
+          return std::unexpected {SaveFormatParseError::kBadPropertyValue};
         }
 
         if (!value->empty()) {
@@ -104,7 +104,7 @@ auto parse_value(const nlohmann::json& value_json,
           }
           else {
             log(LogLevel::kError, "Invalid color property value: {}", *value);
-            return unexpected(SaveFormatParseError::kBadPropertyValue);
+            return std::unexpected {SaveFormatParseError::kBadPropertyValue};
           }
         }
 
@@ -121,32 +121,32 @@ auto parse_value(const nlohmann::json& value_json,
 
       break;
     }
-    default: return unexpected(SaveFormatParseError::kBadPropertyType);
+    default: return std::unexpected {SaveFormatParseError::kBadPropertyType};
   }
 
-  return unexpected(SaveFormatParseError::kBadPropertyValue);
+  return std::unexpected {SaveFormatParseError::kBadPropertyValue};
 }
 
 }  // namespace tmj_format_attribute_parser
 
 auto parse_tiled_tmj_property(const nlohmann::json& property_json)
-    -> Expected<ir::NamedAttribute, SaveFormatParseError>
+    -> std::expected<ir::NamedAttribute, SaveFormatParseError>
 {
   ir::NamedAttribute named_attribute {};
 
   const auto name_iter = property_json.find("name");
   if (name_iter == property_json.end()) {
-    return unexpected(SaveFormatParseError::kNoPropertyName);
+    return std::unexpected {SaveFormatParseError::kNoPropertyName};
   }
 
   const auto type_iter = property_json.find("type");
   if (type_iter == property_json.end()) {
-    return unexpected(SaveFormatParseError::kNoPropertyType);
+    return std::unexpected {SaveFormatParseError::kNoPropertyType};
   }
 
   const auto value_iter = property_json.find("value");
   if (value_iter == property_json.end()) {
-    return unexpected(SaveFormatParseError::kNoPropertyValue);
+    return std::unexpected {SaveFormatParseError::kNoPropertyValue};
   }
 
   name_iter->get_to(named_attribute.name);
@@ -154,12 +154,12 @@ auto parse_tiled_tmj_property(const nlohmann::json& property_json)
   const auto property_type =
       tmj_format_attribute_parser::parse_type(type_iter->get_ref<const String&>());
   if (!property_type.has_value()) {
-    return propagate_unexpected(property_type);
+    return std::unexpected {property_type.error()};
   }
 
   auto property_value = tmj_format_attribute_parser::parse_value(*value_iter, *property_type);
   if (!property_value.has_value()) {
-    return propagate_unexpected(property_value);
+    return std::unexpected {property_value.error()};
   }
 
   named_attribute.value = std::move(*property_value);
@@ -168,7 +168,7 @@ auto parse_tiled_tmj_property(const nlohmann::json& property_json)
 }
 
 auto parse_tiled_tmj_metadata(const nlohmann::json& root_json)
-    -> Expected<ir::Metadata, SaveFormatParseError>
+    -> std::expected<ir::Metadata, SaveFormatParseError>
 {
   ir::Metadata metadata {};
 
@@ -185,7 +185,7 @@ auto parse_tiled_tmj_metadata(const nlohmann::json& root_json)
         metadata.properties.push_back(std::move(*property));
       }
       else {
-        return propagate_unexpected(property);
+        return std::unexpected {property.error()};
       }
     }
   }

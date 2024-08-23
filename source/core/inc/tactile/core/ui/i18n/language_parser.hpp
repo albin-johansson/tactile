@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
@@ -37,9 +39,8 @@ class LanguageParser final
    * A language if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto parse(LanguageID id,
-             const Path& path,
-             const Language* fallback = nullptr) const -> Result<Language>;
+  auto parse(LanguageID id, const Path& path, const Language* fallback = nullptr) const
+      -> std::expected<Language, std::error_code>;
 
  private:
   HashMap<StringView, StringID> mMiscNames {};
@@ -61,6 +62,6 @@ class LanguageParser final
  * A parsed language if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto parse_language_from_disk(LanguageID id) -> Result<Language>;
+auto parse_language_from_disk(LanguageID id) -> std::expected<Language, std::error_code>;
 
 }  // namespace tactile::ui

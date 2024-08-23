@@ -2,17 +2,16 @@
 
 #include "tactile/core/ui/viewport.hpp"
 
+#include "tactile/base/numeric/vec_common.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
-#include "tactile/base/numeric/vec_common.hpp"
 
 namespace tactile {
 inline namespace viewport {
 
 inline constexpr float kZoomPercentage = 0.05f;
 
-void _clamp_viewport_position(CViewport& viewport,
-                              const CViewportLimits& limits)
+void _clamp_viewport_position(CViewport& viewport, const CViewportLimits& limits)
 {
   viewport.pos = max(viewport.pos, limits.min_pos);
   viewport.pos = min(viewport.pos, limits.max_pos);
@@ -71,20 +70,14 @@ void increase_viewport_zoom(CViewport& viewport,
                             const Float2& anchor_screen_pos,
                             const CViewportLimits* limits)
 {
-  _scale_viewport_zoom(viewport,
-                       limits,
-                       anchor_screen_pos,
-                       1.0f + kZoomPercentage);
+  _scale_viewport_zoom(viewport, limits, anchor_screen_pos, 1.0f + kZoomPercentage);
 }
 
 void decrease_viewport_zoom(CViewport& viewport,
                             const Float2& anchor_screen_pos,
                             const CViewportLimits* limits)
 {
-  _scale_viewport_zoom(viewport,
-                       limits,
-                       anchor_screen_pos,
-                       1.0f - kZoomPercentage);
+  _scale_viewport_zoom(viewport, limits, anchor_screen_pos, 1.0f - kZoomPercentage);
 }
 
 void center_viewport_over_content(CViewport& viewport,
@@ -98,8 +91,7 @@ void center_viewport_over_content(CViewport& viewport,
   }
 }
 
-auto to_world_pos(const CViewport& viewport,
-                  const Float2& screen_pos) noexcept -> Float2
+auto to_world_pos(const CViewport& viewport, const Float2& screen_pos) noexcept -> Float2
 {
   return viewport.pos + screen_pos;
 }

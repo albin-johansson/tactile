@@ -7,9 +7,11 @@
 #include <utility>       // move
 
 #define Z_PREFIX_SET
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <zlib.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/runtime/logging.hpp"
@@ -56,7 +58,7 @@ struct ZlibCallbacks final
 auto init_stream(const ZlibCallbacks& callbacks,
                  const ByteSpan input_data,
                  StagingBuffer& staging_buffer,
-                 z_stream& stream) -> Result<void>
+                 z_stream& stream) -> std::expected<void, std::error_code>
 {
   stream.next_in = const_cast<z_byte*>(input_data.data());  // NOLINT
   stream.avail_in = saturate_cast<z_uint>(input_data.size_bytes());
@@ -66,10 +68,10 @@ auto init_stream(const ZlibCallbacks& callbacks,
   const auto init_stream_result = callbacks.init_stream(&stream);
   if (init_stream_result != Z_OK) {
     log(LogLevel::kError, "Could not initialize z_stream: {}", zError(init_stream_result));
-    return unexpected(std::make_error_code(std::errc::io_error));
+    return std::unexpected {std::make_error_code(std::errc::io_error)};
   }
 
-  return kOK;
+  return {};
 }
 
 /**
@@ -87,7 +89,7 @@ auto init_stream(const ZlibCallbacks& callbacks,
 auto process_stream(const ZlibCallbacks& callbacks,
                     z_stream& stream,
                     StagingBuffer& staging_buffer,
-                    ByteStream& output_buffer) -> Result<void>
+                    ByteStream& output_buffer) -> std::expected<void, std::error_code>
 {
   const auto copy_processed_batch_to_output_buffer = [&] {
     const auto written_bytes = staging_buffer.size() - stream.avail_out;
@@ -115,11 +117,11 @@ auto process_stream(const ZlibCallbacks& callbacks,
     }
     else {
       log(LogLevel::kError, "Could not process Zlib chunk: {}", zError(process_result));
-      return unexpected(std::make_error_code(std::errc::io_error));
+      return std::unexpected {std::make_error_code(std::errc::io_error)};
     }
   }
 
-  return kOK;
+  return {};
 }
 
 /**
@@ -132,21 +134,23 @@ auto process_stream(const ZlibCallbacks& callbacks,
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto end_stream(const ZlibCallbacks& callbacks, z_stream& stream) -> Result<void>
+auto end_stream(const ZlibCallbacks& callbacks,
+                z_stream& stream) -> std::expected<void, std::error_code>
 {
   const auto end_stream_result = callbacks.end_stream(&stream);
 
   if (end_stream_result != Z_OK) {
     log(LogLevel::kError, "Could not finalize z_stream: {}", zError(end_stream_result));
-    return unexpected(std::make_error_code(std::errc::io_error));
+    return std::unexpected {std::make_error_code(std::errc::io_error)};
   }
 
-  return kOK;
+  return {};
 }
 
 }  // namespace zlib_compressor
 
-auto ZlibCompressor::compress(const ByteSpan input_data) const -> Result<ByteStream>
+auto ZlibCompressor::compress(const ByteSpan input_data) const
+    -> std::expected<ByteStream, std::error_code>
 {
   zlib_compressor::ZlibCallbacks callbacks {};
   callbacks.init_stream = [](z_stream* stream) {
@@ -175,7 +179,8 @@ auto ZlibCompressor::compress(const ByteSpan input_data) const -> Result<ByteStr
       .transform([&] { return std::move(output_buffer); });
 }
 
-auto ZlibCompressor::decompress(const ByteSpan input_data) const -> Result<ByteStream>
+auto ZlibCompressor::decompress(const ByteSpan input_data) const
+    -> std::expected<ByteStream, std::error_code>
 {
   zlib_compressor::ZlibCallbacks callbacks {};
   callbacks.init_stream = [](z_stream* stream) { return z_inflateInit(stream); };

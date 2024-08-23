@@ -38,9 +38,6 @@ namespace tactile {
  * \param line The file line number of the assertion.
  */
 [[noreturn]]
-void on_assertion_failed(const char* expr,
-                         const char* msg,
-                         const char* file,
-                         int line);
+void on_assertion_failed(const char* expr, const char* msg, const char* file, int line);
 
 }  // namespace tactile

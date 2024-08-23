@@ -20,19 +20,20 @@ namespace tactile {
 
 LayerViewImpl::LayerViewImpl(const MapDocument* document,
                              const ILayerView* parent_layer,
-                             const EntityID layer_id)
-  : mDocument {require_not_null(document, "null document")},
-    mParentLayer {parent_layer},
-    mLayerId {layer_id},
-    mMeta {document, mLayerId}
+                             const EntityID layer_id) :
+  mDocument {require_not_null(document, "null document")},
+  mParentLayer {parent_layer},
+  mLayerId {layer_id},
+  mMeta {document, mLayerId}
 {}
 
-auto LayerViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
+auto LayerViewImpl::accept(IDocumentVisitor& visitor) const
+    -> std::expected<void, std::error_code>
 {
   const auto& registry = mDocument->get_registry();
 
   if (const auto layer_result = visitor.visit(*this); !layer_result.has_value()) {
-    return propagate_unexpected(layer_result);
+    return std::unexpected {layer_result.error()};
   }
 
   if (is_group_layer(registry, mLayerId)) {
@@ -42,7 +43,7 @@ auto LayerViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
       const LayerViewImpl sublayer_view {mDocument, this, sublayer_id};
       if (const auto sublayer_result = sublayer_view.accept(visitor);
           !sublayer_result.has_value()) {
-        return propagate_unexpected(sublayer_result);
+        return std::unexpected {sublayer_result.error()};
       }
     }
   }
@@ -52,12 +53,12 @@ auto LayerViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
     for (const auto object_id : object_layer.objects) {
       const ObjectViewImpl object_view {mDocument, this, object_id};
       if (const auto object_result = object_view.accept(visitor); !object_result.has_value()) {
-        return propagate_unexpected(object_result);
+        return std::unexpected {object_result.error()};
       }
     }
   }
 
-  return kOK;
+  return {};
 }
 
 void LayerViewImpl::write_tile_bytes(ByteStream& byte_stream) const

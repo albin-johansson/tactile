@@ -19,10 +19,10 @@ namespace tactile {
  */
 struct LogMessage final
 {
-  LogLevel level;     ///< The severity of the message.
-  StringView prefix;  ///< A string that encodes the severity and timestamp.
-  StringView scope;   ///< Scope identifier, might be empty.
-  StringView text;    ///< The formatted log message.
+  LogLevel level;              ///< The severity of the message.
+  StringView prefix;           ///< A string that encodes the severity and timestamp.
+  StringView scope;            ///< Scope identifier, might be empty.
+  StringView text;             ///< The formatted log message.
   SteadyClockInstant instant;  ///< The instant that the message was logged.
 };
 

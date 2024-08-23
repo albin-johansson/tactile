@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include <ostream>  // ostream
+#include <expected>      // expected
+#include <ostream>       // ostream
+#include <system_error>  // error_code
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/meta/attribute_type.hpp"
@@ -21,7 +22,7 @@ namespace tactile {
  * An attribute type if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto parse_attribute_type(StringView name) -> Result<AttributeType>;
+auto parse_attribute_type(StringView name) -> std::expected<AttributeType, std::error_code>;
 
 /**
  * Converts an attribute type to a string.

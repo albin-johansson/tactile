@@ -5,7 +5,7 @@
 namespace tactile {
 inline namespace generic_error {
 
-class GenericErrorCategory final : public ErrorCategory
+class GenericErrorCategory final : public std::error_category
 {
  public:
   [[nodiscard]]
@@ -33,7 +33,7 @@ class GenericErrorCategory final : public ErrorCategory
 
 }  // namespace generic_error
 
-auto get_generic_error_category() noexcept -> const ErrorCategory&
+auto get_generic_error_category() noexcept -> const std::error_category&
 {
   static const GenericErrorCategory category {};
   return category;

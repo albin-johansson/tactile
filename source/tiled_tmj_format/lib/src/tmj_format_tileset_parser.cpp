@@ -24,7 +24,7 @@ auto parse_animation_frame(const nlohmann::json& frame_json)
     frame_tile_iter->get_to(frame.tile_index);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoAnimationFrameTileIndex);
+    return std::unexpected {SaveFormatParseError::kNoAnimationFrameTileIndex};
   }
 
   if (const auto duration_iter = frame_json.find("duration");
@@ -32,7 +32,7 @@ auto parse_animation_frame(const nlohmann::json& frame_json)
     frame.duration = Milliseconds {duration_iter->get<Milliseconds::rep>()};
   }
   else {
-    return unexpected(SaveFormatParseError::kNoAnimationFrameDuration);
+    return std::unexpected {SaveFormatParseError::kNoAnimationFrameTileIndex};
   }
 
   return frame;
@@ -50,7 +50,7 @@ auto parse_tile_animation(const nlohmann::json& animation_json)
       animation.push_back(*frame);
     }
     else {
-      return propagate_unexpected(frame);
+      return std::unexpected {frame.error()};
     }
   }
 
@@ -66,14 +66,14 @@ auto parse_tile(const nlohmann::json& tile_json) -> SaveFormatParseResult<ir::Ti
     tile.meta = std::move(*metadata);
   }
   else {
-    return propagate_unexpected(metadata);
+    return std::unexpected {metadata.error()};
   }
 
   if (const auto index_iter = tile_json.find("id"); index_iter != tile_json.end()) {
     index_iter->get_to(tile.index);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTileIndex);
+    return std::unexpected {SaveFormatParseError::kNoTileIndex};
   }
 
   if (const auto object_layer_iter = tile_json.find("objectgroup");
@@ -83,7 +83,7 @@ auto parse_tile(const nlohmann::json& tile_json) -> SaveFormatParseResult<ir::Ti
       tile.objects = std::move(object_layer.objects);
     }
     else {
-      return propagate_unexpected(result);
+      return std::unexpected {result.error()};
     }
   }
 
@@ -93,7 +93,7 @@ auto parse_tile(const nlohmann::json& tile_json) -> SaveFormatParseResult<ir::Ti
       tile.animation = std::move(*animation);
     }
     else {
-      return propagate_unexpected(animation);
+      return std::unexpected {animation.error()};
     }
   }
 
@@ -104,7 +104,7 @@ auto parse_tile(const nlohmann::json& tile_json) -> SaveFormatParseResult<ir::Ti
 auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<ir::Tileset>
 {
   if (!tileset_json.contains("name")) {
-    return unexpected(SaveFormatParseError::kNoTilesetName);
+    return std::unexpected {SaveFormatParseError::kNoTilesetName};
   }
 
   ir::Tileset tileset {};
@@ -118,7 +118,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     tile_width_iter->get_to(tileset.tile_size[0]);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetTileWidth);
+    return std::unexpected {SaveFormatParseError::kNoTilesetTileWidth};
   }
 
   if (const auto tile_height_iter = tileset_json.find("tileheight");
@@ -126,7 +126,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     tile_height_iter->get_to(tileset.tile_size[1]);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetTileHeight);
+    return std::unexpected {SaveFormatParseError::kNoTilesetTileHeight};
   }
 
   if (const auto tile_count_iter = tileset_json.find("tilecount");
@@ -134,7 +134,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     tile_count_iter->get_to(tileset.tile_count);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetTileCount);
+    return std::unexpected {SaveFormatParseError::kNoTilesetTileCount};
   }
 
   if (const auto columns_iter = tileset_json.find("columns");
@@ -142,7 +142,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     columns_iter->get_to(tileset.column_count);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetColumns);
+    return std::unexpected {SaveFormatParseError::kNoTilesetColumns};
   }
 
   if (const auto image_width_iter = tileset_json.find("imagewidth");
@@ -150,7 +150,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     image_width_iter->get_to(tileset.image_size[0]);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetImageWidth);
+    return std::unexpected {SaveFormatParseError::kNoTilesetImageWidth};
   }
 
   if (const auto image_height_iter = tileset_json.find("imageheight");
@@ -158,7 +158,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     image_height_iter->get_to(tileset.image_size[1]);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetImageHeight);
+    return std::unexpected {SaveFormatParseError::kNoTilesetImageHeight};
   }
 
   String relative_image_path {};
@@ -167,7 +167,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     image_path_iter->get_to(relative_image_path);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetImage);
+    return std::unexpected {SaveFormatParseError::kNoTilesetImage};
   }
 
   tileset.image_path = Path {relative_image_path};
@@ -180,7 +180,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
         tileset.tiles.push_back(std::move(*tile));
       }
       else {
-        return propagate_unexpected(tile);
+        return std::unexpected {tile.error()};
       }
     }
   }
@@ -201,7 +201,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
     first_gid_iter->get_to(tileset_ref.first_tile_id);
   }
   else {
-    return unexpected(SaveFormatParseError::kNoTilesetFirstTileId);
+    return std::unexpected {SaveFormatParseError::kNoTilesetFirstTileId};
   }
 
   if (const auto source_iter = tileset_json.find("source");
@@ -220,7 +220,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
       tileset_ref.tileset.is_embedded = false;
     }
     else {
-      return propagate_unexpected(tileset);
+      return std::unexpected {tileset.error()};
     }
   }
   else {
@@ -229,7 +229,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
       tileset_ref.tileset.is_embedded = true;
     }
     else {
-      return propagate_unexpected(tileset);
+      return std::unexpected {tileset.error()};
     }
   }
 

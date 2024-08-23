@@ -37,9 +37,7 @@ void RenamePropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
 
   const auto* dialog_name = language.get(StringID::kRenameProperty);
 
-  if (const PopupScope dialog {kModalPopup,
-                               dialog_name,
-                               ImGuiWindowFlags_AlwaysAutoResize};
+  if (const PopupScope dialog {kModalPopup, dialog_name, ImGuiWindowFlags_AlwaysAutoResize};
       dialog.is_open()) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(language.get(StringID::kName));
@@ -47,19 +45,15 @@ void RenamePropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
     ImGui::InputText("##Name", &mNewPropName);
 
     const auto& meta = registry.get<CMeta>(mContextEntity);
-    const auto can_accept =
-        !mNewPropName.empty() && !exists_in(meta.properties, mNewPropName);
+    const auto can_accept = !mNewPropName.empty() && !exists_in(meta.properties, mNewPropName);
 
-    const auto action =
-        push_dialog_control_buttons(language.get(StringID::kCancel),
-                                    language.get(StringID::kRename),
-                                    nullptr,
-                                    can_accept);
+    const auto action = push_dialog_control_buttons(language.get(StringID::kCancel),
+                                                    language.get(StringID::kRename),
+                                                    nullptr,
+                                                    can_accept);
 
     if (action == DialogStatus::kAccepted) {
-      dispatcher.push<RenamePropertyEvent>(mContextEntity,
-                                           mTargetPropName,
-                                           mNewPropName);
+      dispatcher.push<RenamePropertyEvent>(mContextEntity, mTargetPropName, mNewPropName);
     }
   }
 
@@ -69,8 +63,7 @@ void RenamePropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-void RenamePropertyDialog::open(const EntityID context_entity,
-                                String target_prop_name)
+void RenamePropertyDialog::open(const EntityID context_entity, String target_prop_name)
 {
   mContextEntity = context_entity;
   mTargetPropName = std::move(target_prop_name);

@@ -11,10 +11,9 @@
 
 namespace tactile {
 
-ComponentEventHandler::ComponentEventHandler(Model* model,
-                                             ui::WidgetManager* widget_manager)
-  : mModel {require_not_null(model, "null model")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+ComponentEventHandler::ComponentEventHandler(Model* model, ui::WidgetManager* widget_manager) :
+  mModel {require_not_null(model, "null model")},
+  mWidgetManager {require_not_null(widget_manager, "null widget manager")}
 {}
 
 void ComponentEventHandler::install(EventDispatcher& dispatcher)

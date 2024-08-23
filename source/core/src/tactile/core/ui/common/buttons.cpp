@@ -40,9 +40,7 @@ auto push_horizontally_centered_button(const char* label,
   return push_button(label, tooltip, enabled, width, height);
 }
 
-auto push_icon_button(const Icon icon,
-                      const char* tooltip,
-                      const bool enabled) -> bool
+auto push_icon_button(const Icon icon, const char* tooltip, const bool enabled) -> bool
 {
   const auto* icon_string = to_string(icon);
 

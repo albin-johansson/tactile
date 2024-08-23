@@ -19,9 +19,9 @@ namespace tactile::test {
 class TilesetViewImplTest : public testing::Test
 {
  public:
-  TilesetViewImplTest()
-    : mMapSpec {kOrthogonalMapSpec},
-      mDocument {MapDocument::make(mMapSpec).value()}
+  TilesetViewImplTest() :
+    mMapSpec {kOrthogonalMapSpec},
+    mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:
@@ -51,28 +51,24 @@ TEST_F(TilesetViewImplTest, Getters)
   const auto& tileset_instance = registry.get<CTilesetInstance>(tileset_id);
   const auto& texture = registry.get<CTexture>(tileset_id);
 
-  ASSERT_TRUE(
-      add_animation_frame(registry,
-                          tileset.tiles.at(0),
-                          0,
-                          AnimationFrame {TileIndex {0}, Milliseconds {50}}));
-  ASSERT_TRUE(
-      add_animation_frame(registry,
-                          tileset.tiles.at(1),
-                          0,
-                          AnimationFrame {TileIndex {1}, Milliseconds {50}}));
+  ASSERT_TRUE(add_animation_frame(registry,
+                                  tileset.tiles.at(0),
+                                  0,
+                                  AnimationFrame {TileIndex {0}, Milliseconds {50}}));
+  ASSERT_TRUE(add_animation_frame(registry,
+                                  tileset.tiles.at(1),
+                                  0,
+                                  AnimationFrame {TileIndex {1}, Milliseconds {50}}));
 
   const TilesetViewImpl tileset_view {&mDocument, tileset_id};
 
-  EXPECT_EQ(tileset_view.get_first_tile_id(),
-            tileset_instance.tile_range.first_id);
+  EXPECT_EQ(tileset_view.get_first_tile_id(), tileset_instance.tile_range.first_id);
   EXPECT_EQ(tileset_view.tile_count(), tileset_instance.tile_range.count);
   EXPECT_EQ(tileset_view.get_tile_size(), tileset.tile_size);
 
   EXPECT_EQ(tileset_view.tile_definition_count(), 2);
 
-  EXPECT_EQ(tileset_view.column_count(),
-            texture.size.x() / tileset.tile_size.x());
+  EXPECT_EQ(tileset_view.column_count(), texture.size.x() / tileset.tile_size.x());
   EXPECT_EQ(tileset_view.get_image_size(), texture.size);
   EXPECT_EQ(tileset_view.get_image_path(), texture.path);
 }

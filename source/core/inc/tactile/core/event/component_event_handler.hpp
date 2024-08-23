@@ -42,8 +42,7 @@ class ComponentEventHandler final
    *
    * \param event The associated event.
    */
-  void on_show_component_editor_dialog(
-      const ShowComponentEditorDialogEvent& event);
+  void on_show_component_editor_dialog(const ShowComponentEditorDialogEvent& event);
 
   /**
    * Creates a new component.

@@ -16,10 +16,10 @@ namespace tactile {
 
 ViewEventHandler::ViewEventHandler(Model* model,
                                    IRenderer* renderer,
-                                   ui::WidgetManager* widget_manager)
-  : mModel {require_not_null(model, "null model")},
-    mRenderer {require_not_null(renderer, "null renderer")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+                                   ui::WidgetManager* widget_manager) :
+  mModel {require_not_null(model, "null model")},
+  mRenderer {require_not_null(renderer, "null renderer")},
+  mWidgetManager {require_not_null(widget_manager, "null widget manager")}
 {}
 
 void ViewEventHandler::install(EventDispatcher& dispatcher)
@@ -120,8 +120,7 @@ void ViewEventHandler::on_set_font(const SetFontEvent& event)
 
 void ViewEventHandler::on_reload_fonts(const ReloadFontsEvent& event)
 {
-  TACTILE_LOG_TRACE("ReloadFontsEvent(framebuffer scale: {})",
-                    event.framebuffer_scale);
+  TACTILE_LOG_TRACE("ReloadFontsEvent(framebuffer scale: {})", event.framebuffer_scale);
   ui::reload_fonts(*mRenderer, mModel->get_settings(), event.framebuffer_scale);
 }
 
@@ -130,8 +129,7 @@ void ViewEventHandler::on_toggle_grid(const ToggleGridEvent&)
   TACTILE_LOG_TRACE("ToggleGridEvent");
 }
 
-void ViewEventHandler::on_toggle_layer_highlight(
-    const ToggleLayerHighlightEvent&)
+void ViewEventHandler::on_toggle_layer_highlight(const ToggleLayerHighlightEvent&)
 {
   TACTILE_LOG_TRACE("ToggleLayerHighlightEvent");
 }

@@ -13,8 +13,8 @@
 
 namespace tactile {
 
-LayerEventHandler::LayerEventHandler(Model* model)
-  : mModel {require_not_null(model, "null model")}
+LayerEventHandler::LayerEventHandler(Model* model) :
+  mModel {require_not_null(model, "null model")}
 {}
 
 void LayerEventHandler::install(EventDispatcher& dispatcher)
@@ -32,8 +32,7 @@ void LayerEventHandler::install(EventDispatcher& dispatcher)
 
 void LayerEventHandler::on_create_layer(const CreateLayerEvent& event)
 {
-  TACTILE_LOG_TRACE("CreateLayerEvent(type: {})",
-                    magic_enum::enum_name(event.type));
+  TACTILE_LOG_TRACE("CreateLayerEvent(type: {})", magic_enum::enum_name(event.type));
 }
 
 void LayerEventHandler::on_remove_layer(const RemoveLayerEvent& event)

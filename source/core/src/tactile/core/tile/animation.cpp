@@ -27,8 +27,7 @@ void update_animations(Registry& registry)
     const auto& current_frame = animation.frames.at(animation.frame_index);
 
     if ((now - animation.last_update) >= current_frame.duration) {
-      const auto next_index =
-          (animation.frame_index + 1) % animation.frames.size();
+      const auto next_index = (animation.frame_index + 1) % animation.frames.size();
 
       animation.last_update = now;
       animation.frame_index = next_index;
@@ -39,13 +38,13 @@ void update_animations(Registry& registry)
 auto add_animation_frame(Registry& registry,
                          const EntityID tile_entity,
                          const usize frame_index,
-                         const AnimationFrame& frame) -> Result<void>
+                         const AnimationFrame& frame) -> std::expected<void, std::error_code>
 {
   TACTILE_ASSERT(is_tile(registry, tile_entity));
   const auto is_animated = registry.has<CAnimation>(tile_entity);
 
   if (!is_animated && frame_index != 0) {
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   if (!is_animated) {
@@ -59,22 +58,21 @@ auto add_animation_frame(Registry& registry,
     animation.frames.push_back(frame);
   }
   else if (frame_index < frame_count) {
-    const auto pos =
-        animation.frames.begin() + saturate_cast<ssize>(frame_index);
+    const auto pos = animation.frames.begin() + saturate_cast<ssize>(frame_index);
     animation.frames.insert(pos, frame);
   }
   else {
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   _reset_animation(animation);
 
-  return kOK;
+  return {};
 }
 
 auto remove_animation_frame(Registry& registry,
                             const EntityID tile_entity,
-                            const usize frame_index) -> Result<void>
+                            const usize frame_index) -> std::expected<void, std::error_code>
 {
   TACTILE_ASSERT(is_tile(registry, tile_entity));
   TACTILE_ASSERT(registry.has<CAnimation>(tile_entity));
@@ -82,7 +80,7 @@ auto remove_animation_frame(Registry& registry,
   auto& animation = registry.get<CAnimation>(tile_entity);
 
   if (frame_index >= animation.frames.size()) {
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   const auto pos = animation.frames.begin() + saturate_cast<ssize>(frame_index);
@@ -95,7 +93,7 @@ auto remove_animation_frame(Registry& registry,
     _reset_animation(animation);
   }
 
-  return kOK;
+  return {};
 }
 
 }  // namespace tactile

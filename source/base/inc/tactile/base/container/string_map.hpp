@@ -12,7 +12,8 @@
 namespace tactile {
 
 /** Custom hash object capable of hashing several string types. */
-struct StringHash final {
+struct StringHash final
+{
   using hash_type = std::hash<StringView>;
   using is_transparent [[maybe_unused]] = std::true_type;
 

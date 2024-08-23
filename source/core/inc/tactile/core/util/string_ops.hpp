@@ -39,9 +39,7 @@ auto trim_string(StringView str) -> String;
  * True if the function completed without returning early; false otherwise.
  */
 template <InvocableType<bool, StringView> T>
-auto split_string(const StringView str,
-                  const char separator,
-                  const T& callback) -> bool
+auto split_string(const StringView str, const char separator, const T& callback) -> bool
 {
   usize pos = 0;
   const auto str_length = str.size();

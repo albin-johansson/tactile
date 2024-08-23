@@ -12,12 +12,12 @@
 
 namespace tactile {
 
-NullTexture::NullTexture(const TextureSize size, Path path)
-  : mSize {size},
-    mPath {std::move(path)}
+NullTexture::NullTexture(const TextureSize size, Path path) :
+  mSize {size},
+  mPath {std::move(path)}
 {}
 
-auto NullTexture::load(Path path) -> Result<NullTexture>
+auto NullTexture::load(Path path) -> std::expected<NullTexture, std::error_code>
 {
   TextureSize size {};
 
@@ -30,7 +30,7 @@ auto NullTexture::load(Path path) -> Result<NullTexture>
         "Could not load texture '{}': {}",
         path_string,
         stbi_failure_reason());
-    return unexpected(std::make_error_code(std::errc::io_error));
+    return std::unexpected {std::make_error_code(std::errc::io_error)};
   }
 
   stbi_image_free(pixels);

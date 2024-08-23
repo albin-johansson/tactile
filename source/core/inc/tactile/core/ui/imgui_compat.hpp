@@ -42,8 +42,7 @@ constexpr auto to_float4(const ImVec4& vec) noexcept -> Float4
 [[nodiscard]]
 constexpr auto to_int2(const ImVec2& vec) noexcept -> Int2
 {
-  return Int2 {static_cast<Int2::value_type>(vec.x),
-               static_cast<Int2::value_type>(vec.y)};
+  return Int2 {static_cast<Int2::value_type>(vec.x), static_cast<Int2::value_type>(vec.y)};
 }
 
 /**

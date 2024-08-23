@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <nlohmann/json.hpp>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/io/save/save_format_parse_error.hpp"
 #include "tactile/base/prelude.hpp"
@@ -24,7 +26,7 @@ namespace tactile {
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_property(const nlohmann::json& property_json)
-    -> Expected<ir::NamedAttribute, SaveFormatParseError>;
+    -> std::expected<ir::NamedAttribute, SaveFormatParseError>;
 
 /**
  * Attempts to parse the metadata associated with a generic Tiled TMJ JSON object.
@@ -43,6 +45,6 @@ TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_property(const nlohmann::json& prope
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_metadata(const nlohmann::json& root_json)
-    -> Expected<ir::Metadata, SaveFormatParseError>;
+    -> std::expected<ir::Metadata, SaveFormatParseError>;
 
 }  // namespace tactile

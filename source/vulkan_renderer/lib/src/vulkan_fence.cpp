@@ -9,14 +9,14 @@
 
 namespace tactile {
 
-VulkanFence::VulkanFence(VkDevice device, VkFence fence)
-  : mDevice {device},
-    mFence {fence}
+VulkanFence::VulkanFence(VkDevice device, VkFence fence) :
+  mDevice {device},
+  mFence {fence}
 {}
 
-VulkanFence::VulkanFence(VulkanFence&& other) noexcept
-  : mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
-    mFence {std::exchange(other.mFence, VK_NULL_HANDLE)}
+VulkanFence::VulkanFence(VulkanFence&& other) noexcept :
+  mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
+  mFence {std::exchange(other.mFence, VK_NULL_HANDLE)}
 {}
 
 VulkanFence::~VulkanFence() noexcept
@@ -44,8 +44,8 @@ auto VulkanFence::operator=(VulkanFence&& other) noexcept -> VulkanFence&
   return *this;
 }
 
-auto VulkanFence::create(VkDevice device,
-                         const VkFenceCreateFlags flags) -> Expected<VulkanFence, VkResult>
+auto VulkanFence::create(VkDevice device, const VkFenceCreateFlags flags)
+    -> std::expected<VulkanFence, VkResult>
 {
   const VkFenceCreateInfo create_info {
     .sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
@@ -58,7 +58,7 @@ auto VulkanFence::create(VkDevice device,
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan fence: {}", to_string(result));
-    return unexpected(result);
+    return std::unexpected {result};
   }
 
   return VulkanFence {device, fence};

@@ -6,8 +6,8 @@
 
 namespace tactile {
 
-NullRenderer::NullRenderer(IWindow* window)
-  : mWindow {window}
+NullRenderer::NullRenderer(IWindow* window) :
+  mWindow {window}
 {}
 
 auto NullRenderer::begin_frame() -> bool
@@ -18,12 +18,13 @@ auto NullRenderer::begin_frame() -> bool
 void NullRenderer::end_frame()
 {}
 
-auto NullRenderer::load_texture(const char* image_path) -> Result<TextureID>
+auto NullRenderer::load_texture(const char* image_path)
+    -> std::expected<TextureID, std::error_code>
 {
   auto texture = NullTexture::load(image_path);
 
   if (!texture.has_value()) {
-    return propagate_unexpected(texture);
+    return std::unexpected {texture.error()};
   }
 
   const auto texture_id = mNextTextureId;

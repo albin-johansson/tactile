@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/vector.hpp"
@@ -136,7 +138,8 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID;
 [[nodiscard]]
 auto make_tileset(Registry& registry,
                   IRenderer& renderer,
-                  const ir::TilesetRef& ir_tileset_ref) -> Result<EntityID>;
+                  const ir::TilesetRef& ir_tileset_ref)
+    -> std::expected<EntityID, std::error_code>;
 
 /**
  * Initializes a tileset "instance".
@@ -173,7 +176,7 @@ auto make_tileset(Registry& registry,
 [[nodiscard]]
 auto init_tileset_instance(Registry& registry,
                            EntityID tileset_entity,
-                           TileID first_tile_id) -> Result<void>;
+                           TileID first_tile_id) -> std::expected<void, std::error_code>;
 
 /**
  * Creates a tileset instance.
@@ -190,7 +193,7 @@ auto init_tileset_instance(Registry& registry,
  */
 auto make_tileset_instance(Registry& registry,
                            const TilesetSpec& spec,
-                           TileID first_tile_id) -> Result<EntityID>;
+                           TileID first_tile_id) -> std::expected<EntityID, std::error_code>;
 
 /**
  * Destroys a tileset and all of its associated tiles.

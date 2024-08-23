@@ -32,9 +32,7 @@ enum class FontID : uint8
  * \param settings          The current settings.
  * \param framebuffer_scale The display framebuffer scale.
  */
-void reload_fonts(IRenderer& renderer,
-                  const Settings& settings,
-                  float framebuffer_scale);
+void reload_fonts(IRenderer& renderer, const Settings& settings, float framebuffer_scale);
 
 }  // namespace ui
 }  // namespace tactile

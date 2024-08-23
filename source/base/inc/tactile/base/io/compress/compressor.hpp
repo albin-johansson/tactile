@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/int.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/prelude.hpp"
@@ -26,7 +28,8 @@ class ICompressor
    * A compressed byte stream if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto compress(ByteSpan input_data) const -> Result<ByteStream> = 0;
+  virtual auto compress(ByteSpan input_data) const
+      -> std::expected<ByteStream, std::error_code> = 0;
 
   /**
    * Attempts to decompress a compressed byte stream.
@@ -37,7 +40,8 @@ class ICompressor
    * An uncompressed byte stream if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto decompress(ByteSpan input_data) const -> Result<ByteStream> = 0;
+  virtual auto decompress(ByteSpan input_data) const
+      -> std::expected<ByteStream, std::error_code> = 0;
 };
 
 }  // namespace tactile

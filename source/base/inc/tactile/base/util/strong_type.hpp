@@ -8,24 +8,24 @@
 /**
  * Simple macro useful for defining simple (but effective) strong types.
  */
-#define TACTILE_STRONG_TYPE(Name, ValueType)                                  \
-  struct Name final {                                                         \
-    using value_type = ValueType;                                             \
-                                                                              \
-    ValueType value;                                                          \
-                                                                              \
-    [[nodiscard]] constexpr auto operator==(const Name&) const noexcept       \
-        -> bool = default;                                                    \
-                                                                              \
-    [[nodiscard]] constexpr auto operator<=>(const Name&) const noexcept      \
-        -> std::strong_ordering = default;                                    \
-  };                                                                          \
-                                                                              \
-  inline auto operator<<(std::ostream& stream, const Name obj)->std::ostream& \
-  {                                                                           \
-    stream << obj.value;                                                      \
-    return stream;                                                            \
-  }                                                                           \
+#define TACTILE_STRONG_TYPE(Name, ValueType)                                               \
+  struct Name final                                                                        \
+  {                                                                                        \
+    using value_type = ValueType;                                                          \
+                                                                                           \
+    ValueType value;                                                                       \
+                                                                                           \
+    [[nodiscard]] constexpr auto operator==(const Name&) const noexcept -> bool = default; \
+                                                                                           \
+    [[nodiscard]] constexpr auto operator<=>(const Name&) const noexcept                   \
+        -> std::strong_ordering = default;                                                 \
+  };                                                                                       \
+                                                                                           \
+  inline auto operator<<(std::ostream& stream, const Name obj)->std::ostream&              \
+  {                                                                                        \
+    stream << obj.value;                                                                   \
+    return stream;                                                                         \
+  }                                                                                        \
   static_assert(true, "Missing semicolon")
 
 #define TACTILE_STRONG_TYPE_ADD_BINARY_OP(Type, Op)                            \

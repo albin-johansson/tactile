@@ -8,13 +8,15 @@
 namespace tactile {
 
 /** Represents the extent of a texture. */
-struct TextureSize final {
+struct TextureSize final
+{
   int width;
   int height;
 };
 
 /** Interface for texture resources. */
-class ITexture {
+class ITexture
+{
  public:
   TACTILE_INTERFACE_CLASS(ITexture);
 

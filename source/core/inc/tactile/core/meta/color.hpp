@@ -2,10 +2,11 @@
 
 #pragma once
 
-#include <array>    // array
-#include <ostream>  // ostream
+#include <array>         // array
+#include <expected>      // expected
+#include <ostream>       // ostream
+#include <system_error>  // error_code
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/span.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"

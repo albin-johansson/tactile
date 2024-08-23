@@ -16,16 +16,17 @@
 
 namespace tactile {
 
-TilesetViewImpl::TilesetViewImpl(const MapDocument* document, const EntityID tileset_id)
-  : mDocument {require_not_null(document, "null document")},
-    mTilesetId {tileset_id},
-    mMeta {mDocument, mTilesetId}
+TilesetViewImpl::TilesetViewImpl(const MapDocument* document, const EntityID tileset_id) :
+  mDocument {require_not_null(document, "null document")},
+  mTilesetId {tileset_id},
+  mMeta {mDocument, mTilesetId}
 {}
 
-auto TilesetViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
+auto TilesetViewImpl::accept(IDocumentVisitor& visitor) const
+    -> std::expected<void, std::error_code>
 {
   if (const auto tileset_result = visitor.visit(*this); !tileset_result.has_value()) {
-    return propagate_unexpected(tileset_result);
+    return std::unexpected {tileset_result.error()};
   }
 
   const auto& registry = mDocument->get_registry();
@@ -38,11 +39,11 @@ auto TilesetViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
 
     const TileViewImpl tile_view {mDocument, this, tile_id};
     if (const auto tile_result = tile_view.accept(visitor); !tile_result.has_value()) {
-      return propagate_unexpected(tile_result);
+      return std::unexpected {tile_result.error()};
     }
   }
 
-  return kOK;
+  return {};
 }
 
 auto TilesetViewImpl::get_first_tile_id() const -> TileID

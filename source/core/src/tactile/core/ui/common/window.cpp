@@ -27,11 +27,11 @@ inline HashMap<const char*, WindowData> gWindowData {};
 
 }  // namespace window
 
-Window::Window(const char* name, const ImGuiWindowFlags flags, bool* is_open)
-  : mName {require_not_null(name, "null name")},
-    mIsOpen {ImGui::Begin(name, is_open, flags)},
-    mPos {ImGui::GetWindowPos()},
-    mSize {ImGui::GetWindowSize()}
+Window::Window(const char* name, const ImGuiWindowFlags flags, bool* is_open) :
+  mName {require_not_null(name, "null name")},
+  mIsOpen {ImGui::Begin(name, is_open, flags)},
+  mPos {ImGui::GetWindowPos()},
+  mSize {ImGui::GetWindowSize()}
 {
   auto& window_data = gWindowData[name];
   window_data.had_mouse_then = window_data.has_mouse_now;

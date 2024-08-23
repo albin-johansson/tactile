@@ -35,12 +35,11 @@ class ObjectViewImpl final : public IObjectView
    * \param parent_tile The host tile view.
    * \param object_id   The object entity identifier.
    */
-  ObjectViewImpl(const IDocument* document,
-                 const ITileView* parent_tile,
-                 EntityID object_id);
+  ObjectViewImpl(const IDocument* document, const ITileView* parent_tile, EntityID object_id);
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const -> Result<void> override;
+  auto accept(IDocumentVisitor& visitor) const
+      -> std::expected<void, std::error_code> override;
 
   [[nodiscard]]
   auto get_parent_layer() const -> const ILayerView* override;

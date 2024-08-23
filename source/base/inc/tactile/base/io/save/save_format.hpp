@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
@@ -64,9 +66,8 @@ class ISaveFormat
    * An intermediate map if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto load_map(const Path& map_path,
-                        const SaveFormatReadOptions& options) const
-      -> Result<ir::Map> = 0;
+  virtual auto load_map(const Path& map_path, const SaveFormatReadOptions& options) const
+      -> std::expected<ir::Map, std::error_code> = 0;
 
   /**
    * Attempts to save a map.
@@ -78,9 +79,8 @@ class ISaveFormat
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto save_map(const IMapView& map,
-                        const SaveFormatWriteOptions& options) const
-      -> Result<void> = 0;
+  virtual auto save_map(const IMapView& map, const SaveFormatWriteOptions& options) const
+      -> std::expected<void, std::error_code> = 0;
 };
 
 }  // namespace tactile

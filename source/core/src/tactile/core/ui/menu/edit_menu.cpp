@@ -41,52 +41,31 @@ void EditMenu::push(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kStampTool),
-                        nullptr,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kStampTool), nullptr, false, false)) {
       dispatcher.push<EnableStampToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kEraserTool),
-                        nullptr,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kEraserTool), nullptr, false, false)) {
       dispatcher.push<EnableEraserToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kBucketTool),
-                        nullptr,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kBucketTool), nullptr, false, false)) {
       dispatcher.push<EnableBucketToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kObjectSelectorTool),
-                        nullptr,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kObjectSelectorTool), nullptr, false, false)) {
       dispatcher.push<EnableSelectorToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kRectangleTool),
-                        nullptr,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kRectangleTool), nullptr, false, false)) {
       dispatcher.push<EnableRectangleToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kEllipseTool),
-                        nullptr,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kEllipseTool), nullptr, false, false)) {
       dispatcher.push<EnableEllipseToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kPointTool),
-                        nullptr,
-                        false,
-                        false)) {
+    if (ImGui::MenuItem(language.get(StringID::kPointTool), nullptr, false, false)) {
       dispatcher.push<EnablePointToolEvent>();
     }
 
@@ -101,8 +80,7 @@ void EditMenu::push(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenSettings),
-                        kOpenSettingsShortcut.hint)) {
+    if (ImGui::MenuItem(language.get(StringID::kOpenSettings), kOpenSettingsShortcut.hint)) {
       dispatcher.push<ShowSettingsDialogEvent>();
     }
   }

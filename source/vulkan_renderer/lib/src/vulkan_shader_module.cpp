@@ -11,13 +11,14 @@
 namespace tactile {
 
 VulkanShaderModule::VulkanShaderModule(VkDevice device, VkShaderModule shader_module) noexcept
-  : mDevice {device},
-    mShaderModule {shader_module}
+  :
+  mDevice {device},
+  mShaderModule {shader_module}
 {}
 
-VulkanShaderModule::VulkanShaderModule(VulkanShaderModule&& other) noexcept
-  : mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
-    mShaderModule {std::exchange(other.mShaderModule, VK_NULL_HANDLE)}
+VulkanShaderModule::VulkanShaderModule(VulkanShaderModule&& other) noexcept :
+  mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
+  mShaderModule {std::exchange(other.mShaderModule, VK_NULL_HANDLE)}
 {}
 
 VulkanShaderModule::~VulkanShaderModule() noexcept
@@ -46,13 +47,13 @@ auto VulkanShaderModule::operator=(VulkanShaderModule&& other) noexcept -> Vulka
 }
 
 auto VulkanShaderModule::load(VkDevice device, const Path& shader_path)
-    -> Expected<VulkanShaderModule, VkResult>
+    -> std::expected<VulkanShaderModule, VkResult>
 {
   const auto shader_code = read_binary_file(shader_path);
 
   if (!shader_code.has_value()) {
     log(LogLevel::kError, "Could not load Vulkan shader file");
-    return unexpected(VK_ERROR_UNKNOWN);
+    return std::unexpected {VK_ERROR_UNKNOWN};
   }
 
   const VkShaderModuleCreateInfo create_info {
@@ -68,7 +69,7 @@ auto VulkanShaderModule::load(VkDevice device, const Path& shader_path)
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan shader module: {}", to_string(result));
-    return unexpected(result);
+    return std::unexpected {result};
   }
 
   return VulkanShaderModule {device, shader_module};

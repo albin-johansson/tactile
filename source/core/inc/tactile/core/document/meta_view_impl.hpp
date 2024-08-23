@@ -28,8 +28,7 @@ class MetaViewImpl final : public IMetaView
   auto get_name() const -> StringView override;
 
   [[nodiscard]]
-  auto get_property(usize index) const
-      -> Pair<const String&, const Attribute&> override;
+  auto get_property(usize index) const -> Pair<const String&, const Attribute&> override;
 
   [[nodiscard]]
   auto property_count() const -> usize override;

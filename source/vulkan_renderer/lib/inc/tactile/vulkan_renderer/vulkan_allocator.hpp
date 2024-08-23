@@ -2,10 +2,12 @@
 
 #pragma once
 
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include <vk_mem_alloc.h>
 #include <vulkan/vulkan.h>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
 
@@ -42,7 +44,7 @@ class TACTILE_VULKAN_API VulkanAllocator final
   [[nodiscard]]
   static auto create(VkInstance instance,
                      VkPhysicalDevice physical_device,
-                     VkDevice device) -> Expected<VulkanAllocator, VkResult>;
+                     VkDevice device) -> std::expected<VulkanAllocator, VkResult>;
 
  private:
   VmaAllocator mAllocator {VK_NULL_HANDLE};

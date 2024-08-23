@@ -27,8 +27,7 @@ auto make_object_layer(Registry& registry) -> EntityID
   return layer_entity;
 }
 
-void destroy_object_layer(Registry& registry,
-                          const EntityID object_layer_entity)
+void destroy_object_layer(Registry& registry, const EntityID object_layer_entity)
 {
   TACTILE_ASSERT(is_object_layer(registry, object_layer_entity));
 

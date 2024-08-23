@@ -11,9 +11,15 @@ namespace tactile {
 class EventDispatcherTest : public testing::Test
 {
  public:
-  void on_int(const int value) { mInts.push_back(value); }
+  void on_int(const int value)
+  {
+    mInts.push_back(value);
+  }
 
-  void on_float(const float value) { mFloats.push_back(value); }
+  void on_float(const float value)
+  {
+    mFloats.push_back(value);
+  }
 
  protected:
   EventDispatcher mDispatcher {};

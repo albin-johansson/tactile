@@ -24,7 +24,7 @@ static_assert(std::same_as<NativeChar, wchar_t>);
 
 template <typename T, std::invocable<const char*, const char*, T&> Parser>
 [[nodiscard]] auto _parse_impl(const StringView str,
-                               const Parser& parser) -> Result<T>
+                               const Parser& parser) -> std::expected<T, std::error_code>
 {
   const auto* begin = str.data();
   const auto* end = begin + str.size();
@@ -36,21 +36,20 @@ template <typename T, std::invocable<const char*, const char*, T&> Parser>
     return number;
   }
 
-  return unexpected(make_error(GenericError::kInvalidParam));
+  return std::unexpected {make_error(GenericError::kInvalidParam)};
 }
 
 template <std::integral T>
 [[nodiscard]] auto _parse_number(const StringView str,
-                                 const int base) -> Result<T>
+                                 const int base) -> std::expected<T, std::error_code>
 {
-  return _parse_impl<T>(str,
-                        [base](const char* begin, const char* end, T& number) {
-                          return std::from_chars(begin, end, number, base);
-                        });
+  return _parse_impl<T>(str, [base](const char* begin, const char* end, T& number) {
+    return std::from_chars(begin, end, number, base);
+  });
 }
 
 template <std::floating_point T>
-[[nodiscard]] auto _parse_number(const StringView str) -> Result<T>
+[[nodiscard]] auto _parse_number(const StringView str) -> std::expected<T, std::error_code>
 {
   return _parse_impl<T>(str, [](const char* begin, const char* end, T& number) {
     return fast_float::from_chars(begin, end, number);
@@ -59,7 +58,7 @@ template <std::floating_point T>
 
 }  // namespace string_conv
 
-auto to_native_string(const StringView str) -> Result<NativeString>
+auto to_native_string(const StringView str) -> std::expected<NativeString, std::error_code>
 {
 #if TACTILE_OS_WINDOWS
   if (str.empty()) {
@@ -70,14 +69,10 @@ auto to_native_string(const StringView str) -> Result<NativeString>
   const auto input_size = saturate_cast<int>(str.size());
 
   // Figure out the required size of the converted string.
-  const auto wide_char_count = MultiByteToWideChar(CP_UTF8,
-                                                   MB_ERR_INVALID_CHARS,
-                                                   input_data,
-                                                   input_size,
-                                                   nullptr,
-                                                   0);
+  const auto wide_char_count =
+      MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, input_data, input_size, nullptr, 0);
   if (wide_char_count <= 0) {
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   // Create string of appropriate size.
@@ -94,13 +89,13 @@ auto to_native_string(const StringView str) -> Result<NativeString>
     return wide_str;
   }
 
-  return unexpected(make_error(GenericError::kUnknown));
+  return std::unexpected {make_error(GenericError::kUnknown)};
 #else
   return NativeString {str};
 #endif  // TACTILE_OS_WINDOWS
 }
 
-auto from_native_string(const NativeStringView str) -> Result<String>
+auto from_native_string(const NativeStringView str) -> std::expected<String, std::error_code>
 {
 #if TACTILE_OS_WINDOWS
   if (str.empty()) {
@@ -120,7 +115,7 @@ auto from_native_string(const NativeStringView str) -> Result<String>
                                               nullptr,
                                               nullptr);
   if (char_count <= 0) {
-    return unexpected(make_error(GenericError::kInvalidParam));
+    return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   // Create string of appropriate size.
@@ -138,23 +133,23 @@ auto from_native_string(const NativeStringView str) -> Result<String>
     return output_str;
   }
 
-  return unexpected(make_error(GenericError::kUnknown));
+  return std::unexpected {make_error(GenericError::kUnknown)};
 #else
   return String {str};
 #endif  // TACTILE_OS_WINDOWS
 }
 
-auto parse_int(const StringView str, const int base) -> Result<int64>
+auto parse_int(const StringView str, const int base) -> std::expected<int64, std::error_code>
 {
   return _parse_number<int64>(str, base);
 }
 
-auto parse_uint(const StringView str, const int base) -> Result<uint64>
+auto parse_uint(const StringView str, const int base) -> std::expected<uint64, std::error_code>
 {
   return _parse_number<uint64>(str, base);
 }
 
-auto parse_float(const StringView str) -> Result<double>
+auto parse_float(const StringView str) -> std::expected<double, std::error_code>
 {
   return _parse_number<double>(str);
 }

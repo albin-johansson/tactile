@@ -207,7 +207,8 @@ void _parse_section(const StringMap<IniSection>& ini,
 }
 
 [[nodiscard]]
-auto _validate_strings(Vector<String>& strings, const Language* fallback) -> Result<void>
+auto _validate_strings(Vector<String>& strings,
+                       const Language* fallback) -> std::expected<void, std::error_code>
 {
   usize index {0};
 
@@ -222,32 +223,31 @@ auto _validate_strings(Vector<String>& strings, const Language* fallback) -> Res
         TACTILE_LOG_ERROR("String with ID {} ('{}') is not translated",
                           index,
                           magic_enum::enum_name(string_id));
-        return unexpected(make_error(GenericError::kInvalidFile));
+        return std::unexpected {make_error(GenericError::kInvalidFile)};
       }
     }
 
     ++index;
   }
 
-  return kOK;
+  return {};
 }
 
 }  // namespace language_parser
 
-LanguageParser::LanguageParser()
-  : mMiscNames {_get_misc_names()},
-    mVerbNames {_get_verb_names()},
-    mNounNames {_get_noun_names()},
-    mAdjectiveNames {_get_adjective_names()},
-    mActionNames {_get_action_names()},
-    mHintNames {_get_hint_names()},
-    mMenuNames {_get_menu_names()},
-    mWidgetNames {_get_widget_names()}
+LanguageParser::LanguageParser() :
+  mMiscNames {_get_misc_names()},
+  mVerbNames {_get_verb_names()},
+  mNounNames {_get_noun_names()},
+  mAdjectiveNames {_get_adjective_names()},
+  mActionNames {_get_action_names()},
+  mHintNames {_get_hint_names()},
+  mMenuNames {_get_menu_names()},
+  mWidgetNames {_get_widget_names()}
 {}
 
-auto LanguageParser::parse(const LanguageID id,
-                           const Path& path,
-                           const Language* fallback) const -> Result<Language>
+auto LanguageParser::parse(const LanguageID id, const Path& path, const Language* fallback)
+    const -> std::expected<Language, std::error_code>
 {
   const SetLogScope log_scope {"LanguageParser"};
   const ScopeProfiler profiler {"parse"};
@@ -275,7 +275,7 @@ auto LanguageParser::parse(const LanguageID id,
       });
 }
 
-auto parse_language_from_disk(const LanguageID id) -> Result<Language>
+auto parse_language_from_disk(const LanguageID id) -> std::expected<Language, std::error_code>
 {
   LanguageParser parser {};
 
@@ -284,7 +284,7 @@ auto parse_language_from_disk(const LanguageID id) -> Result<Language>
     case LanguageID::kAmericanEnglish: path = "assets/lang/en.ini"; break;
     case LanguageID::kBritishEnglish:  path = "assets/lang/en_GB.ini"; break;
     case LanguageID::kSwedish:         path = "assets/lang/sv.ini"; break;
-    default:                           return unexpected(make_error(GenericError::kInvalidParam));
+    default:                           return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
   return parser.parse(id, path);

@@ -11,8 +11,7 @@
 
 namespace tactile::ui {
 
-void LogDock::push(const tactile::Model& model,
-                   tactile::EventDispatcher& dispatcher)
+void LogDock::push(const tactile::Model& model, tactile::EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
   const Window dock_window {language.get(StringID::kLogDock)};

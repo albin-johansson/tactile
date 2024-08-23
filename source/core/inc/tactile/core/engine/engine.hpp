@@ -12,7 +12,8 @@ class IRenderer;
 /**
  * Provides the main event loop implementation.
  */
-class Engine final {
+class Engine final
+{
  public:
   /**
    * Creates an engine, but doesn't start it.

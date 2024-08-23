@@ -3,14 +3,15 @@
 #pragma once
 
 #include <exception>     // exception
+#include <expected>      // expected
 #include <fstream>       // ifstream, ofstream
 #include <iomanip>       // setw
 #include <ios>           // ios
 #include <system_error>  // make_error_code, errc
+#include <system_error>  // error_code
 
 #include <nlohmann/json.hpp>
 
-#include "tactile/base/container/expected.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/runtime/logging.hpp"
@@ -64,7 +65,7 @@ inline auto load_json(const Path& path) -> Optional<nlohmann::json>
 [[nodiscard]]
 inline auto save_json(const Path& path,
                       const nlohmann::json& json,
-                      const int indentation) -> Result<void>
+                      const int indentation) -> std::expected<void, std::error_code>
 {
   log(LogLevel::kDebug, "Saving JSON: {}", path.string());
 
@@ -73,7 +74,7 @@ inline auto save_json(const Path& path,
 
     if (stream.good()) {
       stream << std::setw(indentation) << json;
-      return kOK;
+      return {};
     }
 
     log(LogLevel::kError, "Could not open JSON stream");
@@ -85,7 +86,7 @@ inline auto save_json(const Path& path,
     log(LogLevel::kError, "JSON save error");
   }
 
-  return unexpected(std::make_error_code(std::errc::io_error));
+  return std::unexpected {std::make_error_code(std::errc::io_error)};
 }
 
 }  // namespace tactile

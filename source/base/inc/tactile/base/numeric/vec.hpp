@@ -57,9 +57,7 @@ class Vec final
    * \param y The initial y-coordinate.
    * \param z The initial z-coordinate.
    */
-  constexpr Vec(const value_type x,
-                const value_type y,
-                const value_type z) noexcept
+  constexpr Vec(const value_type x, const value_type y, const value_type z) noexcept
     requires(N == 3)
   {
     set_x(x);
@@ -193,8 +191,7 @@ class Vec final
 
   /** \copydoc operator[] */
   [[nodiscard]]
-  constexpr auto operator[](const size_type index) const noexcept
-      -> const value_type&
+  constexpr auto operator[](const size_type index) const noexcept -> const value_type&
   {
     assert(index < N);
     return mData[index];
@@ -305,8 +302,7 @@ class Vec final
   constexpr auto operator==(const Vec&) const noexcept -> bool = default;
 
   [[nodiscard]]
-  constexpr auto operator<=>(const Vec&) const noexcept
-      -> std::partial_ordering = default;
+  constexpr auto operator<=>(const Vec&) const noexcept -> std::partial_ordering = default;
 
  private:
   value_type mData[N] {};  // NOLINT(*-avoid-c-arrays)
@@ -336,8 +332,7 @@ using Int4 = Vec<int, 4>;
  * A vector.
  */
 template <ArithmeticType T, usize N, std::invocable<T> M>
-[[nodiscard]] constexpr auto apply(const Vec<T, N>& vec,
-                                   const M& modifier) noexcept
+[[nodiscard]] constexpr auto apply(const Vec<T, N>& vec, const M& modifier) noexcept
     -> Vec<std::invoke_result_t<M, T>, N>
 {
   Vec<std::invoke_result_t<M, T>, N> result {};
@@ -408,55 +403,46 @@ template <typename VecType, ArithmeticType T, usize N>
   requires(VecType::kSize == N && !std::is_same_v<VecType, Vec<T, N>>)
 [[nodiscard]] constexpr auto vec_cast(const Vec<T, N>& from) noexcept -> VecType
 {
-  return apply(from, [](const T value) {
-    return static_cast<VecType::value_type>(value);
-  });
+  return apply(from, [](const T value) { return static_cast<VecType::value_type>(value); });
 }
 
-#define TACTILE_VEC_IMPL_ARITHMETIC_OP(Op)                                   \
-  template <ArithmeticType T, usize N>                                       \
-  [[nodiscard]] constexpr auto operator Op(                                  \
-      const Vec<T, N>& lhs,                                                  \
-      const Vec<T, N>& rhs) noexcept -> Vec<T, N>                            \
-  {                                                                          \
-    return apply2(lhs, rhs, [=](const T a, const T b) -> T {                 \
-      return a Op b;                                                         \
-    });                                                                      \
-  }                                                                          \
-                                                                             \
-  template <ArithmeticType T, usize N>                                       \
-  constexpr auto operator Op##=(Vec<T, N>& lhs,                              \
-                                const Vec<T, N>& rhs) noexcept -> Vec<T, N>& \
-  {                                                                          \
-    lhs = lhs Op rhs;                                                        \
-    return lhs;                                                              \
-  }                                                                          \
+#define TACTILE_VEC_IMPL_ARITHMETIC_OP(Op)                                                   \
+  template <ArithmeticType T, usize N>                                                       \
+  [[nodiscard]] constexpr auto operator Op(const Vec<T, N>& lhs,                             \
+                                           const Vec<T, N>& rhs) noexcept -> Vec<T, N>       \
+  {                                                                                          \
+    return apply2(lhs, rhs, [=](const T a, const T b) -> T { return a Op b; });              \
+  }                                                                                          \
+                                                                                             \
+  template <ArithmeticType T, usize N>                                                       \
+  constexpr auto operator Op##=(Vec<T, N>& lhs, const Vec<T, N>& rhs) noexcept -> Vec<T, N>& \
+  {                                                                                          \
+    lhs = lhs Op rhs;                                                                        \
+    return lhs;                                                                              \
+  }                                                                                          \
   static_assert(true)
 
-#define TACTILE_VEC_IMPL_SCALAR_OP(Op)                                      \
-  template <ArithmeticType T, usize N>                                      \
-  [[nodiscard]] constexpr auto operator Op(                                 \
-      const Vec<T, N>& vec,                                                 \
-      const T scalar) noexcept -> Vec<T, N>                                 \
-  {                                                                         \
-    return apply(vec, [=](const T value) -> T { return value Op scalar; }); \
-  }                                                                         \
-                                                                            \
-  template <ArithmeticType T, usize N>                                      \
-  [[nodiscard]] constexpr auto operator Op(                                 \
-      const T scalar,                                                       \
-      const Vec<T, N>& vec) noexcept -> Vec<T, N>                           \
-  {                                                                         \
-    return vec * scalar;                                                    \
-  }                                                                         \
-                                                                            \
-  template <ArithmeticType T, usize N>                                      \
-  constexpr auto operator Op##=(Vec<T, N>& vec,                             \
-                                const T scalar) noexcept -> Vec<T, N>&      \
-  {                                                                         \
-    vec = vec Op scalar;                                                    \
-    return vec;                                                             \
-  }                                                                         \
+#define TACTILE_VEC_IMPL_SCALAR_OP(Op)                                                 \
+  template <ArithmeticType T, usize N>                                                 \
+  [[nodiscard]] constexpr auto operator Op(const Vec<T, N>& vec,                       \
+                                           const T scalar) noexcept -> Vec<T, N>       \
+  {                                                                                    \
+    return apply(vec, [=](const T value) -> T { return value Op scalar; });            \
+  }                                                                                    \
+                                                                                       \
+  template <ArithmeticType T, usize N>                                                 \
+  [[nodiscard]] constexpr auto operator Op(const T scalar,                             \
+                                           const Vec<T, N>& vec) noexcept -> Vec<T, N> \
+  {                                                                                    \
+    return vec * scalar;                                                               \
+  }                                                                                    \
+                                                                                       \
+  template <ArithmeticType T, usize N>                                                 \
+  constexpr auto operator Op##=(Vec<T, N>& vec, const T scalar) noexcept -> Vec<T, N>& \
+  {                                                                                    \
+    vec = vec Op scalar;                                                               \
+    return vec;                                                                        \
+  }                                                                                    \
   static_assert(true)
 
 TACTILE_VEC_IMPL_ARITHMETIC_OP(+);

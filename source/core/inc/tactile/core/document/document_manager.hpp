@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/vector.hpp"
@@ -40,7 +42,7 @@ class DocumentManager final
    * The UUID of the map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto create_and_open_map(const MapSpec& spec) -> Result<UUID>;
+  auto create_and_open_map(const MapSpec& spec) -> std::expected<UUID, std::error_code>;
 
   /**
    * Restores a map document from an intermediate map representation.
@@ -55,7 +57,8 @@ class DocumentManager final
    * The UUID of the map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto create_and_open_map(IRenderer& renderer, const ir::Map& ir_map) -> Result<UUID>;
+  auto create_and_open_map(IRenderer& renderer,
+                           const ir::Map& ir_map) -> std::expected<UUID, std::error_code>;
 
   /**
    * Returns the document associated with a given UUID.

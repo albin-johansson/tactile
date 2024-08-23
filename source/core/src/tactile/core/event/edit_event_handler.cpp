@@ -10,8 +10,8 @@
 
 namespace tactile {
 
-EditEventHandler::EditEventHandler(tactile::Model* model)
-  : mModel {require_not_null(model, "null model")}
+EditEventHandler::EditEventHandler(tactile::Model* model) :
+  mModel {require_not_null(model, "null model")}
 {}
 
 void EditEventHandler::install(EventDispatcher& dispatcher)

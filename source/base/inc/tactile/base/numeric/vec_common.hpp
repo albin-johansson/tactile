@@ -133,8 +133,7 @@ template <ArithmeticType T, usize N>
  */
 template <ArithmeticType T, usize N>
 [[nodiscard]] constexpr auto compare_elements(const Vec<T, N>& lhs,
-                                              const Vec<T, N>& rhs) noexcept
-    -> Vec<bool, N>
+                                              const Vec<T, N>& rhs) noexcept -> Vec<bool, N>
 {
   return apply2(lhs, rhs, [](const T a, const T b) { return a == b; });
 }

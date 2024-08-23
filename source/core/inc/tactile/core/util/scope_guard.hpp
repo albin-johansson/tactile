@@ -43,8 +43,8 @@ class ScopeGuard final
    *                 scope.
    */
   [[nodiscard]]
-  explicit ScopeGuard(T callable)
-    : mCallable {std::move(callable)}
+  explicit ScopeGuard(T callable) :
+    mCallable {std::move(callable)}
   {}
 
   /**
@@ -56,8 +56,7 @@ class ScopeGuard final
       mCallable();
     }
     catch (const std::exception& ex) {
-      TACTILE_LOG_ERROR("Scope guard destructor threw exception: {}",
-                        ex.what());
+      TACTILE_LOG_ERROR("Scope guard destructor threw exception: {}", ex.what());
     }
     catch (...) {
       TACTILE_LOG_ERROR("Scope guard destructor threw exception");

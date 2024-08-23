@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
@@ -29,7 +31,7 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
    */
   [[nodiscard]]
   static auto make(IWindow* window,
-                   ImGuiContext* context) -> Result<OpenGLRenderer>;
+                   ImGuiContext* context) -> std::expected<OpenGLRenderer, std::error_code>;
 
   OpenGLRenderer(OpenGLRenderer&& other) noexcept;
 
@@ -43,7 +45,8 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   void end_frame() override;
 
   [[nodiscard]]
-  auto load_texture(const char* image_path) -> Result<TextureID> override;
+  auto load_texture(const char* image_path)
+      -> std::expected<TextureID, std::error_code> override;
 
   void unload_texture(TextureID id) override;
 

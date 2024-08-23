@@ -68,9 +68,7 @@ class Logger final
    * \param args  The format arguments.
    */
   template <typename... Args>
-  void log(const LogLevel level,
-           const FormatString<Args...> fmt,
-           const Args&... args) noexcept
+  void log(const LogLevel level, const FormatString<Args...> fmt, const Args&... args) noexcept
   {
 #if TACTILE_HAS_STD_FORMAT_STRING
     _log(level, fmt.get(), std::make_format_args(args...));
@@ -163,9 +161,7 @@ class Logger final
   Maybe<SteadyClockInstant> mReferenceInstant {};
   StringView mScope {};
 
-  void _log(LogLevel level,
-            StringView fmt_string,
-            std::format_args args) noexcept;
+  void _log(LogLevel level, StringView fmt_string, std::format_args args) noexcept;
 
   [[nodiscard]]
   auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;

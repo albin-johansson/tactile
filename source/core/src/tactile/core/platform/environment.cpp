@@ -13,7 +13,7 @@
 
 namespace tactile {
 
-auto get_env(const char* name) -> Result<String>
+auto get_env(const char* name) -> std::expected<String, std::error_code>
 {
   if (name) {
 #if TACTILE_OS_WINDOWS
@@ -31,7 +31,7 @@ auto get_env(const char* name) -> Result<String>
 #endif  // TACTILE_OS_WINDOWS
   }
 
-  return unexpected(make_error(GenericError::kInvalidParam));
+  return std::unexpected {make_error(GenericError::kInvalidParam)};
 }
 
 }  // namespace tactile

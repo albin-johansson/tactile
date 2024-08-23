@@ -28,13 +28,11 @@ namespace tactile {
 template <std::integral To, std::integral From>
 [[nodiscard]] constexpr auto saturate_cast(const From from) noexcept -> To
 {
-  if (const auto to_min = std::numeric_limits<To>::min();
-      std::cmp_less(from, to_min)) {
+  if (const auto to_min = std::numeric_limits<To>::min(); std::cmp_less(from, to_min)) {
     return to_min;
   }
 
-  if (const auto to_max = std::numeric_limits<To>::max();
-      std::cmp_greater(from, to_max)) {
+  if (const auto to_max = std::numeric_limits<To>::max(); std::cmp_greater(from, to_max)) {
     return to_max;
   }
 

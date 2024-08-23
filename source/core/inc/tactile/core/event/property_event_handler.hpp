@@ -53,8 +53,7 @@ class PropertyEventHandler final
    *
    * \param event The associated event.
    */
-  void on_show_rename_property_dialog(
-      const ShowRenamePropertyDialogEvent& event);
+  void on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event);
 
   /**
    * Creates a new property.

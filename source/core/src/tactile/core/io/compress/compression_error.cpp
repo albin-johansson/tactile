@@ -5,7 +5,8 @@
 namespace tactile {
 inline namespace compression_error {
 
-class CompressionErrorCategory final : public ErrorCategory {
+class CompressionErrorCategory final : public std::error_category
+{
  public:
   [[nodiscard]]
   auto name() const noexcept -> const char* override
@@ -17,20 +18,11 @@ class CompressionErrorCategory final : public ErrorCategory {
   auto message(const int value) const -> std::string override
   {
     switch (CompressionError {value}) {
-      case CompressionError::kBadInit:
-        return "initialization failed";
-
-      case CompressionError::kBadCleanup:
-        return "cleanup failed";
-
-      case CompressionError::kBadState:
-        return "invalid state";
-
-      case CompressionError::kCouldNotCompress:
-        return "compression failed";
-
-      case CompressionError::kCouldNotDecompress:
-        return "decompression failed";
+      case CompressionError::kBadInit:            return "initialization failed";
+      case CompressionError::kBadCleanup:         return "cleanup failed";
+      case CompressionError::kBadState:           return "invalid state";
+      case CompressionError::kCouldNotCompress:   return "compression failed";
+      case CompressionError::kCouldNotDecompress: return "decompression failed";
     }
 
     return "?";
@@ -39,7 +31,7 @@ class CompressionErrorCategory final : public ErrorCategory {
 
 }  // namespace compression_error
 
-auto get_compression_error_category() noexcept -> const ErrorCategory&
+auto get_compression_error_category() noexcept -> const std::error_category&
 {
   static CompressionErrorCategory category {};
   return category;

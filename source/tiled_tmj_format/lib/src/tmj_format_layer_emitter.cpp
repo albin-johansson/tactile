@@ -24,7 +24,7 @@ namespace tmj_format_layer_emitter {
 auto emit_tile_layer(const IRuntime& runtime,
                      const ILayerView& layer,
                      nlohmann::json& layer_json,
-                     ByteStream& tile_bytes) -> Result<void>
+                     ByteStream& tile_bytes) -> std::expected<void, std::error_code>
 {
   const auto tile_encoding = layer.get_tile_encoding();
   const auto tile_compression = layer.get_tile_compression();
@@ -53,12 +53,12 @@ auto emit_tile_layer(const IRuntime& runtime,
       const auto* compression_format = runtime.get_compression_format(*tile_compression);
       if (!compression_format) {
         log(LogLevel::kError, "Could not find suitable compression format");
-        return unexpected(std::make_error_code(std::errc::not_supported));
+        return std::unexpected {std::make_error_code(std::errc::not_supported)};
       }
 
       auto compressed_tile_bytes = compression_format->compress(tile_bytes);
       if (!compressed_tile_bytes.has_value()) {
-        return propagate_unexpected(compressed_tile_bytes);
+        return std::unexpected {compressed_tile_bytes.error()};
       }
 
       tile_bytes = std::move(*compressed_tile_bytes);
@@ -83,7 +83,7 @@ auto emit_tile_layer(const IRuntime& runtime,
     layer_json["data"] = std::move(tile_array);
   }
 
-  return kOK;
+  return {};
 }
 
 void emit_object_layer(const ILayerView& layer, nlohmann::json& layer_json)
@@ -110,7 +110,8 @@ void emit_group_layer(const ILayerView& layer, nlohmann::json& layer_json)
 
 auto emit_tiled_tmj_layer(const IRuntime& runtime,
                           const ILayerView& layer,
-                          ByteStream& tile_byte_stream) -> Result<nlohmann::json>
+                          ByteStream& tile_byte_stream)
+    -> std::expected<nlohmann::json, std::error_code>
 {
   auto layer_json = nlohmann::json::object();
 
@@ -129,7 +130,7 @@ auto emit_tiled_tmj_layer(const IRuntime& runtime,
                                                     tile_byte_stream);
 
       if (!emit_tile_layer_result) {
-        return propagate_unexpected(emit_tile_layer_result);
+        return std::unexpected {emit_tile_layer_result.error()};
       }
 
       break;

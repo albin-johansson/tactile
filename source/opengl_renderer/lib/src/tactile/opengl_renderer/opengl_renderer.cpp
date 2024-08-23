@@ -43,14 +43,15 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
   TextureID next_texture_id;
 };
 
-auto OpenGLRenderer::make(IWindow* window, ImGuiContext* context) -> Result<OpenGLRenderer>
+auto OpenGLRenderer::make(IWindow* window, ImGuiContext* context)
+    -> std::expected<OpenGLRenderer, std::error_code>
 {
   if (SDL_WasInit(SDL_INIT_VIDEO) != SDL_INIT_VIDEO) {
-    return unexpected(make_error(OpenGLError::kNotReady));
+    return std::unexpected {make_error(OpenGLError::kNotReady)};
   }
 
   if (window == nullptr || context == nullptr) {
-    return unexpected(make_error(OpenGLError::kInvalidParam));
+    return std::unexpected {make_error(OpenGLError::kInvalidParam)};
   }
 
   OpenGLRenderer renderer {};
@@ -60,7 +61,7 @@ auto OpenGLRenderer::make(IWindow* window, ImGuiContext* context) -> Result<Open
 
   renderer.mData->gl_context.reset(SDL_GL_CreateContext(window->get_handle()));
   if (!renderer.mData->gl_context) {
-    return unexpected(make_error(OpenGLError::kContextError));
+    return std::unexpected {make_error(OpenGLError::kContextError)};
   }
 
   // NOLINTBEGIN(*-no-malloc)
@@ -70,21 +71,21 @@ auto OpenGLRenderer::make(IWindow* window, ImGuiContext* context) -> Result<Open
   ImGui::SetCurrentContext(context);
 
   if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
-    return unexpected(make_error(OpenGLError::kLoaderError));
+    return std::unexpected {make_error(OpenGLError::kLoaderError)};
   }
 
   if (auto imgui_backend = GLImGuiBackendWrapper::init(window->get_handle(), context)) {
     renderer.mData->imgui_backend.emplace(std::move(*imgui_backend));
   }
   else {
-    return propagate_unexpected(imgui_backend);
+    return std::unexpected {imgui_backend.error()};
   }
 
   if (auto imgui_renderer = GLImGuiRendererWrapper::init()) {
     renderer.mData->imgui_renderer.emplace(std::move(*imgui_renderer));
   }
   else {
-    return propagate_unexpected(imgui_renderer);
+    return std::unexpected {imgui_renderer.error()};
   }
 
   SDL_GL_SetSwapInterval(1);
@@ -92,8 +93,8 @@ auto OpenGLRenderer::make(IWindow* window, ImGuiContext* context) -> Result<Open
   return renderer;
 }
 
-OpenGLRenderer::OpenGLRenderer()
-  : mData {std::make_unique<Data>()}
+OpenGLRenderer::OpenGLRenderer() :
+  mData {std::make_unique<Data>()}
 {}
 
 OpenGLRenderer::OpenGLRenderer(OpenGLRenderer&& other) noexcept = default;
@@ -128,15 +129,16 @@ void OpenGLRenderer::end_frame()
   SDL_GL_SwapWindow(mData->window->get_handle());
 }
 
-auto OpenGLRenderer::load_texture(const char* image_path) -> Result<TextureID>
+auto OpenGLRenderer::load_texture(const char* image_path)
+    -> std::expected<TextureID, std::error_code>
 {
   if (image_path == nullptr) {
-    return unexpected(make_error(OpenGLError::kInvalidParam));
+    return std::unexpected {make_error(OpenGLError::kInvalidParam)};
   }
 
   auto texture = OpenGLTexture::load(image_path);
   if (!texture.has_value()) {
-    return propagate_unexpected(texture);
+    return std::unexpected {texture.error()};
   }
 
   auto& data = *mData;

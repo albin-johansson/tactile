@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/expected.hpp"
+#include <expected>      // expected
+#include <system_error>  // error_code
+
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -40,6 +42,7 @@ struct CTexture final
  * A texture if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto load_texture(IRenderer& renderer, const Path& path) -> Result<CTexture>;
+auto load_texture(IRenderer& renderer,
+                  const Path& path) -> std::expected<CTexture, std::error_code>;
 
 }  // namespace tactile

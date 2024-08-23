@@ -15,10 +15,9 @@
 
 namespace tactile {
 
-PropertyEventHandler::PropertyEventHandler(Model* model,
-                                           ui::WidgetManager* widget_manager)
-  : mModel {require_not_null(model, "null model")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+PropertyEventHandler::PropertyEventHandler(Model* model, ui::WidgetManager* widget_manager) :
+  mModel {require_not_null(model, "null model")},
+  mWidgetManager {require_not_null(widget_manager, "null widget manager")}
 {}
 
 void PropertyEventHandler::install(EventDispatcher& dispatcher)
@@ -35,8 +34,7 @@ void PropertyEventHandler::install(EventDispatcher& dispatcher)
   // clang-format on
 }
 
-void PropertyEventHandler::on_show_new_property_dialog(
-    const ShowNewPropertyDialogEvent& event)
+void PropertyEventHandler::on_show_new_property_dialog(const ShowNewPropertyDialogEvent& event)
 {
   TACTILE_LOG_TRACE("ShowNewPropertyDialogEvent(context: {})",
                     entity_to_string(event.context_entity));
@@ -49,8 +47,7 @@ void PropertyEventHandler::on_show_rename_property_dialog(
   TACTILE_LOG_TRACE("ShowRenamePropertyDialogEvent(context: {}, name: {})",
                     entity_to_string(event.context_entity),
                     event.name);
-  mWidgetManager->get_rename_property_dialog().open(event.context_entity,
-                                                    event.name);
+  mWidgetManager->get_rename_property_dialog().open(event.context_entity, event.name);
 }
 
 void PropertyEventHandler::on_create_property(const CreatePropertyEvent& event)
@@ -58,9 +55,7 @@ void PropertyEventHandler::on_create_property(const CreatePropertyEvent& event)
   TACTILE_LOG_TRACE("CreatePropertyEvent(context: {}, name: {})",
                     entity_to_string(event.context_entity),
                     event.name);
-  mModel->push_command<CreatePropertyCommand>(event.context_entity,
-                                              event.name,
-                                              event.value);
+  mModel->push_command<CreatePropertyCommand>(event.context_entity, event.name, event.value);
 }
 
 void PropertyEventHandler::on_update_property(const UpdatePropertyEvent& event)
@@ -68,9 +63,7 @@ void PropertyEventHandler::on_update_property(const UpdatePropertyEvent& event)
   TACTILE_LOG_TRACE("UpdatePropertyEvent(context: {}, name: {})",
                     entity_to_string(event.context_entity),
                     event.name);
-  mModel->push_command<UpdatePropertyCommand>(event.context_entity,
-                                              event.name,
-                                              event.value);
+  mModel->push_command<UpdatePropertyCommand>(event.context_entity, event.name, event.value);
 }
 
 void PropertyEventHandler::on_remove_property(const RemovePropertyEvent& event)
@@ -83,11 +76,10 @@ void PropertyEventHandler::on_remove_property(const RemovePropertyEvent& event)
 
 void PropertyEventHandler::on_rename_property(const RenamePropertyEvent& event)
 {
-  TACTILE_LOG_TRACE(
-      "RenamePropertyEvent(context: {}, old name: {}, new name: {})",
-      entity_to_string(event.context_entity),
-      event.old_name,
-      event.new_name);
+  TACTILE_LOG_TRACE("RenamePropertyEvent(context: {}, old name: {}, new name: {})",
+                    entity_to_string(event.context_entity),
+                    event.old_name,
+                    event.new_name);
   mModel->push_command<RenamePropertyCommand>(event.context_entity,
                                               event.old_name,
                                               event.new_name);

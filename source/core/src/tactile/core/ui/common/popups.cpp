@@ -4,14 +4,12 @@
 
 namespace tactile::ui {
 
-PopupScope::PopupScope(const char* id, const ImGuiWindowFlags flags)
-  : mIsOpen {ImGui::BeginPopup(id, flags)}
+PopupScope::PopupScope(const char* id, const ImGuiWindowFlags flags) :
+  mIsOpen {ImGui::BeginPopup(id, flags)}
 {}
 
-PopupScope::PopupScope(ModalPopupTag,
-                       const char* id,
-                       const ImGuiWindowFlags flags)
-  : mIsOpen {ImGui::BeginPopupModal(id, nullptr, flags)}
+PopupScope::PopupScope(ModalPopupTag, const char* id, const ImGuiWindowFlags flags) :
+  mIsOpen {ImGui::BeginPopupModal(id, nullptr, flags)}
 {}
 
 PopupScope::~PopupScope() noexcept

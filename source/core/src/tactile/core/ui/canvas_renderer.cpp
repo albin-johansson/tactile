@@ -60,10 +60,8 @@ auto _get_render_bounds(const VisibleTileRegion& tiles,
 {
   RenderBounds bounds {};
 
-  bounds.begin.row =
-      std::clamp(tiles.begin.row, MatrixExtent::value_type {0}, extent.rows);
-  bounds.begin.col =
-      std::clamp(tiles.begin.col, MatrixExtent::value_type {0}, extent.cols);
+  bounds.begin.row = std::clamp(tiles.begin.row, MatrixExtent::value_type {0}, extent.rows);
+  bounds.begin.col = std::clamp(tiles.begin.col, MatrixExtent::value_type {0}, extent.cols);
 
   bounds.end.row = std::clamp(tiles.end.row, bounds.begin.row, extent.rows);
   bounds.end.col = std::clamp(tiles.end.col, bounds.begin.col, extent.cols);
@@ -77,15 +75,15 @@ CanvasRenderer::CanvasRenderer(const Float2& canvas_tl,
                                const Float2& canvas_br,
                                const MatrixExtent& extent,
                                const Int2& tile_size,
-                               const CViewport& viewport)
-  : mExtent {extent},
-    mViewportPos {viewport.pos},
-    mCanvasTileSize {vec_cast<Float2>(tile_size) * viewport.scale},
-    mWindowTL {canvas_tl},
-    mWindowBR {canvas_br},
-    mVisibleRegion {_get_visible_region(mViewportPos, mWindowBR - mWindowTL)},
-    mVisibleTiles {_get_visible_tiles(mVisibleRegion, mCanvasTileSize)},
-    mRenderBounds {_get_render_bounds(mVisibleTiles, mExtent)}
+                               const CViewport& viewport) :
+  mExtent {extent},
+  mViewportPos {viewport.pos},
+  mCanvasTileSize {vec_cast<Float2>(tile_size) * viewport.scale},
+  mWindowTL {canvas_tl},
+  mWindowBR {canvas_br},
+  mVisibleRegion {_get_visible_region(mViewportPos, mWindowBR - mWindowTL)},
+  mVisibleTiles {_get_visible_tiles(mVisibleRegion, mCanvasTileSize)},
+  mRenderBounds {_get_render_bounds(mVisibleTiles, mExtent)}
 {
   auto& draw_list = get_draw_list();
   draw_list.PushClipRect(to_imvec2(mWindowTL), to_imvec2(mWindowBR), false);
@@ -175,9 +173,9 @@ void CanvasRenderer::draw_orthogonal_grid(const UColor& color) const
 
   // Used to align the rendered grid with the underlying tile grid.
   const auto grid_offset =
-      apply2(get_content_position(),
-             mCanvasTileSize,
-             [](const float a, const float b) { return std::fmod(a, b); });
+      apply2(get_content_position(), mCanvasTileSize, [](const float a, const float b) {
+        return std::fmod(a, b);
+      });
   const auto grid_offset_x = grid_offset.x();
   const auto grid_offset_y = grid_offset.y();
 
@@ -191,23 +189,18 @@ void CanvasRenderer::draw_orthogonal_grid(const UColor& color) const
   for (MatrixIndex::value_type r = 0; r < row_count; ++r) {
     const auto row_offset = static_cast<float>(r) * tile_height;
     const auto line_y = begin_y + grid_offset_y + row_offset;
-    draw_list.AddLine(ImVec2 {begin_x, line_y},
-                      ImVec2 {end_x, line_y},
-                      line_color);
+    draw_list.AddLine(ImVec2 {begin_x, line_y}, ImVec2 {end_x, line_y}, line_color);
   }
 
   // Draw vertical lines.
   for (MatrixIndex::value_type c = 0; c < col_count; ++c) {
     const auto column_offset = static_cast<float>(c) * tile_width;
     const auto line_x = begin_x + grid_offset_x + column_offset;
-    draw_list.AddLine(ImVec2 {line_x, begin_y},
-                      ImVec2 {line_x, end_y},
-                      line_color);
+    draw_list.AddLine(ImVec2 {line_x, begin_y}, ImVec2 {line_x, end_y}, line_color);
   }
 }
 
-void CanvasRenderer::draw_tile_outline(const Float2& world_pos,
-                                       const UColor& color) const
+void CanvasRenderer::draw_tile_outline(const Float2& world_pos, const UColor& color) const
 {
   const auto tile_index = floor(world_pos / mCanvasTileSize);
   const auto tile_pos = tile_index * mCanvasTileSize;
@@ -224,8 +217,7 @@ auto CanvasRenderer::get_visible_region() const -> const VisibleRegion&
   return mVisibleRegion;
 }
 
-auto CanvasRenderer::get_visible_tiles() const noexcept
-    -> const VisibleTileRegion&
+auto CanvasRenderer::get_visible_tiles() const noexcept -> const VisibleTileRegion&
 {
   return mVisibleTiles;
 }
@@ -240,14 +232,12 @@ auto CanvasRenderer::get_canvas_tile_size() const -> Float2
   return mCanvasTileSize;
 }
 
-auto CanvasRenderer::to_world_pos(const Float2& screen_pos) const noexcept
-    -> Float2
+auto CanvasRenderer::to_world_pos(const Float2& screen_pos) const noexcept -> Float2
 {
   return screen_pos + mViewportPos;
 }
 
-auto CanvasRenderer::to_screen_pos(const Float2& world_pos) const noexcept
-    -> Float2
+auto CanvasRenderer::to_screen_pos(const Float2& world_pos) const noexcept -> Float2
 {
   return world_pos - mViewportPos + mWindowTL;
 }

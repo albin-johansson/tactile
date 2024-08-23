@@ -2,9 +2,9 @@
 
 #include "tactile/core/document/object_view_impl.hpp"
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/base/document/document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 
@@ -12,25 +12,26 @@ namespace tactile {
 
 ObjectViewImpl::ObjectViewImpl(const IDocument* document,
                                const ILayerView* parent_layer,
-                               const EntityID object_id)
-  : mDocument {require_not_null(document, "null document")},
-    mParentLayer {require_not_null(parent_layer, "null layer view")},
-    mParentTile {nullptr},
-    mObjectId {object_id},
-    mMeta {document, object_id}
+                               const EntityID object_id) :
+  mDocument {require_not_null(document, "null document")},
+  mParentLayer {require_not_null(parent_layer, "null layer view")},
+  mParentTile {nullptr},
+  mObjectId {object_id},
+  mMeta {document, object_id}
 {}
 
 ObjectViewImpl::ObjectViewImpl(const IDocument* document,
                                const ITileView* parent_tile,
-                               const EntityID object_id)
-  : mDocument {require_not_null(document, "null document")},
-    mParentLayer {nullptr},
-    mParentTile {require_not_null(parent_tile, "null tile view")},
-    mObjectId {object_id},
-    mMeta {document, object_id}
+                               const EntityID object_id) :
+  mDocument {require_not_null(document, "null document")},
+  mParentLayer {nullptr},
+  mParentTile {require_not_null(parent_tile, "null tile view")},
+  mObjectId {object_id},
+  mMeta {document, object_id}
 {}
 
-auto ObjectViewImpl::accept(IDocumentVisitor& visitor) const -> Result<void>
+auto ObjectViewImpl::accept(IDocumentVisitor& visitor) const
+    -> std::expected<void, std::error_code>
 {
   return visitor.visit(*this);
 }
