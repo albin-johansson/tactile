@@ -1,67 +1,6 @@
 project(tactile-base CXX)
 
-add_library(tactile-base INTERFACE)
-add_library(tactile::base ALIAS tactile-base)
-
-target_sources(tactile-base
-               INTERFACE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
-               "inc/tactile/base/container/string_map.hpp"
-               "inc/tactile/base/document/component_view.hpp"
-               "inc/tactile/base/document/document.hpp"
-               "inc/tactile/base/document/document_visitor.hpp"
-               "inc/tactile/base/document/layer_view.hpp"
-               "inc/tactile/base/document/map_view.hpp"
-               "inc/tactile/base/document/meta_view.hpp"
-               "inc/tactile/base/document/object_view.hpp"
-               "inc/tactile/base/document/tile_view.hpp"
-               "inc/tactile/base/document/tileset_view.hpp"
-               "inc/tactile/base/engine/engine_app.hpp"
-               "inc/tactile/base/io/compress/compression_format.hpp"
-               "inc/tactile/base/io/compress/compressor.hpp"
-               "inc/tactile/base/io/save/ir.hpp"
-               "inc/tactile/base/io/save/save_format.hpp"
-               "inc/tactile/base/io/save/save_format_id.hpp"
-               "inc/tactile/base/io/save/save_format_parse_error.hpp"
-               "inc/tactile/base/io/save/save_format_parse_result.hpp"
-               "inc/tactile/base/io/byte_stream.hpp"
-               "inc/tactile/base/io/color_parser.hpp"
-               "inc/tactile/base/io/file_io.hpp"
-               "inc/tactile/base/io/int_parser.hpp"
-               "inc/tactile/base/io/tile_io.hpp"
-               "inc/tactile/base/layer/layer_type.hpp"
-               "inc/tactile/base/layer/object_type.hpp"
-               "inc/tactile/base/layer/tile_encoding.hpp"
-               "inc/tactile/base/layer/tile_orientation.hpp"
-               "inc/tactile/base/log/log_level.hpp"
-               "inc/tactile/base/meta/attribute.hpp"
-               "inc/tactile/base/meta/attribute_type.hpp"
-               "inc/tactile/base/meta/color.hpp"
-               "inc/tactile/base/numeric/saturate_cast.hpp"
-               "inc/tactile/base/numeric/sign_cast.hpp"
-               "inc/tactile/base/numeric/vec.hpp"
-               "inc/tactile/base/numeric/vec_common.hpp"
-               "inc/tactile/base/numeric/vec_format.hpp"
-               "inc/tactile/base/numeric/vec_stream.hpp"
-               "inc/tactile/base/platform/bits.hpp"
-               "inc/tactile/base/platform/filesystem.hpp"
-               "inc/tactile/base/platform/native_string.hpp"
-               "inc/tactile/base/render/renderer.hpp"
-               "inc/tactile/base/render/texture.hpp"
-               "inc/tactile/base/render/window.hpp"
-               "inc/tactile/base/util/buffer.hpp"
-               "inc/tactile/base/util/chrono.hpp"
-               "inc/tactile/base/util/concepts.hpp"
-               "inc/tactile/base/util/format.hpp"
-               "inc/tactile/base/util/hash.hpp"
-               "inc/tactile/base/util/matrix_extent.hpp"
-               "inc/tactile/base/util/matrix_index.hpp"
-               "inc/tactile/base/util/strong_type.hpp"
-               "inc/tactile/base/util/tile_matrix.hpp"
-               "inc/tactile/base/id.hpp"
-               "inc/tactile/base/int.hpp"
-               "inc/tactile/base/prelude.hpp"
-               "inc/tactile/base/runtime.hpp"
-               )
+add_subdirectory("lib")
 
 if (TACTILE_BUILD_TESTS)
   add_subdirectory("test")
