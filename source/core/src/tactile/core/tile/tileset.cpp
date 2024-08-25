@@ -47,6 +47,7 @@ auto add_tileset_component(Registry& registry,
 
   auto& tileset = registry.add<CTileset>(tileset_id);
   tileset.tile_size = tile_size;
+  tileset.uv_tile_size = vec_cast<Float2>(tileset.tile_size) / vec_cast<Float2>(texture_size);
   tileset.extent = extent;
 
   return {};
@@ -299,6 +300,7 @@ auto copy_tileset(Registry& registry, const EntityID old_tileset_entity) -> Enti
   auto& new_tileset = registry.add<CTileset>(new_tileset_entity);
   new_tileset.extent = old_tileset.extent;
   new_tileset.tile_size = old_tileset.tile_size;
+  new_tileset.uv_tile_size = old_tileset.uv_tile_size;
 
   new_tileset.tiles.reserve(old_tileset.tiles.size());
   for (const auto old_tile_entity : old_tileset.tiles) {

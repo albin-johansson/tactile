@@ -55,6 +55,9 @@ struct CTileset final
   /** The logical size of all tiles. */
   Int2 tile_size;
 
+  /** The size of all tiles in texture coordinates. */
+  Float2 uv_tile_size;
+
   /** The size of the tileset. */
   MatrixExtent extent;
 
