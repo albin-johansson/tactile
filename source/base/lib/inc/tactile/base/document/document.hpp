@@ -9,6 +9,7 @@
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/matrix_extent.hpp"
 
 namespace tactile {
 
@@ -112,6 +113,15 @@ class IDocument
    */
   [[nodiscard]]
   virtual auto get_tile_size() const -> Int2 = 0;
+
+  /**
+   * Returns the extent of the associated content.
+   *
+   * \return
+   * A matrix extent.
+   */
+  [[nodiscard]]
+  virtual auto get_extent() const -> MatrixExtent = 0;
 
   /**
    * Returns the UUID associated with the document.
