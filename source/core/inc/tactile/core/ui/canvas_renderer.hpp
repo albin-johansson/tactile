@@ -175,6 +175,24 @@ class CanvasRenderer final
   auto get_content_position() const noexcept -> Float2;
 
   /**
+   * Returns the position of the associated canvas.
+   *
+   * \return
+   * A canvas position.
+   */
+  [[nodiscard]]
+  auto get_canvas_position() const noexcept -> Float2;
+
+  /**
+   * Returns the size of the associated canvas.
+   *
+   * \return
+   * A canvas size.
+   */
+  [[nodiscard]]
+  auto get_canvas_size() const noexcept -> Float2;
+
+  /**
    * Returns the region that is visible of the content.
    *
    * \return

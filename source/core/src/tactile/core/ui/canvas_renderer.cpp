@@ -212,6 +212,16 @@ auto CanvasRenderer::get_content_position() const noexcept -> Float2
   return -mViewportPos;
 }
 
+auto CanvasRenderer::get_canvas_position() const noexcept -> Float2
+{
+  return mWindowTL;
+}
+
+auto CanvasRenderer::get_canvas_size() const noexcept -> Float2
+{
+  return mWindowBR - mWindowTL;
+}
+
 auto CanvasRenderer::get_visible_region() const -> const VisibleRegion&
 {
   return mVisibleRegion;
