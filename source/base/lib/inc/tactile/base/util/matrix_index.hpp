@@ -10,6 +10,7 @@
 
 #include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/hash.hpp"
 
@@ -48,6 +49,24 @@ template <std::integral T>
 {
   return {saturate_cast<MatrixIndex::value_type>(index / column_count),
           saturate_cast<MatrixIndex::value_type>(index % column_count)};
+}
+
+[[nodiscard]]
+constexpr auto to_int2(const MatrixIndex& index) noexcept -> Int2
+{
+  return {
+    static_cast<Int2::value_type>(index.col),
+    static_cast<Int2::value_type>(index.row),
+  };
+}
+
+[[nodiscard]]
+constexpr auto to_float2(const MatrixIndex& index) noexcept -> Float2
+{
+  return {
+    static_cast<Float2::value_type>(index.col),
+    static_cast<Float2::value_type>(index.row),
+  };
 }
 
 }  // namespace tactile
