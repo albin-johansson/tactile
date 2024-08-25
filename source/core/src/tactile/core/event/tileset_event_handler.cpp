@@ -2,7 +2,10 @@
 
 #include "tactile/core/event/tileset_event_handler.hpp"
 
+#include "tactile/base/numeric/vec_format.hpp"
 #include "tactile/base/render/renderer.hpp"
+#include "tactile/base/render/texture.hpp"
+#include "tactile/core/cmd/tile/add_tileset_command.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/tileset_events.hpp"
@@ -38,7 +41,34 @@ void TilesetEventHandler::on_show_new_tileset_dialog(const ShowNewTilesetDialogE
 
 void TilesetEventHandler::on_add_tileset(const AddTilesetEvent& event)
 {
-  TACTILE_LOG_TRACE("AddTilesetEvent");
+  TACTILE_LOG_TRACE("AddTilesetEvent(path: {}, tile size: {})",
+                    event.texture_path.string(),
+                    event.tile_size);
+
+  const auto texture_id = mRenderer->load_texture(event.texture_path);
+  if (!texture_id.has_value()) {
+    TACTILE_LOG_ERROR("Could not load tileset texture: {}", texture_id.error().message());
+    return;
+  }
+
+  const auto* texture = mRenderer->find_texture(*texture_id);
+  if (!texture) {
+    TACTILE_LOG_ERROR("Could not find tileset texture");
+    return;
+  }
+
+  const auto texture_size = texture->get_size();
+
+  mModel->push_map_command<AddTilesetCommand>(TilesetSpec {
+    .tile_size = event.tile_size,
+    .texture =
+        CTexture {
+          .raw_handle = texture->get_handle(),
+          .id = *texture_id,
+          .size = Int2 {texture_size.width, texture_size.height},
+          .path = texture->get_path(),
+        },
+  });
 }
 
 }  // namespace tactile
