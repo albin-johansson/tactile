@@ -14,7 +14,6 @@
 #include "tactile/base/util/matrix_index.hpp"
 #include "tactile/base/util/tile_matrix.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/exception.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/entity/registry.hpp"
 
@@ -216,7 +215,7 @@ constexpr void each_layer_tile(const Registry& registry,
   if (const auto& tile_layer = registry.get<CTileLayer>(layer_id);
       !is_index_within_extent(tile_layer.extent, begin) ||
       !is_index_within_extent(tile_layer.extent, MatrixIndex {end.row - 1, end.col - 1})) {
-    throw Exception {"invalid tile layer region"};
+    return;
   }
 
   if (const auto* dense = registry.find<CDenseTileLayer>(layer_id)) {
