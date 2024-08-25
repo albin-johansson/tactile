@@ -4,7 +4,6 @@
 
 #include <algorithm>  // clamp
 #include <cmath>      // fmod
-#include <numbers>    // pi_v
 
 #include <imgui.h>
 
@@ -12,17 +11,15 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/meta/color.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
+#include "tactile/core/ui/render/primitives.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
 namespace tactile::ui {
-inline namespace renderer {
+namespace {
 
 using VisibleRegion = CanvasRenderer::VisibleRegion;
 using VisibleTileRegion = CanvasRenderer::VisibleTileRegion;
 using RenderBounds = CanvasRenderer::RenderBounds;
-
-inline constexpr float kHalfPi = std::numbers::pi_v<float> * 0.5f;
-inline constexpr float kTau = std::numbers::pi_v<float> * 2.0f;
 
 [[nodiscard]]
 auto _get_visible_region(const Float2& viewport_pos,
@@ -69,7 +66,7 @@ auto _get_render_bounds(const VisibleTileRegion& tiles,
   return bounds;
 }
 
-}  // namespace renderer
+}  // namespace
 
 CanvasRenderer::CanvasRenderer(const Float2& canvas_tl,
                                const Float2& canvas_br,
@@ -93,64 +90,6 @@ CanvasRenderer::~CanvasRenderer() noexcept
 {
   auto& draw_list = get_draw_list();
   draw_list.PopClipRect();
-}
-
-void CanvasRenderer::draw_rect(const Float2& screen_pos,
-                               const Float2& size,
-                               const UColor& color,
-                               const float thickness)
-{
-  auto& draw_list = get_draw_list();
-  draw_list.AddRect(to_imvec2(screen_pos),
-                    to_imvec2(screen_pos + size),
-                    to_uint32_abgr(color),
-                    0.0f,
-                    ImDrawFlags_None,
-                    thickness);
-}
-
-void CanvasRenderer::fill_rect(const Float2& screen_pos,
-                               const Float2& size,
-                               const UColor& color)
-{
-  auto& draw_list = get_draw_list();
-  draw_list.AddRectFilled(to_imvec2(screen_pos),
-                          to_imvec2(screen_pos + size),
-                          to_uint32_abgr(color));
-}
-
-void CanvasRenderer::draw_ngon(const Float2& screen_pos,
-                               const float radius,
-                               const uint32 color_mask,
-                               const int segment_count,
-                               const float thickness,
-                               const float angle)
-{
-  if ((color_mask & IM_COL32_A_MASK) == 0 || segment_count <= 2) {
-    return;
-  }
-
-  // We're drawing a closed shape, so we remove one of the segments/points.
-  const auto segment_max =
-      static_cast<float>(segment_count - 1) / static_cast<float>(segment_count);
-  const auto angle_max = kTau * segment_max;
-
-  auto& draw_list = get_draw_list();
-
-  draw_list.PathArcTo(to_imvec2(screen_pos),
-                      radius,
-                      angle,
-                      angle + angle_max,
-                      segment_count - 1);
-  draw_list.PathStroke(color_mask, ImDrawFlags_Closed, thickness);
-}
-
-void CanvasRenderer::draw_hexagon(const Float2& screen_pos,
-                                  const float radius,
-                                  const uint32 color_mask,
-                                  const float thickness)
-{
-  draw_ngon(screen_pos, radius, color_mask, 6, thickness, kHalfPi);
 }
 
 void CanvasRenderer::clear_canvas(const UColor& color) const

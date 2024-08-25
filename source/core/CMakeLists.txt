@@ -259,6 +259,7 @@ target_sources(tactile-core
                "inc/tactile/core/ui/menu/tileset_menu.hpp"
                "inc/tactile/core/ui/menu/view_menu.hpp"
                "inc/tactile/core/ui/render/hexagon_info.hpp"
+               "inc/tactile/core/ui/render/primitives.hpp"
                "inc/tactile/core/ui/canvas_overlay.hpp"
                "inc/tactile/core/ui/canvas_renderer.hpp"
                "inc/tactile/core/ui/fonts.hpp"
