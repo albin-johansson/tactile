@@ -52,41 +52,12 @@ auto parse_value(const nlohmann::json& value_json,
                  const AttributeType type) -> std::expected<Attribute, SaveFormatParseError>
 {
   switch (type) {
-    case AttributeType::kStr: {
-      if (const auto* value = value_json.get_ptr<const nlohmann::json::string_t*>()) {
-        return Attribute {Attribute::string_type {*value}};
-      }
-
-      break;
-    }
-    case AttributeType::kInt: {
-      if (const auto* value = value_json.get_ptr<const nlohmann::json::number_integer_t*>()) {
-        return Attribute {saturate_cast<Attribute::int_type>(*value)};
-      }
-
-      break;
-    }
-    case AttributeType::kFloat: {
-      if (const auto* value = value_json.get_ptr<const nlohmann::json::number_float_t*>()) {
-        return Attribute {static_cast<Attribute::float_type>(*value)};
-      }
-
-      break;
-    }
-    case AttributeType::kBool: {
-      if (const auto* value = value_json.get_ptr<const bool*>()) {
-        return Attribute {*value};
-      }
-
-      break;
-    }
-    case AttributeType::kPath: {
-      if (const auto* value = value_json.get_ptr<const nlohmann::json::string_t*>()) {
-        return Attribute {Attribute::path_type {*value}};
-      }
-
-      break;
-    }
+    case AttributeType::kStr:   return Attribute {value_json.get<Attribute::string_type>()};
+    case AttributeType::kInt:   return Attribute {value_json.get<Attribute::int_type>()};
+    case AttributeType::kFloat: return Attribute {value_json.get<Attribute::float_type>()};
+    case AttributeType::kBool:  return Attribute {value_json.get<bool>()};
+    case AttributeType::kPath:
+      return Attribute {Attribute::path_type {value_json.get<nlohmann::json::string_t>()}};
     case AttributeType::kColor: {
       if (const auto* value = value_json.get_ptr<const nlohmann::json::string_t*>()) {
         Attribute attribute {AttributeType::kColor};
@@ -114,14 +85,9 @@ auto parse_value(const nlohmann::json& value_json,
 
       break;
     }
-    case AttributeType::kObject: {
-      if (const auto* value = value_json.get_ptr<const nlohmann::json::number_integer_t*>()) {
-        return Attribute {
-          Attribute::objref_type {saturate_cast<Attribute::objref_type::value_type>(*value)}};
-      }
-
-      break;
-    }
+    case AttributeType::kObject:
+      return Attribute {
+        Attribute::objref_type {value_json.get<Attribute::objref_type::value_type>()}};
     default: return std::unexpected {SaveFormatParseError::kBadPropertyType};
   }
 
