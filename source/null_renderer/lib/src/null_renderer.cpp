@@ -18,7 +18,7 @@ auto NullRenderer::begin_frame() -> bool
 void NullRenderer::end_frame()
 {}
 
-auto NullRenderer::load_texture(const char* image_path)
+auto NullRenderer::load_texture(const std::filesystem::path& image_path)
     -> std::expected<TextureID, std::error_code>
 {
   auto texture = NullTexture::load(image_path);

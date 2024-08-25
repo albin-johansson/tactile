@@ -31,7 +31,7 @@ class TACTILE_NULL_RENDERER_API NullRenderer final : public IRenderer
   void end_frame() override;
 
   [[nodiscard]]
-  auto load_texture(const char* image_path)
+  auto load_texture(const std::filesystem::path& image_path)
       -> std::expected<TextureID, std::error_code> override;
 
   void unload_texture(TextureID id) override;

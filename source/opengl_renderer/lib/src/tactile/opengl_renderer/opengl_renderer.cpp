@@ -128,13 +128,9 @@ void OpenGLRenderer::end_frame()
   SDL_GL_SwapWindow(mData->window->get_handle());
 }
 
-auto OpenGLRenderer::load_texture(const char* image_path)
+auto OpenGLRenderer::load_texture(const std::filesystem::path& image_path)
     -> std::expected<TextureID, std::error_code>
 {
-  if (image_path == nullptr) {
-    return std::unexpected {make_error(OpenGLError::kInvalidParam)};
-  }
-
   auto texture = OpenGLTexture::load(image_path);
   if (!texture.has_value()) {
     return std::unexpected {texture.error()};

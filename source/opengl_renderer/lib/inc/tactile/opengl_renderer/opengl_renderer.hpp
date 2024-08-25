@@ -37,7 +37,7 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 
   auto operator=(OpenGLRenderer&& other) noexcept -> OpenGLRenderer&;
 
-  ~OpenGLRenderer() noexcept final;
+  ~OpenGLRenderer() noexcept override;
 
   [[nodiscard]]
   auto begin_frame() -> bool override;
@@ -45,7 +45,7 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   void end_frame() override;
 
   [[nodiscard]]
-  auto load_texture(const char* image_path)
+  auto load_texture(const std::filesystem::path& image_path)
       -> std::expected<TextureID, std::error_code> override;
 
   void unload_texture(TextureID id) override;

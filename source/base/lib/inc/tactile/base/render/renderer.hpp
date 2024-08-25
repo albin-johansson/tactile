@@ -3,6 +3,7 @@
 #pragma once
 
 #include <expected>      // expected
+#include <filesystem>    // path
 #include <system_error>  // error_code
 
 #include "tactile/base/id.hpp"
@@ -48,7 +49,7 @@ class IRenderer
    * The identifier assigned to the loaded texture.
    */
   [[nodiscard]]
-  virtual auto load_texture(const char* image_path)
+  virtual auto load_texture(const std::filesystem::path& image_path)
       -> std::expected<TextureID, std::error_code> = 0;
 
   /**
