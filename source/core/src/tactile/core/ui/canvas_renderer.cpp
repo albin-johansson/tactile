@@ -78,6 +78,7 @@ CanvasRenderer::CanvasRenderer(const Float2& canvas_tl,
   mCanvasTileSize {vec_cast<Float2>(tile_size) * viewport.scale},
   mWindowTL {canvas_tl},
   mWindowBR {canvas_br},
+  mScale {viewport.scale},
   mVisibleRegion {_get_visible_region(mViewportPos, mWindowBR - mWindowTL)},
   mVisibleTiles {_get_visible_tiles(mVisibleRegion, mCanvasTileSize)},
   mRenderBounds {_get_render_bounds(mVisibleTiles, mExtent)}
@@ -181,6 +182,11 @@ auto CanvasRenderer::get_canvas_tile_size() const -> Float2
   return mCanvasTileSize;
 }
 
+auto CanvasRenderer::get_scale() const -> float
+{
+  return mScale;
+}
+
 auto CanvasRenderer::to_world_pos(const Float2& screen_pos) const noexcept -> Float2
 {
   return screen_pos + mViewportPos;
@@ -189,6 +195,11 @@ auto CanvasRenderer::to_world_pos(const Float2& screen_pos) const noexcept -> Fl
 auto CanvasRenderer::to_screen_pos(const Float2& world_pos) const noexcept -> Float2
 {
   return world_pos - mViewportPos + mWindowTL;
+}
+
+auto CanvasRenderer::to_screen_pos(const MatrixIndex& tile_pos) const noexcept -> Float2
+{
+  return to_screen_pos(to_float2(tile_pos) * mCanvasTileSize);
 }
 
 auto CanvasRenderer::get_draw_list() noexcept -> ImDrawList&

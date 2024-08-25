@@ -176,6 +176,15 @@ class CanvasRenderer final
   auto get_canvas_tile_size() const -> Float2;
 
   /**
+   * Returns the canvas scale factor.
+   *
+   * \return
+   * A scale factor.
+   */
+  [[nodiscard]]
+  auto get_scale() const -> float;
+
+  /**
    * Converts a screen-space position to the corresponding world-space position.
    *
    * \param screen_pos A screen-space position.
@@ -196,6 +205,9 @@ class CanvasRenderer final
    */
   [[nodiscard]]
   auto to_screen_pos(const Float2& world_pos) const noexcept -> Float2;
+
+  [[nodiscard]]
+  auto to_screen_pos(const MatrixIndex& tile_pos) const noexcept -> Float2;
 
   /**
    * Returns the draw list associated with the window.
@@ -221,6 +233,9 @@ class CanvasRenderer final
 
   /** The bottom-right window corner position (screen-space). */
   Float2 mWindowBR;
+
+  /** The scale factor of rendered content. */
+  float mScale;
 
   /** The region visible via the current viewport. */
   VisibleRegion mVisibleRegion;

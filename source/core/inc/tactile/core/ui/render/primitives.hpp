@@ -6,7 +6,6 @@
 
 #include <imgui.h>
 
-#include "tactile/base/meta/color.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/meta/color.hpp"
@@ -35,6 +34,15 @@ inline void draw_rect(const Float2& screen_pos,
                        ImDrawFlags_None,
                        thickness);
   }
+}
+
+inline void draw_rect_shadowed(const Float2& screen_pos,
+                               const Float2& size,
+                               const UColor& color,
+                               const float thickness = 1.0f)
+{
+  draw_rect(screen_pos + Float2 {thickness, thickness}, size, kColorBlack, thickness);
+  draw_rect(screen_pos, size, color, thickness);
 }
 
 /**
@@ -108,6 +116,58 @@ inline void draw_hexagon(const Float2& screen_pos,
 {
   constexpr auto half_pi = 0.5f * std::numbers::pi_v<float>;
   draw_ngon(screen_pos, radius, color_mask, 6, thickness, half_pi);
+}
+
+inline void draw_hexagon_shadowed(const Float2& screen_pos,
+                                  const float radius,
+                                  const uint32 color_mask,
+                                  const float thickness = 1.0f)
+{
+  draw_hexagon(screen_pos + Float2 {thickness, thickness}, radius, IM_COL32_BLACK, thickness);
+  draw_hexagon(screen_pos, radius, color_mask, thickness);
+}
+
+inline void draw_ellipse(const Float2& center_pos,
+                         const Float2& radius,
+                         const UColor& color,
+                         const float thickness = 1.0f)
+{
+  if (auto* draw_list = ImGui::GetWindowDrawList()) {
+    draw_list->AddEllipse(to_imvec2(center_pos),
+                          to_imvec2(radius),
+                          to_uint32_abgr(color),
+                          0.0f,
+                          50,
+                          thickness);
+  }
+}
+
+inline void draw_ellipse_shadowed(const Float2& center_pos,
+                                  const Float2& radius,
+                                  const UColor& color,
+                                  const float thickness = 1.0f)
+{
+  draw_ellipse(center_pos + Float2 {thickness, thickness}, radius, kColorBlack, thickness);
+  draw_ellipse(center_pos, radius, color, thickness);
+}
+
+inline void draw_circle(const Float2& center_pos,
+                        const float radius,
+                        const UColor& color,
+                        const float thickness = 1.0f)
+{
+  if (auto* draw_list = ImGui::GetWindowDrawList()) {
+    draw_list->AddCircle(to_imvec2(center_pos), radius, to_uint32_abgr(color), 0, thickness);
+  }
+}
+
+inline void draw_circle_shadowed(const Float2& center_pos,
+                                 const float radius,
+                                 const UColor& color,
+                                 const float thickness = 1.0f)
+{
+  draw_circle(center_pos + Float2 {thickness, thickness}, radius, kColorBlack, thickness);
+  draw_circle(center_pos, radius, color, thickness);
 }
 
 }  // namespace tactile::ui
