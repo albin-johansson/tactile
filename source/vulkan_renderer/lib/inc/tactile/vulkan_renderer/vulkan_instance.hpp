@@ -6,7 +6,7 @@
 #include <memory>        // unique_ptr
 #include <system_error>  // error_code
 
-#include <vulkan/vulkan.h>
+#include <volk.h>
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"

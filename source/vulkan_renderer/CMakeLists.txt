@@ -3,6 +3,7 @@ project(tactile-vulkan-renderer CXX)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(Vulkan REQUIRED)
 find_package(VulkanMemoryAllocator CONFIG REQUIRED)
+find_package(volk CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
 
 add_subdirectory("lib")

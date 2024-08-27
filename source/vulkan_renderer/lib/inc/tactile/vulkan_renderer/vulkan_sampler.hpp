@@ -5,7 +5,7 @@
 #include <expected>    // expected
 #include <filesystem>  // path
 
-#include <vulkan/vulkan.h>
+#include <volk.h>
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"

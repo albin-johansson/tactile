@@ -55,6 +55,9 @@
     "vulkan": {
       "description": "Add Vulkan support",
       "dependencies": [
+        "vulkan",
+        "vulkan-memory-allocator",
+        "volk",
         {
           "name": "sdl2",
           "features": [
@@ -66,8 +69,7 @@
           "features": [
             "vulkan-binding"
           ]
-        },
-        "vulkan-memory-allocator"
+        }
       ]
     }
   }
