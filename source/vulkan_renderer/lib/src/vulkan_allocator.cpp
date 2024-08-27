@@ -48,6 +48,10 @@ auto VulkanAllocator::create(VkInstance instance,
                              VkPhysicalDevice physical_device,
                              VkDevice device) -> std::expected<VulkanAllocator, VkResult>
 {
+  VmaVulkanFunctions functions {};
+  functions.vkGetInstanceProcAddr = vkGetInstanceProcAddr;
+  functions.vkGetDeviceProcAddr = vkGetDeviceProcAddr;
+
   const VmaAllocatorCreateInfo create_info {
     .flags = 0,
     .physicalDevice = physical_device,
@@ -56,7 +60,7 @@ auto VulkanAllocator::create(VkInstance instance,
     .pAllocationCallbacks = nullptr,
     .pDeviceMemoryCallbacks = nullptr,
     .pHeapSizeLimit = nullptr,
-    .pVulkanFunctions = nullptr,
+    .pVulkanFunctions = &functions,
     .instance = instance,
     .vulkanApiVersion = VK_API_VERSION_1_2,
     .pTypeExternalMemoryHandleTypes = nullptr,

@@ -46,6 +46,12 @@ class TACTILE_VULKAN_API VulkanAllocator final
                      VkPhysicalDevice physical_device,
                      VkDevice device) -> std::expected<VulkanAllocator, VkResult>;
 
+  [[nodiscard]]
+  auto get() noexcept -> VmaAllocator
+  {
+    return mAllocator;
+  }
+
  private:
   VmaAllocator mAllocator {VK_NULL_HANDLE};
 
