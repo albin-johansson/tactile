@@ -7,7 +7,7 @@
 #include <optional>  // optional
 #include <vector>    // vector
 
-#include <volk.h>
+#include <vulkan/vulkan.h>
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"

@@ -91,8 +91,6 @@ auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, Vk
     return std::unexpected {result};
   }
 
-  volkLoadInstance(instance);
-
   return VulkanInstance {instance};
 }
 

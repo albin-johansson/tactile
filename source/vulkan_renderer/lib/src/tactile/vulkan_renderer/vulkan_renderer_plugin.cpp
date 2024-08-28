@@ -6,7 +6,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_vulkan.h>
-#include <volk.h>
+#include <vulkan/vulkan.h>
 
 #include "tactile/base/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
@@ -24,8 +24,6 @@ void VulkanRendererPlugin::load(IRuntime* runtime)
       return;
     }
 
-    volkInitializeCustom(
-        reinterpret_cast<PFN_vkGetInstanceProcAddr>(SDL_Vulkan_GetVkGetInstanceProcAddr()));
 
   }
   catch (...) {

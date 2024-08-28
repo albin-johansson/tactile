@@ -4,7 +4,7 @@
 
 #include <string_view>  // string_view
 
-#include <volk.h>
+#include <vulkan/vulkan.h>
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"

@@ -251,7 +251,7 @@ auto VulkanSwapchain::create(VkSurfaceKHR surface,
 
   std::vector<VulkanImageView> image_views {};
   image_views.reserve(images->size());
-  for (VkImage image : images) {
+  for (VkImage image : *images) {
     auto image_view = VulkanImageView::create(device,
                                               image,
                                               params.image_format,

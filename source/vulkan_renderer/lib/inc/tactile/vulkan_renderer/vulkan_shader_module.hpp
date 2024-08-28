@@ -6,7 +6,7 @@
 #include <filesystem>    // path
 #include <system_error>  // error_code
 
-#include <volk.h>
+#include <vulkan/vulkan.h>
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/vulkan_renderer/api.hpp"

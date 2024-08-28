@@ -55,8 +55,7 @@ target_link_libraries(tactile-vulkan-renderer
                       PUBLIC
                       tactile::base
                       tactile::runtime
-                      Vulkan::Headers
-                      volk::volk
+                      Vulkan::Vulkan
                       GPUOpen::VulkanMemoryAllocator
                       SDL2::SDL2
 
@@ -64,7 +63,3 @@ target_link_libraries(tactile-vulkan-renderer
                       magic_enum::magic_enum
                       )
 
-target_compile_definitions(tactile-vulkan-renderer
-                           PUBLIC
-                           "VK_NO_PROTOTYPES"
-                           )

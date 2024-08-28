@@ -57,7 +57,6 @@
       "dependencies": [
         "vulkan",
         "vulkan-memory-allocator",
-        "volk",
         {
           "name": "sdl2",
           "features": [
