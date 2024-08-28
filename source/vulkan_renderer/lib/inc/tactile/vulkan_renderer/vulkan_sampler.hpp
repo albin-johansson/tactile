@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <expected>    // expected
-#include <filesystem>  // path
+#include <expected>  // expected
 
 #include <volk.h>
 
@@ -18,6 +17,11 @@ namespace tactile {
 class TACTILE_VULKAN_API VulkanSampler final
 {
  public:
+  TACTILE_DECLARE_MOVE(VulkanSampler);
+  TACTILE_DELETE_COPY(VulkanSampler);
+
+  VulkanSampler() = default;
+
   /**
    * Creates a Vulkan sampler from existing resources.
    *
@@ -26,44 +30,28 @@ class TACTILE_VULKAN_API VulkanSampler final
    */
   VulkanSampler(VkDevice device, VkSampler sampler) noexcept;
 
-  VulkanSampler(VulkanSampler&& other) noexcept;
-
-  VulkanSampler(const VulkanSampler& other) = delete;
-
   ~VulkanSampler() noexcept;
-
-  auto operator=(VulkanSampler&& other) noexcept -> VulkanSampler&;
-
-  auto operator=(const VulkanSampler& other) -> VulkanSampler& = delete;
 
   /**
    * Creates a Vulkan sampler.
    *
-   * \param device      The associated Vulkan device.
-   * \param create_info The sampler configuration.
+   * \param device The associated Vulkan device.
    *
    * \return
    * A Vulkan sampler if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto create(VkDevice device, const VkSamplerCreateInfo& create_info)
-      -> std::expected<VulkanSampler, VkResult>;
+  static auto create(VkDevice device) -> std::expected<VulkanSampler, VkResult>;
 
   [[nodiscard]]
-  auto device() noexcept -> VkDevice
-  {
-    return mDevice;
-  }
+  auto device() -> VkDevice;
 
   [[nodiscard]]
-  auto get() noexcept -> VkSampler
-  {
-    return mSampler;
-  }
+  auto get() -> VkSampler;
 
  private:
-  VkDevice mDevice {VK_NULL_HANDLE};
-  VkSampler mSampler {VK_NULL_HANDLE};
+  VkDevice m_device {VK_NULL_HANDLE};
+  VkSampler m_sampler {VK_NULL_HANDLE};
 
   void _destroy() noexcept;
 };
