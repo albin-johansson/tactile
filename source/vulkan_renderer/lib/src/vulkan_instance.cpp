@@ -11,10 +11,10 @@
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
 
 namespace tactile {
-namespace vulkan_instance {
+namespace {
 
 [[nodiscard]]
-auto get_required_extensions(IWindow& window) -> std::vector<const char*>
+auto _get_required_extensions(IWindow& window) -> std::vector<const char*>
 {
   uint32 extension_count = 0;
   SDL_Vulkan_GetInstanceExtensions(window.get_handle(), &extension_count, nullptr);
@@ -31,7 +31,7 @@ auto get_required_extensions(IWindow& window) -> std::vector<const char*>
   return extensions;
 }
 
-}  // namespace vulkan_instance
+}  // namespace
 
 void VulkanInstanceDeleter::operator()(VkInstance instance) noexcept
 {
@@ -75,6 +75,14 @@ auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, Vk
   instance_info.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 #endif  // TACTILE_USE_VULKAN_SUBSET
 
+  for (const auto* layer : enabled_layers) {
+    log(LogLevel::kDebug, "Using Vulkan layer '{}'", layer);
+  }
+
+  for (const auto* extension : enabled_extensions) {
+    log(LogLevel::kDebug, "Using Vulkan instance extension '{}'", extension);
+  }
+
   VkInstance instance {VK_NULL_HANDLE};
   const auto result = vkCreateInstance(&instance_info, nullptr, &instance);
 
@@ -82,6 +90,8 @@ auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, Vk
     log(LogLevel::kError, "Could not create Vulkan instance: {}", to_string(result));
     return std::unexpected {result};
   }
+
+  volkLoadInstance(instance);
 
   return VulkanInstance {instance};
 }

@@ -2,9 +2,8 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <memory>        // unique_ptr
-#include <system_error>  // error_code
+#include <expected>  // expected
+#include <memory>    // unique_ptr
 
 #include <volk.h>
 
