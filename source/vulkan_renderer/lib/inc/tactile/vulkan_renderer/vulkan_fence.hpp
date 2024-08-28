@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>  // expected
 
 #include <vulkan/vulkan.h>
 
@@ -18,6 +17,11 @@ namespace tactile {
 class TACTILE_VULKAN_API VulkanFence final
 {
  public:
+  TACTILE_DECLARE_MOVE(VulkanFence);
+  TACTILE_DELETE_COPY(VulkanFence);
+
+  VulkanFence() = default;
+
   /**
    * Creates a Vulkan fence from existing resources.
    *
@@ -26,15 +30,7 @@ class TACTILE_VULKAN_API VulkanFence final
    */
   VulkanFence(VkDevice device, VkFence fence);
 
-  VulkanFence(VulkanFence&& other) noexcept;
-
-  VulkanFence(const VulkanFence&) = delete;
-
   ~VulkanFence() noexcept;
-
-  auto operator=(VulkanFence&& other) noexcept -> VulkanFence&;
-
-  auto operator=(const VulkanFence&) -> VulkanFence& = delete;
 
   /**
    * Creates a Vulkan fence.
@@ -50,20 +46,20 @@ class TACTILE_VULKAN_API VulkanFence final
                      VkFenceCreateFlags flags) -> std::expected<VulkanFence, VkResult>;
 
   [[nodiscard]]
-  auto device() noexcept -> VkDevice
-  {
-    return mDevice;
-  }
+  auto reset() -> VkResult;
 
   [[nodiscard]]
-  auto get() noexcept -> VkFence
-  {
-    return mFence;
-  }
+  auto wait() -> VkResult;
+
+  [[nodiscard]]
+  auto device() -> VkDevice;
+
+  [[nodiscard]]
+  auto get() -> VkFence;
 
  private:
-  VkDevice mDevice {VK_NULL_HANDLE};
-  VkFence mFence {VK_NULL_HANDLE};
+  VkDevice m_device {VK_NULL_HANDLE};
+  VkFence m_fence {VK_NULL_HANDLE};
 
   void _destroy() noexcept;
 };
