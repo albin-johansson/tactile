@@ -110,8 +110,8 @@ EmptyLineAfterAccessModifier: Never
 # Constructors
 PackConstructorInitializers: Never
 SpaceBeforeCtorInitializerColon: true
-ConstructorInitializerIndentWidth: 2
-BreakConstructorInitializers: AfterColon
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializers: BeforeColon
 
 # Inheritance
 BreakInheritanceList: AfterColon
