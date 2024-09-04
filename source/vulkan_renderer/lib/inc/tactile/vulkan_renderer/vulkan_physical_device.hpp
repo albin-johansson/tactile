@@ -32,7 +32,7 @@ struct VulkanQueueFamilyIndices final
  * The available physical devices.
  */
 [[nodiscard]]
-TACTILE_VULKAN_API auto list_physical_devices(VkInstance instance)
+TACTILE_VULKAN_API auto get_physical_devices(VkInstance instance)
     -> std::vector<VkPhysicalDevice>;
 
 /**
@@ -111,7 +111,7 @@ TACTILE_VULKAN_API auto get_present_modes(VkPhysicalDevice physical_device,
  * A selected physical device if successful; an error code otherwise.
  */
 [[nodiscard]]
-TACTILE_VULKAN_API auto pick_physical_device(VkInstance instance, VkSurfaceKHR surface)
+TACTILE_VULKAN_API auto select_physical_device(VkInstance instance, VkSurfaceKHR surface)
     -> std::expected<VkPhysicalDevice, VkResult>;
 
 }  // namespace tactile

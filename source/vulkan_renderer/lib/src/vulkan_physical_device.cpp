@@ -9,31 +9,29 @@
 
 namespace tactile {
 
-auto list_physical_devices(VkInstance instance) -> std::vector<VkPhysicalDevice>
+auto get_physical_devices(VkInstance instance) -> std::vector<VkPhysicalDevice>
 {
-  std::uint32_t gpu_count {0};
-  vkEnumeratePhysicalDevices(instance, &gpu_count, nullptr);
+  std::uint32_t count {0};
+  vkEnumeratePhysicalDevices(instance, &count, nullptr);
 
-  std::vector<VkPhysicalDevice> gpus {};
-  gpus.resize(gpu_count);
+  std::vector<VkPhysicalDevice> physical_devices {};
+  physical_devices.resize(count);
 
-  vkEnumeratePhysicalDevices(instance, &gpu_count, gpus.data());
+  vkEnumeratePhysicalDevices(instance, &count, physical_devices.data());
 
-  return gpus;
+  return physical_devices;
 }
 
 auto get_queue_families(VkPhysicalDevice physical_device)
     -> std::vector<VkQueueFamilyProperties>
 {
-  std::uint32_t queue_family_count {0};
-  vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &queue_family_count, nullptr);
+  std::uint32_t count {0};
+  vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &count, nullptr);
 
   std::vector<VkQueueFamilyProperties> queue_families {};
-  queue_families.resize(queue_family_count);
+  queue_families.resize(count);
 
-  vkGetPhysicalDeviceQueueFamilyProperties(physical_device,
-                                           &queue_family_count,
-                                           queue_families.data());
+  vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &count, queue_families.data());
 
   return queue_families;
 }
@@ -83,16 +81,13 @@ auto to_unique(const VulkanQueueFamilyIndices& family_indices) -> std::vector<st
 auto get_surface_formats(VkPhysicalDevice physical_device,
                          VkSurfaceKHR surface) -> std::vector<VkSurfaceFormatKHR>
 {
-  std::uint32_t format_count {0};
-  vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface, &format_count, nullptr);
+  std::uint32_t count {0};
+  vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface, &count, nullptr);
 
   std::vector<VkSurfaceFormatKHR> formats {};
-  formats.resize(format_count);
+  formats.resize(count);
 
-  vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device,
-                                       surface,
-                                       &format_count,
-                                       formats.data());
+  vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface, &count, formats.data());
 
   return formats;
 }
@@ -100,27 +95,24 @@ auto get_surface_formats(VkPhysicalDevice physical_device,
 auto get_present_modes(VkPhysicalDevice physical_device,
                        VkSurfaceKHR surface) -> std::vector<VkPresentModeKHR>
 {
-  std::uint32_t present_mode_count {0};
-  vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device,
-                                            surface,
-                                            &present_mode_count,
-                                            nullptr);
+  std::uint32_t count {0};
+  vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device, surface, &count, nullptr);
 
   std::vector<VkPresentModeKHR> present_modes {};
-  present_modes.resize(present_mode_count);
+  present_modes.resize(count);
 
   vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device,
                                             surface,
-                                            &present_mode_count,
+                                            &count,
                                             present_modes.data());
 
   return present_modes;
 }
 
-auto pick_physical_device(VkInstance instance,
-                          VkSurfaceKHR surface) -> std::expected<VkPhysicalDevice, VkResult>
+auto select_physical_device(VkInstance instance,
+                            VkSurfaceKHR surface) -> std::expected<VkPhysicalDevice, VkResult>
 {
-  auto physical_devices = list_physical_devices(instance);
+  auto physical_devices = get_physical_devices(instance);
 
   if (physical_devices.empty()) {
     log(LogLevel::kError, "Found no physical devices with Vulkan support");
