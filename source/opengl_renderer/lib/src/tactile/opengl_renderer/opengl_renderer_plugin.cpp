@@ -5,9 +5,11 @@
 #include <new>  // nothrow
 
 #include <SDL2/SDL.h>
+#include <imgui.h>
 
 #include "tactile/base/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
+#include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
 namespace opengl_renderer_plugin {
@@ -34,31 +36,31 @@ void set_hints()
 
 void OpenGLRendererPlugin::load(IRuntime* runtime)
 {
-  mRuntime = runtime;
+  m_runtime = runtime;
   opengl_renderer_plugin::set_hints();
 
-  mRuntime->init_window(SDL_WINDOW_OPENGL);
-  auto* window = mRuntime->get_window();
+  m_runtime->init_window(SDL_WINDOW_OPENGL);
+  auto* window = m_runtime->get_window();
 
   if (!window) {
     log(LogLevel::kError, "Could not initialize OpenGL window");
     return;
   }
 
-  auto* imgui_context = mRuntime->get_imgui_context();
+  ImGui::SetAllocatorFunctions([](const usize size, void*) { return runtime_malloc(size); },
+                               [](void* ptr, void*) { runtime_free(ptr); });
 
-  if (auto renderer = OpenGLRenderer::make(window, imgui_context)) {
-    mRenderer = std::move(*renderer);
-    mRuntime->set_renderer(&mRenderer.value());
+  if (auto renderer = OpenGLRenderer::make(window)) {
+    m_renderer = std::move(*renderer);
+    m_runtime->set_renderer(&m_renderer.value());
   }
 }
 
 void OpenGLRendererPlugin::unload()
 {
-  mRuntime->set_renderer(nullptr);
-  mRuntime = nullptr;
-
-  mRenderer.reset();
+  m_runtime->set_renderer(nullptr);
+  m_runtime = nullptr;
+  m_renderer.reset();
 }
 
 auto tactile_make_plugin() -> IPlugin*

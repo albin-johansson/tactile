@@ -10,6 +10,7 @@
 #include "tactile/base/prelude.hpp"
 
 struct ImGuiContext;
+union SDL_Event;
 
 namespace tactile {
 
@@ -98,6 +99,22 @@ class IRenderer
    */
   [[nodiscard]]
   virtual auto get_window() const -> const IWindow* = 0;
+
+  /**
+   * Returns the associated Dear ImGui context.
+   *
+   * \return
+   * A Dear ImGui context.
+   */
+  [[nodiscard]]
+  virtual auto get_imgui_context() -> ImGuiContext* = 0;
+
+  [[nodiscard]]
+  virtual auto imgui_malloc(std::size_t bytes) -> void* = 0;
+
+  virtual void imgui_free(void* memory) = 0;
+
+  virtual void process_event(const SDL_Event& event) = 0;
 };
 
 }  // namespace tactile

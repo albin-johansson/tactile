@@ -10,6 +10,7 @@
 
 #include <imgui.h>
 
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/debug/terminate.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
@@ -22,20 +23,10 @@
 #include "tactile/runtime/window.hpp"
 
 namespace tactile {
-namespace runtime_impl {
-
-struct ImGuiContextDeleter final
-{
-  void operator()(ImGuiContext* context) noexcept
-  {
-    ImGui::DestroyContext(context);
-  }
-};
-
-using UniqueImGuiContext = std::unique_ptr<ImGuiContext, ImGuiContextDeleter>;
+namespace {
 
 [[nodiscard]]
-auto make_logger() -> Logger
+auto _make_logger() -> Logger
 {
   win32_enable_virtual_terminal_processing();
 
@@ -51,50 +42,27 @@ auto make_logger() -> Logger
   return logger;
 }
 
-[[nodiscard]]
-auto make_imgui_context() -> UniqueImGuiContext
-{
-  UniqueImGuiContext imgui_context {ImGui::CreateContext()};
-
-  // NOLINTBEGIN(*-no-malloc)
-  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
-                               [](void* ptr, void*) noexcept { std::free(ptr); });
-  ImGui::SetCurrentContext(imgui_context.get());
-  // NOLINTEND(*-no-malloc)
-
-  auto& io = ImGui::GetIO();
-  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
-  ui::apply_custom_style(ImGui::GetStyle());
-
-  return imgui_context;
-}
-
-}  // namespace runtime_impl
+}  // namespace
 
 struct Runtime::Data final
 {
   ProtobufContext protobuf_context;
   SDLContext sdl_context;
   Logger logger;
-  runtime_impl::UniqueImGuiContext imgui_context {};
   std::optional<Window> window {};
   IRenderer* renderer {};
   std::unordered_map<CompressionFormat, ICompressor*> compression_formats {};
   std::unordered_map<SaveFormatId, ISaveFormat*> save_formats {};
 
-  Data() :
-    protobuf_context {},
-    sdl_context {},
-    logger {runtime_impl::make_logger()},
-    imgui_context {runtime_impl::make_imgui_context()}
+  Data()
+      : logger {_make_logger()}
   {
     set_default_logger(&logger);
   }
 
   ~Data() noexcept
   {
+    TACTILE_LOG_TRACE("Destroying runtime data");
     set_default_logger(nullptr);
   }
 
@@ -176,9 +144,14 @@ auto Runtime::get_save_format(const SaveFormatId id) const -> const ISaveFormat*
   return nullptr;
 }
 
-auto Runtime::get_imgui_context() -> ImGuiContext*
+auto runtime_malloc(const std::size_t bytes) noexcept -> void*
 {
-  return mData->imgui_context.get();
+  return std::malloc(bytes);
+}
+
+void runtime_free(void* memory) noexcept
+{
+  return std::free(memory);
 }
 
 }  // namespace tactile

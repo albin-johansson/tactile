@@ -4,12 +4,15 @@
 
 #include <utility>  // move
 
+#include <imgui.h>
+
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/base/runtime.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/view_events.hpp"
 #include "tactile/core/log/logger.hpp"
+#include "tactile/core/ui/common/style.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
 
 namespace tactile {
@@ -24,6 +27,12 @@ TactileApp::~TactileApp() noexcept = default;
 
 void TactileApp::on_startup()
 {
+  auto& io = ImGui::GetIO();
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+  ui::apply_custom_style(ImGui::GetStyle());
+
   mWindow->show();
   mWindow->maximize();
 

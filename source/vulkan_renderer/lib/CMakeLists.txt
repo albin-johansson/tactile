@@ -63,9 +63,10 @@ target_link_libraries(tactile-vulkan-renderer
                       tactile::runtime
                       Vulkan::Vulkan
                       GPUOpen::VulkanMemoryAllocator
-                      SDL2::SDL2
 
                       PRIVATE
+                      imgui::imgui
                       magic_enum::magic_enum
+                      SDL2::SDL2
                       )
 

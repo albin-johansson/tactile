@@ -22,8 +22,8 @@ class TACTILE_OPENGL_API OpenGLRendererPlugin final : public IPlugin
   void unload() override;
 
  private:
-  IRuntime* mRuntime {};
-  std::optional<OpenGLRenderer> mRenderer {};
+  IRuntime* m_runtime {};
+  std::optional<OpenGLRenderer> m_renderer {};
 };
 
 extern "C"

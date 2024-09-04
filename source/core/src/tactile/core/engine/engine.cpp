@@ -4,7 +4,6 @@
 
 #include <SDL2/SDL.h>
 #include <imgui.h>
-#include <imgui_impl_sdl2.h>
 
 #include "tactile/base/engine/engine_app.hpp"
 #include "tactile/base/render/renderer.hpp"
@@ -13,13 +12,25 @@
 
 namespace tactile {
 
-Engine::Engine(IEngineApp* app, IRenderer* renderer) :
-  mApp {require_not_null(app, "null app")},
-  mRenderer {require_not_null(renderer, "null renderer")}
+Engine::Engine(IEngineApp* app, IRenderer* renderer)
+  : mApp {require_not_null(app, "null app")},
+    mRenderer {require_not_null(renderer, "null renderer")}
 {}
 
 void Engine::run()
 {
+  ImGui::SetAllocatorFunctions(
+      [](const std::size_t bytes, void* user_data) -> void* {
+        auto* renderer = static_cast<IRenderer*>(user_data);
+        return renderer->imgui_malloc(bytes);
+      },
+      [](void* memory, void* user_data) {
+        auto* renderer = static_cast<IRenderer*>(user_data);
+        renderer->imgui_free(memory);
+      },
+      mRenderer);
+  ImGui::SetCurrentContext(mRenderer->get_imgui_context());
+
   mApp->on_startup();
 
   bool running = true;
@@ -45,7 +56,7 @@ auto Engine::_poll_events() -> bool
 
   SDL_Event event {};
   while (SDL_PollEvent(&event)) {
-    ImGui_ImplSDL2_ProcessEvent(&event);
+    mRenderer->process_event(event);
 
     if (event.type == SDL_QUIT) {
       keep_running = false;

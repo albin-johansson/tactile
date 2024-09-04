@@ -6,8 +6,8 @@
 
 namespace tactile {
 
-NullRenderer::NullRenderer(IWindow* window) :
-  mWindow {window}
+NullRenderer::NullRenderer(IWindow* window)
+    : mWindow {window}
 {}
 
 auto NullRenderer::begin_frame() -> bool
@@ -68,5 +68,23 @@ auto NullRenderer::get_window() const -> const IWindow*
 {
   return mWindow;
 }
+
+auto NullRenderer::get_imgui_context() -> ImGuiContext*
+{
+  return nullptr;
+}
+
+auto NullRenderer::imgui_malloc(const std::size_t bytes) -> void*
+{
+  return std::malloc(bytes);
+}
+
+void NullRenderer::imgui_free(void* memory)
+{
+  std::free(memory);
+}
+
+void NullRenderer::process_event(const SDL_Event&)
+{}
 
 }  // namespace tactile

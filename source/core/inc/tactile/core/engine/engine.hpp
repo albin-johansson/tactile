@@ -34,7 +34,7 @@ class Engine final
   float mFramebufferScale {0.0f};
 
   [[nodiscard]]
-  static auto _poll_events() -> bool;
+  auto _poll_events() -> bool;
 
   void _check_framebuffer_scale();
 };

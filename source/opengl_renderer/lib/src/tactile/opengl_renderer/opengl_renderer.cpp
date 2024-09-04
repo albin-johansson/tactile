@@ -16,10 +16,11 @@
 #include <imgui_impl_sdl2.h>
 
 #include "tactile/base/render/window.hpp"
+#include "tactile/base/util/scope_exit.hpp"
 #include "tactile/opengl_renderer/opengl_error.hpp"
-#include "tactile/opengl_renderer/opengl_imgui.hpp"
 #include "tactile/opengl_renderer/opengl_texture.hpp"
 #include "tactile/runtime/logging.hpp"
+#include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
 
@@ -33,67 +34,70 @@ struct GLContextDeleter final
 
 struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
 {
-  ImGuiContext* context;
+  ImGuiContext* imgui_context;
   IWindow* window;
   std::unique_ptr<void, GLContextDeleter> gl_context;
-  std::optional<GLImGuiBackendWrapper> imgui_backend;
-  std::optional<GLImGuiRendererWrapper> imgui_renderer;
+  ScopeExit imgui_context_deleter {};
+  ScopeExit imgui_backend_impl_deleter {};
+  ScopeExit imgui_renderer_impl_deleter {};
   std::unordered_map<TextureID, OpenGLTexture> textures;
   TextureID next_texture_id;
 };
 
-auto OpenGLRenderer::make(IWindow* window, ImGuiContext* context)
-    -> std::expected<OpenGLRenderer, std::error_code>
+auto OpenGLRenderer::make(IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>
 {
   if (SDL_WasInit(SDL_INIT_VIDEO) != SDL_INIT_VIDEO) {
     return std::unexpected {make_error(OpenGLError::kNotReady)};
   }
 
-  if (window == nullptr || context == nullptr) {
+  if (!window) {
     return std::unexpected {make_error(OpenGLError::kInvalidParam)};
   }
 
   OpenGLRenderer renderer {};
-  renderer.mData->window = window;
-  renderer.mData->context = context;
-  renderer.mData->next_texture_id = TextureID {1};
+  auto& data = *renderer.mData;
 
-  renderer.mData->gl_context.reset(SDL_GL_CreateContext(window->get_handle()));
-  if (!renderer.mData->gl_context) {
+  data.window = window;
+  data.next_texture_id = TextureID {1};
+
+  data.gl_context.reset(SDL_GL_CreateContext(window->get_handle()));
+  if (!data.gl_context) {
     return std::unexpected {make_error(OpenGLError::kContextError)};
   }
-
-  // NOLINTBEGIN(*-no-malloc)
-  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
-                               [](void* ptr, void*) { std::free(ptr); });
-  // NOLINTEND(*-no-malloc)
-  ImGui::SetCurrentContext(context);
 
   if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
     return std::unexpected {make_error(OpenGLError::kLoaderError)};
   }
 
-  if (auto imgui_backend = GLImGuiBackendWrapper::init(window->get_handle(), context)) {
-    renderer.mData->imgui_backend.emplace(std::move(*imgui_backend));
-  }
-  else {
-    return std::unexpected {imgui_backend.error()};
+  data.imgui_context = ImGui::CreateContext();
+
+  if (!data.imgui_context) {
+    log(LogLevel::kError, "Could not create ImGui context");
+    return std::unexpected {make_error(OpenGLError::kImGuiError)};
   }
 
-  if (auto imgui_renderer = GLImGuiRendererWrapper::init()) {
-    renderer.mData->imgui_renderer.emplace(std::move(*imgui_renderer));
+  data.imgui_context_deleter =
+      ScopeExit {[ctx = data.imgui_context] { ImGui::DestroyContext(ctx); }};
+
+  if (!ImGui_ImplSDL2_InitForOpenGL(window->get_handle(), data.imgui_context)) {
+    return std::unexpected {make_error(OpenGLError::kImGuiError)};
   }
-  else {
-    return std::unexpected {imgui_renderer.error()};
+
+  data.imgui_backend_impl_deleter = ScopeExit {[] { ImGui_ImplSDL2_Shutdown(); }};
+
+  if (!ImGui_ImplOpenGL3_Init("#version 410 core")) {
+    return std::unexpected {make_error(OpenGLError::kImGuiError)};
   }
+
+  data.imgui_renderer_impl_deleter = ScopeExit {[] { ImGui_ImplOpenGL3_Shutdown(); }};
 
   SDL_GL_SetSwapInterval(1);
 
   return renderer;
 }
 
-OpenGLRenderer::OpenGLRenderer() :
-  mData {std::make_unique<Data>()}
+OpenGLRenderer::OpenGLRenderer()
+  : mData {std::make_unique<Data>()}
 {}
 
 OpenGLRenderer::OpenGLRenderer(OpenGLRenderer&& other) noexcept = default;
@@ -178,6 +182,26 @@ auto OpenGLRenderer::get_window() -> IWindow*
 auto OpenGLRenderer::get_window() const -> const IWindow*
 {
   return mData->window;
+}
+
+auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
+{
+  return ImGui::GetCurrentContext();
+}
+
+auto OpenGLRenderer::imgui_malloc(const std::size_t bytes) -> void*
+{
+  return runtime_malloc(bytes);
+}
+
+void OpenGLRenderer::imgui_free(void* memory)
+{
+  runtime_free(memory);
+}
+
+void OpenGLRenderer::process_event(const SDL_Event& event)
+{
+  ImGui_ImplSDL2_ProcessEvent(&event);
 }
 
 }  // namespace tactile

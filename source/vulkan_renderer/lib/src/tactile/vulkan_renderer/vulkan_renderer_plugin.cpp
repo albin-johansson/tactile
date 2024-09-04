@@ -24,6 +24,15 @@ void VulkanRendererPlugin::load(IRuntime* runtime)
       return;
     }
 
+    mRuntime->init_window(SDL_WINDOW_VULKAN);
+    auto* window = mRuntime->get_window();
+    if (!window) {
+      log(LogLevel::kError, "Could not initialize Vulkan window");
+      return;
+    }
+
+    ImGui::SetAllocatorFunctions([](const usize size, void*) { return runtime_malloc(size); },
+                                 [](void* ptr, void*) { runtime_free(ptr); });
 
   }
   catch (...) {

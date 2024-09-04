@@ -63,12 +63,12 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
   [[nodiscard]]
   auto get_save_format(SaveFormatId id) const -> const ISaveFormat* override;
 
-  [[nodiscard]]
-  auto get_imgui_context() -> ImGuiContext* override;
-
  private:
   struct Data;
   std::unique_ptr<Data> mData;
 };
+
+TACTILE_RUNTIME_API auto runtime_malloc(std::size_t bytes) noexcept -> void*;
+TACTILE_RUNTIME_API void runtime_free(void* memory) noexcept;
 
 }  // namespace tactile

@@ -7,8 +7,6 @@
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
 
-struct ImGuiContext;
-
 namespace tactile {
 
 class IWindow;
@@ -99,15 +97,6 @@ class IRuntime
    */
   [[nodiscard]]
   virtual auto get_save_format(SaveFormatId id) const -> const ISaveFormat* = 0;
-
-  /**
-   * Returns the associated Dear ImGui context.
-   *
-   * \return
-   * A Dear ImGui context.
-   */
-  [[nodiscard]]
-  virtual auto get_imgui_context() -> ImGuiContext* = 0;
 };
 
 }  // namespace tactile

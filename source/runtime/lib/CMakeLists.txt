@@ -47,5 +47,4 @@ target_link_libraries(tactile-runtime
                       PRIVATE
                       tactile::core
                       SDL2::SDL2
-                      imgui::imgui
                       )

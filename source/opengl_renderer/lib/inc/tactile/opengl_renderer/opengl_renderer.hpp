@@ -23,15 +23,13 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   /**
    * Creates an OpenGL renderer.
    *
-   * \param window  The associated window.
-   * \param context The associated ImGui context.
+   * \param window The associated window.
    *
    * \return
    * An OpenGL renderer if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(IWindow* window, ImGuiContext* context)
-      -> std::expected<OpenGLRenderer, std::error_code>;
+  static auto make(IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>;
 
   OpenGLRenderer(OpenGLRenderer&& other) noexcept;
 
@@ -63,6 +61,16 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 
   [[nodiscard]]
   auto get_window() const -> const IWindow* override;
+
+  [[nodiscard]]
+  auto get_imgui_context() -> ImGuiContext* override;
+
+  [[nodiscard]]
+  auto imgui_malloc(std::size_t bytes) -> void* override;
+
+  void imgui_free(void* memory) override;
+
+  void process_event(const SDL_Event& event) override;
 
  private:
   struct Data;
