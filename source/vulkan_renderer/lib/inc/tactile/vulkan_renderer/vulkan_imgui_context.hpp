@@ -7,6 +7,9 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/scope_exit.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
+#include "tactile/vulkan_renderer/vulkan_descriptor_set_layout.hpp"
+#include "tactile/vulkan_renderer/vulkan_pipeline.hpp"
+#include "tactile/vulkan_renderer/vulkan_pipeline_layout.hpp"
 
 struct ImGui_ImplVulkan_InitInfo;
 struct ImGuiContext;
@@ -30,11 +33,17 @@ class TACTILE_VULKAN_API VulkanImGuiContext final
   [[nodiscard]]
   auto get() const -> ImGuiContext*;
 
+  [[nodiscard]]
+  auto get_pipeline() const -> VkPipeline;
+
  private:
   ImGuiContext* m_ctx {};
   ScopeExit m_context_deleter {};
   ScopeExit m_backend_impl_deleter {};
   ScopeExit m_renderer_impl_deleter {};
+  VulkanDescriptorSetLayout m_descriptor_set_layout {};
+  VulkanPipelineLayout m_pipeline_layout {};
+  VulkanPipeline m_pipeline {};
 };
 
 }  // namespace tactile
