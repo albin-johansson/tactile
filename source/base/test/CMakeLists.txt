@@ -19,6 +19,7 @@ target_sources(tactile-base-test
                "src/util/format_test.cpp"
                "src/util/matrix_extent_test.cpp"
                "src/util/matrix_index_test.cpp"
+               "src/util/scope_exit_test.cpp"
                "src/util/tile_matrix_test.cpp"
                "src/main.cpp"
                )
