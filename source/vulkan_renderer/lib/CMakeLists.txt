@@ -11,6 +11,7 @@ target_sources(tactile-vulkan-renderer
                PRIVATE
                "src/tactile/vulkan_renderer/vulkan_renderer_plugin.cpp"
                "src/vulkan_allocator.cpp"
+               "src/vulkan_command_buffer.cpp"
                "src/vulkan_command_pool.cpp"
                "src/vulkan_descriptor_pool.cpp"
                "src/vulkan_device.cpp"
@@ -30,6 +31,7 @@ target_sources(tactile-vulkan-renderer
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/vulkan_renderer/api.hpp"
                "inc/tactile/vulkan_renderer/vulkan_allocator.hpp"
+               "inc/tactile/vulkan_renderer/vulkan_command_buffer.hpp"
                "inc/tactile/vulkan_renderer/vulkan_command_pool.hpp"
                "inc/tactile/vulkan_renderer/vulkan_descriptor_pool.hpp"
                "inc/tactile/vulkan_renderer/vulkan_device.hpp"
