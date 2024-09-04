@@ -20,27 +20,19 @@ class TACTILE_VULKAN_API VulkanCommandPool final
 
   VulkanCommandPool() = default;
 
-  VulkanCommandPool(VkDevice device, VkCommandPool pool);
-
   ~VulkanCommandPool() noexcept;
 
-  [[nodiscard]]
-  static auto create(VkDevice device,
-                     std::uint32_t queue_family_index,
-                     VkCommandPoolCreateFlags flags)
-      -> std::expected<VulkanCommandPool, VkResult>;
-
-  [[nodiscard]]
-  auto device() -> VkDevice;
-
-  [[nodiscard]]
-  auto get() -> VkCommandPool;
+  VkDevice device {VK_NULL_HANDLE};
+  VkCommandPool handle {VK_NULL_HANDLE};
 
  private:
-  VkDevice m_device {VK_NULL_HANDLE};
-  VkCommandPool m_pool {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_command_pool(VkDevice device,
+                                                   std::uint32_t queue_family_index,
+                                                   VkCommandPoolCreateFlags flags)
+    -> std::expected<VulkanCommandPool, VkResult>;
 
 }  // namespace tactile

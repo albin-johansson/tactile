@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>  // expected
 
 #include <vulkan/vulkan.h>
 
@@ -20,48 +19,31 @@ class IWindow;
 class TACTILE_VULKAN_API VulkanSurface final
 {
  public:
-  VulkanSurface(VkInstance instance, VkSurfaceKHR surface);
+  TACTILE_DELETE_COPY(VulkanSurface);
+  TACTILE_DECLARE_MOVE(VulkanSurface);
 
-  VulkanSurface(VulkanSurface&& other) noexcept;
-
-  VulkanSurface(const VulkanSurface&) = delete;
+  VulkanSurface() = default;
 
   ~VulkanSurface() noexcept;
 
-  auto operator=(VulkanSurface&& other) noexcept -> VulkanSurface&;
-
-  auto operator=(const VulkanSurface&) -> VulkanSurface& = delete;
-
-  /**
-   * Creates a Vulkan surface.
-   *
-   * \param instance The associated Vulkan instance.
-   * \param window   The target window.
-   *
-   * \return
-   * A Vulkan surface if successful; an error code otherwise.
-   */
-  [[nodiscard]]
-  static auto create(VkInstance instance,
-                     IWindow* window) -> std::expected<VulkanSurface, VkResult>;
-
-  [[nodiscard]]
-  auto instance() noexcept -> VkInstance
-  {
-    return mInstance;
-  }
-
-  [[nodiscard]]
-  auto get() noexcept -> VkSurfaceKHR
-  {
-    return mSurface;
-  }
+  VkInstance instance {VK_NULL_HANDLE};
+  VkSurfaceKHR handle {VK_NULL_HANDLE};
 
  private:
-  VkInstance mInstance {VK_NULL_HANDLE};
-  VkSurfaceKHR mSurface {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+/**
+ * Creates a Vulkan surface.
+ *
+ * \param instance The associated Vulkan instance.
+ * \param window   The target window.
+ *
+ * \return
+ * A Vulkan surface if successful; an error code otherwise.
+ */
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_surface(VkInstance instance, IWindow& window)
+    -> std::expected<VulkanSurface, VkResult>;
 
 }  // namespace tactile

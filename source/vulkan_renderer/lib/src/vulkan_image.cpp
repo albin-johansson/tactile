@@ -9,21 +9,11 @@
 
 namespace tactile {
 
-VulkanImage::VulkanImage(VmaAllocator allocator,
-                         VkImage image,
-                         VmaAllocation allocation,
-                         const VulkanImageParams& params)
-    : m_allocator {allocator},
-      m_image {image},
-      m_allocation {allocation},
-      m_params {params}
-{}
-
 VulkanImage::VulkanImage(VulkanImage&& other) noexcept
-    : m_allocator {std::exchange(other.m_allocator, VK_NULL_HANDLE)},
-      m_image {std::exchange(other.m_image, VK_NULL_HANDLE)},
-      m_allocation {std::exchange(other.m_allocation, VK_NULL_HANDLE)},
-      m_params {std::exchange(other.m_params, VulkanImageParams {})}
+    : allocator {std::exchange(other.allocator, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)},
+      allocation {std::exchange(other.allocation, VK_NULL_HANDLE)},
+      params {std::exchange(other.params, VulkanImageParams {})}
 {}
 
 VulkanImage::~VulkanImage() noexcept
@@ -36,10 +26,10 @@ auto VulkanImage::operator=(VulkanImage&& other) noexcept -> VulkanImage&
   if (this != &other) {
     _destroy();
 
-    m_allocator = std::exchange(other.m_allocator, VK_NULL_HANDLE);
-    m_image = std::exchange(other.m_image, VK_NULL_HANDLE);
-    m_allocation = std::exchange(other.m_allocation, VK_NULL_HANDLE);
-    m_params = std::exchange(other.m_params, VulkanImageParams {});
+    allocator = std::exchange(other.allocator, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
+    allocation = std::exchange(other.allocation, VK_NULL_HANDLE);
+    params = std::exchange(other.params, VulkanImageParams {});
   }
 
   return *this;
@@ -47,13 +37,13 @@ auto VulkanImage::operator=(VulkanImage&& other) noexcept -> VulkanImage&
 
 void VulkanImage::_destroy() noexcept
 {
-  if (m_image != VK_NULL_HANDLE) {
-    vmaDestroyImage(m_allocator, m_image, m_allocation);
-    m_image = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vmaDestroyImage(allocator, handle, allocation);
+    handle = VK_NULL_HANDLE;
   }
 }
 
-auto VulkanImage::create(VmaAllocator allocator, const VulkanImageParams& params)
+auto create_vulkan_image(VmaAllocator allocator, const VulkanImageParams& params)
     -> std::expected<VulkanImage, VkResult>
 {
   const VkImageCreateInfo image_info {
@@ -85,17 +75,23 @@ auto VulkanImage::create(VmaAllocator allocator, const VulkanImageParams& params
     .priority = 0.0f,
   };
 
-  VkImage image {};
-  VmaAllocation allocation {};
-  const auto result =
-      vmaCreateImage(allocator, &image_info, &allocation_info, &image, &allocation, nullptr);
+  VulkanImage image {};
+  image.allocator = allocator;
+  image.params = params;
+
+  const auto result = vmaCreateImage(allocator,
+                                     &image_info,
+                                     &allocation_info,
+                                     &image.handle,
+                                     &image.allocation,
+                                     nullptr);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan image: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanImage {allocator, image, allocation, params};
+  return image;
 }
 
 }  // namespace tactile

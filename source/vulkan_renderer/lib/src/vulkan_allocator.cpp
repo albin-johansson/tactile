@@ -12,12 +12,8 @@
 
 namespace tactile {
 
-VulkanAllocator::VulkanAllocator(VmaAllocator allocator) :
-  mAllocator {allocator}
-{}
-
-VulkanAllocator::VulkanAllocator(VulkanAllocator&& other) noexcept :
-  mAllocator {std::exchange(other.mAllocator, VK_NULL_HANDLE)}
+VulkanAllocator::VulkanAllocator(VulkanAllocator&& other) noexcept
+    : handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanAllocator::~VulkanAllocator() noexcept
@@ -27,9 +23,9 @@ VulkanAllocator::~VulkanAllocator() noexcept
 
 void VulkanAllocator::_destroy() noexcept
 {
-  if (mAllocator != VK_NULL_HANDLE) {
-    vmaDestroyAllocator(mAllocator);
-    mAllocator = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vmaDestroyAllocator(handle);
+    handle = VK_NULL_HANDLE;
   }
 }
 
@@ -38,13 +34,13 @@ auto VulkanAllocator::operator=(VulkanAllocator&& other) noexcept -> VulkanAlloc
   if (this != &other) {
     _destroy();
 
-    mAllocator = std::exchange(other.mAllocator, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
   }
 
   return *this;
 }
 
-auto VulkanAllocator::create(VkInstance instance,
+auto create_vulkan_allocator(VkInstance instance,
                              VkPhysicalDevice physical_device,
                              VkDevice device) -> std::expected<VulkanAllocator, VkResult>
 {
@@ -66,15 +62,15 @@ auto VulkanAllocator::create(VkInstance instance,
     .pTypeExternalMemoryHandleTypes = nullptr,
   };
 
-  VmaAllocator allocator {};
-  const auto result = vmaCreateAllocator(&create_info, &allocator);
+  VulkanAllocator allocator {};
+  const auto result = vmaCreateAllocator(&create_info, &allocator.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan allocator: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanAllocator {allocator};
+  return allocator;
 }
 
 }  // namespace tactile

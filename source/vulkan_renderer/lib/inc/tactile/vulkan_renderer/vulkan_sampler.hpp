@@ -22,38 +22,25 @@ class TACTILE_VULKAN_API VulkanSampler final
 
   VulkanSampler() = default;
 
-  /**
-   * Creates a Vulkan sampler from existing resources.
-   *
-   * \param device  The associated Vulkan device.
-   * \param sampler The sampler handle that will be claimed.
-   */
-  VulkanSampler(VkDevice device, VkSampler sampler) noexcept;
-
   ~VulkanSampler() noexcept;
 
-  /**
-   * Creates a Vulkan sampler.
-   *
-   * \param device The associated Vulkan device.
-   *
-   * \return
-   * A Vulkan sampler if successful; an error code otherwise.
-   */
-  [[nodiscard]]
-  static auto create(VkDevice device) -> std::expected<VulkanSampler, VkResult>;
-
-  [[nodiscard]]
-  auto device() -> VkDevice;
-
-  [[nodiscard]]
-  auto get() -> VkSampler;
+  VkDevice device {VK_NULL_HANDLE};
+  VkSampler handle {VK_NULL_HANDLE};
 
  private:
-  VkDevice m_device {VK_NULL_HANDLE};
-  VkSampler m_sampler {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+/**
+ * Creates a Vulkan sampler.
+ *
+ * \param device The associated Vulkan device.
+ *
+ * \return
+ * A Vulkan sampler if successful; an error code otherwise.
+ */
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_sampler(VkDevice device)
+    -> std::expected<VulkanSampler, VkResult>;
 
 }  // namespace tactile

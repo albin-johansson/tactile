@@ -9,14 +9,9 @@
 
 namespace tactile {
 
-VulkanSemaphore::VulkanSemaphore(VkDevice device, VkSemaphore semaphore) :
-  mDevice {device},
-  mSemaphore {semaphore}
-{}
-
-VulkanSemaphore::VulkanSemaphore(VulkanSemaphore&& other) noexcept :
-  mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
-  mSemaphore {std::exchange(other.mSemaphore, VK_NULL_HANDLE)}
+VulkanSemaphore::VulkanSemaphore(VulkanSemaphore&& other) noexcept
+    : device {std::exchange(other.device, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanSemaphore::~VulkanSemaphore() noexcept
@@ -26,9 +21,9 @@ VulkanSemaphore::~VulkanSemaphore() noexcept
 
 void VulkanSemaphore::_destroy() noexcept
 {
-  if (mSemaphore != VK_NULL_HANDLE) {
-    vkDestroySemaphore(mDevice, mSemaphore, nullptr);
-    mSemaphore = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroySemaphore(device, handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
@@ -37,30 +32,32 @@ auto VulkanSemaphore::operator=(VulkanSemaphore&& other) noexcept -> VulkanSemap
   if (this != &other) {
     _destroy();
 
-    mDevice = std::exchange(other.mDevice, VK_NULL_HANDLE);
-    mSemaphore = std::exchange(other.mSemaphore, VK_NULL_HANDLE);
+    device = std::exchange(other.device, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
   }
 
   return *this;
 }
 
-auto VulkanSemaphore::create(VkDevice device) -> std::expected<VulkanSemaphore, VkResult>
+auto create_vulkan_semaphore(VkDevice device) -> std::expected<VulkanSemaphore, VkResult>
 {
-  const VkSemaphoreCreateInfo create_info {
+  constexpr VkSemaphoreCreateInfo create_info {
     .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
     .pNext = nullptr,
     .flags = 0,
   };
 
-  VkSemaphore semaphore {};
-  const auto result = vkCreateSemaphore(device, &create_info, nullptr, &semaphore);
+  VulkanSemaphore semaphore {};
+  semaphore.device = device;
+
+  const auto result = vkCreateSemaphore(device, &create_info, nullptr, &semaphore.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan semaphore: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanSemaphore {device, semaphore};
+  return semaphore;
 }
 
 }  // namespace tactile

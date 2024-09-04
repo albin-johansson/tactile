@@ -9,19 +9,14 @@
 
 namespace tactile {
 
-VulkanImageView::VulkanImageView(VkDevice device, VkImageView image_view)
-    : m_device {device},
-      m_image_view {image_view}
-{}
-
 VulkanImageView::~VulkanImageView() noexcept
 {
   _destroy();
 }
 
 VulkanImageView::VulkanImageView(VulkanImageView&& other) noexcept
-    : m_device {std::exchange(other.m_device, VK_NULL_HANDLE)},
-      m_image_view {std::exchange(other.m_image_view, VK_NULL_HANDLE)}
+    : device {std::exchange(other.device, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 auto VulkanImageView::operator=(VulkanImageView&& other) noexcept -> VulkanImageView&
@@ -29,8 +24,8 @@ auto VulkanImageView::operator=(VulkanImageView&& other) noexcept -> VulkanImage
   if (this != &other) {
     _destroy();
 
-    m_device = std::exchange(other.m_device, VK_NULL_HANDLE);
-    m_image_view = std::exchange(other.m_image_view, VK_NULL_HANDLE);
+    device = std::exchange(other.device, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
   }
 
   return *this;
@@ -38,18 +33,18 @@ auto VulkanImageView::operator=(VulkanImageView&& other) noexcept -> VulkanImage
 
 void VulkanImageView::_destroy() noexcept
 {
-  if (m_image_view != VK_NULL_HANDLE) {
-    vkDestroyImageView(m_device, m_image_view, nullptr);
-    m_image_view = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroyImageView(device, handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
-auto VulkanImageView::create(VkDevice device,
-                             VkImage image,
-                             const VkFormat format,
-                             const VkImageViewType type,
-                             const VkImageAspectFlags aspect_mask,
-                             const std::uint32_t mip_levels)
+auto create_vulkan_image_view(VkDevice device,
+                              VkImage image,
+                              const VkFormat format,
+                              const VkImageViewType type,
+                              const VkImageAspectFlags aspect_mask,
+                              const std::uint32_t mip_levels)
     -> std::expected<VulkanImageView, VkResult>
 {
   const VkImageViewCreateInfo image_view_info {
@@ -76,15 +71,17 @@ auto VulkanImageView::create(VkDevice device,
         },
   };
 
-  VkImageView image_view {};
-  const auto result = vkCreateImageView(device, &image_view_info, nullptr, &image_view);
+  VulkanImageView image_view {};
+  image_view.device = device;
+
+  const auto result = vkCreateImageView(device, &image_view_info, nullptr, &image_view.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan image view: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanImageView {device, image_view};
+  return image_view;
 }
 
 }  // namespace tactile

@@ -4,21 +4,14 @@
 
 #include <utility>  // exchange
 
-#include "tactile/base/io/file_io.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
 
 namespace tactile {
 
-VulkanShaderModule::VulkanShaderModule(VkDevice device, VkShaderModule shader_module) noexcept
-  :
-  mDevice {device},
-  mShaderModule {shader_module}
-{}
-
-VulkanShaderModule::VulkanShaderModule(VulkanShaderModule&& other) noexcept :
-  mDevice {std::exchange(other.mDevice, VK_NULL_HANDLE)},
-  mShaderModule {std::exchange(other.mShaderModule, VK_NULL_HANDLE)}
+VulkanShaderModule::VulkanShaderModule(VulkanShaderModule&& other) noexcept
+    : device {std::exchange(other.device, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanShaderModule::~VulkanShaderModule() noexcept
@@ -28,9 +21,9 @@ VulkanShaderModule::~VulkanShaderModule() noexcept
 
 void VulkanShaderModule::_destroy() noexcept
 {
-  if (mShaderModule != VK_NULL_HANDLE) {
-    vkDestroyShaderModule(mDevice, mShaderModule, nullptr);
-    mShaderModule = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroyShaderModule(device, handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
@@ -39,40 +32,36 @@ auto VulkanShaderModule::operator=(VulkanShaderModule&& other) noexcept -> Vulka
   if (this != &other) {
     _destroy();
 
-    mDevice = std::exchange(other.mDevice, VK_NULL_HANDLE);
-    mShaderModule = std::exchange(other.mShaderModule, VK_NULL_HANDLE);
+    device = std::exchange(other.device, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
   }
 
   return *this;
 }
 
-auto VulkanShaderModule::load(VkDevice device, const std::filesystem::path& shader_path)
+auto create_vulkan_shader_module(VkDevice device, std::span<const std::uint32_t> code)
     -> std::expected<VulkanShaderModule, VkResult>
 {
-  const auto shader_code = read_binary_file(shader_path);
-
-  if (!shader_code.has_value()) {
-    log(LogLevel::kError, "Could not load Vulkan shader file");
-    return std::unexpected {VK_ERROR_UNKNOWN};
-  }
-
   const VkShaderModuleCreateInfo create_info {
     .sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
     .pNext = nullptr,
     .flags = 0,
-    .codeSize = shader_code->size(),
-    .pCode = reinterpret_cast<const uint32*>(shader_code->data()),
+    .codeSize = code.size_bytes(),
+    .pCode = code.data(),
   };
 
-  VkShaderModule shader_module {};
-  const auto result = vkCreateShaderModule(device, &create_info, nullptr, &shader_module);
+  VulkanShaderModule shader_module {};
+  shader_module.device = device;
+
+  const auto result =
+      vkCreateShaderModule(device, &create_info, nullptr, &shader_module.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan shader module: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanShaderModule {device, shader_module};
+  return shader_module;
 }
 
 }  // namespace tactile

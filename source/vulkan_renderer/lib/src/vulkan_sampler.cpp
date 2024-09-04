@@ -9,14 +9,9 @@
 
 namespace tactile {
 
-VulkanSampler::VulkanSampler(VkDevice device, VkSampler sampler) noexcept
-    : m_device {device},
-      m_sampler {sampler}
-{}
-
 VulkanSampler::VulkanSampler(VulkanSampler&& other) noexcept
-    : m_device {std::exchange(other.m_device, VK_NULL_HANDLE)},
-      m_sampler {std::exchange(other.m_sampler, VK_NULL_HANDLE)}
+    : device {std::exchange(other.device, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanSampler::~VulkanSampler() noexcept
@@ -26,9 +21,9 @@ VulkanSampler::~VulkanSampler() noexcept
 
 void VulkanSampler::_destroy() noexcept
 {
-  if (m_sampler != VK_NULL_HANDLE) {
-    vkDestroySampler(m_device, m_sampler, nullptr);
-    m_sampler = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroySampler(device, handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
@@ -37,14 +32,14 @@ auto VulkanSampler::operator=(VulkanSampler&& other) noexcept -> VulkanSampler&
   if (this != &other) {
     _destroy();
 
-    m_device = std::exchange(other.m_device, VK_NULL_HANDLE);
-    m_sampler = std::exchange(other.m_sampler, VK_NULL_HANDLE);
+    device = std::exchange(other.device, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
   }
 
   return *this;
 }
 
-auto VulkanSampler::create(VkDevice device) -> std::expected<VulkanSampler, VkResult>
+auto create_vulkan_sampler(VkDevice device) -> std::expected<VulkanSampler, VkResult>
 {
   constexpr VkSamplerCreateInfo create_info {
     .sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
@@ -67,25 +62,17 @@ auto VulkanSampler::create(VkDevice device) -> std::expected<VulkanSampler, VkRe
     .unnormalizedCoordinates = VK_FALSE,
   };
 
-  VkSampler sampler {};
-  const auto result = vkCreateSampler(device, &create_info, nullptr, &sampler);
+  VulkanSampler sampler {};
+  sampler.device = device;
+
+  const auto result = vkCreateSampler(device, &create_info, nullptr, &sampler.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan sampler: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanSampler {device, sampler};
-}
-
-auto VulkanSampler::device() -> VkDevice
-{
-  return m_device;
-}
-
-auto VulkanSampler::get() -> VkSampler
-{
-  return m_sampler;
+  return sampler;
 }
 
 }  // namespace tactile

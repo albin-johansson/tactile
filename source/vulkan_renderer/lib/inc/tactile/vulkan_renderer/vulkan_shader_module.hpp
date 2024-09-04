@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <filesystem>    // path
-#include <system_error>  // error_code
+#include <cstdint>   // uint32_t
+#include <expected>  // expected
+#include <span>      // span
 
 #include <vulkan/vulkan.h>
 
@@ -19,54 +19,32 @@ namespace tactile {
 class TACTILE_VULKAN_API VulkanShaderModule final
 {
  public:
-  /**
-   * Creates a Vulkan shader module from existing resources.
-   *
-   * \param device        The associated Vulkan device.
-   * \param shader_module The shader module handle that will be claimed.
-   */
-  VulkanShaderModule(VkDevice device, VkShaderModule shader_module) noexcept;
+  TACTILE_DELETE_COPY(VulkanShaderModule);
+  TACTILE_DECLARE_MOVE(VulkanShaderModule);
 
-  VulkanShaderModule(VulkanShaderModule&& other) noexcept;
-
-  VulkanShaderModule(const VulkanShaderModule& other) = delete;
+  VulkanShaderModule() = default;
 
   ~VulkanShaderModule() noexcept;
 
-  auto operator=(VulkanShaderModule&& other) noexcept -> VulkanShaderModule&;
-
-  auto operator=(const VulkanShaderModule& other) -> VulkanShaderModule& = delete;
-
-  /**
-   * Creates a Vulkan shader module from a compiled shader.
-   *
-   * \param device      The associated Vulkan device.
-   * \param shader_path The file path of the binary shader file.
-   *
-   * \return
-   * A Vulkan shader module if successful; an error code otherwise.
-   */
-  [[nodiscard]]
-  static auto load(VkDevice device, const std::filesystem::path& shader_path)
-      -> std::expected<VulkanShaderModule, VkResult>;
-
-  [[nodiscard]]
-  auto device() noexcept -> VkDevice
-  {
-    return mDevice;
-  }
-
-  [[nodiscard]]
-  auto get() noexcept -> VkShaderModule
-  {
-    return mShaderModule;
-  }
+  VkDevice device {VK_NULL_HANDLE};
+  VkShaderModule handle {VK_NULL_HANDLE};
 
  private:
-  VkDevice mDevice {VK_NULL_HANDLE};
-  VkShaderModule mShaderModule {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+/**
+ * Creates a Vulkan shader module from a compiled shader.
+ *
+ * \param device The associated Vulkan device.
+ * \param code   The compiled shader module code.
+ *
+ * \return
+ * A Vulkan shader module if successful; an error code otherwise.
+ */
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_shader_module(VkDevice device,
+                                                    std::span<const std::uint32_t> code)
+    -> std::expected<VulkanShaderModule, VkResult>;
 
 }  // namespace tactile

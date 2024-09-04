@@ -20,31 +20,19 @@ class TACTILE_VULKAN_API VulkanDevice final
 
   VulkanDevice() = default;
 
-  VulkanDevice(VkDevice device,
-               std::uint32_t graphics_queue_index,
-               std::uint32_t present_queue_index);
-
   ~VulkanDevice() noexcept;
 
-  [[nodiscard]]
-  static auto create(VkPhysicalDevice physical_device,
-                     VkSurfaceKHR surface) -> std::expected<VulkanDevice, VkResult>;
-
-  [[nodiscard]]
-  auto get() -> VkDevice;
-
-  [[nodiscard]]
-  auto graphics_queue_index() const -> std::uint32_t;
-
-  [[nodiscard]]
-  auto presentation_queue_index() const -> std::uint32_t;
+  VkDevice handle {VK_NULL_HANDLE};
+  std::uint32_t graphics_queue_family {};
+  std::uint32_t presentation_queue_family {};
 
  private:
-  VkDevice m_device {VK_NULL_HANDLE};
-  std::uint32_t m_graphics_queue_index {};
-  std::uint32_t m_present_queue_index {};
-
   void _destroy() noexcept;
 };
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_device(VkPhysicalDevice physical_device,
+                                             VkSurfaceKHR surface)
+    -> std::expected<VulkanDevice, VkResult>;
 
 }  // namespace tactile

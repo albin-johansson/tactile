@@ -2,8 +2,6 @@
 
 #include "tactile/vulkan_renderer/vulkan_fence.hpp"
 
-#include <cstdint>  // uint64_t
-#include <limits>   // numeric_limits
 #include <utility>  // exchange
 
 #include "tactile/runtime/logging.hpp"
@@ -11,14 +9,9 @@
 
 namespace tactile {
 
-VulkanFence::VulkanFence(VkDevice device, VkFence fence)
-    : m_device {device},
-      m_fence {fence}
-{}
-
 VulkanFence::VulkanFence(VulkanFence&& other) noexcept
-    : m_device {std::exchange(other.m_device, VK_NULL_HANDLE)},
-      m_fence {std::exchange(other.m_fence, VK_NULL_HANDLE)}
+    : device {std::exchange(other.device, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanFence::~VulkanFence() noexcept
@@ -28,9 +21,9 @@ VulkanFence::~VulkanFence() noexcept
 
 void VulkanFence::_destroy() noexcept
 {
-  if (m_fence != VK_NULL_HANDLE) {
-    vkDestroyFence(m_device, m_fence, nullptr);
-    m_fence = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroyFence(device, handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
@@ -39,14 +32,14 @@ auto VulkanFence::operator=(VulkanFence&& other) noexcept -> VulkanFence&
   if (this != &other) {
     _destroy();
 
-    m_device = std::exchange(other.m_device, VK_NULL_HANDLE);
-    m_fence = std::exchange(other.m_fence, VK_NULL_HANDLE);
+    device = std::exchange(other.device, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
   }
 
   return *this;
 }
 
-auto VulkanFence::create(VkDevice device, const VkFenceCreateFlags flags)
+auto create_vulkan_fence(VkDevice device, const VkFenceCreateFlags flags)
     -> std::expected<VulkanFence, VkResult>
 {
   const VkFenceCreateInfo create_info {
@@ -55,39 +48,16 @@ auto VulkanFence::create(VkDevice device, const VkFenceCreateFlags flags)
     .flags = flags,
   };
 
-  VkFence fence {};
-  const auto result = vkCreateFence(device, &create_info, nullptr, &fence);
+  VulkanFence fence {};
+  fence.device = device;
+  const auto result = vkCreateFence(device, &create_info, nullptr, &fence.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan fence: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanFence {device, fence};
-}
-
-auto VulkanFence::reset() -> VkResult
-{
-  return vkResetFences(m_device, 1, &m_fence);
-}
-
-auto VulkanFence::wait() -> VkResult
-{
-  return vkWaitForFences(m_device,
-                         1,
-                         &m_fence,
-                         VK_TRUE,
-                         std::numeric_limits<std::uint64_t>::max());
-}
-
-auto VulkanFence::device() -> VkDevice
-{
-  return m_device;
-}
-
-auto VulkanFence::get() -> VkFence
-{
-  return m_fence;
+  return fence;
 }
 
 }  // namespace tactile

@@ -31,36 +31,20 @@ class TACTILE_VULKAN_API VulkanImage final
 
   VulkanImage() = default;
 
-  VulkanImage(VmaAllocator allocator,
-              VkImage image,
-              VmaAllocation allocation,
-              const VulkanImageParams& params);
-
   ~VulkanImage() noexcept;
 
-  [[nodiscard]]
-  static auto create(VmaAllocator allocator,
-                     const VulkanImageParams& params) -> std::expected<VulkanImage, VkResult>;
-
-  [[nodiscard]]
-  auto get() noexcept -> VkImage
-  {
-    return m_image;
-  }
-
-  [[nodiscard]]
-  auto params() const noexcept -> const VulkanImageParams&
-  {
-    return m_params;
-  }
+  VmaAllocator allocator {VK_NULL_HANDLE};
+  VkImage handle {VK_NULL_HANDLE};
+  VmaAllocation allocation {VK_NULL_HANDLE};
+  VulkanImageParams params {};
 
  private:
-  VmaAllocator m_allocator {VK_NULL_HANDLE};
-  VkImage m_image {VK_NULL_HANDLE};
-  VmaAllocation m_allocation {VK_NULL_HANDLE};
-  VulkanImageParams m_params {};
-
   void _destroy() noexcept;
 };
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_image(VmaAllocator allocator,
+                                            const VulkanImageParams& params)
+    -> std::expected<VulkanImage, VkResult>;
 
 }  // namespace tactile

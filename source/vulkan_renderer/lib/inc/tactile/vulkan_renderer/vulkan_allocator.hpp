@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>  // expected
 
 #include <vk_mem_alloc.h>
 #include <vulkan/vulkan.h>
@@ -19,43 +18,33 @@ namespace tactile {
 class TACTILE_VULKAN_API VulkanAllocator final
 {
  public:
-  explicit VulkanAllocator(VmaAllocator allocator);
+  TACTILE_DELETE_COPY(VulkanAllocator);
+  TACTILE_DECLARE_MOVE(VulkanAllocator);
 
-  VulkanAllocator(VulkanAllocator&& other) noexcept;
-
-  VulkanAllocator(const VulkanAllocator&) = delete;
+  VulkanAllocator() = default;
 
   ~VulkanAllocator() noexcept;
 
-  auto operator=(VulkanAllocator&& other) noexcept -> VulkanAllocator&;
-
-  auto operator=(const VulkanAllocator&) -> VulkanAllocator& = delete;
-
-  /**
-   * Creates a Vulkan allocator.
-   *
-   * \param instance        The associated Vulkan instance.
-   * \param physical_device The associated physical device.
-   * \param device          The associated logical device.
-   *
-   * \return
-   * A Vulkan allocator if successful; an error code otherwise.
-   */
-  [[nodiscard]]
-  static auto create(VkInstance instance,
-                     VkPhysicalDevice physical_device,
-                     VkDevice device) -> std::expected<VulkanAllocator, VkResult>;
-
-  [[nodiscard]]
-  auto get() noexcept -> VmaAllocator
-  {
-    return mAllocator;
-  }
+  VmaAllocator handle {VK_NULL_HANDLE};
 
  private:
-  VmaAllocator mAllocator {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+/**
+ * Creates a Vulkan allocator.
+ *
+ * \param instance        The associated Vulkan instance.
+ * \param physical_device The associated physical device.
+ * \param device          The associated logical device.
+ *
+ * \return
+ * A Vulkan allocator if successful; an error code otherwise.
+ */
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_allocator(VkInstance instance,
+                                                VkPhysicalDevice physical_device,
+                                                VkDevice device)
+    -> std::expected<VulkanAllocator, VkResult>;
 
 }  // namespace tactile

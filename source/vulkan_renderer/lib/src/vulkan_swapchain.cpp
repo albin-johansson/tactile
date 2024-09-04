@@ -3,6 +3,7 @@
 #include "tactile/vulkan_renderer/vulkan_swapchain.hpp"
 
 #include <algorithm>  // clamp
+#include <limits>     // numeric_limits
 #include <utility>    // move, exchange
 
 #include "tactile/runtime/logging.hpp"
@@ -117,10 +118,10 @@ void _prepare_depth_buffer(VkDevice device,
                            VmaAllocator allocator,
                            const VkFormat format,
                            const VkExtent2D extent,
-                           VulkanImage& depth_image,
-                           VulkanImageView& depth_image_view)
+                           VulkanImage& depth_buffer,
+                           VulkanImageView& depth_buffer_view)
 {
-  const VulkanImageParams depth_image_params {
+  const VulkanImageParams depth_buffer_params {
     .type = VK_IMAGE_TYPE_2D,
     .format = format,
     .layout = VK_IMAGE_LAYOUT_UNDEFINED,
@@ -130,49 +131,29 @@ void _prepare_depth_buffer(VkDevice device,
     .mip_levels = 1,
   };
 
-  depth_image = VulkanImage::create(allocator, depth_image_params).value();
-  depth_image_view = VulkanImageView::create(device,
-                                             depth_image.get(),
-                                             depth_image_params.format,
-                                             VK_IMAGE_VIEW_TYPE_2D,
-                                             VK_IMAGE_ASPECT_DEPTH_BIT,
-                                             1)
-                         .value();
+  depth_buffer = create_vulkan_image(allocator, depth_buffer_params).value();
+  depth_buffer_view = create_vulkan_image_view(device,
+                                               depth_buffer.handle,
+                                               depth_buffer_params.format,
+                                               VK_IMAGE_VIEW_TYPE_2D,
+                                               VK_IMAGE_ASPECT_DEPTH_BIT,
+                                               1)
+                          .value();
 }
 
 }  // namespace
 
-VulkanSwapchain::VulkanSwapchain(VkSurfaceKHR surface,
-                                 VkDevice device,
-                                 VmaAllocator allocator,
-                                 VkSwapchainKHR swapchain,
-                                 VulkanSwapchainParams params,
-                                 std::vector<VkImage> images,
-                                 std::vector<VulkanImageView> image_views,
-                                 VulkanImage depth_image,
-                                 VulkanImageView depth_image_view)
-    : m_surface {surface},
-      m_device {device},
-      m_allocator {allocator},
-      m_swapchain {swapchain},
-      m_params {std::move(params)},
-      m_images {std::move(images)},
-      m_image_views {std::move(image_views)},
-      m_depth_image {std::move(depth_image)},
-      m_depth_image_view {std::move(depth_image_view)}
-{}
-
 VulkanSwapchain::VulkanSwapchain(VulkanSwapchain&& other) noexcept
-    : m_surface {std::exchange(other.m_surface, VK_NULL_HANDLE)},
-      m_device {std::exchange(other.m_device, VK_NULL_HANDLE)},
-      m_allocator {std::exchange(other.m_allocator, VK_NULL_HANDLE)},
-      m_swapchain {std::exchange(other.m_swapchain, VK_NULL_HANDLE)},
-      m_params {std::exchange(other.m_params, VulkanSwapchainParams {})},
-      m_images {std::exchange(other.m_images, {})},
-      m_image_views {std::exchange(other.m_image_views, {})},
-      m_depth_image {std::exchange(other.m_depth_image, VulkanImage {})},
-      m_depth_image_view {std::exchange(other.m_depth_image_view, VulkanImageView {})},
-      m_image_index {std::exchange(other.m_image_index, 0)}
+    : surface {std::exchange(other.surface, VK_NULL_HANDLE)},
+      device {std::exchange(other.device, VK_NULL_HANDLE)},
+      allocator {std::exchange(other.allocator, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)},
+      params {std::exchange(other.params, VulkanSwapchainParams {})},
+      images {std::exchange(other.images, {})},
+      image_views {std::exchange(other.image_views, {})},
+      depth_buffer {std::exchange(other.depth_buffer, VulkanImage {})},
+      depth_buffer_view {std::exchange(other.depth_buffer_view, VulkanImageView {})},
+      image_index {std::exchange(other.image_index, 0)}
 {}
 
 VulkanSwapchain::~VulkanSwapchain() noexcept
@@ -185,16 +166,16 @@ auto VulkanSwapchain::operator=(VulkanSwapchain&& other) noexcept -> VulkanSwapc
   if (this != &other) {
     _destroy();
 
-    m_surface = std::exchange(other.m_surface, VK_NULL_HANDLE);
-    m_device = std::exchange(other.m_device, VK_NULL_HANDLE);
-    m_allocator = std::exchange(other.m_allocator, VK_NULL_HANDLE);
-    m_swapchain = std::exchange(other.m_swapchain, VK_NULL_HANDLE);
-    m_params = std::exchange(other.m_params, VulkanSwapchainParams {});
-    m_images = std::exchange(other.m_images, {});
-    m_image_views = std::exchange(other.m_image_views, {});
-    m_depth_image = std::exchange(other.m_depth_image, VulkanImage {});
-    m_depth_image_view = std::exchange(other.m_depth_image_view, VulkanImageView {});
-    m_image_index = std::exchange(other.m_image_index, 0);
+    surface = std::exchange(other.surface, VK_NULL_HANDLE);
+    device = std::exchange(other.device, VK_NULL_HANDLE);
+    allocator = std::exchange(other.allocator, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
+    params = std::exchange(other.params, VulkanSwapchainParams {});
+    images = std::exchange(other.images, {});
+    image_views = std::exchange(other.image_views, {});
+    depth_buffer = std::exchange(other.depth_buffer, VulkanImage {});
+    depth_buffer_view = std::exchange(other.depth_buffer_view, VulkanImageView {});
+    image_index = std::exchange(other.image_index, 0);
   }
 
   return *this;
@@ -202,13 +183,13 @@ auto VulkanSwapchain::operator=(VulkanSwapchain&& other) noexcept -> VulkanSwapc
 
 void VulkanSwapchain::_destroy() noexcept
 {
-  if (m_swapchain != VK_NULL_HANDLE) {
-    vkDestroySwapchainKHR(m_device, m_swapchain, nullptr);
-    m_swapchain = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroySwapchainKHR(device, handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
-auto VulkanSwapchain::create(VkSurfaceKHR surface,
+auto create_vulkan_swapchain(VkSurfaceKHR surface,
                              VkDevice device,
                              VmaAllocator allocator,
                              VulkanSwapchainParams params,
@@ -236,57 +217,56 @@ auto VulkanSwapchain::create(VkSurfaceKHR surface,
     .oldSwapchain = old_swapchain,
   };
 
-  VkSwapchainKHR swapchain {};
-  const auto result = vkCreateSwapchainKHR(device, &swapchain_info, nullptr, &swapchain);
+  VulkanSwapchain swapchain {};
+  swapchain.surface = surface;
+  swapchain.device = device;
+  swapchain.allocator = allocator;
+  swapchain.params = std::move(params);
+
+  const auto result =
+      vkCreateSwapchainKHR(device, &swapchain_info, nullptr, &swapchain.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan swapchain: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  auto images = _get_swapchain_images(device, swapchain);
-  if (!images.has_value()) {
+  if (auto images = _get_swapchain_images(device, swapchain.handle)) {
+    swapchain.images = std::move(*images);
+  }
+  else {
     return std::unexpected {images.error()};
   }
 
-  std::vector<VulkanImageView> image_views {};
-  image_views.reserve(images->size());
-  for (VkImage image : *images) {
-    auto image_view = VulkanImageView::create(device,
-                                              image,
-                                              params.image_format,
-                                              VK_IMAGE_VIEW_TYPE_2D,
-                                              VK_IMAGE_ASPECT_COLOR_BIT,
-                                              1)
-                          .value();
-    image_views.push_back(std::move(image_view));
+  swapchain.image_views.reserve(swapchain.images.size());
+  for (VkImage image : swapchain.images) {
+    if (auto image_view = create_vulkan_image_view(device,
+                                                   image,
+                                                   swapchain.params.image_format,
+                                                   VK_IMAGE_VIEW_TYPE_2D,
+                                                   VK_IMAGE_ASPECT_COLOR_BIT,
+                                                   1)) {
+      swapchain.image_views.push_back(std::move(*image_view));
+    }
+    else {
+      return std::unexpected {image_view.error()};
+    }
   }
 
-  VulkanImage depth_image {};
-  VulkanImageView depth_image_view {};
   _prepare_depth_buffer(device,
                         allocator,
-                        params.depth_format,
-                        params.image_extent,
-                        depth_image,
-                        depth_image_view);
+                        swapchain.params.depth_format,
+                        swapchain.params.image_extent,
+                        swapchain.depth_buffer,
+                        swapchain.depth_buffer_view);
 
-  return VulkanSwapchain {surface,
-                          device,
-                          allocator,
-                          swapchain,
-                          std::move(params),
-                          std::move(*images),
-                          std::move(image_views),
-                          std::move(depth_image),
-                          std::move(depth_image_view)};
+  return swapchain;
 }
 
-auto VulkanSwapchain::create(VkSurfaceKHR surface,
+auto create_vulkan_swapchain(VkSurfaceKHR surface,
                              VkPhysicalDevice physical_device,
                              VkDevice device,
-                             VmaAllocator allocator,
-                             VkExtent2D image_extent)
+                             VmaAllocator allocator)
     -> std::expected<VulkanSwapchain, VkResult>
 {
   const auto queue_family_indices = get_queue_family_indices(physical_device, surface);
@@ -295,11 +275,11 @@ auto VulkanSwapchain::create(VkSurfaceKHR surface,
   VkSurfaceCapabilitiesKHR capabilities {};
   vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical_device, surface, &capabilities);
 
-  const auto image_width = std::clamp(image_extent.width,
+  const auto image_width = std::clamp(capabilities.currentExtent.width,
                                       capabilities.minImageExtent.width,
                                       capabilities.maxImageExtent.width);
 
-  const auto image_height = std::clamp(image_extent.height,
+  const auto image_height = std::clamp(capabilities.currentExtent.height,
                                        capabilities.minImageExtent.height,
                                        capabilities.maxImageExtent.height);
 
@@ -333,17 +313,7 @@ auto VulkanSwapchain::create(VkSurfaceKHR surface,
     .queue_family_indices = std::move(unique_queue_family_indices),
   };
 
-  return create(surface, device, allocator, params);
-}
-
-auto VulkanSwapchain::params() const -> const VulkanSwapchainParams&
-{
-  return m_params;
-}
-
-auto VulkanSwapchain::image_count() const -> std::size_t
-{
-  return m_images.size();
+  return create_vulkan_swapchain(surface, device, allocator, params);
 }
 
 }  // namespace tactile

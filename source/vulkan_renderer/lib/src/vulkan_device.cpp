@@ -11,19 +11,30 @@
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
 
 namespace tactile {
+namespace {
 
-VulkanDevice::VulkanDevice(VkDevice device,
-                           const std::uint32_t graphics_queue_index,
-                           const std::uint32_t present_queue_index)
-    : m_device {device},
-      m_graphics_queue_index {graphics_queue_index},
-      m_present_queue_index {present_queue_index}
-{}
+[[nodiscard]]
+auto _get_device_extensions() -> std::vector<const char*>
+{
+  std::vector<const char*> enabled_extensions {};
+  enabled_extensions.reserve(3);
+
+  enabled_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+  enabled_extensions.push_back(VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME);
+
+#ifdef TACTILE_USE_VULKAN_SUBSET
+  enabled_extensions.push_back("VK_KHR_portability_subset");
+#endif  // TACTILE_USE_VULKAN_SUBSET
+
+  return enabled_extensions;
+}
+
+}  // namespace
 
 VulkanDevice::VulkanDevice(VulkanDevice&& other) noexcept
-    : m_device {std::exchange(other.m_device, VK_NULL_HANDLE)},
-      m_graphics_queue_index {std::exchange(other.m_graphics_queue_index, 0)},
-      m_present_queue_index {std::exchange(other.m_present_queue_index, 0)}
+    : handle {std::exchange(other.handle, VK_NULL_HANDLE)},
+      graphics_queue_family {std::exchange(other.graphics_queue_family, 0)},
+      presentation_queue_family {std::exchange(other.presentation_queue_family, 0)}
 {}
 
 VulkanDevice::~VulkanDevice() noexcept
@@ -33,9 +44,9 @@ VulkanDevice::~VulkanDevice() noexcept
 
 void VulkanDevice::_destroy() noexcept
 {
-  if (m_device != VK_NULL_HANDLE) {
-    vkDestroyDevice(m_device, nullptr);
-    m_device = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroyDevice(handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
@@ -44,15 +55,15 @@ auto VulkanDevice::operator=(VulkanDevice&& other) noexcept -> VulkanDevice&
   if (this != &other) {
     _destroy();
 
-    m_device = std::exchange(other.m_device, VK_NULL_HANDLE);
-    m_graphics_queue_index = std::exchange(other.m_graphics_queue_index, 0);
-    m_present_queue_index = std::exchange(other.m_present_queue_index, 0);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
+    graphics_queue_family = std::exchange(other.graphics_queue_family, 0);
+    presentation_queue_family = std::exchange(other.presentation_queue_family, 0);
   }
 
   return *this;
 }
 
-auto VulkanDevice::create(VkPhysicalDevice physical_device,
+auto create_vulkan_device(VkPhysicalDevice physical_device,
                           VkSurfaceKHR surface) -> std::expected<VulkanDevice, VkResult>
 {
   const auto queue_family_indices = get_queue_family_indices(physical_device, surface);
@@ -89,15 +100,7 @@ auto VulkanDevice::create(VkPhysicalDevice physical_device,
     enabled_layers.push_back("VK_LAYER_KHRONOS_validation");
   }
 
-  std::vector<const char*> enabled_extensions {};
-  enabled_extensions.reserve(3);
-  enabled_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-  enabled_extensions.push_back(VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME);
-
-#ifdef TACTILE_USE_VULKAN_SUBSET
-  enabled_extensions.push_back("VK_KHR_portability_subset");
-#endif  // TACTILE_USE_VULKAN_SUBSET
-
+  const auto enabled_extensions = _get_device_extensions();
   for (const auto* extension : enabled_extensions) {
     log(LogLevel::kDebug, "Using Vulkan device extension '{}'", extension);
   }
@@ -123,30 +126,17 @@ auto VulkanDevice::create(VkPhysicalDevice physical_device,
     .pEnabledFeatures = &enabled_features,
   };
 
-  VkDevice device {};
-  const auto result = vkCreateDevice(physical_device, &device_info, nullptr, &device);
+  VulkanDevice device {};
+  device.graphics_queue_family = *queue_family_indices.graphics;
+  device.presentation_queue_family = *queue_family_indices.present;
 
+  const auto result = vkCreateDevice(physical_device, &device_info, nullptr, &device.handle);
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan device: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanDevice {device, *queue_family_indices.graphics, *queue_family_indices.present};
-}
-
-auto VulkanDevice::get() -> VkDevice
-{
-  return m_device;
-}
-
-auto VulkanDevice::graphics_queue_index() const -> std::uint32_t
-{
-  return m_graphics_queue_index;
-}
-
-auto VulkanDevice::presentation_queue_index() const -> std::uint32_t
-{
-  return m_present_queue_index;
+  return device;
 }
 
 }  // namespace tactile

@@ -22,46 +22,26 @@ class TACTILE_VULKAN_API VulkanFence final
 
   VulkanFence() = default;
 
-  /**
-   * Creates a Vulkan fence from existing resources.
-   *
-   * \param device The associated Vulkan device.
-   * \param fence  The fence handle that will be claimed.
-   */
-  VulkanFence(VkDevice device, VkFence fence);
-
   ~VulkanFence() noexcept;
 
-  /**
-   * Creates a Vulkan fence.
-   *
-   * \param device The associated Vulkan device.
-   * \param flags  The fence creation flags.
-   *
-   * \return
-   * A Vulkan fence if successful; an error code otherwise.
-   */
-  [[nodiscard]]
-  static auto create(VkDevice device,
-                     VkFenceCreateFlags flags) -> std::expected<VulkanFence, VkResult>;
-
-  [[nodiscard]]
-  auto reset() -> VkResult;
-
-  [[nodiscard]]
-  auto wait() -> VkResult;
-
-  [[nodiscard]]
-  auto device() -> VkDevice;
-
-  [[nodiscard]]
-  auto get() -> VkFence;
+  VkDevice device {VK_NULL_HANDLE};
+  VkFence handle {VK_NULL_HANDLE};
 
  private:
-  VkDevice m_device {VK_NULL_HANDLE};
-  VkFence m_fence {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+/**
+ * Creates a Vulkan fence.
+ *
+ * \param device The associated Vulkan device.
+ * \param flags  The fence creation flags.
+ *
+ * \return
+ * A Vulkan fence if successful; an error code otherwise.
+ */
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_fence(VkDevice device, VkFenceCreateFlags flags)
+    -> std::expected<VulkanFence, VkResult>;
 
 }  // namespace tactile

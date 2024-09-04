@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <expected>  // expected
+
 #include <vulkan/vulkan.h>
 
 #include "tactile/base/prelude.hpp"
@@ -25,5 +27,9 @@ class TACTILE_VULKAN_API VulkanDescriptorPool final
  private:
   void _destroy() noexcept;
 };
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_imgui_descriptor_pool(VkDevice device)
+    -> std::expected<VulkanDescriptorPool, VkResult>;
 
 }  // namespace tactile

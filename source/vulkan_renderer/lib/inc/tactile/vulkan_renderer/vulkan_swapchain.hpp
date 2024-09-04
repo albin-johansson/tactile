@@ -34,52 +34,38 @@ class TACTILE_VULKAN_API VulkanSwapchain final
   TACTILE_DELETE_COPY(VulkanSwapchain);
   TACTILE_DECLARE_MOVE(VulkanSwapchain);
 
-  VulkanSwapchain(VkSurfaceKHR surface,
-                  VkDevice device,
-                  VmaAllocator allocator,
-                  VkSwapchainKHR swapchain,
-                  VulkanSwapchainParams params,
-                  std::vector<VkImage> images,
-                  std::vector<VulkanImageView> image_views,
-                  VulkanImage depth_image,
-                  VulkanImageView depth_image_view);
+  VulkanSwapchain() = default;
 
   ~VulkanSwapchain() noexcept;
 
-  [[nodiscard]]
-  static auto create(VkSurfaceKHR surface,
-                     VkDevice device,
-                     VmaAllocator allocator,
-                     VulkanSwapchainParams params,
-                     VkSwapchainKHR old_swapchain = VK_NULL_HANDLE)
-      -> std::expected<VulkanSwapchain, VkResult>;
-
-  [[nodiscard]]
-  static auto create(VkSurfaceKHR surface,
-                     VkPhysicalDevice physical_device,
-                     VkDevice device,
-                     VmaAllocator allocator,
-                     VkExtent2D image_extent) -> std::expected<VulkanSwapchain, VkResult>;
-
-  [[nodiscard]]
-  auto params() const -> const VulkanSwapchainParams&;
-
-  [[nodiscard]]
-  auto image_count() const -> std::size_t;
+  VkSurfaceKHR surface {VK_NULL_HANDLE};
+  VkDevice device {VK_NULL_HANDLE};
+  VmaAllocator allocator {VK_NULL_HANDLE};
+  VkSwapchainKHR handle {VK_NULL_HANDLE};
+  VulkanSwapchainParams params {};
+  std::vector<VkImage> images {};
+  std::vector<VulkanImageView> image_views {};
+  VulkanImage depth_buffer {};
+  VulkanImageView depth_buffer_view {};
+  std::uint32_t image_index {0};
 
  private:
-  VkSurfaceKHR m_surface;
-  VkDevice m_device;
-  VmaAllocator m_allocator;
-  VkSwapchainKHR m_swapchain;
-  VulkanSwapchainParams m_params;
-  std::vector<VkImage> m_images;
-  std::vector<VulkanImageView> m_image_views;
-  VulkanImage m_depth_image;
-  VulkanImageView m_depth_image_view;
-  std::uint32_t m_image_index {0};
-
   void _destroy() noexcept;
 };
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_swapchain(VkSurfaceKHR surface,
+                                                VkDevice device,
+                                                VmaAllocator allocator,
+                                                VulkanSwapchainParams params,
+                                                VkSwapchainKHR old_swapchain = VK_NULL_HANDLE)
+    -> std::expected<VulkanSwapchain, VkResult>;
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_swapchain(VkSurfaceKHR surface,
+                                                VkPhysicalDevice physical_device,
+                                                VkDevice device,
+                                                VmaAllocator allocator)
+    -> std::expected<VulkanSwapchain, VkResult>;
 
 }  // namespace tactile

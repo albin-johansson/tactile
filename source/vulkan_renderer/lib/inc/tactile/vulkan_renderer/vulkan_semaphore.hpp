@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>  // expected
 
 #include <vulkan/vulkan.h>
 
@@ -18,52 +17,30 @@ namespace tactile {
 class TACTILE_VULKAN_API VulkanSemaphore final
 {
  public:
-  /**
-   * Creates a Vulkan semaphore from existing resources.
-   *
-   * \param device    The associated Vulkan device.
-   * \param semaphore The semaphore handle that will be claimed.
-   */
-  VulkanSemaphore(VkDevice device, VkSemaphore semaphore);
+  TACTILE_DELETE_COPY(VulkanSemaphore);
+  TACTILE_DECLARE_MOVE(VulkanSemaphore);
 
-  VulkanSemaphore(VulkanSemaphore&& other) noexcept;
-
-  VulkanSemaphore(const VulkanSemaphore&) = delete;
+  VulkanSemaphore() = default;
 
   ~VulkanSemaphore() noexcept;
 
-  auto operator=(VulkanSemaphore&& other) noexcept -> VulkanSemaphore&;
-
-  auto operator=(const VulkanSemaphore&) -> VulkanSemaphore& = delete;
-
-  /**
-   * Creates a Vulkan semaphore.
-   *
-   * \param device The associated Vulkan device.
-   *
-   * \return
-   * A Vulkan semaphore if successful; an error code otherwise.
-   */
-  [[nodiscard]]
-  static auto create(VkDevice device) -> std::expected<VulkanSemaphore, VkResult>;
-
-  [[nodiscard]]
-  auto device() noexcept -> VkDevice
-  {
-    return mDevice;
-  }
-
-  [[nodiscard]]
-  auto get() -> VkSemaphore
-  {
-    return mSemaphore;
-  }
+  VkDevice device {VK_NULL_HANDLE};
+  VkSemaphore handle {VK_NULL_HANDLE};
 
  private:
-  VkDevice mDevice {VK_NULL_HANDLE};
-  VkSemaphore mSemaphore {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+/**
+ * Creates a Vulkan semaphore.
+ *
+ * \param device The associated Vulkan device.
+ *
+ * \return
+ * A Vulkan semaphore if successful; an error code otherwise.
+ */
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_semaphore(VkDevice device)
+    -> std::expected<VulkanSemaphore, VkResult>;
 
 }  // namespace tactile

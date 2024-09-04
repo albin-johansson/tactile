@@ -20,35 +20,22 @@ class TACTILE_VULKAN_API VulkanImageView final
 
   VulkanImageView() = default;
 
-  VulkanImageView(VkDevice device, VkImageView image_view);
-
   ~VulkanImageView() noexcept;
 
-  [[nodiscard]]
-  static auto create(VkDevice device,
-                     VkImage image,
-                     VkFormat format,
-                     VkImageViewType type,
-                     VkImageAspectFlags aspect_mask,
-                     std::uint32_t mip_levels) -> std::expected<VulkanImageView, VkResult>;
-
-  [[nodiscard]]
-  auto device() noexcept -> VkDevice
-  {
-    return m_device;
-  }
-
-  [[nodiscard]]
-  auto get() noexcept -> VkImageView
-  {
-    return m_image_view;
-  }
+  VkDevice device {VK_NULL_HANDLE};
+  VkImageView handle {VK_NULL_HANDLE};
 
  private:
-  VkDevice m_device {VK_NULL_HANDLE};
-  VkImageView m_image_view {VK_NULL_HANDLE};
-
   void _destroy() noexcept;
 };
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_image_view(VkDevice device,
+                                                 VkImage image,
+                                                 VkFormat format,
+                                                 VkImageViewType type,
+                                                 VkImageAspectFlags aspect_mask,
+                                                 std::uint32_t mip_levels)
+    -> std::expected<VulkanImageView, VkResult>;
 
 }  // namespace tactile

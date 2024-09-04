@@ -9,14 +9,9 @@
 
 namespace tactile {
 
-VulkanCommandPool::VulkanCommandPool(VkDevice device, VkCommandPool pool)
-    : m_device {device},
-      m_pool {pool}
-{}
-
 VulkanCommandPool::VulkanCommandPool(VulkanCommandPool&& other) noexcept
-    : m_device {std::exchange(other.m_device, VK_NULL_HANDLE)},
-      m_pool {std::exchange(other.m_pool, VK_NULL_HANDLE)}
+    : device {std::exchange(other.device, VK_NULL_HANDLE)},
+      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanCommandPool::~VulkanCommandPool() noexcept
@@ -29,8 +24,8 @@ auto VulkanCommandPool::operator=(VulkanCommandPool&& other) noexcept -> VulkanC
   if (this != &other) {
     _destroy();
 
-    m_device = std::exchange(other.m_device, VK_NULL_HANDLE);
-    m_pool = std::exchange(other.m_pool, VK_NULL_HANDLE);
+    device = std::exchange(other.device, VK_NULL_HANDLE);
+    handle = std::exchange(other.handle, VK_NULL_HANDLE);
   }
 
   return *this;
@@ -38,15 +33,15 @@ auto VulkanCommandPool::operator=(VulkanCommandPool&& other) noexcept -> VulkanC
 
 void VulkanCommandPool::_destroy() noexcept
 {
-  if (m_pool != VK_NULL_HANDLE) {
-    vkDestroyCommandPool(m_device, m_pool, nullptr);
-    m_pool = VK_NULL_HANDLE;
+  if (handle != VK_NULL_HANDLE) {
+    vkDestroyCommandPool(device, handle, nullptr);
+    handle = VK_NULL_HANDLE;
   }
 }
 
-auto VulkanCommandPool::create(VkDevice device,
-                               const std::uint32_t queue_family_index,
-                               const VkCommandPoolCreateFlags flags)
+auto create_vulkan_command_pool(VkDevice device,
+                                const std::uint32_t queue_family_index,
+                                const VkCommandPoolCreateFlags flags)
     -> std::expected<VulkanCommandPool, VkResult>
 {
   const VkCommandPoolCreateInfo pool_info {
@@ -56,25 +51,17 @@ auto VulkanCommandPool::create(VkDevice device,
     .queueFamilyIndex = queue_family_index,
   };
 
-  VkCommandPool pool {};
-  const auto result = vkCreateCommandPool(device, &pool_info, nullptr, &pool);
+  VulkanCommandPool command_pool {};
+  command_pool.device = device;
+
+  const auto result = vkCreateCommandPool(device, &pool_info, nullptr, &command_pool.handle);
 
   if (result != VK_SUCCESS) {
     log(LogLevel::kError, "Could not create Vulkan command pool: {}", to_string(result));
     return std::unexpected {result};
   }
 
-  return VulkanCommandPool {device, pool};
-}
-
-auto VulkanCommandPool::device() -> VkDevice
-{
-  return m_device;
-}
-
-auto VulkanCommandPool::get() -> VkCommandPool
-{
-  return m_pool;
+  return command_pool;
 }
 
 }  // namespace tactile
