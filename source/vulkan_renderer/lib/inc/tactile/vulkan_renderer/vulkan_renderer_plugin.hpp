@@ -2,9 +2,13 @@
 
 #pragma once
 
+#include <memory>  // unique_ptr
+
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/scope_exit.hpp"
 #include "tactile/runtime/plugin.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
+#include "tactile/vulkan_renderer/vulkan_renderer.hpp"
 
 namespace tactile {
 
@@ -16,7 +20,9 @@ class TACTILE_VULKAN_API VulkanRendererPlugin final : public IPlugin
   void unload() override;
 
  private:
-  IRuntime* mRuntime {};
+  IRuntime* m_runtime {};
+  std::unique_ptr<VulkanRenderer> m_renderer {};
+  ScopeExit m_sdl_vulkan_library_deleter {};
 };
 
 extern "C"

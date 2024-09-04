@@ -6,17 +6,20 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_vulkan.h>
+#include <imgui.h>
 #include <vulkan/vulkan.h>
 
 #include "tactile/base/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
+#include "tactile/runtime/runtime.hpp"
+#include "tactile/vulkan_renderer/vulkan_util.hpp"
 
 namespace tactile {
 
 void VulkanRendererPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading Vulkan renderer plugin");
-  mRuntime = runtime;
+  m_runtime = runtime;
 
   try {
     if (SDL_Vulkan_LoadLibrary(nullptr) == -1) {
@@ -24,8 +27,10 @@ void VulkanRendererPlugin::load(IRuntime* runtime)
       return;
     }
 
-    mRuntime->init_window(SDL_WINDOW_VULKAN);
-    auto* window = mRuntime->get_window();
+    m_sdl_vulkan_library_deleter = ScopeExit {[] { SDL_Vulkan_UnloadLibrary(); }};
+
+    m_runtime->init_window(SDL_WINDOW_VULKAN);
+    auto* window = m_runtime->get_window();
     if (!window) {
       log(LogLevel::kError, "Could not initialize Vulkan window");
       return;
@@ -34,6 +39,8 @@ void VulkanRendererPlugin::load(IRuntime* runtime)
     ImGui::SetAllocatorFunctions([](const usize size, void*) { return runtime_malloc(size); },
                                  [](void* ptr, void*) { runtime_free(ptr); });
 
+    m_renderer = std::make_unique<VulkanRenderer>(window);
+    m_runtime->set_renderer(m_renderer.get());
   }
   catch (...) {
     log(LogLevel::kError, "Could not load Vulkan renderer");
@@ -43,7 +50,11 @@ void VulkanRendererPlugin::load(IRuntime* runtime)
 void VulkanRendererPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading Vulkan renderer plugin");
-  mRuntime = nullptr;
+
+  m_runtime->set_renderer(nullptr);
+  m_runtime = nullptr;
+
+  m_renderer.reset();
 }
 
 auto tactile_make_plugin() -> IPlugin*

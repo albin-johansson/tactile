@@ -9,7 +9,6 @@ add_library(tactile::vulkan_renderer ALIAS tactile-vulkan-renderer)
 
 target_sources(tactile-vulkan-renderer
                PRIVATE
-               "src/tactile/vulkan_renderer/vulkan_renderer_plugin.cpp"
                "src/vulkan_allocator.cpp"
                "src/vulkan_command_buffer.cpp"
                "src/vulkan_command_pool.cpp"
@@ -24,6 +23,8 @@ target_sources(tactile-vulkan-renderer
                "src/vulkan_physical_device.cpp"
                "src/vulkan_pipeline.cpp"
                "src/vulkan_pipeline_layout.cpp"
+               "src/vulkan_renderer.cpp"
+               "src/vulkan_renderer_plugin.cpp"
                "src/vulkan_sampler.cpp"
                "src/vulkan_semaphore.cpp"
                "src/vulkan_shader_module.cpp"
@@ -47,6 +48,7 @@ target_sources(tactile-vulkan-renderer
                "inc/tactile/vulkan_renderer/vulkan_physical_device.hpp"
                "inc/tactile/vulkan_renderer/vulkan_pipeline.hpp"
                "inc/tactile/vulkan_renderer/vulkan_pipeline_layout.hpp"
+               "inc/tactile/vulkan_renderer/vulkan_renderer.hpp"
                "inc/tactile/vulkan_renderer/vulkan_renderer_plugin.hpp"
                "inc/tactile/vulkan_renderer/vulkan_sampler.hpp"
                "inc/tactile/vulkan_renderer/vulkan_semaphore.hpp"
@@ -76,3 +78,9 @@ target_link_libraries(tactile-vulkan-renderer
                       SDL2::SDL2
                       )
 
+if (TACTILE_USE_VULKAN_SUBSET)
+  target_compile_definitions(tactile-vulkan-renderer
+                             PRIVATE
+                             "TACTILE_USE_VULKAN_SUBSET"
+                             )
+endif ()
