@@ -1,0 +1,39 @@
+// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
+
+#pragma once
+
+#include <expected>  // expected
+
+#include <vk_mem_alloc.h>
+#include <vulkan/vulkan.h>
+
+#include "tactile/base/prelude.hpp"
+#include "tactile/vulkan_renderer/api.hpp"
+
+namespace tactile {
+
+class TACTILE_VULKAN_API VulkanBuffer final
+{
+ public:
+  TACTILE_DELETE_COPY(VulkanBuffer);
+  TACTILE_DECLARE_MOVE(VulkanBuffer);
+
+  VulkanBuffer() = default;
+
+  ~VulkanBuffer() noexcept;
+
+  VmaAllocator allocator {VK_NULL_HANDLE};
+  VkBuffer handle {VK_NULL_HANDLE};
+  VmaAllocation allocation {VK_NULL_HANDLE};
+
+ private:
+  void _destroy() noexcept;
+};
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_buffer(VmaAllocator allocator,
+                                             const VkBufferCreateInfo& buffer_info,
+                                             const VmaAllocationCreateInfo& allocation_info)
+    -> std::expected<VulkanBuffer, VkResult>;
+
+}  // namespace tactile
