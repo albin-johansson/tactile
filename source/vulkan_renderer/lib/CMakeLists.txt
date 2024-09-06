@@ -31,10 +31,12 @@ target_sources(tactile-vulkan-renderer
                "src/vulkan_shader_module.cpp"
                "src/vulkan_surface.cpp"
                "src/vulkan_swapchain.cpp"
+               "src/vulkan_texture.cpp"
                "src/vulkan_util.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/vulkan_renderer/api.hpp"
+               "inc/tactile/vulkan_renderer/imgui_shader_code.hpp"
                "inc/tactile/vulkan_renderer/vulkan_allocator.hpp"
                "inc/tactile/vulkan_renderer/vulkan_buffer.hpp"
                "inc/tactile/vulkan_renderer/vulkan_command_buffer.hpp"
@@ -57,6 +59,7 @@ target_sources(tactile-vulkan-renderer
                "inc/tactile/vulkan_renderer/vulkan_shader_module.hpp"
                "inc/tactile/vulkan_renderer/vulkan_surface.hpp"
                "inc/tactile/vulkan_renderer/vulkan_swapchain.hpp"
+               "inc/tactile/vulkan_renderer/vulkan_texture.hpp"
                "inc/tactile/vulkan_renderer/vulkan_util.hpp"
                )
 
@@ -66,6 +69,10 @@ target_compile_definitions(tactile-vulkan-renderer
                            PRIVATE
                            "TACTILE_BUILDING_VULKAN_RENDERER"
                            )
+
+target_include_directories(tactile-vulkan-renderer
+                           PRIVATE
+                           ${Stb_INCLUDE_DIR})
 
 target_link_libraries(tactile-vulkan-renderer
                       PUBLIC

@@ -2,7 +2,9 @@
 
 #include "tactile/vulkan_renderer/vulkan_buffer.hpp"
 
-#include <utility>  // exchange
+#include <algorithm>  // min
+#include <cstring>    // memcpy
+#include <utility>    // exchange
 
 #include "tactile/runtime/logging.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
@@ -62,6 +64,59 @@ auto create_vulkan_buffer(VmaAllocator allocator,
   }
 
   return buffer;
+}
+
+auto create_vulkan_staging_buffer(VmaAllocator allocator,
+                                  const std::uint64_t size,
+                                  const VkBufferUsageFlags usage_flags)
+    -> std::expected<VulkanBuffer, VkResult>
+{
+  const VkBufferCreateInfo buffer_info {
+    .sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+    .pNext = nullptr,
+    .flags = 0,
+    .size = size,
+    .usage = usage_flags | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+    .sharingMode = VK_SHARING_MODE_EXCLUSIVE,
+    .queueFamilyIndexCount = 0,
+    .pQueueFamilyIndices = nullptr,
+  };
+
+  constexpr VmaAllocationCreateInfo allocation_info {
+    .flags = VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT,
+    .usage = VMA_MEMORY_USAGE_AUTO_PREFER_HOST,
+    .requiredFlags =
+        VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+    .preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+    .memoryTypeBits = 0,
+    .pool = nullptr,
+    .pUserData = nullptr,
+    .priority = 0,
+  };
+
+  return create_vulkan_buffer(allocator, buffer_info, allocation_info);
+}
+
+auto set_buffer_data(VulkanBuffer& buffer,
+                     const void* data,
+                     const uint64 data_size) -> VkResult
+{
+  void* mapped_data = nullptr;
+  const auto result = vmaMapMemory(buffer.allocator, buffer.allocation, &mapped_data);
+
+  if (result != VK_SUCCESS) {
+    return result;
+  }
+
+  VmaAllocationInfo allocation_info {};
+  vmaGetAllocationInfo(buffer.allocator, buffer.allocation, &allocation_info);
+
+  const auto allocation_size = static_cast<std::uint64_t>(allocation_info.size);
+  std::memcpy(mapped_data, data, std::min(data_size, allocation_size));
+
+  vmaUnmapMemory(buffer.allocator, buffer.allocation);
+
+  return result;
 }
 
 }  // namespace tactile

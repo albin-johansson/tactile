@@ -46,7 +46,7 @@ auto create_vulkan_imgui_descriptor_pool(VkDevice device)
   constexpr VkDescriptorPoolSize pool_sizes[] = {
     VkDescriptorPoolSize {
       .type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-      .descriptorCount = 1,
+      .descriptorCount = 8,
     },
   };
 
@@ -54,7 +54,7 @@ auto create_vulkan_imgui_descriptor_pool(VkDevice device)
     .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,
     .pNext = nullptr,
     .flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,
-    .maxSets = 5,
+    .maxSets = 64,
     .poolSizeCount = 1,
     .pPoolSizes = pool_sizes,
   };

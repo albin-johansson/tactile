@@ -2,11 +2,13 @@
 
 #pragma once
 
-#include <cstddef>  // size_t
-#include <vector>   // vector
+#include <cstddef>        // size_t
+#include <unordered_map>  // unordered_map
+#include <vector>         // vector
 
 #include <vulkan/vulkan.h>
 
+#include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/vulkan_renderer/api.hpp"
@@ -22,6 +24,7 @@
 #include "tactile/vulkan_renderer/vulkan_semaphore.hpp"
 #include "tactile/vulkan_renderer/vulkan_surface.hpp"
 #include "tactile/vulkan_renderer/vulkan_swapchain.hpp"
+#include "tactile/vulkan_renderer/vulkan_texture.hpp"
 
 namespace tactile {
 
@@ -97,8 +100,9 @@ class TACTILE_VULKAN_API VulkanRenderer final : public IRenderer
   PFN_vkCmdEndRenderingKHR m_vkCmdEndRendering {};
   std::vector<VulkanFrame> m_frames {};
   std::size_t m_frame_index {0};
-
   VulkanImGuiContext m_imgui_context {};
+  std::unordered_map<TextureID, VulkanTexture> m_textures {};
+  TextureID m_next_texture_id {1};
 
   void _record_commands() const;
 

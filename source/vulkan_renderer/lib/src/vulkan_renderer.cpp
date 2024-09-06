@@ -2,18 +2,22 @@
 
 #include "tactile/vulkan_renderer/vulkan_renderer.hpp"
 
-#include <cstdint>  // uint32_t, uint64_t
-#include <limits>   // numeric_limits
-#include <tuple>    // ignore
+#include <cstdint>       // uint32_t, uint64_t
+#include <limits>        // numeric_limits
+#include <system_error>  // make_error_code, errc
+#include <tuple>         // ignore
+#include <utility>       // move
 
 #include <SDL_events.h>
 #include <SDL_vulkan.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_vulkan.h>
 
+#include "tactile/base/io/file_io.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/runtime/runtime.hpp"
+#include "tactile/vulkan_renderer/vulkan_buffer.hpp"
 #include "tactile/vulkan_renderer/vulkan_physical_device.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
 
@@ -174,17 +178,38 @@ void VulkanRenderer::end_frame()
 auto VulkanRenderer::load_texture(const std::filesystem::path& image_path)
     -> std::expected<TextureID, std::error_code>
 {
-  // TODO
-  return {};
+  auto texture = load_vulkan_texture(m_device.handle,
+                                     m_graphics_queue,
+                                     m_graphics_command_pool.handle,
+                                     m_allocator.handle,
+                                     m_sampler.handle,
+                                     image_path);
+
+  if (!texture.has_value()) {
+    return std::unexpected {std::make_error_code(std::errc::io_error)};
+  }
+
+  const auto id = m_next_texture_id;
+  ++m_next_texture_id.value;
+
+  m_textures.insert_or_assign(id, std::move(*texture));
+
+  return id;
 }
 
-void VulkanRenderer::unload_texture(TextureID id)
+void VulkanRenderer::unload_texture(const TextureID id)
 {
-  // TODO
+  m_textures.erase(id);
 }
 
-auto VulkanRenderer::find_texture(TextureID id) const -> const ITexture*
+auto VulkanRenderer::find_texture(const TextureID id) const -> const ITexture*
 {
+  const auto iter = m_textures.find(id);
+
+  if (iter != m_textures.end()) {
+    return &iter->second;
+  }
+
   return nullptr;
 }
 
@@ -372,7 +397,8 @@ void VulkanRenderer::_begin_dynamic_rendering(const VulkanFrame& frame) const
     .sType = VK_STRUCTURE_TYPE_RENDERING_INFO_KHR,
     .pNext = nullptr,
     .flags = 0,
-    .renderArea = VkRect2D {0, 0, image_extent.width, image_extent.height},
+    .renderArea =
+        VkRect2D {VkOffset2D {0, 0}, VkExtent2D {image_extent.width, image_extent.height}},
     .layerCount = 1,
     .viewMask = 0,
     .colorAttachmentCount = 1,

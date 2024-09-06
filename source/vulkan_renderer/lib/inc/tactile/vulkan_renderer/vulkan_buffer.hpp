@@ -36,4 +36,15 @@ TACTILE_VULKAN_API auto create_vulkan_buffer(VmaAllocator allocator,
                                              const VmaAllocationCreateInfo& allocation_info)
     -> std::expected<VulkanBuffer, VkResult>;
 
+[[nodiscard]]
+TACTILE_VULKAN_API auto create_vulkan_staging_buffer(VmaAllocator allocator,
+                                                     std::uint64_t size,
+                                                     VkBufferUsageFlags usage_flags)
+    -> std::expected<VulkanBuffer, VkResult>;
+
+[[nodiscard]]
+TACTILE_VULKAN_API auto set_buffer_data(VulkanBuffer& buffer,
+                                        const void* data,
+                                        std::uint64_t data_size) -> VkResult;
+
 }  // namespace tactile
