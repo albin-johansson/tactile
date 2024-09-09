@@ -23,13 +23,15 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
   /**
    * Creates an OpenGL renderer.
    *
-   * \param window The associated window.
+   * \param options The renderer options to use.
+   * \param window  The associated window.
    *
    * \return
    * An OpenGL renderer if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>;
+  static auto make(const RendererOptions& options,
+                   IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>;
 
   OpenGLRenderer(OpenGLRenderer&& other) noexcept;
 

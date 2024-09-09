@@ -24,12 +24,13 @@ class OpenGLTextureTest : public testing::Test
 
   Runtime mRuntime {};
   OpenGLRendererPlugin mPlugin {};
+  RendererOptions m_options {};
 };
 
 /// \trace tactile::OpenGLTexture::load
 TEST_F(OpenGLTextureTest, Load)
 {
-  const auto texture = OpenGLTexture::load("assets/images/dummy.png");
+  const auto texture = OpenGLTexture::load("assets/images/dummy.png", m_options);
   ASSERT_TRUE(texture.has_value());
   EXPECT_NE(texture->get_handle(), nullptr);
   EXPECT_EQ(texture->get_path(), "assets/images/dummy.png");

@@ -12,6 +12,8 @@
 
 namespace tactile {
 
+struct RendererOptions;
+
 /**
  * Represents an OpenGL texture.
  */
@@ -24,12 +26,13 @@ class TACTILE_OPENGL_API OpenGLTexture final : public ITexture
    * Loads a texture from an image on disk.
    *
    * \param image_path The path to the image file.
+   * \param options    The renderer options to use.
    *
    * \return
-   *    A texture if successful; an error code otherwise.
+   * A texture if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto load(const std::filesystem::path& image_path)
+  static auto load(const std::filesystem::path& image_path, const RendererOptions& options)
       -> std::expected<OpenGLTexture, std::error_code>;
 
   OpenGLTexture() = delete;

@@ -10,19 +10,25 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
+#include "tactile/base/render/renderer_options.hpp"
 #include "tactile/opengl_renderer/opengl_error.hpp"
 
 namespace tactile {
 
-auto OpenGLTexture::load(const std::filesystem::path& image_path)
+auto OpenGLTexture::load(const std::filesystem::path& image_path,
+                         const RendererOptions& options)
     -> std::expected<OpenGLTexture, std::error_code>
 {
   uint texture_id {};
 
   glGenTextures(1, &texture_id);
   glBindTexture(GL_TEXTURE_2D, texture_id);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+  const auto filter_mode =
+      options.texture_filter_mode == TextureFilterMode::kNearest ? GL_NEAREST : GL_LINEAR;
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter_mode);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter_mode);
+
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
@@ -51,6 +57,10 @@ auto OpenGLTexture::load(const std::filesystem::path& image_path)
                pixel_data);
   stbi_image_free(pixel_data);
 
+  if (options.use_mipmaps) {
+    glGenerateMipmap(GL_TEXTURE_2D);
+  }
+
   if (const auto err = glGetError(); err != GL_NONE) {
     return std::unexpected {make_error(map_opengl_error_code(err))};
   }
@@ -60,16 +70,16 @@ auto OpenGLTexture::load(const std::filesystem::path& image_path)
 
 OpenGLTexture::OpenGLTexture(const id_type id,
                              const TextureSize size,
-                             std::filesystem::path path) :
-  mID {id},
-  mSize {size},
-  mPath {std::move(path)}
+                             std::filesystem::path path)
+  : mID {id},
+    mSize {size},
+    mPath {std::move(path)}
 {}
 
-OpenGLTexture::OpenGLTexture(OpenGLTexture&& other) noexcept :
-  mID {std::exchange(other.mID, 0)},
-  mSize {std::exchange(other.mSize, TextureSize {})},
-  mPath {std::exchange(other.mPath, std::filesystem::path {})}
+OpenGLTexture::OpenGLTexture(OpenGLTexture&& other) noexcept
+  : mID {std::exchange(other.mID, 0)},
+    mSize {std::exchange(other.mSize, TextureSize {})},
+    mPath {std::exchange(other.mPath, std::filesystem::path {})}
 {}
 
 auto OpenGLTexture::operator=(OpenGLTexture&& other) noexcept -> OpenGLTexture&

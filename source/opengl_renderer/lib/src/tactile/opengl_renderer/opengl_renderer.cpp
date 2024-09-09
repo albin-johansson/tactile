@@ -44,7 +44,8 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
   TextureID next_texture_id;
 };
 
-auto OpenGLRenderer::make(IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>
+auto OpenGLRenderer::make(const RendererOptions& options,
+                          IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>
 {
   if (SDL_WasInit(SDL_INIT_VIDEO) != SDL_INIT_VIDEO) {
     return std::unexpected {make_error(OpenGLError::kNotReady)};
@@ -57,6 +58,7 @@ auto OpenGLRenderer::make(IWindow* window) -> std::expected<OpenGLRenderer, std:
   OpenGLRenderer renderer {};
   auto& data = *renderer.mData;
 
+  data.options = options;
   data.window = window;
   data.next_texture_id = TextureID {1};
 
@@ -91,7 +93,16 @@ auto OpenGLRenderer::make(IWindow* window) -> std::expected<OpenGLRenderer, std:
 
   data.imgui_renderer_impl_deleter = ScopeExit {[] { ImGui_ImplOpenGL3_Shutdown(); }};
 
-  SDL_GL_SetSwapInterval(1);
+  const auto preferred_swap_interval = options.use_vsync ? (options.limit_fps ? 1 : -1) : 0;
+  log(LogLevel::kTrace, "Preferred swap interval mode is {}", preferred_swap_interval);
+
+  const auto set_swap_interval_result = SDL_GL_SetSwapInterval(preferred_swap_interval);
+  if (set_swap_interval_result != 0 && options.use_vsync) {
+    SDL_GL_SetSwapInterval(1);
+  }
+
+  const auto swap_interval = SDL_GL_GetSwapInterval();
+  log(LogLevel::kDebug, "Swap interval is {}", swap_interval);
 
   return renderer;
 }
@@ -135,7 +146,7 @@ void OpenGLRenderer::end_frame()
 auto OpenGLRenderer::load_texture(const std::filesystem::path& image_path)
     -> std::expected<TextureID, std::error_code>
 {
-  auto texture = OpenGLTexture::load(image_path);
+  auto texture = OpenGLTexture::load(image_path, mData->options);
   if (!texture.has_value()) {
     return std::unexpected {texture.error()};
   }
