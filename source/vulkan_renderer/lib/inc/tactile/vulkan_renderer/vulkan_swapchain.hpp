@@ -15,6 +15,8 @@
 
 namespace tactile {
 
+struct RendererOptions;
+
 struct VulkanSwapchainParams final
 {
   VkExtent2D image_extent;
@@ -65,7 +67,8 @@ TACTILE_VULKAN_API auto create_vulkan_swapchain(VkSurfaceKHR surface,
 TACTILE_VULKAN_API auto create_vulkan_swapchain(VkSurfaceKHR surface,
                                                 VkPhysicalDevice physical_device,
                                                 VkDevice device,
-                                                VmaAllocator allocator)
+                                                VmaAllocator allocator,
+                                                const RendererOptions& options)
     -> std::expected<VulkanSwapchain, VkResult>;
 
 }  // namespace tactile

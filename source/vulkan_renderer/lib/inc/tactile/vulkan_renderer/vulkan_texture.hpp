@@ -16,6 +16,8 @@
 
 namespace tactile {
 
+struct RendererOptions;
+
 class TACTILE_VULKAN_API VulkanTexture final : public ITexture
 {
  public:
@@ -40,7 +42,8 @@ TACTILE_VULKAN_API auto load_vulkan_texture(VkDevice device,
                                             VkCommandPool command_pool,
                                             VmaAllocator allocator,
                                             VkSampler sampler,
-                                            const std::filesystem::path& image_path)
+                                            const std::filesystem::path& image_path,
+                                            const RendererOptions& options)
     -> std::expected<VulkanTexture, VkResult>;
 
 }  // namespace tactile

@@ -6,6 +6,9 @@
 #include <limits>     // numeric_limits
 #include <utility>    // move, exchange
 
+#include <magic_enum.hpp>
+
+#include "tactile/base/render/renderer_options.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/vulkan_renderer/vulkan_physical_device.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
@@ -53,8 +56,24 @@ auto _pick_image_format(VkPhysicalDevice physical_device,
 }
 
 [[nodiscard]]
+auto _get_preferred_present_mode(const RendererOptions& options) -> VkPresentModeKHR
+{
+  if (!options.use_vsync) {
+    return VK_PRESENT_MODE_IMMEDIATE_KHR;
+  }
+
+  if (!options.limit_fps) {
+    return VK_PRESENT_MODE_MAILBOX_KHR;
+  }
+
+  return VK_PRESENT_MODE_FIFO_KHR;
+}
+
+[[nodiscard]]
 auto _pick_present_mode(VkPhysicalDevice physical_device,
-                        VkSurfaceKHR surface) -> std::expected<VkPresentModeKHR, VkResult>
+                        VkSurfaceKHR surface,
+                        const RendererOptions& options)
+    -> std::expected<VkPresentModeKHR, VkResult>
 {
   std::vector<VkPresentModeKHR> present_modes {};
 
@@ -80,8 +99,14 @@ auto _pick_present_mode(VkPhysicalDevice physical_device,
     return std::unexpected {result};
   }
 
+  const auto preferred_present_mode = _get_preferred_present_mode(options);
+
+  log(LogLevel::kTrace,
+      "Preferred presentation mode is '{}'",
+      magic_enum::enum_name(preferred_present_mode));
+
   for (const auto present_mode : present_modes) {
-    if (present_mode == VK_PRESENT_MODE_MAILBOX_KHR) {
+    if (present_mode == preferred_present_mode) {
       return present_mode;
     }
   }
@@ -144,16 +169,16 @@ void _prepare_depth_buffer(VkDevice device,
 }  // namespace
 
 VulkanSwapchain::VulkanSwapchain(VulkanSwapchain&& other) noexcept
-    : surface {std::exchange(other.surface, VK_NULL_HANDLE)},
-      device {std::exchange(other.device, VK_NULL_HANDLE)},
-      allocator {std::exchange(other.allocator, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)},
-      params {std::exchange(other.params, VulkanSwapchainParams {})},
-      images {std::exchange(other.images, {})},
-      image_views {std::exchange(other.image_views, {})},
-      depth_buffer {std::exchange(other.depth_buffer, VulkanImage {})},
-      depth_buffer_view {std::exchange(other.depth_buffer_view, VulkanImageView {})},
-      image_index {std::exchange(other.image_index, 0)}
+  : surface {std::exchange(other.surface, VK_NULL_HANDLE)},
+    device {std::exchange(other.device, VK_NULL_HANDLE)},
+    allocator {std::exchange(other.allocator, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)},
+    params {std::exchange(other.params, VulkanSwapchainParams {})},
+    images {std::exchange(other.images, {})},
+    image_views {std::exchange(other.image_views, {})},
+    depth_buffer {std::exchange(other.depth_buffer, VulkanImage {})},
+    depth_buffer_view {std::exchange(other.depth_buffer_view, VulkanImageView {})},
+    image_index {std::exchange(other.image_index, 0)}
 {}
 
 VulkanSwapchain::~VulkanSwapchain() noexcept
@@ -266,7 +291,8 @@ auto create_vulkan_swapchain(VkSurfaceKHR surface,
 auto create_vulkan_swapchain(VkSurfaceKHR surface,
                              VkPhysicalDevice physical_device,
                              VkDevice device,
-                             VmaAllocator allocator)
+                             VmaAllocator allocator,
+                             const RendererOptions& options)
     -> std::expected<VulkanSwapchain, VkResult>
 {
   const auto queue_family_indices = get_queue_family_indices(physical_device, surface);
@@ -291,15 +317,29 @@ auto create_vulkan_swapchain(VkSurfaceKHR surface,
                                       ? VK_SHARING_MODE_CONCURRENT
                                       : VK_SHARING_MODE_EXCLUSIVE;
 
+  log(LogLevel::kDebug,
+      "Using image sharing mode '{}'",
+      magic_enum::enum_name(image_sharing_mode));
+
   const auto surface_format = _pick_image_format(physical_device, surface);
   if (!surface_format.has_value()) {
     return std::unexpected {surface_format.error()};
   }
 
-  const auto present_mode = _pick_present_mode(physical_device, surface);
+  log(LogLevel::kDebug,
+      "Using surface format '{}'",
+      magic_enum::enum_name(surface_format->format));
+
+  log(LogLevel::kDebug,
+      "Using surface color space '{}'",
+      magic_enum::enum_name(surface_format->colorSpace));
+
+  const auto present_mode = _pick_present_mode(physical_device, surface, options);
   if (!present_mode.has_value()) {
     return std::unexpected {present_mode.error()};
   }
+
+  log(LogLevel::kDebug, "Using presentation mode '{}'", magic_enum::enum_name(*present_mode));
 
   const VulkanSwapchainParams params {
     .image_extent = VkExtent2D {image_width, image_height},

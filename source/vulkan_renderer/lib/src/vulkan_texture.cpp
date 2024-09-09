@@ -8,6 +8,7 @@
 
 #include "tactile/base/io/file_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/base/render/renderer_options.hpp"
 #include "tactile/base/util/scope_exit.hpp"
 #include "tactile/vulkan_renderer/vulkan_buffer.hpp"
 
@@ -34,7 +35,8 @@ auto load_vulkan_texture(VkDevice device,
                          VkCommandPool command_pool,
                          VmaAllocator allocator,
                          VkSampler sampler,
-                         const std::filesystem::path& image_path)
+                         const std::filesystem::path& image_path,
+                         const RendererOptions& options)
     -> std::expected<VulkanTexture, VkResult>
 {
   int width {};
@@ -98,9 +100,11 @@ auto load_vulkan_texture(VkDevice device,
     return std::unexpected {result};
   }
 
-  result = image->generate_mipmaps(device, queue, command_pool);
-  if (result != VK_SUCCESS) {
-    return std::unexpected {result};
+  if (options.use_mipmaps) {
+    result = image->generate_mipmaps(device, queue, command_pool);
+    if (result != VK_SUCCESS) {
+      return std::unexpected {result};
+    }
   }
 
   result = image->change_layout(device,

@@ -4,14 +4,17 @@
 
 #include <utility>  // exchange
 
+#include <magic_enum.hpp>
+
+#include "tactile/base/render/renderer_options.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
 
 namespace tactile {
 
 VulkanSampler::VulkanSampler(VulkanSampler&& other) noexcept
-    : device {std::exchange(other.device, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : device {std::exchange(other.device, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanSampler::~VulkanSampler() noexcept
@@ -39,15 +42,29 @@ auto VulkanSampler::operator=(VulkanSampler&& other) noexcept -> VulkanSampler&
   return *this;
 }
 
-auto create_vulkan_sampler(VkDevice device) -> std::expected<VulkanSampler, VkResult>
+auto create_vulkan_sampler(VkDevice device, const RendererOptions& options)
+    -> std::expected<VulkanSampler, VkResult>
 {
-  constexpr VkSamplerCreateInfo create_info {
+  const auto filter_mode = options.texture_filter_mode == TextureFilterMode::kNearest
+                               ? VK_FILTER_NEAREST
+                               : VK_FILTER_LINEAR;
+
+  const auto mipmap_filter_mode = options.texture_filter_mode == TextureFilterMode::kNearest
+                                      ? VK_SAMPLER_MIPMAP_MODE_NEAREST
+                                      : VK_SAMPLER_MIPMAP_MODE_LINEAR;
+
+  log(LogLevel::kDebug, "Using sampler filter mode '{}'", magic_enum::enum_name(filter_mode));
+  log(LogLevel::kDebug,
+      "Using sampler mipmap filter mode '{}'",
+      magic_enum::enum_name(mipmap_filter_mode));
+
+  const VkSamplerCreateInfo create_info {
     .sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
     .pNext = nullptr,
     .flags = 0,
-    .magFilter = VK_FILTER_NEAREST,
-    .minFilter = VK_FILTER_NEAREST,
-    .mipmapMode = VK_SAMPLER_MIPMAP_MODE_NEAREST,
+    .magFilter = filter_mode,
+    .minFilter = filter_mode,
+    .mipmapMode = mipmap_filter_mode,
     .addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
     .addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
     .addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,

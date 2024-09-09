@@ -44,8 +44,9 @@ void _init_frames(std::vector<VulkanFrame>& frames,
 
 }  // namespace
 
-VulkanRenderer::VulkanRenderer(IWindow* window)
-  : m_window {window},
+VulkanRenderer::VulkanRenderer(const RendererOptions& options, IWindow* window)
+  : m_options {options},
+    m_window {window},
     m_instance {create_vulkan_instance(*m_window).value()},
     m_surface {create_vulkan_surface(m_instance.get(), *m_window).value()},
     m_physical_device {select_physical_device(m_instance.get(), m_surface.handle).value()},
@@ -55,14 +56,15 @@ VulkanRenderer::VulkanRenderer(IWindow* window)
     m_swapchain {create_vulkan_swapchain(m_surface.handle,
                                          m_physical_device,
                                          m_device.handle,
-                                         m_allocator.handle)
+                                         m_allocator.handle,
+                                         m_options)
                      .value()},
     m_graphics_command_pool {
       create_vulkan_command_pool(m_device.handle,
                                  m_device.graphics_queue_family,
                                  VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT)
           .value()},
-    m_sampler {create_vulkan_sampler(m_device.handle).value()},
+    m_sampler {create_vulkan_sampler(m_device.handle, m_options).value()},
     m_imgui_descriptor_pool {create_vulkan_imgui_descriptor_pool(m_device.handle).value()},
     m_vkCmdBeginRendering {reinterpret_cast<PFN_vkCmdBeginRenderingKHR>(
         vkGetInstanceProcAddr(m_instance.get(), "vkCmdBeginRenderingKHR"))},
@@ -182,7 +184,8 @@ auto VulkanRenderer::load_texture(const std::filesystem::path& image_path)
                                      m_graphics_command_pool.handle,
                                      m_allocator.handle,
                                      m_sampler.handle,
-                                     image_path);
+                                     image_path,
+                                     m_options);
 
   if (!texture.has_value()) {
     return std::unexpected {std::make_error_code(std::errc::io_error)};

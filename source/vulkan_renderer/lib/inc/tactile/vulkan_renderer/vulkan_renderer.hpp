@@ -44,7 +44,7 @@ class TACTILE_VULKAN_API VulkanRenderer final : public IRenderer
   TACTILE_DELETE_COPY(VulkanRenderer);
   TACTILE_DEFAULT_MOVE(VulkanRenderer);
 
-  explicit VulkanRenderer(IWindow* window);
+  VulkanRenderer(const RendererOptions& options, IWindow* window);
 
   ~VulkanRenderer() noexcept override;
 
