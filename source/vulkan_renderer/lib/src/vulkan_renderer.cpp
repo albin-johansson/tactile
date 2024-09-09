@@ -242,6 +242,11 @@ void VulkanRenderer::process_event(const SDL_Event& event)
   ImGui_ImplSDL2_ProcessEvent(&event);
 }
 
+auto VulkanRenderer::get_options() -> const RendererOptions&
+{
+  return m_options;
+}
+
 void VulkanRenderer::_record_commands() const
 {
   const auto& frame = m_frames.at(m_frame_index);

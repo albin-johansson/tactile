@@ -55,7 +55,11 @@ class TACTILE_NULL_RENDERER_API NullRenderer final : public IRenderer
 
   void process_event(const SDL_Event& event) override;
 
+  [[nodiscard]]
+  auto get_options() -> const RendererOptions& override;
+
  private:
+  RendererOptions m_options {};
   IWindow* mWindow;
   std::unordered_map<TextureID, NullTexture> mTextures {};
   TextureID mNextTextureId {1};

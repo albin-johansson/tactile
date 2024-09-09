@@ -8,6 +8,7 @@
 
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer_options.hpp"
 
 struct ImGuiContext;
 union SDL_Event;
@@ -109,7 +110,21 @@ class IRenderer
   [[nodiscard]]
   virtual auto get_imgui_context() -> ImGuiContext* = 0;
 
+  /**
+   * Processes a single event.
+   *
+   * \param event The pending event.
+   */
   virtual void process_event(const SDL_Event& event) = 0;
+
+  /**
+   * Returns the configured options for the renderer.
+   *
+   * \return
+   * The renderer options.
+   */
+  [[nodiscard]]
+  virtual auto get_options() -> const RendererOptions& = 0;
 };
 
 }  // namespace tactile

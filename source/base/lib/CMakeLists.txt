@@ -46,6 +46,7 @@ target_sources(tactile-base
                "inc/tactile/base/platform/filesystem.hpp"
                "inc/tactile/base/platform/native_string.hpp"
                "inc/tactile/base/render/renderer.hpp"
+               "inc/tactile/base/render/renderer_options.hpp"
                "inc/tactile/base/render/texture.hpp"
                "inc/tactile/base/render/window.hpp"
                "inc/tactile/base/util/buffer.hpp"

@@ -33,6 +33,7 @@ struct GLContextDeleter final
 
 struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
 {
+  RendererOptions options;
   ImGuiContext* imgui_context;
   IWindow* window;
   std::unique_ptr<void, GLContextDeleter> gl_context;
@@ -191,6 +192,11 @@ auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
 void OpenGLRenderer::process_event(const SDL_Event& event)
 {
   ImGui_ImplSDL2_ProcessEvent(&event);
+}
+
+auto OpenGLRenderer::get_options() -> const RendererOptions&
+{
+  return mData->options;
 }
 
 }  // namespace tactile

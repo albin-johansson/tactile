@@ -67,6 +67,9 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 
   void process_event(const SDL_Event& event) override;
 
+  [[nodiscard]]
+  auto get_options() -> const RendererOptions& override;
+
  private:
   struct Data;
   std::unique_ptr<Data> mData;

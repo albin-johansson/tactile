@@ -78,7 +78,11 @@ class TACTILE_VULKAN_API VulkanRenderer final : public IRenderer
 
   void process_event(const SDL_Event& event) override;
 
+  [[nodiscard]]
+  auto get_options() -> const RendererOptions& override;
+
  private:
+  RendererOptions m_options {};
   IWindow* m_window {};
   VulkanInstance m_instance {};
   VulkanSurface m_surface {};

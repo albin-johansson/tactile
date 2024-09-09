@@ -77,4 +77,9 @@ auto NullRenderer::get_imgui_context() -> ImGuiContext*
 void NullRenderer::process_event(const SDL_Event&)
 {}
 
+auto NullRenderer::get_options() -> const RendererOptions&
+{
+  return m_options;
+}
+
 }  // namespace tactile
