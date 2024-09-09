@@ -19,18 +19,6 @@ Engine::Engine(IEngineApp* app, IRenderer* renderer)
 
 void Engine::run()
 {
-  ImGui::SetAllocatorFunctions(
-      [](const std::size_t bytes, void* user_data) -> void* {
-        auto* renderer = static_cast<IRenderer*>(user_data);
-        return renderer->imgui_malloc(bytes);
-      },
-      [](void* memory, void* user_data) {
-        auto* renderer = static_cast<IRenderer*>(user_data);
-        renderer->imgui_free(memory);
-      },
-      mRenderer);
-  ImGui::SetCurrentContext(mRenderer->get_imgui_context());
-
   mApp->on_startup();
 
   bool running = true;

@@ -20,7 +20,6 @@
 #include "tactile/opengl_renderer/opengl_error.hpp"
 #include "tactile/opengl_renderer/opengl_texture.hpp"
 #include "tactile/runtime/logging.hpp"
-#include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
 
@@ -187,16 +186,6 @@ auto OpenGLRenderer::get_window() const -> const IWindow*
 auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
 {
   return ImGui::GetCurrentContext();
-}
-
-auto OpenGLRenderer::imgui_malloc(const std::size_t bytes) -> void*
-{
-  return runtime_malloc(bytes);
-}
-
-void OpenGLRenderer::imgui_free(void* memory)
-{
-  runtime_free(memory);
 }
 
 void OpenGLRenderer::process_event(const SDL_Event& event)

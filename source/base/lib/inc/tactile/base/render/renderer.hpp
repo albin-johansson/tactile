@@ -109,11 +109,6 @@ class IRenderer
   [[nodiscard]]
   virtual auto get_imgui_context() -> ImGuiContext* = 0;
 
-  [[nodiscard]]
-  virtual auto imgui_malloc(std::size_t bytes) -> void* = 0;
-
-  virtual void imgui_free(void* memory) = 0;
-
   virtual void process_event(const SDL_Event& event) = 0;
 };
 

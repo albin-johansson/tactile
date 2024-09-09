@@ -26,6 +26,17 @@ namespace tactile {
 namespace {
 
 [[nodiscard]]
+auto _imgui_malloc(const std::size_t bytes, void*) -> void*
+{
+  return std::malloc(bytes);
+}
+
+void _imgui_free(void* memory, void*)
+{
+  std::free(memory);
+}
+
+[[nodiscard]]
 auto _make_logger() -> Logger
 {
   win32_enable_virtual_terminal_processing();
@@ -144,14 +155,21 @@ auto Runtime::get_save_format(const SaveFormatId id) const -> const ISaveFormat*
   return nullptr;
 }
 
-auto runtime_malloc(const std::size_t bytes) noexcept -> void*
+void Runtime::get_imgui_allocator_functions(imgui_malloc_fn** malloc_fn,
+                                            imgui_free_fn** free_fn,
+                                            void** user_data)
 {
-  return std::malloc(bytes);
-}
+  if (malloc_fn) {
+    *malloc_fn = &_imgui_malloc;
+  }
 
-void runtime_free(void* memory) noexcept
-{
-  return std::free(memory);
+  if (free_fn) {
+    *free_fn = &_imgui_free;
+  }
+
+  if (user_data) {
+    *user_data = nullptr;
+  }
 }
 
 }  // namespace tactile

@@ -76,11 +76,6 @@ class TACTILE_VULKAN_API VulkanRenderer final : public IRenderer
   [[nodiscard]]
   auto get_imgui_context() -> ImGuiContext* override;
 
-  [[nodiscard]]
-  auto imgui_malloc(std::size_t bytes) -> void* override;
-
-  void imgui_free(void* memory) override;
-
   void process_event(const SDL_Event& event) override;
 
  private:

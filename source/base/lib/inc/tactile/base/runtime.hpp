@@ -22,6 +22,9 @@ class IRuntime
  public:
   TACTILE_INTERFACE_CLASS(IRuntime);
 
+  using imgui_malloc_fn = void*(std::size_t, void*);
+  using imgui_free_fn = void(void*, void*);
+
   /**
    * Initializes the application window.
    *
@@ -97,6 +100,17 @@ class IRuntime
    */
   [[nodiscard]]
   virtual auto get_save_format(SaveFormatId id) const -> const ISaveFormat* = 0;
+
+  /**
+   * Returns the allocation functions associated with the Dear ImGui context.
+   *
+   * \param[out] malloc_fn Pointer to the allocation function pointer to set.
+   * \param[out] free_fn   Pointer to the deallocation function to set.
+   * \param[out] user_data Pointer to the allocation user data to set.
+   */
+  virtual void get_imgui_allocator_functions(imgui_malloc_fn** malloc_fn,
+                                             imgui_free_fn** free_fn,
+                                             void** user_data) = 0;
 };
 
 }  // namespace tactile

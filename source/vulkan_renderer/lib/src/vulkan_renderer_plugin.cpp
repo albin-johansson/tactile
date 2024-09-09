@@ -7,12 +7,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_vulkan.h>
 #include <imgui.h>
-#include <vulkan/vulkan.h>
 
 #include "tactile/base/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
-#include "tactile/runtime/runtime.hpp"
-#include "tactile/vulkan_renderer/vulkan_util.hpp"
 
 namespace tactile {
 
@@ -36,8 +33,13 @@ void VulkanRendererPlugin::load(IRuntime* runtime)
       return;
     }
 
-    ImGui::SetAllocatorFunctions([](const usize size, void*) { return runtime_malloc(size); },
-                                 [](void* ptr, void*) { runtime_free(ptr); });
+    ImGuiMemAllocFunc imgui_alloc_fn {};
+    ImGuiMemFreeFunc imgui_free_fn {};
+    void* imgui_user_data {};
+    m_runtime->get_imgui_allocator_functions(&imgui_alloc_fn,
+                                             &imgui_free_fn,
+                                             &imgui_user_data);
+    ImGui::SetAllocatorFunctions(imgui_alloc_fn, imgui_free_fn, imgui_user_data);
 
     m_renderer = std::make_unique<VulkanRenderer>(window);
     m_runtime->set_renderer(m_renderer.get());

@@ -16,7 +16,6 @@
 #include "tactile/base/io/file_io.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/runtime/logging.hpp"
-#include "tactile/runtime/runtime.hpp"
 #include "tactile/vulkan_renderer/vulkan_buffer.hpp"
 #include "tactile/vulkan_renderer/vulkan_physical_device.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
@@ -236,16 +235,6 @@ auto VulkanRenderer::get_window() const -> const IWindow*
 auto VulkanRenderer::get_imgui_context() -> ImGuiContext*
 {
   return m_imgui_context.get();
-}
-
-auto VulkanRenderer::imgui_malloc(const std::size_t bytes) -> void*
-{
-  return runtime_malloc(bytes);
-}
-
-void VulkanRenderer::imgui_free(void* memory)
-{
-  runtime_free(memory);
 }
 
 void VulkanRenderer::process_event(const SDL_Event& event)

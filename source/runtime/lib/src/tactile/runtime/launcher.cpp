@@ -6,6 +6,9 @@
 #include <utility>    // move
 #include <vector>     // vector
 
+#include <imgui.h>
+
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -101,6 +104,14 @@ auto launch(const int, char*[]) -> int
       TACTILE_LOG_ERROR("A renderer has not been installed");
       return EXIT_FAILURE;
     }
+
+    ImGuiMemAllocFunc imgui_alloc_fn {};
+    ImGuiMemFreeFunc imgui_free_fn {};
+    void* imgui_user_data {};
+    runtime.get_imgui_allocator_functions(&imgui_alloc_fn, &imgui_free_fn, &imgui_user_data);
+
+    ImGui::SetAllocatorFunctions(imgui_alloc_fn, imgui_free_fn, imgui_user_data);
+    ImGui::SetCurrentContext(renderer->get_imgui_context());
 
     TactileApp app {&runtime};
 
