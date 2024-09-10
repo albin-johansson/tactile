@@ -124,7 +124,7 @@ auto from_native_string(const NativeStringView str)
 
   // Create string of appropriate size.
   std::string output_str {};
-  output_str.resize(static_cast<usize>(char_count));
+  output_str.resize(static_cast<std::size_t>(char_count));
 
   if (WideCharToMultiByte(CP_UTF8,
                           WC_ERR_INVALID_CHARS,
@@ -144,15 +144,15 @@ auto from_native_string(const NativeStringView str)
 }
 
 auto parse_int(const std::string_view str, const int base)
-    -> std::expected<int64, std::error_code>
+    -> std::expected<std::int64_t, std::error_code>
 {
-  return _parse_number<int64>(str, base);
+  return _parse_number<std::int64_t>(str, base);
 }
 
 auto parse_uint(const std::string_view str, const int base)
-    -> std::expected<uint64, std::error_code>
+    -> std::expected<std::uint64_t, std::error_code>
 {
-  return _parse_number<uint64>(str, base);
+  return _parse_number<std::uint64_t>(str, base);
 }
 
 auto parse_float(const std::string_view str) -> std::expected<double, std::error_code>

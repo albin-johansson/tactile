@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <format>  // formatter, format_to, formattable
+#include <cstddef>  // ptrdiff_t
+#include <format>   // formatter, format_to, formattable
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -14,7 +14,7 @@ namespace tactile {
  */
 struct MatrixExtent final
 {
-  using value_type = ssize;
+  using value_type = std::ptrdiff_t;
 
   /** The number of rows. */
   value_type rows;

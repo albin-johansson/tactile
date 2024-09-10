@@ -24,7 +24,7 @@ namespace tactile {
  * \return
  * A vector with absolute elements.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 [[nodiscard]] constexpr auto abs(const Vec<T, N>& vec) noexcept -> Vec<T, N>
 {
   return apply(vec, [](const T value) { return std::abs(value); });
@@ -41,7 +41,7 @@ template <ArithmeticType T, usize N>
  * \return
  * A vector with rounded elements.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 [[nodiscard]] constexpr auto round(const Vec<T, N>& vec) noexcept -> Vec<T, N>
 {
   return apply(vec, [](const T value) { return std::round(value); });
@@ -58,7 +58,7 @@ template <ArithmeticType T, usize N>
  * \return
  * A vector with floored elements.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 [[nodiscard]] constexpr auto floor(const Vec<T, N>& vec) noexcept -> Vec<T, N>
 {
   return apply(vec, [](const T value) { return std::floor(value); });
@@ -75,7 +75,7 @@ template <ArithmeticType T, usize N>
  * \return
  * A new vector.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 [[nodiscard]] constexpr auto ceil(const Vec<T, N>& vec) noexcept -> Vec<T, N>
 {
   return apply(vec, [](const T value) { return std::ceil(value); });
@@ -93,7 +93,7 @@ template <ArithmeticType T, usize N>
  * \return
  * A vector with the smallest elements from the respective vectors.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 [[nodiscard]] constexpr auto min(const Vec<T, N>& lhs,
                                  const Vec<T, N>& rhs) noexcept -> Vec<T, N>
 {
@@ -112,7 +112,7 @@ template <ArithmeticType T, usize N>
  * \return
  * A vector with the largest elements from the respective vectors.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 [[nodiscard]] constexpr auto max(const Vec<T, N>& lhs,
                                  const Vec<T, N>& rhs) noexcept -> Vec<T, N>
 {
@@ -131,7 +131,7 @@ template <ArithmeticType T, usize N>
  * \return
  * The element-wise comparison result.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 [[nodiscard]] constexpr auto compare_elements(const Vec<T, N>& lhs,
                                               const Vec<T, N>& rhs) noexcept -> Vec<bool, N>
 {

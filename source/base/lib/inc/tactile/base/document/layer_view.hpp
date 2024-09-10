@@ -94,7 +94,7 @@ class ILayerView
    * A global layer index.
    */
   [[nodiscard]]
-  virtual auto get_global_index() const -> usize = 0;
+  virtual auto get_global_index() const -> std::size_t = 0;
 
   /**
    * Returns the number of contained layers (for group layers).
@@ -103,7 +103,7 @@ class ILayerView
    * A layer count.
    */
   [[nodiscard]]
-  virtual auto layer_count() const -> usize = 0;
+  virtual auto layer_count() const -> std::size_t = 0;
 
   /**
    * Returns the number of contained objects (for object layers).
@@ -112,7 +112,7 @@ class ILayerView
    * An object count.
    */
   [[nodiscard]]
-  virtual auto object_count() const -> usize = 0;
+  virtual auto object_count() const -> std::size_t = 0;
 
   /**
    * Returns a tile in the associated tile layer.

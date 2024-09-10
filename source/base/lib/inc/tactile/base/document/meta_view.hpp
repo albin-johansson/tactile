@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include <cstddef>      // size_t
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // pair
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -39,7 +39,7 @@ class IMetaView
    * A property name and value pair.
    */
   [[nodiscard]]
-  virtual auto get_property(usize index) const
+  virtual auto get_property(std::size_t index) const
       -> std::pair<const std::string&, const Attribute&> = 0;
 
   /**
@@ -49,7 +49,7 @@ class IMetaView
    * A property count.
    */
   [[nodiscard]]
-  virtual auto property_count() const -> usize = 0;
+  virtual auto property_count() const -> std::size_t = 0;
 };
 
 }  // namespace tactile

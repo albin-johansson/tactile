@@ -5,8 +5,9 @@
 #include <bit>       // byteswap, endian
 #include <cassert>   // assert
 #include <concepts>  // integral, invocable
+#include <cstddef>   // size_t
+#include <cstdint>   // uint8_t
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -23,10 +24,10 @@ namespace tactile {
  * The N-th byte.
  */
 template <typename T>
-[[nodiscard]] auto nth_byte(const T& object, const usize n) noexcept -> uint8
+[[nodiscard]] auto nth_byte(const T& object, const std::size_t n) noexcept -> std::uint8_t
 {
   assert(n < sizeof(T));
-  const auto* bytes = reinterpret_cast<const uint8*>(&object);
+  const auto* bytes = reinterpret_cast<const std::uint8_t*>(&object);
   return bytes[n];
 }
 
@@ -36,11 +37,11 @@ template <typename T>
  * \param value    The integer value to inspect.
  * \param callable The function object.
  */
-template <std::integral IntType, std::invocable<uint8> CallableType>
+template <std::integral IntType, std::invocable<std::uint8_t> CallableType>
 void each_byte(const IntType value, const CallableType& callable)
 {
-  const auto* bytes = reinterpret_cast<const uint8*>(&value);
-  for (usize idx = 0; idx < sizeof(IntType); ++idx) {
+  const auto* bytes = reinterpret_cast<const std::uint8_t*>(&value);
+  for (std::size_t idx = 0; idx < sizeof(IntType); ++idx) {
     callable(bytes[idx]);
   }
 }

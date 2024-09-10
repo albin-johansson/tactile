@@ -5,20 +5,21 @@
 #include <algorithm>    // min, copy_n
 #include <array>        // array
 #include <concepts>     // same_as, input_iterator
+#include <cstddef>      // size_t
+#include <cstdint>      // uint8_t
 #include <cstdlib>      // abs
 #include <iterator>     // distance
 #include <span>         // span
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/numeric/sign_cast.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
-inline constexpr usize kDefaultMemoryBufferCapacity = 512;
+inline constexpr std::size_t kDefaultMemoryBufferCapacity = 512;
 
 /**
  * Represents a fixed-size buffer.
@@ -26,7 +27,7 @@ inline constexpr usize kDefaultMemoryBufferCapacity = 512;
  * \tparam T        The type of the underlying buffer elements.
  * \tparam Capacity The maximum number of stored elements.
  */
-template <typename T = uint8, usize Capacity = kDefaultMemoryBufferCapacity>
+template <typename T = std::uint8_t, std::size_t Capacity = kDefaultMemoryBufferCapacity>
   requires(Capacity > 0)
 class Buffer final
 {
@@ -38,7 +39,7 @@ class Buffer final
   using const_pointer = const value_type*;
   using iterator = pointer;
   using const_iterator = const_pointer;
-  using size_type = usize;
+  using size_type = std::size_t;
 
   /**
    * Creates an empty buffer.
@@ -274,6 +275,6 @@ class Buffer final
 };
 
 template class Buffer<char>;
-template class Buffer<uint8>;
+template class Buffer<std::uint8_t>;
 
 }  // namespace tactile

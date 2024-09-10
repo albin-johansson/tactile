@@ -2,10 +2,10 @@
 
 #pragma once
 
+#include <cstddef>   // size_t
 #include <optional>  // optional
 #include <vector>    // vector
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
@@ -73,7 +73,7 @@ void destroy_group_layer(Registry& registry, EntityID group_layer_id);
  * The number of layers stored in the hierarchy.
  */
 [[nodiscard]]
-auto count_layers(const Registry& registry, EntityID root_layer_id) -> usize;
+auto count_layers(const Registry& registry, EntityID root_layer_id) -> std::size_t;
 
 /**
  * Attempts to find a layer parent within a group layer hierarchy.
@@ -109,7 +109,7 @@ auto find_parent_layer(const Registry& registry,
 [[nodiscard]]
 auto get_local_layer_index(const Registry& registry,
                            EntityID root_layer_id,
-                           EntityID target_layer_id) -> std::optional<usize>;
+                           EntityID target_layer_id) -> std::optional<std::size_t>;
 
 /**
  * Returns the global index of a layer within a group layer hierarchy.
@@ -127,7 +127,7 @@ auto get_local_layer_index(const Registry& registry,
 [[nodiscard]]
 auto get_global_layer_index(const Registry& registry,
                             EntityID root_layer_id,
-                            EntityID target_layer_id) -> std::optional<usize>;
+                            EntityID target_layer_id) -> std::optional<std::size_t>;
 
 /**
  * Moves a layer up within a group layer hierarchy.

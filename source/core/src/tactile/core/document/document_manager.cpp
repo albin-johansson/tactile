@@ -104,7 +104,7 @@ auto DocumentManager::get_open_documents() const -> const std::vector<UUID>&
   return mOpenDocuments;
 }
 
-void DocumentManager::set_command_capacity(const usize capacity)
+void DocumentManager::set_command_capacity(const std::size_t capacity)
 {
   TACTILE_LOG_DEBUG("Setting command capacity to {}", capacity);
   mCommandCapacity = capacity;
@@ -114,7 +114,7 @@ void DocumentManager::set_command_capacity(const usize capacity)
   }
 }
 
-auto DocumentManager::command_capacity() const -> usize
+auto DocumentManager::command_capacity() const -> std::size_t
 {
   return mCommandCapacity;
 }

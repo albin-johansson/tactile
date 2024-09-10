@@ -18,7 +18,7 @@ MetaViewMock::MetaViewMock(ir::Metadata meta) :
 
   ON_CALL(*this, get_property)
       .WillByDefault(
-          [this](const usize index) -> std::pair<const std::string&, const Attribute&> {
+          [this](const std::size_t index) -> std::pair<const std::string&, const Attribute&> {
             const auto& property = mMeta.properties.at(index);
             return {property.name, property.value};
           });
@@ -83,7 +83,7 @@ TileViewMock::TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile) :
   ON_CALL(*this, get_parent_tileset).WillByDefault(ReturnRef(*mParentTileset));
   ON_CALL(*this, get_index).WillByDefault(Return(mTile.index));
   ON_CALL(*this, animation_frame_count).WillByDefault(Return(mTile.animation.size()));
-  ON_CALL(*this, get_animation_frame).WillByDefault([this](usize index) {
+  ON_CALL(*this, get_animation_frame).WillByDefault([this](std::size_t index) {
     const auto& frame = mTile.animation.at(index);
     return std::make_pair(frame.tile_index, frame.duration);
   });
@@ -170,8 +170,8 @@ LayerViewMock::LayerViewMock(ir::Layer layer,
             index.col >= 0 &&                  //
             index.row < mLayer.extent.rows &&  //
             index.col < mLayer.extent.cols) {
-          const auto u_row = saturate_cast<usize>(index.row);
-          const auto u_col = saturate_cast<usize>(index.col);
+          const auto u_row = saturate_cast<std::size_t>(index.row);
+          const auto u_col = saturate_cast<std::size_t>(index.col);
           return mLayer.tiles.at(u_row).at(u_col);
         }
 

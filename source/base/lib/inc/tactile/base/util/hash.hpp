@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include <cstddef>     // size_t
 #include <functional>  // hash
 
-#include "tactile/base/int.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
@@ -19,10 +20,11 @@ namespace tactile {
  * \see https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0814r0.pdf
  */
 template <typename T>
-void hash_combine(usize& seed, const T& value) noexcept
+void hash_combine(std::size_t& seed, const T& value) noexcept
 {
   const auto value_hash = std::hash<T> {}(value);
-  seed ^= value_hash + usize {0x9E3779B9} + (seed << usize {6}) + (seed >> usize {2});
+  seed ^= value_hash + std::size_t {0x9E3779B9} + (seed << std::size_t {6}) +
+          (seed >> std::size_t {2});
 }
 
 /**
@@ -33,9 +35,9 @@ void hash_combine(usize& seed, const T& value) noexcept
  * \return A hash of the values.
  */
 [[nodiscard]]
-auto hash_combine(const auto&... args) noexcept -> usize
+auto hash_combine(const auto&... args) noexcept -> std::size_t
 {
-  usize seed = 0;
+  std::size_t seed = 0;
   (hash_combine(seed, args), ...);
   return seed;
 }

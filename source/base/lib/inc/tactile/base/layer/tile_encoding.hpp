@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -10,7 +11,7 @@ namespace tactile {
 /**
  * Represents the supported tile layer data encodings.
  */
-enum class TileEncoding : uint8
+enum class TileEncoding : std::uint8_t
 {
   kPlainText,
   kBase64,

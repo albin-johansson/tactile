@@ -3,8 +3,8 @@
 #pragma once
 
 #include <memory>  // unique_ptr
+#include <cstdint> // uint32_t
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
@@ -42,7 +42,7 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
 
   ~Runtime() noexcept override;
 
-  void init_window(uint32 flags) override;
+  void init_window(std::uint32_t flags) override;
 
   void set_renderer(IRenderer* renderer) override;
 

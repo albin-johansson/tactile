@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -15,7 +16,7 @@ namespace ui {
 /**
  * Provides identifiers for the supported editor fonts.
  */
-enum class FontID : uint8
+enum class FontID : std::uint8_t
 {
   /** The default embedded Dear ImGui font. */
   kDefault,

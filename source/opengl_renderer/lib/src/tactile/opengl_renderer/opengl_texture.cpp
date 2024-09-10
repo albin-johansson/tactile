@@ -5,6 +5,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include <bit>      // bit_cast
+#include <cstdint>  // uintptr_t
 #include <utility>  // move, exchange
 
 #include <glad/glad.h>
@@ -19,7 +20,7 @@ auto OpenGLTexture::load(const std::filesystem::path& image_path,
                          const RendererOptions& options)
     -> std::expected<OpenGLTexture, std::error_code>
 {
-  uint texture_id {};
+  unsigned texture_id {};
 
   glGenTextures(1, &texture_id);
   glBindTexture(GL_TEXTURE_2D, texture_id);
@@ -110,7 +111,7 @@ void OpenGLTexture::_dispose() noexcept
 
 auto OpenGLTexture::get_handle() const -> void*
 {
-  return std::bit_cast<void*>(static_cast<uintptr>(mID));
+  return std::bit_cast<void*>(static_cast<std::uintptr_t>(mID));
 }
 
 auto OpenGLTexture::get_size() const -> TextureSize

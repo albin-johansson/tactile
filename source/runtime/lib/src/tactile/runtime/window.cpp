@@ -19,9 +19,9 @@ Window::Window(SDL_Window* window) :
   mWindow {require_not_null(window, "null window")}
 {}
 
-auto Window::create(const uint32 extra_flags) -> std::expected<Window, std::error_code>
+auto Window::create(const std::uint32_t extra_flags) -> std::expected<Window, std::error_code>
 {
-  const uint32 basic_flags =
+  const std::uint32_t basic_flags =
       SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
 
   auto* handle = SDL_CreateWindow("Tactile " TACTILE_VERSION_STRING,

@@ -32,9 +32,9 @@ constexpr auto parse_color_rgb(const std::string_view rgb) noexcept -> std::opti
   const auto b = parse<UColor::value_type>(rgb.substr(5, 2), 16);
 
   if (r.has_value() && g.has_value() && b.has_value()) {
-    return UColor {static_cast<uint8>(*r),
-                   static_cast<uint8>(*g),
-                   static_cast<uint8>(*b),
+    return UColor {static_cast<std::uint8_t>(*r),
+                   static_cast<std::uint8_t>(*g),
+                   static_cast<std::uint8_t>(*b),
                    0xFF};
   }
 
@@ -62,10 +62,10 @@ constexpr auto parse_color_rgba(const std::string_view rgba) noexcept -> std::op
   const auto a = parse<UColor::value_type>(rgba.substr(7, 2), 16);
 
   if (r.has_value() && g.has_value() && b.has_value() && a.has_value()) {
-    return UColor {static_cast<uint8>(*r),
-                   static_cast<uint8>(*g),
-                   static_cast<uint8>(*b),
-                   static_cast<uint8>(*a)};
+    return UColor {static_cast<std::uint8_t>(*r),
+                   static_cast<std::uint8_t>(*g),
+                   static_cast<std::uint8_t>(*b),
+                   static_cast<std::uint8_t>(*a)};
   }
 
   return std::nullopt;
@@ -92,10 +92,10 @@ constexpr auto parse_color_argb(const std::string_view argb) noexcept -> std::op
   const auto b = parse<UColor::value_type>(argb.substr(7, 2), 16);
 
   if (a.has_value() && r.has_value() && g.has_value() && b.has_value()) {
-    return UColor {static_cast<uint8>(*r),
-                   static_cast<uint8>(*g),
-                   static_cast<uint8>(*b),
-                   static_cast<uint8>(*a)};
+    return UColor {static_cast<std::uint8_t>(*r),
+                   static_cast<std::uint8_t>(*g),
+                   static_cast<std::uint8_t>(*b),
+                   static_cast<std::uint8_t>(*a)};
   }
 
   return std::nullopt;

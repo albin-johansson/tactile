@@ -6,8 +6,6 @@
 #include <system_error>  // error_code, error_category
 #include <utility>       // to_underlying
 
-#include "tactile/base/int.hpp"
-
 namespace tactile {
 
 /**

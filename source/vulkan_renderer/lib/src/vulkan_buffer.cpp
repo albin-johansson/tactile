@@ -99,7 +99,7 @@ auto create_vulkan_staging_buffer(VmaAllocator allocator,
 
 auto set_buffer_data(VulkanBuffer& buffer,
                      const void* data,
-                     const uint64 data_size) -> VkResult
+                     const std::uint64_t data_size) -> VkResult
 {
   void* mapped_data = nullptr;
   const auto result = vmaMapMemory(buffer.allocator, buffer.allocation, &mapped_data);

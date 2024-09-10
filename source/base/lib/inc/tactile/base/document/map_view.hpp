@@ -2,13 +2,13 @@
 
 #pragma once
 
+#include <cstddef>       // size_t
 #include <expected>      // expected
 #include <filesystem>    // path
 #include <optional>      // optional
 #include <system_error>  // error_code
 
 #include "tactile/base/id.hpp"
-#include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -118,7 +118,7 @@ class IMapView
    * A layer count.
    */
   [[nodiscard]]
-  virtual auto layer_count() const -> usize = 0;
+  virtual auto layer_count() const -> std::size_t = 0;
 
   /**
    * Returns the number of tilesets attached to the map.
@@ -127,7 +127,7 @@ class IMapView
    * A tileset count.
    */
   [[nodiscard]]
-  virtual auto tileset_count() const -> usize = 0;
+  virtual auto tileset_count() const -> std::size_t = 0;
 
   /**
    * Returns the number of component definitions in the map.
@@ -136,7 +136,7 @@ class IMapView
    * A component count.
    */
   [[nodiscard]]
-  virtual auto component_count() const -> usize = 0;
+  virtual auto component_count() const -> std::size_t = 0;
 
   /**
    * Returns a view of the associated metadata.

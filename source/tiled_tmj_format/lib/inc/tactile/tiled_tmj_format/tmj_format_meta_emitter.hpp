@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include <cstddef>  // size_t
+
 #include <nlohmann/json.hpp>
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/tiled_tmj_format/api.hpp"
 
@@ -25,7 +26,8 @@ class IMetaView;
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_tiled_tmj_property(const IMetaView& meta,
-                                                    usize property_index) -> nlohmann::json;
+                                                    std::size_t property_index)
+    -> nlohmann::json;
 
 /**
  * Emits the Tiled TMJ metadata for a given meta context.

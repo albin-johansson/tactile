@@ -57,7 +57,7 @@ class ITilesetView
    * A tile count.
    */
   [[nodiscard]]
-  virtual auto tile_count() const -> usize = 0;
+  virtual auto tile_count() const -> std::size_t = 0;
 
   /**
    * Returns the number of tile definitions in the tileset.
@@ -66,7 +66,7 @@ class ITilesetView
    * A tile definition count.
    */
   [[nodiscard]]
-  virtual auto tile_definition_count() const -> usize = 0;
+  virtual auto tile_definition_count() const -> std::size_t = 0;
 
   /**
    * Returns the number of columns in the tileset.
@@ -75,7 +75,7 @@ class ITilesetView
    * A column count.
    */
   [[nodiscard]]
-  virtual auto column_count() const -> usize = 0;
+  virtual auto column_count() const -> std::size_t = 0;
 
   /**
    * Returns the logical size of tiles in the tileset.

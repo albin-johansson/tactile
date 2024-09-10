@@ -15,7 +15,7 @@ namespace tactile {
 auto make_color(const float r, const float g, const float b, const float a) -> UColor
 {
   const auto to_u8 = [](const float val) {
-    return static_cast<uint8>(std::clamp(val, 0.0f, 1.0f) * 255.0f);
+    return static_cast<std::uint8_t>(std::clamp(val, 0.0f, 1.0f) * 255.0f);
   };
 
   return {to_u8(r), to_u8(g), to_u8(b), to_u8(a)};
@@ -54,18 +54,18 @@ auto to_string_argb(const UColor& color) -> std::string
                      color.blue);
 }
 
-auto to_uint32_abgr(const UColor& color) -> uint32
+auto to_uint32_abgr(const UColor& color) -> std::uint32_t
 {
-  const auto a = static_cast<uint32>(color.alpha) << uint32 {24};
-  const auto b = static_cast<uint32>(color.blue) << uint32 {16};
-  const auto g = static_cast<uint32>(color.green) << uint32 {8};
-  const auto r = static_cast<uint32>(color.red) << uint32 {0};
+  const auto a = static_cast<std::uint32_t>(color.alpha) << std::uint32_t {24};
+  const auto b = static_cast<std::uint32_t>(color.blue) << std::uint32_t {16};
+  const auto g = static_cast<std::uint32_t>(color.green) << std::uint32_t {8};
+  const auto r = static_cast<std::uint32_t>(color.red) << std::uint32_t {0};
   return a | b | g | r;
 }
 
 auto normalize(const UColor& color) -> FColor
 {
-  const auto to_f = [](const uint8 val) { return static_cast<float>(val) / 255.0f; };
+  const auto to_f = [](const std::uint8_t val) { return static_cast<float>(val) / 255.0f; };
 
   return {to_f(color.red), to_f(color.green), to_f(color.blue), to_f(color.alpha)};
 }

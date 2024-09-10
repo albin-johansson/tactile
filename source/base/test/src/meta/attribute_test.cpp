@@ -20,7 +20,7 @@ TEST(Attribute, DefaultConstructor)
 TEST(Attribute, ExplicitTypeConstructor)
 {
   EXPECT_EQ(Attribute {AttributeType::kStr}, Attribute {std::string {}});
-  EXPECT_EQ(Attribute {AttributeType::kInt}, Attribute {int32 {}});
+  EXPECT_EQ(Attribute {AttributeType::kInt}, Attribute {std::int32_t {}});
   EXPECT_EQ(Attribute {AttributeType::kInt2}, Attribute {Int2 {}});
   EXPECT_EQ(Attribute {AttributeType::kInt3}, Attribute {Int3 {}});
   EXPECT_EQ(Attribute {AttributeType::kInt4}, Attribute {Int4 {}});
@@ -112,7 +112,7 @@ TEST(Attribute, Reset)
 
   attribute.reset(AttributeType::kInt);
   EXPECT_TRUE(attribute.has_default_value());
-  EXPECT_EQ(attribute, Attribute {int32 {}});
+  EXPECT_EQ(attribute, Attribute {std::int32_t {}});
 
   attribute.reset(AttributeType::kInt2);
   EXPECT_TRUE(attribute.has_default_value());

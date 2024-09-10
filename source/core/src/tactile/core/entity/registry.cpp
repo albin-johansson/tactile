@@ -19,9 +19,9 @@ auto Registry::destroy(const EntityID entity_id) -> bool
   return false;
 }
 
-auto Registry::count() const -> usize
+auto Registry::count() const -> std::size_t
 {
-  usize n = 0;
+  std::size_t n = 0;
 
   for (const auto& [id, sparse_set] : mRegistry.storage()) {
     n += sparse_set.size();

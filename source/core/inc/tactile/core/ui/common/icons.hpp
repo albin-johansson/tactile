@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {
@@ -10,7 +11,7 @@ namespace tactile::ui {
 /**
  * Represents the different icons used in the UI.
  */
-enum class Icon : uint8
+enum class Icon : std::uint8_t
 {
   kNewFile,
   kCloseFile,

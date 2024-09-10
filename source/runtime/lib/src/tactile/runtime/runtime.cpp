@@ -91,7 +91,7 @@ Runtime::Runtime()
 
 Runtime::~Runtime() noexcept = default;
 
-void Runtime::init_window(const uint32 flags)
+void Runtime::init_window(const std::uint32_t flags)
 {
   if (auto window = Window::create(flags)) {
     mData->window = std::move(*window);

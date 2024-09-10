@@ -37,7 +37,7 @@ void update_animations(Registry& registry)
 
 auto add_animation_frame(Registry& registry,
                          const EntityID tile_entity,
-                         const usize frame_index,
+                         const std::size_t frame_index,
                          const AnimationFrame& frame) -> std::expected<void, std::error_code>
 {
   TACTILE_ASSERT(is_tile(registry, tile_entity));
@@ -58,7 +58,7 @@ auto add_animation_frame(Registry& registry,
     animation.frames.push_back(frame);
   }
   else if (frame_index < frame_count) {
-    const auto pos = animation.frames.begin() + saturate_cast<ssize>(frame_index);
+    const auto pos = animation.frames.begin() + saturate_cast<std::ptrdiff_t>(frame_index);
     animation.frames.insert(pos, frame);
   }
   else {
@@ -72,7 +72,7 @@ auto add_animation_frame(Registry& registry,
 
 auto remove_animation_frame(Registry& registry,
                             const EntityID tile_entity,
-                            const usize frame_index) -> std::expected<void, std::error_code>
+                            const std::size_t frame_index) -> std::expected<void, std::error_code>
 {
   TACTILE_ASSERT(is_tile(registry, tile_entity));
   TACTILE_ASSERT(registry.has<CAnimation>(tile_entity));
@@ -83,7 +83,7 @@ auto remove_animation_frame(Registry& registry,
     return std::unexpected {make_error(GenericError::kInvalidParam)};
   }
 
-  const auto pos = animation.frames.begin() + saturate_cast<ssize>(frame_index);
+  const auto pos = animation.frames.begin() + saturate_cast<std::ptrdiff_t>(frame_index);
   animation.frames.erase(pos);
 
   if (animation.frames.empty()) {

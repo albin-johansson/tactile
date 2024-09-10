@@ -17,7 +17,7 @@ template <typename VecType>
     -> std::expected<VecType, std::error_code>
 {
   VecType vec {};
-  usize index = 0;
+  std::size_t index = 0;
 
   const auto ok = split_string(str, ';', [&](const std::string_view token) {
     if (index >= vec.size()) {

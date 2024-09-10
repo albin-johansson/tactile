@@ -4,11 +4,10 @@
 
 #include <compare>     // strong_ordering
 #include <concepts>    // integral
-#include <cstddef>     // size_t
+#include <cstddef>     // size_t, ptrdiff_t
 #include <format>      // formatter, format_to, formattable
 #include <functional>  // hash
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -21,7 +20,7 @@ namespace tactile {
  */
 struct MatrixIndex final
 {
-  using value_type = ssize;
+  using value_type = std::ptrdiff_t;
 
   /** The row index. */
   value_type row;

@@ -23,11 +23,11 @@ auto UUID::generate() -> UUID
   return uuid;
 }
 
-auto UUID::hash_code() const noexcept -> usize
+auto UUID::hash_code() const noexcept -> std::size_t
 {
-  usize hash {};
+  std::size_t hash {};
 
-  for (const uint8 byte : mData) {
+  for (const std::uint8_t byte : mData) {
     hash_combine(hash, byte);
   }
 
@@ -36,7 +36,7 @@ auto UUID::hash_code() const noexcept -> usize
 
 auto UUID::is_null() const -> bool
 {
-  return std::ranges::all_of(mData, [](const uint8 byte) { return byte == 0; });
+  return std::ranges::all_of(mData, [](const std::uint8_t byte) { return byte == 0; });
 }
 
 auto to_string(const UUID& uuid) -> std::string

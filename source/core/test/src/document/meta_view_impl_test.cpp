@@ -71,7 +71,7 @@ TEST_F(MetaViewImplTest, GetProperty)
   const auto property_count = meta_view.property_count();
   EXPECT_EQ(property_count, 3);
 
-  for (usize index = 0; index < property_count; ++index) {
+  for (std::size_t index = 0; index < property_count; ++index) {
     const auto& [name, value] = meta_view.get_property(index);
 
     EXPECT_THAT(name, AnyOf(Eq("A"), Eq("B"), Eq("C")));

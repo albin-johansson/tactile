@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstddef>  // size_t
+
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/i18n/language_id.hpp"
@@ -18,7 +19,7 @@ struct Settings final
   LanguageID language;
 
   /** The maximum number of changes to track in a document. */
-  usize command_capacity;
+  std::size_t command_capacity;
 
   /** The font used in the UI. */
   ui::FontID font;

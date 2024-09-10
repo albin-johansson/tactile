@@ -32,10 +32,10 @@ class MetaViewMock : public IMetaView
 
   MOCK_METHOD((std::pair<const std::string&, const Attribute&>),
               get_property,
-              (usize),
+              (std::size_t),
               (const, override));
 
-  MOCK_METHOD(usize, property_count, (), (const, override));
+  MOCK_METHOD(std::size_t, property_count, (), (const, override));
 
  private:
   ir::Metadata mMeta {};
@@ -96,13 +96,13 @@ class TileViewMock : public ITileView
 
   MOCK_METHOD(TileIndex, get_index, (), (const, override));
 
-  MOCK_METHOD(usize, object_count, (), (const, override));
+  MOCK_METHOD(std::size_t, object_count, (), (const, override));
 
-  MOCK_METHOD(usize, animation_frame_count, (), (const, override));
+  MOCK_METHOD(std::size_t, animation_frame_count, (), (const, override));
 
   MOCK_METHOD((std::pair<TileIndex, Milliseconds>),
               get_animation_frame,
-              (usize),
+              (std::size_t),
               (const, override));
 
   MOCK_METHOD(const IMetaView&, get_meta, (), (const, override));
@@ -136,11 +136,11 @@ class TilesetViewMock : public ITilesetView
 
   MOCK_METHOD(TileID, get_first_tile_id, (), (const, override));
 
-  MOCK_METHOD(usize, tile_count, (), (const, override));
+  MOCK_METHOD(std::size_t, tile_count, (), (const, override));
 
-  MOCK_METHOD(usize, tile_definition_count, (), (const, override));
+  MOCK_METHOD(std::size_t, tile_definition_count, (), (const, override));
 
-  MOCK_METHOD(usize, column_count, (), (const, override));
+  MOCK_METHOD(std::size_t, column_count, (), (const, override));
 
   MOCK_METHOD(Int2, get_tile_size, (), (const, override));
 
@@ -187,11 +187,11 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(bool, is_visible, (), (const, override));
 
-  MOCK_METHOD(usize, get_global_index, (), (const, override));
+  MOCK_METHOD(std::size_t, get_global_index, (), (const, override));
 
-  MOCK_METHOD(usize, layer_count, (), (const, override));
+  MOCK_METHOD(std::size_t, layer_count, (), (const, override));
 
-  MOCK_METHOD(usize, object_count, (), (const, override));
+  MOCK_METHOD(std::size_t, object_count, (), (const, override));
 
   MOCK_METHOD(std::optional<TileID>, get_tile, (const MatrixIndex&), (const, override));
 
@@ -244,11 +244,11 @@ class MapViewMock : public IMapView
 
   MOCK_METHOD(std::optional<int>, get_compression_level, (), (const, override));
 
-  MOCK_METHOD(usize, layer_count, (), (const, override));
+  MOCK_METHOD(std::size_t, layer_count, (), (const, override));
 
-  MOCK_METHOD(usize, tileset_count, (), (const, override));
+  MOCK_METHOD(std::size_t, tileset_count, (), (const, override));
 
-  MOCK_METHOD(usize, component_count, (), (const, override));
+  MOCK_METHOD(std::size_t, component_count, (), (const, override));
 
   MOCK_METHOD(const IMetaView&, get_meta, (), (const, override));
 

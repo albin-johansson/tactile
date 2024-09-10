@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
-
 namespace tactile {
 
 /**
@@ -33,7 +31,7 @@ auto get_random_int(int min, int max) -> int;
  * A pseudo-random value in the interval [min, max].
  */
 [[nodiscard]]
-auto get_random_uint(uint min, uint max) -> uint;
+auto get_random_uint(unsigned min, unsigned max) -> unsigned;
 
 /**
  * Returns a pseudo-random float.

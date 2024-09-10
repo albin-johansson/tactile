@@ -30,7 +30,7 @@ auto _make_random_engine() -> RandomEngine
 [[nodiscard]]
 auto _get_random_engine() -> RandomEngine&
 {
-  thread_local static auto engine = _make_random_engine();
+  thread_local auto engine = _make_random_engine();
   return engine;
 }
 
@@ -40,7 +40,7 @@ template <typename T>
 {
   static_assert(!std::same_as<T, bool>);
   static_assert(!std::same_as<T, char>);
-  static_assert(!std::same_as<T, uchar>);
+  static_assert(!std::same_as<T, unsigned char>);
 
   TACTILE_ASSERT(min <= max);
   auto& engine = _get_random_engine();
@@ -65,7 +65,7 @@ auto get_random_int(const int min, const int max) -> int
   return _get_random(min, max);
 }
 
-auto get_random_uint(const uint min, const uint max) -> uint
+auto get_random_uint(const unsigned min, const unsigned max) -> unsigned
 {
   return _get_random(min, max);
 }

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <cstddef>      // size_t
 #include <format>       // format_to_n, vformat_to, make_format_args, format_args
 #include <iterator>     // back_inserter
 #include <string>       // string
@@ -10,7 +11,6 @@
 #include <utility>      // forward
 #include <version>      // __cpp_lib_format
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/buffer.hpp"
 
@@ -53,7 +53,7 @@ using FormatString = std::string_view;
  * \param fmt    The format string.
  * \param args   The format arguments.
  */
-template <usize N>
+template <std::size_t N>
 void vformat_to_buffer(Buffer<char, N>& buffer,
                        const std::string_view fmt,
                        std::format_args args)
@@ -68,7 +68,7 @@ void vformat_to_buffer(Buffer<char, N>& buffer,
   // This is safe because the Buffer::push_back function has no effect when the
   // buffer is full. Ideally, we would like to do something like:
   //     std::format_to_n(std::back_inserter(buffer),
-  //                      saturate_cast<ssize>(remaining_chars),
+  //                      saturate_cast<std::ptrdiff_t>(remaining_chars),
   //                      fmt,
   //                      std::forward<Args>(args)...);
   std::vformat_to(std::back_inserter(buffer), fmt, args);
@@ -87,7 +87,7 @@ void vformat_to_buffer(Buffer<char, N>& buffer,
  * \param fmt    The format string.
  * \param args   The format arguments.
  */
-template <usize N, typename... Args>
+template <std::size_t N, typename... Args>
 void format_to_buffer(Buffer<char, N>& buffer,
                       const FormatString<Args...> fmt,
                       const Args&... args)

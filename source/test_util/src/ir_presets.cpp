@@ -2,6 +2,7 @@
 
 #include "tactile/test_util/ir_presets.hpp"
 
+#include <cstddef>  // ptrdiff_t
 #include <utility>  // move
 
 #include "tactile/test_util/ir.hpp"
@@ -70,10 +71,10 @@ auto make_complex_ir_tile_layer(const LayerID id, const MatrixExtent& extent) ->
   tile_layer.visible = true;
 
   TileID tile_id {1};
-  for (ssize row = 0; row < extent.rows; ++row) {
-    for (ssize col = 0; col < extent.cols; ++col) {
-      const auto u_row = static_cast<usize>(row);
-      const auto u_col = static_cast<usize>(col);
+  for (std::ptrdiff_t row = 0; row < extent.rows; ++row) {
+    for (std::ptrdiff_t col = 0; col < extent.cols; ++col) {
+      const auto u_row = static_cast<std::size_t>(row);
+      const auto u_col = static_cast<std::size_t>(col);
       tile_layer.tiles[u_row][u_col] = tile_id;
       ++tile_id;
     }

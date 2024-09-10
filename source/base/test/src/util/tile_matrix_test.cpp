@@ -17,9 +17,9 @@ TEST(TileMatrix, MakeTileMatrix)
   EXPECT_EQ(tile_matrix.at(1).size(), extent.cols);
   EXPECT_EQ(tile_matrix.at(2).size(), extent.cols);
 
-  for (ssize row = 0; row < extent.rows; ++row) {
-    for (ssize col = 0; col < extent.cols; ++col) {
-      EXPECT_EQ(tile_matrix.at(static_cast<usize>(row)).at(static_cast<usize>(col)),
+  for (std::ptrdiff_t row = 0; row < extent.rows; ++row) {
+    for (std::ptrdiff_t col = 0; col < extent.cols; ++col) {
+      EXPECT_EQ(tile_matrix.at(static_cast<std::size_t>(row)).at(static_cast<std::size_t>(col)),
                 kEmptyTile);
     }
   }

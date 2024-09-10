@@ -2,12 +2,12 @@
 
 #pragma once
 
+#include <cstddef>   // size_t
 #include <optional>  // optional, nullopt
 #include <utility>   // forward, move
 
 #include <entt/entity/registry.hpp>
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/exception.hpp"
@@ -289,7 +289,7 @@ class Registry final
    * The number of component instances.
    */
   template <typename T>
-  [[nodiscard]] auto count() const -> usize
+  [[nodiscard]] auto count() const -> std::size_t
   {
     if (const auto* storage = mRegistry.storage<T>()) {
       return storage->size();
@@ -307,7 +307,7 @@ class Registry final
    * \return
    * The number of components.
    */
-  [[nodiscard]] auto count() const -> usize;
+  [[nodiscard]] auto count() const -> std::size_t;
 
   /**
    * Indicates whether an entity identifier is valid.

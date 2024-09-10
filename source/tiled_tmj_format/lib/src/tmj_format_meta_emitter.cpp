@@ -2,7 +2,8 @@
 
 #include "tactile/tiled_tmj_format/tmj_format_meta_emitter.hpp"
 
-#include <format>  // format
+#include <cstddef>  // size_t
+#include <format>   // format
 
 #include "tactile/base/document/meta_view.hpp"
 #include "tactile/base/meta/attribute.hpp"
@@ -10,7 +11,7 @@
 namespace tactile {
 
 auto emit_tiled_tmj_property(const IMetaView& meta,
-                             const usize property_index) -> nlohmann::json
+                             const std::size_t property_index) -> nlohmann::json
 {
   const auto& [property_name, property_value] = meta.get_property(property_index);
 
@@ -126,7 +127,7 @@ void emit_tiled_tmj_metadata(const IMetaView& meta, nlohmann::json& meta_json)
   auto property_array = nlohmann::json::array();
   property_array.get_ref<nlohmann::json::array_t&>().reserve(property_count);
 
-  for (usize index = 0; index < property_count; ++index) {
+  for (std::size_t index = 0; index < property_count; ++index) {
     property_array.push_back(emit_tiled_tmj_property(meta, index));
   }
 

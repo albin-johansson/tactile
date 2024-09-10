@@ -91,7 +91,7 @@ auto MapViewImpl::get_compression_level() const -> std::optional<int>
   return _get_tile_format().comp_level;
 }
 
-auto MapViewImpl::layer_count() const -> usize
+auto MapViewImpl::layer_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
   const auto& map = _get_map();
@@ -99,12 +99,12 @@ auto MapViewImpl::layer_count() const -> usize
   return count_layers(registry, map.root_layer);
 }
 
-auto MapViewImpl::tileset_count() const -> usize
+auto MapViewImpl::tileset_count() const -> std::size_t
 {
   return _get_map().attached_tilesets.size();
 }
 
-auto MapViewImpl::component_count() const -> usize
+auto MapViewImpl::component_count() const -> std::size_t
 {
   return 0;  // TODO
 }

@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstddef>  // size_t
+#include <cstdint>  // uint32_t
+
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
@@ -34,7 +36,7 @@ class IRuntime
    *              SDL which type of window to create. For example,
    *              \c SDL_WINDOW_OPENGL for an OpenGL window.
    */
-  virtual void init_window(uint32 flags) = 0;
+  virtual void init_window(std::uint32_t flags) = 0;
 
   /**
    * Sets the associated renderer.

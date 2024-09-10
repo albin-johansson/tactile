@@ -3,6 +3,7 @@
 #include "tactile/zlib_compression/zlib_compressor.hpp"
 
 #include <array>         // array
+#include <cstddef>       // size_t
 #include <expected>      // expected
 #include <system_error>  // errc, make_error_code
 #include <system_error>  // error_code
@@ -16,7 +17,7 @@
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile {
-namespace zlib_compressor {
+namespace {
 
 // Zlib has inconsistently named typedefs, we use these instead.
 using z_byte = ::Bytef;
@@ -54,10 +55,10 @@ struct ZlibCallbacks final
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto init_stream(const ZlibCallbacks& callbacks,
-                 const ByteSpan input_data,
-                 StagingBuffer& staging_buffer,
-                 z_stream& stream) -> std::expected<void, std::error_code>
+auto _init_stream(const ZlibCallbacks& callbacks,
+                  const ByteSpan input_data,
+                  StagingBuffer& staging_buffer,
+                  z_stream& stream) -> std::expected<void, std::error_code>
 {
   stream.next_in = const_cast<z_byte*>(input_data.data());  // NOLINT
   stream.avail_in = saturate_cast<z_uint>(input_data.size_bytes());
@@ -85,10 +86,10 @@ auto init_stream(const ZlibCallbacks& callbacks,
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto process_stream(const ZlibCallbacks& callbacks,
-                    z_stream& stream,
-                    StagingBuffer& staging_buffer,
-                    ByteStream& output_buffer) -> std::expected<void, std::error_code>
+auto _process_stream(const ZlibCallbacks& callbacks,
+                     z_stream& stream,
+                     StagingBuffer& staging_buffer,
+                     ByteStream& output_buffer) -> std::expected<void, std::error_code>
 {
   const auto copy_processed_batch_to_output_buffer = [&] {
     const auto written_bytes = staging_buffer.size() - stream.avail_out;
@@ -133,8 +134,8 @@ auto process_stream(const ZlibCallbacks& callbacks,
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto end_stream(const ZlibCallbacks& callbacks,
-                z_stream& stream) -> std::expected<void, std::error_code>
+auto _end_stream(const ZlibCallbacks& callbacks,
+                 z_stream& stream) -> std::expected<void, std::error_code>
 {
   const auto end_stream_result = callbacks.end_stream(&stream);
 
@@ -146,12 +147,12 @@ auto end_stream(const ZlibCallbacks& callbacks,
   return {};
 }
 
-}  // namespace zlib_compressor
+}  // namespace
 
 auto ZlibCompressor::compress(const ByteSpan input_data) const
     -> std::expected<ByteStream, std::error_code>
 {
-  zlib_compressor::ZlibCallbacks callbacks {};
+  ZlibCallbacks callbacks {};
   callbacks.init_stream = [](z_stream* stream) {
     return z_deflateInit(stream, Z_DEFAULT_COMPRESSION);
   };
@@ -160,46 +161,39 @@ auto ZlibCompressor::compress(const ByteSpan input_data) const
 
   z_stream stream {};
 
-  zlib_compressor::StagingBuffer staging_buffer;  // NOLINT uninitialized
+  StagingBuffer staging_buffer;  // NOLINT uninitialized
   ByteStream output_buffer {};
 
-  return zlib_compressor::init_stream(callbacks, input_data, staging_buffer, stream)
+  return _init_stream(callbacks, input_data, staging_buffer, stream)
       .and_then([&] {
-        const usize output_buffer_bound =
-            deflateBound(&stream,
-                         saturate_cast<zlib_compressor::z_ulong>(input_data.size_bytes()));
+        const std::size_t output_buffer_bound =
+            deflateBound(&stream, saturate_cast<z_ulong>(input_data.size_bytes()));
         output_buffer.reserve(output_buffer_bound);
-        return zlib_compressor::process_stream(callbacks,
-                                               stream,
-                                               staging_buffer,
-                                               output_buffer);
+        return _process_stream(callbacks, stream, staging_buffer, output_buffer);
       })
-      .and_then([&] { return zlib_compressor::end_stream(callbacks, stream); })
+      .and_then([&] { return _end_stream(callbacks, stream); })
       .transform([&] { return std::move(output_buffer); });
 }
 
 auto ZlibCompressor::decompress(const ByteSpan input_data) const
     -> std::expected<ByteStream, std::error_code>
 {
-  zlib_compressor::ZlibCallbacks callbacks {};
+  ZlibCallbacks callbacks {};
   callbacks.init_stream = [](z_stream* stream) { return z_inflateInit(stream); };
   callbacks.process_stream = &inflate;
   callbacks.end_stream = &inflateEnd;
 
   z_stream stream {};
 
-  zlib_compressor::StagingBuffer staging_buffer;  // NOLINT uninitialized
+  StagingBuffer staging_buffer;  // NOLINT uninitialized
   ByteStream output_buffer {};
 
-  return zlib_compressor::init_stream(callbacks, input_data, staging_buffer, stream)
+  return _init_stream(callbacks, input_data, staging_buffer, stream)
       .and_then([&] {
         output_buffer.reserve(2'048);
-        return zlib_compressor::process_stream(callbacks,
-                                               stream,
-                                               staging_buffer,
-                                               output_buffer);
+        return _process_stream(callbacks, stream, staging_buffer, output_buffer);
       })
-      .and_then([&] { return zlib_compressor::end_stream(callbacks, stream); })
+      .and_then([&] { return _end_stream(callbacks, stream); })
       .transform([&] { return std::move(output_buffer); });
 }
 

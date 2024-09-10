@@ -17,7 +17,7 @@ TEST(Animation, UpdateAnimations)
   Registry registry {};
 
   auto add_frame =
-      [&registry](EntityID tile_entity, const usize frame_index, const TileIndex tile_index) {
+      [&registry](EntityID tile_entity, const std::size_t frame_index, const TileIndex tile_index) {
         const AnimationFrame frame {tile_index, Milliseconds::zero()};
         return add_animation_frame(registry, tile_entity, frame_index, frame);
       };

@@ -4,13 +4,12 @@
 
 #include <array>       // array
 #include <cstddef>     // size_t
+#include <cstdint>     // uint8_t
 #include <cstring>     // memcmp
 #include <format>      // format, format_to, formattable
 #include <functional>  // hash
 #include <ostream>     // ostream
 #include <string>      // string
-
-#include "tactile/base/int.hpp"
 
 namespace tactile {
 
@@ -49,7 +48,7 @@ class UUID final
    * A hash value.
    */
   [[nodiscard]]
-  auto hash_code() const noexcept -> usize;
+  auto hash_code() const noexcept -> std::size_t;
 
   /**
    * Indicates whether the UUID is null.
@@ -68,7 +67,7 @@ class UUID final
   [[nodiscard]] auto operator==(const UUID&) const noexcept -> bool = default;
 
  private:
-  std::array<uint8, 16> mData {};
+  std::array<std::uint8_t, 16> mData {};
 
   friend auto to_string(const UUID& uuid) -> std::string;
 };

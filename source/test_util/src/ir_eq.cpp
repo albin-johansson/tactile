@@ -3,6 +3,7 @@
 #include "tactile/test_util/ir_eq.hpp"
 
 #include <algorithm>  // find_if
+#include <cstddef>    // size_t
 #include <format>     // format
 #include <iostream>   // cout
 
@@ -162,7 +163,7 @@ void expect_eq(const ir::Tile& tile1, const ir::Tile& tile2, const AttributeEqMo
     expect_eq(object1, *object2_iter, mode);
   }
 
-  for (usize index = 0; index < tile1.animation.size(); ++index) {
+  for (std::size_t index = 0; index < tile1.animation.size(); ++index) {
     const auto& frame1 = tile1.animation.at(index);
     const auto& frame2 = tile2.animation.at(index);
 
@@ -242,7 +243,7 @@ void expect_eq(const ir::Map& map1, const ir::Map& map2, const AttributeEqMode m
     expect_eq(tileset_ref1, *tileset_ref2_iter, mode);
   }
 
-  for (usize index = 0; index < map1.layers.size(); ++index) {
+  for (std::size_t index = 0; index < map1.layers.size(); ++index) {
     const auto& layer1 = map1.layers.at(index);
     const auto& layer2 = map2.layers.at(index);
 

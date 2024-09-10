@@ -2,9 +2,9 @@
 
 #include "tactile/base/util/format.hpp"
 
-#include <gtest/gtest.h>
+#include <cstddef>  // size_t
 
-#include "tactile/base/int.hpp"
+#include <gtest/gtest.h>
 
 namespace tactile {
 
@@ -37,7 +37,7 @@ TEST(Format, FormatToBuffer)
 TEST(Format, FormatToBufferWhenFull)
 {
   Buffer<char, 32> buffer;  // NOLINT
-  for (usize i = 0; i < buffer.capacity(); ++i) {
+  for (std::size_t i = 0; i < buffer.capacity(); ++i) {
     buffer.push_back('?');
   }
 
@@ -56,7 +56,7 @@ TEST(Format, FormatToBufferWhenFull)
 TEST(Format, FormatToBufferWithOverflow)
 {
   Buffer<char, 32> buffer;  // NOLINT
-  for (usize i = 0; i < buffer.capacity() - 3; ++i) {
+  for (std::size_t i = 0; i < buffer.capacity() - 3; ++i) {
     buffer.push_back('?');
   }
 

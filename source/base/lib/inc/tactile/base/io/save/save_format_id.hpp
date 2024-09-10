@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -13,7 +14,7 @@ namespace tactile {
  * \note
  * The enumerator values must be kept in sync with the associated Protobuf enum.
  */
-enum class SaveFormatId : uint8
+enum class SaveFormatId : std::uint8_t
 {
   /** The native YAML save format. */
   kTactileYaml = 0,

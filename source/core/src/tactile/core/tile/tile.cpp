@@ -17,7 +17,7 @@ auto convert_animation(Registry& registry,
                        const EntityID tile_id,
                        const ir::Tile& ir_tile) -> std::expected<void, std::error_code>
 {
-  usize frame_index = 0;
+  std::size_t frame_index = 0;
 
   for (const auto& ir_frame : ir_tile.animation) {
     const AnimationFrame frame {ir_frame.tile_index, ir_frame.duration};

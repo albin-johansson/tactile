@@ -9,8 +9,8 @@ namespace tactile {
 // tactile::to_little_endian
 TEST(Bits, ToLittleEndian)
 {
-  const uint32 native_value = 0xFFEE2211u;
-  const uint32 little_value = to_little_endian(native_value);
+  const std::uint32_t native_value = 0xFFEE2211u;
+  const std::uint32_t little_value = to_little_endian(native_value);
 
   EXPECT_EQ(nth_byte(little_value, 0), 0x11);
   EXPECT_EQ(nth_byte(little_value, 1), 0x22);

@@ -2,6 +2,7 @@
 
 #include "tactile/tiled_tmj_format/tmj_format_tile_emitter.hpp"
 
+#include <cstddef>  // size_t
 #include <utility>  // move
 
 #include "tactile/base/document/tile_view.hpp"
@@ -20,7 +21,7 @@ void save_tile_animation(const ITileView& tile, nlohmann::json& tile_json)
   auto animation_json = nlohmann::json::array();
   animation_json.get_ref<nlohmann::json::array_t&>().reserve(frame_count);
 
-  for (usize index = 0; index < frame_count; ++index) {
+  for (std::size_t index = 0; index < frame_count; ++index) {
     auto frame_json = nlohmann::json::object();
 
     const auto [frame_tile, frame_duration] = tile.get_animation_frame(index);

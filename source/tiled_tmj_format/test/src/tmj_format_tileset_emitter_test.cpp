@@ -26,8 +26,8 @@ TEST(TmjFormatTilesetEmitter, EmitEmbeddedTileset)
   const TilesetViewMock tileset {};
 
   const TileID tile_id {42};
-  const usize column_count {3};
-  const usize tile_count {16};
+  const std::size_t column_count {3};
+  const std::size_t tile_count {16};
   const Int2 tile_size {16, 16};
   const Int2 image_size {96, 64};
   const std::filesystem::path image_path {"assets/images/dummy.png"};
@@ -75,8 +75,8 @@ TEST(TmjFormatTilesetEmitter, EmitExternalTileset)
   const TilesetViewMock tileset {};
 
   const TileID tile_id {15};
-  const usize column_count {3};
-  const usize tile_count {16};
+  const std::size_t column_count {3};
+  const std::size_t tile_count {16};
   const Int2 tile_size {16, 16};
   const Int2 image_size {96, 64};
   const std::filesystem::path image_path {"assets/images/dummy.png"};

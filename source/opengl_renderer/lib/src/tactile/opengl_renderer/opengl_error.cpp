@@ -49,7 +49,7 @@ auto get_opengl_error_category() noexcept -> const std::error_category&
   return category;
 }
 
-auto map_opengl_error_code(const uint error) noexcept -> OpenGLError
+auto map_opengl_error_code(const unsigned error) noexcept -> OpenGLError
 {
   switch (error) {
     case GL_INVALID_ENUM:                  return OpenGLError::kInvalidEnum;

@@ -5,7 +5,6 @@
 #include <expected>      // expected
 #include <system_error>  // error_code
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/prelude.hpp"
 

@@ -61,7 +61,7 @@ class ITileView
    * An object count.
    */
   [[nodiscard]]
-  virtual auto object_count() const -> usize = 0;
+  virtual auto object_count() const -> std::size_t = 0;
 
   /**
    * Returns the number of frames in the associated animation, if any.
@@ -70,7 +70,7 @@ class ITileView
    * An animation frame count.
    */
   [[nodiscard]]
-  virtual auto animation_frame_count() const -> usize = 0;
+  virtual auto animation_frame_count() const -> std::size_t = 0;
 
   /**
    * Returns the frame at a given index in the associated animation.
@@ -81,7 +81,7 @@ class ITileView
    * A tile index and frame duration pair.
    */
   [[nodiscard]]
-  virtual auto get_animation_frame(usize index) const
+  virtual auto get_animation_frame(std::size_t index) const
       -> std::pair<TileIndex, Milliseconds> = 0;
 
   /**

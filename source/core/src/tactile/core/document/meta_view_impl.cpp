@@ -25,7 +25,7 @@ auto MetaViewImpl::get_name() const -> std::string_view
   return meta.name;
 }
 
-auto MetaViewImpl::get_property(const usize index) const
+auto MetaViewImpl::get_property(const std::size_t index) const
     -> std::pair<const std::string&, const Attribute&>
 {
   const auto& registry = mDocument->get_registry();
@@ -35,11 +35,11 @@ auto MetaViewImpl::get_property(const usize index) const
     throw Exception {"bad property index"};
   }
 
-  const auto iter = std::next(meta.properties.begin(), saturate_cast<ssize>(index));
+  const auto iter = std::next(meta.properties.begin(), saturate_cast<std::ptrdiff_t>(index));
   return {iter->first, iter->second};
 }
 
-auto MetaViewImpl::property_count() const -> usize
+auto MetaViewImpl::property_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
   const auto& meta = registry.get<CMeta>(mMetaId);

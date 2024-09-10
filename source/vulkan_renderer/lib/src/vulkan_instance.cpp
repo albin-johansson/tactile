@@ -2,7 +2,8 @@
 
 #include "tactile/vulkan_renderer/vulkan_instance.hpp"
 
-#include <vector>  // vector
+#include <cstdint>  // uint32_t
+#include <vector>   // vector
 
 #include <SDL2/SDL_vulkan.h>
 
@@ -16,7 +17,7 @@ namespace {
 [[nodiscard]]
 auto _get_required_extensions(IWindow& window) -> std::vector<const char*>
 {
-  uint32 extension_count = 0;
+  std::uint32_t extension_count = 0;
   SDL_Vulkan_GetInstanceExtensions(window.get_handle(), &extension_count, nullptr);
 
   std::vector<const char*> extensions {};
@@ -58,16 +59,16 @@ auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, Vk
     enabled_layers.push_back("VK_LAYER_KHRONOS_validation");
   }
 
-  const auto enabled_extensions = vulkan_instance::get_required_extensions(window);
+  const auto enabled_extensions = _get_required_extensions(window);
 
   VkInstanceCreateInfo instance_info {
     .sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
     .pNext = nullptr,
     .flags = 0,
     .pApplicationInfo = &app_info,
-    .enabledLayerCount = static_cast<uint32>(enabled_layers.size()),
+    .enabledLayerCount = static_cast<std::uint32_t>(enabled_layers.size()),
     .ppEnabledLayerNames = enabled_layers.data(),
-    .enabledExtensionCount = static_cast<uint32>(enabled_extensions.size()),
+    .enabledExtensionCount = static_cast<std::uint32_t>(enabled_extensions.size()),
     .ppEnabledExtensionNames = enabled_extensions.data(),
   };
 

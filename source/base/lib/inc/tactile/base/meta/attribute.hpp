@@ -23,7 +23,7 @@ namespace tactile {
 template <typename T>
 concept AttributeValueType = std::same_as<T, bool> ||                          //
                              std::convertible_to<T, std::string> ||            //
-                             std::convertible_to<T, int32> ||                  //
+                             std::convertible_to<T, std::int32_t> ||                  //
                              std::convertible_to<T, Int2> ||                   //
                              std::convertible_to<T, Int3> ||                   //
                              std::convertible_to<T, Int4> ||                   //
@@ -41,23 +41,23 @@ concept AttributeValueType = std::same_as<T, bool> ||                          /
 class Attribute final
 {
   // These are indices into the value type variant
-  inline static constexpr usize kStringTypeIndex = 0;
-  inline static constexpr usize kIntTypeIndex = 1;
-  inline static constexpr usize kInt2TypeIndex = 2;
-  inline static constexpr usize kInt3TypeIndex = 3;
-  inline static constexpr usize kInt4TypeIndex = 4;
-  inline static constexpr usize kFloatTypeIndex = 5;
-  inline static constexpr usize kFloat2TypeIndex = 6;
-  inline static constexpr usize kFloat3TypeIndex = 7;
-  inline static constexpr usize kFloat4TypeIndex = 8;
-  inline static constexpr usize kBoolTypeIndex = 9;
-  inline static constexpr usize kColorTypeIndex = 10;
-  inline static constexpr usize kPathTypeIndex = 11;
-  inline static constexpr usize kObjRefTypeIndex = 12;
+  inline static constexpr std::size_t kStringTypeIndex = 0;
+  inline static constexpr std::size_t kIntTypeIndex = 1;
+  inline static constexpr std::size_t kInt2TypeIndex = 2;
+  inline static constexpr std::size_t kInt3TypeIndex = 3;
+  inline static constexpr std::size_t kInt4TypeIndex = 4;
+  inline static constexpr std::size_t kFloatTypeIndex = 5;
+  inline static constexpr std::size_t kFloat2TypeIndex = 6;
+  inline static constexpr std::size_t kFloat3TypeIndex = 7;
+  inline static constexpr std::size_t kFloat4TypeIndex = 8;
+  inline static constexpr std::size_t kBoolTypeIndex = 9;
+  inline static constexpr std::size_t kColorTypeIndex = 10;
+  inline static constexpr std::size_t kPathTypeIndex = 11;
+  inline static constexpr std::size_t kObjRefTypeIndex = 12;
 
  public:
   using string_type = std::string;
-  using int_type = int32;
+  using int_type = std::int32_t;
   using int2_type = Int2;
   using int3_type = Int3;
   using int4_type = Int4;

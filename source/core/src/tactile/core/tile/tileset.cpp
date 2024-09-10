@@ -66,9 +66,9 @@ void add_viewport_component(Registry& registry,
 void create_tiles(Registry& registry, CTileset& tileset)
 {
   const auto tile_count = tileset.extent.rows * tileset.extent.cols;
-  tileset.tiles.reserve(saturate_cast<usize>(tile_count));
+  tileset.tiles.reserve(saturate_cast<std::size_t>(tile_count));
 
-  for (ssize index = 0; index < tile_count; ++index) {
+  for (std::ptrdiff_t index = 0; index < tile_count; ++index) {
     const auto tile_index = saturate_cast<TileIndex>(index);
     const auto tile_entity = make_tile(registry, tile_index);
 
@@ -81,7 +81,7 @@ auto create_tiles(Registry& registry,
                   CTileset& tileset,
                   const ir::Tileset& ir_tileset) -> std::expected<void, std::error_code>
 {
-  const auto tile_count = saturate_cast<usize>(ir_tileset.tile_count);
+  const auto tile_count = saturate_cast<std::size_t>(ir_tileset.tile_count);
   tileset.tiles.resize(tile_count, kInvalidEntity);
 
   for (const auto& ir_tile : ir_tileset.tiles) {
@@ -90,7 +90,7 @@ auto create_tiles(Registry& registry,
       return std::unexpected {tile_id.error()};
     }
 
-    const auto tile_index = saturate_cast<usize>(ir_tile.index);
+    const auto tile_index = saturate_cast<std::size_t>(ir_tile.index);
     if (tile_index >= tileset.tiles.size()) {
       return std::unexpected {std::make_error_code(std::errc::result_out_of_range)};
     }
@@ -99,7 +99,7 @@ auto create_tiles(Registry& registry,
   }
 
   TACTILE_ASSERT(tileset.tiles.size() == tile_count);
-  for (usize tile_index = 0; tile_index < tile_count; ++tile_index) {
+  for (std::size_t tile_index = 0; tile_index < tile_count; ++tile_index) {
     if (tileset.tiles[tile_index] == kInvalidEntity) {
       tileset.tiles[tile_index] = make_tile(registry, saturate_cast<TileIndex>(tile_index));
     }
@@ -217,7 +217,7 @@ auto init_tileset_instance(Registry& registry,
 
   const TileRange tile_range {
     .first_id = first_tile_id,
-    .count = saturate_cast<int32>(tileset.tiles.size()),
+    .count = saturate_cast<std::int32_t>(tileset.tiles.size()),
   };
 
   if (!is_tile_range_available(registry, tile_range)) {
@@ -234,7 +234,7 @@ auto init_tileset_instance(Registry& registry,
   auto& tile_cache = registry.get<CTileCache>();
   tile_cache.tileset_mapping.reserve(tile_cache.tileset_mapping.size() + tileset.tiles.size());
 
-  for (int32 index = 0; index < tile_range.count; ++index) {
+  for (std::int32_t index = 0; index < tile_range.count; ++index) {
     const TileID tile_id {tile_range.first_id + index};
     tile_cache.tileset_mapping.insert_or_assign(tile_id, tileset_entity);
   }
@@ -278,7 +278,7 @@ void destroy_tileset(Registry& registry, const EntityID tileset_entity)
 
   if (const auto* instance = registry.find<CTilesetInstance>(tileset_entity)) {
     auto& tile_cache = registry.get<CTileCache>();
-    for (int32 index = 0; index < instance->tile_range.count; ++index) {
+    for (std::int32_t index = 0; index < instance->tile_range.count; ++index) {
       const TileID tile_id {instance->tile_range.first_id + index};
       tile_cache.tileset_mapping.erase(tile_id);
     }
@@ -321,7 +321,7 @@ auto get_tile_appearance(const Registry& registry,
   TACTILE_ASSERT(is_tileset(registry, tileset_entity));
   const auto& tileset = registry.get<CTileset>(tileset_entity);
 
-  const auto tile_entity = tileset.tiles.at(static_cast<usize>(tile_index));
+  const auto tile_entity = tileset.tiles.at(static_cast<std::size_t>(tile_index));
   if (const auto* animation = registry.find<CAnimation>(tile_entity)) {
     return animation->frames.at(animation->frame_index).tile_index;
   }

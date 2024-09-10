@@ -73,7 +73,7 @@ inline void fill_rect(const Float2& screen_pos, const Float2& size, const UColor
  */
 inline void draw_ngon(const Float2& screen_pos,
                       const float radius,
-                      const uint32 color_mask,
+                      const std::uint32_t color_mask,
                       const int segment_count,
                       const float thickness = 1.0f,
                       const float angle = 0.0f)
@@ -111,7 +111,7 @@ inline void draw_ngon(const Float2& screen_pos,
  */
 inline void draw_hexagon(const Float2& screen_pos,
                          const float radius,
-                         const uint32 color_mask,
+                         const std::uint32_t color_mask,
                          const float thickness = 1.0f)
 {
   constexpr auto half_pi = 0.5f * std::numbers::pi_v<float>;
@@ -120,7 +120,7 @@ inline void draw_hexagon(const Float2& screen_pos,
 
 inline void draw_hexagon_shadowed(const Float2& screen_pos,
                                   const float radius,
-                                  const uint32 color_mask,
+                                  const std::uint32_t color_mask,
                                   const float thickness = 1.0f)
 {
   draw_hexagon(screen_pos + Float2 {thickness, thickness}, radius, IM_COL32_BLACK, thickness);

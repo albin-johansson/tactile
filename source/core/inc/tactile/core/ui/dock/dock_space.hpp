@@ -5,7 +5,6 @@
 #include <filesystem>  // path
 #include <optional>    // optional
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {
@@ -39,7 +38,7 @@ class DockSpace final
 
  private:
   std::filesystem::path mImGuiIniPath;
-  std::optional<uint> mRootId {};
+  std::optional<unsigned> mRootId {};
   bool mDidInit {false};
 };
 

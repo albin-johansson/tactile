@@ -2,6 +2,7 @@
 
 #include "tactile/tiled_tmj_format/tmj_format_layer_parser.hpp"
 
+#include <cstddef>   // size_t
 #include <iterator>  // distance
 #include <utility>   // move
 
@@ -106,7 +107,8 @@ auto parse_csv_tile_data(const nlohmann::json& data_json,
   MatrixIndex::value_type index = 0;
   for (const auto& [_, tile_json] : tile_items) {
     const auto [row, col] = make_matrix_index(index, layer.extent.cols);
-    tile_json.get_to(layer.tiles[saturate_cast<usize>(row)][saturate_cast<usize>(col)]);
+    tile_json.get_to(
+        layer.tiles[saturate_cast<std::size_t>(row)][saturate_cast<std::size_t>(col)]);
 
     ++index;
   }

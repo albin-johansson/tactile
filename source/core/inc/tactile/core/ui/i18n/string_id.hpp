@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstddef>  // size_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {
@@ -17,7 +18,7 @@ namespace tactile::ui {
  * possible to minimize memory usage. Basically, don't provide explicit
  * enumerator values.
  */
-enum class StringID : usize
+enum class StringID : std::size_t
 {
   // Miscellaneous.
   kOK,

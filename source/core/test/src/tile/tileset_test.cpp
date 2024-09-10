@@ -129,7 +129,7 @@ TEST_F(TilesetTest, InitTilesetInstance)
   const auto& instance = mRegistry.get<CTilesetInstance>(ts_entity);
 
   EXPECT_EQ(instance.tile_range.first_id, first_tile);
-  EXPECT_EQ(instance.tile_range.count, saturate_cast<int32>(tileset.tiles.size()));
+  EXPECT_EQ(instance.tile_range.count, saturate_cast<std::int32_t>(tileset.tiles.size()));
   EXPECT_FALSE(instance.is_embedded);
 
   EXPECT_EQ(tile_cache.tileset_mapping.size(), tileset.tiles.size());
@@ -137,7 +137,7 @@ TEST_F(TilesetTest, InitTilesetInstance)
   EXPECT_FALSE(tile_cache.tileset_mapping.contains(first_tile - TileID {1}));
   EXPECT_FALSE(tile_cache.tileset_mapping.contains(first_tile + instance.tile_range.count));
 
-  for (int32 index = 0; index < instance.tile_range.count; ++index) {
+  for (std::int32_t index = 0; index < instance.tile_range.count; ++index) {
     const TileID tile_id {instance.tile_range.first_id + index};
     EXPECT_TRUE(tile_cache.tileset_mapping.contains(tile_id));
   }

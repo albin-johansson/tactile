@@ -33,7 +33,7 @@ void compare_tile_animation(const Registry& registry,
     EXPECT_EQ(animation->frame_index, 0);
     ASSERT_EQ(animation->frames.size(), ir_tile.animation.size());
 
-    for (usize index = 0, count = animation->frames.size(); index < count; ++index) {
+    for (std::size_t index = 0, count = animation->frames.size(); index < count; ++index) {
       const auto& frame = animation->frames.at(index);
       const auto& ir_frame = ir_tile.animation.at(index);
 
@@ -109,7 +109,7 @@ void compare_tile_layer(const Registry& registry,
   ASSERT_EQ(tile_layer.extent, ir_layer.extent);
   each_layer_tile(registry, layer_id, [&](const MatrixIndex& index, const TileID tile_id) {
     const auto ir_tile_id =
-        ir_layer.tiles[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
+        ir_layer.tiles[static_cast<std::size_t>(index.row)][static_cast<std::size_t>(index.col)];
     EXPECT_EQ(tile_id, ir_tile_id)
         << "tiles at (" << index.row << ';' << index.col << ") don't match";
   });
@@ -133,7 +133,7 @@ void compare_object_layer(const Registry& registry,
   ASSERT_EQ(object_layer.objects.size(), ir_layer.objects.size());
   EXPECT_EQ(object_layer.objects.capacity(), ir_layer.objects.size());
 
-  for (usize index = 0, count = object_layer.objects.size(); index < count; ++index) {
+  for (std::size_t index = 0, count = object_layer.objects.size(); index < count; ++index) {
     const auto object_id = object_layer.objects.at(index);
     const auto& ir_object = ir_layer.objects.at(index);
     compare_object(registry, object_id, ir_object);
@@ -158,7 +158,7 @@ void compare_group_layer(const Registry& registry,
   ASSERT_EQ(group_layer.layers.size(), ir_layer.layers.size());
   EXPECT_EQ(group_layer.layers.capacity(), ir_layer.layers.size());
 
-  for (usize index = 0, count = group_layer.layers.size(); index < count; ++index) {
+  for (std::size_t index = 0, count = group_layer.layers.size(); index < count; ++index) {
     const auto sublayer_id = group_layer.layers.at(index);
     const auto& ir_sublayer = ir_layer.layers.at(index);
     compare_layer(registry, sublayer_id, ir_sublayer);
@@ -187,7 +187,7 @@ void compare_tile(const Registry& registry, const EntityID tile_id, const ir::Ti
   ASSERT_EQ(tile.objects.size(), ir_tile.objects.size());
   EXPECT_EQ(tile.objects.capacity(), ir_tile.objects.size());
 
-  for (usize index = 0, count = tile.objects.size(); index < count; ++index) {
+  for (std::size_t index = 0, count = tile.objects.size(); index < count; ++index) {
     const auto object_id = tile.objects.at(index);
     const auto& ir_object = ir_tile.objects.at(index);
     compare_object(registry, object_id, ir_object);
@@ -225,7 +225,7 @@ void compare_tileset(const Registry& registry,
 
   const auto& tile_cache = registry.get<CTileCache>();
 
-  for (usize index = 0, count = tileset.tiles.size(); index < count; ++index) {
+  for (std::size_t index = 0, count = tileset.tiles.size(); index < count; ++index) {
     const auto tile_id = tileset.tiles.at(index);
     EXPECT_NE(tile_id, kInvalidEntity) << "tile #" << index << " is invalid";
     EXPECT_TRUE(is_tile(registry, tile_id));
@@ -239,7 +239,7 @@ void compare_tileset(const Registry& registry,
   }
 
   for (const auto& ir_tile : ir_tileset.tiles) {
-    const auto tile_index = saturate_cast<usize>(ir_tile.index);
+    const auto tile_index = saturate_cast<std::size_t>(ir_tile.index);
     const auto tile_id = tileset.tiles.at(tile_index);
     compare_tile(registry, tile_id, ir_tile);
   }
@@ -271,14 +271,14 @@ void compare_map(const Registry& registry, const EntityID map_id, const ir::Map&
   EXPECT_EQ(tile_format.compression, ir_map.tile_format.compression);
   EXPECT_EQ(tile_format.comp_level, ir_map.tile_format.compression_level);
 
-  for (usize index = 0, count = map.attached_tilesets.size(); index < count; ++index) {
+  for (std::size_t index = 0, count = map.attached_tilesets.size(); index < count; ++index) {
     const auto tileset_id = map.attached_tilesets.at(index);
     const auto& ir_tileset_ref = ir_map.tilesets.at(index);
     compare_tileset(registry, tileset_id, ir_tileset_ref);
   }
 
   const auto& root_layer = registry.get<CGroupLayer>(map.root_layer);
-  for (usize index = 0, count = ir_map.layers.size(); index < count; ++index) {
+  for (std::size_t index = 0, count = ir_map.layers.size(); index < count; ++index) {
     const auto layer_id = root_layer.layers.at(index);
     const auto& ir_layer = ir_map.layers.at(index);
     compare_layer(registry, layer_id, ir_layer);

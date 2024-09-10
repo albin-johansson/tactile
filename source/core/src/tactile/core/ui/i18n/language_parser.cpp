@@ -210,7 +210,7 @@ void _parse_section(const StringMap<IniSection>& ini,
 auto _validate_strings(std::vector<std::string>& strings,
                        const Language* fallback) -> std::expected<void, std::error_code>
 {
-  usize index {0};
+  std::size_t index {0};
 
   for (auto& string : strings) {
     if (string.empty()) {

@@ -71,11 +71,11 @@ TEST(UColor, ToStringARGB)
 // tactile::to_uint32_abgr [UColor]
 TEST(UColor, ToUInt32ABGR)
 {
-  EXPECT_EQ(to_uint32_abgr(kColorBlack), uint32 {0xFF000000});
-  EXPECT_EQ(to_uint32_abgr(kColorWhite), uint32 {0xFFFFFFFF});
-  EXPECT_EQ(to_uint32_abgr(color_test::kLimeGreen), uint32 {0xFF32CD32});
-  EXPECT_EQ(to_uint32_abgr(color_test::kDarkBlue), uint32 {0xFF8B0000});
-  EXPECT_EQ(to_uint32_abgr(color_test::kHotPink), uint32 {0xFFB469FF});
+  EXPECT_EQ(to_uint32_abgr(kColorBlack), std::uint32_t {0xFF000000});
+  EXPECT_EQ(to_uint32_abgr(kColorWhite), std::uint32_t {0xFFFFFFFF});
+  EXPECT_EQ(to_uint32_abgr(color_test::kLimeGreen), std::uint32_t {0xFF32CD32});
+  EXPECT_EQ(to_uint32_abgr(color_test::kDarkBlue), std::uint32_t {0xFF8B0000});
+  EXPECT_EQ(to_uint32_abgr(color_test::kHotPink), std::uint32_t {0xFFB469FF});
 }
 
 // tactile::normalize [UColor]

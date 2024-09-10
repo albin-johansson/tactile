@@ -55,13 +55,13 @@ class MapViewImpl final : public IMapView
   auto get_compression_level() const -> std::optional<int> override;
 
   [[nodiscard]]
-  auto layer_count() const -> usize override;
+  auto layer_count() const -> std::size_t override;
 
   [[nodiscard]]
-  auto tileset_count() const -> usize override;
+  auto tileset_count() const -> std::size_t override;
 
   [[nodiscard]]
-  auto component_count() const -> usize override;
+  auto component_count() const -> std::size_t override;
 
   [[nodiscard]]
   auto get_meta() const -> const IMetaView& override;

@@ -8,7 +8,6 @@
 
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/id.hpp"
-#include "tactile/base/int.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/base/prelude.hpp"

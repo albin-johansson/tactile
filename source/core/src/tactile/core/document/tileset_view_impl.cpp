@@ -54,7 +54,7 @@ auto TilesetViewImpl::get_first_tile_id() const -> TileID
   return instance.tile_range.first_id;
 }
 
-auto TilesetViewImpl::tile_count() const -> usize
+auto TilesetViewImpl::tile_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
   const auto& tileset = registry.get<CTileset>(mTilesetId);
@@ -62,24 +62,24 @@ auto TilesetViewImpl::tile_count() const -> usize
   return tileset.tiles.size();
 }
 
-auto TilesetViewImpl::tile_definition_count() const -> usize
+auto TilesetViewImpl::tile_definition_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
   const auto& tileset = registry.get<CTileset>(mTilesetId);
 
-  return saturate_cast<usize>(std::ranges::count_if(
+  return saturate_cast<std::size_t>(std::ranges::count_if(
       tileset.tiles,
       [&registry](const EntityID tile_id) { return !is_tile_plain(registry, tile_id); }));
 }
 
-auto TilesetViewImpl::column_count() const -> usize
+auto TilesetViewImpl::column_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
 
   const auto& tileset = registry.get<CTileset>(mTilesetId);
   const auto& texture = registry.get<CTexture>(mTilesetId);
 
-  return saturate_cast<usize>(texture.size.x() / tileset.tile_size.x());
+  return saturate_cast<std::size_t>(texture.size.x() / tileset.tile_size.x());
 }
 
 auto TilesetViewImpl::get_tile_size() const -> Int2

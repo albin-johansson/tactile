@@ -2,29 +2,30 @@
 
 #pragma once
 
+#include <cstddef>     // size_t
+#include <cstdint>     // int32_t, uint16_t
 #include <functional>  // hash
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/util/hash.hpp"
 #include "tactile/base/util/strong_type.hpp"
 
 namespace tactile {
 
-using LayerID = int32;
+using LayerID = std::int32_t;
 
-using ObjectID = int32;
+using ObjectID = std::int32_t;
 
 /** Represents local tile identifiers. */
-using TileIndex = int32;
+using TileIndex = std::int32_t;
 
 /** Represents global tile identifiers. */
-using TileID = int32;
+using TileID = std::int32_t;
 
 /** Strong type for object reference identifiers. */
-TACTILE_STRONG_TYPE(ObjectRef, int32);
+TACTILE_STRONG_TYPE(ObjectRef, std::int32_t);
 
 /** Strong type for texture identifiers. */
-TACTILE_STRONG_TYPE(TextureID, uint16);
+TACTILE_STRONG_TYPE(TextureID, std::uint16_t);
 
 /** The identifier used by empty tiles. */
 inline constexpr TileID kEmptyTile = 0;
@@ -35,7 +36,7 @@ template <>
 struct std::hash<tactile::TextureID> final
 {
   [[nodiscard]]
-  auto operator()(const tactile::TextureID id) const -> tactile::usize
+  auto operator()(const tactile::TextureID id) const -> std::size_t
   {
     return tactile::hash_combine(id.value);
   }

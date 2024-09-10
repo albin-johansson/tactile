@@ -33,13 +33,13 @@ class TilesetViewImpl final : public ITilesetView
   auto get_first_tile_id() const -> TileID override;
 
   [[nodiscard]]
-  auto tile_count() const -> usize override;
+  auto tile_count() const -> std::size_t override;
 
   [[nodiscard]]
-  auto tile_definition_count() const -> usize override;
+  auto tile_definition_count() const -> std::size_t override;
 
   [[nodiscard]]
-  auto column_count() const -> usize override;
+  auto column_count() const -> std::size_t override;
 
   [[nodiscard]]
   auto get_tile_size() const -> Int2 override;

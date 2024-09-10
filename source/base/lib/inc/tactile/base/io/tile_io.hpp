@@ -4,11 +4,12 @@
 
 #include <bit>       // endian, byteswap
 #include <concepts>  // same_as
+#include <cstddef>   // size_t
+#include <cstdint>   // uint8_t, int32_t, uint32_t
 #include <cstring>   // memcpy
 #include <optional>  // optional
 #include <vector>    // vector
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/platform/bits.hpp"
 #include "tactile/base/prelude.hpp"
@@ -21,7 +22,7 @@ namespace tactile {
 /**
  * Represents the different possible tile identifier representation modes.
  */
-enum class TileIdFormat : uint8
+enum class TileIdFormat : std::uint8_t
 {
   /** Native format, no special bits. */
   kTactile,
@@ -31,14 +32,14 @@ enum class TileIdFormat : uint8
 };
 
 // Update the documentation if the representation of TileID changes.
-static_assert(std::same_as<TileID, int32>);
+static_assert(std::same_as<TileID, std::int32_t>);
 
-inline constexpr uint32 kTiledFlippedHorizontallyBit = 1u << 31u;
-inline constexpr uint32 kTiledFlippedVerticallyBit = 1u << 30u;
-inline constexpr uint32 kTiledFlippedDiagonallyBit = 1u << 29u;
-inline constexpr uint32 kTiledRotatedHexagonal120Bit = 1u << 28u;
+inline constexpr std::uint32_t kTiledFlippedHorizontallyBit = 1u << 31u;
+inline constexpr std::uint32_t kTiledFlippedVerticallyBit = 1u << 30u;
+inline constexpr std::uint32_t kTiledFlippedDiagonallyBit = 1u << 29u;
+inline constexpr std::uint32_t kTiledRotatedHexagonal120Bit = 1u << 28u;
 
-inline constexpr uint32 kTiledTileFlippingMask =
+inline constexpr std::uint32_t kTiledTileFlippingMask =
     kTiledFlippedHorizontallyBit | kTiledFlippedVerticallyBit | kTiledFlippedDiagonallyBit |
     kTiledRotatedHexagonal120Bit;
 
@@ -60,7 +61,7 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
   auto tile_matrix = make_tile_matrix(extent);
 
   const auto expected_byte_count =
-      saturate_cast<usize>(extent.rows * extent.cols) * sizeof(TileID);
+      saturate_cast<std::size_t>(extent.rows * extent.cols) * sizeof(TileID);
   const auto real_byte_count = byte_stream.size();
 
   if (expected_byte_count != real_byte_count) {
@@ -68,7 +69,7 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
   }
 
   const auto tile_count = byte_stream.size() / sizeof(TileID);
-  for (usize tile_index = 0; tile_index < tile_count; ++tile_index) {
+  for (std::size_t tile_index = 0; tile_index < tile_count; ++tile_index) {
     TileID tile_id {};
 
     const auto byte_index = tile_index * sizeof tile_id;
@@ -84,8 +85,8 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
       tile_id &= ~kTiledTileFlippingMask;
     }
 
-    const auto [row, col] = make_matrix_index(saturate_cast<ssize>(tile_index), extent.cols);
-    tile_matrix[static_cast<usize>(row)][static_cast<usize>(col)] = tile_id;
+    const auto [row, col] = make_matrix_index(saturate_cast<std::ptrdiff_t>(tile_index), extent.cols);
+    tile_matrix[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)] = tile_id;
   }
 
   return tile_matrix;
@@ -108,10 +109,10 @@ inline auto to_byte_stream(const TileMatrix& tile_matrix) -> ByteStream
 
   bytes.reserve(row_count * col_count * sizeof(TileID));
 
-  for (usize row = 0; row < row_count; ++row) {
-    for (usize col = 0; col < col_count; ++col) {
+  for (std::size_t row = 0; row < row_count; ++row) {
+    for (std::size_t col = 0; col < col_count; ++col) {
       const auto tile_id = to_little_endian(tile_matrix[row][col]);
-      each_byte(tile_id, [&](const uint8 byte) { bytes.push_back(byte); });
+      each_byte(tile_id, [&](const std::uint8_t byte) { bytes.push_back(byte); });
     }
   }
 

@@ -8,7 +8,6 @@
 #include <string_view>   // string_view
 #include <system_error>  // errc
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -25,8 +24,8 @@ namespace tactile {
  * An integer if successful; an empty optional otherwise.
  */
 template <std::integral T>
-[[nodiscard]] constexpr auto parse(std::string_view str, const int base = 10) noexcept
-    -> std::optional<T>
+[[nodiscard]] constexpr auto parse(std::string_view str,
+                                   const int base = 10) noexcept -> std::optional<T>
 {
   const auto* const begin = str.data();
   const auto* const end = begin + str.size();

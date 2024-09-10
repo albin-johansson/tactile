@@ -222,7 +222,7 @@ constexpr void each_layer_tile(const Registry& registry,
     for (auto row = begin.row; row < end.row; ++row) {
       for (auto col = begin.col; col < end.col; ++col) {
         const MatrixIndex index {row, col};
-        callable(index, dense->tiles[static_cast<usize>(row)][static_cast<usize>(col)]);
+        callable(index, dense->tiles[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)]);
       }
     }
   }

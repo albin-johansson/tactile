@@ -8,7 +8,6 @@
 #include <string_view>   // string_view
 #include <system_error>  // error_code
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/platform/native_string.hpp"
 

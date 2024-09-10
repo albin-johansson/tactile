@@ -7,7 +7,6 @@
 #include <string_view>   // string_view
 #include <system_error>  // error_code
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/prelude.hpp"
 

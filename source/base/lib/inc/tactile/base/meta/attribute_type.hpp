@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -10,7 +11,7 @@ namespace tactile {
 /**
  * The supported attribute value types.
  */
-enum class AttributeType : uint8
+enum class AttributeType : std::uint8_t
 {
   kStr,
   kInt,

@@ -54,7 +54,7 @@ auto TileViewImpl::get_index() const -> TileIndex
   return tile.index;
 }
 
-auto TileViewImpl::object_count() const -> usize
+auto TileViewImpl::object_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
   const auto& tile = registry.get<CTile>(mTileId);
@@ -62,7 +62,7 @@ auto TileViewImpl::object_count() const -> usize
   return tile.objects.size();
 }
 
-auto TileViewImpl::animation_frame_count() const -> usize
+auto TileViewImpl::animation_frame_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
 
@@ -73,7 +73,7 @@ auto TileViewImpl::animation_frame_count() const -> usize
   return 0;
 }
 
-auto TileViewImpl::get_animation_frame(const usize index) const
+auto TileViewImpl::get_animation_frame(const std::size_t index) const
     -> std::pair<TileIndex, Milliseconds>
 {
   const auto& registry = mDocument->get_registry();

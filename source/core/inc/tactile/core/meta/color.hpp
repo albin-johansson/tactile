@@ -3,13 +3,13 @@
 #pragma once
 
 #include <array>         // array
+#include <cstdint>       // uint32_t
 #include <expected>      // expected
 #include <ostream>       // ostream
 #include <span>          // span
 #include <string>        // string
 #include <system_error>  // error_code
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/meta/color.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -73,7 +73,7 @@ auto to_string_argb(const UColor& color) -> std::string;
  * An 32-bit integer, where each octet represents a different color channel.
  */
 [[nodiscard]]
-auto to_uint32_abgr(const UColor& color) -> uint32;
+auto to_uint32_abgr(const UColor& color) -> std::uint32_t;
 
 [[nodiscard]]
 auto normalize(const UColor& color) -> FColor;

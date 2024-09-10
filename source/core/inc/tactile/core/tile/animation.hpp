@@ -2,12 +2,12 @@
 
 #pragma once
 
+#include <cstddef>       // size_t
 #include <expected>      // expected
 #include <system_error>  // error_code
 #include <vector>        // vector
 
 #include "tactile/base/id.hpp"
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -37,7 +37,7 @@ struct CAnimation final
   SteadyClockInstant last_update;
 
   /** The index of the currently displayed frame. */
-  usize frame_index;
+  std::size_t frame_index;
 
   /** The sequence of frames the animation cycles through. */
   std::vector<AnimationFrame> frames;
@@ -74,7 +74,7 @@ void update_animations(Registry& registry);
  */
 auto add_animation_frame(Registry& registry,
                          EntityID tile_entity,
-                         usize frame_index,
+                         std::size_t frame_index,
                          const AnimationFrame& frame) -> std::expected<void, std::error_code>;
 
 /**
@@ -98,6 +98,6 @@ auto add_animation_frame(Registry& registry,
  */
 auto remove_animation_frame(Registry& registry,
                             EntityID tile_entity,
-                            usize frame_index) -> std::expected<void, std::error_code>;
+                            std::size_t frame_index) -> std::expected<void, std::error_code>;
 
 }  // namespace tactile

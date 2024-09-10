@@ -5,7 +5,6 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/concepts.hpp"
 
@@ -43,7 +42,7 @@ auto trim_string(std::string_view str) -> std::string;
 template <InvocableType<bool, std::string_view> T>
 auto split_string(const std::string_view str, const char separator, const T& callback) -> bool
 {
-  usize pos = 0;
+  std::size_t pos = 0;
   const auto str_length = str.size();
 
   while (pos < str_length) {

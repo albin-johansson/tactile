@@ -32,7 +32,7 @@ StyleColorScope::StyleColorScope(const ImGuiCol id, const ImVec4& color)
   ImGui::PushStyleColor(id, color);
 }
 
-StyleColorScope::StyleColorScope(const ImGuiCol id, const uint32 color)
+StyleColorScope::StyleColorScope(const ImGuiCol id, const std::uint32_t color)
 {
   ImGui::PushStyleColor(id, color);
 }

@@ -2,13 +2,13 @@
 
 #pragma once
 
+#include <cstddef>        // size_t
 #include <expected>       // expected
 #include <memory>         // unique_ptr
 #include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 #include <vector>         // vector
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command_stack.hpp"
 #include "tactile/core/util/uuid.hpp"
@@ -57,8 +57,8 @@ class DocumentManager final
    * The UUID of the map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto create_and_open_map(IRenderer& renderer, const ir::Map& ir_map)
-      -> std::expected<UUID, std::error_code>;
+  auto create_and_open_map(IRenderer& renderer,
+                           const ir::Map& ir_map) -> std::expected<UUID, std::error_code>;
 
   /**
    * Returns the document associated with a given UUID.
@@ -106,7 +106,7 @@ class DocumentManager final
    *
    * \param capacity The new command capacity.
    */
-  void set_command_capacity(usize capacity);
+  void set_command_capacity(std::size_t capacity);
 
   /**
    * Returns the maximum number of commands stored by a document.
@@ -115,7 +115,7 @@ class DocumentManager final
    * The current command capacity.
    */
   [[nodiscard]]
-  auto command_capacity() const -> usize;
+  auto command_capacity() const -> std::size_t;
 
   /**
    * Returns the command history associated with a given document.
@@ -148,7 +148,7 @@ class DocumentManager final
   std::vector<UUID> mOpenDocuments {};
   UUID mActiveDocument {};
   std::unordered_map<UUID, CommandStack> mHistories {};
-  usize mCommandCapacity {100};
+  std::size_t mCommandCapacity {100};
 };
 
 }  // namespace tactile

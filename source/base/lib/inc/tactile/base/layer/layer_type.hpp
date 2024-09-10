@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -10,7 +11,7 @@ namespace tactile {
 /**
  * Represents the supported layer types.
  */
-enum class LayerType : uint8
+enum class LayerType : std::uint8_t
 {
   kTileLayer,
   kObjectLayer,

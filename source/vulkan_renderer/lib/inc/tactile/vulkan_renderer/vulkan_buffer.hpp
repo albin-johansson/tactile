@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <cstdint>   // uint64_t
 #include <expected>  // expected
 
 #include <vk_mem_alloc.h>

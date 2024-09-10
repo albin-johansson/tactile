@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include <cstddef>  // size_t
 #include <ostream>  // ostream
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/concepts.hpp"
@@ -23,7 +23,7 @@ namespace tactile {
  * \return
  * The output stream.
  */
-template <ArithmeticType T, usize N>
+template <ArithmeticType T, std::size_t N>
 auto operator<<(std::ostream& stream, const Vec<T, N>& vec) -> std::ostream&
 {
   stream << '{' << vec[0] << ',' << ' ' << vec[1];

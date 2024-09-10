@@ -6,7 +6,6 @@
 #include <system_error>  // error_code, error_category
 #include <utility>       // to_underlying
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/opengl_renderer/api.hpp"
 
@@ -53,7 +52,7 @@ TACTILE_OPENGL_API auto get_opengl_error_category() noexcept -> const std::error
  * An OpenGL error code.
  */
 [[nodiscard]]
-TACTILE_OPENGL_API auto map_opengl_error_code(uint error) noexcept -> OpenGLError;
+TACTILE_OPENGL_API auto map_opengl_error_code(unsigned error) noexcept -> OpenGLError;
 
 /**
  * Creates an OpenGL error code.

@@ -118,7 +118,7 @@ auto LayerViewImpl::is_visible() const -> bool
   return layer.visible;
 }
 
-auto LayerViewImpl::get_global_index() const -> usize
+auto LayerViewImpl::get_global_index() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
 
@@ -128,7 +128,7 @@ auto LayerViewImpl::get_global_index() const -> usize
   return get_global_layer_index(registry, map.root_layer, mLayerId).value();
 }
 
-auto LayerViewImpl::layer_count() const -> usize
+auto LayerViewImpl::layer_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
 
@@ -139,7 +139,7 @@ auto LayerViewImpl::layer_count() const -> usize
   return 0;
 }
 
-auto LayerViewImpl::object_count() const -> usize
+auto LayerViewImpl::object_count() const -> std::size_t
 {
   const auto& registry = mDocument->get_registry();
 

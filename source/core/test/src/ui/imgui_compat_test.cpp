@@ -56,15 +56,15 @@ TEST(ImGuiCompat, ToImGuiDataType)
   EXPECT_EQ(to_imgui_data_type<float>(), ImGuiDataType_Float);
   EXPECT_EQ(to_imgui_data_type<double>(), ImGuiDataType_Double);
 
-  EXPECT_EQ(to_imgui_data_type<uint8>(), ImGuiDataType_U8);
-  EXPECT_EQ(to_imgui_data_type<uint16>(), ImGuiDataType_U16);
-  EXPECT_EQ(to_imgui_data_type<uint32>(), ImGuiDataType_U32);
-  EXPECT_EQ(to_imgui_data_type<uint64>(), ImGuiDataType_U64);
+  EXPECT_EQ(to_imgui_data_type<std::uint8_t>(), ImGuiDataType_U8);
+  EXPECT_EQ(to_imgui_data_type<std::uint16_t>(), ImGuiDataType_U16);
+  EXPECT_EQ(to_imgui_data_type<std::uint32_t>(), ImGuiDataType_U32);
+  EXPECT_EQ(to_imgui_data_type<std::uint64_t>(), ImGuiDataType_U64);
 
-  EXPECT_EQ(to_imgui_data_type<int8>(), ImGuiDataType_S8);
-  EXPECT_EQ(to_imgui_data_type<int16>(), ImGuiDataType_S16);
-  EXPECT_EQ(to_imgui_data_type<int32>(), ImGuiDataType_S32);
-  EXPECT_EQ(to_imgui_data_type<int64>(), ImGuiDataType_S64);
+  EXPECT_EQ(to_imgui_data_type<std::int8_t>(), ImGuiDataType_S8);
+  EXPECT_EQ(to_imgui_data_type<std::int16_t>(), ImGuiDataType_S16);
+  EXPECT_EQ(to_imgui_data_type<std::int32_t>(), ImGuiDataType_S32);
+  EXPECT_EQ(to_imgui_data_type<std::int64_t>(), ImGuiDataType_S64);
 }
 
 }  // namespace tactile

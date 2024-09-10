@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -14,7 +15,7 @@ namespace tactile {
  */
 struct UColor final
 {
-  using value_type = uint8;
+  using value_type = std::uint8_t;
 
   value_type red;
   value_type green;

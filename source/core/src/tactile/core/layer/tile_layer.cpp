@@ -14,38 +14,40 @@
 namespace tactile {
 namespace tile_layer {
 
-void add_n_rows(TileMatrix& matrix, const ssize n, const MatrixExtent::value_type column_count)
+void add_n_rows(TileMatrix& matrix,
+                const std::ptrdiff_t n,
+                const MatrixExtent::value_type column_count)
 {
-  matrix.reserve(matrix.size() + saturate_cast<usize>(n));
+  matrix.reserve(matrix.size() + saturate_cast<std::size_t>(n));
 
-  for (ssize i = 0; i < n; ++i) {
+  for (std::ptrdiff_t i = 0; i < n; ++i) {
     matrix.emplace_back(column_count, kEmptyTile);
   }
 }
 
-void remove_n_rows(TileMatrix& matrix, const ssize n)
+void remove_n_rows(TileMatrix& matrix, const std::ptrdiff_t n)
 {
-  for (ssize i = 0; i < n; ++i) {
+  for (std::ptrdiff_t i = 0; i < n; ++i) {
     TACTILE_ASSERT(!matrix.empty());
     matrix.pop_back();
   }
 }
 
-void add_n_columns(TileMatrix& matrix, const ssize n)
+void add_n_columns(TileMatrix& matrix, const std::ptrdiff_t n)
 {
   for (auto& row : matrix) {
-    row.reserve(row.size() + saturate_cast<usize>(n));
+    row.reserve(row.size() + saturate_cast<std::size_t>(n));
 
-    for (ssize i = 0; i < n; ++i) {
+    for (std::ptrdiff_t i = 0; i < n; ++i) {
       row.push_back(kEmptyTile);
     }
   }
 }
 
-void remove_n_columns(TileMatrix& matrix, const ssize n)
+void remove_n_columns(TileMatrix& matrix, const std::ptrdiff_t n)
 {
   for (auto& row : matrix) {
-    for (ssize i = 0; i < n; ++i) {
+    for (std::ptrdiff_t i = 0; i < n; ++i) {
       TACTILE_ASSERT(!row.empty());
       row.pop_back();
     }
@@ -55,7 +57,7 @@ void remove_n_columns(TileMatrix& matrix, const ssize n)
 void resize(TileMatrix& matrix, const MatrixExtent& extent)
 {
   const auto old_rows = std::ssize(matrix);
-  const auto old_cols = (old_rows > 0) ? std::ssize(matrix.at(0)) : ssize {0};
+  const auto old_cols = (old_rows > 0) ? std::ssize(matrix.at(0)) : std::ptrdiff_t {0};
 
   if (old_cols != extent.cols) {
     if (old_cols > extent.cols) {
@@ -87,7 +89,7 @@ void set_tile_unchecked(TileMatrix& matrix, const MatrixIndex& index, const Tile
 {
   TACTILE_ASSERT(index.row < std::ssize(matrix));
   TACTILE_ASSERT(index.col < std::ssize(matrix.at(0)));
-  matrix[static_cast<usize>(index.row)][static_cast<usize>(index.col)] = tile_id;
+  matrix[static_cast<std::size_t>(index.row)][static_cast<std::size_t>(index.col)] = tile_id;
 }
 
 void set_tile_unchecked(SparseTileMatrix& matrix,
@@ -105,7 +107,7 @@ void set_tile_unchecked(SparseTileMatrix& matrix,
 [[nodiscard]]
 auto get_tile_unchecked(const TileMatrix& matrix, const MatrixIndex& index) noexcept -> TileID
 {
-  return matrix[static_cast<usize>(index.row)][static_cast<usize>(index.col)];
+  return matrix[static_cast<std::size_t>(index.row)][static_cast<std::size_t>(index.col)];
 }
 
 [[nodiscard]]
@@ -153,7 +155,8 @@ void convert_to_dense_tile_layer(Registry& registry, const EntityID layer_id)
     auto tile_matrix = make_tile_matrix(tile_layer.extent);
 
     each_layer_tile(registry, layer_id, [&](const MatrixIndex& index, const TileID tile_id) {
-      tile_matrix[static_cast<usize>(index.row)][static_cast<usize>(index.col)] = tile_id;
+      tile_matrix[static_cast<std::size_t>(index.row)][static_cast<std::size_t>(index.col)] =
+          tile_id;
     });
 
     auto& dense = registry.add<CDenseTileLayer>(layer_id);
@@ -213,13 +216,13 @@ auto serialize_tile_layer(const Registry& registry, const EntityID layer_id) -> 
 
   ByteStream byte_stream {};
 
-  const auto u_rows = saturate_cast<usize>(tile_layer.extent.rows);
-  const auto u_cols = saturate_cast<usize>(tile_layer.extent.cols);
+  const auto u_rows = saturate_cast<std::size_t>(tile_layer.extent.rows);
+  const auto u_cols = saturate_cast<std::size_t>(tile_layer.extent.cols);
   byte_stream.reserve(u_rows * u_cols * sizeof(TileID));
 
   each_layer_tile(registry, layer_id, [&](const MatrixIndex&, const TileID tile_id) {
     each_byte(to_little_endian(tile_id),
-              [&](const uint8 byte) { byte_stream.push_back(byte); });
+              [&](const std::uint8_t byte) { byte_stream.push_back(byte); });
   });
 
   return byte_stream;

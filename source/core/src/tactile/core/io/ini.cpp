@@ -60,7 +60,7 @@ auto _parse_key_value_pair(const std::string_view current_line,
   auto value = trim_string(current_line.substr(eq_pos + 1));
 
   const auto value_is_just_whitespace = std::ranges::all_of(value, [](const char ch) {
-    return std::isspace(static_cast<uchar>(ch));
+    return std::isspace(static_cast<unsigned char>(ch));
   });
 
   if (value.empty() || value_is_just_whitespace) {

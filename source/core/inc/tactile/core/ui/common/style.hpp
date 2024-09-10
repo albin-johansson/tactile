@@ -7,7 +7,6 @@
 
 #include <imgui.h>
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {
@@ -48,7 +47,7 @@ class StyleColorScope final
   StyleColorScope(ImGuiCol id, const ImVec4& color);
 
   [[nodiscard]]
-  StyleColorScope(ImGuiCol id, uint32 color);
+  StyleColorScope(ImGuiCol id, std::uint32_t color);
 
   ~StyleColorScope() noexcept;
 

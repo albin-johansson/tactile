@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {
@@ -10,7 +11,7 @@ namespace tactile::ui {
 /**
  * Represents the available editor themes.
  */
-enum class Theme : uint8
+enum class Theme : std::uint8_t
 {
   kDearImGuiLight,
   kDearImGuiDark

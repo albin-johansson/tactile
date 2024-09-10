@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -13,7 +14,7 @@ namespace tactile {
  * \details
  * The underlying value increases with severity.
  */
-enum class LogLevel : uint8
+enum class LogLevel : std::uint8_t
 {
   kTrace,  ///< For verbose messages only useful for detailed debugging.
   kDebug,  ///< For messages that provide useful developer information.

@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -10,7 +11,7 @@ namespace tactile {
 /**
  * Represents known compression formats.
  */
-enum class CompressionFormat : uint8
+enum class CompressionFormat : std::uint8_t
 {
   kZlib,
   kZstd

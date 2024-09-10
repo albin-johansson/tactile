@@ -35,7 +35,7 @@ struct TileRange final
   TileID first_id;
 
   /** The number of tile identifiers (starting at \c first_id). */
-  int32 count;
+  std::int32_t count;
 };
 
 /**

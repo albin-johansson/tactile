@@ -2,19 +2,20 @@
 
 #pragma once
 
-#include <ranges>  // contiguous_range
-#include <span>    // span
-#include <vector>  // vector
+#include <cstdint>  // uint8_t
+#include <ranges>   // contiguous_range
+#include <span>     // span
+#include <vector>   // vector
 
-#include "tactile/base/int.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
 /** A contiguous sequence of arbitrary bytes. */
-using ByteSpan = std::span<const uint8>;
+using ByteSpan = std::span<const std::uint8_t>;
 
 /** A contiguous stream of arbitrary bytes. */
-using ByteStream = std::vector<uint8>;
+using ByteStream = std::vector<std::uint8_t>;
 
 /**
  * Creates a byte span from a container.
@@ -29,7 +30,7 @@ using ByteStream = std::vector<uint8>;
 template <std::ranges::contiguous_range T>
 [[nodiscard]] constexpr auto make_byte_span(const T& container) -> ByteSpan
 {
-  return {reinterpret_cast<const uint8*>(container.data()),
+  return {reinterpret_cast<const std::uint8_t*>(container.data()),
           container.size() * sizeof(typename T::value_type)};
 }
 

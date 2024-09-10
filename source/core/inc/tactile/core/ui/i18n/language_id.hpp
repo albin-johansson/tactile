@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -10,7 +11,7 @@ namespace tactile {
 /**
  * Provides identifiers for the supported languages.
  */
-enum class LanguageID : uint8
+enum class LanguageID : std::uint8_t
 {
   kAmericanEnglish,
   kBritishEnglish,

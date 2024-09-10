@@ -4,12 +4,12 @@
 
 #include <algorithm>  // copy_n, min
 #include <array>      // array
+#include <cstddef>    // size_t
 #include <cstring>    // strlen
 #include <utility>    // to_underlying
 
 #include <imgui.h>
 
-#include "tactile/base/int.hpp"
 #include "tactile/core/meta/color.hpp"
 #include "tactile/core/platform/file_dialog.hpp"
 #include "tactile/core/ui/common/buttons.hpp"
@@ -21,14 +21,14 @@ inline namespace attribute_widgets {
 
 using AttributeTypeNameArray = std::array<const char*, 13>;
 
-inline constexpr usize kStringCharLimit = 128;
+inline constexpr std::size_t kStringCharLimit = 128;
 
 auto _push_attribute_type_selectable(const AttributeTypeNameArray& names,
                                      const AttributeType selectable_type,
                                      const AttributeType current_type) -> bool
 {
   const auto is_selected = current_type == selectable_type;
-  const auto& type_name = names.at(static_cast<usize>(selectable_type));
+  const auto& type_name = names.at(static_cast<std::size_t>(selectable_type));
 
   const auto pressed = ImGui::Selectable(type_name, is_selected);
 
@@ -356,7 +356,7 @@ auto push_attribute_type_combo(const Language& language,
 
   bool changed {false};
 
-  const auto& preview_name = type_names.at(static_cast<usize>(type));
+  const auto& preview_name = type_names.at(static_cast<std::size_t>(type));
   if (const ComboScope type_combo {label, preview_name}; type_combo.is_open()) {
     const auto all_types = {AttributeType::kStr,
                             AttributeType::kInt,

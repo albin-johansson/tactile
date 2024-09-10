@@ -2,6 +2,7 @@
 
 #include "tactile/test_util/ir.hpp"
 
+#include <cstddef>  // size_t
 #include <format>   // format
 #include <utility>  // move
 
@@ -11,8 +12,8 @@ namespace tactile::test {
 
 auto make_ir_tile_matrix(const MatrixExtent& extent) -> std::vector<std::vector<TileID>>
 {
-  const auto u_rows = saturate_cast<usize>(extent.rows);
-  const auto u_cols = saturate_cast<usize>(extent.cols);
+  const auto u_rows = saturate_cast<std::size_t>(extent.rows);
+  const auto u_cols = saturate_cast<std::size_t>(extent.cols);
 
   std::vector<TileID> tile_row {};
   tile_row.reserve(u_cols);

@@ -2,13 +2,12 @@
 
 #pragma once
 
+#include <cstddef>        // size_t
 #include <functional>     // hash, equal_to
 #include <string>         // string
 #include <string_view>    // string_view
 #include <type_traits>    // true_type
 #include <unordered_map>  // unordered_map
-
-#include "tactile/base/int.hpp"
 
 namespace tactile {
 
@@ -18,17 +17,17 @@ struct StringHash final
   using hash_type = std::hash<std::string_view>;
   using is_transparent [[maybe_unused]] = std::true_type;
 
-  [[nodiscard]] auto operator()(const char* str) const -> usize
+  [[nodiscard]] auto operator()(const char* str) const -> std::size_t
   {
     return hash_type {}(str);
   }
 
-  [[nodiscard]] auto operator()(const std::string_view str) const -> usize
+  [[nodiscard]] auto operator()(const std::string_view str) const -> std::size_t
   {
     return hash_type {}(str);
   }
 
-  [[nodiscard]] auto operator()(const std::string& str) const -> usize
+  [[nodiscard]] auto operator()(const std::string& str) const -> std::size_t
   {
     return hash_type {}(str);
   }

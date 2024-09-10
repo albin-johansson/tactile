@@ -52,13 +52,13 @@ class LayerViewImpl final : public ILayerView
   auto is_visible() const -> bool override;
 
   [[nodiscard]]
-  auto get_global_index() const -> usize override;
+  auto get_global_index() const -> std::size_t override;
 
   [[nodiscard]]
-  auto layer_count() const -> usize override;
+  auto layer_count() const -> std::size_t override;
 
   [[nodiscard]]
-  auto object_count() const -> usize override;
+  auto object_count() const -> std::size_t override;
 
   [[nodiscard]]
   auto get_tile(const MatrixIndex& index) const -> std::optional<TileID> override;

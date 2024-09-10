@@ -200,10 +200,10 @@ struct Tileset final
   Int2 tile_size;
 
   /** The total number of tiles in the tileset. */
-  ssize tile_count;
+  std::ptrdiff_t tile_count;
 
   /** The number of tile columns in the tileset. */
-  ssize column_count;
+  std::ptrdiff_t column_count;
 
   /** The size of the associated image. */
   Int2 image_size;
@@ -248,7 +248,7 @@ struct TileFormat final
   std::optional<CompressionFormat> compression;
 
   /** The compression level. */
-  std::optional<int32> compression_level;
+  std::optional<std::int32_t> compression_level;
 
   [[nodiscard]]
   auto operator==(const TileFormat&) const -> bool = default;

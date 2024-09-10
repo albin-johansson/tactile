@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include <cstdint>      // uint8_t
 #include <string_view>  // string_view
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -12,7 +12,7 @@ namespace tactile {
 /**
  * Provides identifiers for common save format parse errors.
  */
-enum class SaveFormatParseError : uint8
+enum class SaveFormatParseError : std::uint8_t
 {
   kNoPropertyName,
   kNoPropertyType,

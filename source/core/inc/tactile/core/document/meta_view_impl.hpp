@@ -28,11 +28,11 @@ class MetaViewImpl final : public IMetaView
   auto get_name() const -> std::string_view override;
 
   [[nodiscard]]
-  auto get_property(usize index) const
+  auto get_property(std::size_t index) const
       -> std::pair<const std::string&, const Attribute&> override;
 
   [[nodiscard]]
-  auto property_count() const -> usize override;
+  auto property_count() const -> std::size_t override;
 
  private:
   const IDocument* mDocument;

@@ -2,13 +2,13 @@
 
 #pragma once
 
+#include <cstddef>       // size_t
 #include <expected>      // expected
 #include <string>        // string
 #include <string_view>   // string_view
 #include <system_error>  // error_code
 #include <utility>       // pair
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -54,7 +54,7 @@ class IComponentView
    * An attribute key and value pair.
    */
   [[nodiscard]]
-  virtual auto get_attribute(usize index) const
+  virtual auto get_attribute(std::size_t index) const
       -> std::pair<const std::string&, const Attribute&> = 0;
 
   /**
@@ -64,7 +64,7 @@ class IComponentView
    * An attribute count.
    */
   [[nodiscard]]
-  virtual auto attribute_count() const -> usize = 0;
+  virtual auto attribute_count() const -> std::size_t = 0;
 };
 
 }  // namespace tactile

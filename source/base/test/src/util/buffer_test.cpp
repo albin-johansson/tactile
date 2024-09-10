@@ -161,8 +161,8 @@ TEST(Buffer, AppendIteratorRange)
 // tactile::Buffer::append [container version]
 TEST(Buffer, AppendContainer)
 {
-  const std::vector<uint32> values = {1, 2, 3, 4, 5};
-  Buffer<uint32, 8> buffer;  // NOLINT
+  const std::vector<std::uint32_t> values = {1, 2, 3, 4, 5};
+  Buffer<std::uint32_t, 8> buffer;  // NOLINT
   ASSERT_EQ(buffer.size(), 0);
 
   buffer.append(values);
@@ -252,7 +252,7 @@ TEST(Buffer, Data)
 // tactile::Buffer::end
 TEST(Buffer, Iteration)
 {
-  Buffer<uint16, 6> buffer;  // NOLINT
+  Buffer<std::uint16_t, 6> buffer;  // NOLINT
 
   EXPECT_EQ(std::distance(buffer.begin(), buffer.end()), 0);
   EXPECT_EQ(std::distance(Const(buffer).begin(), Const(buffer).end()), 0);
@@ -285,7 +285,7 @@ TEST(Buffer, ViewWithCharBuffer)
 // tactile::Buffer::view
 TEST(Buffer, ViewWithNonCharBuffer)
 {
-  Buffer<uint8, 16> buffer;  // NOLINT
+  Buffer<std::uint8_t, 16> buffer;  // NOLINT
 
   buffer.push_back(1u);
   buffer.push_back(2u);

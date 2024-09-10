@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/int.hpp"
+#include <cstdint>  // uint8_t
+
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -10,7 +11,7 @@ namespace tactile {
 /**
  * Represents the different supported tile orientations.
  */
-enum class TileOrientation : uint8
+enum class TileOrientation : std::uint8_t
 {
   /** The classic tile orientation, with orthogonal x and y axes. */
   kOrthogonal,

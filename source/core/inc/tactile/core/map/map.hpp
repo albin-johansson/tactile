@@ -2,13 +2,13 @@
 
 #pragma once
 
+#include <cstdint>       // int32_t
 #include <expected>      // expected
 #include <optional>      // optional
 #include <system_error>  // error_code
 #include <vector>        // vector
 
 #include "tactile/base/id.hpp"
-#include "tactile/base/int.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
@@ -92,13 +92,13 @@ struct CMapIdCache final
 struct CLayerSuffixes final
 {
   /** The next tile layer suffix. */
-  int32 tile_layer_suffix;
+  std::int32_t tile_layer_suffix;
 
   /** The next object layer suffix. */
-  int32 object_layer_suffix;
+  std::int32_t object_layer_suffix;
 
   /** The next group layer suffix. */
-  int32 group_layer_suffix;
+  std::int32_t group_layer_suffix;
 };
 
 /**

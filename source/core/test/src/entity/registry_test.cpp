@@ -144,13 +144,13 @@ TEST_F(RegistryTest, GetFromEntity)
 /// \trace tactile::Registry::find
 TEST_F(RegistryTest, Find)
 {
-  mRegistry.add<uint32>(0xBEEFu);
+  mRegistry.add<std::uint32_t>(0xBEEFu);
 
-  EXPECT_EQ(mRegistry.find<uint32>(), &mRegistry.get<uint32>());
-  EXPECT_EQ(Const(mRegistry).find<uint32>(), &Const(mRegistry).get<uint32>());
+  EXPECT_EQ(mRegistry.find<std::uint32_t>(), &mRegistry.get<std::uint32_t>());
+  EXPECT_EQ(Const(mRegistry).find<std::uint32_t>(), &Const(mRegistry).get<std::uint32_t>());
 
-  EXPECT_EQ(mRegistry.find<int32>(), nullptr);
-  EXPECT_EQ(Const(mRegistry).find<int32>(), nullptr);
+  EXPECT_EQ(mRegistry.find<std::int32_t>(), nullptr);
+  EXPECT_EQ(Const(mRegistry).find<std::int32_t>(), nullptr);
 }
 
 /// \trace tactile::Registry::find [EntityID]

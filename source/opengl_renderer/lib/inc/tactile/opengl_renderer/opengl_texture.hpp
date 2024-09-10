@@ -5,7 +5,6 @@
 #include <expected>      // expected
 #include <system_error>  // error_code
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/texture.hpp"
 #include "tactile/opengl_renderer/api.hpp"
@@ -20,7 +19,7 @@ struct RendererOptions;
 class TACTILE_OPENGL_API OpenGLTexture final : public ITexture
 {
  public:
-  using id_type = uint;
+  using id_type = unsigned;
 
   /**
    * Loads a texture from an image on disk.

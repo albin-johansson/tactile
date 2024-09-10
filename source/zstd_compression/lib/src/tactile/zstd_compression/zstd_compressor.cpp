@@ -3,6 +3,7 @@
 #include "tactile/zstd_compression/zstd_compressor.hpp"
 
 #include <algorithm>  // copy_n
+#include <cstddef>    // size_t
 #include <iterator>   // back_inserter
 #include <memory>     // unique_ptr
 
@@ -83,7 +84,7 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
     std::copy_n(staging_buffer.data(), output_view.pos, std::back_inserter(decompressed_data));
   };
 
-  usize byte_write_count = 0;
+  std::size_t byte_write_count = 0;
 
   do {
     // Check if our staging buffer is full, in which case we flush and reuse it.

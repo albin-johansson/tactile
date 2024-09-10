@@ -60,7 +60,6 @@ target_sources(tactile-base
                "inc/tactile/base/util/strong_type.hpp"
                "inc/tactile/base/util/tile_matrix.hpp"
                "inc/tactile/base/id.hpp"
-               "inc/tactile/base/int.hpp"
                "inc/tactile/base/prelude.hpp"
                "inc/tactile/base/runtime.hpp"
                )

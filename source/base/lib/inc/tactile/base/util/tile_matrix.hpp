@@ -25,8 +25,8 @@ using TileMatrix = std::vector<TileRow>;
 [[nodiscard]]
 constexpr auto make_tile_matrix(const MatrixExtent& extent) -> TileMatrix
 {
-  return {saturate_cast<usize>(extent.rows),
-          TileRow(saturate_cast<usize>(extent.cols), kEmptyTile)};
+  return {saturate_cast<std::size_t>(extent.rows),
+          TileRow(saturate_cast<std::size_t>(extent.cols), kEmptyTile)};
 }
 
 }  // namespace tactile

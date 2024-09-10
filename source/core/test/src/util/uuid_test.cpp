@@ -67,7 +67,7 @@ TEST(UUID, HashCode)
 TEST(UUID, ToString)
 {
   auto is_hex_digit = [](const char digit) -> bool {
-    return std::isxdigit(static_cast<uchar>(digit));
+    return std::isxdigit(static_cast<unsigned char>(digit));
   };
 
   {

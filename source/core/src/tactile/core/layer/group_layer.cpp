@@ -21,13 +21,13 @@ namespace group_layer_impl {
 struct FindLayerResult final
 {
   CGroupLayer* parent_layer;
-  ssize layer_index;
+  std::ptrdiff_t layer_index;
 };
 
 struct FindLayerConstResult final
 {
   const CGroupLayer* parent_layer;
-  ssize layer_index;
+  std::ptrdiff_t layer_index;
 };
 
 [[nodiscard]]
@@ -84,7 +84,7 @@ auto find_layer(const Registry& registry,
 auto can_move_layer(const Registry& registry,
                     const EntityID root_layer_id,
                     const EntityID target_layer_id,
-                    const ssize offset) -> bool
+                    const std::ptrdiff_t offset) -> bool
 {
   const auto find_result = find_layer(registry, root_layer_id, target_layer_id);
 
@@ -102,7 +102,7 @@ auto can_move_layer(const Registry& registry,
 auto get_global_layer_index(const Registry& registry,
                             const EntityID root_layer_id,
                             const EntityID target_layer_id,
-                            usize& index) -> bool
+                            std::size_t& index) -> bool
 {
   const auto& root_layer = registry.get<CGroupLayer>(root_layer_id);
 
@@ -165,12 +165,12 @@ void destroy_group_layer(Registry& registry, const EntityID group_layer_id)
   registry.destroy(group_layer_id);
 }
 
-auto count_layers(const Registry& registry, const EntityID root_layer_id) -> usize
+auto count_layers(const Registry& registry, const EntityID root_layer_id) -> std::size_t
 {
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
 
   const auto& root_layer = registry.get<CGroupLayer>(root_layer_id);
-  usize count = 0;
+  std::size_t count = 0;
 
   for (const auto layer_id : root_layer.layers) {
     ++count;
@@ -211,25 +211,25 @@ auto find_parent_layer(const Registry& registry,
 
 auto get_local_layer_index(const Registry& registry,
                            const EntityID root_layer_id,
-                           const EntityID target_layer_id) -> std::optional<usize>
+                           const EntityID target_layer_id) -> std::optional<std::size_t>
 {
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
 
   return group_layer_impl::find_layer(registry, root_layer_id, target_layer_id)
       .transform([](const group_layer_impl::FindLayerConstResult& result) {
-        return saturate_cast<usize>(result.layer_index);
+        return saturate_cast<std::size_t>(result.layer_index);
       });
 }
 
 auto get_global_layer_index(const Registry& registry,
                             const EntityID root_layer_id,
-                            const EntityID target_layer_id) -> std::optional<usize>
+                            const EntityID target_layer_id) -> std::optional<std::size_t>
 {
   TACTILE_ASSERT(is_group_layer(registry, root_layer_id));
   TACTILE_ASSERT(is_layer(registry, target_layer_id));
 
-  usize index = 0;
+  std::size_t index = 0;
 
   if (group_layer_impl::get_global_layer_index(registry,
                                                root_layer_id,

@@ -41,13 +41,13 @@ class TileViewImpl final : public ITileView
   auto get_index() const -> TileIndex override;
 
   [[nodiscard]]
-  auto object_count() const -> usize override;
+  auto object_count() const -> std::size_t override;
 
   [[nodiscard]]
-  auto animation_frame_count() const -> usize override;
+  auto animation_frame_count() const -> std::size_t override;
 
   [[nodiscard]]
-  auto get_animation_frame(usize index) const -> std::pair<TileIndex, Milliseconds> override;
+  auto get_animation_frame(std::size_t index) const -> std::pair<TileIndex, Milliseconds> override;
 
   [[nodiscard]]
   auto get_meta() const -> const IMetaView& override;

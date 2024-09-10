@@ -6,7 +6,7 @@ namespace tactile {
 inline namespace settings {
 
 inline constexpr auto kLanguageDefault = LanguageID::kAmericanEnglish;
-inline constexpr auto kCommandCapacityDefault = usize {100};
+inline constexpr auto kCommandCapacityDefault = std::size_t {100};
 inline constexpr auto kFontDefault = ui::FontID::kDefault;
 inline constexpr auto kFontSizeDefault = 13.0f;
 inline constexpr auto kLogVerboseEventsDefault = false;

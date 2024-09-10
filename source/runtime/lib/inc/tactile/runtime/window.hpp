@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include <cstdint>       // uint32_t
 #include <expected>      // expected
 #include <memory>        // unique_ptr
 #include <system_error>  // error_code
 
-#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/runtime/api.hpp"
@@ -46,7 +46,7 @@ class TACTILE_RUNTIME_API Window final : public IWindow
    * A window if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto create(uint32 extra_flags) -> std::expected<Window, std::error_code>;
+  static auto create(std::uint32_t extra_flags) -> std::expected<Window, std::error_code>;
 
   ~Window() noexcept override = default;
 
