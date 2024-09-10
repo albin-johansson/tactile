@@ -20,11 +20,11 @@ namespace tactile {
 
 LayerViewImpl::LayerViewImpl(const MapDocument* document,
                              const ILayerView* parent_layer,
-                             const EntityID layer_id) :
-  mDocument {require_not_null(document, "null document")},
-  mParentLayer {parent_layer},
-  mLayerId {layer_id},
-  mMeta {document, mLayerId}
+                             const EntityID layer_id)
+  : mDocument {require_not_null(document, "null document")},
+    mParentLayer {parent_layer},
+    mLayerId {layer_id},
+    mMeta {document, mLayerId}
 {}
 
 auto LayerViewImpl::accept(IDocumentVisitor& visitor) const

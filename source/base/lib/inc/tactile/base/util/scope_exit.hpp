@@ -24,14 +24,14 @@ class ScopeExit final
 
   [[nodiscard]]
   explicit ScopeExit(function_type&& callable)
-      : m_callable {std::move(callable)},
-        m_primed {true}
+    : m_callable {std::move(callable)},
+      m_primed {true}
   {}
 
   [[nodiscard]]
   ScopeExit(ScopeExit&& other) noexcept
-      : m_callable {std::move(other.m_callable)},
-        m_primed {std::exchange(other.m_primed, false)}
+    : m_callable {std::move(other.m_callable)},
+      m_primed {std::exchange(other.m_primed, false)}
   {}
 
   ~ScopeExit() noexcept

@@ -235,15 +235,15 @@ auto _validate_strings(std::vector<std::string>& strings,
 
 }  // namespace language_parser
 
-LanguageParser::LanguageParser() :
-  mMiscNames {_get_misc_names()},
-  mVerbNames {_get_verb_names()},
-  mNounNames {_get_noun_names()},
-  mAdjectiveNames {_get_adjective_names()},
-  mActionNames {_get_action_names()},
-  mHintNames {_get_hint_names()},
-  mMenuNames {_get_menu_names()},
-  mWidgetNames {_get_widget_names()}
+LanguageParser::LanguageParser()
+  : mMiscNames {_get_misc_names()},
+    mVerbNames {_get_verb_names()},
+    mNounNames {_get_noun_names()},
+    mAdjectiveNames {_get_adjective_names()},
+    mActionNames {_get_action_names()},
+    mHintNames {_get_hint_names()},
+    mMenuNames {_get_menu_names()},
+    mWidgetNames {_get_widget_names()}
 {}
 
 auto LanguageParser::parse(const LanguageID id,

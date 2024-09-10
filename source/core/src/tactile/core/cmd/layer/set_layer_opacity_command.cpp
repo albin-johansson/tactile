@@ -14,11 +14,11 @@ namespace tactile {
 
 SetLayerOpacityCommand::SetLayerOpacityCommand(MapDocument* document,
                                                const EntityID layer_id,
-                                               const float opacity) :
-  m_document {require_not_null(document, "null document")},
-  m_layer_id {layer_id},
-  m_new_opacity {opacity},
-  m_old_opacity {0.0f}
+                                               const float opacity)
+  : m_document {require_not_null(document, "null document")},
+    m_layer_id {layer_id},
+    m_new_opacity {opacity},
+    m_old_opacity {0.0f}
 {}
 
 void SetLayerOpacityCommand::undo()

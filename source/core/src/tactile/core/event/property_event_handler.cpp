@@ -15,9 +15,9 @@
 
 namespace tactile {
 
-PropertyEventHandler::PropertyEventHandler(Model* model, ui::WidgetManager* widget_manager) :
-  mModel {require_not_null(model, "null model")},
-  mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+PropertyEventHandler::PropertyEventHandler(Model* model, ui::WidgetManager* widget_manager)
+  : mModel {require_not_null(model, "null model")},
+    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
 {}
 
 void PropertyEventHandler::install(EventDispatcher& dispatcher)

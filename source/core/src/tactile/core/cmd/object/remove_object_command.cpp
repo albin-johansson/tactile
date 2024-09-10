@@ -13,11 +13,11 @@ namespace tactile {
 
 RemoveObjectCommand::RemoveObjectCommand(MapDocument* document,
                                          const EntityID layer_id,
-                                         const EntityID object_id) :
-  m_document {require_not_null(document, "null document")},
-  m_layer_id {layer_id},
-  m_object_id {object_id},
-  m_object_was_removed {false}
+                                         const EntityID object_id)
+  : m_document {require_not_null(document, "null document")},
+    m_layer_id {layer_id},
+    m_object_id {object_id},
+    m_object_was_removed {false}
 {}
 
 void RemoveObjectCommand::undo()

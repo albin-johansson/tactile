@@ -14,11 +14,11 @@ namespace tactile {
 
 SetLayerVisibilityCommand::SetLayerVisibilityCommand(MapDocument* document,
                                                      const EntityID layer_id,
-                                                     const bool visibility) :
-  m_document {require_not_null(document, "null document")},
-  m_layer_id {layer_id},
-  m_new_visibility {visibility},
-  m_old_visibility {false}
+                                                     const bool visibility)
+  : m_document {require_not_null(document, "null document")},
+    m_layer_id {layer_id},
+    m_new_visibility {visibility},
+    m_old_visibility {false}
 {}
 
 void SetLayerVisibilityCommand::undo()

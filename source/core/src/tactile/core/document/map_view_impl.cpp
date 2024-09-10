@@ -14,9 +14,9 @@
 
 namespace tactile {
 
-MapViewImpl::MapViewImpl(const MapDocument* document) :
-  mDocument {require_not_null(document, "null document")},
-  mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
+MapViewImpl::MapViewImpl(const MapDocument* document)
+  : mDocument {require_not_null(document, "null document")},
+    mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
 {}
 
 auto MapViewImpl::accept(IDocumentVisitor& visitor) const

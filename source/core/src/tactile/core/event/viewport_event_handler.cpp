@@ -17,8 +17,8 @@
 
 namespace tactile {
 
-ViewportEventHandler::ViewportEventHandler(Model* model) :
-  mModel {require_not_null(model, "null model")}
+ViewportEventHandler::ViewportEventHandler(Model* model)
+  : mModel {require_not_null(model, "null model")}
 {}
 
 void ViewportEventHandler::install(EventDispatcher& dispatcher)

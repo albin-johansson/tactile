@@ -12,10 +12,10 @@
 
 namespace tactile {
 
-RemoveTilesetCommand::RemoveTilesetCommand(MapDocument* document, const EntityID tileset_id) :
-  m_document {require_not_null(document, "null document")},
-  m_tileset_id {tileset_id},
-  m_tileset_was_removed {false}
+RemoveTilesetCommand::RemoveTilesetCommand(MapDocument* document, const EntityID tileset_id)
+  : m_document {require_not_null(document, "null document")},
+    m_tileset_id {tileset_id},
+    m_tileset_was_removed {false}
 {}
 
 RemoveTilesetCommand::~RemoveTilesetCommand() noexcept

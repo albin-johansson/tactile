@@ -23,7 +23,7 @@ namespace tactile {
 template <typename T>
 concept AttributeValueType = std::same_as<T, bool> ||                          //
                              std::convertible_to<T, std::string> ||            //
-                             std::convertible_to<T, std::int32_t> ||                  //
+                             std::convertible_to<T, std::int32_t> ||           //
                              std::convertible_to<T, Int2> ||                   //
                              std::convertible_to<T, Int3> ||                   //
                              std::convertible_to<T, Int4> ||                   //

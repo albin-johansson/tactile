@@ -13,11 +13,11 @@
 
 namespace tactile {
 
-DuplicateLayerCommand::DuplicateLayerCommand(MapDocument* document, const EntityID layer_id) :
-  m_document {require_not_null(document, "null document")},
-  m_layer_id {layer_id},
-  m_duplicate_layer_id {kInvalidEntity},
-  m_layer_was_added {false}
+DuplicateLayerCommand::DuplicateLayerCommand(MapDocument* document, const EntityID layer_id)
+  : m_document {require_not_null(document, "null document")},
+    m_layer_id {layer_id},
+    m_duplicate_layer_id {kInvalidEntity},
+    m_layer_was_added {false}
 {}
 
 void DuplicateLayerCommand::undo()

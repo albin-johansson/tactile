@@ -19,9 +19,9 @@ namespace tactile::test {
 class TilesetViewImplTest : public testing::Test
 {
  public:
-  TilesetViewImplTest() :
-    mMapSpec {kOrthogonalMapSpec},
-    mDocument {MapDocument::make(mMapSpec).value()}
+  TilesetViewImplTest()
+    : mMapSpec {kOrthogonalMapSpec},
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
  protected:

@@ -10,9 +10,9 @@
 namespace tactile {
 
 VulkanCommandBuffer::VulkanCommandBuffer(VulkanCommandBuffer&& other) noexcept
-    : device {std::exchange(other.device, VK_NULL_HANDLE)},
-      pool {std::exchange(other.pool, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : device {std::exchange(other.device, VK_NULL_HANDLE)},
+    pool {std::exchange(other.pool, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 auto VulkanCommandBuffer::operator=(VulkanCommandBuffer&& other) noexcept

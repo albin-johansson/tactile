@@ -48,8 +48,8 @@ class MapDocument final : public IDocument
    * A map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(IRenderer& renderer, const ir::Map& ir_map)
-      -> std::expected<MapDocument, std::error_code>;
+  static auto make(IRenderer& renderer,
+                   const ir::Map& ir_map) -> std::expected<MapDocument, std::error_code>;
 
   ~MapDocument() noexcept override;
 

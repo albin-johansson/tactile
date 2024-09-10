@@ -10,8 +10,8 @@
 namespace tactile {
 
 VulkanShaderModule::VulkanShaderModule(VulkanShaderModule&& other) noexcept
-    : device {std::exchange(other.device, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : device {std::exchange(other.device, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanShaderModule::~VulkanShaderModule() noexcept

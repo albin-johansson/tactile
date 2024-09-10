@@ -8,9 +8,9 @@
 
 namespace tactile {
 
-ScopeProfiler::ScopeProfiler(const char* description) noexcept :
-  mDescription {description ? description : "?"},
-  mStartInstant {SteadyClock::now()}
+ScopeProfiler::ScopeProfiler(const char* description) noexcept
+  : mDescription {description ? description : "?"},
+    mStartInstant {SteadyClock::now()}
 {}
 
 ScopeProfiler::~ScopeProfiler() noexcept

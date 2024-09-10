@@ -6,8 +6,8 @@
 
 namespace tactile::ui {
 
-MenuScope::MenuScope(const char* name) :
-  mIsOpen {ImGui::BeginMenu(name)}
+MenuScope::MenuScope(const char* name)
+  : mIsOpen {ImGui::BeginMenu(name)}
 {}
 
 MenuScope::~MenuScope() noexcept

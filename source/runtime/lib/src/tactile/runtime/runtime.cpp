@@ -66,7 +66,7 @@ struct Runtime::Data final
   std::unordered_map<SaveFormatId, ISaveFormat*> save_formats {};
 
   Data()
-      : logger {_make_logger()}
+    : logger {_make_logger()}
   {
     set_default_logger(&logger);
   }

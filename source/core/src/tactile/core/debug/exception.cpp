@@ -8,9 +8,9 @@
 
 namespace tactile {
 
-Exception::Exception(std::string message) :
-  mMessage {std::move(message)},
-  mTrace {get_stacktrace()}
+Exception::Exception(std::string message)
+  : mMessage {std::move(message)},
+    mTrace {get_stacktrace()}
 {}
 
 auto Exception::what() const noexcept -> const char*

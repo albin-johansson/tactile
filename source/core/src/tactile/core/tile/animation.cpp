@@ -72,7 +72,8 @@ auto add_animation_frame(Registry& registry,
 
 auto remove_animation_frame(Registry& registry,
                             const EntityID tile_entity,
-                            const std::size_t frame_index) -> std::expected<void, std::error_code>
+                            const std::size_t frame_index)
+    -> std::expected<void, std::error_code>
 {
   TACTILE_ASSERT(is_tile(registry, tile_entity));
   TACTILE_ASSERT(registry.has<CAnimation>(tile_entity));

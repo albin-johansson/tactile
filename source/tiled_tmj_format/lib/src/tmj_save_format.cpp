@@ -12,8 +12,8 @@
 
 namespace tactile {
 
-TmjSaveFormat::TmjSaveFormat(IRuntime* runtime) :
-  mRuntime {runtime}
+TmjSaveFormat::TmjSaveFormat(IRuntime* runtime)
+  : mRuntime {runtime}
 {}
 
 auto TmjSaveFormat::load_map(const std::filesystem::path& map_path,

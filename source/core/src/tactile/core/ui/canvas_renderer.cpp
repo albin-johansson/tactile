@@ -72,16 +72,16 @@ CanvasRenderer::CanvasRenderer(const Float2& canvas_tl,
                                const Float2& canvas_br,
                                const MatrixExtent& extent,
                                const Int2& tile_size,
-                               const CViewport& viewport) :
-  mExtent {extent},
-  mViewportPos {viewport.pos},
-  mCanvasTileSize {vec_cast<Float2>(tile_size) * viewport.scale},
-  mWindowTL {canvas_tl},
-  mWindowBR {canvas_br},
-  mScale {viewport.scale},
-  mVisibleRegion {_get_visible_region(mViewportPos, mWindowBR - mWindowTL)},
-  mVisibleTiles {_get_visible_tiles(mVisibleRegion, mCanvasTileSize)},
-  mRenderBounds {_get_render_bounds(mVisibleTiles, mExtent)}
+                               const CViewport& viewport)
+  : mExtent {extent},
+    mViewportPos {viewport.pos},
+    mCanvasTileSize {vec_cast<Float2>(tile_size) * viewport.scale},
+    mWindowTL {canvas_tl},
+    mWindowBR {canvas_br},
+    mScale {viewport.scale},
+    mVisibleRegion {_get_visible_region(mViewportPos, mWindowBR - mWindowTL)},
+    mVisibleTiles {_get_visible_tiles(mVisibleRegion, mCanvasTileSize)},
+    mRenderBounds {_get_render_bounds(mVisibleTiles, mExtent)}
 {
   auto& draw_list = get_draw_list();
   draw_list.PushClipRect(to_imvec2(mWindowTL), to_imvec2(mWindowBR), false);

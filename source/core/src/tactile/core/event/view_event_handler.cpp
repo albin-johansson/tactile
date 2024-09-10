@@ -16,10 +16,10 @@ namespace tactile {
 
 ViewEventHandler::ViewEventHandler(Model* model,
                                    IRenderer* renderer,
-                                   ui::WidgetManager* widget_manager) :
-  mModel {require_not_null(model, "null model")},
-  mRenderer {require_not_null(renderer, "null renderer")},
-  mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+                                   ui::WidgetManager* widget_manager)
+  : mModel {require_not_null(model, "null model")},
+    mRenderer {require_not_null(renderer, "null renderer")},
+    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
 {}
 
 void ViewEventHandler::install(EventDispatcher& dispatcher)

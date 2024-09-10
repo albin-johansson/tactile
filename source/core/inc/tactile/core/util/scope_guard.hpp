@@ -43,8 +43,8 @@ class ScopeGuard final
    *                 scope.
    */
   [[nodiscard]]
-  explicit ScopeGuard(T callable) :
-    mCallable {std::move(callable)}
+  explicit ScopeGuard(T callable)
+    : mCallable {std::move(callable)}
   {}
 
   /**

@@ -13,12 +13,12 @@
 
 namespace tactile {
 
-CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType type) :
-  m_document {require_not_null(document, "null document")},
-  m_type {type},
-  m_parent_layer_id {kInvalidEntity},
-  m_layer_id {kInvalidEntity},
-  m_layer_was_added {false}
+CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType type)
+  : m_document {require_not_null(document, "null document")},
+    m_type {type},
+    m_parent_layer_id {kInvalidEntity},
+    m_layer_id {kInvalidEntity},
+    m_layer_was_added {false}
 {}
 
 void CreateLayerCommand::undo()

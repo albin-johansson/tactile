@@ -85,7 +85,8 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
       tile_id &= ~kTiledTileFlippingMask;
     }
 
-    const auto [row, col] = make_matrix_index(saturate_cast<std::ptrdiff_t>(tile_index), extent.cols);
+    const auto [row, col] =
+        make_matrix_index(saturate_cast<std::ptrdiff_t>(tile_index), extent.cols);
     tile_matrix[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)] = tile_id;
   }
 

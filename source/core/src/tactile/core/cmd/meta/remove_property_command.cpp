@@ -15,11 +15,11 @@ namespace tactile {
 
 RemovePropertyCommand::RemovePropertyCommand(IDocument* document,
                                              const EntityID context_entity,
-                                             std::string name) :
-  m_document {require_not_null(document, "null document")},
-  m_context_id {context_entity},
-  m_name {std::move(name)},
-  m_value {}
+                                             std::string name)
+  : m_document {require_not_null(document, "null document")},
+    m_context_id {context_entity},
+    m_name {std::move(name)},
+    m_value {}
 {}
 
 void RemovePropertyCommand::undo()

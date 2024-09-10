@@ -13,7 +13,7 @@
 namespace tactile {
 
 VulkanAllocator::VulkanAllocator(VulkanAllocator&& other) noexcept
-    : handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanAllocator::~VulkanAllocator() noexcept

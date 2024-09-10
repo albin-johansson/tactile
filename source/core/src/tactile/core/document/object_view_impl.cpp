@@ -12,22 +12,22 @@ namespace tactile {
 
 ObjectViewImpl::ObjectViewImpl(const IDocument* document,
                                const ILayerView* parent_layer,
-                               const EntityID object_id) :
-  mDocument {require_not_null(document, "null document")},
-  mParentLayer {require_not_null(parent_layer, "null layer view")},
-  mParentTile {nullptr},
-  mObjectId {object_id},
-  mMeta {document, object_id}
+                               const EntityID object_id)
+  : mDocument {require_not_null(document, "null document")},
+    mParentLayer {require_not_null(parent_layer, "null layer view")},
+    mParentTile {nullptr},
+    mObjectId {object_id},
+    mMeta {document, object_id}
 {}
 
 ObjectViewImpl::ObjectViewImpl(const IDocument* document,
                                const ITileView* parent_tile,
-                               const EntityID object_id) :
-  mDocument {require_not_null(document, "null document")},
-  mParentLayer {nullptr},
-  mParentTile {require_not_null(parent_tile, "null tile view")},
-  mObjectId {object_id},
-  mMeta {document, object_id}
+                               const EntityID object_id)
+  : mDocument {require_not_null(document, "null document")},
+    mParentLayer {nullptr},
+    mParentTile {require_not_null(parent_tile, "null tile view")},
+    mObjectId {object_id},
+    mMeta {document, object_id}
 {}
 
 auto ObjectViewImpl::accept(IDocumentVisitor& visitor) const

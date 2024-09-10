@@ -6,8 +6,8 @@
 
 namespace tactile {
 
-CommandStack::CommandStack(const std::size_t capacity) :
-  m_capacity {capacity}
+CommandStack::CommandStack(const std::size_t capacity)
+  : m_capacity {capacity}
 {}
 
 void CommandStack::mark_as_clean()

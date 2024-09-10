@@ -17,10 +17,10 @@
 
 namespace tactile {
 
-TactileApp::TactileApp(IRuntime* runtime) :
-  mRuntime {require_not_null(runtime, "null runtime")},
-  mWindow {require_not_null(runtime->get_window(), "null window")},
-  mRenderer {require_not_null(runtime->get_renderer(), "null renderer")}
+TactileApp::TactileApp(IRuntime* runtime)
+  : mRuntime {require_not_null(runtime, "null runtime")},
+    mWindow {require_not_null(runtime->get_window(), "null window")},
+    mRenderer {require_not_null(runtime->get_renderer(), "null renderer")}
 {}
 
 TactileApp::~TactileApp() noexcept = default;

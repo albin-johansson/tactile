@@ -174,8 +174,9 @@ void set_layer_tile(Registry& registry,
  * A tile identifier if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-auto get_layer_tile(const Registry& registry, EntityID layer_id, const MatrixIndex& index)
-    -> std::optional<TileID>;
+auto get_layer_tile(const Registry& registry,
+                    EntityID layer_id,
+                    const MatrixIndex& index) -> std::optional<TileID>;
 
 /**
  * Indicates whether a matrix index is within the interval [{0, 0}, {rows, columns}).
@@ -187,8 +188,8 @@ auto get_layer_tile(const Registry& registry, EntityID layer_id, const MatrixInd
  * True if the index is within the region; false otherwise.
  */
 [[nodiscard]]
-auto is_index_within_extent(const MatrixExtent& extent, const MatrixIndex& index) noexcept
-    -> bool;
+auto is_index_within_extent(const MatrixExtent& extent,
+                            const MatrixIndex& index) noexcept -> bool;
 
 /**
  * Visits each tile in a tile layer within a given region.
@@ -222,7 +223,8 @@ constexpr void each_layer_tile(const Registry& registry,
     for (auto row = begin.row; row < end.row; ++row) {
       for (auto col = begin.col; col < end.col; ++col) {
         const MatrixIndex index {row, col};
-        callable(index, dense->tiles[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)]);
+        callable(index,
+                 dense->tiles[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)]);
       }
     }
   }

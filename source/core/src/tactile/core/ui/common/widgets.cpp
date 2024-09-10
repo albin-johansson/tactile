@@ -75,8 +75,8 @@ TooltipScope::~TooltipScope() noexcept
   ImGui::EndTooltip();
 }
 
-ComboScope::ComboScope(const char* label, const char* preview, const ImGuiComboFlags flags) :
-  mIsOpen {ImGui::BeginCombo(label, preview, flags)}
+ComboScope::ComboScope(const char* label, const char* preview, const ImGuiComboFlags flags)
+  : mIsOpen {ImGui::BeginCombo(label, preview, flags)}
 {}
 
 ComboScope::~ComboScope() noexcept
@@ -91,8 +91,8 @@ auto ComboScope::is_open() const -> bool
   return mIsOpen;
 }
 
-TableScope::TableScope(const char* label, const int columns, const ImGuiTableFlags flags) :
-  mIsOpen {ImGui::BeginTable(label, columns, flags)}
+TableScope::TableScope(const char* label, const int columns, const ImGuiTableFlags flags)
+  : mIsOpen {ImGui::BeginTable(label, columns, flags)}
 {}
 
 TableScope::~TableScope() noexcept
@@ -107,8 +107,8 @@ auto TableScope::is_open() const -> bool
   return mIsOpen;
 }
 
-TabBarScope::TabBarScope(const char* id, const ImGuiTabBarFlags flags) :
-  mIsOpen {ImGui::BeginTabBar(id, flags)}
+TabBarScope::TabBarScope(const char* id, const ImGuiTabBarFlags flags)
+  : mIsOpen {ImGui::BeginTabBar(id, flags)}
 {}
 
 TabBarScope::~TabBarScope() noexcept
@@ -123,8 +123,8 @@ auto TabBarScope::is_open() const -> bool
   return mIsOpen;
 }
 
-TabItemScope::TabItemScope(const char* label, const ImGuiTabItemFlags flags) :
-  mIsOpen {ImGui::BeginTabItem(label, nullptr, flags)}
+TabItemScope::TabItemScope(const char* label, const ImGuiTabItemFlags flags)
+  : mIsOpen {ImGui::BeginTabItem(label, nullptr, flags)}
 {}
 
 TabItemScope::~TabItemScope() noexcept

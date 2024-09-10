@@ -16,11 +16,11 @@ namespace tactile {
 CreatePropertyCommand::CreatePropertyCommand(IDocument* document,
                                              const EntityID context_id,
                                              std::string name,
-                                             Attribute value) :
-  m_document {require_not_null(document, "null document")},
-  m_context_id {context_id},
-  m_name {std::move(name)},
-  m_value {std::move(value)}
+                                             Attribute value)
+  : m_document {require_not_null(document, "null document")},
+    m_context_id {context_id},
+    m_name {std::move(name)},
+    m_value {std::move(value)}
 {}
 
 void CreatePropertyCommand::undo()

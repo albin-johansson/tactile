@@ -15,11 +15,11 @@
 
 namespace tactile {
 
-AddTilesetCommand::AddTilesetCommand(MapDocument* document, TilesetSpec spec) :
-  m_document {require_not_null(document, "null document")},
-  m_spec {std::move(spec)},
-  m_tileset_id {kInvalidEntity},
-  m_tileset_was_added {false}
+AddTilesetCommand::AddTilesetCommand(MapDocument* document, TilesetSpec spec)
+  : m_document {require_not_null(document, "null document")},
+    m_spec {std::move(spec)},
+    m_tileset_id {kInvalidEntity},
+    m_tileset_was_added {false}
 {}
 
 AddTilesetCommand::~AddTilesetCommand() noexcept

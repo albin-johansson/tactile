@@ -20,9 +20,9 @@ namespace tactile::test {
 class LayerViewImplTest : public testing::Test
 {
  public:
-  LayerViewImplTest() :
-    mMapSpec {kOrthogonalMapSpec},
-    mDocument {MapDocument::make(mMapSpec).value()}
+  LayerViewImplTest()
+    : mMapSpec {kOrthogonalMapSpec},
+      mDocument {MapDocument::make(mMapSpec).value()}
   {}
 
   void SetUp() override

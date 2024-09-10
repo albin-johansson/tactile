@@ -13,8 +13,8 @@
 
 namespace tactile {
 
-LayerEventHandler::LayerEventHandler(Model* model) :
-  mModel {require_not_null(model, "null model")}
+LayerEventHandler::LayerEventHandler(Model* model)
+  : mModel {require_not_null(model, "null model")}
 {}
 
 void LayerEventHandler::install(EventDispatcher& dispatcher)

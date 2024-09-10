@@ -13,8 +13,8 @@
 
 namespace tactile::ui {
 
-DockSpace::DockSpace() :
-  mImGuiIniPath {get_imgui_ini_file_path()}
+DockSpace::DockSpace()
+  : mImGuiIniPath {get_imgui_ini_file_path()}
 {}
 
 void DockSpace::update(const Language& language)

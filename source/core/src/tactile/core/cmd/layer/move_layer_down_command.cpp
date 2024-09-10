@@ -12,9 +12,9 @@
 
 namespace tactile {
 
-MoveLayerDownCommand::MoveLayerDownCommand(MapDocument* document, const EntityID layer_id) :
-  m_document {require_not_null(document, "null document")},
-  m_layer_id {layer_id}
+MoveLayerDownCommand::MoveLayerDownCommand(MapDocument* document, const EntityID layer_id)
+  : m_document {require_not_null(document, "null document")},
+    m_layer_id {layer_id}
 {}
 
 void MoveLayerDownCommand::undo()

@@ -24,8 +24,8 @@ static_assert(std::same_as<std::filesystem::path::value_type, wchar_t>);
 #endif  // TACTILE_OS_WINDOWS
 
 template <typename T, std::invocable<const char*, const char*, T&> Parser>
-[[nodiscard]] auto _parse_impl(const std::string_view str, const Parser& parser)
-    -> std::expected<T, std::error_code>
+[[nodiscard]] auto _parse_impl(const std::string_view str,
+                               const Parser& parser) -> std::expected<T, std::error_code>
 {
   const auto* begin = str.data();
   const auto* end = begin + str.size();
@@ -41,8 +41,8 @@ template <typename T, std::invocable<const char*, const char*, T&> Parser>
 }
 
 template <std::integral T>
-[[nodiscard]] auto _parse_number(const std::string_view str, const int base)
-    -> std::expected<T, std::error_code>
+[[nodiscard]] auto _parse_number(const std::string_view str,
+                                 const int base) -> std::expected<T, std::error_code>
 {
   return _parse_impl<T>(str, [base](const char* begin, const char* end, T& number) {
     return std::from_chars(begin, end, number, base);
@@ -143,14 +143,14 @@ auto from_native_string(const NativeStringView str)
 #endif  // TACTILE_OS_WINDOWS
 }
 
-auto parse_int(const std::string_view str, const int base)
-    -> std::expected<std::int64_t, std::error_code>
+auto parse_int(const std::string_view str,
+               const int base) -> std::expected<std::int64_t, std::error_code>
 {
   return _parse_number<std::int64_t>(str, base);
 }
 
-auto parse_uint(const std::string_view str, const int base)
-    -> std::expected<std::uint64_t, std::error_code>
+auto parse_uint(const std::string_view str,
+                const int base) -> std::expected<std::uint64_t, std::error_code>
 {
   return _parse_number<std::uint64_t>(str, base);
 }

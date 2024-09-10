@@ -6,9 +6,9 @@
 
 namespace tactile::ui {
 
-Language::Language(const LanguageID id, std::vector<std::string> strings) :
-  mID {id},
-  mStrings {std::move(strings)}
+Language::Language(const LanguageID id, std::vector<std::string> strings)
+  : mID {id},
+    mStrings {std::move(strings)}
 {}
 
 void Language::add_icons()

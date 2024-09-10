@@ -14,11 +14,11 @@ namespace tactile {
 
 SetObjectVisibilityCommand::SetObjectVisibilityCommand(IDocument* document,
                                                        const EntityID object_id,
-                                                       const bool visibility) :
-  m_document {require_not_null(document, "null document")},
-  m_object_id {object_id},
-  m_new_visibility {visibility},
-  m_old_visibility {false}
+                                                       const bool visibility)
+  : m_document {require_not_null(document, "null document")},
+    m_object_id {object_id},
+    m_new_visibility {visibility},
+    m_old_visibility {false}
 {}
 
 void SetObjectVisibilityCommand::undo()

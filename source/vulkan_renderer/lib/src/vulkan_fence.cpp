@@ -10,8 +10,8 @@
 namespace tactile {
 
 VulkanFence::VulkanFence(VulkanFence&& other) noexcept
-    : device {std::exchange(other.device, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : device {std::exchange(other.device, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanFence::~VulkanFence() noexcept

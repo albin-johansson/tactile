@@ -10,8 +10,8 @@
 namespace tactile {
 
 VulkanSemaphore::VulkanSemaphore(VulkanSemaphore&& other) noexcept
-    : device {std::exchange(other.device, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : device {std::exchange(other.device, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanSemaphore::~VulkanSemaphore() noexcept

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-#include <cstdint> // uint32_t
+#include <cstdint>  // uint32_t
+#include <memory>   // unique_ptr
 
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"

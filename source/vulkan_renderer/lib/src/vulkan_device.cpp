@@ -32,9 +32,9 @@ auto _get_device_extensions() -> std::vector<const char*>
 }  // namespace
 
 VulkanDevice::VulkanDevice(VulkanDevice&& other) noexcept
-    : handle {std::exchange(other.handle, VK_NULL_HANDLE)},
-      graphics_queue_family {std::exchange(other.graphics_queue_family, 0)},
-      presentation_queue_family {std::exchange(other.presentation_queue_family, 0)}
+  : handle {std::exchange(other.handle, VK_NULL_HANDLE)},
+    graphics_queue_family {std::exchange(other.graphics_queue_family, 0)},
+    presentation_queue_family {std::exchange(other.presentation_queue_family, 0)}
 {}
 
 VulkanDevice::~VulkanDevice() noexcept

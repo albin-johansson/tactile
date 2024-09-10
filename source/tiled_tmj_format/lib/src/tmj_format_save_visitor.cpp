@@ -21,9 +21,9 @@
 
 namespace tactile {
 
-TmjFormatSaveVisitor::TmjFormatSaveVisitor(IRuntime* runtime, SaveFormatWriteOptions options) :
-  mRuntime {runtime},
-  mOptions {std::move(options)}
+TmjFormatSaveVisitor::TmjFormatSaveVisitor(IRuntime* runtime, SaveFormatWriteOptions options)
+  : mRuntime {runtime},
+    mOptions {std::move(options)}
 {}
 
 auto TmjFormatSaveVisitor::visit(const IMapView& map) -> std::expected<void, std::error_code>

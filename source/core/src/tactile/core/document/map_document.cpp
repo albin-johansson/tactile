@@ -26,20 +26,20 @@ struct MapDocument::Data final
   std::optional<std::filesystem::path> path;
   SaveFormatId format;
 
-  Data() :
-    uuid {UUID::generate()},
-    registry {},
-    map_entity {kInvalidEntity},
-    path {std::nullopt},
-    format {SaveFormatId::kTactileYaml}
+  Data()
+    : uuid {UUID::generate()},
+      registry {},
+      map_entity {kInvalidEntity},
+      path {std::nullopt},
+      format {SaveFormatId::kTactileYaml}
   {
     registry.add<CTileCache>();
     registry.add<CDocumentInfo>();
   }
 };
 
-MapDocument::MapDocument() :
-  mData {std::make_unique<Data>()}
+MapDocument::MapDocument()
+  : mData {std::make_unique<Data>()}
 {}
 
 auto MapDocument::make(const MapSpec& spec) -> std::expected<MapDocument, std::error_code>

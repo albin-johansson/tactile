@@ -17,12 +17,12 @@ namespace tactile {
 UpdatePropertyCommand::UpdatePropertyCommand(IDocument* document,
                                              const EntityID context_id,
                                              std::string property_name,
-                                             Attribute property_value) :
-  m_document {require_not_null(document, "null document")},
-  m_context_id {context_id},
-  m_property_name {std::move(property_name)},
-  m_new_property_value {std::move(property_value)},
-  m_old_property_value {}
+                                             Attribute property_value)
+  : m_document {require_not_null(document, "null document")},
+    m_context_id {context_id},
+    m_property_name {std::move(property_name)},
+    m_new_property_value {std::move(property_value)},
+    m_old_property_value {}
 {}
 
 void UpdatePropertyCommand::undo()

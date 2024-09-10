@@ -12,9 +12,9 @@
 
 namespace tactile {
 
-MetaViewImpl::MetaViewImpl(const IDocument* document, const EntityID meta_id) :
-  mDocument {require_not_null(document, "null document")},
-  mMetaId {meta_id}
+MetaViewImpl::MetaViewImpl(const IDocument* document, const EntityID meta_id)
+  : mDocument {require_not_null(document, "null document")},
+    mMetaId {meta_id}
 {}
 
 auto MetaViewImpl::get_name() const -> std::string_view

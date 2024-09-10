@@ -14,11 +14,11 @@ namespace tactile {
 
 TileViewImpl::TileViewImpl(const IDocument* document,
                            const ITilesetView* tileset_view,
-                           const EntityID tile_id) :
-  mDocument {require_not_null(document, "null document")},
-  mTilesetView {require_not_null(tileset_view, "null tileset view")},
-  mTileId {tile_id},
-  mMeta {document, tile_id}
+                           const EntityID tile_id)
+  : mDocument {require_not_null(document, "null document")},
+    mTilesetView {require_not_null(tileset_view, "null tileset view")},
+    mTileId {tile_id},
+    mMeta {document, tile_id}
 {}
 
 auto TileViewImpl::accept(IDocumentVisitor& visitor) const

@@ -12,8 +12,8 @@
 namespace tactile {
 
 VulkanSurface::VulkanSurface(VulkanSurface&& other) noexcept
-    : instance {std::exchange(other.instance, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : instance {std::exchange(other.instance, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 VulkanSurface::~VulkanSurface() noexcept

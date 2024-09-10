@@ -15,8 +15,8 @@ void WindowHandleDeleter::operator()(SDL_Window* window) noexcept
   SDL_DestroyWindow(window);
 }
 
-Window::Window(SDL_Window* window) :
-  mWindow {require_not_null(window, "null window")}
+Window::Window(SDL_Window* window)
+  : mWindow {require_not_null(window, "null window")}
 {}
 
 auto Window::create(const std::uint32_t extra_flags) -> std::expected<Window, std::error_code>

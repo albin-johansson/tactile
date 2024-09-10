@@ -14,11 +14,11 @@ namespace tactile {
 
 SetObjectTagCommand::SetObjectTagCommand(IDocument* document,
                                          const EntityID object_id,
-                                         std::string tag) :
-  m_document {require_not_null(document, "null document")},
-  m_object_id {object_id},
-  m_new_tag {std::move(tag)},
-  m_old_tag {}
+                                         std::string tag)
+  : m_document {require_not_null(document, "null document")},
+    m_object_id {object_id},
+    m_new_tag {std::move(tag)},
+    m_old_tag {}
 {}
 
 void SetObjectTagCommand::undo()

@@ -15,11 +15,11 @@ namespace tactile {
 
 MoveObjectCommand::MoveObjectCommand(IDocument* document,
                                      const EntityID object_id,
-                                     const Float2& position) :
-  m_document {require_not_null(document, "null document")},
-  m_object_id {object_id},
-  m_new_position {position},
-  m_old_position {0, 0}
+                                     const Float2& position)
+  : m_document {require_not_null(document, "null document")},
+    m_object_id {object_id},
+    m_new_position {position},
+    m_old_position {0, 0}
 {}
 
 void MoveObjectCommand::undo()

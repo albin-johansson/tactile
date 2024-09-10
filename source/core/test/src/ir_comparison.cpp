@@ -109,7 +109,8 @@ void compare_tile_layer(const Registry& registry,
   ASSERT_EQ(tile_layer.extent, ir_layer.extent);
   each_layer_tile(registry, layer_id, [&](const MatrixIndex& index, const TileID tile_id) {
     const auto ir_tile_id =
-        ir_layer.tiles[static_cast<std::size_t>(index.row)][static_cast<std::size_t>(index.col)];
+        ir_layer
+            .tiles[static_cast<std::size_t>(index.row)][static_cast<std::size_t>(index.col)];
     EXPECT_EQ(tile_id, ir_tile_id)
         << "tiles at (" << index.row << ';' << index.col << ") don't match";
   });

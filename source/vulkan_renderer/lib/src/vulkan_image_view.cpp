@@ -15,8 +15,8 @@ VulkanImageView::~VulkanImageView() noexcept
 }
 
 VulkanImageView::VulkanImageView(VulkanImageView&& other) noexcept
-    : device {std::exchange(other.device, VK_NULL_HANDLE)},
-      handle {std::exchange(other.handle, VK_NULL_HANDLE)}
+  : device {std::exchange(other.device, VK_NULL_HANDLE)},
+    handle {std::exchange(other.handle, VK_NULL_HANDLE)}
 {}
 
 auto VulkanImageView::operator=(VulkanImageView&& other) noexcept -> VulkanImageView&

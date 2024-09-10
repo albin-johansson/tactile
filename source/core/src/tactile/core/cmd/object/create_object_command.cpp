@@ -17,14 +17,14 @@ CreateObjectCommand::CreateObjectCommand(MapDocument* document,
                                          const EntityID layer_id,
                                          const ObjectType type,
                                          const Float2& position,
-                                         const Float2& size) :
-  m_document {require_not_null(document, "null document")},
-  m_layer_id {layer_id},
-  m_type {type},
-  m_position {position},
-  m_size {size},
-  m_object_id {kInvalidEntity},
-  m_object_was_added {false}
+                                         const Float2& size)
+  : m_document {require_not_null(document, "null document")},
+    m_layer_id {layer_id},
+    m_type {type},
+    m_position {position},
+    m_size {size},
+    m_object_id {kInvalidEntity},
+    m_object_was_added {false}
 {}
 
 void CreateObjectCommand::undo()
