@@ -6,7 +6,11 @@
 
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/numeric/vec_common.hpp"
+#include "tactile/base/numeric/vec_format.hpp"
+#include "tactile/base/util/buffer.hpp"
+#include "tactile/base/util/format.hpp"
 #include "tactile/core/ui/canvas_renderer.hpp"
+#include "tactile/core/ui/common/text.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
@@ -15,9 +19,9 @@ namespace tactile::ui {
 void push_viewport_info_section(const CViewport& viewport)
 {
   ImGui::SeparatorText("Viewport");
-  ImGui::Text("Position: (%.2f, %.2f)", viewport.pos.x(), viewport.pos.y());
-  ImGui::Text("Size: (%.2f, %.2f)", viewport.size.x(), viewport.size.y());
-  ImGui::Text("Scale: %.2f", viewport.scale);
+  push_formatted_text<64>("Position: {}", viewport.pos);
+  push_formatted_text<64>("Size: {}", viewport.size);
+  push_formatted_text<64>("Scale: {:.2f}", viewport.scale);
 }
 
 void push_canvas_info_section(const CanvasRenderer& canvas_renderer)
@@ -29,17 +33,9 @@ void push_canvas_info_section(const CanvasRenderer& canvas_renderer)
                           (render_bounds.end.y - render_bounds.begin.y);
 
   ImGui::SeparatorText("Canvas");
-  ImGui::Text("Range: (%d:%d) to (%d:%d)",
-              visible_tiles.begin.y,
-              visible_tiles.begin.x,
-              visible_tiles.end.y,
-              visible_tiles.end.x);
-  ImGui::Text("Render bounds: (%d:%d) to (%d:%d)",
-              render_bounds.begin.y,
-              render_bounds.begin.x,
-              render_bounds.end.y,
-              render_bounds.end.x);
-  ImGui::Text("Tile count: %d", tile_count);
+  push_formatted_text<80>("Range: {} to {}", visible_tiles.begin, visible_tiles.end);
+  push_formatted_text<80>("Render bounds: {} to {}", render_bounds.begin, render_bounds.end);
+  push_formatted_text<64>("Tile count: {}", tile_count);
 }
 
 void push_viewport_mouse_info_section(const CanvasRenderer& canvas_renderer)
@@ -56,13 +52,20 @@ void push_viewport_mouse_info_section(const CanvasRenderer& canvas_renderer)
       local_mouse_pos.y() >= 0.0f &&             //
       local_mouse_pos.x() <= canvas_size.x() &&  //
       local_mouse_pos.y() <= canvas_size.y()) {
+    push_formatted_text<64>("Position: {}", local_mouse_world_pos);
+
     const auto local_mouse_tile =
         vec_cast<Int2>(floor(local_mouse_world_pos / canvas_tile_size));
 
-    ImGui::Text("Position: (%.2f, %.2f)",
-                local_mouse_world_pos.x(),
-                local_mouse_world_pos.y());
-    ImGui::Text("Index: (%d:%d)", local_mouse_tile.x(), local_mouse_tile.y());
+    if (const auto mouse_index = Index2D::from_vec(local_mouse_tile)) {
+      const auto& render_bounds = canvas_renderer.get_render_bounds();
+      if (mouse_index->x < render_bounds.end.x && mouse_index->y < render_bounds.end.y) {
+        push_formatted_text<64>("Index: {}", *mouse_index);
+      }
+      else {
+        ImGui::TextUnformatted("Index: -");
+      }
+    }
   }
   else {
     ImGui::TextUnformatted("Position: -");

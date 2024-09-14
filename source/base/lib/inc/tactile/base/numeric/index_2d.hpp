@@ -6,6 +6,7 @@
 #include <cstddef>     // size_t
 #include <format>      // formatter, format_to, formattable
 #include <functional>  // hash
+#include <optional>    // optional
 
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -42,6 +43,19 @@ struct Index2D final
     return {
       .x = saturate_cast<value_type>(index % column_count),
       .y = saturate_cast<value_type>(index / column_count),
+    };
+  }
+
+  [[nodiscard]] constexpr static auto from_vec(const Int2 vec) noexcept
+      -> std::optional<Index2D>
+  {
+    if (vec.x() < 0 || vec.y() < 0) {
+      return std::nullopt;
+    }
+
+    return Index2D {
+      .x = static_cast<value_type>(vec.x()),
+      .y = static_cast<value_type>(vec.y()),
     };
   }
 
