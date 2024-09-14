@@ -18,7 +18,7 @@ ReferenceAlignment: Left
 
 # Qualifiers
 QualifierAlignment: Custom
-QualifierOrder: [ 'friend', 'inline', 'static', 'constexpr', 'const', 'volatile', 'restrict', 'type' ]
+QualifierOrder: [ 'friend', 'inline', 'constexpr', 'static', 'const', 'volatile', 'restrict', 'type' ]
 SpaceAroundPointerQualifiers: Default
 
 # Braces
