@@ -234,6 +234,7 @@ target_sources(tactile-core
                "inc/tactile/core/ui/common/overlays.hpp"
                "inc/tactile/core/ui/common/popups.hpp"
                "inc/tactile/core/ui/common/style.hpp"
+               "inc/tactile/core/ui/common/text.hpp"
                "inc/tactile/core/ui/common/widgets.hpp"
                "inc/tactile/core/ui/common/window.hpp"
                "inc/tactile/core/ui/dialog/new_map_dialog.hpp"
