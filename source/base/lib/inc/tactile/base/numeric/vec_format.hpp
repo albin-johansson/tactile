@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include <format>  // formatter, format_to, formattable
+#include <format>       // formatter, format_to, formattable
+#include <type_traits>  // is_floating_point_v
 
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -19,7 +20,12 @@ struct std::formatter<tactile::Vec<T, 2>> final
   template <typename FormatContext>
   auto format(const tactile::Vec<T, 2>& vec, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(), "{{{}, {}}}", vec.x(), vec.y());
+    if constexpr (std::is_floating_point_v<T>) {
+      return std::format_to(ctx.out(), "{{{:.3f}, {:.3f}}}", vec.x(), vec.y());
+    }
+    else {
+      return std::format_to(ctx.out(), "{{{}, {}}}", vec.x(), vec.y());
+    }
   }
 };
 
@@ -35,7 +41,16 @@ struct std::formatter<tactile::Vec<T, 3>> final
   template <typename FormatContext>
   auto format(const tactile::Vec<T, 3>& vec, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x(), vec.y(), vec.z());
+    if constexpr (std::is_floating_point_v<T>) {
+      return std::format_to(ctx.out(),
+                            "{{{:.3f}, {:.3f}, {:.3f}}}",
+                            vec.x(),
+                            vec.y(),
+                            vec.z());
+    }
+    else {
+      return std::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x(), vec.y(), vec.z());
+    }
   }
 };
 
@@ -51,7 +66,22 @@ struct std::formatter<tactile::Vec<T, 4>> final
   template <typename FormatContext>
   auto format(const tactile::Vec<T, 4>& vec, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x(), vec.y(), vec.z(), vec.w());
+    if constexpr (std::is_floating_point_v<T>) {
+      return std::format_to(ctx.out(),
+                            "{{{:.3f}, {:.3f}, {:.3f}, {:.3f}}}",
+                            vec.x(),
+                            vec.y(),
+                            vec.z(),
+                            vec.w());
+    }
+    else {
+      return std::format_to(ctx.out(),
+                            "{{{}, {}, {}, {}}}",
+                            vec.x(),
+                            vec.y(),
+                            vec.z(),
+                            vec.w());
+    }
   }
 };
 
