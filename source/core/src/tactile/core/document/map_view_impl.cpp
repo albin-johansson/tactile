@@ -61,7 +61,7 @@ auto MapViewImpl::get_tile_size() const -> Int2
   return _get_map().tile_size;
 }
 
-auto MapViewImpl::get_extent() const -> MatrixExtent
+auto MapViewImpl::get_extent() const -> Extent2D
 {
   return _get_map().extent;
 }

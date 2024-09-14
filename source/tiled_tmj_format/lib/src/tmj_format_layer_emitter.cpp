@@ -2,7 +2,7 @@
 
 #include "tactile/tiled_tmj_format/tmj_format_layer_emitter.hpp"
 
-#include <cstddef>       // size_t, ptrdiff_t
+#include <cstddef>       // size_t
 #include <system_error>  // make_error_code, errc
 #include <utility>       // move
 
@@ -73,9 +73,9 @@ auto emit_tile_layer(const IRuntime& runtime,
     tile_array.get_ref<nlohmann::json::array_t&>().reserve(
         saturate_cast<std::size_t>(extent.rows * extent.cols));
 
-    for (std::ptrdiff_t row = 0; row < extent.rows; ++row) {
-      for (std::ptrdiff_t col = 0; col < extent.cols; ++col) {
-        const MatrixIndex index {row, col};
+    for (Extent2D::value_type row = 0; row < extent.rows; ++row) {
+      for (Extent2D::value_type col = 0; col < extent.cols; ++col) {
+        const Index2D index {.x = col, .y = row};
         const auto tile_id = layer.get_tile(index).value_or(kEmptyTile);
         tile_array.push_back(tile_id);
       }

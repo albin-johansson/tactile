@@ -82,7 +82,7 @@ TEST_F(LayerViewImplTest, Getters)
             get_global_layer_index(registry, map.root_layer, layer_id));
 
   EXPECT_EQ(layer_view.get_extent(), mMapSpec.extent);
-  EXPECT_EQ(layer_view.get_tile(MatrixIndex {0, 0}), kEmptyTile);
+  EXPECT_EQ(layer_view.get_tile(Index2D {0, 0}), kEmptyTile);
 }
 
 }  // namespace tactile::test

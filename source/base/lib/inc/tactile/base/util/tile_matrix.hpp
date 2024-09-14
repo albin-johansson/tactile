@@ -5,9 +5,8 @@
 #include <vector>  // vector
 
 #include "tactile/base/id.hpp"
-#include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
 
 namespace tactile {
 
@@ -23,10 +22,9 @@ using TileMatrix = std::vector<TileRow>;
  * A tile matrix.
  */
 [[nodiscard]]
-constexpr auto make_tile_matrix(const MatrixExtent& extent) -> TileMatrix
+constexpr auto make_tile_matrix(const Extent2D& extent) -> TileMatrix
 {
-  return {saturate_cast<std::size_t>(extent.rows),
-          TileRow(saturate_cast<std::size_t>(extent.cols), kEmptyTile)};
+  return {extent.rows, TileRow(extent.cols, kEmptyTile)};
 }
 
 }  // namespace tactile

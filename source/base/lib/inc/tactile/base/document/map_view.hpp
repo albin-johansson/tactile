@@ -11,9 +11,9 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
 
 namespace tactile {
 
@@ -64,7 +64,7 @@ class IMapView
    * A map extent.
    */
   [[nodiscard]]
-  virtual auto get_extent() const -> MatrixExtent = 0;
+  virtual auto get_extent() const -> Extent2D = 0;
 
   /**
    * Returns the next available layer identifier.

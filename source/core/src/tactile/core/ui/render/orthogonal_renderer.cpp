@@ -26,8 +26,8 @@ namespace tactile::ui {
 namespace {
 
 void _render_tile(const CanvasRenderer& canvas_renderer,
-                  const MatrixIndex& position_in_world,
-                  const MatrixIndex& position_in_tileset,
+                  const Index2D& position_in_world,
+                  const Index2D& position_in_tileset,
                   void* texture_handle,
                   const Float2& uv_tile_size)
 {
@@ -56,7 +56,7 @@ void _render_tile_layer(const CanvasRenderer& canvas_renderer,
       layer_id,
       render_bounds.begin,
       render_bounds.end,
-      [&](const MatrixIndex& position_in_world, const TileID tile_id) {
+      [&](const Index2D& position_in_world, const TileID tile_id) {
         if (tile_id == kEmptyTile) {
           return;
         }
@@ -71,8 +71,8 @@ void _render_tile_layer(const CanvasRenderer& canvas_renderer,
         const auto apparent_tile_index = get_tile_appearance(registry, tileset_id, tile_index);
 
         const auto position_in_tileset =
-            make_matrix_index(static_cast<MatrixExtent::value_type>(apparent_tile_index),
-                              tileset.extent.cols);
+            Index2D::from_1d(static_cast<Extent2D::value_type>(apparent_tile_index),
+                             tileset.extent.cols);
 
         _render_tile(canvas_renderer,
                      position_in_world,

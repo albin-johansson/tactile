@@ -4,15 +4,14 @@
 
 #include <cstddef>   // size_t
 #include <iterator>  // distance
-#include <utility>   // move
+#include <utility>   // move, cmp_not_equal
 
 #include <cppcodec/base64_default_rfc4648.hpp>
 
 #include "tactile/base/io/compress/compressor.hpp"
 #include "tactile/base/io/tile_io.hpp"
-#include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/base/numeric/index_2d.hpp"
 #include "tactile/base/runtime.hpp"
-#include "tactile/base/util/matrix_index.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/tiled_tmj_format/tmj_format_attribute_parser.hpp"
 #include "tactile/tiled_tmj_format/tmj_format_object_parser.hpp"
@@ -96,7 +95,7 @@ auto parse_csv_tile_data(const nlohmann::json& data_json,
   const auto real_tile_count = std::distance(tile_items.begin(), tile_items.end());
   const auto expected_tile_count = layer.extent.rows * layer.extent.cols;
 
-  if (real_tile_count != expected_tile_count) {
+  if (std::cmp_not_equal(real_tile_count, expected_tile_count)) {
     log(LogLevel::kError,
         "Bad tile layer tile count, expected {} but got {}",
         expected_tile_count,
@@ -104,13 +103,12 @@ auto parse_csv_tile_data(const nlohmann::json& data_json,
     return std::unexpected {SaveFormatParseError::kBadTileLayerData};
   }
 
-  MatrixIndex::value_type index = 0;
+  Index2D::value_type tile_index = 0;
   for (const auto& [_, tile_json] : tile_items) {
-    const auto [row, col] = make_matrix_index(index, layer.extent.cols);
-    tile_json.get_to(
-        layer.tiles[saturate_cast<std::size_t>(row)][saturate_cast<std::size_t>(col)]);
+    const auto position = Index2D::from_1d(tile_index, layer.extent.cols);
+    tile_json.get_to(layer.tiles[position.y][position.x]);
 
-    ++index;
+    ++tile_index;
   }
 
   return kParseResultOK;

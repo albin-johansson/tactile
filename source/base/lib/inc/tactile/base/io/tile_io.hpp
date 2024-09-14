@@ -13,8 +13,6 @@
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/platform/bits.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
-#include "tactile/base/util/matrix_index.hpp"
 #include "tactile/base/util/tile_matrix.hpp"
 
 namespace tactile {
@@ -54,14 +52,13 @@ inline constexpr std::uint32_t kTiledTileFlippingMask =
  * The parsed tile matrix if successful; an empty optional otherwise.
  */
 constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
-                                     const MatrixExtent& extent,
+                                     const Extent2D& extent,
                                      const TileIdFormat tile_id_format)
     -> std::optional<TileMatrix>
 {
   auto tile_matrix = make_tile_matrix(extent);
 
-  const auto expected_byte_count =
-      saturate_cast<std::size_t>(extent.rows * extent.cols) * sizeof(TileID);
+  const auto expected_byte_count = extent.rows * extent.cols * sizeof(TileID);
   const auto real_byte_count = byte_stream.size();
 
   if (expected_byte_count != real_byte_count) {
@@ -85,9 +82,8 @@ constexpr auto parse_raw_tile_matrix(const ByteStream& byte_stream,
       tile_id &= ~kTiledTileFlippingMask;
     }
 
-    const auto [row, col] =
-        make_matrix_index(saturate_cast<std::ptrdiff_t>(tile_index), extent.cols);
-    tile_matrix[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)] = tile_id;
+    const auto index = Index2D::from_1d(tile_index, extent.cols);
+    tile_matrix[index.y][index.x] = tile_id;
   }
 
   return tile_matrix;

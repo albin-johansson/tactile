@@ -24,7 +24,7 @@ class TileLayerTest : public testing::TestWithParam<bool>
   }
 
   [[nodiscard]]
-  auto make_test_layer(const MatrixExtent& extent = {5, 5})
+  auto make_test_layer(const Extent2D& extent = {5, 5})
   {
     const auto layer_id = make_tile_layer(mRegistry, extent);
 
@@ -38,42 +38,39 @@ class TileLayerTest : public testing::TestWithParam<bool>
     return layer_id;
   }
 
-  void check_tile_validity(const EntityID layer_id, const MatrixExtent& expected_extent)
+  void check_tile_validity(const EntityID layer_id, const Extent2D& expected_extent)
   {
     const auto& tile_layer = mRegistry.get<CTileLayer>(layer_id);
     EXPECT_EQ(tile_layer.extent, expected_extent);
 
-    for (MatrixExtent::value_type row = 0; row < expected_extent.rows; ++row) {
-      for (MatrixExtent::value_type col = 0; col < expected_extent.cols; ++col) {
-        const MatrixIndex index {row, col};
+    for (Extent2D::value_type row = 0; row < expected_extent.rows; ++row) {
+      for (Extent2D::value_type col = 0; col < expected_extent.cols; ++col) {
+        const Index2D index {.x = col, .y = row};
         EXPECT_TRUE(get_layer_tile(mRegistry, layer_id, index).has_value());
       }
     }
   }
 
-  void test_resize(const EntityID layer_id, const MatrixExtent& original_extent)
+  void test_resize(const EntityID layer_id, const Extent2D& original_extent)
   {
-    const auto resize_and_validate = [&](const MatrixExtent& extent) {
+    const auto resize_and_validate = [&](const Extent2D& extent) {
       resize_tile_layer(mRegistry, layer_id, extent);
       check_tile_validity(layer_id, extent);
     };
 
-    resize_and_validate(MatrixExtent {original_extent.rows + 1, original_extent.cols});
-    resize_and_validate(MatrixExtent {original_extent.rows - 1, original_extent.cols});
+    resize_and_validate(Extent2D {original_extent.rows + 1, original_extent.cols});
+    resize_and_validate(Extent2D {original_extent.rows - 1, original_extent.cols});
 
-    resize_and_validate(MatrixExtent {original_extent.rows, original_extent.cols + 1});
-    resize_and_validate(MatrixExtent {original_extent.rows, original_extent.cols - 1});
+    resize_and_validate(Extent2D {original_extent.rows, original_extent.cols + 1});
+    resize_and_validate(Extent2D {original_extent.rows, original_extent.cols - 1});
 
-    resize_and_validate(MatrixExtent {original_extent.rows + 2, original_extent.cols + 3});
-    resize_and_validate(MatrixExtent {original_extent.rows - 2, original_extent.cols - 3});
+    resize_and_validate(Extent2D {original_extent.rows + 2, original_extent.cols + 3});
+    resize_and_validate(Extent2D {original_extent.rows - 2, original_extent.cols - 3});
 
-    resize_and_validate(MatrixExtent {0, 0});
-    resize_and_validate(MatrixExtent {20, 20});
-    resize_and_validate(MatrixExtent {30, 10});
-    resize_and_validate(MatrixExtent {10, 30});
-
-    EXPECT_ANY_THROW(resize_tile_layer(mRegistry, layer_id, MatrixExtent {-1, 0}));
-    EXPECT_ANY_THROW(resize_tile_layer(mRegistry, layer_id, MatrixExtent {0, -1}));
+    resize_and_validate(Extent2D {0, 0});
+    resize_and_validate(Extent2D {20, 20});
+    resize_and_validate(Extent2D {30, 10});
+    resize_and_validate(Extent2D {10, 30});
   }
 };
 
@@ -92,7 +89,7 @@ TEST_P(TileLayerTest, IsTileLayer)
 // tactile::make_tile_layer
 TEST_P(TileLayerTest, MakeTileLayer)
 {
-  constexpr MatrixExtent extent {5, 6};
+  constexpr Extent2D extent {5, 6};
   const auto layer_id = make_test_layer(extent);
 
   EXPECT_TRUE(is_layer(mRegistry, layer_id));
@@ -119,7 +116,7 @@ TEST_P(TileLayerTest, MakeTileLayer)
   EXPECT_EQ(layer.opacity, 1.0f);
   EXPECT_TRUE(layer.visible);
 
-  each_layer_tile(mRegistry, layer_id, [](const MatrixIndex& index, const TileID tile_id) {
+  each_layer_tile(mRegistry, layer_id, [](const Index2D&, const TileID tile_id) {
     EXPECT_EQ(tile_id, kEmptyTile);
   });
 }
@@ -152,7 +149,7 @@ TEST_P(TileLayerTest, DestroyTileLayer)
 // tactile::convert_to_sparse_tile_layer
 TEST_P(TileLayerTest, DenseSparseConversion)
 {
-  const auto layer_id = make_test_layer(MatrixExtent {6, 4});
+  const auto layer_id = make_test_layer(Extent2D {6, 4});
 
   convert_to_dense_tile_layer(mRegistry, layer_id);
 
@@ -175,10 +172,10 @@ TEST_P(TileLayerTest, DenseSparseConversion)
   {
     const auto& sparse = mRegistry.get<CSparseTileLayer>(layer_id);
     EXPECT_EQ(sparse.tiles.size(), 4);
-    EXPECT_EQ(sparse.tiles.at(MatrixIndex {0, 0}), TileID {42});
-    EXPECT_EQ(sparse.tiles.at(MatrixIndex {0, 1}), TileID {73});
-    EXPECT_EQ(sparse.tiles.at(MatrixIndex {3, 2}), TileID {99});
-    EXPECT_EQ(sparse.tiles.at(MatrixIndex {5, 3}), TileID {36});
+    EXPECT_EQ(sparse.tiles.at(Index2D {0, 0}), TileID {42});
+    EXPECT_EQ(sparse.tiles.at(Index2D {1, 0}), TileID {73});
+    EXPECT_EQ(sparse.tiles.at(Index2D {2, 3}), TileID {99});
+    EXPECT_EQ(sparse.tiles.at(Index2D {3, 5}), TileID {36});
   }
 
   convert_to_dense_tile_layer(mRegistry, layer_id);
@@ -198,7 +195,7 @@ TEST_P(TileLayerTest, DenseSparseConversion)
 // tactile::resize_tile_layer
 TEST_P(TileLayerTest, ResizeTileLayer)
 {
-  constexpr MatrixExtent extent {5, 5};
+  constexpr Extent2D extent {5, 5};
   const auto layer_id = make_test_layer(extent);
   test_resize(layer_id, extent);
 }
@@ -206,7 +203,7 @@ TEST_P(TileLayerTest, ResizeTileLayer)
 // tactile::serialize_tile_layer
 TEST_P(TileLayerTest, SerializeTileLayer)
 {
-  constexpr MatrixExtent extent {3, 3};
+  constexpr Extent2D extent {3, 3};
   const auto layer_id = make_test_layer(extent);
 
   convert_to_dense_tile_layer(mRegistry, layer_id);
@@ -244,28 +241,24 @@ TEST_P(TileLayerTest, SerializeTileLayer)
 // tactile::get_layer_tile
 TEST_P(TileLayerTest, SetLayerTile)
 {
-  constexpr MatrixExtent extent {10, 10};
+  constexpr Extent2D extent {10, 10};
   const auto layer_id = make_test_layer(extent);
 
-  EXPECT_NO_THROW(set_layer_tile(mRegistry, layer_id, MatrixIndex {-1, 0}, TileID {99}));
-  EXPECT_NO_THROW(set_layer_tile(mRegistry, layer_id, MatrixIndex {0, -1}, TileID {99}));
-  EXPECT_NO_THROW(
-      set_layer_tile(mRegistry, layer_id, MatrixIndex {extent.rows, 0}, TileID {99}));
-  EXPECT_NO_THROW(
-      set_layer_tile(mRegistry, layer_id, MatrixIndex {0, extent.cols}, TileID {99}));
+  EXPECT_NO_THROW(set_layer_tile(mRegistry, layer_id, Index2D {0, extent.rows}, TileID {99}));
+  EXPECT_NO_THROW(set_layer_tile(mRegistry, layer_id, Index2D {extent.cols, 0}, TileID {99}));
 
-  auto set_and_verify = [this, layer_id](const MatrixIndex& index, const TileID tile_id) {
+  auto set_and_verify = [this, layer_id](const Index2D& index, const TileID tile_id) {
     set_layer_tile(mRegistry, layer_id, index, tile_id);
     EXPECT_EQ(get_layer_tile(mRegistry, layer_id, index), tile_id);
   };
 
-  set_and_verify(MatrixIndex {0, 0}, TileID {1});
-  set_and_verify(MatrixIndex {0, extent.cols - 1}, TileID {2});
-  set_and_verify(MatrixIndex {extent.rows - 1, 0}, TileID {3});
-  set_and_verify(MatrixIndex {extent.rows - 1, extent.cols - 1}, TileID {4});
+  set_and_verify(Index2D {0, 0}, TileID {1});
+  set_and_verify(Index2D {extent.cols - 1, 0}, TileID {2});
+  set_and_verify(Index2D {0, extent.rows - 1}, TileID {3});
+  set_and_verify(Index2D {extent.cols - 1, extent.rows - 1}, TileID {4});
 
-  set_and_verify(MatrixIndex {3, 6}, TileID {184});
-  set_and_verify(MatrixIndex {9, 4}, TileID {865});
+  set_and_verify(Index2D {6, 3}, TileID {184});
+  set_and_verify(Index2D {4, 9}, TileID {865});
 }
 
 }  // namespace tactile

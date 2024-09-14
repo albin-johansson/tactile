@@ -42,26 +42,31 @@ auto _get_visible_tiles(const VisibleRegion& visible_region,
   const auto tl = visible_region.begin / tile_size;
   const auto br = ceil(visible_region.end / tile_size);
 
-  visible_tiles.begin.row = static_cast<MatrixIndex::value_type>(tl.y());
-  visible_tiles.begin.col = static_cast<MatrixIndex::value_type>(tl.x());
+  visible_tiles.begin.y = static_cast<Offset2D::value_type>(tl.y());
+  visible_tiles.begin.x = static_cast<Offset2D::value_type>(tl.x());
 
-  visible_tiles.end.row = static_cast<MatrixIndex::value_type>(br.y());
-  visible_tiles.end.col = static_cast<MatrixIndex::value_type>(br.x());
+  visible_tiles.end.y = static_cast<Offset2D::value_type>(br.y());
+  visible_tiles.end.x = static_cast<Offset2D::value_type>(br.x());
 
   return visible_tiles;
 }
 
 [[nodiscard]]
-auto _get_render_bounds(const VisibleTileRegion& tiles,
-                        const MatrixExtent& extent) -> RenderBounds
+auto _get_render_bounds(const VisibleTileRegion& tiles, const Extent2D& extent) -> RenderBounds
 {
   RenderBounds bounds {};
 
-  bounds.begin.row = std::clamp(tiles.begin.row, MatrixExtent::value_type {0}, extent.rows);
-  bounds.begin.col = std::clamp(tiles.begin.col, MatrixExtent::value_type {0}, extent.cols);
+  bounds.begin.y = std::clamp(saturate_cast<Index2D::value_type>(tiles.begin.y),
+                              Index2D::value_type {0},
+                              extent.rows);
+  bounds.begin.x = std::clamp(saturate_cast<Index2D::value_type>(tiles.begin.x),
+                              Extent2D::value_type {0},
+                              extent.cols);
 
-  bounds.end.row = std::clamp(tiles.end.row, bounds.begin.row, extent.rows);
-  bounds.end.col = std::clamp(tiles.end.col, bounds.begin.col, extent.cols);
+  bounds.end.y =
+      std::clamp(saturate_cast<Index2D::value_type>(tiles.end.y), bounds.begin.y, extent.rows);
+  bounds.end.x =
+      std::clamp(saturate_cast<Index2D::value_type>(tiles.end.x), bounds.begin.x, extent.cols);
 
   return bounds;
 }
@@ -70,7 +75,7 @@ auto _get_render_bounds(const VisibleTileRegion& tiles,
 
 CanvasRenderer::CanvasRenderer(const Float2& canvas_tl,
                                const Float2& canvas_br,
-                               const MatrixExtent& extent,
+                               const Extent2D& extent,
                                const Int2& tile_size,
                                const CViewport& viewport)
   : mExtent {extent},
@@ -100,8 +105,10 @@ void CanvasRenderer::clear_canvas(const UColor& color) const
 
 void CanvasRenderer::draw_orthogonal_grid(const UColor& color) const
 {
-  const auto row_count = mVisibleTiles.end.row - mVisibleTiles.begin.row;
-  const auto col_count = mVisibleTiles.end.col - mVisibleTiles.begin.col;
+  const auto row_count =
+      saturate_cast<Index2D::value_type>(mVisibleTiles.end.y - mVisibleTiles.begin.y);
+  const auto col_count =
+      saturate_cast<Index2D::value_type>(mVisibleTiles.end.x - mVisibleTiles.begin.x);
 
   const auto begin_pos = to_screen_pos(mVisibleRegion.begin);
   const auto begin_x = begin_pos.x();
@@ -126,14 +133,14 @@ void CanvasRenderer::draw_orthogonal_grid(const UColor& color) const
   auto& draw_list = get_draw_list();
 
   // Draw horizontal lines.
-  for (MatrixIndex::value_type r = 0; r < row_count; ++r) {
+  for (Index2D::value_type r = 0; r < row_count; ++r) {
     const auto row_offset = static_cast<float>(r) * tile_height;
     const auto line_y = begin_y + grid_offset_y + row_offset;
     draw_list.AddLine(ImVec2 {begin_x, line_y}, ImVec2 {end_x, line_y}, line_color);
   }
 
   // Draw vertical lines.
-  for (MatrixIndex::value_type c = 0; c < col_count; ++c) {
+  for (Index2D::value_type c = 0; c < col_count; ++c) {
     const auto column_offset = static_cast<float>(c) * tile_width;
     const auto line_x = begin_x + grid_offset_x + column_offset;
     draw_list.AddLine(ImVec2 {line_x, begin_y}, ImVec2 {line_x, end_y}, line_color);
@@ -197,7 +204,7 @@ auto CanvasRenderer::to_screen_pos(const Float2& world_pos) const noexcept -> Fl
   return world_pos - mViewportPos + mWindowTL;
 }
 
-auto CanvasRenderer::to_screen_pos(const MatrixIndex& tile_pos) const noexcept -> Float2
+auto CanvasRenderer::to_screen_pos(const Index2D& tile_pos) const noexcept -> Float2
 {
   return to_screen_pos(to_float2(tile_pos) * mCanvasTileSize);
 }

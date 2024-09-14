@@ -25,20 +25,20 @@ void push_canvas_info_section(const CanvasRenderer& canvas_renderer)
   const auto& visible_tiles = canvas_renderer.get_visible_tiles();
   const auto& render_bounds = canvas_renderer.get_render_bounds();
 
-  const auto tile_count = (render_bounds.end.col - render_bounds.begin.col) *
-                          (render_bounds.end.row - render_bounds.begin.row);
+  const auto tile_count = (render_bounds.end.x - render_bounds.begin.x) *
+                          (render_bounds.end.y - render_bounds.begin.y);
 
   ImGui::SeparatorText("Canvas");
   ImGui::Text("Range: (%d:%d) to (%d:%d)",
-              visible_tiles.begin.row,
-              visible_tiles.begin.col,
-              visible_tiles.end.row,
-              visible_tiles.end.col);
+              visible_tiles.begin.y,
+              visible_tiles.begin.x,
+              visible_tiles.end.y,
+              visible_tiles.end.x);
   ImGui::Text("Render bounds: (%d:%d) to (%d:%d)",
-              render_bounds.begin.row,
-              render_bounds.begin.col,
-              render_bounds.end.row,
-              render_bounds.end.col);
+              render_bounds.begin.y,
+              render_bounds.begin.x,
+              render_bounds.end.y,
+              render_bounds.end.x);
   ImGui::Text("Tile count: %d", tile_count);
 }
 

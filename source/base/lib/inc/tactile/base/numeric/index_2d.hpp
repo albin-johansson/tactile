@@ -94,7 +94,7 @@ struct std::formatter<tactile::Index2D> final
   template <typename FormatContext>
   auto format(const tactile::Index2D& index, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(), "({}:{})", index.x, index.y);
+    return std::format_to(ctx.out(), "(x{}, y{})", index.x, index.y);
   }
 };
 

@@ -82,7 +82,7 @@ class MapDocument final : public IDocument
   auto get_tile_size() const -> Int2 override;
 
   [[nodiscard]]
-  auto get_extent() const -> MatrixExtent override;
+  auto get_extent() const -> Extent2D override;
 
   [[nodiscard]]
   auto get_uuid() const -> const UUID& override;

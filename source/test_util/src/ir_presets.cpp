@@ -2,7 +2,6 @@
 
 #include "tactile/test_util/ir_presets.hpp"
 
-#include <cstddef>  // ptrdiff_t
 #include <utility>  // move
 
 #include "tactile/test_util/ir.hpp"
@@ -62,7 +61,7 @@ auto make_complex_ir_object_layer(const LayerID id, ObjectID& next_object_id) ->
   return object_layer;
 }
 
-auto make_complex_ir_tile_layer(const LayerID id, const MatrixExtent& extent) -> ir::Layer
+auto make_complex_ir_tile_layer(const LayerID id, const Extent2D& extent) -> ir::Layer
 {
   auto tile_layer = make_ir_tile_layer(id, extent);
 
@@ -71,11 +70,9 @@ auto make_complex_ir_tile_layer(const LayerID id, const MatrixExtent& extent) ->
   tile_layer.visible = true;
 
   TileID tile_id {1};
-  for (std::ptrdiff_t row = 0; row < extent.rows; ++row) {
-    for (std::ptrdiff_t col = 0; col < extent.cols; ++col) {
-      const auto u_row = static_cast<std::size_t>(row);
-      const auto u_col = static_cast<std::size_t>(col);
-      tile_layer.tiles[u_row][u_col] = tile_id;
+  for (Extent2D::value_type row = 0; row < extent.rows; ++row) {
+    for (Extent2D::value_type col = 0; col < extent.cols; ++col) {
+      tile_layer.tiles[row][col] = tile_id;
       ++tile_id;
     }
   }
@@ -96,7 +93,7 @@ auto make_complex_ir_tile_layer(const LayerID id, const MatrixExtent& extent) ->
 //    └── tile_layer4
 auto make_complex_ir_group_layer(LayerID& next_layer_id,
                                  ObjectID& next_object_id,
-                                 const MatrixExtent& extent) -> ir::Layer
+                                 const Extent2D& extent) -> ir::Layer
 {
   auto root = make_ir_group_layer(next_layer_id++);
 
@@ -168,7 +165,7 @@ auto make_complex_ir_tileset(TileID& next_tile_id, ObjectID& next_object_id) -> 
 
 auto make_complex_ir_map(const ir::TileFormat& tile_format) -> ir::Map
 {
-  const MatrixExtent extent {8, 10};
+  const Extent2D extent {8, 10};
 
   auto map = make_ir_map(extent);
 

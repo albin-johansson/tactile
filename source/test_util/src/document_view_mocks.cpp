@@ -2,7 +2,8 @@
 
 #include "tactile/test_util/document_view_mocks.hpp"
 
-#include <utility>  // move
+#include <type_traits>  // is_unsigned_v
+#include <utility>      // move
 
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
@@ -165,14 +166,11 @@ LayerViewMock::LayerViewMock(ir::Layer layer,
 
   ON_CALL(*this, get_extent).WillByDefault(Return(mLayer.extent));
   ON_CALL(*this, get_tile)
-      .WillByDefault([this](const MatrixIndex& index) -> std::optional<TileID> {
-        if (index.row >= 0 &&                  //
-            index.col >= 0 &&                  //
-            index.row < mLayer.extent.rows &&  //
-            index.col < mLayer.extent.cols) {
-          const auto u_row = saturate_cast<std::size_t>(index.row);
-          const auto u_col = saturate_cast<std::size_t>(index.col);
-          return mLayer.tiles.at(u_row).at(u_col);
+      .WillByDefault([this](const Index2D& index) -> std::optional<TileID> {
+        static_assert(std::is_unsigned_v<Index2D::value_type>);
+
+        if (index.y < mLayer.extent.rows && index.x < mLayer.extent.cols) {
+          return mLayer.tiles[index.y][index.x];
         }
 
         return std::nullopt;

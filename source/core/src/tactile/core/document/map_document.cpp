@@ -147,7 +147,7 @@ auto MapDocument::get_tile_size() const -> Int2
   return map.tile_size;
 }
 
-auto MapDocument::get_extent() const -> MatrixExtent
+auto MapDocument::get_extent() const -> Extent2D
 {
   const auto& map = mData->registry.get<CMap>(mData->map_entity);
   return map.extent;

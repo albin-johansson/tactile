@@ -53,6 +53,6 @@ struct std::formatter<tactile::Offset2D> final
   template <typename FormatContext>
   auto format(const tactile::Offset2D& offset, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(), "({}, {})", offset.x, offset.y);
+    return std::format_to(ctx.out(), "(dx: {}, dy: {})", offset.x, offset.y);
   }
 };

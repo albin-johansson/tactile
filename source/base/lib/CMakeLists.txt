@@ -57,8 +57,6 @@ target_sources(tactile-base
                "inc/tactile/base/util/concepts.hpp"
                "inc/tactile/base/util/format.hpp"
                "inc/tactile/base/util/hash.hpp"
-               "inc/tactile/base/util/matrix_extent.hpp"
-               "inc/tactile/base/util/matrix_index.hpp"
                "inc/tactile/base/util/scope_exit.hpp"
                "inc/tactile/base/util/strong_type.hpp"
                "inc/tactile/base/util/tile_matrix.hpp"

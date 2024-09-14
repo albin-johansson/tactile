@@ -10,18 +10,15 @@
 
 namespace tactile::test {
 
-auto make_ir_tile_matrix(const MatrixExtent& extent) -> std::vector<std::vector<TileID>>
+auto make_ir_tile_matrix(const Extent2D& extent) -> std::vector<std::vector<TileID>>
 {
-  const auto u_rows = saturate_cast<std::size_t>(extent.rows);
-  const auto u_cols = saturate_cast<std::size_t>(extent.cols);
-
   std::vector<TileID> tile_row {};
-  tile_row.reserve(u_cols);
-  tile_row.assign(u_cols, 0);
+  tile_row.reserve(extent.cols);
+  tile_row.assign(extent.cols, 0);
 
   std::vector<std::vector<TileID>> tile_matrix {};
-  tile_matrix.reserve(u_rows);
-  tile_matrix.assign(u_rows, tile_row);
+  tile_matrix.reserve(extent.rows);
+  tile_matrix.assign(extent.rows, tile_row);
 
   return tile_matrix;
 }
@@ -58,7 +55,7 @@ auto make_ir_object_layer(const LayerID id, std::vector<ir::Object> objects) -> 
     .id = id,
     .type = LayerType::kObjectLayer,
     .opacity = 1.0f,
-    .extent = MatrixExtent {0, 0},
+    .extent = Extent2D {0, 0},
     .tiles = {},
     .objects = std::move(objects),
     .layers = {},
@@ -66,7 +63,7 @@ auto make_ir_object_layer(const LayerID id, std::vector<ir::Object> objects) -> 
   };
 }
 
-auto make_ir_tile_layer(const LayerID id, const MatrixExtent& extent) -> ir::Layer
+auto make_ir_tile_layer(const LayerID id, const Extent2D& extent) -> ir::Layer
 {
   return {
     .meta = make_ir_metadata(std::format("Tile Layer {}", id)),
@@ -88,7 +85,7 @@ auto make_ir_group_layer(const LayerID id, std::vector<ir::Layer> layers) -> ir:
     .id = id,
     .type = LayerType::kGroupLayer,
     .opacity = 1.0f,
-    .extent = MatrixExtent {0, 0},
+    .extent = Extent2D {0, 0},
     .tiles = {},
     .objects = {},
     .layers = std::move(layers),
@@ -142,7 +139,7 @@ auto make_ir_tile_format() -> ir::TileFormat
   };
 }
 
-auto make_ir_map(const MatrixExtent& extent) -> ir::Map
+auto make_ir_map(const Extent2D& extent) -> ir::Map
 {
   return {
     .meta = make_ir_metadata("Map"),

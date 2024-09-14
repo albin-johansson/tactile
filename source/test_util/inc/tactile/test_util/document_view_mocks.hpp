@@ -193,7 +193,7 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(std::size_t, object_count, (), (const, override));
 
-  MOCK_METHOD(std::optional<TileID>, get_tile, (const MatrixIndex&), (const, override));
+  MOCK_METHOD(std::optional<TileID>, get_tile, (const Index2D&), (const, override));
 
   MOCK_METHOD(TileEncoding, get_tile_encoding, (), (const, override));
 
@@ -201,7 +201,7 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(std::optional<int>, get_compression_level, (), (const, override));
 
-  MOCK_METHOD(std::optional<MatrixExtent>, get_extent, (), (const, override));
+  MOCK_METHOD(std::optional<Extent2D>, get_extent, (), (const, override));
 
   MOCK_METHOD(const IMetaView&, get_meta, (), (const, override));
 
@@ -232,7 +232,7 @@ class MapViewMock : public IMapView
 
   MOCK_METHOD(Int2, get_tile_size, (), (const, override));
 
-  MOCK_METHOD(MatrixExtent, get_extent, (), (const, override));
+  MOCK_METHOD(Extent2D, get_extent, (), (const, override));
 
   MOCK_METHOD(LayerID, get_next_layer_id, (), (const, override));
 

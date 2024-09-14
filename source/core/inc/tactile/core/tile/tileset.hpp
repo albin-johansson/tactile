@@ -9,9 +9,9 @@
 #include <vector>         // vector
 
 #include "tactile/base/id.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/util/uuid.hpp"
 
@@ -59,7 +59,7 @@ struct CTileset final
   Float2 uv_tile_size;
 
   /** The size of the tileset. */
-  MatrixExtent extent;
+  Extent2D extent;
 
   /** Tracks the associated tiles. Indexed using \c TileIndex values. */
   std::vector<EntityID> tiles;

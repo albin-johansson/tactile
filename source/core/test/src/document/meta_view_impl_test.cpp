@@ -17,7 +17,7 @@ class MetaViewImplTest : public testing::Test
 {
  public:
   MetaViewImplTest()
-    : mMapSpec {TileOrientation::kOrthogonal, MatrixExtent {5, 5}, Int2 {32, 32}},
+    : mMapSpec {TileOrientation::kOrthogonal, Extent2D {5, 5}, Int2 {32, 32}},
       mDocument {MapDocument::make(mMapSpec).value()}
   {}
 

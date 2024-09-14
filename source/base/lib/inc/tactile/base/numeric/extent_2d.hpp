@@ -70,7 +70,7 @@ struct std::formatter<tactile::Extent2D> final
   template <typename FormatContext>
   auto format(const tactile::Extent2D& extent, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(), "({}, {})", extent.rows, extent.cols);
+    return std::format_to(ctx.out(), "(rows: {}, cols: {})", extent.rows, extent.cols);
   }
 };
 

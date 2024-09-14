@@ -2,10 +2,11 @@
 
 #pragma once
 
+#include "tactile/base/numeric/extent_2d.hpp"
+#include "tactile/base/numeric/index_2d.hpp"
+#include "tactile/base/numeric/offset_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
-#include "tactile/base/util/matrix_index.hpp"
 #include "tactile/core/entity/entity.hpp"
 
 struct ImDrawList;
@@ -35,10 +36,10 @@ class CanvasRenderer final
   struct VisibleTileRegion final
   {
     /** The index of the top-left tile (inclusive). */
-    MatrixIndex begin;
+    Offset2D begin;
 
     /** The index of the bottom-right tile (exclusive). */
-    MatrixIndex end;
+    Offset2D end;
   };
 
   /**
@@ -59,10 +60,10 @@ class CanvasRenderer final
   struct RenderBounds final
   {
     /** The top-left tile index to render (inclusive). */
-    MatrixIndex begin;
+    Index2D begin;
 
     /** The bottom-right tile index to render (exclusive). */
-    MatrixIndex end;
+    Index2D end;
   };
 
   TACTILE_DELETE_COPY(CanvasRenderer);
@@ -79,7 +80,7 @@ class CanvasRenderer final
    */
   CanvasRenderer(const Float2& canvas_tl,
                  const Float2& canvas_br,
-                 const MatrixExtent& extent,
+                 const Extent2D& extent,
                  const Int2& tile_size,
                  const CViewport& viewport);
 
@@ -206,7 +207,7 @@ class CanvasRenderer final
   auto to_screen_pos(const Float2& world_pos) const noexcept -> Float2;
 
   [[nodiscard]]
-  auto to_screen_pos(const MatrixIndex& tile_pos) const noexcept -> Float2;
+  auto to_screen_pos(const Index2D& tile_pos) const noexcept -> Float2;
 
   /**
    * Returns the draw list associated with the window.
@@ -219,7 +220,7 @@ class CanvasRenderer final
 
  private:
   /** The content extent. */
-  MatrixExtent mExtent;
+  Extent2D mExtent;
 
   /** The viewport position relative to the content origin (world-space). */
   Float2 mViewportPos;

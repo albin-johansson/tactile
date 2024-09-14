@@ -11,9 +11,9 @@
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
+#include "tactile/base/numeric/index_2d.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
-#include "tactile/base/util/matrix_index.hpp"
 
 namespace tactile {
 
@@ -127,7 +127,7 @@ class ILayerView
    * optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_tile(const MatrixIndex& index) const -> std::optional<TileID> = 0;
+  virtual auto get_tile(const Index2D& index) const -> std::optional<TileID> = 0;
 
   /**
    * Returns the tile encoding format used by the layer.
@@ -163,7 +163,7 @@ class ILayerView
    * The extent of the layer if it's a tile layer; an empty optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_extent() const -> std::optional<MatrixExtent> = 0;
+  virtual auto get_extent() const -> std::optional<Extent2D> = 0;
 
   /**
    * Returns a view of the associated metadata.

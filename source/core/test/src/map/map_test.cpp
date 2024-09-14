@@ -37,7 +37,7 @@ TEST_F(MapTest, IsMap)
 {
   const MapSpec spec {
     .orientation = TileOrientation::kOrthogonal,
-    .extent = MatrixExtent {5, 5},
+    .extent = Extent2D {5, 5},
     .tile_size = Int2 {16, 16},
   };
 
@@ -51,9 +51,9 @@ TEST_F(MapTest, IsMap)
 // tactile::make_map [Registry&, const MapSpec&]
 TEST_F(MapTest, MakeMap)
 {
-  const MapSpec spec {
+  constexpr MapSpec spec {
     .orientation = TileOrientation::kOrthogonal,
-    .extent = MatrixExtent {10, 8},
+    .extent = Extent2D {10, 8},
     .tile_size = Int2 {32, 36},
   };
 
@@ -118,15 +118,15 @@ TEST_F(MapTest, MakeMapFromIR)
 // tactile::make_map
 TEST_F(MapTest, MakeMapWithInvalidSpec)
 {
-  const MapSpec bad_extent {
+  constexpr MapSpec bad_extent {
     .orientation = TileOrientation::kOrthogonal,
-    .extent = MatrixExtent {0, 0},
+    .extent = Extent2D {0, 0},
     .tile_size = Int2 {32, 32},
   };
 
-  const MapSpec bad_tile_size {
+  constexpr MapSpec bad_tile_size {
     .orientation = TileOrientation::kOrthogonal,
-    .extent = MatrixExtent {10, 10},
+    .extent = Extent2D {10, 10},
     .tile_size = Int2 {0, 0},
   };
 
@@ -137,9 +137,9 @@ TEST_F(MapTest, MakeMapWithInvalidSpec)
 // tactile::destroy_map
 TEST_F(MapTest, DestroyMap)
 {
-  const MapSpec spec {
+  constexpr MapSpec spec {
     .orientation = TileOrientation::kOrthogonal,
-    .extent = MatrixExtent {5, 5},
+    .extent = Extent2D {5, 5},
     .tile_size = Int2 {32, 32},
   };
 
@@ -171,9 +171,9 @@ TEST_F(MapTest, DestroyMap)
 // tactile::add_tileset_to_map
 TEST_F(MapTest, AddTilesetToMap)
 {
-  const MapSpec spec {
+  constexpr MapSpec spec {
     .orientation = TileOrientation::kOrthogonal,
-    .extent = MatrixExtent {10, 10},
+    .extent = Extent2D {10, 10},
     .tile_size = Int2 {32, 32},
   };
 

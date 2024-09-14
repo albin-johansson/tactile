@@ -8,14 +8,14 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/layer/object_type.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
 
 namespace tactile::test {
 
 [[nodiscard]]
-auto make_ir_tile_matrix(const MatrixExtent& extent) -> std::vector<std::vector<TileID>>;
+auto make_ir_tile_matrix(const Extent2D& extent) -> std::vector<std::vector<TileID>>;
 
 [[nodiscard]]
 auto make_ir_metadata(std::string name) -> ir::Metadata;
@@ -30,7 +30,7 @@ auto make_ir_object(ObjectID id,
 auto make_ir_object_layer(LayerID id, std::vector<ir::Object> objects = {}) -> ir::Layer;
 
 [[nodiscard]]
-auto make_ir_tile_layer(LayerID id, const MatrixExtent& extent) -> ir::Layer;
+auto make_ir_tile_layer(LayerID id, const Extent2D& extent) -> ir::Layer;
 
 [[nodiscard]]
 auto make_ir_group_layer(LayerID id, std::vector<ir::Layer> layers = {}) -> ir::Layer;
@@ -48,6 +48,6 @@ auto make_ir_tileset_ref(TileID& next_tile_id) -> ir::TilesetRef;
 auto make_ir_tile_format() -> ir::TileFormat;
 
 [[nodiscard]]
-auto make_ir_map(const MatrixExtent& extent) -> ir::Map;
+auto make_ir_map(const Extent2D& extent) -> ir::Map;
 
 }  // namespace tactile::test

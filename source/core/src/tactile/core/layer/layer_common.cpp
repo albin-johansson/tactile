@@ -23,11 +23,10 @@ auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID
     case LayerType::kTileLayer: {
       layer_id = make_tile_layer(registry, ir_layer.extent);
 
-      for (std::ptrdiff_t row = 0; row < ir_layer.extent.rows; ++row) {
-        for (std::ptrdiff_t col = 0; col < ir_layer.extent.cols; ++col) {
-          const auto tile_id =
-              ir_layer.tiles[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)];
-          set_layer_tile(registry, layer_id, MatrixIndex {row, col}, tile_id);
+      for (Extent2D::value_type row = 0; row < ir_layer.extent.rows; ++row) {
+        for (Extent2D::value_type col = 0; col < ir_layer.extent.cols; ++col) {
+          const auto tile_id = ir_layer.tiles[row][col];
+          set_layer_tile(registry, layer_id, Index2D {.x = col, .y = row}, tile_id);
         }
       }
 

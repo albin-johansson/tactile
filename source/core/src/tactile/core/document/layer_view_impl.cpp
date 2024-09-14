@@ -150,7 +150,7 @@ auto LayerViewImpl::object_count() const -> std::size_t
   return 0;
 }
 
-auto LayerViewImpl::get_tile(const MatrixIndex& index) const -> std::optional<TileID>
+auto LayerViewImpl::get_tile(const Index2D& index) const -> std::optional<TileID>
 {
   const auto& registry = mDocument->get_registry();
 
@@ -176,7 +176,7 @@ auto LayerViewImpl::get_compression_level() const -> std::optional<int>
   return _get_tile_format().comp_level;
 }
 
-auto LayerViewImpl::get_extent() const -> std::optional<MatrixExtent>
+auto LayerViewImpl::get_extent() const -> std::optional<Extent2D>
 {
   const auto& registry = mDocument->get_registry();
   const auto* tile_layer = registry.find<CTileLayer>(mLayerId);

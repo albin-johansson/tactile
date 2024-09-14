@@ -98,7 +98,7 @@ void NewMapDialog::open()
 {
   mSpec = MapSpec {
     .orientation = TileOrientation::kOrthogonal,
-    .extent = MatrixExtent {10, 10},
+    .extent = Extent2D {10, 10},
     .tile_size = Int2 {32, 32},
   };
 

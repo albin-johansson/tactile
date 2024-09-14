@@ -75,15 +75,15 @@ auto get_hexagon_bounding_box(const Float2& center_pos,
   return box;
 }
 
-auto get_hexagon_center(const MatrixIndex& index,
+auto get_hexagon_center(const Index2D& index,
                         const HexagonInfo& hexagon_info) noexcept -> Float2
 {
-  const auto is_row_odd = (index.row % 2) != 0;
+  const auto is_row_odd = index.y % 2 != 0;
   const auto odd_row_x_offset = is_row_odd ? hexagon_info.apothem : 0.0f;
 
   const Float2 origin {
-    static_cast<float>(index.col) * hexagon_info.width() + odd_row_x_offset,
-    static_cast<float>(index.row) * hexagon_info.side_length * 1.5f,
+    static_cast<float>(index.x) * hexagon_info.width() + odd_row_x_offset,
+    static_cast<float>(index.y) * hexagon_info.side_length * 1.5f,
   };
 
   const Float2 hexagon_size {hexagon_info.width(), hexagon_info.height()};

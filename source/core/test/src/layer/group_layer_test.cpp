@@ -199,7 +199,7 @@ TEST_F(GroupLayerTest, DestroyGroupLayerWithStoredLayers)
   const auto group_layer_entity = make_group_layer(mRegistry);
 
   {
-    const MatrixExtent extent {5, 5};
+    constexpr Extent2D extent {5, 5};
     auto& group_layer = mRegistry.get<CGroupLayer>(group_layer_entity);
 
     const auto other_group_layer_entity = make_group_layer(mRegistry);

@@ -20,7 +20,7 @@ TEST(TileIO, ParseRawTileMatrix)
     // clang-format on
   };
 
-  const MatrixExtent extent {3, 2};
+  constexpr Extent2D extent {.rows = 3, .cols = 2};
   const auto tile_matrix = parse_raw_tile_matrix(byte_stream, extent, TileIdFormat::kTactile);
 
   ASSERT_TRUE(tile_matrix.has_value());
@@ -50,11 +50,11 @@ TEST(TileIO, ParseRawTileMatrixWithInsufficientData)
     0x11, 0x22, 0x33, 0x44, // Tile 3
     0x11, 0x22, 0x33, 0x44, // Tile 4
     0x11, 0x22, 0x33, 0x44, // Tile 5
-    0x11, 0x22, 0x33,      // Tile 6
+    0x11, 0x22, 0x33,       // Tile 6
     // clang-format on
   };
 
-  const MatrixExtent extent {3, 2};
+  constexpr Extent2D extent {.rows = 3, .cols = 2};
   const auto tile_matrix = parse_raw_tile_matrix(byte_stream, extent, TileIdFormat::kTactile);
 
   EXPECT_FALSE(tile_matrix.has_value());
@@ -75,7 +75,7 @@ TEST(TileIO, ParseRawTileMatrixWithTooMuchData)
     // clang-format on
   };
 
-  const MatrixExtent extent {3, 2};
+  constexpr Extent2D extent {.rows = 3, .cols = 2};
   const auto tile_matrix = parse_raw_tile_matrix(byte_stream, extent, TileIdFormat::kTactile);
 
   EXPECT_FALSE(tile_matrix.has_value());
@@ -95,7 +95,7 @@ TEST(TileIO, TileMatrixToByteStreamAndBack)
   EXPECT_EQ(bytes.size(), 12 * sizeof(TileID));
 
   const auto new_tile_matrix =
-      parse_raw_tile_matrix(bytes, MatrixExtent {3, 4}, TileIdFormat::kTactile);
+      parse_raw_tile_matrix(bytes, Extent2D {.rows = 3, .cols = 4}, TileIdFormat::kTactile);
   ASSERT_TRUE(new_tile_matrix.has_value());
 
   ASSERT_EQ(new_tile_matrix->size(), 3);

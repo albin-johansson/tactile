@@ -9,7 +9,7 @@ namespace tactile::test {
 // tactile::make_tile_matrix
 TEST(TileMatrix, MakeTileMatrix)
 {
-  const MatrixExtent extent {3, 4};
+  constexpr Extent2D extent {3, 4};
   const auto tile_matrix = make_tile_matrix(extent);
 
   ASSERT_EQ(tile_matrix.size(), extent.rows);
@@ -17,11 +17,9 @@ TEST(TileMatrix, MakeTileMatrix)
   EXPECT_EQ(tile_matrix.at(1).size(), extent.cols);
   EXPECT_EQ(tile_matrix.at(2).size(), extent.cols);
 
-  for (std::ptrdiff_t row = 0; row < extent.rows; ++row) {
-    for (std::ptrdiff_t col = 0; col < extent.cols; ++col) {
-      EXPECT_EQ(
-          tile_matrix.at(static_cast<std::size_t>(row)).at(static_cast<std::size_t>(col)),
-          kEmptyTile);
+  for (Extent2D::value_type row = 0; row < extent.rows; ++row) {
+    for (Extent2D::value_type col = 0; col < extent.cols; ++col) {
+      EXPECT_EQ(tile_matrix.at(row).at(col), kEmptyTile);
     }
   }
 }

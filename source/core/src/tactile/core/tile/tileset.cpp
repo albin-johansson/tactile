@@ -35,9 +35,9 @@ auto add_tileset_component(Registry& registry,
     return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
   }
 
-  const MatrixExtent extent {
-    .rows = static_cast<MatrixExtent::value_type>(texture_size.y() / tile_size.y()),
-    .cols = static_cast<MatrixExtent::value_type>(texture_size.x() / tile_size.x()),
+  const Extent2D extent {
+    .rows = static_cast<Extent2D::value_type>(texture_size.y() / tile_size.y()),
+    .cols = static_cast<Extent2D::value_type>(texture_size.x() / tile_size.x()),
   };
 
   if (extent.rows <= 0 || extent.cols <= 0) {
@@ -66,9 +66,9 @@ void add_viewport_component(Registry& registry,
 void create_tiles(Registry& registry, CTileset& tileset)
 {
   const auto tile_count = tileset.extent.rows * tileset.extent.cols;
-  tileset.tiles.reserve(saturate_cast<std::size_t>(tile_count));
+  tileset.tiles.reserve(tile_count);
 
-  for (std::ptrdiff_t index = 0; index < tile_count; ++index) {
+  for (std::size_t index = 0; index < tile_count; ++index) {
     const auto tile_index = saturate_cast<TileIndex>(index);
     const auto tile_entity = make_tile(registry, tile_index);
 

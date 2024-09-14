@@ -13,9 +13,9 @@
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/layer/tile_orientation.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
 #include "tactile/core/entity/entity.hpp"
 
 namespace tactile {
@@ -38,7 +38,7 @@ struct CMap final
   TileOrientation orientation;
 
   /** The size of the map, in tiles. */
-  MatrixExtent extent;
+  Extent2D extent;
 
   /** The logical size of all tiles. */
   Int2 tile_size;

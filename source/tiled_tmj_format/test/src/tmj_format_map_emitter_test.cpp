@@ -13,7 +13,7 @@ namespace tactile::test {
 // tactile::emit_tiled_tmj_map
 TEST(TmjFormatMapEmitter, EmitEmptyMap)
 {
-  const auto ir_map = make_ir_map(MatrixExtent {5, 4});
+  const auto ir_map = make_ir_map(Extent2D {5, 4});
   const MapViewMock map_view {ir_map};
 
   EXPECT_CALL(map_view, get_tile_size);

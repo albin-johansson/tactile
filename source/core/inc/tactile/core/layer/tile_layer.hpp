@@ -9,9 +9,9 @@
 
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/byte_stream.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
+#include "tactile/base/numeric/index_2d.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
-#include "tactile/base/util/matrix_index.hpp"
 #include "tactile/base/util/tile_matrix.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -19,14 +19,14 @@
 
 namespace tactile {
 
-using SparseTileMatrix = std::map<MatrixIndex, TileID, std::less<>>;
+using SparseTileMatrix = std::map<Index2D, TileID, std::less<>>;
 
 /**
  * Base component for tile layers.
  */
 struct CTileLayer final
 {
-  MatrixExtent extent;
+  Extent2D extent;
 };
 
 /**
@@ -76,7 +76,7 @@ auto is_tile_layer(const Registry& registry, EntityID id) -> bool;
  * A tile layer entity.
  */
 [[nodiscard]]
-auto make_tile_layer(Registry& registry, const MatrixExtent& extent) -> EntityID;
+auto make_tile_layer(Registry& registry, const Extent2D& extent) -> EntityID;
 
 /**
  * Destroys a tile layer.
@@ -123,7 +123,7 @@ void convert_to_sparse_tile_layer(Registry& registry, EntityID layer_id);
  * \param layer_id The target layer identifier.
  * \param extent   The new layer extent.
  */
-void resize_tile_layer(Registry& registry, EntityID layer_id, const MatrixExtent& extent);
+void resize_tile_layer(Registry& registry, EntityID layer_id, const Extent2D& extent);
 
 /**
  * Serializes the tile data associated with a tile layer as a byte stream.
@@ -158,7 +158,7 @@ auto serialize_tile_layer(const Registry& registry, EntityID layer_id) -> ByteSt
  */
 void set_layer_tile(Registry& registry,
                     EntityID layer_id,
-                    const MatrixIndex& index,
+                    const Index2D& index,
                     TileID tile_id);
 
 /**
@@ -176,20 +176,7 @@ void set_layer_tile(Registry& registry,
 [[nodiscard]]
 auto get_layer_tile(const Registry& registry,
                     EntityID layer_id,
-                    const MatrixIndex& index) -> std::optional<TileID>;
-
-/**
- * Indicates whether a matrix index is within the interval [{0, 0}, {rows, columns}).
- *
- * \param extent The extent that represents the target region.
- * \param index  The index to check.
- *
- * \return
- * True if the index is within the region; false otherwise.
- */
-[[nodiscard]]
-auto is_index_within_extent(const MatrixExtent& extent,
-                            const MatrixIndex& index) noexcept -> bool;
+                    const Index2D& index) -> std::optional<TileID>;
 
 /**
  * Visits each tile in a tile layer within a given region.
@@ -204,35 +191,34 @@ auto is_index_within_extent(const MatrixExtent& extent,
  * \param end      The exclusive last (bottom-right) tile position.
  * \param callable The function object invoked for each tile in the region.
  */
-template <std::invocable<const MatrixIndex&, TileID> T>
+template <std::invocable<const Index2D&, TileID> T>
 constexpr void each_layer_tile(const Registry& registry,
                                const EntityID layer_id,
-                               const MatrixIndex& begin,
-                               const MatrixIndex& end,
+                               const Index2D& begin,
+                               const Index2D& end,
                                const T& callable)
 {
   TACTILE_ASSERT(is_tile_layer(registry, layer_id));
 
   if (const auto& tile_layer = registry.get<CTileLayer>(layer_id);
-      !is_index_within_extent(tile_layer.extent, begin) ||
-      !is_index_within_extent(tile_layer.extent, MatrixIndex {end.row - 1, end.col - 1})) {
+      !tile_layer.extent.contains(begin) ||
+      !tile_layer.extent.contains(Index2D {.x = end.x - 1, .y = end.y - 1})) {
     return;
   }
 
   if (const auto* dense = registry.find<CDenseTileLayer>(layer_id)) {
-    for (auto row = begin.row; row < end.row; ++row) {
-      for (auto col = begin.col; col < end.col; ++col) {
-        const MatrixIndex index {row, col};
-        callable(index,
-                 dense->tiles[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)]);
+    for (auto row = begin.y; row < end.y; ++row) {
+      for (auto col = begin.x; col < end.x; ++col) {
+        const Index2D index {.x = col, .y = row};
+        callable(index, dense->tiles[row][col]);
       }
     }
   }
   else {
     const auto& sparse = registry.get<CSparseTileLayer>(layer_id);
-    for (auto row = begin.row; row < end.row; ++row) {
-      for (auto col = begin.col; col < end.col; ++col) {
-        const MatrixIndex index {row, col};
+    for (auto row = begin.y; row < end.y; ++row) {
+      for (auto col = begin.x; col < end.x; ++col) {
+        const Index2D index {.x = col, .y = row};
 
         const auto iter = sparse.tiles.find(index);
         callable(index, iter != sparse.tiles.end() ? iter->second : kEmptyTile);
@@ -252,7 +238,7 @@ constexpr void each_layer_tile(const Registry& registry,
  * \param layer_id The target tile layer identifier.
  * \param callable The function object invoked for each tile in the layer.
  */
-template <std::invocable<const MatrixIndex&, TileID> T>
+template <std::invocable<const Index2D&, TileID> T>
 constexpr void each_layer_tile(const Registry& registry,
                                const EntityID layer_id,
                                const T& callable)
@@ -260,8 +246,8 @@ constexpr void each_layer_tile(const Registry& registry,
   TACTILE_ASSERT(is_tile_layer(registry, layer_id));
   const auto& tile_layer = registry.get<CTileLayer>(layer_id);
 
-  constexpr MatrixIndex begin {0, 0};
-  const MatrixIndex end {tile_layer.extent.rows, tile_layer.extent.cols};
+  constexpr Index2D begin {.x = 0, .y = 0};
+  const Index2D end {.x = tile_layer.extent.cols, .y = tile_layer.extent.rows};
 
   each_layer_tile(registry, layer_id, begin, end, callable);
 }

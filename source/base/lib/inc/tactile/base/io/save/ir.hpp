@@ -13,10 +13,10 @@
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/meta/attribute.hpp"
+#include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
-#include "tactile/base/util/matrix_extent.hpp"
 
 namespace tactile::ir {
 
@@ -132,7 +132,7 @@ struct Layer final
   float opacity;
 
   /** The number of tile rows and columns (if tile layer). */
-  MatrixExtent extent;
+  Extent2D extent;
 
   /** The contained tiles (if tile layer). */
   std::vector<std::vector<TileID>> tiles;
@@ -263,7 +263,7 @@ struct Map final
   Metadata meta;
 
   /** The number of rows and columns in each tile layer. */
-  MatrixExtent extent;
+  Extent2D extent;
 
   /** The logical size of all tiles. */
   Int2 tile_size;

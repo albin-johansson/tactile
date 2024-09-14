@@ -73,7 +73,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitPlainTileLayer)
     .id = LayerID {34},
     .type = LayerType::kTileLayer,
     .opacity = 0.1f,
-    .extent = MatrixExtent {3, 3},
+    .extent = Extent2D {3, 3},
     .tiles =
         TileMatrix {
           {TileID {123}, TileID {123}, TileID {123}},
@@ -135,7 +135,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitBase64TileLayer)
     .id = LayerID {42},
     .type = LayerType::kTileLayer,
     .opacity = 0.5f,
-    .extent = MatrixExtent {4, 5},
+    .extent = Extent2D {4, 5},
     .tiles =
         TileMatrix {
           {TileID {123}, TileID {123}, TileID {123}, TileID {123}, TileID {123}},
@@ -202,7 +202,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitZlibCompressedTileLayer)
     .id = LayerID {824},
     .type = LayerType::kTileLayer,
     .opacity = 1.0f,
-    .extent = MatrixExtent {3, 3},
+    .extent = Extent2D {3, 3},
     .tiles =
         TileMatrix {
           {TileID {1}, TileID {2}, TileID {3}},
@@ -268,7 +268,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitZstdCompressedTileLayer)
     .id = LayerID {573},
     .type = LayerType::kTileLayer,
     .opacity = 1.0f,
-    .extent = MatrixExtent {3, 3},
+    .extent = Extent2D {3, 3},
     .tiles =
         TileMatrix {
           {TileID {1}, TileID {2}, TileID {3}},
@@ -332,7 +332,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitObjectLayer)
     .id = LayerID {1},
     .type = LayerType::kObjectLayer,
     .opacity = 1.0f,
-    .extent = MatrixExtent {0, 0},
+    .extent = Extent2D {0, 0},
     .tiles = {},
     .objects =
         {
@@ -394,7 +394,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitGroupLayer)
     .id = LayerID {58},
     .type = LayerType::kGroupLayer,
     .opacity = 0.2f,
-    .extent = MatrixExtent {0, 0},
+    .extent = Extent2D {0, 0},
     .tiles = {},
     .objects = {},
     .layers =
