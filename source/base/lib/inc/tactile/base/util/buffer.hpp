@@ -14,7 +14,6 @@
 #include <string_view>  // string_view
 
 #include "tactile/base/numeric/saturate_cast.hpp"
-#include "tactile/base/numeric/sign_cast.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -94,7 +93,7 @@ class Buffer final
   constexpr void append(const Iter begin, const Iter end) noexcept
   {
     const auto avail_count = capacity() - size();
-    const auto elem_count = to_unsigned(std::abs(std::distance(begin, end)));
+    const auto elem_count = static_cast<size_type>(std::abs(std::distance(begin, end)));
     const auto n = std::min(avail_count, elem_count);
     mEnd = std::copy_n(begin, n, mEnd);
   }

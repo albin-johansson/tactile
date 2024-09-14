@@ -40,7 +40,6 @@ target_sources(tactile-base
                "inc/tactile/base/numeric/index_2d.hpp"
                "inc/tactile/base/numeric/offset_2d.hpp"
                "inc/tactile/base/numeric/saturate_cast.hpp"
-               "inc/tactile/base/numeric/sign_cast.hpp"
                "inc/tactile/base/numeric/vec.hpp"
                "inc/tactile/base/numeric/vec_common.hpp"
                "inc/tactile/base/numeric/vec_format.hpp"
