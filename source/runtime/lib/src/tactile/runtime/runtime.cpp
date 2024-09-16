@@ -94,6 +94,7 @@ Runtime::~Runtime() noexcept = default;
 void Runtime::init_window(const std::uint32_t flags)
 {
   if (auto window = Window::create(flags)) {
+    win32_use_immersive_dark_mode(window->get_handle());
     mData->window = std::move(*window);
   }
 }
