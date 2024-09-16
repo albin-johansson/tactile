@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstdint>   // uint8_t
+#include <format>    // formatter, format_to
 #include <optional>  // optional
 
 #include "tactile/base/log/log_level.hpp"
@@ -39,3 +40,23 @@ TACTILE_RUNTIME_API auto parse_command_line_options(int argc, char* argv[])
     -> std::optional<CommandLineOptions>;
 
 }  // namespace tactile
+
+template <>
+struct std::formatter<tactile::RendererBackendId> final
+{
+  template <typename FormatParseContext>
+  constexpr static auto parse(FormatParseContext& ctx)
+  {
+    return ctx.begin();
+  }
+
+  template <typename FormatContext>
+  auto format(const tactile::RendererBackendId& id, FormatContext& ctx) const
+  {
+    switch (id) {
+      case tactile::RendererBackendId::kOpenGL: return std::format_to(ctx.out(), "opengl");
+      case tactile::RendererBackendId::kVulkan: return std::format_to(ctx.out(), "vulkan");
+      default:                                  return std::format_to(ctx.out(), "?");
+    }
+  }
+};

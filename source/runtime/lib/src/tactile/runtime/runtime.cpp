@@ -54,6 +54,21 @@ auto _make_logger(const LogLevel log_level) -> Logger
   return logger;
 }
 
+void _log_command_line_options(const CommandLineOptions& options)
+{
+  TACTILE_LOG_TRACE("renderer: {}", options.renderer_backend);
+  TACTILE_LOG_TRACE("load_zlib: {}", options.load_zlib);
+  TACTILE_LOG_TRACE("load_zstd: {}", options.load_zstd);
+  TACTILE_LOG_TRACE("load_yaml_format: {}", options.load_yaml_format);
+  TACTILE_LOG_TRACE("load_tiled_tmj_format: {}", options.load_tiled_tmj_format);
+  TACTILE_LOG_TRACE("load_tiled_tmx_format: {}", options.load_tiled_tmx_format);
+  TACTILE_LOG_TRACE("load_godot_tscn_format: {}", options.load_godot_tscn_format);
+  TACTILE_LOG_TRACE("texture_filter_mode: {}", options.renderer_options.texture_filter_mode);
+  TACTILE_LOG_TRACE("use_mipmaps: {}", options.renderer_options.use_mipmaps);
+  TACTILE_LOG_TRACE("use_vsync: {}", options.renderer_options.use_vsync);
+  TACTILE_LOG_TRACE("limit_fps: {}", options.renderer_options.limit_fps);
+}
+
 }  // namespace
 
 struct Runtime::Data final
@@ -72,6 +87,7 @@ struct Runtime::Data final
       logger {_make_logger(options.log_level)}
   {
     set_default_logger(&logger);
+    _log_command_line_options(options);
     TACTILE_LOG_DEBUG("Tactile " TACTILE_VERSION_STRING);
   }
 

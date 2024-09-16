@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstdint>  // uint8_t
+#include <format>   // formatter, format_to
 
 #include "tactile/base/prelude.hpp"
 
@@ -25,3 +26,27 @@ enum class LogLevel : std::uint8_t
 };
 
 }  // namespace tactile
+
+template <>
+struct std::formatter<tactile::LogLevel> final
+{
+  template <typename FormatParseContext>
+  constexpr static auto parse(FormatParseContext& ctx)
+  {
+    return ctx.begin();
+  }
+
+  template <typename FormatContext>
+  auto format(const tactile::LogLevel& level, FormatContext& ctx) const
+  {
+    switch (level) {
+      case tactile::LogLevel::kTrace: return std::format_to(ctx.out(), "trace");
+      case tactile::LogLevel::kDebug: return std::format_to(ctx.out(), "debug");
+      case tactile::LogLevel::kInfo:  return std::format_to(ctx.out(), "info");
+      case tactile::LogLevel::kWarn:  return std::format_to(ctx.out(), "warn");
+      case tactile::LogLevel::kError: return std::format_to(ctx.out(), "error");
+      case tactile::LogLevel::kFatal: return std::format_to(ctx.out(), "fatal");
+      default:                        return std::format_to(ctx.out(), "?");
+    }
+  }
+};

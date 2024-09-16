@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstdint>  // uint8_t
+#include <format>   // formatter, format_to
 
 #include "tactile/base/prelude.hpp"
 
@@ -30,3 +31,23 @@ struct RendererOptions final
 };
 
 }  // namespace tactile
+
+template <>
+struct std::formatter<tactile::TextureFilterMode> final
+{
+  template <typename FormatParseContext>
+  constexpr static auto parse(FormatParseContext& ctx)
+  {
+    return ctx.begin();
+  }
+
+  template <typename FormatContext>
+  auto format(const tactile::TextureFilterMode& mode, FormatContext& ctx) const
+  {
+    switch (mode) {
+      case tactile::TextureFilterMode::kNearest: return std::format_to(ctx.out(), "nearest");
+      case tactile::TextureFilterMode::kLinear:  return std::format_to(ctx.out(), "linear");
+      default:                                   return std::format_to(ctx.out(), "?");
+    }
+  }
+};
