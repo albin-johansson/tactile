@@ -67,7 +67,7 @@ class TACTILE_VULKAN_API VulkanImage final
 };
 
 [[nodiscard]]
-constexpr auto calculate_vulkan_mip_levels(const VkExtent2D extent) -> std::uint32_t
+inline auto calculate_vulkan_mip_levels(const VkExtent2D extent) -> std::uint32_t
 {
   const auto max_extent = std::max(extent.width, extent.height);
   return 1u + static_cast<std::uint32_t>(std::floor(std::log2(max_extent)));
