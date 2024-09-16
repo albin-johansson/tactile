@@ -18,6 +18,8 @@ constexpr const char* kUsageHelpMessage =
                [--limit-fps <on|off>] [--zlib <on|off>] [--zstd <on|off>]
                [--yaml-format <on|off>] [--tiled-tmj-format <on|off>]
                [--tiled-tmx-format <on|off>] [--godot-tscn-format <on|off>]
+               [--log-level <trc|dbg|inf|wrn|err|ftl>]
+
 Options:
   -h, --help           Prints this help message
   -v, --version        Prints the current version
@@ -32,7 +34,8 @@ Options:
   --yaml-format        Load Tiled TMJ save format plugin (default: "on")
   --tiled-tmj-format   Load Tiled TMJ save format plugin (default: "on")
   --tiled-tmx-format   Load Tiled TMX save format plugin (default: "on")
-  --godot-tscn-format  Load Godot TSCN save format plugin (default: "on"))";
+  --godot-tscn-format  Load Godot TSCN save format plugin (default: "on")
+  --log-level          The verbosity of log output (default: "inf"))";
 
 void _add_bool_argument(argparse::ArgumentParser& parser,
                         const std::string_view name,
@@ -46,10 +49,10 @@ void _add_bool_argument(argparse::ArgumentParser& parser,
 
 }  // namespace
 
-auto parse_command_line_options(const int argc,
-                                char* argv[]) -> std::optional<CommandLineOptions>
+auto get_default_command_line_options() -> CommandLineOptions
 {
-  CommandLineOptions options {
+  return {
+    .log_level = LogLevel::kInfo,
     .renderer_backend = RendererBackendId::kOpenGL,
     .renderer_options =
         RendererOptions {
@@ -65,6 +68,12 @@ auto parse_command_line_options(const int argc,
     .load_tiled_tmx_format = true,
     .load_godot_tscn_format = true,
   };
+}
+
+auto parse_command_line_options(const int argc,
+                                char* argv[]) -> std::optional<CommandLineOptions>
+{
+  auto options = get_default_command_line_options();
 
   argparse::ArgumentParser parser {"tactile",
                                    TACTILE_VERSION_STRING,
@@ -99,6 +108,31 @@ auto parse_command_line_options(const int argc,
       .nargs(1)
       .choices("en", "en_GB", "se")
       .default_value("en");
+
+  parser.add_argument("--log-level")
+      .nargs(1)
+      .choices("trc", "dbg", "inf", "wrn", "err", "ftl")
+      .default_value("inf")
+      .action([&](const std::string& value) {
+        if (value == "trc") {
+          options.log_level = LogLevel::kTrace;
+        }
+        else if (value == "dbg") {
+          options.log_level = LogLevel::kDebug;
+        }
+        else if (value == "inf") {
+          options.log_level = LogLevel::kInfo;
+        }
+        else if (value == "wrn") {
+          options.log_level = LogLevel::kWarn;
+        }
+        else if (value == "err") {
+          options.log_level = LogLevel::kError;
+        }
+        else if (value == "ftl") {
+          options.log_level = LogLevel::kFatal;
+        }
+      });
 
   parser.add_argument("--texture-filter")
       .nargs(1)

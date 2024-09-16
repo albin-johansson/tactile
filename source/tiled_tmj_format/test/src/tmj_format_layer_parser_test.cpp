@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/runtime.hpp"
 
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
@@ -42,7 +43,7 @@ class TmjFormatLayerParserTest : public testing::Test
   }
 
  protected:
-  Runtime mRuntime {};
+  Runtime mRuntime {get_default_command_line_options()};
 
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
   ZlibCompressionPlugin mZlibPlugin {};

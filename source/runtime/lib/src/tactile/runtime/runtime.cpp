@@ -18,6 +18,7 @@
 #include "tactile/core/numeric/random.hpp"
 #include "tactile/core/platform/win32.hpp"
 #include "tactile/core/ui/common/style.hpp"
+#include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/protobuf_context.hpp"
 #include "tactile/runtime/sdl_context.hpp"
 #include "tactile/runtime/window.hpp"
@@ -37,7 +38,7 @@ void _imgui_free(void* memory, void*)
 }
 
 [[nodiscard]]
-auto _make_logger() -> Logger
+auto _make_logger(const LogLevel log_level) -> Logger
 {
   win32_enable_virtual_terminal_processing();
 
@@ -47,7 +48,7 @@ auto _make_logger() -> Logger
   Logger logger {};
 
   logger.set_reference_instant(SteadyClock::now());
-  logger.set_min_level(LogLevel::kTrace);
+  logger.set_min_level(log_level);
   logger.add_sink(std::move(terminal_sink));
 
   return logger;
@@ -65,10 +66,11 @@ struct Runtime::Data final
   std::unordered_map<CompressionFormat, ICompressor*> compression_formats {};
   std::unordered_map<SaveFormatId, ISaveFormat*> save_formats {};
 
-  Data()
-    : logger {_make_logger()}
+  explicit Data(const CommandLineOptions& options)
+    : logger {_make_logger(options.log_level)}
   {
     set_default_logger(&logger);
+    TACTILE_LOG_DEBUG("Tactile " TACTILE_VERSION_STRING);
   }
 
   ~Data() noexcept
@@ -81,10 +83,10 @@ struct Runtime::Data final
   TACTILE_DELETE_MOVE(Data);
 };
 
-Runtime::Runtime()
+Runtime::Runtime(const CommandLineOptions& options)
 {
   std::set_terminate(&on_terminate);
-  mData = std::make_unique<Data>();
+  mData = std::make_unique<Data>(options);
 
   init_random_number_generator();
 }

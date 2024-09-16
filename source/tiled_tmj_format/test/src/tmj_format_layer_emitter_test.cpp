@@ -7,6 +7,7 @@
 
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/platform/bits.hpp"
+#include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/runtime.hpp"
 #include "tactile/test_util/document_view_mocks.hpp"
 #include "tactile/test_util/ir.hpp"
@@ -47,7 +48,7 @@ class TmjFormatLayerEmitterTest : public testing::Test
   }
 
  protected:
-  Runtime mRuntime {};
+  Runtime mRuntime {get_default_command_line_options()};
 
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
   ZlibCompressionPlugin mZlibPlugin {};

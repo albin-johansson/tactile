@@ -5,6 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/runtime.hpp"
 
 namespace tactile::test {
@@ -12,7 +13,7 @@ namespace tactile::test {
 class TmjFormatAttributeParserTest : public testing::Test
 {
  private:
-  Runtime mRuntime {};
+  Runtime mRuntime {get_default_command_line_options()};
 };
 
 // tactile::parse_tiled_tmj_property

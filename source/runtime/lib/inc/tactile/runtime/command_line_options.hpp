@@ -5,6 +5,7 @@
 #include <cstdint>   // uint8_t
 #include <optional>  // optional
 
+#include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer_options.hpp"
 #include "tactile/runtime/api.hpp"
@@ -19,6 +20,7 @@ enum class RendererBackendId : std::uint8_t
 
 struct CommandLineOptions final
 {
+  LogLevel log_level;
   RendererBackendId renderer_backend;
   RendererOptions renderer_options;
   bool load_zlib;
@@ -28,6 +30,9 @@ struct CommandLineOptions final
   bool load_tiled_tmx_format;
   bool load_godot_tscn_format;
 };
+
+[[nodiscard]]
+TACTILE_RUNTIME_API auto get_default_command_line_options() -> CommandLineOptions;
 
 [[nodiscard]]
 TACTILE_RUNTIME_API auto parse_command_line_options(int argc, char* argv[])

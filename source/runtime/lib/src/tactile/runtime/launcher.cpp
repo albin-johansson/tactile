@@ -95,9 +95,7 @@ auto launch(const int argc, char* argv[]) -> int
       return EXIT_FAILURE;
     }
 
-    TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
-
-    Runtime runtime {};
+    Runtime runtime {*options};
 
     const auto plugins [[maybe_unused]] = _load_plugins(runtime, *options);
 

@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/opengl_renderer/opengl_renderer_plugin.hpp"
+#include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
@@ -22,7 +23,7 @@ class OpenGLRendererTest : public testing::Test
     mPlugin.unload();
   }
 
-  Runtime mRuntime {};
+  Runtime mRuntime {get_default_command_line_options()};
   OpenGLRendererPlugin mPlugin {};
 };
 

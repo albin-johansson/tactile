@@ -8,6 +8,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/runtime.hpp"
 #include "tactile/test_util/document_view_mocks.hpp"
 #include "tactile/test_util/ir.hpp"
@@ -85,7 +86,7 @@ class TmjFormatRoundtripTest : public testing::TestWithParam<TmjRoundtripConfig>
   }
 
  protected:
-  Runtime mRuntime {};
+  Runtime mRuntime {get_default_command_line_options()};
 
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
   ZlibCompressionPlugin mZlibCompressionPlugin {};

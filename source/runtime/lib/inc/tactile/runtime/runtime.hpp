@@ -15,6 +15,8 @@ struct ImGuiContext;
 
 namespace tactile {
 
+struct CommandLineOptions;
+
 /**
  * Implements the runtime interface.
  */
@@ -37,8 +39,10 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
    * - Initializes the Protobuf library. \n
    * - Initializes The SDL library. \n
    * - Creates and installs a core logger.
+   *
+   * \param options The provided command line options.
    */
-  Runtime();
+  explicit Runtime(const CommandLineOptions& options);
 
   ~Runtime() noexcept override;
 
