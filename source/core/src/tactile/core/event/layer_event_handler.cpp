@@ -4,8 +4,14 @@
 
 #include <magic_enum.hpp>
 
+#include "tactile/core/cmd/layer/create_layer_command.hpp"
+#include "tactile/core/cmd/layer/duplicate_layer_command.hpp"
+#include "tactile/core/cmd/layer/move_layer_down_command.hpp"
+#include "tactile/core/cmd/layer/move_layer_up_command.hpp"
+#include "tactile/core/cmd/layer/remove_layer_command.hpp"
+#include "tactile/core/cmd/layer/set_layer_opacity_command.hpp"
+#include "tactile/core/cmd/layer/set_layer_visibility_command.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/document/map_document.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/layer_events.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -33,41 +39,49 @@ void LayerEventHandler::install(EventDispatcher& dispatcher)
 void LayerEventHandler::on_create_layer(const CreateLayerEvent& event)
 {
   TACTILE_LOG_TRACE("CreateLayerEvent(type: {})", magic_enum::enum_name(event.type));
+  mModel->push_map_command<CreateLayerCommand>(event.type);
 }
 
 void LayerEventHandler::on_remove_layer(const RemoveLayerEvent& event)
 {
   TACTILE_LOG_TRACE("RemoveLayerEvent");
+  mModel->push_map_command<RemoveLayerCommand>(event.layer_entity);
 }
 
 void LayerEventHandler::on_duplicate_layer(const DuplicateLayerEvent& event)
 {
   TACTILE_LOG_TRACE("DuplicateLayerEvent");
+  mModel->push_map_command<DuplicateLayerCommand>(event.layer_entity);
 }
 
 void LayerEventHandler::on_move_layer_up(const MoveLayerUpEvent& event)
 {
   TACTILE_LOG_TRACE("MoveLayerUpEvent");
+  mModel->push_map_command<MoveLayerUpCommand>(event.layer_entity);
 }
 
 void LayerEventHandler::on_move_layer_down(const MoveLayerDownEvent& event)
 {
   TACTILE_LOG_TRACE("MoveLayerDownEvent");
+  mModel->push_map_command<MoveLayerDownCommand>(event.layer_entity);
 }
 
-void LayerEventHandler::on_rename_layer(const RenameLayerEvent& event)
+void LayerEventHandler::on_rename_layer(const RenameLayerEvent&)
 {
   TACTILE_LOG_TRACE("RenameLayerEvent");
+  // TODO
 }
 
 void LayerEventHandler::on_set_layer_opacity(const SetLayerOpacityEvent& event)
 {
   TACTILE_LOG_TRACE("SetLayerOpacityEvent");
+  mModel->push_map_command<SetLayerOpacityCommand>(event.layer_entity, event.opacity);
 }
 
 void LayerEventHandler::on_set_layer_visible(const SetLayerVisibleEvent& event)
 {
   TACTILE_LOG_TRACE("SetLayerVisibleEvent");
+  mModel->push_map_command<SetLayerVisibilityCommand>(event.layer_entity, event.visible);
 }
 
 }  // namespace tactile
