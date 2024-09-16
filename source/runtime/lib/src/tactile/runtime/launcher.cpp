@@ -14,56 +14,60 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/platform/dynamic_library.hpp"
 #include "tactile/core/tactile_app.hpp"
+#include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/plugin_instance.hpp"
 #include "tactile/runtime/runtime.hpp"
 
 namespace tactile {
-namespace launcher_impl {
+namespace {
 
 [[nodiscard]]
-auto get_plugin_names() -> std::vector<std::string_view>
+auto _get_plugin_names(const CommandLineOptions& options) -> std::vector<std::string_view>
 {
   std::vector<std::string_view> plugin_names {};
 
-#ifdef TACTILE_ENABLE_ZLIB_COMPRESSION
-  plugin_names.emplace_back("tactile-zlib-compression" TACTILE_DLL_EXT);
-#endif
+  if (options.load_zlib) {
+    plugin_names.emplace_back("tactile-zlib-compression" TACTILE_DLL_EXT);
+  }
 
-#ifdef TACTILE_ENABLE_ZSTD_COMPRESSION
-  plugin_names.emplace_back("tactile-zstd-compression" TACTILE_DLL_EXT);
-#endif
+  if (options.load_zstd) {
+    plugin_names.emplace_back("tactile-zstd-compression" TACTILE_DLL_EXT);
+  }
 
-#ifdef TACTILE_ENABLE_YAML_FORMAT
-  plugin_names.emplace_back("tactile-yaml-format" TACTILE_DLL_EXT);
-#endif
+  if (options.load_yaml_format) {
+    plugin_names.emplace_back("tactile-yaml-format" TACTILE_DLL_EXT);
+  }
 
-#ifdef TACTILE_ENABLE_TILED_TMJ_FORMAT
-  plugin_names.emplace_back("tactile-tiled-tmj-format" TACTILE_DLL_EXT);
-#endif
+  if (options.load_tiled_tmj_format) {
+    plugin_names.emplace_back("tactile-tiled-tmj-format" TACTILE_DLL_EXT);
+  }
 
-#ifdef TACTILE_ENABLE_TILED_TMX_FORMAT
-  plugin_names.emplace_back("tactile-tiled-tmx-format" TACTILE_DLL_EXT);
-#endif
+  if (options.load_tiled_tmx_format) {
+    plugin_names.emplace_back("tactile-tiled-tmx-format" TACTILE_DLL_EXT);
+  }
 
-#ifdef TACTILE_ENABLE_GODOT_TSCN_FORMAT
-  plugin_names.emplace_back("tactile-godot-tscn-format" TACTILE_DLL_EXT);
-#endif
+  if (options.load_godot_tscn_format) {
+    plugin_names.emplace_back("tactile-godot-tscn-format" TACTILE_DLL_EXT);
+  }
 
-#ifdef TACTILE_ENABLE_OPENGL_RENDERER
-  plugin_names.emplace_back("tactile-opengl-renderer" TACTILE_DLL_EXT);
-#elif defined(TACTILE_ENABLE_VULKAN_RENDERER)
-  plugin_names.emplace_back("tactile-vulkan-renderer" TACTILE_DLL_EXT);
-#else
-  #error "No renderer has been configured"
-#endif
+  switch (options.renderer_backend) {
+    case RendererBackendId::kOpenGL:
+      plugin_names.emplace_back("tactile-opengl-renderer" TACTILE_DLL_EXT);
+      break;
+
+    case RendererBackendId::kVulkan:
+      plugin_names.emplace_back("tactile-vulkan-renderer" TACTILE_DLL_EXT);
+      break;
+  }
 
   return plugin_names;
 }
 
 [[nodiscard]]
-auto load_plugins(IRuntime& runtime) -> std::vector<PluginInstance>
+auto _load_plugins(IRuntime& runtime,
+                   const CommandLineOptions& options) -> std::vector<PluginInstance>
 {
-  const auto plugin_names = get_plugin_names();
+  const auto plugin_names = _get_plugin_names(options);
 
   std::vector<PluginInstance> plugins {};
 
@@ -81,18 +85,23 @@ auto load_plugins(IRuntime& runtime) -> std::vector<PluginInstance>
   return plugins;
 }
 
-}  // namespace launcher_impl
+}  // namespace
 
-auto launch(const int, char*[]) -> int
+auto launch(const int argc, char* argv[]) -> int
 {
   try {
-    Runtime runtime {};
+    const auto options = parse_command_line_options(argc, argv);
+    if (!options.has_value()) {
+      return EXIT_FAILURE;
+    }
 
     TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
 
-    const auto plugins [[maybe_unused]] = launcher_impl::load_plugins(runtime);
+    Runtime runtime {};
 
-    auto* window = runtime.get_window();
+    const auto plugins [[maybe_unused]] = _load_plugins(runtime, *options);
+
+    const auto* window = runtime.get_window();
     auto* renderer = runtime.get_renderer();
 
     if (window == nullptr) {
