@@ -7,8 +7,8 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
-inline namespace saturate_cast_test {
+namespace tactile::test {
+namespace {
 
 template <typename T = std::int8_t>
 inline constexpr T kMinI8 = T {std::numeric_limits<std::int8_t>::min()};
@@ -25,9 +25,9 @@ inline constexpr T kMinI16 = T {std::numeric_limits<std::int16_t>::min()};
 template <typename T = std::int16_t>
 inline constexpr T kMaxI16 = T {std::numeric_limits<std::int16_t>::max()};
 
-}  // namespace saturate_cast_test
+}  // namespace
 
-/// \trace tactile::saturate_cast
+// tactile::saturate_cast
 TEST(SaturateCast, SignedToSignedNarrowing)
 {
   EXPECT_EQ(saturate_cast<std::int8_t>(std::int16_t {0x00}), std::int8_t {0x00});
@@ -41,7 +41,7 @@ TEST(SaturateCast, SignedToSignedNarrowing)
   EXPECT_EQ(saturate_cast<std::int8_t>(kMaxI8<std::int16_t> + std::int16_t {1}), kMaxI8<>);
 }
 
-/// \trace tactile::saturate_cast
+// tactile::saturate_cast
 TEST(SaturateCast, SignedToSignedPromoting)
 {
   EXPECT_EQ(saturate_cast<std::int32_t>(std::int16_t {0}), std::int32_t {0});
@@ -51,7 +51,7 @@ TEST(SaturateCast, SignedToSignedPromoting)
   EXPECT_EQ(saturate_cast<std::int32_t>(kMaxI16<>), kMaxI16<std::int32_t>);
 }
 
-/// \trace tactile::saturate_cast
+// tactile::saturate_cast
 TEST(SaturateCast, UnsignedToSignedNarrowing)
 {
   EXPECT_EQ(saturate_cast<std::int8_t>(std::uint8_t {0}), std::int8_t {0});
@@ -61,7 +61,7 @@ TEST(SaturateCast, UnsignedToSignedNarrowing)
   EXPECT_EQ(saturate_cast<std::int8_t>(kMaxI8<std::uint8_t> + std::uint8_t {1}), kMaxI8<>);
 }
 
-/// \trace tactile::saturate_cast
+// tactile::saturate_cast
 TEST(SaturateCast, UnsignedToSignedPromoting)
 {
   EXPECT_EQ(saturate_cast<std::int16_t>(std::uint8_t {0}), std::int16_t {0});
@@ -70,7 +70,7 @@ TEST(SaturateCast, UnsignedToSignedPromoting)
   EXPECT_EQ(saturate_cast<std::int16_t>(kMaxU8<>), kMaxU8<std::int16_t>);
 }
 
-/// \trace tactile::saturate_cast
+// tactile::saturate_cast
 TEST(SaturateCast, SignedToUnsignedNarrowing)
 {
   EXPECT_EQ(saturate_cast<std::uint8_t>(std::int16_t {0}), std::uint8_t {0});
@@ -84,7 +84,7 @@ TEST(SaturateCast, SignedToUnsignedNarrowing)
   EXPECT_EQ(saturate_cast<std::uint8_t>(kMaxU8<std::int16_t> + std::int16_t {1}), kMaxU8<>);
 }
 
-/// \trace tactile::saturate_cast
+// tactile::saturate_cast
 TEST(SaturateCast, SignedToUnsignedPromoting)
 {
   EXPECT_EQ(saturate_cast<std::uint8_t>(std::int8_t {0}), std::uint8_t {0});

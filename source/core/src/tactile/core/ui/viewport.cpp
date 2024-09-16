@@ -7,7 +7,7 @@
 #include "tactile/core/entity/registry.hpp"
 
 namespace tactile {
-inline namespace viewport {
+namespace {
 
 inline constexpr float kZoomPercentage = 0.05f;
 
@@ -33,7 +33,7 @@ void _scale_viewport_zoom(CViewport& viewport,
   }
 }
 
-}  // namespace viewport
+}  // namespace
 
 auto is_viewport(const Registry& registry, const EntityID entity) -> bool
 {

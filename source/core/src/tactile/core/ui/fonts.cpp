@@ -12,11 +12,11 @@
 #include "tactile/core/model/settings.hpp"
 
 namespace tactile::ui {
-inline namespace fonts {
+namespace {
 
 inline constexpr std::array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
 
-}  // namespace fonts
+}  // namespace
 
 void reload_fonts(IRenderer& renderer, const Settings& settings, const float framebuffer_scale)
 {

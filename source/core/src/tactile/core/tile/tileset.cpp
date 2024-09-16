@@ -22,13 +22,13 @@
 #include "tactile/core/util/lookup.hpp"
 
 namespace tactile {
-namespace tileset {
+namespace {
 
 [[nodiscard]]
-auto add_tileset_component(Registry& registry,
-                           const EntityID tileset_id,
-                           const Int2& texture_size,
-                           const Int2& tile_size) -> std::expected<void, std::error_code>
+auto _add_tileset_component(Registry& registry,
+                            const EntityID tileset_id,
+                            const Int2& texture_size,
+                            const Int2& tile_size) -> std::expected<void, std::error_code>
 {
   if (tile_size.x() <= 0 || tile_size.y() <= 0) {
     TACTILE_LOG_ERROR("Invalid tileset tile size: {}", tile_size);
@@ -53,9 +53,9 @@ auto add_tileset_component(Registry& registry,
   return {};
 }
 
-void add_viewport_component(Registry& registry,
-                            const EntityID tileset_id,
-                            const Int2& texture_size)
+void _add_viewport_component(Registry& registry,
+                             const EntityID tileset_id,
+                             const Int2& texture_size)
 {
   auto& viewport = registry.add<CViewport>(tileset_id);
   viewport.pos = Float2 {0.0f, 0.0f};
@@ -63,7 +63,7 @@ void add_viewport_component(Registry& registry,
   viewport.scale = 1.0f;
 }
 
-void create_tiles(Registry& registry, CTileset& tileset)
+void _create_tiles(Registry& registry, CTileset& tileset)
 {
   const auto tile_count = tileset.extent.rows * tileset.extent.cols;
   tileset.tiles.reserve(tile_count);
@@ -77,9 +77,9 @@ void create_tiles(Registry& registry, CTileset& tileset)
 }
 
 [[nodiscard]]
-auto create_tiles(Registry& registry,
-                  CTileset& tileset,
-                  const ir::Tileset& ir_tileset) -> std::expected<void, std::error_code>
+auto _create_tiles(Registry& registry,
+                   CTileset& tileset,
+                   const ir::Tileset& ir_tileset) -> std::expected<void, std::error_code>
 {
   const auto tile_count = saturate_cast<std::size_t>(ir_tileset.tile_count);
   tileset.tiles.resize(tile_count, kInvalidEntity);
@@ -108,7 +108,7 @@ auto create_tiles(Registry& registry,
   return {};
 }
 
-}  // namespace tileset
+}  // namespace
 
 auto is_tileset(const Registry& registry, const EntityID entity) -> bool
 {
@@ -128,18 +128,18 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID
   const auto tileset_id = registry.make_entity();
 
   const auto add_tileset_result =
-      tileset::add_tileset_component(registry, tileset_id, spec.texture.size, spec.tile_size);
+      _add_tileset_component(registry, tileset_id, spec.texture.size, spec.tile_size);
   if (!add_tileset_result.has_value()) {
     return kInvalidEntity;
   }
 
-  tileset::add_viewport_component(registry, tileset_id, spec.texture.size);
+  _add_viewport_component(registry, tileset_id, spec.texture.size);
 
   registry.add<CMeta>(tileset_id);
   registry.add<CTexture>(tileset_id, spec.texture);
 
   auto& tileset = registry.get<CTileset>(tileset_id);
-  tileset::create_tiles(registry, tileset);
+  _create_tiles(registry, tileset);
 
   TACTILE_ASSERT(is_tileset(registry, tileset_id));
   TACTILE_ASSERT(tileset.extent.rows > 0);
@@ -162,21 +162,19 @@ auto make_tileset(Registry& registry,
 
   auto& texture = registry.add<CTexture>(tileset_id, std::move(*texture_result));
 
-  tileset::add_viewport_component(registry, tileset_id, texture.size);
+  _add_viewport_component(registry, tileset_id, texture.size);
 
-  const auto add_tileset_result =
-      tileset::add_tileset_component(registry,
-                                     tileset_id,
-                                     texture.size,
-                                     ir_tileset_ref.tileset.tile_size);
+  const auto add_tileset_result = _add_tileset_component(registry,
+                                                         tileset_id,
+                                                         texture.size,
+                                                         ir_tileset_ref.tileset.tile_size);
   if (!add_tileset_result.has_value()) {
     return kInvalidEntity;
   }
 
   auto& tileset = registry.get<CTileset>(tileset_id);
 
-  const auto create_tiles_result =
-      tileset::create_tiles(registry, tileset, ir_tileset_ref.tileset);
+  const auto create_tiles_result = _create_tiles(registry, tileset, ir_tileset_ref.tileset);
   if (!create_tiles_result.has_value()) {
     return std::unexpected {create_tiles_result.error()};
   }

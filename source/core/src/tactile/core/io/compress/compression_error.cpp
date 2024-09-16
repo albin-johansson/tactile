@@ -3,7 +3,7 @@
 #include "tactile/core/io/compress/compression_error.hpp"
 
 namespace tactile {
-inline namespace compression_error {
+namespace {
 
 class CompressionErrorCategory final : public std::error_category
 {
@@ -29,7 +29,7 @@ class CompressionErrorCategory final : public std::error_category
   }
 };
 
-}  // namespace compression_error
+}  // namespace
 
 auto get_compression_error_category() noexcept -> const std::error_category&
 {
