@@ -7,6 +7,7 @@
 
 #include <SDL2/SDL_vulkan.h>
 
+#include "tactile/base/render/renderer_options.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
@@ -34,17 +35,18 @@ auto _get_required_extensions(IWindow& window) -> std::vector<const char*>
 
 }  // namespace
 
-void VulkanInstanceDeleter::operator()(VkInstance instance) noexcept
+void VulkanInstanceDeleter::operator()(VkInstance instance) const noexcept
 {
   vkDestroyInstance(instance, nullptr);
 }
 
-auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, VkResult>
+auto create_vulkan_instance(IWindow& window, const RendererOptions& options)
+    -> std::expected<VulkanInstance, VkResult>
 {
-  const auto tactile_version =
+  constexpr auto tactile_version =
       VK_MAKE_VERSION(TACTILE_MAJOR_VERSION, TACTILE_MINOR_VERSION, TACTILE_PATCH_VERSION);
 
-  const VkApplicationInfo app_info {
+  constexpr VkApplicationInfo app_info {
     .sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
     .pNext = nullptr,
     .pApplicationName = "Tactile",
@@ -55,7 +57,7 @@ auto create_vulkan_instance(IWindow& window) -> std::expected<VulkanInstance, Vk
   };
 
   std::vector<const char*> enabled_layers {};
-  if constexpr (kIsDebugBuild) {
+  if (options.vulkan_validation) {
     enabled_layers.push_back("VK_LAYER_KHRONOS_validation");
   }
 

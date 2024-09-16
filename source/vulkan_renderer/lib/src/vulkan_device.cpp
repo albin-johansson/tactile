@@ -6,6 +6,7 @@
 #include <utility>  // exchange
 #include <vector>   // vector
 
+#include "tactile/base/render/renderer_options.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/vulkan_renderer/vulkan_physical_device.hpp"
 #include "tactile/vulkan_renderer/vulkan_util.hpp"
@@ -64,7 +65,9 @@ auto VulkanDevice::operator=(VulkanDevice&& other) noexcept -> VulkanDevice&
 }
 
 auto create_vulkan_device(VkPhysicalDevice physical_device,
-                          VkSurfaceKHR surface) -> std::expected<VulkanDevice, VkResult>
+                          VkSurfaceKHR surface,
+                          const RendererOptions& options)
+    -> std::expected<VulkanDevice, VkResult>
 {
   const auto queue_family_indices = get_queue_family_indices(physical_device, surface);
 
@@ -96,7 +99,7 @@ auto create_vulkan_device(VkPhysicalDevice physical_device,
   }
 
   std::vector<const char*> enabled_layers {};
-  if constexpr (kIsDebugBuild) {
+  if (options.vulkan_validation) {
     enabled_layers.push_back("VK_LAYER_KHRONOS_validation");
   }
 

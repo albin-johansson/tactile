@@ -12,6 +12,8 @@
 
 namespace tactile {
 
+struct RendererOptions;
+
 class TACTILE_VULKAN_API VulkanDevice final
 {
  public:
@@ -32,7 +34,8 @@ class TACTILE_VULKAN_API VulkanDevice final
 
 [[nodiscard]]
 TACTILE_VULKAN_API auto create_vulkan_device(VkPhysicalDevice physical_device,
-                                             VkSurfaceKHR surface)
+                                             VkSurfaceKHR surface,
+                                             const RendererOptions& options)
     -> std::expected<VulkanDevice, VkResult>;
 
 }  // namespace tactile

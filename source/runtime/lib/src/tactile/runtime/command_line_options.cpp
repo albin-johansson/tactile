@@ -18,7 +18,7 @@ constexpr const char* kUsageHelpMessage =
                [--limit-fps <on|off>] [--zlib <on|off>] [--zstd <on|off>]
                [--yaml-format <on|off>] [--tiled-tmj-format <on|off>]
                [--tiled-tmx-format <on|off>] [--godot-tscn-format <on|off>]
-               [--log-level <trc|dbg|inf|wrn|err|ftl>]
+               [--vulkan-validation <on|off>] [--log-level <trc|dbg|inf|wrn|err|ftl>]
 
 Options:
   -h, --help           Prints this help message
@@ -35,6 +35,7 @@ Options:
   --tiled-tmj-format   Load Tiled TMJ save format plugin (default: "on")
   --tiled-tmx-format   Load Tiled TMX save format plugin (default: "on")
   --godot-tscn-format  Load Godot TSCN save format plugin (default: "on")
+  --vulkan-validation  Load Vulkan validation layers (default: "off")
   --log-level          The verbosity of log output (default: "inf"))";
 
 void _add_bool_argument(argparse::ArgumentParser& parser,
@@ -60,6 +61,7 @@ auto get_default_command_line_options() -> CommandLineOptions
           .use_mipmaps = true,
           .use_vsync = true,
           .limit_fps = false,
+          .vulkan_validation = false,
         },
     .load_zlib = true,
     .load_zstd = true,
@@ -156,6 +158,9 @@ auto parse_command_line_options(const int argc,
   _add_bool_argument(parser, "--tiled-tmj-format", options.load_tiled_tmj_format);
   _add_bool_argument(parser, "--tiled-tmx-format", options.load_tiled_tmx_format);
   _add_bool_argument(parser, "--godot-tscn-format", options.load_godot_tscn_format);
+  _add_bool_argument(parser,
+                     "--vulkan-validation",
+                     options.renderer_options.vulkan_validation);
 
   try {
     parser.parse_args(argc, argv);

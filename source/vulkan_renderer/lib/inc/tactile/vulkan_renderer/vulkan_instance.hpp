@@ -13,10 +13,11 @@
 namespace tactile {
 
 class IWindow;
+struct RendererOptions;
 
 struct TACTILE_VULKAN_API VulkanInstanceDeleter final
 {
-  void operator()(VkInstance instance) noexcept;
+  void operator()(VkInstance instance) const noexcept;
 };
 
 using VulkanInstance = std::unique_ptr<VkInstance_T, VulkanInstanceDeleter>;
@@ -24,13 +25,14 @@ using VulkanInstance = std::unique_ptr<VkInstance_T, VulkanInstanceDeleter>;
 /**
  * Creates a Vulkan instance.
  *
- * \param window The target window.
+ * \param window  The target window.
+ * \param options The configured renderer options.
  *
  * \return
  * A Vulkan instance if successful; an error code otherwise.
  */
 [[nodiscard]]
-TACTILE_VULKAN_API auto create_vulkan_instance(IWindow& window)
+TACTILE_VULKAN_API auto create_vulkan_instance(IWindow& window, const RendererOptions& options)
     -> std::expected<VulkanInstance, VkResult>;
 
 }  // namespace tactile

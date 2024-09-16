@@ -67,6 +67,7 @@ void _log_command_line_options(const CommandLineOptions& options)
   TACTILE_LOG_TRACE("use_mipmaps: {}", options.renderer_options.use_mipmaps);
   TACTILE_LOG_TRACE("use_vsync: {}", options.renderer_options.use_vsync);
   TACTILE_LOG_TRACE("limit_fps: {}", options.renderer_options.limit_fps);
+  TACTILE_LOG_TRACE("vulkan_validation: {}", options.renderer_options.vulkan_validation);
 }
 
 }  // namespace

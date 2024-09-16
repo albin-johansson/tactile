@@ -26,8 +26,11 @@ struct RendererOptions final
   /** Synchronize image presentation with the monitor vertical blanking period. */
   bool use_vsync;
 
-  /** Try to limit the frame rate to the monitor refresh rate.  */
+  /** Try to limit the frame rate to the monitor refresh rate. */
   bool limit_fps;
+
+  /** Load validation layers (Vulkan only). */
+  bool vulkan_validation;
 };
 
 }  // namespace tactile

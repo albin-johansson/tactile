@@ -48,10 +48,10 @@ void _init_frames(std::vector<VulkanFrame>& frames,
 VulkanRenderer::VulkanRenderer(const RendererOptions& options, IWindow* window)
   : m_options {options},
     m_window {window},
-    m_instance {create_vulkan_instance(*m_window).value()},
+    m_instance {create_vulkan_instance(*m_window, m_options).value()},
     m_surface {create_vulkan_surface(m_instance.get(), *m_window).value()},
     m_physical_device {select_physical_device(m_instance.get(), m_surface.handle).value()},
-    m_device {create_vulkan_device(m_physical_device, m_surface.handle).value()},
+    m_device {create_vulkan_device(m_physical_device, m_surface.handle, m_options).value()},
     m_allocator {
       create_vulkan_allocator(m_instance.get(), m_physical_device, m_device.handle).value()},
     m_swapchain {create_vulkan_swapchain(m_surface.handle,
