@@ -2,6 +2,7 @@
 
 #include "tactile/vulkan_renderer/vulkan_renderer.hpp"
 
+#include <algorithm>     // clamp
 #include <cstdint>       // uint32_t, uint64_t
 #include <limits>        // numeric_limits
 #include <system_error>  // make_error_code, errc
@@ -108,7 +109,7 @@ VulkanRenderer::VulkanRenderer(const RendererOptions& options, IWindow* window)
     .PipelineRenderingCreateInfo = pipeline_rendering_info,
     .Allocator = nullptr,
     .CheckVkResultFn = nullptr,
-    .MinAllocationSize = 1024u * 1024u,
+    .MinAllocationSize = VkDeviceSize {1024u} * VkDeviceSize {1024u},
   };
 
   m_imgui_context = VulkanImGuiContext::init(*m_window, imgui_vulkan_info).value();
@@ -136,9 +137,20 @@ auto VulkanRenderer::begin_frame() -> bool
   const auto y_scale = static_cast<float>(height_pixels) / static_cast<float>(height);
 
   auto& io = ImGui::GetIO();
-  io.DisplaySize.x = width;
-  io.DisplaySize.y = height;
+  io.DisplaySize.x = static_cast<float>(width);
+  io.DisplaySize.y = static_cast<float>(height);
   io.DisplayFramebufferScale = ImVec2 {x_scale, y_scale};
+
+  // Skip the frame if the window isn't visible
+  VkSurfaceCapabilitiesKHR surface_capabilities {};
+  vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physical_device,
+                                            m_surface.handle,
+                                            &surface_capabilities);
+  if (surface_capabilities.currentExtent.width == 0 ||
+      surface_capabilities.currentExtent.height == 0) {
+    m_frame_index = (m_frame_index + 1) % m_frames.size();
+    return false;
+  }
 
   // Wait until the GPU has finished executing previously submitted commands.
   std::ignore = vkWaitForFences(m_device.handle,
@@ -466,28 +478,18 @@ void VulkanRenderer::_submit_commands()
 {
   auto& frame = m_frames.at(m_frame_index);
 
-  // Wait for image_available_semaphore before executing the commands
-  const VkSemaphore wait_semaphores[] = {
-    frame.image_available_semaphore.handle,
-  };
-
-  // Signal render_finished_semaphore after the commands have finished.
-  const VkSemaphore signal_semaphores[] = {
-    frame.render_finished_semaphore.handle,
-  };
-
   constexpr VkPipelineStageFlags wait_stage = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 
   const VkSubmitInfo submit_info {
     .sType = VK_STRUCTURE_TYPE_SUBMIT_INFO,
     .pNext = nullptr,
     .waitSemaphoreCount = 1,
-    .pWaitSemaphores = wait_semaphores,
+    .pWaitSemaphores = &frame.image_available_semaphore.handle,
     .pWaitDstStageMask = &wait_stage,
     .commandBufferCount = 1,
     .pCommandBuffers = &frame.command_buffer.handle,
     .signalSemaphoreCount = 1,
-    .pSignalSemaphores = signal_semaphores,
+    .pSignalSemaphores = &frame.render_finished_semaphore.handle,
   };
 
   const auto submit_result =
@@ -504,26 +506,14 @@ void VulkanRenderer::_present_swapchain_image()
 {
   const auto& frame = m_frames.at(m_frame_index);
 
-  const VkSemaphore wait_semaphores[] = {
-    frame.render_finished_semaphore.handle,
-  };
-
-  const VkSwapchainKHR swapchains[] = {
-    m_swapchain.handle,
-  };
-
-  const std::uint32_t image_indices[] = {
-    m_swapchain.image_index,
-  };
-
   const VkPresentInfoKHR present_info {
     .sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
     .pNext = nullptr,
     .waitSemaphoreCount = 1,
-    .pWaitSemaphores = wait_semaphores,
+    .pWaitSemaphores = &frame.render_finished_semaphore.handle,
     .swapchainCount = 1,
-    .pSwapchains = swapchains,
-    .pImageIndices = image_indices,
+    .pSwapchains = &m_swapchain.handle,
+    .pImageIndices = &m_swapchain.image_index,
     .pResults = nullptr,
   };
 
@@ -564,7 +554,12 @@ auto VulkanRenderer::_recreate_swapchain() -> VkResult
                                             &surface_capabilities);
 
   auto new_params = m_swapchain.params;
-  new_params.image_extent = surface_capabilities.currentExtent;
+  new_params.image_extent.width = std::clamp(surface_capabilities.currentExtent.width,
+                                             surface_capabilities.minImageExtent.width,
+                                             surface_capabilities.maxImageExtent.width);
+  new_params.image_extent.height = std::clamp(surface_capabilities.currentExtent.height,
+                                              surface_capabilities.minImageExtent.height,
+                                              surface_capabilities.maxImageExtent.height);
 
   log(LogLevel::kDebug,
       "New swapchain image extent: {{{}, {}}}",
