@@ -15,6 +15,7 @@ class IWindow;
 class IRenderer;
 class ICompressor;
 class ISaveFormat;
+struct RendererOptions;
 
 /**
  * Interface that defines the primary API used by dynamic Tactile modules.
@@ -113,6 +114,15 @@ class IRuntime
   virtual void get_imgui_allocator_functions(imgui_malloc_fn** malloc_fn,
                                              imgui_free_fn** free_fn,
                                              void** user_data) = 0;
+
+  /**
+   * Returns the configured renderer options.
+   *
+   * \return
+   * The current renderer options.
+   */
+  [[nodiscard]]
+  virtual auto get_renderer_options() const -> const RendererOptions& = 0;
 };
 
 }  // namespace tactile

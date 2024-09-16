@@ -58,6 +58,7 @@ auto _make_logger(const LogLevel log_level) -> Logger
 
 struct Runtime::Data final
 {
+  RendererOptions renderer_options;
   ProtobufContext protobuf_context;
   SDLContext sdl_context;
   Logger logger;
@@ -67,7 +68,8 @@ struct Runtime::Data final
   std::unordered_map<SaveFormatId, ISaveFormat*> save_formats {};
 
   explicit Data(const CommandLineOptions& options)
-    : logger {_make_logger(options.log_level)}
+    : renderer_options {options.renderer_options},
+      logger {_make_logger(options.log_level)}
   {
     set_default_logger(&logger);
     TACTILE_LOG_DEBUG("Tactile " TACTILE_VERSION_STRING);
@@ -173,6 +175,11 @@ void Runtime::get_imgui_allocator_functions(imgui_malloc_fn** malloc_fn,
   if (user_data) {
     *user_data = nullptr;
   }
+}
+
+auto Runtime::get_renderer_options() const -> const RendererOptions&
+{
+  return mData->renderer_options;
 }
 
 }  // namespace tactile

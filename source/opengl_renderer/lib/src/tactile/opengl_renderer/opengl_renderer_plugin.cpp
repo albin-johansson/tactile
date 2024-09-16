@@ -52,15 +52,7 @@ void OpenGLRendererPlugin::load(IRuntime* runtime)
   m_runtime->get_imgui_allocator_functions(&imgui_alloc_fn, &imgui_free_fn, &imgui_user_data);
   ImGui::SetAllocatorFunctions(imgui_alloc_fn, imgui_free_fn, imgui_user_data);
 
-  // TODO load from CLI via runtime
-  constexpr RendererOptions options {
-    .texture_filter_mode = TextureFilterMode::kNearest,
-    .use_mipmaps = true,
-    .use_vsync = true,
-    .limit_fps = false,
-  };
-
-  if (auto renderer = OpenGLRenderer::make(options, window)) {
+  if (auto renderer = OpenGLRenderer::make(m_runtime->get_renderer_options(), window)) {
     m_renderer = std::move(*renderer);
     m_runtime->set_renderer(&m_renderer.value());
   }

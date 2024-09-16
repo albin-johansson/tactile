@@ -70,6 +70,9 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
                                      imgui_free_fn** free_fn,
                                      void** user_data) override;
 
+  [[nodiscard]]
+  auto get_renderer_options() const -> const RendererOptions& override;
+
  private:
   struct Data;
   std::unique_ptr<Data> mData;
