@@ -5,7 +5,7 @@ add_library(tactile::godot_tscn_format ALIAS tactile-godot-tscn-format)
 
 target_sources(tactile-godot-tscn-format
                PRIVATE
-               "src/tactile/godot_tscn_format/godot_tscn_format_plugin.cpp"
+               "src/godot_tscn_format_plugin.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/godot_tscn_format/api.hpp"
