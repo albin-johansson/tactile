@@ -9,6 +9,7 @@ target_sources(tactile-godot-tscn-format
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/godot_tscn_format/api.hpp"
+               "inc/tactile/godot_tscn_format/gd3_types.hpp"
                "inc/tactile/godot_tscn_format/godot_tscn_format_plugin.hpp"
                )
 
