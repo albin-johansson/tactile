@@ -38,6 +38,7 @@ target_sources(tactile-base
                "inc/tactile/base/meta/color.hpp"
                "inc/tactile/base/numeric/extent_2d.hpp"
                "inc/tactile/base/numeric/index_2d.hpp"
+               "inc/tactile/base/numeric/literals.hpp"
                "inc/tactile/base/numeric/offset_2d.hpp"
                "inc/tactile/base/numeric/saturate_cast.hpp"
                "inc/tactile/base/numeric/vec.hpp"
