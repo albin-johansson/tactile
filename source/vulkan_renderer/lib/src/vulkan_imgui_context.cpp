@@ -90,7 +90,6 @@ auto _create_imgui_pipeline_layout(VkDevice device,
 }
 
 auto _create_imgui_graphics_pipeline(VkDevice device,
-                                     VkDescriptorSetLayout descriptor_set_layout,
                                      VkPipelineLayout pipeline_layout,
                                      const VkPipelineRenderingCreateInfoKHR& rendering_info)
     -> std::expected<VulkanPipeline, VkResult>
@@ -191,7 +190,7 @@ auto _create_imgui_graphics_pipeline(VkDevice device,
     .depthClampEnable = VK_FALSE,
     .rasterizerDiscardEnable = VK_FALSE,
     .polygonMode = VK_POLYGON_MODE_FILL,
-    .cullMode = VK_CULL_MODE_NONE,  // FIXME
+    .cullMode = VK_CULL_MODE_NONE,  // Dear ImGui doesn't work well with back-face culling
     .frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE,
     .depthBiasEnable = VK_FALSE,
     .depthBiasConstantFactor = 0.0f,
@@ -352,7 +351,6 @@ auto VulkanImGuiContext::init(IWindow& window, ImGui_ImplVulkan_InitInfo& vulkan
 
   if (auto pipeline =
           _create_imgui_graphics_pipeline(vulkan_info.Device,
-                                          context.m_descriptor_set_layout.handle,
                                           context.m_pipeline_layout.handle,
                                           vulkan_info.PipelineRenderingCreateInfo)) {
     context.m_pipeline = std::move(*pipeline);
