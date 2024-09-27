@@ -9,7 +9,7 @@
 #include "tactile/null_renderer/null_renderer.hpp"
 #include "tactile/runtime/plugin.hpp"
 
-namespace tactile {
+namespace tactile::null_renderer {
 
 /**
  * Manages the null renderer plugin.
@@ -25,8 +25,8 @@ class TACTILE_NULL_RENDERER_API NullRendererPlugin final : public IPlugin
   void unload() override;
 
  private:
-  IRuntime* mRuntime {};
-  std::unique_ptr<NullRenderer> mRenderer {};
+  IRuntime* m_runtime {};
+  std::unique_ptr<NullRenderer> m_renderer {};
 };
 
 extern "C"
@@ -35,4 +35,4 @@ extern "C"
   TACTILE_NULL_RENDERER_API void tactile_free_plugin(IPlugin* plugin);
 }
 
-}  // namespace tactile
+}  // namespace tactile::null_renderer

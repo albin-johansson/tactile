@@ -5,12 +5,11 @@
 #include <unordered_map>  // unordered_map
 
 #include "tactile/base/id.hpp"
-#include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/null_renderer/api.hpp"
 #include "tactile/null_renderer/null_texture.hpp"
 
-namespace tactile {
+namespace tactile::null_renderer {
 
 /**
  * A null renderer implementation.
@@ -59,10 +58,10 @@ class TACTILE_NULL_RENDERER_API NullRenderer final : public IRenderer
   auto get_options() -> const RendererOptions& override;
 
  private:
-  RendererOptions m_options {};
-  IWindow* mWindow;
-  std::unordered_map<TextureID, NullTexture> mTextures {};
-  TextureID mNextTextureId {1};
+  RendererOptions m_options;
+  IWindow* m_window;
+  std::unordered_map<TextureID, NullTexture> m_textures;
+  TextureID m_next_texture_id;
 };
 
-}  // namespace tactile
+}  // namespace tactile::null_renderer

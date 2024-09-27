@@ -4,10 +4,13 @@
 
 #include <utility>  // move
 
-namespace tactile {
+namespace tactile::null_renderer {
 
 NullRenderer::NullRenderer(IWindow* window)
-  : mWindow {window}
+  : m_options {},
+    m_window {window},
+    m_textures {},
+    m_next_texture_id {1}
 {}
 
 auto NullRenderer::begin_frame() -> bool
@@ -27,24 +30,24 @@ auto NullRenderer::load_texture(const std::filesystem::path& image_path)
     return std::unexpected {texture.error()};
   }
 
-  const auto texture_id = mNextTextureId;
-  ++mNextTextureId.value;
+  const auto texture_id = m_next_texture_id;
+  ++m_next_texture_id.value;
 
-  mTextures.insert_or_assign(texture_id, std::move(*texture));
+  m_textures.insert_or_assign(texture_id, std::move(*texture));
 
   return texture_id;
 }
 
 void NullRenderer::unload_texture(const TextureID id)
 {
-  mTextures.erase(id);
+  m_textures.erase(id);
 }
 
 auto NullRenderer::find_texture(const TextureID id) const -> const ITexture*
 {
-  const auto iter = mTextures.find(id);
+  const auto iter = m_textures.find(id);
 
-  if (iter != mTextures.end()) {
+  if (iter != m_textures.end()) {
     return &iter->second;
   }
 
@@ -61,12 +64,12 @@ auto NullRenderer::can_reload_fonts() const -> bool
 
 auto NullRenderer::get_window() -> IWindow*
 {
-  return mWindow;
+  return m_window;
 }
 
 auto NullRenderer::get_window() const -> const IWindow*
 {
-  return mWindow;
+  return m_window;
 }
 
 auto NullRenderer::get_imgui_context() -> ImGuiContext*
@@ -82,4 +85,4 @@ auto NullRenderer::get_options() -> const RendererOptions&
   return m_options;
 }
 
-}  // namespace tactile
+}  // namespace tactile::null_renderer

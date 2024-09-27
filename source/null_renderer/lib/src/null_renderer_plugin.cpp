@@ -7,33 +7,33 @@
 #include "tactile/base/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
 
-namespace tactile {
+namespace tactile::null_renderer {
 
 void NullRendererPlugin::load(IRuntime* runtime)
 {
   log(LogLevel::kTrace, "Loading null renderer plugin");
-  mRuntime = runtime;
+  m_runtime = runtime;
 
-  mRuntime->init_window(0);
-  auto* window = mRuntime->get_window();
+  m_runtime->init_window(0);
+  auto* window = m_runtime->get_window();
 
   if (!window) {
     log(LogLevel::kError, "Could not initialize window");
     return;
   }
 
-  mRenderer = std::make_unique<NullRenderer>(window);
-  mRuntime->set_renderer(mRenderer.get());
+  m_renderer = std::make_unique<NullRenderer>(window);
+  m_runtime->set_renderer(m_renderer.get());
 }
 
 void NullRendererPlugin::unload()
 {
   log(LogLevel::kTrace, "Unloading null renderer plugin");
 
-  mRuntime->set_renderer(nullptr);
-  mRuntime = nullptr;
+  m_runtime->set_renderer(nullptr);
+  m_runtime = nullptr;
 
-  mRenderer.reset();
+  m_renderer.reset();
 }
 
 auto tactile_make_plugin() -> IPlugin*
@@ -46,4 +46,4 @@ void tactile_free_plugin(IPlugin* plugin)
   delete plugin;
 }
 
-}  // namespace tactile
+}  // namespace tactile::null_renderer

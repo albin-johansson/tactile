@@ -9,7 +9,7 @@
 #include "tactile/base/render/texture.hpp"
 #include "tactile/null_renderer/api.hpp"
 
-namespace tactile {
+namespace tactile::null_renderer {
 
 /**
  * A null texture implementation.
@@ -41,10 +41,10 @@ class TACTILE_NULL_RENDERER_API NullTexture final : public ITexture
   auto get_path() const -> const std::filesystem::path& override;
 
  private:
-  TextureSize mSize;
-  std::filesystem::path mPath;
+  TextureSize m_size;
+  std::filesystem::path m_path;
 
   NullTexture(TextureSize size, std::filesystem::path path);
 };
 
-}  // namespace tactile
+}  // namespace tactile::null_renderer

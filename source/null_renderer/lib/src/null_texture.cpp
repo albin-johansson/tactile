@@ -10,11 +10,11 @@
 
 #include "tactile/runtime/logging.hpp"
 
-namespace tactile {
+namespace tactile::null_renderer {
 
 NullTexture::NullTexture(const TextureSize size, std::filesystem::path path)
-  : mSize {size},
-    mPath {std::move(path)}
+  : m_size {size},
+    m_path {std::move(path)}
 {}
 
 auto NullTexture::load(std::filesystem::path path)
@@ -46,12 +46,12 @@ auto NullTexture::get_handle() const -> void*
 
 auto NullTexture::get_size() const -> TextureSize
 {
-  return mSize;
+  return m_size;
 }
 
 auto NullTexture::get_path() const -> const std::filesystem::path&
 {
-  return mPath;
+  return m_path;
 }
 
-}  // namespace tactile
+}  // namespace tactile::null_renderer
