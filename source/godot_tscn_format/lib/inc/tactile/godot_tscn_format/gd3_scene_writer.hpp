@@ -17,17 +17,17 @@
 namespace tactile::godot {
 
 /**
- * Utility for generating Godot 3 TSCN files.
+ * Utility for emitting Godot 3 scene files.
  */
-class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
+class TACTILE_TSCN_FORMAT_API Gd3SceneWriter final
 {
  public:
   /**
-   * Creates a TSCN writer.
+   * Creates a scene writer.
    *
    * \param stream The output stream to use, whose lifetime must exceed the writer.
    */
-  explicit Gd3TscnWriter(std::ostream& stream);
+  explicit Gd3SceneWriter(std::ostream& stream);
 
   /**
    * Outputs a line break.
@@ -35,7 +35,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto newline() -> Gd3TscnWriter&;
+  auto newline() -> Gd3SceneWriter&;
 
   /**
    * Outputs a "gd_scene" header.
@@ -45,7 +45,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto gd_scene_header(std::size_t load_steps) -> Gd3TscnWriter&;
+  auto gd_scene_header(std::size_t load_steps) -> Gd3SceneWriter&;
 
   /**
    * Outputs a "gd_resource" header.
@@ -56,7 +56,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto gd_resource_header(std::string_view type, std::size_t load_steps) -> Gd3TscnWriter&;
+  auto gd_resource_header(std::string_view type, std::size_t load_steps) -> Gd3SceneWriter&;
 
   /**
    * Outputs a "node" header without a parent node.
@@ -67,7 +67,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto node_header(std::string_view name, std::string_view type) -> Gd3TscnWriter&;
+  auto node_header(std::string_view name, std::string_view type) -> Gd3SceneWriter&;
 
   /**
    * Outputs a "node" header.
@@ -80,7 +80,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * The writer itself.
    */
   auto node_header(std::string_view name, std::string_view type, std::string_view parent)
-      -> Gd3TscnWriter&;
+      -> Gd3SceneWriter&;
 
   /**
    * Outputs a "resource" header.
@@ -88,7 +88,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto resource_header() -> Gd3TscnWriter&;
+  auto resource_header() -> Gd3SceneWriter&;
 
   /**
    * Outputs an "ext_resource" header.
@@ -99,7 +99,8 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto ext_resource_header(ExtResourceId id, const Gd3ExtResource& resource) -> Gd3TscnWriter&;
+  auto ext_resource_header(ExtResourceId id, const Gd3ExtResource& resource)
+      -> Gd3SceneWriter&;
 
   /**
    * Outputs a "sub_resource" header.
@@ -110,7 +111,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto sub_resource_header(std::string_view type, SubResourceId id) -> Gd3TscnWriter&;
+  auto sub_resource_header(std::string_view type, SubResourceId id) -> Gd3SceneWriter&;
 
   /**
    * Outputs a plain key/value pair.
@@ -121,12 +122,12 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto variable(std::string_view key, std::string_view value) -> Gd3TscnWriter&;
+  auto variable(std::string_view key, std::string_view value) -> Gd3SceneWriter&;
 
   /**
    * \copydoc variable(std::string_view, std::string_view)
    */
-  auto variable(const std::string_view key, const char* value) -> Gd3TscnWriter&
+  auto variable(const std::string_view key, const char* value) -> Gd3SceneWriter&
   {
     return variable(key, std::string_view {value});
   }
@@ -134,7 +135,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
   /**
    * \copydoc variable(std::string_view, std::string_view)
    */
-  auto variable(std::string_view key, bool value) -> Gd3TscnWriter&;
+  auto variable(std::string_view key, bool value) -> Gd3SceneWriter&;
 
   /**
    * Outputs a plain key/value pair with quotes around the value.
@@ -145,7 +146,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto variable_quoted(std::string_view key, std::string_view value) -> Gd3TscnWriter&;
+  auto variable_quoted(std::string_view key, std::string_view value) -> Gd3SceneWriter&;
 
   /**
    * Outputs a "Vector2" variable.
@@ -156,12 +157,12 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto vector2_variable(std::string_view key, const Int2& vec) -> Gd3TscnWriter&;
+  auto vector2_variable(std::string_view key, const Int2& vec) -> Gd3SceneWriter&;
 
   /**
    * \copydoc vector2_variable(std::string_view, const Int2&)
    */
-  auto vector2_variable(std::string_view key, const Float2& vec) -> Gd3TscnWriter&;
+  auto vector2_variable(std::string_view key, const Float2& vec) -> Gd3SceneWriter&;
 
   /**
    * Outputs a "Rect2" variable.
@@ -172,7 +173,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto rect2_variable(std::string_view key, const Int4& rect) -> Gd3TscnWriter&;
+  auto rect2_variable(std::string_view key, const Int4& rect) -> Gd3SceneWriter&;
 
   /**
    * Outputs a "SubResource" variable.
@@ -183,7 +184,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto sub_resource_variable(std::string_view key, SubResourceId id) -> Gd3TscnWriter&;
+  auto sub_resource_variable(std::string_view key, SubResourceId id) -> Gd3SceneWriter&;
 
   /**
    * Outputs an "ExtResource" variable.
@@ -194,7 +195,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto ext_resource_variable(std::string_view key, ExtResourceId id) -> Gd3TscnWriter&;
+  auto ext_resource_variable(std::string_view key, ExtResourceId id) -> Gd3SceneWriter&;
 
   /**
    * Outputs a "Color" variable.
@@ -205,7 +206,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto color_variable(std::string_view key, const FColor& color) -> Gd3TscnWriter&;
+  auto color_variable(std::string_view key, const FColor& color) -> Gd3SceneWriter&;
 
   /**
    * Outputs a variable with elements from a given range.
@@ -225,7 +226,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
   auto sequence_variable(const std::string_view key,
                          const std::string_view type,
                          const T& range,
-                         const Emitter& emitter) -> Gd3TscnWriter&
+                         const Emitter& emitter) -> Gd3SceneWriter&
   {
     _emit_key_prefix();
     *m_stream << key << " = " << type << "( ";
@@ -261,7 +262,7 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
   template <typename T>
   auto sequence_variable(const std::string_view key,
                          const std::string_view type,
-                         const T& range) -> Gd3TscnWriter&
+                         const T& range) -> Gd3SceneWriter&
   {
     const auto streamer = [](std::ostream& stream, const typename T::value_type& elem) {
       stream << elem;
