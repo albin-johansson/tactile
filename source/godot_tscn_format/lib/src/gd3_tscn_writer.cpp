@@ -2,8 +2,8 @@
 
 #include "tactile/godot_tscn_format/gd3_tscn_writer.hpp"
 
-#include <iomanip>  // quoted
-#include <ios>      // boolalpha
+#include <iomanip>  // quoted, setprecision
+#include <ios>      // boolalpha, fixed
 #include <utility>  // move
 
 namespace tactile::godot {
@@ -11,7 +11,9 @@ namespace tactile::godot {
 Gd3TscnWriter::Gd3TscnWriter(std::ostream& stream)
   : m_stream {&stream},
     m_key_prefix {}
-{}
+{
+  *m_stream << std::setprecision(3) << std::fixed;
+}
 
 auto Gd3TscnWriter::newline() -> Gd3TscnWriter&
 {
@@ -33,8 +35,8 @@ auto Gd3TscnWriter::gd_resource_header(const std::string_view type,
   return *this;
 }
 
-auto Gd3TscnWriter::node_header(const std::string_view name,
-                                const std::string_view type) -> Gd3TscnWriter&
+auto Gd3TscnWriter::node_header(const std::string_view name, const std::string_view type)
+    -> Gd3TscnWriter&
 {
   *m_stream << "[node name=" << std::quoted(name) << " type=" << std::quoted(type) << "]\n";
   return *this;
@@ -50,8 +52,14 @@ auto Gd3TscnWriter::node_header(const std::string_view name,
   return *this;
 }
 
-auto Gd3TscnWriter::ext_resource_header(const ExtResourceId id,
-                                        const Gd3ExtResource& resource) -> Gd3TscnWriter&
+auto Gd3TscnWriter::resource_header() -> Gd3TscnWriter&
+{
+  *m_stream << "[resource]\n";
+  return *this;
+}
+
+auto Gd3TscnWriter::ext_resource_header(const ExtResourceId id, const Gd3ExtResource& resource)
+    -> Gd3TscnWriter&
 {
   *m_stream << "[ext_resource path=" << std::quoted(resource.path)  //
             << " type=" << std::quoted(resource.type)               //
@@ -59,18 +67,18 @@ auto Gd3TscnWriter::ext_resource_header(const ExtResourceId id,
   return *this;
 }
 
-auto Gd3TscnWriter::sub_resource_header(const std::string_view type,
-                                        const SubResourceId id) -> Gd3TscnWriter&
+auto Gd3TscnWriter::sub_resource_header(const std::string_view type, const SubResourceId id)
+    -> Gd3TscnWriter&
 {
   *m_stream << "[sub_resource type=" << std::quoted(type) << " id=" << id << "]\n";
   return *this;
 }
 
-auto Gd3TscnWriter::variable(const std::string_view key,
-                             const std::string_view value) -> Gd3TscnWriter&
+auto Gd3TscnWriter::variable(const std::string_view key, const std::string_view value)
+    -> Gd3TscnWriter&
 {
   _emit_key_prefix();
-  *m_stream << key << "= " << value << '\n';
+  *m_stream << key << " = " << value << '\n';
   return *this;
 }
 
@@ -81,33 +89,32 @@ auto Gd3TscnWriter::variable(const std::string_view key, const bool value) -> Gd
   return *this;
 }
 
-auto Gd3TscnWriter::variable_quoted(const std::string_view key,
-                                    const std::string_view value) -> Gd3TscnWriter&
+auto Gd3TscnWriter::variable_quoted(const std::string_view key, const std::string_view value)
+    -> Gd3TscnWriter&
 {
   _emit_key_prefix();
-  *m_stream << key << "= " << std::quoted(value) << '\n';
+  *m_stream << key << " = " << std::quoted(value) << '\n';
   return *this;
 }
 
-auto Gd3TscnWriter::vector2_variable(const std::string_view key,
-                                     const Int2& vec) -> Gd3TscnWriter&
-{
-  _emit_key_prefix();
-  *m_stream << key << " = Vector2( " << vec.x() << ", " << vec.y() << " )\n";
-
-  return *this;
-}
-
-auto Gd3TscnWriter::vector2_variable(const std::string_view key,
-                                     const Float2& vec) -> Gd3TscnWriter&
+auto Gd3TscnWriter::vector2_variable(const std::string_view key, const Int2& vec)
+    -> Gd3TscnWriter&
 {
   _emit_key_prefix();
   *m_stream << key << " = Vector2( " << vec.x() << ", " << vec.y() << " )\n";
   return *this;
 }
 
-auto Gd3TscnWriter::rect2_variable(const std::string_view key,
-                                   const Int4& rect) -> Gd3TscnWriter&
+auto Gd3TscnWriter::vector2_variable(const std::string_view key, const Float2& vec)
+    -> Gd3TscnWriter&
+{
+  _emit_key_prefix();
+  *m_stream << key << " = Vector2( " << vec.x() << ", " << vec.y() << " )\n";
+  return *this;
+}
+
+auto Gd3TscnWriter::rect2_variable(const std::string_view key, const Int4& rect)
+    -> Gd3TscnWriter&
 {
   _emit_key_prefix();
   *m_stream << key << " = Rect2( "  //
@@ -118,30 +125,34 @@ auto Gd3TscnWriter::rect2_variable(const std::string_view key,
   return *this;
 }
 
-auto Gd3TscnWriter::sub_resource_variable(const std::string_view key,
-                                          const SubResourceId id) -> Gd3TscnWriter&
+auto Gd3TscnWriter::sub_resource_variable(const std::string_view key, const SubResourceId id)
+    -> Gd3TscnWriter&
 {
   _emit_key_prefix();
   *m_stream << key << " = SubResource( " << id << " )\n";
   return *this;
 }
 
-auto Gd3TscnWriter::ext_resource_variable(const std::string_view key,
-                                          const ExtResourceId id) -> Gd3TscnWriter&
+auto Gd3TscnWriter::ext_resource_variable(const std::string_view key, const ExtResourceId id)
+    -> Gd3TscnWriter&
 {
   _emit_key_prefix();
   *m_stream << key << " = ExtResource( " << id << " )\n";
   return *this;
 }
 
+auto Gd3TscnWriter::color_variable(const std::string_view key, const FColor& color)
+    -> Gd3TscnWriter&
+{
+  _emit_key_prefix();
+  *m_stream << key << " = Color( " << color.red << ", " << color.green << ", " << color.blue
+            << ", " << color.alpha << " )\n";
+  return *this;
+}
+
 void Gd3TscnWriter::set_key_prefix(std::string prefix)
 {
   m_key_prefix = std::move(prefix);
-}
-
-auto Gd3TscnWriter::get_stream() -> std::ostream&
-{
-  return *m_stream;
 }
 
 void Gd3TscnWriter::_emit_key_prefix() const

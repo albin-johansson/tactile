@@ -2,11 +2,13 @@
 
 #pragma once
 
+#include <concepts>     // invocable
 #include <cstddef>      // size_t
 #include <ostream>      // ostream
 #include <string>       // string
 #include <string_view>  // string_view
 
+#include "tactile/base/meta/color.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/godot_tscn_format/api.hpp"
@@ -77,9 +79,16 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * \return
    * The writer itself.
    */
-  auto node_header(std::string_view name,
-                   std::string_view type,
-                   std::string_view parent) -> Gd3TscnWriter&;
+  auto node_header(std::string_view name, std::string_view type, std::string_view parent)
+      -> Gd3TscnWriter&;
+
+  /**
+   * Outputs a "resource" header.
+   *
+   * \return
+   * The writer itself.
+   */
+  auto resource_header() -> Gd3TscnWriter&;
 
   /**
    * Outputs an "ext_resource" header.
@@ -113,6 +122,14 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
    * The writer itself.
    */
   auto variable(std::string_view key, std::string_view value) -> Gd3TscnWriter&;
+
+  /**
+   * \copydoc variable(std::string_view, std::string_view)
+   */
+  auto variable(const std::string_view key, const char* value) -> Gd3TscnWriter&
+  {
+    return variable(key, std::string_view {value});
+  }
 
   /**
    * \copydoc variable(std::string_view, std::string_view)
@@ -180,14 +197,85 @@ class TACTILE_TSCN_FORMAT_API Gd3TscnWriter final
   auto ext_resource_variable(std::string_view key, ExtResourceId id) -> Gd3TscnWriter&;
 
   /**
+   * Outputs a "Color" variable.
+   *
+   * \param key   The variable name.
+   * \param color The variable value.
+   *
+   * \return
+   * The writer itself.
+   */
+  auto color_variable(std::string_view key, const FColor& color) -> Gd3TscnWriter&;
+
+  /**
+   * Outputs a variable with elements from a given range.
+   *
+   * \tparam T       The type of the range.
+   * \tparam Emitter The type of the custom emitter.
+   *
+   * \param key     The variable name.
+   * \param type    The variable type.
+   * \param range   The range of elements to include.
+   * \param emitter The function object used to output the range elements.
+   *
+   * \return
+   * The writer itself.
+   */
+  template <typename T, std::invocable<std::ostream&, const typename T::value_type&> Emitter>
+  auto sequence_variable(const std::string_view key,
+                         const std::string_view type,
+                         const T& range,
+                         const Emitter& emitter) -> Gd3TscnWriter&
+  {
+    _emit_key_prefix();
+    *m_stream << key << " = " << type << "( ";
+
+    std::size_t index {0};
+    for (const auto& elem : range) {
+      if (index != 0) {
+        *m_stream << ", ";
+      }
+
+      emitter(*m_stream, elem);
+
+      ++index;
+    }
+
+    *m_stream << " )\n";
+
+    return *this;
+  }
+
+  /**
+   * Outputs a variable with elements from a given range, using operator<< to output elements.
+   *
+   * \tparam T The type of the range.
+   *
+   * \param key   The variable name.
+   * \param type  The variable type.
+   * \param range The range of elements to include.
+   *
+   * \return
+   * The writer itself.
+   */
+  template <typename T>
+  auto sequence_variable(const std::string_view key,
+                         const std::string_view type,
+                         const T& range) -> Gd3TscnWriter&
+  {
+    const auto streamer = [](std::ostream& stream, const typename T::value_type& elem) {
+      stream << elem;
+    };
+
+    return sequence_variable(key, type, range, streamer);
+  }
+
+  /**
    * Sets the prefix that is prepended to variable keys.
    *
    * \param prefix The new key prefix.
    */
   void set_key_prefix(std::string prefix);
-
-  [[nodiscard]]
-  auto get_stream() -> std::ostream&;
 
  private:
   std::ostream* m_stream;
