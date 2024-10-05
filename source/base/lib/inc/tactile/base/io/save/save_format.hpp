@@ -2,10 +2,13 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <filesystem>    // path
-#include <system_error>  // error_code
+#include <expected>       // expected
+#include <filesystem>     // path
+#include <string>         // string
+#include <system_error>   // error_code
+#include <unordered_map>  // unordered_map
 
+#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -13,11 +16,16 @@ namespace tactile {
 
 class IMapView;
 
+using SaveFormatExtraSettings = StringMap<std::string>;
+
 /**
  * Provides save format parse options.
  */
 struct SaveFormatReadOptions final
 {
+  /** Used for implementation-specific settings. */
+  SaveFormatExtraSettings extra;
+
   /** The parent directory of the map or tileset file. */
   std::filesystem::path base_dir;
 
@@ -30,6 +38,9 @@ struct SaveFormatReadOptions final
  */
 struct SaveFormatWriteOptions final
 {
+  /** Used for implementation-specific settings. */
+  SaveFormatExtraSettings extra;
+
   /** The parent directory of the map or tileset file. */
   std::filesystem::path base_dir;
 
