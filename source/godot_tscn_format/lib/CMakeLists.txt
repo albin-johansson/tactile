@@ -7,6 +7,7 @@ target_sources(tactile-godot-tscn-format
                PRIVATE
                "src/gd3_document_converter.cpp"
                "src/gd3_scene_writer.cpp"
+               "src/godot_scene_format.cpp"
                "src/godot_tscn_format_plugin.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
@@ -14,6 +15,7 @@ target_sources(tactile-godot-tscn-format
                "inc/tactile/godot_tscn_format/gd3_document_converter.hpp"
                "inc/tactile/godot_tscn_format/gd3_scene_writer.hpp"
                "inc/tactile/godot_tscn_format/gd3_types.hpp"
+               "inc/tactile/godot_tscn_format/godot_scene_format.hpp"
                "inc/tactile/godot_tscn_format/godot_tscn_format_plugin.hpp"
                )
 
