@@ -2,11 +2,13 @@
 
 #pragma once
 
-#include <cstddef>  // size_t
-#include <cstdint>  // int32_t
-#include <string>   // string
-#include <variant>  // variant
-#include <vector>   // vector
+#include <cstddef>     // size_t
+#include <cstdint>     // int32_t
+#include <filesystem>  // path
+#include <ostream>     // ostream
+#include <string>      // string
+#include <variant>     // variant
+#include <vector>      // vector
 
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/base/id.hpp"
@@ -105,8 +107,12 @@ struct Gd3TileAnimation final
   TileID tile_id;
 };
 
+struct Gd3Layer;
+
 struct Gd3GroupLayer final
-{};
+{
+  std::vector<Gd3Layer> layers;
+};
 
 struct Gd3TileLayer final
 {
@@ -125,6 +131,7 @@ struct Gd3Layer final
   std::string parent;
   std::variant<Gd3TileLayer, Gd3ObjectLayer, Gd3GroupLayer> value;
   Gd3Metadata meta;
+  float opacity;
   bool visible;
 };
 
@@ -132,22 +139,21 @@ using Gd3ExtResourceMap = std::unordered_map<ExtResourceId, Gd3ExtResource>;
 using Gd3AtlasTextureMap = std::unordered_map<SubResourceId, Gd3AtlasTexture>;
 using Gd3RectShapeMap = std::unordered_map<SubResourceId, Gd3RectShape>;
 
-struct Gd3Scene final
+struct Gd3Scene final  // TODO rename
 {
   ExtResourceId next_ext_resource_id;
   SubResourceId next_sub_resource_id;
   Gd3ExtResourceMap ext_resources;
-  Gd3AtlasTextureMap atlas_textures;
-  Gd3RectShapeMap rect_shapes;
-  Gd3SpriteFrames sprite_frames;
   Gd3Metadata root_meta;
 };
 
-struct Gd3Spritesheet final
+struct Gd3TilesetInstance final
 {
   std::string name;
   ExtResourceId texture_id;
   TileID first_tile_id;
+  std::int32_t tile_count;
+  std::int32_t column_count;
   Int2 tile_size;
   Int2 image_size;
 };
@@ -155,8 +161,8 @@ struct Gd3Spritesheet final
 struct Gd3Tileset final
 {
   Gd3Scene scene;
-  std::vector<std::string> texture_paths;
-  std::vector<Gd3Spritesheet> spritesheets;
+  std::vector<std::filesystem::path> texture_paths;
+  std::vector<Gd3TilesetInstance> instances;
 };
 
 struct Gd3Map final
@@ -165,6 +171,46 @@ struct Gd3Map final
   ExtResourceId tileset_id;
   Gd3Tileset tileset;
   std::vector<Gd3Layer> layers;
+  std::unordered_map<TileID, ExtResourceId> tileset_texture_ids;
+  Gd3SpriteFrames sprite_frames;
+  Gd3AtlasTextureMap atlas_textures;
+  Gd3RectShapeMap rect_shapes;
 };
+
+[[nodiscard]]
+inline auto find_tileset_instance(const Gd3Tileset& gd_tileset, const TileID tile_id)
+    -> const Gd3TilesetInstance*
+{
+  for (const auto& gd_tileset_instance : gd_tileset.instances) {
+    const auto first_id = gd_tileset_instance.first_tile_id;
+    const auto last_id = gd_tileset_instance.first_tile_id + gd_tileset_instance.tile_count;
+
+    if (tile_id >= first_id && tile_id < last_id) {
+      return &gd_tileset_instance;
+    }
+  }
+
+  return nullptr;
+}
+
+[[nodiscard]]
+inline auto get_tileset_index(const Gd3Tileset& gd_tileset, const TileID tile_id)
+    -> std::int32_t
+{
+  std::int32_t tileset_index {};
+
+  for (const auto& gd_tileset_instance : gd_tileset.instances) {
+    const auto first_id = gd_tileset_instance.first_tile_id;
+    const auto last_id = gd_tileset_instance.first_tile_id + gd_tileset_instance.tile_count;
+
+    if (tile_id >= first_id && tile_id < last_id) {
+      return tileset_index;
+    }
+
+    ++tileset_index;
+  }
+
+  return tileset_index;
+}
 
 }  // namespace tactile::godot

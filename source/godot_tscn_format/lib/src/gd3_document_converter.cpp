@@ -3,10 +3,12 @@
 #include "tactile/godot_tscn_format/gd3_document_converter.hpp"
 
 #include <algorithm>   // replace
+#include <cassert>     // assert
 #include <cmath>       // sin, cos
 #include <filesystem>  // path
 #include <format>      // format
 #include <numbers>     // pi_v
+#include <stdexcept>   // runtime_error
 #include <string>      // string
 #include <utility>     // move
 
@@ -106,17 +108,53 @@ auto _convert_meta(const IMetaView& meta) -> Gd3Metadata
   return gd_meta;
 }
 
+void _convert_common_layer_data(const ILayerView& layer,
+                                Gd3Layer& gd_layer,
+                                std::string parent_path)
+{
+  gd_layer.name = _escape_name(layer.get_meta().get_name());
+  gd_layer.meta = _convert_meta(layer.get_meta());
+  gd_layer.parent = std::move(parent_path);
+  gd_layer.opacity = layer.get_opacity();
+  gd_layer.visible = layer.is_visible();
+}
+
+[[nodiscard]]
+auto _convert_tile(const ILayerView& layer,
+                   const Gd3Tileset& gd_tileset,
+                   const Index2D& tile_pos,
+                   const TileID tile_id) -> Gd3EncodedTile
+{
+  const auto* gd_tileset_instance = find_tileset_instance(gd_tileset, tile_id);
+  if (!gd_tileset_instance) {
+    throw std::runtime_error {"could not find tileset instance"};
+  }
+
+  constexpr std::int32_t tile_offset = 65'536;
+
+  Gd3EncodedTile gd_tile {};
+  gd_tile.tile_index = tile_id - gd_tileset_instance->first_tile_id;
+
+  if (gd_tile.tile_index >= gd_tileset_instance->column_count) {
+    const auto position_in_tileset = layer.get_tile_position_in_tileset(tile_id).value();
+    gd_tile.tile_index = saturate_cast<std::int32_t>(position_in_tileset.x) +
+                         saturate_cast<std::int32_t>(position_in_tileset.y) * tile_offset;
+  }
+
+  gd_tile.position = saturate_cast<std::int32_t>(tile_pos.x) +
+                     saturate_cast<std::int32_t>(tile_pos.y) * tile_offset;
+  gd_tile.tileset = get_tileset_index(gd_tileset, tile_id);
+
+  return gd_tile;
+}
+
 [[nodiscard]]
 auto _convert_tile_layer(const ILayerView& layer,
                          const Gd3Tileset& gd_tileset,
                          std::string parent_path) -> Gd3Layer
 {
   Gd3Layer gd_layer {};
-  gd_layer.name = _escape_name(layer.get_meta().get_name());
-  gd_layer.meta = _convert_meta(layer.get_meta());
-  gd_layer.parent = std::move(parent_path);
-  gd_layer.opacity = layer.get_opacity();
-  gd_layer.visible = layer.is_visible();
+  _convert_common_layer_data(layer, gd_layer, std::move(parent_path));
 
   auto& gd_tile_layer = gd_layer.value.emplace<Gd3TileLayer>();
   gd_tile_layer.cell_size = layer.get_tile_size();
@@ -124,42 +162,20 @@ auto _convert_tile_layer(const ILayerView& layer,
   const auto extent = layer.get_extent().value();
   for (Extent2D::value_type row = 0; row < extent.rows; ++row) {
     for (Extent2D::value_type col = 0; col < extent.cols; ++col) {
-      const Index2D tile_position {.x = col, .y = row};
+      const Index2D tile_pos {.x = col, .y = row};
 
-      const auto tile_id = layer.get_tile(tile_position);
-      if (!tile_id.has_value() || tile_id == kEmptyTile) {
+      const auto tile_id = layer.get_tile(tile_pos).value();
+      if (tile_id == kEmptyTile) {
         continue;
       }
 
-      const auto position_in_tileset = layer.get_tile_position_in_tileset(*tile_id);
-      if (!position_in_tileset.has_value()) {
-        continue;
-      }
+      const auto gd_encoded_tile = _convert_tile(layer, gd_tileset, tile_pos, tile_id);
+      gd_tile_layer.tiles.push_back(gd_encoded_tile);
 
-      const auto* gd_tileset_instance = find_tileset_instance(gd_tileset, *tile_id);
-      if (!gd_tileset_instance) {
-        // TODO error
-        continue;
-      }
-
-      constexpr std::int32_t tile_offset = 65'536;
-
-      auto& gd_tile = gd_tile_layer.tiles.emplace_back();
-      gd_tile.tile_index = *tile_id - gd_tileset_instance->first_tile_id;
-
-      if (gd_tile.tile_index >= gd_tileset_instance->column_count) {
-        gd_tile.tile_index = saturate_cast<std::int32_t>(position_in_tileset->x) +
-                             saturate_cast<std::int32_t>(position_in_tileset->y) * tile_offset;
-      }
-
-      gd_tile.position =
-          saturate_cast<std::int32_t>(col) + saturate_cast<std::int32_t>(row) * tile_offset;
-      gd_tile.tileset = get_tileset_index(gd_tileset, *tile_id);
-
-      if (layer.is_tile_animated(tile_position)) {
+      if (layer.is_tile_animated(tile_pos)) {
         auto& gd_tile_animation = gd_tile_layer.animations.emplace_back();
-        gd_tile_animation.position = tile_position;
-        gd_tile_animation.tile_id = *tile_id;
+        gd_tile_animation.position = tile_pos;
+        gd_tile_animation.tile_id = tile_id;
         gd_tile_animation.parent = std::format("{}/{}", gd_layer.parent, gd_layer.name);
       }
     }
@@ -169,49 +185,35 @@ auto _convert_tile_layer(const ILayerView& layer,
 }
 
 [[nodiscard]]
-auto _convert_object_layer(const ILayerView& layer, std::string parent_path) -> Gd3Layer
+auto _prepare_object_layer(const ILayerView& layer, std::string parent_path) -> Gd3Layer
 {
-  const auto object_count = layer.object_count();
-
   Gd3Layer gd_layer {};
-  gd_layer.name = _escape_name(layer.get_meta().get_name());
-  gd_layer.meta = _convert_meta(layer.get_meta());
-  gd_layer.parent = std::move(parent_path);
-  gd_layer.opacity = layer.get_opacity();
-  gd_layer.visible = layer.is_visible();
+  _convert_common_layer_data(layer, gd_layer, std::move(parent_path));
 
   auto& gd_object_layer = gd_layer.value.emplace<Gd3ObjectLayer>();
-  gd_object_layer.objects.reserve(object_count);
+  gd_object_layer.objects.reserve(layer.object_count());
 
   return gd_layer;
 }
 
 [[nodiscard]]
-auto _convert_group_layer(const ILayerView& layer, std::string parent_path) -> Gd3Layer
+auto _prepare_group_layer(const ILayerView& layer, std::string parent_path) -> Gd3Layer
 {
-  const auto layer_count = layer.layer_count();
-
   Gd3Layer gd_layer {};
-  gd_layer.name = _escape_name(layer.get_meta().get_name());
-  gd_layer.meta = _convert_meta(layer.get_meta());
-  gd_layer.parent = std::move(parent_path);
-  gd_layer.opacity = layer.get_opacity();
-  gd_layer.visible = layer.is_visible();
+  _convert_common_layer_data(layer, gd_layer, std::move(parent_path));
 
   auto& gd_group_layer = gd_layer.value.emplace<Gd3GroupLayer>();
-  gd_group_layer.layers.reserve(layer_count);
+  gd_group_layer.layers.reserve(layer.layer_count());
 
   return gd_layer;
 }
 
 void _convert_tile_animation(const ITileView& tile,
-                             Gd3Scene& gd_scene,
+                             Gd3Map& gd_map,
                              const ExtResourceId texture_id)
 {
   const auto frame_count = tile.animation_frame_count();
-  if (frame_count < 1) {
-    return;
-  }
+  assert(frame_count > 0);
 
   const auto& tileset = tile.get_parent_tileset();
   const auto tileset_columns = saturate_cast<TileIndex>(tileset.column_count());
@@ -223,7 +225,6 @@ void _convert_tile_animation(const ITileView& tile,
   gd_animation.name = std::format("Tile {}", tile_id);
   gd_animation.frames.reserve(frame_count);
 
-  // Godot 3 uses the same speed for all frames, so we pick the speed of the first frame.
   const auto [_, first_frame_duration_ms] = tile.get_animation_frame(0);
   gd_animation.speed = 1'000.0f / static_cast<float>(first_frame_duration_ms.count());
 
@@ -239,17 +240,17 @@ void _convert_tile_animation(const ITileView& tile,
                       tile_size.y()},
     };
 
-    const auto atlas_texture_id = gd_scene.next_sub_resource_id++;
-    gd_scene.atlas_textures.insert_or_assign(atlas_texture_id, frame_texture);
+    const auto atlas_texture_id = gd_map.scene.next_sub_resource_id++;
+    gd_map.atlas_textures.insert_or_assign(atlas_texture_id, frame_texture);
 
     gd_animation.frames.push_back(atlas_texture_id);
   }
 
-  if (gd_scene.sprite_frames.animations.empty()) {
-    gd_scene.sprite_frames.id = gd_scene.next_sub_resource_id++;
+  if (gd_map.sprite_frames.animations.empty()) {
+    gd_map.sprite_frames.id = gd_map.scene.next_sub_resource_id++;
   }
 
-  gd_scene.sprite_frames.animations.push_back(std::move(gd_animation));
+  gd_map.sprite_frames.animations.push_back(std::move(gd_animation));
 }
 
 }  // namespace
@@ -269,6 +270,7 @@ auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std
 {
   m_map.scene.next_ext_resource_id = 1;
   m_map.scene.next_sub_resource_id = 1;
+  m_map.sprite_frames.id = m_map.scene.next_sub_resource_id++;
 
   m_map.tileset.scene.next_ext_resource_id = 1;
   m_map.tileset.scene.next_sub_resource_id = 1;
@@ -277,7 +279,7 @@ auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std
   m_map.scene.root_meta = _convert_meta(map.get_meta());
 
   m_map.scene.ext_resources[m_map.tileset_id] = Gd3ExtResource {
-    .path = "res://tileset.tres",  // FIXME
+    .path = "res://tileset.tres",  // TODO setting
     .type = "TileSet",
   };
 
@@ -307,12 +309,12 @@ auto Gd3DocumentConverter::visit(const ILayerView& layer)
     }
 
     case LayerType::kObjectLayer: {
-      gd_layer = _convert_object_layer(layer, parent_path);
+      gd_layer = _prepare_object_layer(layer, parent_path);
       break;
     }
 
     case LayerType::kGroupLayer: {
-      gd_layer = _convert_group_layer(layer, parent_path);
+      gd_layer = _prepare_group_layer(layer, parent_path);
       break;
     }
   }
@@ -332,7 +334,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
 {
   const auto* parent_layer = object.get_parent_layer();
   if (!parent_layer) {
-    // TODO figure out how to handle objects in tiles
+    // TODO
     return {};
   }
 
@@ -349,7 +351,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
 
   Gd3Object gd_object {};
   gd_object.name = std::move(object_name);
-  gd_object.parent = gd_parent_layer->parent;
+  gd_object.parent = std::format("{}/{}", gd_parent_layer->parent, gd_parent_layer->name);
   gd_object.meta = _convert_meta(object.get_meta());
   gd_object.visible = object.is_visible();
 
@@ -367,7 +369,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
       auto& gd_rect = gd_object.value.emplace<Gd3Rect>();
       gd_rect.shape_id = shape_id;
 
-      m_map.scene.rect_shapes[shape_id] = Gd3RectShape {
+      m_map.rect_shapes[shape_id] = Gd3RectShape {
         .extents = object.get_size() * 0.5f,
       };
 
@@ -379,7 +381,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
       auto& gd_polygon = gd_object.value.emplace<Gd3Polygon>();
 
       const auto radius = object.get_size() * 0.5f;
-      constexpr std::size_t point_count = 32;  // FIXME
+      constexpr std::size_t point_count = 32;  // TODO setting
       gd_polygon.points = _approximate_ellipse_as_polygon(radius, point_count);
 
       break;
@@ -400,10 +402,16 @@ auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
   const auto texture_id = m_map.tileset.scene.next_ext_resource_id++;
   const auto texture_image_name = source_image_path.filename().string();
 
-  m_map.tileset.scene.ext_resources[texture_id] = Gd3ExtResource {
+  const Gd3ExtResource texture_resource {
     .path = std::format("res://{}", texture_image_name),
     .type = "Texture",
   };
+
+  const auto texture_res_id_in_map = m_map.scene.next_ext_resource_id++;
+  m_map.scene.ext_resources[texture_res_id_in_map] = texture_resource;
+  m_map.tileset_texture_ids[tileset.get_first_tile_id()] = texture_res_id_in_map;
+
+  m_map.tileset.scene.ext_resources[texture_id] = texture_resource;
   m_map.tileset.texture_paths.push_back(source_image_path);
 
   auto& gd_tileset_instance = m_map.tileset.instances.emplace_back();
@@ -420,11 +428,11 @@ auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
 
 auto Gd3DocumentConverter::visit(const ITileView& tile) -> std::expected<void, std::error_code>
 {
-  const auto& tileset = tile.get_parent_tileset();
-
-  const auto texture_id =
-      _find_tileset_texture_id(m_map.tileset, tileset.get_first_tile_id()).value();
-  _convert_tile_animation(tile, m_map.tileset.scene, texture_id);
+  if (tile.animation_frame_count() > 0) {
+    const auto& tileset = tile.get_parent_tileset();
+    const auto texture_res_id = m_map.tileset_texture_ids.at(tileset.get_first_tile_id());
+    _convert_tile_animation(tile, m_map, texture_res_id);
+  }
 
   return {};
 }
