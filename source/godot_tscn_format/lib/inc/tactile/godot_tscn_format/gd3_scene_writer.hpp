@@ -19,7 +19,7 @@ namespace tactile::godot {
 /**
  * Utility for emitting Godot 3 scene files.
  */
-class TACTILE_TSCN_FORMAT_API Gd3SceneWriter final
+class TACTILE_GODOT_API Gd3SceneWriter final
 {
  public:
   /**

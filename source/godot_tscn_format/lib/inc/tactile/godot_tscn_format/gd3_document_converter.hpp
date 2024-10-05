@@ -13,7 +13,7 @@ namespace tactile::godot {
 /**
  * A document visitor that produces intermediate Godot 3 scene representations.
  */
-class TACTILE_TSCN_FORMAT_API Gd3DocumentConverter final : public IDocumentVisitor
+class TACTILE_GODOT_API Gd3DocumentConverter final : public IDocumentVisitor
 {
  public:
   /**

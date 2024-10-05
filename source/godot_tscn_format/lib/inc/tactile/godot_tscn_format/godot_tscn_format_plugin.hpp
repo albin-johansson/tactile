@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-class TACTILE_TSCN_FORMAT_API GodotTscnFormatPlugin final : public IPlugin
+class TACTILE_GODOT_API GodotTscnFormatPlugin final : public IPlugin
 {
  public:
   void load(IRuntime* runtime) override;
@@ -21,8 +21,8 @@ class TACTILE_TSCN_FORMAT_API GodotTscnFormatPlugin final : public IPlugin
 
 extern "C"
 {
-  TACTILE_TSCN_FORMAT_API auto tactile_make_plugin() -> IPlugin*;
-  TACTILE_TSCN_FORMAT_API void tactile_free_plugin(IPlugin* plugin);
+  TACTILE_GODOT_API auto tactile_make_plugin() -> IPlugin*;
+  TACTILE_GODOT_API void tactile_free_plugin(IPlugin* plugin);
 }
 
 }  // namespace tactile
