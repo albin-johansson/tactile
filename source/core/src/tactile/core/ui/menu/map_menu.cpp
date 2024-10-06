@@ -81,19 +81,15 @@ void MapMenu::_push_export_as_menu(const Language& language, EventDispatcher& di
   if (const MenuScope export_as_menu {language.get(StringID::kExportAsMenu)};
       export_as_menu.is_open()) {
     if (ImGui::MenuItem("Tiled JSON (TMJ)")) {
-      dispatcher.push<ShowExportMapDialogEvent>(SaveFormatId::kTiledTmj);
+      // TODO
     }
 
     if (ImGui::MenuItem("Tiled XML (TMX)")) {
-      dispatcher.push<ShowExportMapDialogEvent>(SaveFormatId::kTiledTmx);
+      // TODO
     }
 
-    if (ImGui::MenuItem("Godot 3 TSCN")) {
-      dispatcher.push<ShowExportMapDialogEvent>(SaveFormatId::kGodotTscn);
-    }
-
-    if (ImGui::MenuItem("Godot 4 TSCN")) {
-      // TODO dispatcher.push<ShowExportMapDialogEvent>(SaveFormatId::kGodot4Tscn);
+    if (ImGui::MenuItem("Godot Scene")) {
+      dispatcher.push<ShowGodotExportDialogEvent>();
     }
   }
 }
