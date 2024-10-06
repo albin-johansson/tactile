@@ -96,6 +96,7 @@ void MapEventHandler::on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
 void MapEventHandler::on_show_godot_export_dialog(const ShowGodotExportDialogEvent&)
 {
   TACTILE_LOG_TRACE("ShowGodotExportDialogEvent");
+  mWidgetManager->get_godot_export_dialog().open();
 }
 
 void MapEventHandler::on_create_map(const CreateMapEvent& event)

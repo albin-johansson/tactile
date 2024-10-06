@@ -51,6 +51,8 @@ enum class StringID : std::size_t
   kDarkThemes,
   kFont,
   kDefault,
+  kVersion,
+  kProjectDir,
 
   // Generic verbs.
   kCancel,
@@ -76,6 +78,7 @@ enum class StringID : std::size_t
   kAnimationDock,
   kLogDock,
   kStyleEditorWidget,
+  kGodotExportDialog,
 
   // Menu names.
   kFileMenu,
