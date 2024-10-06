@@ -5,6 +5,7 @@ add_library(tactile::base ALIAS tactile-base)
 
 target_sources(tactile-base
                INTERFACE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/base/container/result.hpp"
                "inc/tactile/base/container/string_map.hpp"
                "inc/tactile/base/document/component_view.hpp"
                "inc/tactile/base/document/document.hpp"
