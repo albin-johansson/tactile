@@ -11,6 +11,10 @@ namespace tactile::godot {
 /**
  * Provides support for the scene format used by the Godot game engine.
  *
+ * \details
+ * This save format supports the following custom settings.
+ * - \c "godot::version": An integer indicating which major version of Godot to target.
+ *
  * \see https://docs.godotengine.org/en/stable/contributing/development/file_formats/tscn.html
  * \see https://docs.godotengine.org/en/3.6/development/file_formats/tscn.html
  */
