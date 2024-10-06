@@ -20,7 +20,9 @@ class WidgetManager;
 
 struct ShowNewMapDialogEvent;
 struct ShowOpenMapDialogEvent;
+struct ShowGodotExportDialogEvent;
 struct CreateMapEvent;
+struct ExportAsGodotSceneEvent;
 
 /**
  * Handles events related to maps.
@@ -58,12 +60,16 @@ class MapEventHandler final
    */
   void on_show_open_map_dialog(const ShowOpenMapDialogEvent& event);
 
+  void on_show_godot_export_dialog(const ShowGodotExportDialogEvent& event);
+
   /**
    * Creates a new map.
    *
    * \param event The associated event.
    */
   void on_create_map(const CreateMapEvent& event);
+
+  void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event) const;
 
  private:
   Model* mModel;
