@@ -169,6 +169,7 @@ struct Gd3Map final
 {
   Gd3Scene scene;
   ExtResourceId tileset_id;
+  Int2 tile_size;
   Gd3Tileset tileset;
   std::vector<Gd3Layer> layers;
   std::unordered_map<TileID, ExtResourceId> tileset_texture_ids;

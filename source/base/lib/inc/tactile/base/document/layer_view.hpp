@@ -130,6 +130,29 @@ class ILayerView
   virtual auto get_tile(const Index2D& index) const -> std::optional<TileID> = 0;
 
   /**
+   * Returns the position of a tile in its parent tileset.
+   *
+   * \param tile_id The target tile identifier.
+   *
+   * \return
+   * The position of the tile in the tileset if successful; an empty optional otherwise.
+   */
+  [[nodiscard]]
+  virtual auto get_tile_position_in_tileset(TileID tile_id) const
+      -> std::optional<Index2D> = 0;
+
+  /**
+   * Indicates whether the tile at a given world position is animated.
+   *
+   * \param world_pos The world position of the tile to check.
+   *
+   * \return
+   * True if the tile is animated; false otherwise.
+   */
+  [[nodiscard]]
+  virtual auto is_tile_animated(const Index2D& world_pos) const -> bool = 0;
+
+  /**
    * Returns the tile encoding format used by the layer.
    *
    * \return

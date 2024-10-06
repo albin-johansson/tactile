@@ -15,6 +15,8 @@
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/meta/meta.hpp"
+#include "tactile/core/tile/animation.hpp"
+#include "tactile/core/tile/tileset.hpp"
 
 namespace tactile {
 
@@ -159,6 +161,48 @@ auto LayerViewImpl::get_tile(const Index2D& index) const -> std::optional<TileID
   }
 
   return get_layer_tile(registry, mLayerId, index);
+}
+
+auto LayerViewImpl::get_tile_position_in_tileset(const TileID tile_id) const
+    -> std::optional<Index2D>
+{
+  const auto& registry = mDocument->get_registry();
+
+  const auto tile_index = get_tile_index(registry, tile_id);
+  if (!tile_index.has_value()) {
+    return std::nullopt;
+  }
+
+  const auto tileset_id = find_tileset(registry, tile_id);
+  if (tileset_id == kInvalidEntity) {
+    return std::nullopt;
+  }
+
+  const auto& tileset = registry.get<CTileset>(tileset_id);
+  return Index2D::from_1d(static_cast<Index2D::value_type>(*tile_index), tileset.extent.cols);
+}
+
+auto LayerViewImpl::is_tile_animated(const Index2D& position) const -> bool
+{
+  const auto& registry = mDocument->get_registry();
+
+  const auto tile_id = get_layer_tile(registry, mLayerId, position).value();
+  if (tile_id == kEmptyTile) {
+    return false;
+  }
+
+  const auto tileset_id = find_tileset(registry, tile_id);
+  if (tileset_id == kInvalidEntity) {
+    return false;
+  }
+
+  const auto& tileset = registry.get<CTileset>(tileset_id);
+  const auto& tileset_instance = registry.get<CTilesetInstance>(tileset_id);
+
+  const auto tile_index = tile_id - tileset_instance.tile_range.first_id;
+  const auto tile_entity = tileset.tiles.at(static_cast<std::size_t>(tile_index));
+
+  return registry.has<CAnimation>(tile_entity);
 }
 
 auto LayerViewImpl::get_tile_encoding() const -> TileEncoding

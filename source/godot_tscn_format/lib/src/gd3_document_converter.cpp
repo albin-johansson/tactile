@@ -150,6 +150,7 @@ auto _convert_tile(const ILayerView& layer,
 
 [[nodiscard]]
 auto _convert_tile_layer(const ILayerView& layer,
+                         const Int2 tile_size,
                          const Gd3Tileset& gd_tileset,
                          std::string parent_path) -> Gd3Layer
 {
@@ -157,7 +158,7 @@ auto _convert_tile_layer(const ILayerView& layer,
   _convert_common_layer_data(layer, gd_layer, std::move(parent_path));
 
   auto& gd_tile_layer = gd_layer.value.emplace<Gd3TileLayer>();
-  gd_tile_layer.cell_size = layer.get_tile_size();
+  gd_tile_layer.cell_size = tile_size;
 
   const auto extent = layer.get_extent().value();
   for (Extent2D::value_type row = 0; row < extent.rows; ++row) {
@@ -275,6 +276,7 @@ auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std
   m_map.tileset.scene.next_ext_resource_id = 1;
   m_map.tileset.scene.next_sub_resource_id = 1;
 
+  m_map.tile_size = map.get_tile_size();
   m_map.tileset_id = m_map.scene.next_ext_resource_id++;
   m_map.scene.root_meta = _convert_meta(map.get_meta());
 
@@ -304,7 +306,7 @@ auto Gd3DocumentConverter::visit(const ILayerView& layer)
   Gd3Layer gd_layer {};
   switch (layer.get_type()) {
     case LayerType::kTileLayer: {
-      gd_layer = _convert_tile_layer(layer, m_map.tileset, parent_path);
+      gd_layer = _convert_tile_layer(layer, m_map.tile_size, m_map.tileset, parent_path);
       break;
     }
 
