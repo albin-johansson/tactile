@@ -160,7 +160,7 @@ auto make_tileset(Registry& registry,
   const auto tileset_id = registry.make_entity();
   registry.add<CMeta>(tileset_id);
 
-  auto& texture = registry.add<CTexture>(tileset_id, std::move(*texture_result));
+  const auto& texture = registry.add<CTexture>(tileset_id, std::move(*texture_result));
 
   _add_viewport_component(registry, tileset_id, texture.size);
 
