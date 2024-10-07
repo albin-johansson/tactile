@@ -482,18 +482,6 @@ auto _emit_tileset_file(const Gd3Tileset& tileset,
 
   _emit_resources(writer, tileset.resources);
 
-  for (const auto& tile_atlas : tileset.atlases) {
-    const auto dest = options.base_dir / tile_atlas.image_path.filename();  // FIXME
-
-    log(LogLevel::kDebug,
-        "Copying texture '{}' to '{}'",
-        tile_atlas.image_path.filename().string(),
-        dest.string());
-    std::filesystem::copy(tile_atlas.image_path,
-                          dest,
-                          std::filesystem::copy_options::overwrite_existing);
-  }
-
   writer.newline().resource_header();
 
   std::size_t tileset_index = 0;
@@ -507,15 +495,41 @@ auto _emit_tileset_file(const Gd3Tileset& tileset,
   return kOK;
 }
 
+[[nodiscard]]
+auto _save_tileset_images(const Gd3Tileset& tileset,
+                          const SaveFormatWriteOptions& options) -> Result<void>
+{
+  for (const auto& tile_atlas : tileset.atlases) {
+    const auto dest = options.base_dir / tile_atlas.image_path.filename();  // FIXME
+
+    log(LogLevel::kDebug,
+        "Copying texture '{}' to '{}'",
+        tile_atlas.image_path.filename().string(),
+        dest.string());
+
+    std::error_code copy_error {};
+    std::filesystem::copy(tile_atlas.image_path,
+                          dest,
+                          std::filesystem::copy_options::overwrite_existing,
+                          copy_error);
+
+    if (copy_error) {
+      return std::unexpected {copy_error};
+    }
+  }
+
+  return kOK;
+}
+
 }  // namespace
 
-auto save_godot3_scene(const Gd3Map& map, const SaveFormatWriteOptions& options)
-    -> Result<void>
+auto save_godot3_scene(const Gd3Map& map,
+                       const SaveFormatWriteOptions& options) -> Result<void>
 {
   // TODO put tileset in map as subresource
-  return _emit_tileset_file(map.tileset, options).and_then([&]() {
-    return _emit_map_file(map, options);
-  });
+  return _save_tileset_images(map.tileset, options)
+      .and_then([&] { return _emit_tileset_file(map.tileset, options); })
+      .and_then([&] { return _emit_map_file(map, options); });
 }
 
 }  // namespace tactile::godot
