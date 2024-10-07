@@ -267,7 +267,6 @@ auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std
   m_map.sprite_frames.id = m_map.resources.next_sub_resource_id++;
 
   m_map.tile_size = map.get_tile_size();
-  m_map.tileset_id = m_map.resources.next_ext_resource_id++;
   m_map.meta = _convert_meta(map.get_meta());
 
   return {};

@@ -264,14 +264,14 @@ void _emit_tile_layer_animation_nodes(Gd3SceneWriter& writer,
 
 void _emit_tile_layer(Gd3SceneWriter& writer,
                       const Gd3Layer& layer,
-                      const ExtResourceId tileset_id,
+                      const SubResourceId tileset_id,
                       const SubResourceId sprite_frames_id)
 {
   const auto& tile_layer = std::get<Gd3TileLayer>(layer.value);
 
   writer.newline()
       .node_header(layer.name, "TileMap", layer.parent)
-      .ext_resource_variable("tile_set", tileset_id)
+      .sub_resource_variable("tile_set", tileset_id)
       .variable("visible", layer.visible)
       .vector2_variable("cell_size", tile_layer.cell_size)
       .color_variable("modulate", FColor {1, 1, 1, layer.opacity})
@@ -367,12 +367,12 @@ void _emit_object_layer(Gd3SceneWriter& writer, const Gd3Layer& layer)
 
 void _emit_layer(Gd3SceneWriter& writer,
                  const Gd3Layer& layer,
-                 ExtResourceId tileset_id,
+                 SubResourceId tileset_id,
                  SubResourceId sprite_frames_id);
 
 void _emit_group_layer(Gd3SceneWriter& writer,
                        const Gd3Layer& layer,
-                       const ExtResourceId tileset_id,
+                       const SubResourceId tileset_id,
                        const SubResourceId sprite_frames_id)
 {
   const auto& group_layer = std::get<Gd3GroupLayer>(layer.value);
@@ -391,7 +391,7 @@ void _emit_group_layer(Gd3SceneWriter& writer,
 
 void _emit_layer(Gd3SceneWriter& writer,
                  const Gd3Layer& layer,
-                 const ExtResourceId tileset_id,
+                 const SubResourceId tileset_id,
                  const SubResourceId sprite_frames_id)
 {
   switch (layer.value.index()) {
@@ -467,15 +467,15 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) ->
   _emit_metadata(writer, map.meta);
 
   for (const auto& layer : map.layers) {
-    _emit_layer(writer, layer, map.tileset_id, map.sprite_frames.id);
+    _emit_layer(writer, layer, map.tileset.id, map.sprite_frames.id);
   }
 
   return kOK;
 }
 
 [[nodiscard]]
-auto _save_tileset_images(const Gd3Tileset& tileset,
-                          const SaveFormatWriteOptions& options) -> Result<void>
+auto _save_tileset_images(const Gd3Tileset& tileset, const SaveFormatWriteOptions& options)
+    -> Result<void>
 {
   for (const auto& tile_atlas : tileset.atlases) {
     const auto dest = options.base_dir / tile_atlas.image_path.filename();  // FIXME
@@ -501,8 +501,8 @@ auto _save_tileset_images(const Gd3Tileset& tileset,
 
 }  // namespace
 
-auto save_godot3_scene(const Gd3Map& map,
-                       const SaveFormatWriteOptions& options) -> Result<void>
+auto save_godot3_scene(const Gd3Map& map, const SaveFormatWriteOptions& options)
+    -> Result<void>
 {
   return _save_tileset_images(map.tileset, options).and_then([&] {
     return _emit_map_file(map, options);
