@@ -62,19 +62,6 @@ auto _find_layer_at_global_index(std::vector<Gd3Layer>& layers,
 }
 
 [[nodiscard]]
-auto _find_tileset_texture_id(const Gd3Tileset& gd_tileset, const TileID first_tile_id)
-    -> std::optional<ExtResourceId>
-{
-  for (const auto& gd_tileset_instance : gd_tileset.instances) {
-    if (gd_tileset_instance.first_tile_id == first_tile_id) {
-      return gd_tileset_instance.texture_id;
-    }
-  }
-
-  return std::nullopt;
-}
-
-[[nodiscard]]
 auto _approximate_ellipse_as_polygon(const Float2 radius, const std::size_t point_count)
     -> std::vector<Float2>
 {
@@ -125,17 +112,17 @@ auto _convert_tile(const ILayerView& layer,
                    const Index2D& tile_pos,
                    const TileID tile_id) -> Gd3EncodedTile
 {
-  const auto* gd_tileset_instance = find_tileset_instance(gd_tileset, tile_id);
-  if (!gd_tileset_instance) {
-    throw std::runtime_error {"could not find tileset instance"};
+  const auto& [gd_tile_atlas_index, gd_tile_atlas] = find_tile_atlas(gd_tileset, tile_id);
+  if (!gd_tile_atlas) {
+    throw std::runtime_error {"could not find tile atlas"};
   }
 
   constexpr std::int32_t tile_offset = 65'536;
 
   Gd3EncodedTile gd_tile {};
-  gd_tile.tile_index = tile_id - gd_tileset_instance->first_tile_id;
+  gd_tile.tile_index = tile_id - gd_tile_atlas->first_tile_id;
 
-  if (gd_tile.tile_index >= gd_tileset_instance->column_count) {
+  if (gd_tile.tile_index >= gd_tile_atlas->column_count) {
     const auto position_in_tileset = layer.get_tile_position_in_tileset(tile_id).value();
     gd_tile.tile_index = saturate_cast<std::int32_t>(position_in_tileset.x) +
                          saturate_cast<std::int32_t>(position_in_tileset.y) * tile_offset;
@@ -143,7 +130,7 @@ auto _convert_tile(const ILayerView& layer,
 
   gd_tile.position = saturate_cast<std::int32_t>(tile_pos.x) +
                      saturate_cast<std::int32_t>(tile_pos.y) * tile_offset;
-  gd_tile.tileset = get_tileset_index(gd_tileset, tile_id);
+  gd_tile.tile_atlas = gd_tile_atlas_index;
 
   return gd_tile;
 }
@@ -241,14 +228,14 @@ void _convert_tile_animation(const ITileView& tile,
                       tile_size.y()},
     };
 
-    const auto atlas_texture_id = gd_map.scene.next_sub_resource_id++;
+    const auto atlas_texture_id = gd_map.resources.next_sub_resource_id++;
     gd_map.atlas_textures.insert_or_assign(atlas_texture_id, frame_texture);
 
     gd_animation.frames.push_back(atlas_texture_id);
   }
 
   if (gd_map.sprite_frames.animations.empty()) {
-    gd_map.sprite_frames.id = gd_map.scene.next_sub_resource_id++;
+    gd_map.sprite_frames.id = gd_map.resources.next_sub_resource_id++;
   }
 
   gd_map.sprite_frames.animations.push_back(std::move(gd_animation));
@@ -256,9 +243,8 @@ void _convert_tile_animation(const ITileView& tile,
 
 }  // namespace
 
-Gd3DocumentConverter::Gd3DocumentConverter(IRuntime* runtime, SaveFormatWriteOptions options)
-  : m_runtime {runtime},
-    m_options {std::move(options)},
+Gd3DocumentConverter::Gd3DocumentConverter(SaveFormatWriteOptions options)
+  : m_options {std::move(options)},
     m_map {}
 {}
 
@@ -269,18 +255,19 @@ auto Gd3DocumentConverter::visit(const IComponentView&) -> std::expected<void, s
 
 auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std::error_code>
 {
-  m_map.scene.next_ext_resource_id = 1;
-  m_map.scene.next_sub_resource_id = 1;
-  m_map.sprite_frames.id = m_map.scene.next_sub_resource_id++;
+  m_map.resources.next_ext_resource_id = 1;
+  m_map.resources.next_sub_resource_id = 1;
 
-  m_map.tileset.scene.next_ext_resource_id = 1;
-  m_map.tileset.scene.next_sub_resource_id = 1;
+  m_map.tileset.resources.next_ext_resource_id = 1;
+  m_map.tileset.resources.next_sub_resource_id = 1;
+
+  m_map.sprite_frames.id = m_map.resources.next_sub_resource_id++;
 
   m_map.tile_size = map.get_tile_size();
-  m_map.tileset_id = m_map.scene.next_ext_resource_id++;
-  m_map.scene.root_meta = _convert_meta(map.get_meta());
+  m_map.tileset_id = m_map.resources.next_ext_resource_id++;
+  m_map.meta = _convert_meta(map.get_meta());
 
-  m_map.scene.ext_resources[m_map.tileset_id] = Gd3ExtResource {
+  m_map.resources.ext_resources[m_map.tileset_id] = Gd3ExtResource {
     .path = "res://tileset.tres",  // TODO setting
     .type = "TileSet",
   };
@@ -366,7 +353,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
     case ObjectType::kRect: {
       gd_object.position = object.get_position() + object.get_size() * 0.5f;
 
-      const auto shape_id = m_map.scene.next_sub_resource_id++;
+      const auto shape_id = m_map.resources.next_sub_resource_id++;
 
       auto& gd_rect = gd_object.value.emplace<Gd3Rect>();
       gd_rect.shape_id = shape_id;
@@ -401,7 +388,7 @@ auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
 {
   const auto& source_image_path = tileset.get_image_path();
 
-  const auto texture_id = m_map.tileset.scene.next_ext_resource_id++;
+  const auto texture_id = m_map.tileset.resources.next_ext_resource_id++;
   const auto texture_image_name = source_image_path.filename().string();
 
   const Gd3ExtResource texture_resource {
@@ -409,21 +396,21 @@ auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
     .type = "Texture",
   };
 
-  const auto texture_res_id_in_map = m_map.scene.next_ext_resource_id++;
-  m_map.scene.ext_resources[texture_res_id_in_map] = texture_resource;
+  const auto texture_res_id_in_map = m_map.resources.next_ext_resource_id++;
+  m_map.resources.ext_resources[texture_res_id_in_map] = texture_resource;
   m_map.tileset_texture_ids[tileset.get_first_tile_id()] = texture_res_id_in_map;
 
-  m_map.tileset.scene.ext_resources[texture_id] = texture_resource;
-  m_map.tileset.texture_paths.push_back(source_image_path);
+  m_map.tileset.resources.ext_resources[texture_id] = texture_resource;
 
-  auto& gd_tileset_instance = m_map.tileset.instances.emplace_back();
-  gd_tileset_instance.name = _escape_name(tileset.get_meta().get_name());
-  gd_tileset_instance.texture_id = texture_id;
-  gd_tileset_instance.first_tile_id = tileset.get_first_tile_id();
-  gd_tileset_instance.tile_count = tileset.tile_count();
-  gd_tileset_instance.column_count = tileset.column_count();
-  gd_tileset_instance.tile_size = tileset.get_tile_size();
-  gd_tileset_instance.image_size = tileset.get_image_size();
+  auto& gd_tile_atlas = m_map.tileset.atlases.emplace_back();
+  gd_tile_atlas.name = _escape_name(tileset.get_meta().get_name());
+  gd_tile_atlas.image_path = source_image_path;
+  gd_tile_atlas.texture_id = texture_id;
+  gd_tile_atlas.first_tile_id = tileset.get_first_tile_id();
+  gd_tile_atlas.tile_count = tileset.tile_count();
+  gd_tile_atlas.column_count = tileset.column_count();
+  gd_tile_atlas.tile_size = tileset.get_tile_size();
+  gd_tile_atlas.image_size = tileset.get_image_size();
 
   return {};
 }

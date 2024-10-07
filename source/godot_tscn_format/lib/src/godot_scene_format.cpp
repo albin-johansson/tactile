@@ -53,7 +53,7 @@ auto GodotSceneFormat::save_map(const IMapView& map,
     const auto version = _deduce_godot_version(options.extra);
 
     if (version == 3) {
-      Gd3DocumentConverter converter {m_runtime, options};
+      Gd3DocumentConverter converter {options};
       map.accept(converter);
 
       const auto& gd_map = converter.get_map();

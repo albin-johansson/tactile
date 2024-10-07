@@ -4,7 +4,6 @@
 
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/io/save/save_format.hpp"
-#include "tactile/base/runtime.hpp"
 #include "tactile/godot_tscn_format/api.hpp"
 #include "tactile/godot_tscn_format/gd3_types.hpp"
 
@@ -19,10 +18,9 @@ class TACTILE_GODOT_API Gd3DocumentConverter final : public IDocumentVisitor
   /**
    * Creates a document converter.
    *
-   * \param runtime The associated runtime, cannot be null.
    * \param options The write options to use.
    */
-  Gd3DocumentConverter(IRuntime* runtime, SaveFormatWriteOptions options);
+  explicit Gd3DocumentConverter(SaveFormatWriteOptions options);
 
   [[nodiscard]]
   auto visit(const IComponentView& component) -> std::expected<void, std::error_code> override;
@@ -52,7 +50,6 @@ class TACTILE_GODOT_API Gd3DocumentConverter final : public IDocumentVisitor
   auto get_map() const -> const Gd3Map&;
 
  private:
-  IRuntime* m_runtime;
   SaveFormatWriteOptions m_options;
   Gd3Map m_map;
 };

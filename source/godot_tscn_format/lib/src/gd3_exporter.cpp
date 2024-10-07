@@ -157,18 +157,18 @@ void _emit_metadata(Gd3SceneWriter& writer, const Gd3Metadata& meta)
   writer.variable("__meta__", meta_string);
 }
 
-void _emit_spritesheet(Gd3SceneWriter& emitter,
-                       const Gd3TilesetInstance& spritesheet,
-                       const std::size_t index)
+void _emit_tile_atlas(Gd3SceneWriter& emitter,
+                      const Gd3TileAtlas& tile_atlas,
+                      const std::size_t index)
 {
   emitter.set_key_prefix(std::format("{}/", index));
 
-  emitter.variable_quoted("name", spritesheet.name)
-      .ext_resource_variable("texture", spritesheet.texture_id)
+  emitter.variable_quoted("name", tile_atlas.name)
+      .ext_resource_variable("texture", tile_atlas.texture_id)
       .variable("tex_offset", "Vector2( 0, 0 )")
       .variable("modulate", "Color( 1, 1, 1, 1 )")
       .rect2_variable("region",
-                      Int4 {0, 0, spritesheet.image_size.x(), spritesheet.image_size.y()})
+                      Int4 {0, 0, tile_atlas.image_size.x(), tile_atlas.image_size.y()})
       .variable("tile_mode", "2")
       .variable("occluder_offset", "Vector2( 0, 0 )")
       .variable("navigation_offset", "Vector2( 0, 0 )")
@@ -182,7 +182,7 @@ void _emit_spritesheet(Gd3SceneWriter& emitter,
   emitter.set_key_prefix(std::format("{}/autotile/", index));
 
   emitter.variable("icon_coordinate", "Vector2( 0, 0 )")
-      .vector2_variable("tile_size", spritesheet.tile_size)
+      .vector2_variable("tile_size", tile_atlas.tile_size)
       .variable("spacing", "0")
       .variable("occluder_map", "[  ]")
       .variable("navpoly_map", "[  ]")
@@ -280,7 +280,7 @@ void _emit_tile_layer(Gd3SceneWriter& emitter,
                          "PoolIntArray",
                          tile_layer.tiles,
                          [](std::ostream& stream, const Gd3EncodedTile& tile) {
-                           stream << tile.position << ", " << tile.tileset << ", "
+                           stream << tile.position << ", " << tile.tile_atlas << ", "
                                   << tile.tile_index;
                          });
 
@@ -411,9 +411,9 @@ void _emit_layer(Gd3SceneWriter& emitter,
   }
 }
 
-void _emit_scene(Gd3SceneWriter& emitter, const Gd3Scene& scene)
+void _emit_resources(Gd3SceneWriter& emitter, const Gd3Resources& resources)
 {
-  for (const auto& [id, resource] : scene.ext_resources) {
+  for (const auto& [id, resource] : resources.ext_resources) {
     emitter.newline().ext_resource_header(id, resource);
   }
 }
@@ -431,11 +431,11 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) ->
 
   Gd3SceneWriter emitter {stream};
 
-  const auto load_steps = map.scene.ext_resources.size() +
-                          saturate_cast<std::size_t>(map.scene.next_sub_resource_id - 1);
+  const auto load_steps = map.resources.ext_resources.size() +
+                          saturate_cast<std::size_t>(map.resources.next_sub_resource_id - 1);
   emitter.gd_scene_header(load_steps);
 
-  _emit_scene(emitter, map.scene);
+  _emit_resources(emitter, map.resources);
 
   for (const auto& [id, texture] : map.atlas_textures) {
     _emit_atlas_texture(emitter, id, texture);
@@ -450,7 +450,7 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) ->
   }
 
   emitter.newline().node_header("Root", "Node2D");
-  _emit_metadata(emitter, map.scene.root_meta);
+  _emit_metadata(emitter, map.meta);
 
   for (const auto& layer : map.layers) {
     _emit_layer(emitter, layer, map.tileset_id, map.sprite_frames.id);
@@ -473,22 +473,23 @@ auto _emit_tileset_file(const Gd3Tileset& tileset, const SaveFormatWriteOptions&
 
   Gd3SceneWriter emitter {stream};
 
-  const auto load_steps = tileset.scene.ext_resources.size() +
-                          saturate_cast<std::size_t>(tileset.scene.next_sub_resource_id - 1);
+  const auto load_steps =
+      tileset.resources.ext_resources.size() +
+      saturate_cast<std::size_t>(tileset.resources.next_sub_resource_id - 1);
   emitter.gd_resource_header("TileSet", load_steps);
 
-  _emit_metadata(emitter, tileset.scene.root_meta);
+  _emit_metadata(emitter, tileset.meta);
 
-  _emit_scene(emitter, tileset.scene);
+  _emit_resources(emitter, tileset.resources);
 
-  for (const auto& texture_path : tileset.texture_paths) {
-    const auto dest = options.base_dir / texture_path.filename();  // FIXME
+  for (const auto& tile_atlas : tileset.atlases) {
+    const auto dest = options.base_dir / tile_atlas.image_path.filename();  // FIXME
 
     log(LogLevel::kDebug,
         "Copying texture '{}' to '{}'",
-        texture_path.filename().string(),
+        tile_atlas.image_path.filename().string(),
         dest.string());
-    std::filesystem::copy(texture_path,
+    std::filesystem::copy(tile_atlas.image_path,
                           dest,
                           std::filesystem::copy_options::overwrite_existing);
   }
@@ -496,8 +497,8 @@ auto _emit_tileset_file(const Gd3Tileset& tileset, const SaveFormatWriteOptions&
   emitter.newline().resource_header();
 
   std::size_t tileset_index = 0;
-  for (const auto& spritesheet : tileset.instances) {
-    _emit_spritesheet(emitter, spritesheet, tileset_index);
+  for (const auto& tile_atlas : tileset.atlases) {
+    _emit_tile_atlas(emitter, tile_atlas, tileset_index);
     ++tileset_index;
   }
 
