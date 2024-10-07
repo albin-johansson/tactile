@@ -4,19 +4,19 @@
 
 #include <expected>       // expected
 #include <filesystem>     // path
-#include <string>         // string
+#include <string_view>    // string_view
 #include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/io/save/ir.hpp"
+#include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
 class IMapView;
 
-using SaveFormatExtraSettings = StringMap<std::string>;
+using SaveFormatExtraSettings = std::unordered_map<std::string_view, Attribute>;
 
 /**
  * Provides save format parse options.

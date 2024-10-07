@@ -248,6 +248,11 @@ Gd3DocumentConverter::Gd3DocumentConverter(SaveFormatWriteOptions options)
     m_map {}
 {}
 
+void Gd3DocumentConverter::set_ellipse_polygon_vertices(const std::size_t count)
+{
+  m_ellipse_polygon_vertices = count;
+}
+
 auto Gd3DocumentConverter::visit(const IComponentView&) -> std::expected<void, std::error_code>
 {
   return {};
@@ -370,8 +375,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
       auto& gd_polygon = gd_object.value.emplace<Gd3Polygon>();
 
       const auto radius = object.get_size() * 0.5f;
-      constexpr std::size_t point_count = 32;  // TODO setting
-      gd_polygon.points = _approximate_ellipse_as_polygon(radius, point_count);
+      gd_polygon.points = _approximate_ellipse_as_polygon(radius, m_ellipse_polygon_vertices);
 
       break;
     }

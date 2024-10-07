@@ -7,6 +7,7 @@
 
 #include "tactile/base/document/map_view.hpp"
 #include "tactile/base/io/int_parser.hpp"
+#include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/godot_tscn_format/gd3_document_converter.hpp"
 #include "tactile/godot_tscn_format/gd3_exporter.hpp"
 #include "tactile/runtime/logging.hpp"
@@ -15,21 +16,33 @@ namespace tactile::godot {
 namespace {
 
 [[nodiscard]]
-auto _deduce_godot_version(const SaveFormatExtraSettings& settings) -> std::optional<int>
+auto _deduce_godot_version(const SaveFormatExtraSettings& settings) -> int
 {
   int version {3};
 
-  if (const auto iter = settings.find("godot::version"); iter != settings.end()) {
-    if (const auto parsed_version = parse<int>(iter->second)) {
-      version = *parsed_version;
+  if (const auto iter = settings.find("version"); iter != settings.end()) {
+    const auto parsed_version = iter->second.as_int();
+    if (parsed_version == 3 || parsed_version == 4) {
+      version = parsed_version;
     }
   }
 
-  if (version != 3 && version != 4) {
-    return std::nullopt;
+  return version;
+}
+
+[[nodiscard]]
+auto _deduce_ellipse_polygon_vertices(const SaveFormatExtraSettings& settings) -> std::size_t
+{
+  std::size_t vertices {32};
+
+  if (const auto iter = settings.find("ellipse_polygon_vertices"); iter != settings.end()) {
+    const auto parsed_vertices = saturate_cast<std::size_t>(iter->second.as_int());
+    if (parsed_vertices >= 4) {
+      vertices = parsed_vertices;
+    }
   }
 
-  return version;
+  return vertices;
 }
 
 }  // namespace
@@ -51,9 +64,12 @@ auto GodotSceneFormat::save_map(const IMapView& map,
 {
   try {
     const auto version = _deduce_godot_version(options.extra);
+    const auto ellipse_polygon_vertices = _deduce_ellipse_polygon_vertices(options.extra);
 
     if (version == 3) {
       Gd3DocumentConverter converter {options};
+      converter.set_ellipse_polygon_vertices(ellipse_polygon_vertices);
+
       map.accept(converter);
 
       const auto& gd_map = converter.get_map();

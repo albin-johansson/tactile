@@ -13,7 +13,9 @@ namespace tactile::godot {
  *
  * \details
  * This save format supports the following custom settings.
- * - \c "godot::version": An integer indicating which major version of Godot to target.
+ * - \c "version": An integer indicating which major version of Godot to target.
+ * - \c "ellipse_polygon_vertices": An integer indicating the number of vertices to use when
+ *                                  approximating ellipse objects as polygons.
  *
  * \see https://docs.godotengine.org/en/stable/contributing/development/file_formats/tscn.html
  * \see https://docs.godotengine.org/en/3.6/development/file_formats/tscn.html

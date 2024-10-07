@@ -130,7 +130,8 @@ void MapEventHandler::on_export_as_godot_scene(const ExportAsGodotSceneEvent& ev
   }
 
   SaveFormatExtraSettings extra_settings {};
-  extra_settings.insert_or_assign("godot::version", std::to_string(event.version));
+  extra_settings["version"] = Attribute {event.version};
+  extra_settings["ellipse_polygon_vertices"] = Attribute {32};
 
   const SaveFormatWriteOptions options {
     .extra = std::move(extra_settings),
