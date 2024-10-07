@@ -71,7 +71,7 @@ auto _approximate_ellipse_as_polygon(const Float2 radius, const std::size_t poin
   const auto n = static_cast<float>(point_count);
 
   for (auto index = 0_uz; index < point_count; ++index) {
-    const auto theta = static_cast<float>(index) / n * std::numbers::pi * 2.0f;
+    const auto theta = static_cast<float>(index) / n * std::numbers::pi_v<float> * 2.0f;
 
     auto& point = points.emplace_back();
     point.set_x(radius.x() * std::cos(theta));
@@ -263,19 +263,12 @@ auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std
   m_map.resources.next_ext_resource_id = 1;
   m_map.resources.next_sub_resource_id = 1;
 
-  m_map.tileset.resources.next_ext_resource_id = 1;
-  m_map.tileset.resources.next_sub_resource_id = 1;
-
+  m_map.tileset.id = m_map.resources.next_sub_resource_id++;
   m_map.sprite_frames.id = m_map.resources.next_sub_resource_id++;
 
   m_map.tile_size = map.get_tile_size();
   m_map.tileset_id = m_map.resources.next_ext_resource_id++;
   m_map.meta = _convert_meta(map.get_meta());
-
-  m_map.resources.ext_resources[m_map.tileset_id] = Gd3ExtResource {
-    .path = "res://tileset.tres",  // TODO setting
-    .type = "TileSet",
-  };
 
   return {};
 }
@@ -392,7 +385,7 @@ auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
 {
   const auto& source_image_path = tileset.get_image_path();
 
-  const auto texture_id = m_map.tileset.resources.next_ext_resource_id++;
+  const auto texture_id = m_map.resources.next_ext_resource_id++;
   const auto texture_image_name = source_image_path.filename().string();
 
   const Gd3ExtResource texture_resource {
@@ -400,19 +393,16 @@ auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
     .type = "Texture",
   };
 
-  const auto texture_res_id_in_map = m_map.resources.next_ext_resource_id++;
-  m_map.resources.ext_resources[texture_res_id_in_map] = texture_resource;
-  m_map.tileset_texture_ids[tileset.get_first_tile_id()] = texture_res_id_in_map;
-
-  m_map.tileset.resources.ext_resources[texture_id] = texture_resource;
+  m_map.resources.ext_resources[texture_id] = texture_resource;
+  m_map.tileset_texture_ids[tileset.get_first_tile_id()] = texture_id;
 
   auto& gd_tile_atlas = m_map.tileset.atlases.emplace_back();
   gd_tile_atlas.name = _escape_name(tileset.get_meta().get_name());
   gd_tile_atlas.image_path = source_image_path;
   gd_tile_atlas.texture_id = texture_id;
   gd_tile_atlas.first_tile_id = tileset.get_first_tile_id();
-  gd_tile_atlas.tile_count = tileset.tile_count();
-  gd_tile_atlas.column_count = tileset.column_count();
+  gd_tile_atlas.tile_count = static_cast<std::int32_t>(tileset.tile_count());
+  gd_tile_atlas.column_count = static_cast<std::int32_t>(tileset.column_count());
   gd_tile_atlas.tile_size = tileset.get_tile_size();
   gd_tile_atlas.image_size = tileset.get_image_size();
 

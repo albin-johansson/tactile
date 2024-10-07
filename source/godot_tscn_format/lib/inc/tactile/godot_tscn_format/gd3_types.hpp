@@ -161,8 +161,8 @@ struct Gd3TileAtlas final
 
 struct Gd3Tileset final
 {
+  SubResourceId id;
   Gd3Metadata meta;
-  Gd3Resources resources;
   std::vector<Gd3TileAtlas> atlases;
 };
 

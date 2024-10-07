@@ -411,6 +411,19 @@ void _emit_layer(Gd3SceneWriter& writer,
   }
 }
 
+void _emit_tileset(Gd3SceneWriter& writer, const Gd3Tileset& tileset)
+{
+  writer.newline().sub_resource_header("TileSet", tileset.id);
+
+  _emit_metadata(writer, tileset.meta);
+
+  std::size_t tileset_index = 0;
+  for (const auto& tile_atlas : tileset.atlases) {
+    _emit_tile_atlas(writer, tile_atlas, tileset_index);
+    ++tileset_index;
+  }
+}
+
 void _emit_resources(Gd3SceneWriter& writer, const Gd3Resources& resources)
 {
   for (const auto& [id, resource] : resources.ext_resources) {
@@ -441,13 +454,14 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) ->
     _emit_atlas_texture(writer, id, texture);
   }
 
-  _emit_sprite_frames(writer, map.sprite_frames);
-
   for (const auto& [id, shape] : map.rect_shapes) {
     writer.newline()
         .sub_resource_header("RectangleShape2D", id)
         .vector2_variable("extents", shape.extents);
   }
+
+  _emit_sprite_frames(writer, map.sprite_frames);
+  _emit_tileset(writer, map.tileset);
 
   writer.newline().node_header("Root", "Node2D");
   _emit_metadata(writer, map.meta);
@@ -455,42 +469,6 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) ->
   for (const auto& layer : map.layers) {
     _emit_layer(writer, layer, map.tileset_id, map.sprite_frames.id);
   }
-
-  return kOK;
-}
-
-[[nodiscard]]
-auto _emit_tileset_file(const Gd3Tileset& tileset,
-                        const SaveFormatWriteOptions& options) -> Result<void>
-{
-  const auto path = options.base_dir / "tileset.tres";
-  log(LogLevel::kDebug, "Generating tileset resource '{}'", path.string());
-
-  std::ofstream stream {path, std::ios::out | std::ios::trunc};
-  if (!stream.good()) {
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
-  }
-
-  Gd3SceneWriter writer {stream};
-
-  const auto load_steps =
-      tileset.resources.ext_resources.size() +
-      saturate_cast<std::size_t>(tileset.resources.next_sub_resource_id - 1);
-  writer.gd_resource_header("TileSet", load_steps);
-
-  _emit_metadata(writer, tileset.meta);
-
-  _emit_resources(writer, tileset.resources);
-
-  writer.newline().resource_header();
-
-  std::size_t tileset_index = 0;
-  for (const auto& tile_atlas : tileset.atlases) {
-    _emit_tile_atlas(writer, tile_atlas, tileset_index);
-    ++tileset_index;
-  }
-
-  writer.set_key_prefix("");
 
   return kOK;
 }
@@ -526,10 +504,9 @@ auto _save_tileset_images(const Gd3Tileset& tileset,
 auto save_godot3_scene(const Gd3Map& map,
                        const SaveFormatWriteOptions& options) -> Result<void>
 {
-  // TODO put tileset in map as subresource
-  return _save_tileset_images(map.tileset, options)
-      .and_then([&] { return _emit_tileset_file(map.tileset, options); })
-      .and_then([&] { return _emit_map_file(map, options); });
+  return _save_tileset_images(map.tileset, options).and_then([&] {
+    return _emit_map_file(map, options);
+  });
 }
 
 }  // namespace tactile::godot
