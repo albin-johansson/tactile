@@ -122,5 +122,5 @@ if (TACTILE_BUILD_OPENGL_RENDERER)
 endif ()
 
 if (TACTILE_BUILD_VULKAN_RENDERER)
-  add_subdirectory("source/vulkan_renderer")
+  add_subdirectory("source/renderers/vulkan")
 endif ()
