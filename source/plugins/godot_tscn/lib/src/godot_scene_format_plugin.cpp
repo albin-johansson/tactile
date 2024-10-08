@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/godot_tscn_format/godot_scene_format_plugin.hpp"
+#include "tactile/godot_tscn/godot_scene_format_plugin.hpp"
 
 #include <new>  // nothrow
 

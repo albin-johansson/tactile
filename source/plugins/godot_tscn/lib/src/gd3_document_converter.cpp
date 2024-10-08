@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/godot_tscn_format/gd3_document_converter.hpp"
+#include "tactile/godot_tscn/gd3_document_converter.hpp"
 
 #include <algorithm>   // replace
 #include <cassert>     // assert

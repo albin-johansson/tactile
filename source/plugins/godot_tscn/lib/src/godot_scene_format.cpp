@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/godot_tscn_format/godot_scene_format.hpp"
+#include "tactile/godot_tscn/godot_scene_format.hpp"
 
 #include <exception>     // exception
 #include <system_error>  // make_error_code, errc
@@ -8,8 +8,8 @@
 #include "tactile/base/document/map_view.hpp"
 #include "tactile/base/io/int_parser.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
-#include "tactile/godot_tscn_format/gd3_document_converter.hpp"
-#include "tactile/godot_tscn_format/gd3_exporter.hpp"
+#include "tactile/godot_tscn/gd3_document_converter.hpp"
+#include "tactile/godot_tscn/gd3_exporter.hpp"
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile::godot {

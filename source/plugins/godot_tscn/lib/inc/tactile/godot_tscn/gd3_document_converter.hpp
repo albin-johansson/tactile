@@ -6,8 +6,8 @@
 
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/io/save/save_format.hpp"
-#include "tactile/godot_tscn_format/api.hpp"
-#include "tactile/godot_tscn_format/gd3_types.hpp"
+#include "tactile/godot_tscn/api.hpp"
+#include "tactile/godot_tscn/gd3_types.hpp"
 
 namespace tactile::godot {
 

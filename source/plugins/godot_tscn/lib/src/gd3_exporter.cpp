@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/godot_tscn_format/gd3_exporter.hpp"
+#include "tactile/godot_tscn/gd3_exporter.hpp"
 
 #include <cstddef>  // size_t
 #include <format>   // format
@@ -11,8 +11,8 @@
 #include <sstream>  // stringstream
 
 #include "tactile/base/numeric/saturate_cast.hpp"
-#include "tactile/godot_tscn_format/gd3_scene_writer.hpp"
-#include "tactile/godot_tscn_format/gd3_types.hpp"
+#include "tactile/godot_tscn/gd3_scene_writer.hpp"
+#include "tactile/godot_tscn/gd3_types.hpp"
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile::godot {

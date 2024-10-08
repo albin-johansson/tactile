@@ -11,8 +11,8 @@
 #include "tactile/base/meta/color.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/godot_tscn_format/api.hpp"
-#include "tactile/godot_tscn_format/gd3_types.hpp"
+#include "tactile/godot_tscn/api.hpp"
+#include "tactile/godot_tscn/gd3_types.hpp"
 
 namespace tactile::godot {
 

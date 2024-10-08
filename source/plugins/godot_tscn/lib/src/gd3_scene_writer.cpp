@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/godot_tscn_format/gd3_scene_writer.hpp"
+#include "tactile/godot_tscn/gd3_scene_writer.hpp"
 
 #include <iomanip>  // quoted, setprecision
 #include <ios>      // boolalpha, fixed

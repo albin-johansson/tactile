@@ -4,7 +4,7 @@
 
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/base/runtime.hpp"
-#include "tactile/godot_tscn_format/api.hpp"
+#include "tactile/godot_tscn/api.hpp"
 
 namespace tactile::godot {
 
