@@ -96,7 +96,7 @@ if (TACTILE_BUILD_YAML_FORMAT)
 endif ()
 
 if (TACTILE_BUILD_TILED_TMJ_FORMAT)
-  add_subdirectory("source/tiled_tmj_format")
+  add_subdirectory("source/plugins/tiled_tmj")
 endif ()
 
 if (TACTILE_BUILD_TILED_TMX_FORMAT)
