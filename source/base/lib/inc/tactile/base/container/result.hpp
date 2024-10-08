@@ -2,14 +2,15 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>  // expected
+
+#include "tactile/base/debug/error_code.hpp"
 
 namespace tactile {
 
 template <typename T>
-using Result = std::expected<T, std::error_code>;
+using Result = std::expected<T, ErrorCode>;
 
-inline const Result<void> kOK {};
+inline constexpr Result<void> kOK {};
 
 }  // namespace tactile

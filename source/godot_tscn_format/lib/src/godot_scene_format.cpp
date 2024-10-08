@@ -73,7 +73,9 @@ auto GodotSceneFormat::save_map(const IMapView& map,
       map.accept(converter);
 
       const auto& gd_map = converter.get_map();
-      return save_godot3_scene(gd_map, options);
+      return save_godot3_scene(gd_map, options).transform_error([](const ErrorCode) {
+        return std::make_error_code(std::errc::io_error);
+      });
     }
 
     return std::unexpected {std::make_error_code(std::errc::not_supported)};

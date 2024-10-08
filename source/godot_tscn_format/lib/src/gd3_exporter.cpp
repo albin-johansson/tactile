@@ -439,7 +439,7 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) ->
 
   std::ofstream stream {path, std::ios::out | std::ios::trunc};
   if (!stream.good()) {
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    return std::unexpected {ErrorCode::kBadFileStream};
   }
 
   Gd3SceneWriter writer {stream};
@@ -492,7 +492,7 @@ auto _save_tileset_images(const Gd3Tileset& tileset, const SaveFormatWriteOption
                           copy_error);
 
     if (copy_error) {
-      return std::unexpected {copy_error};
+      return std::unexpected {ErrorCode::kBadFileCopy};
     }
   }
 
