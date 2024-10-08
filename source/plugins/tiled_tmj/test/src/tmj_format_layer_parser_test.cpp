@@ -8,7 +8,7 @@
 #include "tactile/runtime/runtime.hpp"
 
 #ifdef TACTILE_HAS_ZLIB_COMPRESSION
-  #include "tactile/zlib_compression/zlib_compression_plugin.hpp"
+  #include "tactile/zlib/zlib_compression_plugin.hpp"
 #endif  // TACTILE_HAS_ZLIB_COMPRESSION
 
 #ifdef TACTILE_HAS_ZSTD_COMPRESSION

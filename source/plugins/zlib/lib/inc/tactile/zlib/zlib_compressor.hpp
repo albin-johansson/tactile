@@ -4,7 +4,7 @@
 
 #include "tactile/base/io/compress/compressor.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/zlib_compression/api.hpp"
+#include "tactile/zlib/api.hpp"
 
 namespace tactile {
 

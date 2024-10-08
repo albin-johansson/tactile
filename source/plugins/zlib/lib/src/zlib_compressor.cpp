@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/zlib_compression/zlib_compressor.hpp"
+#include "tactile/zlib/zlib_compressor.hpp"
 
 #include <array>         // array
 #include <cstddef>       // size_t

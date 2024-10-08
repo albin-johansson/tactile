@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/zlib_compression/zlib_compression_plugin.hpp"
+#include "tactile/zlib/zlib_compression_plugin.hpp"
 
 #include <new>  // nothrow
 

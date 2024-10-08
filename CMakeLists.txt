@@ -108,7 +108,7 @@ if (TACTILE_BUILD_GODOT_TSCN_FORMAT)
 endif ()
 
 if (TACTILE_BUILD_ZLIB_COMPRESSION)
-  add_subdirectory("source/zlib_compression")
+  add_subdirectory("source/plugins/zlib")
 endif ()
 
 if (TACTILE_BUILD_ZSTD_COMPRESSION)
