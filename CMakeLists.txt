@@ -92,7 +92,7 @@ add_subdirectory("source/json_util")
 add_subdirectory("source/main")
 
 if (TACTILE_BUILD_YAML_FORMAT)
-  add_subdirectory("source/yaml_format")
+  add_subdirectory("source/plugins/tactile_yaml")
 endif ()
 
 if (TACTILE_BUILD_TILED_TMJ_FORMAT)

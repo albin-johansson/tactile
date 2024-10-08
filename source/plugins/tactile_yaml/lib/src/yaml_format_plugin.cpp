@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/yaml_format/yaml_format_plugin.hpp"
+#include "tactile/yaml/yaml_format_plugin.hpp"
 
 #include <new>  // nothrow
 
