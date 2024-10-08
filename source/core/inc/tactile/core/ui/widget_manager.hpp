@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/ui/dialog/godot_export_dialog.hpp"
 #include "tactile/core/ui/dialog/new_map_dialog.hpp"
 #include "tactile/core/ui/dialog/new_property_dialog.hpp"
 #include "tactile/core/ui/dialog/new_tileset_dialog.hpp"
@@ -55,6 +56,9 @@ class WidgetManager final
   [[nodiscard]]
   auto get_new_map_dialog() -> NewMapDialog&;
 
+  [[nodiscard]]
+  auto get_godot_export_dialog() -> GodotExportDialog&;
+
   /**
    * Returns the tileset creation dialog.
    *
@@ -95,6 +99,7 @@ class WidgetManager final
   NewTilesetDialog mNewTilesetDialog {};
   NewPropertyDialog mNewPropertyDialog {};
   RenamePropertyDialog mRenamePropertyDialog {};
+  GodotExportDialog m_godot_export_dialog {};
 };
 
 }  // namespace ui

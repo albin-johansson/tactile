@@ -104,7 +104,7 @@ if (TACTILE_BUILD_TILED_TMX_FORMAT)
 endif ()
 
 if (TACTILE_BUILD_GODOT_TSCN_FORMAT)
-  add_subdirectory("source/godot_tscn_format")
+  add_subdirectory("source/plugins/godot_tscn")
 endif ()
 
 if (TACTILE_BUILD_ZLIB_COMPRESSION)

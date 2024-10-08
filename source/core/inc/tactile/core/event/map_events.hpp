@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/io/save/save_format_id.hpp"
-#include "tactile/base/prelude.hpp"
+#include <filesystem>  // path
+
 #include "tactile/core/map/map_spec.hpp"
 
 namespace tactile {
@@ -66,11 +66,21 @@ struct FixMapTilesEvent final
 {};
 
 /**
- * Event for opening the dialog for exporting the active map using a specific save format.
+ * Event for opening the dialog for exporting the active map as a Godot scene.
  */
-struct ShowExportMapDialogEvent final
+struct ShowGodotExportDialogEvent final
+{};
+
+/**
+ * Event for saving the active map as a Godot scene.
+ */
+struct ExportAsGodotSceneEvent final
 {
-  SaveFormatId format_id;
+  /** The desired major Godot version. */
+  int version;
+
+  /** The base directory of the Godot project. */
+  std::filesystem::path project_dir;
 };
 
 }  // namespace tactile

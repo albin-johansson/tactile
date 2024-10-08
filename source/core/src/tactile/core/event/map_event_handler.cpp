@@ -2,12 +2,15 @@
 
 #include "tactile/core/event/map_event_handler.hpp"
 
+#include <utility>  // move
+
 #include <magic_enum.hpp>
 
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/base/numeric/vec_format.hpp"
 #include "tactile/base/runtime.hpp"
 #include "tactile/core/debug/validation.hpp"
+#include "tactile/core/document/map_view_impl.hpp"
 #include "tactile/core/event/dialog_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/map_events.hpp"
@@ -33,7 +36,9 @@ void MapEventHandler::install(EventDispatcher& dispatcher)
   using Self = MapEventHandler;
   dispatcher.bind<ShowNewMapDialogEvent, &Self::on_show_new_map_dialog>(this);
   dispatcher.bind<ShowOpenMapDialogEvent, &Self::on_show_open_map_dialog>(this);
+  dispatcher.bind<ShowGodotExportDialogEvent, &Self::on_show_godot_export_dialog>(this);
   dispatcher.bind<CreateMapEvent, &Self::on_create_map>(this);
+  dispatcher.bind<ExportAsGodotSceneEvent, &Self::on_export_as_godot_scene>(this);
 }
 
 void MapEventHandler::on_show_new_map_dialog(const ShowNewMapDialogEvent&)
@@ -90,6 +95,12 @@ void MapEventHandler::on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
   document.set_format(*format_id);
 }
 
+void MapEventHandler::on_show_godot_export_dialog(const ShowGodotExportDialogEvent&)
+{
+  TACTILE_LOG_TRACE("ShowGodotExportDialogEvent");
+  mWidgetManager->get_godot_export_dialog().open();
+}
+
 void MapEventHandler::on_create_map(const CreateMapEvent& event)
 {
   TACTILE_LOG_TRACE("CreateMapEvent(orientation: {}, size: {}, tile_size: {})",
@@ -101,6 +112,42 @@ void MapEventHandler::on_create_map(const CreateMapEvent& event)
   const auto document_uuid = document_manager.create_and_open_map(event.spec);
   if (document_uuid.has_value()) {
     TACTILE_LOG_DEBUG("Created map document (uuid: {})", *document_uuid);
+  }
+}
+
+void MapEventHandler::on_export_as_godot_scene(const ExportAsGodotSceneEvent& event) const
+{
+  TACTILE_LOG_TRACE("ExportMapEvent");
+
+  const auto* save_format = mRuntime->get_save_format(SaveFormatId::kGodotTscn);
+  if (!save_format) {
+    TACTILE_LOG_ERROR("Godot plugin is not enabled");
+    return;
+  }
+
+  const auto* document = dynamic_cast<const MapDocument*>(mModel->get_current_document());
+  if (!document) {
+    TACTILE_LOG_ERROR("No current document");
+    return;
+  }
+
+  SaveFormatExtraSettings extra_settings {};
+  extra_settings["version"] = Attribute {event.version};
+  extra_settings["ellipse_polygon_vertices"] = Attribute {32};
+
+  const SaveFormatWriteOptions options {
+    .extra = std::move(extra_settings),
+    .base_dir = event.project_dir,
+    .use_external_tilesets = false,
+    .use_indentation = false,
+    .fold_tile_layer_data = false,
+  };
+
+  const MapViewImpl map_view {document};
+  const auto save_result = save_format->save_map(map_view, options);
+
+  if (!save_result.has_value()) {
+    TACTILE_LOG_ERROR("Could not export Godot scene: {}", save_result.error().message());
   }
 }
 

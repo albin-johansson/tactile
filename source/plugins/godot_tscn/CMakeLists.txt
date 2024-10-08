@@ -1,4 +1,4 @@
-project(tactile-godot-tscn-format CXX)
+project(tactile-plugins-godot-tscn CXX)
 
 add_subdirectory("lib")
 

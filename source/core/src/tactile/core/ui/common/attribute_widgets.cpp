@@ -64,8 +64,8 @@ auto push_string_input(const char* id, const Attribute::string_type& str)
   return new_str;
 }
 
-auto push_int_input(const char* id,
-                    Attribute::int_type value) -> std::optional<Attribute::int_type>
+auto push_int_input(const char* id, Attribute::int_type value)
+    -> std::optional<Attribute::int_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::int_type> new_value {};
@@ -78,8 +78,8 @@ auto push_int_input(const char* id,
   return new_value;
 }
 
-auto push_int2_input(const char* id,
-                     Attribute::int2_type value) -> std::optional<Attribute::int2_type>
+auto push_int2_input(const char* id, Attribute::int2_type value)
+    -> std::optional<Attribute::int2_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::int2_type> new_value {};
@@ -92,8 +92,8 @@ auto push_int2_input(const char* id,
   return new_value;
 }
 
-auto push_int3_input(const char* id,
-                     Attribute::int3_type value) -> std::optional<Attribute::int3_type>
+auto push_int3_input(const char* id, Attribute::int3_type value)
+    -> std::optional<Attribute::int3_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::int3_type> new_value {};
@@ -106,8 +106,8 @@ auto push_int3_input(const char* id,
   return new_value;
 }
 
-auto push_int4_input(const char* id,
-                     Attribute::int4_type value) -> std::optional<Attribute::int4_type>
+auto push_int4_input(const char* id, Attribute::int4_type value)
+    -> std::optional<Attribute::int4_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::int4_type> new_value {};
@@ -120,8 +120,8 @@ auto push_int4_input(const char* id,
   return new_value;
 }
 
-auto push_float_input(const char* id,
-                      Attribute::float_type value) -> std::optional<Attribute::float_type>
+auto push_float_input(const char* id, Attribute::float_type value)
+    -> std::optional<Attribute::float_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::float_type> new_value {};
@@ -134,8 +134,8 @@ auto push_float_input(const char* id,
   return new_value;
 }
 
-auto push_float2_input(const char* id,
-                       Attribute::float2_type value) -> std::optional<Attribute::float2_type>
+auto push_float2_input(const char* id, Attribute::float2_type value)
+    -> std::optional<Attribute::float2_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::float2_type> new_value {};
@@ -148,8 +148,8 @@ auto push_float2_input(const char* id,
   return new_value;
 }
 
-auto push_float3_input(const char* id,
-                       Attribute::float3_type value) -> std::optional<Attribute::float3_type>
+auto push_float3_input(const char* id, Attribute::float3_type value)
+    -> std::optional<Attribute::float3_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::float3_type> new_value {};
@@ -162,8 +162,8 @@ auto push_float3_input(const char* id,
   return new_value;
 }
 
-auto push_float4_input(const char* id,
-                       Attribute::float4_type value) -> std::optional<Attribute::float4_type>
+auto push_float4_input(const char* id, Attribute::float4_type value)
+    -> std::optional<Attribute::float4_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::float4_type> new_value {};
@@ -188,8 +188,8 @@ auto push_bool_input(const char* id, bool value) -> std::optional<bool>
   return new_value;
 }
 
-auto push_path_input(const char* id,
-                     const Attribute::path_type& path) -> std::optional<Attribute::path_type>
+auto push_path_input(const char* id, const Attribute::path_type& path)
+    -> std::optional<Attribute::path_type>
 {
   const IdScope scope {id};
   std::optional<Attribute::path_type> new_path {};
@@ -203,6 +203,33 @@ auto push_path_input(const char* id,
 
   if (push_icon_button(Icon::kEllipsis)) {
     if (auto selected_path = FileDialog::open_file()) {
+      new_path = Attribute::path_type {std::move(*selected_path)};
+    }
+  }
+
+  ImGui::SameLine();
+
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted(path_c_str);
+
+  return new_path;
+}
+
+auto push_directory_input(const char* id, const Attribute::path_type& path)
+    -> std::optional<Attribute::path_type>
+{
+  const IdScope scope {id};
+  std::optional<Attribute::path_type> new_path {};
+
+#if TACTILE_OS_WINDOWS
+  const auto path_string = path.string();
+  const auto* path_c_str = path_string.c_str();
+#else
+  const auto* path_c_str = path.c_str();
+#endif
+
+  if (push_icon_button(Icon::kEllipsis)) {
+    if (auto selected_path = FileDialog::open_folder()) {
       new_path = Attribute::path_type {std::move(*selected_path)};
     }
   }
@@ -245,8 +272,8 @@ auto push_objref_input(const char* id, const Attribute::objref_type& object)
 }
 
 // NOLINTNEXTLINE(*-cognitive-complexity)
-auto push_attribute_input(const char* id,
-                          const Attribute& attribute) -> std::optional<Attribute>
+auto push_attribute_input(const char* id, const Attribute& attribute)
+    -> std::optional<Attribute>
 {
   switch (attribute.get_type()) {
     case AttributeType::kStr: {

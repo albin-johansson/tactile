@@ -13,10 +13,12 @@ target_sources(tactile-runtime
                "src/tactile/runtime/runtime.cpp"
                "src/tactile/runtime/sdl_context.cpp"
                "src/tactile/runtime/window.cpp"
+               "src/tactile/document_factory.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/runtime/api.hpp"
                "inc/tactile/runtime/command_line_options.hpp"
+               "inc/tactile/runtime/document_factory.hpp"
                "inc/tactile/runtime/launcher.hpp"
                "inc/tactile/runtime/logging.hpp"
                "inc/tactile/runtime/plugin.hpp"

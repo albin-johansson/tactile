@@ -72,6 +72,8 @@ auto _get_noun_names() -> std::unordered_map<std::string_view, StringID>
     {"dark_themes", StringID::kDarkThemes},
     {"font", StringID::kFont},
     {"default", StringID::kDefault},
+    {"version", StringID::kVersion},
+    {"project_dir", StringID::kProjectDir},
   };
 }
 
@@ -189,6 +191,7 @@ auto _get_widget_names() -> std::unordered_map<std::string_view, StringID>
     {"animation_dock", StringID::kAnimationDock},
     {"log_dock", StringID::kLogDock},
     {"style_editor", StringID::kStyleEditorWidget},
+    {"godot_export_dialog", StringID::kGodotExportDialog},
   };
 }
 

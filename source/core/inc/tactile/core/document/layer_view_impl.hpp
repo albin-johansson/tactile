@@ -64,6 +64,12 @@ class LayerViewImpl final : public ILayerView
   auto get_tile(const Index2D& index) const -> std::optional<TileID> override;
 
   [[nodiscard]]
+  auto get_tile_position_in_tileset(TileID tile_id) const -> std::optional<Index2D> override;
+
+  [[nodiscard]]
+  auto is_tile_animated(const Index2D& position) const -> bool override;
+
+  [[nodiscard]]
   auto get_tile_encoding() const -> TileEncoding override;
 
   [[nodiscard]]

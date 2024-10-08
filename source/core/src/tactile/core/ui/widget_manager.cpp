@@ -33,6 +33,7 @@ void WidgetManager::push(const Model& model, EventDispatcher& dispatcher)
   mNewTilesetDialog.push(model, dispatcher);
   mNewPropertyDialog.push(model, dispatcher);
   mRenamePropertyDialog.push(model, dispatcher);
+  m_godot_export_dialog.push(model, dispatcher);
 
   push_global_shortcuts(model, dispatcher);
 }
@@ -45,6 +46,11 @@ auto WidgetManager::get_dock_space() -> DockSpace&
 auto WidgetManager::get_new_map_dialog() -> NewMapDialog&
 {
   return mNewMapDialog;
+}
+
+auto WidgetManager::get_godot_export_dialog() -> GodotExportDialog&
+{
+  return m_godot_export_dialog;
 }
 
 auto WidgetManager::get_new_tileset_dialog() -> NewTilesetDialog&

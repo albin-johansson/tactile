@@ -33,8 +33,8 @@ auto push_string_input(const char* id, const Attribute::string_type& str)
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_int_input(const char* id,
-                    Attribute::int_type value) -> std::optional<Attribute::int_type>;
+auto push_int_input(const char* id, Attribute::int_type value)
+    -> std::optional<Attribute::int_type>;
 
 /**
  * Pushes an attribute 2D integer input to the widget stack.
@@ -45,8 +45,8 @@ auto push_int_input(const char* id,
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_int2_input(const char* id,
-                     Attribute::int2_type value) -> std::optional<Attribute::int2_type>;
+auto push_int2_input(const char* id, Attribute::int2_type value)
+    -> std::optional<Attribute::int2_type>;
 
 /**
  * Pushes an attribute 3D integer input to the widget stack.
@@ -57,8 +57,8 @@ auto push_int2_input(const char* id,
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_int3_input(const char* id,
-                     Attribute::int3_type value) -> std::optional<Attribute::int3_type>;
+auto push_int3_input(const char* id, Attribute::int3_type value)
+    -> std::optional<Attribute::int3_type>;
 
 /**
  * Pushes an attribute 4D integer input to the widget stack.
@@ -69,8 +69,8 @@ auto push_int3_input(const char* id,
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_int4_input(const char* id,
-                     Attribute::int4_type value) -> std::optional<Attribute::int4_type>;
+auto push_int4_input(const char* id, Attribute::int4_type value)
+    -> std::optional<Attribute::int4_type>;
 
 /**
  * Pushes an attribute float input to the widget stack.
@@ -81,8 +81,8 @@ auto push_int4_input(const char* id,
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_float_input(const char* id,
-                      Attribute::float_type value) -> std::optional<Attribute::float_type>;
+auto push_float_input(const char* id, Attribute::float_type value)
+    -> std::optional<Attribute::float_type>;
 
 /**
  * Pushes an attribute 2D float input to the widget stack.
@@ -93,8 +93,8 @@ auto push_float_input(const char* id,
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_float2_input(const char* id,
-                       Attribute::float2_type value) -> std::optional<Attribute::float2_type>;
+auto push_float2_input(const char* id, Attribute::float2_type value)
+    -> std::optional<Attribute::float2_type>;
 
 /**
  * Pushes an attribute 3D float input to the widget stack.
@@ -105,8 +105,8 @@ auto push_float2_input(const char* id,
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_float3_input(const char* id,
-                       Attribute::float3_type value) -> std::optional<Attribute::float3_type>;
+auto push_float3_input(const char* id, Attribute::float3_type value)
+    -> std::optional<Attribute::float3_type>;
 
 /**
  * Pushes an attribute 4D float input to the widget stack.
@@ -117,8 +117,8 @@ auto push_float3_input(const char* id,
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_float4_input(const char* id,
-                       Attribute::float4_type value) -> std::optional<Attribute::float4_type>;
+auto push_float4_input(const char* id, Attribute::float4_type value)
+    -> std::optional<Attribute::float4_type>;
 
 /**
  * Pushes an attribute boolean input to the widget stack.
@@ -134,14 +134,26 @@ auto push_bool_input(const char* id, bool value) -> std::optional<bool>;
 /**
  * Pushes an attribute path input to the widget stack.
  *
- * \param id    The widget identifier.
- * \param value The current path value.
+ * \param id   The widget identifier.
+ * \param path The current path value.
  *
  * \return
  * The new value if modified; an empty optional otherwise.
  */
-auto push_path_input(const char* id,
-                     const Attribute::path_type& path) -> std::optional<Attribute::path_type>;
+auto push_path_input(const char* id, const Attribute::path_type& path)
+    -> std::optional<Attribute::path_type>;
+
+/**
+ * Pushes a directory path input to the widget stack.
+ *
+ * \param id   The widget identifier.
+ * \param path The current directory path value.
+ *
+ * \return
+ * The new value if modified; an empty optional otherwise.
+ */
+auto push_directory_input(const char* id, const Attribute::path_type& path)
+    -> std::optional<Attribute::path_type>;
 
 /**
  * Pushes an attribute color input to the widget stack.
@@ -176,8 +188,8 @@ auto push_objref_input(const char* id, const Attribute::objref_type& object)
  * \return
  * The new attribute value if modified; an empty optional otherwise.
  */
-auto push_attribute_input(const char* id,
-                          const Attribute& attribute) -> std::optional<Attribute>;
+auto push_attribute_input(const char* id, const Attribute& attribute)
+    -> std::optional<Attribute>;
 
 /**
  * Pushes a combo for selecting an attribute type to the widget stack.

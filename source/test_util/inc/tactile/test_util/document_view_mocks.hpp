@@ -195,6 +195,13 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(std::optional<TileID>, get_tile, (const Index2D&), (const, override));
 
+  MOCK_METHOD(std::optional<Index2D>,
+              get_tile_position_in_tileset,
+              (TileID),
+              (const, override));
+
+  MOCK_METHOD(bool, is_tile_animated, (const Index2D&), (const, override));
+
   MOCK_METHOD(TileEncoding, get_tile_encoding, (), (const, override));
 
   MOCK_METHOD(std::optional<CompressionFormat>, get_tile_compression, (), (const, override));

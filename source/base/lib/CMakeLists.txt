@@ -5,6 +5,7 @@ add_library(tactile::base ALIAS tactile-base)
 
 target_sources(tactile-base
                INTERFACE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/base/container/result.hpp"
                "inc/tactile/base/container/string_map.hpp"
                "inc/tactile/base/document/component_view.hpp"
                "inc/tactile/base/document/document.hpp"
@@ -38,6 +39,7 @@ target_sources(tactile-base
                "inc/tactile/base/meta/color.hpp"
                "inc/tactile/base/numeric/extent_2d.hpp"
                "inc/tactile/base/numeric/index_2d.hpp"
+               "inc/tactile/base/numeric/literals.hpp"
                "inc/tactile/base/numeric/offset_2d.hpp"
                "inc/tactile/base/numeric/saturate_cast.hpp"
                "inc/tactile/base/numeric/vec.hpp"
