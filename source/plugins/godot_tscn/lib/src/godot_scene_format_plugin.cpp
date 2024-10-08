@@ -7,7 +7,7 @@
 #include "tactile/base/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 void GodotSceneFormatPlugin::load(IRuntime* runtime)
 {
@@ -38,4 +38,4 @@ void tactile_free_plugin(IPlugin* plugin)
   delete plugin;
 }
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

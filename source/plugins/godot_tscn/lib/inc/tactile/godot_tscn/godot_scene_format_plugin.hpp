@@ -9,7 +9,7 @@
 #include "tactile/godot_tscn/godot_scene_format.hpp"
 #include "tactile/runtime/plugin.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 class TACTILE_GODOT_API GodotSceneFormatPlugin final : public IPlugin
 {
@@ -29,4 +29,4 @@ extern "C"
   TACTILE_GODOT_API void tactile_free_plugin(IPlugin* plugin);
 }
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

@@ -6,7 +6,7 @@
 #include <ios>      // boolalpha, fixed
 #include <utility>  // move
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 Gd3SceneWriter::Gd3SceneWriter(std::ostream& stream)
   : m_stream {&stream},
@@ -162,4 +162,4 @@ void Gd3SceneWriter::_emit_key_prefix() const
   }
 }
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

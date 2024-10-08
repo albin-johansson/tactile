@@ -6,7 +6,7 @@
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/godot_tscn/api.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 struct Gd3Map;
 
@@ -24,4 +24,4 @@ TACTILE_GODOT_API auto save_godot3_scene(const Gd3Map& map,
                                          const SaveFormatWriteOptions& options)
     -> Result<void>;
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

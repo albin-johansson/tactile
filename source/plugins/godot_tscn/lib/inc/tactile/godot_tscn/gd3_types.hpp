@@ -16,7 +16,7 @@
 #include "tactile/base/numeric/index_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 /** External resource identifier. */
 using ExtResourceId = std::int32_t;
@@ -199,4 +199,4 @@ constexpr auto find_tile_atlas(const Gd3Tileset& gd_tileset, const TileID tile_i
   return {-1, nullptr};
 }
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

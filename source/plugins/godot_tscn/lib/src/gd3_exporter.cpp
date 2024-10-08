@@ -15,7 +15,7 @@
 #include "tactile/godot_tscn/gd3_types.hpp"
 #include "tactile/runtime/logging.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 namespace {
 
 void _emit_attribute(std::ostream& stream, const std::string_view name, const Attribute& value)
@@ -509,4 +509,4 @@ auto save_godot3_scene(const Gd3Map& map, const SaveFormatWriteOptions& options)
   });
 }
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

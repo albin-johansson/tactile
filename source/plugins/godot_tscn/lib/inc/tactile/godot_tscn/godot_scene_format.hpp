@@ -6,7 +6,7 @@
 #include "tactile/base/runtime.hpp"
 #include "tactile/godot_tscn/api.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 /**
  * Provides support for the scene format used by the Godot game engine.
@@ -38,4 +38,4 @@ class TACTILE_GODOT_API GodotSceneFormat final : public ISaveFormat
   IRuntime* m_runtime;
 };
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

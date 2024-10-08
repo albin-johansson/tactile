@@ -12,7 +12,7 @@
 #include "tactile/godot_tscn/gd3_exporter.hpp"
 #include "tactile/runtime/logging.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 namespace {
 
 [[nodiscard]]
@@ -87,4 +87,4 @@ auto GodotSceneFormat::save_map(const IMapView& map,
   return std::unexpected {std::make_error_code(std::errc::io_error)};
 }
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

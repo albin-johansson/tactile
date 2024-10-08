@@ -9,7 +9,7 @@
 #include "tactile/godot_tscn/api.hpp"
 #include "tactile/godot_tscn/gd3_types.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 /**
  * A document visitor that produces intermediate Godot 3 scene representations.
@@ -59,4 +59,4 @@ class TACTILE_GODOT_API Gd3DocumentConverter final : public IDocumentVisitor
   std::size_t m_ellipse_polygon_vertices {};
 };
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

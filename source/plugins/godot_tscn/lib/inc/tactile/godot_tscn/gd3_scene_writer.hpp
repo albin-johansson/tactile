@@ -14,7 +14,7 @@
 #include "tactile/godot_tscn/api.hpp"
 #include "tactile/godot_tscn/gd3_types.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 
 /**
  * Utility for emitting Godot 3 scene files.
@@ -285,4 +285,4 @@ class TACTILE_GODOT_API Gd3SceneWriter final
   void _emit_key_prefix() const;
 };
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn

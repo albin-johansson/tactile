@@ -21,7 +21,7 @@
 #include "tactile/base/numeric/literals.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 
-namespace tactile::godot {
+namespace tactile::godot_tscn {
 namespace {
 
 using namespace std::string_literals;
@@ -424,4 +424,4 @@ auto Gd3DocumentConverter::get_map() const -> const Gd3Map&
   return m_map;
 }
 
-}  // namespace tactile::godot
+}  // namespace tactile::godot_tscn
