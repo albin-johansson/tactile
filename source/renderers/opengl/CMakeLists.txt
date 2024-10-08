@@ -1,4 +1,4 @@
-project(tactile-opengl-renderer CXX)
+project(tactile-renderers-opengl CXX)
 
 find_package(imgui CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)

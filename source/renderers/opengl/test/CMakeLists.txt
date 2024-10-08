@@ -1,4 +1,4 @@
-project(tactile-opengl-renderer-test CXX)
+project(tactile-renderers-opengl-test CXX)
 
 add_executable(tactile-opengl-renderer-test)
 

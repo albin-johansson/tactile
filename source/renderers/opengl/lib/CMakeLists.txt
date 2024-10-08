@@ -1,21 +1,21 @@
-project(tactile-opengl-renderer-lib CXX)
+project(tactile-renderers-opengl-lib CXX)
 
 add_library(tactile-opengl-renderer SHARED)
 add_library(tactile::opengl_renderer ALIAS tactile-opengl-renderer)
 
 target_sources(tactile-opengl-renderer
                PRIVATE
-               "src/tactile/opengl_renderer/opengl_error.cpp"
-               "src/tactile/opengl_renderer/opengl_renderer.cpp"
-               "src/tactile/opengl_renderer/opengl_renderer_plugin.cpp"
-               "src/tactile/opengl_renderer/opengl_texture.cpp"
+               "src/opengl_error.cpp"
+               "src/opengl_renderer.cpp"
+               "src/opengl_renderer_plugin.cpp"
+               "src/opengl_texture.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
-               "inc/tactile/opengl_renderer/api.hpp"
-               "inc/tactile/opengl_renderer/opengl_error.hpp"
-               "inc/tactile/opengl_renderer/opengl_renderer.hpp"
-               "inc/tactile/opengl_renderer/opengl_renderer_plugin.hpp"
-               "inc/tactile/opengl_renderer/opengl_texture.hpp"
+               "inc/tactile/opengl/api.hpp"
+               "inc/tactile/opengl/opengl_error.hpp"
+               "inc/tactile/opengl/opengl_renderer.hpp"
+               "inc/tactile/opengl/opengl_renderer_plugin.hpp"
+               "inc/tactile/opengl/opengl_texture.hpp"
                )
 
 tactile_prepare_target(tactile-opengl-renderer)

@@ -118,7 +118,7 @@ endif ()
 add_subdirectory("source/renderers/null")
 
 if (TACTILE_BUILD_OPENGL_RENDERER)
-  add_subdirectory("source/opengl_renderer")
+  add_subdirectory("source/renderers/opengl")
 endif ()
 
 if (TACTILE_BUILD_VULKAN_RENDERER)

@@ -1,10 +1,10 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl_renderer/opengl_texture.hpp"
+#include "tactile/opengl/opengl_texture.hpp"
 
 #include <gtest/gtest.h>
 
-#include "tactile/opengl_renderer/opengl_renderer_plugin.hpp"
+#include "tactile/opengl/opengl_renderer_plugin.hpp"
 #include "tactile/runtime/command_line_options.hpp"
 #include "tactile/runtime/runtime.hpp"
 

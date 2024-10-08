@@ -8,7 +8,7 @@
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
-#include "tactile/opengl_renderer/api.hpp"
+#include "tactile/opengl/api.hpp"
 
 namespace tactile {
 
