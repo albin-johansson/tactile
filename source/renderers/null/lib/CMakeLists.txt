@@ -1,4 +1,4 @@
-project(tactile-null-renderer-lib CXX)
+project(tactile-renderers-null-lib CXX)
 
 add_library(tactile-null-renderer SHARED)
 add_library(tactile::null_renderer ALIAS tactile-null-renderer)

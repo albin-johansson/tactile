@@ -1,4 +1,4 @@
-project(tactile-null-renderer CXX)
+project(tactile-renderers-null CXX)
 
 find_package(Stb REQUIRED)
 
