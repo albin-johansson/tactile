@@ -3,7 +3,6 @@
 #pragma once
 
 #include "tactile/base/io/save/save_format.hpp"
-#include "tactile/base/runtime.hpp"
 #include "tactile/godot_tscn/api.hpp"
 
 namespace tactile::godot_tscn {
@@ -23,8 +22,6 @@ namespace tactile::godot_tscn {
 class TACTILE_GODOT_API GodotSceneFormat final : public ISaveFormat
 {
  public:
-  explicit GodotSceneFormat(IRuntime* runtime);
-
   [[nodiscard]]
   auto load_map(const std::filesystem::path& map_path,
                 const SaveFormatReadOptions& options) const
@@ -33,9 +30,6 @@ class TACTILE_GODOT_API GodotSceneFormat final : public ISaveFormat
   [[nodiscard]]
   auto save_map(const IMapView& map, const SaveFormatWriteOptions& options) const
       -> std::expected<void, std::error_code> override;
-
- private:
-  IRuntime* m_runtime;
 };
 
 }  // namespace tactile::godot_tscn

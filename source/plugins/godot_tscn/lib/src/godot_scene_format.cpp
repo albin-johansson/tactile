@@ -47,10 +47,6 @@ auto _deduce_ellipse_polygon_vertices(const SaveFormatExtraSettings& settings) -
 
 }  // namespace
 
-GodotSceneFormat::GodotSceneFormat(IRuntime* runtime)
-  : m_runtime {runtime}
-{}
-
 auto GodotSceneFormat::load_map(const std::filesystem::path&,
                                 const SaveFormatReadOptions&) const
     -> std::expected<ir::Map, std::error_code>

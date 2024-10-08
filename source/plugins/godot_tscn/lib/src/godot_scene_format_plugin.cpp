@@ -14,7 +14,7 @@ void GodotSceneFormatPlugin::load(IRuntime* runtime)
   log(LogLevel::kTrace, "Loading Godot TSCN format plugin");
   m_runtime = runtime;
 
-  m_format = std::make_unique<GodotSceneFormat>(m_runtime);
+  m_format = std::make_unique<GodotSceneFormat>();
   m_runtime->set_save_format(SaveFormatId::kGodotTscn, m_format.get());
 }
 

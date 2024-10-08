@@ -222,10 +222,15 @@ void _convert_tile_animation(const ITileView& tile,
 
     const Gd3AtlasTexture frame_texture {
       .atlas_id = texture_id,
-      .region = Int4 {saturate_cast<Int4::value_type>(frame_tile_pos.x * tile_size.x()),
-                      saturate_cast<Int4::value_type>(frame_tile_pos.y * tile_size.y()),
-                      tile_size.x(),
-                      tile_size.y()},
+      .region =
+          Int4 {
+            saturate_cast<Int4::value_type>(frame_tile_pos.x *
+                                            saturate_cast<Index2D::value_type>(tile_size.x())),
+            saturate_cast<Int4::value_type>(frame_tile_pos.y *
+                                            saturate_cast<Index2D::value_type>(tile_size.y())),
+            tile_size.x(),
+            tile_size.y(),
+          },
     };
 
     const auto atlas_texture_id = gd_map.resources.next_sub_resource_id++;
