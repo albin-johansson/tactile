@@ -100,7 +100,7 @@ if (TACTILE_BUILD_TILED_TMJ_FORMAT)
 endif ()
 
 if (TACTILE_BUILD_TILED_TMX_FORMAT)
-  add_subdirectory("source/tiled_tmx_format")
+  add_subdirectory("source/plugins/tiled_tmx")
 endif ()
 
 if (TACTILE_BUILD_GODOT_TSCN_FORMAT)

@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/tiled_tmx_format/tiled_tmx_format_plugin.hpp"
+#include "tactile/tiled_tmx/tiled_tmx_format_plugin.hpp"
 
 #include <new>  // nothrow
 

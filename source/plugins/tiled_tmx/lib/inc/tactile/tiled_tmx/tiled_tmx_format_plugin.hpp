@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/plugin.hpp"
-#include "tactile/tiled_tmx_format/api.hpp"
+#include "tactile/tiled_tmx/api.hpp"
 
 namespace tactile {
 
