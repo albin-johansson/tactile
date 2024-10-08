@@ -2,6 +2,8 @@
 
 #include "tactile/core/event/map_event_handler.hpp"
 
+#include <utility>  // move
+
 #include <magic_enum.hpp>
 
 #include "tactile/base/io/save/save_format.hpp"
