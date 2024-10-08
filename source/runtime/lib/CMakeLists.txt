@@ -5,15 +5,15 @@ add_library(tactile::runtime ALIAS tactile-runtime)
 
 target_sources(tactile-runtime
                PRIVATE
-               "src/tactile/runtime/command_line_options.cpp"
-               "src/tactile/runtime/launcher.cpp"
-               "src/tactile/runtime/logging.cpp"
-               "src/tactile/runtime/plugin_instance.cpp"
-               "src/tactile/runtime/protobuf_context.cpp"
-               "src/tactile/runtime/runtime.cpp"
-               "src/tactile/runtime/sdl_context.cpp"
-               "src/tactile/runtime/window.cpp"
-               "src/tactile/document_factory.cpp"
+               "src/command_line_options.cpp"
+               "src/launcher.cpp"
+               "src/logging.cpp"
+               "src/plugin_instance.cpp"
+               "src/protobuf_context.cpp"
+               "src/runtime.cpp"
+               "src/sdl_context.cpp"
+               "src/window.cpp"
+               "src/document_factory.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/runtime/api.hpp"
