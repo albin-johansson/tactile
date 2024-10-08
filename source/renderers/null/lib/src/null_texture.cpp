@@ -2,8 +2,7 @@
 
 #include "tactile/null_renderer/null_texture.hpp"
 
-#include <system_error>  // errc, make_error_code
-#include <utility>       // move
+#include <utility>  // move
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -17,8 +16,7 @@ NullTexture::NullTexture(const TextureSize size, std::filesystem::path path)
     m_path {std::move(path)}
 {}
 
-auto NullTexture::load(std::filesystem::path path)
-    -> std::expected<NullTexture, std::error_code>
+auto NullTexture::load(std::filesystem::path path) -> std::expected<NullTexture, ErrorCode>
 {
   TextureSize size {};
 
@@ -31,7 +29,7 @@ auto NullTexture::load(std::filesystem::path path)
         "Could not load texture '{}': {}",
         path_string,
         stbi_failure_reason());
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    return std::unexpected {ErrorCode::kBadImage};
   }
 
   stbi_image_free(pixels);

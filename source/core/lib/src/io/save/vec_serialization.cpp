@@ -5,7 +5,6 @@
 #include <format>  // format
 
 #include "tactile/base/io/int_parser.hpp"
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
@@ -14,7 +13,7 @@ namespace {
 
 template <typename VecType>
 [[nodiscard]] auto _deserialize_vec(const std::string_view str)
-    -> std::expected<VecType, std::error_code>
+    -> std::expected<VecType, ErrorCode>
 {
   VecType vec {};
   std::size_t index = 0;
@@ -36,7 +35,7 @@ template <typename VecType>
   });
 
   if (!ok) {
-    return std::unexpected {make_error(GenericError::kInvalidParam)};
+    return std::unexpected {ErrorCode::kBadParam};
   }
 
   return vec;
@@ -74,32 +73,32 @@ auto serialize(const Float4& vec) -> std::string
   return std::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
-auto deserialize_int2(const std::string_view str) -> std::expected<Int2, std::error_code>
+auto deserialize_int2(const std::string_view str) -> std::expected<Int2, ErrorCode>
 {
   return _deserialize_vec<Int2>(str);
 }
 
-auto deserialize_int3(const std::string_view str) -> std::expected<Int3, std::error_code>
+auto deserialize_int3(const std::string_view str) -> std::expected<Int3, ErrorCode>
 {
   return _deserialize_vec<Int3>(str);
 }
 
-auto deserialize_int4(const std::string_view str) -> std::expected<Int4, std::error_code>
+auto deserialize_int4(const std::string_view str) -> std::expected<Int4, ErrorCode>
 {
   return _deserialize_vec<Int4>(str);
 }
 
-auto deserialize_float2(const std::string_view str) -> std::expected<Float2, std::error_code>
+auto deserialize_float2(const std::string_view str) -> std::expected<Float2, ErrorCode>
 {
   return _deserialize_vec<Float2>(str);
 }
 
-auto deserialize_float3(const std::string_view str) -> std::expected<Float3, std::error_code>
+auto deserialize_float3(const std::string_view str) -> std::expected<Float3, ErrorCode>
 {
   return _deserialize_vec<Float3>(str);
 }
 
-auto deserialize_float4(const std::string_view str) -> std::expected<Float4, std::error_code>
+auto deserialize_float4(const std::string_view str) -> std::expected<Float4, ErrorCode>
 {
   return _deserialize_vec<Float4>(str);
 }

@@ -2,8 +2,7 @@
 
 #include "tactile/godot_tscn/godot_scene_format.hpp"
 
-#include <exception>     // exception
-#include <system_error>  // make_error_code, errc
+#include <exception>  // exception
 
 #include "tactile/base/document/map_view.hpp"
 #include "tactile/base/io/int_parser.hpp"
@@ -49,14 +48,14 @@ auto _deduce_ellipse_polygon_vertices(const SaveFormatExtraSettings& settings) -
 
 auto GodotSceneFormat::load_map(const std::filesystem::path&,
                                 const SaveFormatReadOptions&) const
-    -> std::expected<ir::Map, std::error_code>
+    -> std::expected<ir::Map, ErrorCode>
 {
-  return std::unexpected {std::make_error_code(std::errc::not_supported)};
+  return std::unexpected {ErrorCode::kNotSupported};
 }
 
 auto GodotSceneFormat::save_map(const IMapView& map,
                                 const SaveFormatWriteOptions& options) const
-    -> std::expected<void, std::error_code>
+    -> std::expected<void, ErrorCode>
 {
   try {
     const auto version = _deduce_godot_version(options.extra);
@@ -69,18 +68,16 @@ auto GodotSceneFormat::save_map(const IMapView& map,
       map.accept(converter);
 
       const auto& gd_map = converter.get_map();
-      return save_godot3_scene(gd_map, options).transform_error([](const ErrorCode) {
-        return std::make_error_code(std::errc::io_error);
-      });
+      return save_godot3_scene(gd_map, options);
     }
 
-    return std::unexpected {std::make_error_code(std::errc::not_supported)};
+    return std::unexpected {ErrorCode::kNotSupported};
   }
   catch (const std::exception& error) {
     log(LogLevel::kError, "Unexpected Godot export error: {}", error.what());
   }
 
-  return std::unexpected {std::make_error_code(std::errc::io_error)};
+  return std::unexpected {ErrorCode::kUnknown};
 }
 
 }  // namespace tactile::godot_tscn

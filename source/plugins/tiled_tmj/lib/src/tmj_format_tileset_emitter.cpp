@@ -48,10 +48,11 @@ void save_basic_tileset_attributes(const ITilesetView& tileset,
 
 }  // namespace tmj_format_tileset_emitter
 
-auto emit_tiled_tmj_tileset(const ITilesetView& tileset,
-                            const SaveFormatWriteOptions& options,
-                            std::unordered_map<TileID, TmjFormatExternalTilesetData>&
-                                external_tilesets) -> nlohmann::json
+auto emit_tiled_tmj_tileset(
+    const ITilesetView& tileset,
+    const SaveFormatWriteOptions& options,
+    std::unordered_map<TileID, TmjFormatExternalTilesetData>& external_tilesets)
+    -> nlohmann::json
 {
   auto tileset_json = nlohmann::json::object();
   tileset_json["firstgid"] = tileset.get_first_tile_id();

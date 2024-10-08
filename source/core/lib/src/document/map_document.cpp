@@ -2,9 +2,8 @@
 
 #include "tactile/core/document/map_document.hpp"
 
-#include <optional>      // optional
-#include <system_error>  // make_error_code, errc
-#include <utility>       // move
+#include <optional>  // optional
+#include <utility>   // move
 
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/core/document/document_info.hpp"
@@ -42,7 +41,7 @@ MapDocument::MapDocument()
   : mData {std::make_unique<Data>()}
 {}
 
-auto MapDocument::make(const MapSpec& spec) -> std::expected<MapDocument, std::error_code>
+auto MapDocument::make(const MapSpec& spec) -> std::expected<MapDocument, ErrorCode>
 {
   MapDocument document {};
   auto& registry = document.mData->registry;
@@ -50,7 +49,7 @@ auto MapDocument::make(const MapSpec& spec) -> std::expected<MapDocument, std::e
   const auto map_id = make_map(registry, spec);
   if (map_id == kInvalidEntity) {
     TACTILE_LOG_ERROR("Could not create map document");
-    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   document.mData->map_entity = map_id;
@@ -63,15 +62,15 @@ auto MapDocument::make(const MapSpec& spec) -> std::expected<MapDocument, std::e
   return document;
 }
 
-auto MapDocument::make(IRenderer& renderer,
-                       const ir::Map& ir_map) -> std::expected<MapDocument, std::error_code>
+auto MapDocument::make(IRenderer& renderer, const ir::Map& ir_map)
+    -> std::expected<MapDocument, ErrorCode>
 {
   MapDocument document {};
   auto& registry = document.mData->registry;
 
   const auto map_id = make_map(registry, renderer, ir_map);
   if (!map_id.has_value()) {
-    TACTILE_LOG_ERROR("Could not create map document: {}", map_id.error().message());
+    TACTILE_LOG_ERROR("Could not create map document: {}", to_string(map_id.error()));
     return std::unexpected {map_id.error()};
   }
 
@@ -90,8 +89,7 @@ TACTILE_DEFINE_MOVE(MapDocument);
 
 MapDocument::~MapDocument() noexcept = default;
 
-auto MapDocument::accept(IDocumentVisitor& visitor) const
-    -> std::expected<void, std::error_code>
+auto MapDocument::accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode>
 {
   const MapViewImpl map_view {this};
   return map_view.accept(visitor);

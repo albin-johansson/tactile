@@ -5,9 +5,9 @@
 #include <expected>       // expected
 #include <filesystem>     // path
 #include <string_view>    // string_view
-#include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/i18n/language_id.hpp"
@@ -41,8 +41,7 @@ class LanguageParser final
   [[nodiscard]]
   auto parse(LanguageID id,
              const std::filesystem::path& path,
-             const Language* fallback = nullptr) const
-      -> std::expected<Language, std::error_code>;
+             const Language* fallback = nullptr) const -> std::expected<Language, ErrorCode>;
 
  private:
   std::unordered_map<std::string_view, StringID> mMiscNames {};
@@ -64,6 +63,6 @@ class LanguageParser final
  * A parsed language if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto parse_language_from_disk(LanguageID id) -> std::expected<Language, std::error_code>;
+auto parse_language_from_disk(LanguageID id) -> std::expected<Language, ErrorCode>;
 
 }  // namespace tactile::ui

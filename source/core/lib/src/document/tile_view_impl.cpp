@@ -21,8 +21,7 @@ TileViewImpl::TileViewImpl(const IDocument* document,
     mMeta {document, tile_id}
 {}
 
-auto TileViewImpl::accept(IDocumentVisitor& visitor) const
-    -> std::expected<void, std::error_code>
+auto TileViewImpl::accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode>
 {
   if (const auto tile_result = visitor.visit(*this); !tile_result.has_value()) {
     return std::unexpected {tile_result.error()};

@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include <concepts>      // integral, signed_integral, unsigned_integral, floating_point
-#include <expected>      // expected
-#include <string>        // string
-#include <string_view>   // string_view
-#include <system_error>  // error_code
+#include <concepts>     // integral, signed_integral, unsigned_integral, floating_point
+#include <expected>     // expected
+#include <string>       // string
+#include <string_view>  // string_view
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/platform/native_string.hpp"
 
@@ -22,7 +22,7 @@ namespace tactile {
  * A native string if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto to_native_string(std::string_view str) -> std::expected<NativeString, std::error_code>;
+auto to_native_string(std::string_view str) -> std::expected<NativeString, ErrorCode>;
 
 /**
  * Converts a native string to a normal string.
@@ -33,7 +33,7 @@ auto to_native_string(std::string_view str) -> std::expected<NativeString, std::
  * A normal string if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto from_native_string(NativeStringView str) -> std::expected<std::string, std::error_code>;
+auto from_native_string(NativeStringView str) -> std::expected<std::string, ErrorCode>;
 
 /**
  * Attempts to convert a string to a floating-point value.
@@ -44,7 +44,7 @@ auto from_native_string(NativeStringView str) -> std::expected<std::string, std:
  * A float if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto parse_float(std::string_view str) -> std::expected<double, std::error_code>;
+auto parse_float(std::string_view str) -> std::expected<double, ErrorCode>;
 
 /**
  * Attempts to convert a string to a float.
@@ -57,7 +57,7 @@ auto parse_float(std::string_view str) -> std::expected<double, std::error_code>
  * A float if successful; an error code otherwise.
  */
 template <std::floating_point T>
-[[nodiscard]] auto parse(const std::string_view str) -> std::expected<T, std::error_code>
+[[nodiscard]] auto parse(const std::string_view str) -> std::expected<T, ErrorCode>
 {
   return parse_float(str).transform([](double value) { return static_cast<T>(value); });
 }

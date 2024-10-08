@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <filesystem>    // path
-#include <system_error>  // error_code
+#include <expected>    // expected
+#include <filesystem>  // path
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
@@ -43,6 +43,6 @@ struct CTexture final
  */
 [[nodiscard]]
 auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
-    -> std::expected<CTexture, std::error_code>;
+    -> std::expected<CTexture, ErrorCode>;
 
 }  // namespace tactile

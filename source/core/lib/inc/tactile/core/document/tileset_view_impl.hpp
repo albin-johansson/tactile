@@ -26,8 +26,7 @@ class TilesetViewImpl final : public ITilesetView
   TilesetViewImpl(const MapDocument* document, EntityID tileset_id);
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> override;
+  auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
   auto get_first_tile_id() const -> TileID override;

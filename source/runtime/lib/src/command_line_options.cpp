@@ -72,8 +72,8 @@ auto get_default_command_line_options() -> CommandLineOptions
   };
 }
 
-auto parse_command_line_options(const int argc,
-                                char* argv[]) -> std::optional<CommandLineOptions>
+auto parse_command_line_options(const int argc, char* argv[])
+    -> std::optional<CommandLineOptions>
 {
   auto options = get_default_command_line_options();
 

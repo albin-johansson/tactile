@@ -47,7 +47,7 @@ class ObjectViewMock : public IObjectView
   explicit ObjectViewMock(ir::Object object,
                           std::variant<const ILayerView*, const ITileView*> parent = {});
 
-  MOCK_METHOD((std::expected<void, std::error_code>),
+  MOCK_METHOD((std::expected<void, ErrorCode>),
               accept,
               (IDocumentVisitor&),
               (const, override));
@@ -87,7 +87,7 @@ class TileViewMock : public ITileView
  public:
   TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile);
 
-  MOCK_METHOD((std::expected<void, std::error_code>),
+  MOCK_METHOD((std::expected<void, ErrorCode>),
               accept,
               (IDocumentVisitor&),
               (const, override));
@@ -129,7 +129,7 @@ class TilesetViewMock : public ITilesetView
 
   explicit TilesetViewMock(ir::TilesetRef tileset_ref);
 
-  MOCK_METHOD((std::expected<void, std::error_code>),
+  MOCK_METHOD((std::expected<void, ErrorCode>),
               accept,
               (IDocumentVisitor&),
               (const, override));
@@ -170,7 +170,7 @@ class LayerViewMock : public ILayerView
                 const ir::TileFormat& tile_format,
                 const LayerViewMock* parent_layer = nullptr);
 
-  MOCK_METHOD((std::expected<void, std::error_code>),
+  MOCK_METHOD((std::expected<void, ErrorCode>),
               accept,
               (IDocumentVisitor&),
               (const, override));
@@ -230,7 +230,7 @@ class MapViewMock : public IMapView
  public:
   explicit MapViewMock(const ir::Map& map);
 
-  MOCK_METHOD((std::expected<void, std::error_code>),
+  MOCK_METHOD((std::expected<void, ErrorCode>),
               accept,
               (IDocumentVisitor&),
               (const, override));

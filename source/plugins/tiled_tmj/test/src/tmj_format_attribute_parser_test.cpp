@@ -27,7 +27,7 @@ TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithoutName)
   const auto property = parse_tiled_tmj_property(property_json);
 
   ASSERT_FALSE(property.has_value());
-  EXPECT_EQ(property.error(), SaveFormatParseError::kNoPropertyName);
+  EXPECT_EQ(property.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_property
@@ -41,7 +41,7 @@ TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithoutType)
   const auto property = parse_tiled_tmj_property(property_json);
 
   ASSERT_FALSE(property.has_value());
-  EXPECT_EQ(property.error(), SaveFormatParseError::kNoPropertyType);
+  EXPECT_EQ(property.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_property
@@ -56,7 +56,7 @@ TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithInvalidType)
   const auto property = parse_tiled_tmj_property(property_json);
 
   ASSERT_FALSE(property.has_value());
-  EXPECT_EQ(property.error(), SaveFormatParseError::kBadPropertyType);
+  EXPECT_EQ(property.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_property
@@ -70,7 +70,7 @@ TEST_F(TmjFormatAttributeParserTest, ParsePropertyWithoutValue)
   const auto property = parse_tiled_tmj_property(property_json);
 
   ASSERT_FALSE(property.has_value());
-  EXPECT_EQ(property.error(), SaveFormatParseError::kNoPropertyValue);
+  EXPECT_EQ(property.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_property
@@ -204,7 +204,7 @@ TEST_F(TmjFormatAttributeParserTest, ParseMalformedColorARGB)
   const auto property = parse_tiled_tmj_property(property_json);
 
   ASSERT_FALSE(property.has_value());
-  EXPECT_EQ(property.error(), SaveFormatParseError::kBadPropertyValue);
+  EXPECT_EQ(property.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_property
@@ -219,7 +219,7 @@ TEST_F(TmjFormatAttributeParserTest, ParseTooShortColorARGB)
   const auto property = parse_tiled_tmj_property(property_json);
 
   ASSERT_FALSE(property.has_value());
-  EXPECT_EQ(property.error(), SaveFormatParseError::kBadPropertyValue);
+  EXPECT_EQ(property.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_property
@@ -234,7 +234,7 @@ TEST_F(TmjFormatAttributeParserTest, ParseTooLongColorARGB)
   const auto property = parse_tiled_tmj_property(property_json);
 
   ASSERT_FALSE(property.has_value());
-  EXPECT_EQ(property.error(), SaveFormatParseError::kBadPropertyValue);
+  EXPECT_EQ(property.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_property

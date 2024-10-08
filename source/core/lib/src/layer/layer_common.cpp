@@ -87,9 +87,8 @@ void destroy_layer(Registry& registry, const EntityID layer_id)
   }
 }
 
-auto copy_layer(Registry& registry,
-                const EntityID source_layer_id,
-                LayerID& next_layer_id) -> EntityID
+auto copy_layer(Registry& registry, const EntityID source_layer_id, LayerID& next_layer_id)
+    -> EntityID
 {
   TACTILE_ASSERT(is_layer(registry, source_layer_id));
 

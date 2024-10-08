@@ -9,7 +9,7 @@
 #include <SDL2/SDL.h>
 
 #include "tactile/base/platform/native_string.hpp"
-#include "tactile/core/debug/generic_error.hpp"
+#include "tactile/base/util/scope_exit.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/platform/environment.hpp"
 #include "tactile/core/util/string_conv.hpp"
@@ -17,10 +17,10 @@
 namespace tactile {
 
 auto open_directory_in_finder(const std::filesystem::path& dir)
-    -> std::expected<void, std::error_code>
+    -> std::expected<void, ErrorCode>
 {
   if (!std::filesystem::is_directory(dir)) {
-    return std::unexpected {make_error(GenericError::kInvalidParam)};
+    return std::unexpected {ErrorCode::kBadParam};
   }
 
   if constexpr (kOnMacos) {
@@ -37,24 +37,24 @@ auto open_directory_in_finder(const std::filesystem::path& dir)
   }
   else {
     TACTILE_LOG_ERROR("Cannot open finder on this platform");
-    return std::unexpected {make_error(GenericError::kUnsupported)};
+    return std::unexpected {ErrorCode::kNotSupported};
   }
 
   return {};
 }
 
-auto get_persistent_storage_directory()
-    -> std::expected<std::filesystem::path, std::error_code>
+auto get_persistent_storage_directory() -> std::expected<std::filesystem::path, ErrorCode>
 {
-  if (const auto* path = SDL_GetPrefPath("albin-johansson", "tactile")) {
+  if (auto* path = SDL_GetPrefPath("albin-johansson", "tactile")) {
+    const ScopeExit path_deleter {[path] { SDL_free(path); }};
     return std::filesystem::path {path};
   }
 
   TACTILE_LOG_ERROR("Could not determine persistent storage directory: {}", SDL_GetError());
-  return std::unexpected {make_error(GenericError::kInvalidState)};
+  return std::unexpected {ErrorCode::kBadState};
 }
 
-auto get_user_home_directory() -> std::expected<std::string, std::error_code>
+auto get_user_home_directory() -> std::optional<std::string>
 {
   // On Unix platforms, HOME is something like '/Users/username'.
   // On Windows, USERPROFILE is something like 'C:\Users\username'.
@@ -85,7 +85,7 @@ auto has_prefix(const std::filesystem::path& path, const std::string_view prefix
 
 auto strip_home_directory_prefix(const std::filesystem::path& path,
                                  const std::string_view home_dir)
-    -> std::expected<std::string, std::error_code>
+    -> std::expected<std::string, ErrorCode>
 {
   if (has_prefix(path, home_dir)) {
     const NativeStringView path_view {path.c_str()};
@@ -103,7 +103,7 @@ auto strip_home_directory_prefix(const std::filesystem::path& path,
 #endif
   }
 
-  return std::unexpected {make_error(GenericError::kInvalidParam)};
+  return std::unexpected {ErrorCode::kBadParam};
 }
 
 }  // namespace tactile

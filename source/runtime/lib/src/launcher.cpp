@@ -64,8 +64,8 @@ auto _get_plugin_names(const CommandLineOptions& options) -> std::vector<std::st
 }
 
 [[nodiscard]]
-auto _load_plugins(IRuntime& runtime,
-                   const CommandLineOptions& options) -> std::vector<PluginInstance>
+auto _load_plugins(IRuntime& runtime, const CommandLineOptions& options)
+    -> std::vector<PluginInstance>
 {
   const auto plugin_names = _get_plugin_names(options);
 

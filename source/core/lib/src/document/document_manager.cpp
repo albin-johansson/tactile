@@ -5,7 +5,6 @@
 #include <utility>  // move
 
 #include "tactile/base/document/document.hpp"
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -16,7 +15,7 @@
 namespace tactile {
 
 auto DocumentManager::create_and_open_map(const MapSpec& spec)
-    -> std::expected<UUID, std::error_code>
+    -> std::expected<UUID, ErrorCode>
 {
   auto document = MapDocument::make(spec);
   if (!document.has_value()) {
@@ -32,7 +31,7 @@ auto DocumentManager::create_and_open_map(const MapSpec& spec)
   // NB: A UUID collision should be exceptionally rare, but we check regardless.
   if (!did_insert) {
     TACTILE_LOG_ERROR("Could not store map document");
-    return std::unexpected {make_error(GenericError::kInvalidState)};
+    return std::unexpected {ErrorCode::kBadState};
   }
 
   mOpenDocuments.push_back(document_uuid);
@@ -44,7 +43,7 @@ auto DocumentManager::create_and_open_map(const MapSpec& spec)
 }
 
 auto DocumentManager::create_and_open_map(IRenderer& renderer, const ir::Map& ir_map)
-    -> std::expected<UUID, std::error_code>
+    -> std::expected<UUID, ErrorCode>
 {
   auto document = MapDocument::make(renderer, ir_map);
   if (!document.has_value()) {
@@ -60,7 +59,7 @@ auto DocumentManager::create_and_open_map(IRenderer& renderer, const ir::Map& ir
   // NB: A UUID collision should be exceptionally rare, but we check regardless.
   if (!did_insert) {
     TACTILE_LOG_ERROR("Could not store map document");
-    return std::unexpected {make_error(GenericError::kInvalidState)};
+    return std::unexpected {ErrorCode::kBadState};
   }
 
   mOpenDocuments.push_back(document_uuid);

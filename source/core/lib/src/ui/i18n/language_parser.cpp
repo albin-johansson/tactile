@@ -7,7 +7,6 @@
 
 #include <magic_enum.hpp>
 
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/debug/performance.hpp"
 #include "tactile/core/io/ini.hpp"
 #include "tactile/core/log/logger.hpp"
@@ -210,8 +209,8 @@ void _parse_section(const StringMap<IniSection>& ini,
 }
 
 [[nodiscard]]
-auto _validate_strings(std::vector<std::string>& strings,
-                       const Language* fallback) -> std::expected<void, std::error_code>
+auto _validate_strings(std::vector<std::string>& strings, const Language* fallback)
+    -> std::expected<void, ErrorCode>
 {
   std::size_t index {0};
 
@@ -226,7 +225,7 @@ auto _validate_strings(std::vector<std::string>& strings,
         TACTILE_LOG_ERROR("std::string with ID {} ('{}') is not translated",
                           index,
                           magic_enum::enum_name(string_id));
-        return std::unexpected {make_error(GenericError::kInvalidFile)};
+        return std::unexpected {ErrorCode::kBadState};
       }
     }
 
@@ -252,7 +251,7 @@ LanguageParser::LanguageParser()
 auto LanguageParser::parse(const LanguageID id,
                            const std::filesystem::path& path,
                            const Language* fallback) const
-    -> std::expected<Language, std::error_code>
+    -> std::expected<Language, ErrorCode>
 {
   const SetLogScope log_scope {"LanguageParser"};
   const ScopeProfiler profiler {"parse"};
@@ -280,7 +279,7 @@ auto LanguageParser::parse(const LanguageID id,
       });
 }
 
-auto parse_language_from_disk(const LanguageID id) -> std::expected<Language, std::error_code>
+auto parse_language_from_disk(const LanguageID id) -> std::expected<Language, ErrorCode>
 {
   LanguageParser parser {};
 
@@ -289,7 +288,7 @@ auto parse_language_from_disk(const LanguageID id) -> std::expected<Language, st
     case LanguageID::kAmericanEnglish: path = "assets/lang/en.ini"; break;
     case LanguageID::kBritishEnglish:  path = "assets/lang/en_GB.ini"; break;
     case LanguageID::kSwedish:         path = "assets/lang/sv.ini"; break;
-    default:                           return std::unexpected {make_error(GenericError::kInvalidParam)};
+    default:                           return std::unexpected {ErrorCode::kBadState};
   }
 
   return parser.parse(id, path);

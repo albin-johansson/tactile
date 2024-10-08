@@ -11,7 +11,7 @@
 namespace tactile {
 
 auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
-    -> std::expected<CTexture, std::error_code>
+    -> std::expected<CTexture, ErrorCode>
 {
   const auto path_string = path.string();
 
@@ -19,14 +19,14 @@ auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
   if (!texture_id.has_value()) {
     TACTILE_LOG_ERROR("Could not load texture '{}': {}",
                       path_string,
-                      texture_id.error().message());
+                      to_string(texture_id.error()));
     return std::unexpected {texture_id.error()};
   }
 
   const auto* texture = renderer.find_texture(*texture_id);
   if (!texture) {
     TACTILE_LOG_ERROR("Could not find loaded texture");
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    return std::unexpected {ErrorCode::kBadState};
   }
 
   const auto texture_size = texture->get_size();

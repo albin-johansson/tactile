@@ -2,12 +2,9 @@
 
 #include "tactile/core/map/map.hpp"
 
-#include <system_error>  // make_error_code, errc
-
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/layer.hpp"
@@ -79,9 +76,8 @@ auto make_map(Registry& registry, const MapSpec& spec) -> EntityID
   return map_entity;
 }
 
-auto make_map(Registry& registry,
-              IRenderer& renderer,
-              const ir::Map& ir_map) -> std::expected<EntityID, std::error_code>
+auto make_map(Registry& registry, IRenderer& renderer, const ir::Map& ir_map)
+    -> std::expected<EntityID, ErrorCode>
 {
   const auto map_id = registry.make_entity();
 
@@ -165,8 +161,7 @@ void destroy_map(Registry& registry, const EntityID map_entity)
 
 auto add_tileset_to_map(Registry& registry,
                         const EntityID map_id,
-                        const TilesetSpec& tileset_spec)
-    -> std::expected<EntityID, std::error_code>
+                        const TilesetSpec& tileset_spec) -> std::expected<EntityID, ErrorCode>
 {
   TACTILE_ASSERT(is_map(registry, map_id));
 
@@ -213,9 +208,8 @@ void remove_tileset_from_map(Registry& registry,
   }
 }
 
-auto add_layer_to_map(Registry& registry,
-                      const EntityID map_id,
-                      const LayerType type) -> std::expected<EntityID, std::error_code>
+auto add_layer_to_map(Registry& registry, const EntityID map_id, const LayerType type)
+    -> std::expected<EntityID, ErrorCode>
 {
   TACTILE_ASSERT(is_map(registry, map_id));
   const auto& map = registry.get<CMap>(map_id);
@@ -225,7 +219,7 @@ auto add_layer_to_map(Registry& registry,
     case LayerType::kTileLayer:   layer_entity = make_tile_layer(registry, map.extent); break;
     case LayerType::kObjectLayer: layer_entity = make_object_layer(registry); break;
     case LayerType::kGroupLayer:  layer_entity = make_group_layer(registry); break;
-    default:                      return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
+    default:                      return std::unexpected {ErrorCode::kBadParam};
   }
 
   append_layer_to_map(registry, map_id, layer_entity);
@@ -254,9 +248,8 @@ void append_layer_to_map(Registry& registry, const EntityID map_id, const Entity
   }
 }
 
-auto remove_layer_from_map(Registry& registry,
-                           const EntityID map_id,
-                           const EntityID layer_id) -> std::expected<void, std::error_code>
+auto remove_layer_from_map(Registry& registry, const EntityID map_id, const EntityID layer_id)
+    -> std::expected<void, ErrorCode>
 {
   TACTILE_ASSERT(is_map(registry, map_id));
   TACTILE_ASSERT(is_layer(registry, layer_id));
@@ -265,7 +258,7 @@ auto remove_layer_from_map(Registry& registry,
 
   const auto parent_layer_id = find_parent_layer(registry, map.root_layer, layer_id);
   if (parent_layer_id == kInvalidEntity) {
-    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
+    return std::unexpected {ErrorCode::kBadParam};
   }
 
   auto& parent_layer = registry.get<CGroupLayer>(parent_layer_id);

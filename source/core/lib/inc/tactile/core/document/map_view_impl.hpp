@@ -27,8 +27,7 @@ class MapViewImpl final : public IMapView
   MapViewImpl(const MapDocument* document);
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> override;
+  auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
   auto get_path() const -> const std::filesystem::path* override;

@@ -37,8 +37,8 @@ struct Index2D final
    * A two-dimensional index.
    */
   template <std::integral T>
-  [[nodiscard]] constexpr static auto from_1d(const T index,
-                                              const T column_count) noexcept -> Index2D
+  [[nodiscard]] constexpr static auto from_1d(const T index, const T column_count) noexcept
+      -> Index2D
   {
     return {
       .x = saturate_cast<value_type>(index % column_count),

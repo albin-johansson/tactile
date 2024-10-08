@@ -5,9 +5,9 @@
 #include <expected>       // expected
 #include <filesystem>     // path
 #include <string_view>    // string_view
-#include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
@@ -79,7 +79,7 @@ class ISaveFormat
   [[nodiscard]]
   virtual auto load_map(const std::filesystem::path& map_path,
                         const SaveFormatReadOptions& options) const
-      -> std::expected<ir::Map, std::error_code> = 0;
+      -> std::expected<ir::Map, ErrorCode> = 0;
 
   /**
    * Attempts to save a map.
@@ -92,7 +92,7 @@ class ISaveFormat
    */
   [[nodiscard]]
   virtual auto save_map(const IMapView& map, const SaveFormatWriteOptions& options) const
-      -> std::expected<void, std::error_code> = 0;
+      -> std::expected<void, ErrorCode> = 0;
 };
 
 }  // namespace tactile

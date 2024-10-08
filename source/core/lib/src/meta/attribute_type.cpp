@@ -3,12 +3,10 @@
 #include "tactile/core/meta/attribute_type.hpp"
 
 #include "tactile/core/debug/exception.hpp"
-#include "tactile/core/debug/generic_error.hpp"
 
 namespace tactile {
 
-auto parse_attribute_type(std::string_view name)
-    -> std::expected<AttributeType, std::error_code>
+auto parse_attribute_type(std::string_view name) -> std::expected<AttributeType, ErrorCode>
 {
   if (name == "string") {
     return AttributeType::kStr;
@@ -50,7 +48,7 @@ auto parse_attribute_type(std::string_view name)
     return AttributeType::kObject;
   }
 
-  return std::unexpected {make_error(GenericError::kInvalidParam)};
+  return std::unexpected {ErrorCode::kBadParam};
 }
 
 auto serialize(const AttributeType type) -> std::string_view

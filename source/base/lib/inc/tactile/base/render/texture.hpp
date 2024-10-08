@@ -4,6 +4,7 @@
 
 #include <filesystem>  // path
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include <cstdint>       // int32_t
-#include <expected>      // expected
-#include <optional>      // optional
-#include <system_error>  // error_code
-#include <vector>        // vector
+#include <cstdint>   // int32_t
+#include <expected>  // expected
+#include <optional>  // optional
+#include <vector>    // vector
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/layer_type.hpp"
@@ -145,9 +145,8 @@ auto make_map(Registry& registry, const MapSpec& spec) -> EntityID;
  * A map entity identifier if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto make_map(Registry& registry,
-              IRenderer& renderer,
-              const ir::Map& ir_map) -> std::expected<EntityID, std::error_code>;
+auto make_map(Registry& registry, IRenderer& renderer, const ir::Map& ir_map)
+    -> std::expected<EntityID, ErrorCode>;
 
 /**
  * Destroys a map.
@@ -178,7 +177,7 @@ void destroy_map(Registry& registry, EntityID map_entity);
  */
 [[nodiscard]]
 auto add_tileset_to_map(Registry& registry, EntityID map_id, const TilesetSpec& tileset_spec)
-    -> std::expected<EntityID, std::error_code>;
+    -> std::expected<EntityID, ErrorCode>;
 
 /**
  * Removes a tileset from a map, but does not destroy it.
@@ -213,9 +212,8 @@ void remove_tileset_from_map(Registry& registry, EntityID map_id, EntityID tiles
  * A layer entity identifier if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto add_layer_to_map(Registry& registry,
-                      EntityID map_id,
-                      LayerType type) -> std::expected<EntityID, std::error_code>;
+auto add_layer_to_map(Registry& registry, EntityID map_id, LayerType type)
+    -> std::expected<EntityID, ErrorCode>;
 
 /**
  * Appends an existing layer to a map.
@@ -248,8 +246,7 @@ void append_layer_to_map(Registry& registry, EntityID map_id, EntityID layer_id)
  * Nothing if the layer was removed; an error code otherwise.
  */
 [[nodiscard]]
-auto remove_layer_from_map(Registry& registry,
-                           EntityID map_id,
-                           EntityID layer_id) -> std::expected<void, std::error_code>;
+auto remove_layer_from_map(Registry& registry, EntityID map_id, EntityID layer_id)
+    -> std::expected<void, ErrorCode>;
 
 }  // namespace tactile

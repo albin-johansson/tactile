@@ -10,8 +10,8 @@
 
 namespace tactile {
 
-auto emit_tiled_tmj_property(const IMetaView& meta,
-                             const std::size_t property_index) -> nlohmann::json
+auto emit_tiled_tmj_property(const IMetaView& meta, const std::size_t property_index)
+    -> nlohmann::json
 {
   const auto& [property_name, property_value] = meta.get_property(property_index);
 

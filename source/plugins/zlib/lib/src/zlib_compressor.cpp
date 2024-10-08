@@ -2,12 +2,10 @@
 
 #include "tactile/zlib/zlib_compressor.hpp"
 
-#include <array>         // array
-#include <cstddef>       // size_t
-#include <expected>      // expected
-#include <system_error>  // errc, make_error_code
-#include <system_error>  // error_code
-#include <utility>       // move
+#include <array>     // array
+#include <cstddef>   // size_t
+#include <expected>  // expected
+#include <utility>   // move
 
 #define Z_PREFIX_SET
 #include <zlib.h>
@@ -58,7 +56,7 @@ struct ZlibCallbacks final
 auto _init_stream(const ZlibCallbacks& callbacks,
                   const ByteSpan input_data,
                   StagingBuffer& staging_buffer,
-                  z_stream& stream) -> std::expected<void, std::error_code>
+                  z_stream& stream) -> std::expected<void, ErrorCode>
 {
   stream.next_in = const_cast<z_byte*>(input_data.data());  // NOLINT
   stream.avail_in = saturate_cast<z_uint>(input_data.size_bytes());
@@ -68,7 +66,7 @@ auto _init_stream(const ZlibCallbacks& callbacks,
   const auto init_stream_result = callbacks.init_stream(&stream);
   if (init_stream_result != Z_OK) {
     log(LogLevel::kError, "Could not initialize z_stream: {}", zError(init_stream_result));
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   return {};
@@ -89,7 +87,7 @@ auto _init_stream(const ZlibCallbacks& callbacks,
 auto _process_stream(const ZlibCallbacks& callbacks,
                      z_stream& stream,
                      StagingBuffer& staging_buffer,
-                     ByteStream& output_buffer) -> std::expected<void, std::error_code>
+                     ByteStream& output_buffer) -> std::expected<void, ErrorCode>
 {
   const auto copy_processed_batch_to_output_buffer = [&] {
     const auto written_bytes = staging_buffer.size() - stream.avail_out;
@@ -117,7 +115,7 @@ auto _process_stream(const ZlibCallbacks& callbacks,
     }
     else {
       log(LogLevel::kError, "Could not process Zlib chunk: {}", zError(process_result));
-      return std::unexpected {std::make_error_code(std::errc::io_error)};
+      return std::unexpected {ErrorCode::kBadState};
     }
   }
 
@@ -134,14 +132,14 @@ auto _process_stream(const ZlibCallbacks& callbacks,
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto _end_stream(const ZlibCallbacks& callbacks,
-                 z_stream& stream) -> std::expected<void, std::error_code>
+auto _end_stream(const ZlibCallbacks& callbacks, z_stream& stream)
+    -> std::expected<void, ErrorCode>
 {
   const auto end_stream_result = callbacks.end_stream(&stream);
 
   if (end_stream_result != Z_OK) {
     log(LogLevel::kError, "Could not finalize z_stream: {}", zError(end_stream_result));
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    return std::unexpected {ErrorCode::kBadState};
   }
 
   return {};
@@ -150,7 +148,7 @@ auto _end_stream(const ZlibCallbacks& callbacks,
 }  // namespace
 
 auto ZlibCompressor::compress(const ByteSpan input_data) const
-    -> std::expected<ByteStream, std::error_code>
+    -> std::expected<ByteStream, ErrorCode>
 {
   ZlibCallbacks callbacks {};
   callbacks.init_stream = [](z_stream* stream) {
@@ -176,7 +174,7 @@ auto ZlibCompressor::compress(const ByteSpan input_data) const
 }
 
 auto ZlibCompressor::decompress(const ByteSpan input_data) const
-    -> std::expected<ByteStream, std::error_code>
+    -> std::expected<ByteStream, ErrorCode>
 {
   ZlibCallbacks callbacks {};
   callbacks.init_stream = [](z_stream* stream) { return z_inflateInit(stream); };

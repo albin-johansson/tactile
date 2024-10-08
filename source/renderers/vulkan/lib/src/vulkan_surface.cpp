@@ -41,8 +41,8 @@ void VulkanSurface::_destroy() noexcept
   }
 }
 
-auto create_vulkan_surface(VkInstance instance,
-                           IWindow& window) -> std::expected<VulkanSurface, VkResult>
+auto create_vulkan_surface(VkInstance instance, IWindow& window)
+    -> std::expected<VulkanSurface, VkResult>
 {
   VulkanSurface surface {};
   surface.instance = instance;

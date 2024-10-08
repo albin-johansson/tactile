@@ -75,8 +75,8 @@ auto get_hexagon_bounding_box(const Float2& center_pos,
   return box;
 }
 
-auto get_hexagon_center(const Index2D& index,
-                        const HexagonInfo& hexagon_info) noexcept -> Float2
+auto get_hexagon_center(const Index2D& index, const HexagonInfo& hexagon_info) noexcept
+    -> Float2
 {
   const auto is_row_odd = index.y % 2 != 0;
   const auto odd_row_x_offset = is_row_odd ? hexagon_info.apothem : 0.0f;

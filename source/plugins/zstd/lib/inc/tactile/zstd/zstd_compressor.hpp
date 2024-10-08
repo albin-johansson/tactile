@@ -17,12 +17,10 @@ class TACTILE_ZSTD_API ZstdCompressor final : public ICompressor
 {
  public:
   [[nodiscard]]
-  auto compress(ByteSpan input_data) const
-      -> std::expected<ByteStream, std::error_code> override;
+  auto compress(ByteSpan input_data) const -> std::expected<ByteStream, ErrorCode> override;
 
   [[nodiscard]]
-  auto decompress(ByteSpan input_data) const
-      -> std::expected<ByteStream, std::error_code> override;
+  auto decompress(ByteSpan input_data) const -> std::expected<ByteStream, ErrorCode> override;
 };
 
 }  // namespace tactile

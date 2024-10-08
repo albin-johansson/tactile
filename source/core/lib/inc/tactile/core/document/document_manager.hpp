@@ -5,10 +5,10 @@
 #include <cstddef>        // size_t
 #include <expected>       // expected
 #include <memory>         // unique_ptr
-#include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 #include <vector>         // vector
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command_stack.hpp"
 #include "tactile/core/util/uuid.hpp"
@@ -42,7 +42,7 @@ class DocumentManager final
    * The UUID of the map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto create_and_open_map(const MapSpec& spec) -> std::expected<UUID, std::error_code>;
+  auto create_and_open_map(const MapSpec& spec) -> std::expected<UUID, ErrorCode>;
 
   /**
    * Restores a map document from an intermediate map representation.
@@ -57,8 +57,8 @@ class DocumentManager final
    * The UUID of the map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto create_and_open_map(IRenderer& renderer,
-                           const ir::Map& ir_map) -> std::expected<UUID, std::error_code>;
+  auto create_and_open_map(IRenderer& renderer, const ir::Map& ir_map)
+      -> std::expected<UUID, ErrorCode>;
 
   /**
    * Returns the document associated with a given UUID.

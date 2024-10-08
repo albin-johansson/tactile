@@ -31,8 +31,7 @@ class TileViewImpl final : public ITileView
   TileViewImpl(const IDocument* document, const ITilesetView* tileset_view, EntityID tile_id);
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> override;
+  auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
   auto get_parent_tileset() const -> const ITilesetView& override;

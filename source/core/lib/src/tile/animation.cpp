@@ -4,7 +4,6 @@
 
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/tile/tile.hpp"
 
@@ -38,13 +37,13 @@ void update_animations(Registry& registry)
 auto add_animation_frame(Registry& registry,
                          const EntityID tile_entity,
                          const std::size_t frame_index,
-                         const AnimationFrame& frame) -> std::expected<void, std::error_code>
+                         const AnimationFrame& frame) -> std::expected<void, ErrorCode>
 {
   TACTILE_ASSERT(is_tile(registry, tile_entity));
   const auto is_animated = registry.has<CAnimation>(tile_entity);
 
   if (!is_animated && frame_index != 0) {
-    return std::unexpected {make_error(GenericError::kInvalidParam)};
+    return std::unexpected {ErrorCode::kBadParam};
   }
 
   if (!is_animated) {
@@ -62,7 +61,7 @@ auto add_animation_frame(Registry& registry,
     animation.frames.insert(pos, frame);
   }
   else {
-    return std::unexpected {make_error(GenericError::kInvalidParam)};
+    return std::unexpected {ErrorCode::kBadParam};
   }
 
   _reset_animation(animation);
@@ -72,8 +71,7 @@ auto add_animation_frame(Registry& registry,
 
 auto remove_animation_frame(Registry& registry,
                             const EntityID tile_entity,
-                            const std::size_t frame_index)
-    -> std::expected<void, std::error_code>
+                            const std::size_t frame_index) -> std::expected<void, ErrorCode>
 {
   TACTILE_ASSERT(is_tile(registry, tile_entity));
   TACTILE_ASSERT(registry.has<CAnimation>(tile_entity));
@@ -81,7 +79,7 @@ auto remove_animation_frame(Registry& registry,
   auto& animation = registry.get<CAnimation>(tile_entity);
 
   if (frame_index >= animation.frames.size()) {
-    return std::unexpected {make_error(GenericError::kInvalidParam)};
+    return std::unexpected {ErrorCode::kBadParam};
   }
 
   const auto pos = animation.frames.begin() + saturate_cast<std::ptrdiff_t>(frame_index);

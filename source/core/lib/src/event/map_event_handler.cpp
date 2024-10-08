@@ -78,7 +78,7 @@ void MapEventHandler::on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
 
   const auto ir_map = save_format->load_map(*map_path, read_options);
   if (!ir_map.has_value()) {
-    TACTILE_LOG_ERROR("Could not load map: {}", ir_map.error().message());
+    TACTILE_LOG_ERROR("Could not load map: {}", to_string(ir_map.error()));
     return;
   }
 
@@ -87,7 +87,7 @@ void MapEventHandler::on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
   const auto document_uuid =
       document_manager.create_and_open_map(*mRuntime->get_renderer(), *ir_map);
   if (!document_uuid.has_value()) {
-    TACTILE_LOG_ERROR("Could not create map document: {}", document_uuid.error().message());
+    TACTILE_LOG_ERROR("Could not create map document: {}", to_string(document_uuid.error()));
     return;
   }
 
@@ -147,7 +147,7 @@ void MapEventHandler::on_export_as_godot_scene(const ExportAsGodotSceneEvent& ev
   const auto save_result = save_format->save_map(map_view, options);
 
   if (!save_result.has_value()) {
-    TACTILE_LOG_ERROR("Could not export Godot scene: {}", save_result.error().message());
+    TACTILE_LOG_ERROR("Could not export Godot scene: {}", to_string(save_result.error()));
   }
 }
 

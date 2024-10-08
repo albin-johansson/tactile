@@ -95,4 +95,4 @@ TEST(SaturateCast, SignedToUnsignedPromoting)
   EXPECT_EQ(saturate_cast<std::uint8_t>(kMaxI8<>), kMaxI8<std::uint8_t>);
 }
 
-}  // namespace tactile
+}  // namespace tactile::test

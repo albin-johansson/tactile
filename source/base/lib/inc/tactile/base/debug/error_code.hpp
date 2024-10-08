@@ -50,8 +50,8 @@ enum class ErrorCode : int
   /** An invalid image was detected. */
   kBadImage,
 
-  /** An invalid save file was detected. */
-  kBadSaveFile,
+  /** A file could not be parsed. */
+  kParseError,
 
   /** A compression operation failed. */
   kCouldNotCompress,
@@ -77,7 +77,7 @@ constexpr auto to_string(const ErrorCode errc) noexcept -> std::string_view
     case ErrorCode::kBadFileStream:      return "file stream error";
     case ErrorCode::kBadFileCopy:        return "file copy error";
     case ErrorCode::kBadImage:           return "invalid image";
-    case ErrorCode::kBadSaveFile:        return "invalid save file";
+    case ErrorCode::kParseError:         return "parse error";
     case ErrorCode::kCouldNotCompress:   return "could not compress";
     case ErrorCode::kCouldNotDecompress: return "could not decompress";
   }

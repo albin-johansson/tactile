@@ -94,8 +94,8 @@ template <ArithmeticType T, std::size_t N>
  * A vector with the smallest elements from the respective vectors.
  */
 template <ArithmeticType T, std::size_t N>
-[[nodiscard]] constexpr auto min(const Vec<T, N>& lhs,
-                                 const Vec<T, N>& rhs) noexcept -> Vec<T, N>
+[[nodiscard]] constexpr auto min(const Vec<T, N>& lhs, const Vec<T, N>& rhs) noexcept
+    -> Vec<T, N>
 {
   return apply2(lhs, rhs, [](const T a, const T b) { return std::min(a, b); });
 }
@@ -113,8 +113,8 @@ template <ArithmeticType T, std::size_t N>
  * A vector with the largest elements from the respective vectors.
  */
 template <ArithmeticType T, std::size_t N>
-[[nodiscard]] constexpr auto max(const Vec<T, N>& lhs,
-                                 const Vec<T, N>& rhs) noexcept -> Vec<T, N>
+[[nodiscard]] constexpr auto max(const Vec<T, N>& lhs, const Vec<T, N>& rhs) noexcept
+    -> Vec<T, N>
 {
   return apply2(lhs, rhs, [](const T a, const T b) { return std::max(a, b); });
 }

@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
-#include <vector>        // vector
+#include <expected>  // expected
+#include <vector>    // vector
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -69,8 +69,8 @@ auto make_tile(Registry& registry, TileIndex index) -> EntityID;
  * A tile entity identifier if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto make_tile(Registry& registry,
-               const ir::Tile& ir_tile) -> std::expected<EntityID, std::error_code>;
+auto make_tile(Registry& registry, const ir::Tile& ir_tile)
+    -> std::expected<EntityID, ErrorCode>;
 
 /**
  * Destroys a tile.

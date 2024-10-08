@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <filesystem>    // path
-#include <system_error>  // error_code
+#include <expected>    // expected
+#include <filesystem>  // path
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -34,8 +34,7 @@ class IDocument
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> = 0;
 
   /**
    * Updates the state of the document.

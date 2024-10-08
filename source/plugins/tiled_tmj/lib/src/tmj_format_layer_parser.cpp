@@ -20,17 +20,16 @@ namespace tactile {
 namespace tmj_format_layer_parser {
 
 [[nodiscard]]
-auto parse_type(const nlohmann::json& layer_json)
-    -> std::expected<LayerType, SaveFormatParseError>
+auto parse_type(const nlohmann::json& layer_json) -> std::expected<LayerType, ErrorCode>
 {
   const auto type_iter = layer_json.find("type");
   if (type_iter == layer_json.end()) {
-    return std::unexpected {SaveFormatParseError::kNoLayerType};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   const auto* type_name = type_iter->get_ptr<const std::string*>();
   if (type_name == nullptr) {
-    return std::unexpected {SaveFormatParseError::kBadLayerType};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (*type_name == "tilelayer") {
@@ -45,14 +44,14 @@ auto parse_type(const nlohmann::json& layer_json)
     return LayerType::kGroupLayer;
   }
 
-  return std::unexpected {SaveFormatParseError::kBadLayerType};
+  return std::unexpected {ErrorCode::kParseError};
 }
 
 [[nodiscard]]
 auto parse_base64_tile_data(const IRuntime& runtime,
                             const nlohmann::json& data_json,
                             const std::optional<CompressionFormat> compression,
-                            ir::Layer& layer) -> SaveFormatParseResult<void>
+                            ir::Layer& layer) -> std::expected<void, ErrorCode>
 {
   const auto& encoded_tile_data = data_json.get_ref<const std::string&>();
   auto decoded_bytes = base64::decode(encoded_tile_data);
@@ -60,15 +59,15 @@ auto parse_base64_tile_data(const IRuntime& runtime,
   if (compression.has_value()) {
     const auto* compression_format = runtime.get_compression_format(*compression);
     if (!compression_format) {
-      return std::unexpected {SaveFormatParseError::kNoSuchCompressionFormat};
+      return std::unexpected {ErrorCode::kParseError};
     }
 
     auto decompressed_bytes = compression_format->decompress(decoded_bytes);
     if (!decompressed_bytes.has_value()) {
       log(LogLevel::kError,
           "Could not decompress tile data: {}",
-          decompressed_bytes.error().message());
-      return std::unexpected {SaveFormatParseError::kBadTileLayerData};
+          to_string(decompressed_bytes.error()));
+      return std::unexpected {ErrorCode::kParseError};
     }
 
     decoded_bytes = std::move(*decompressed_bytes);
@@ -76,19 +75,19 @@ auto parse_base64_tile_data(const IRuntime& runtime,
 
   auto tile_matrix = parse_raw_tile_matrix(decoded_bytes, layer.extent, TileIdFormat::kTiled);
   if (!tile_matrix.has_value()) {
-    return std::unexpected {SaveFormatParseError::kBadTileLayerData};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   layer.tiles = std::move(*tile_matrix);
-  return kParseResultOK;
+  return {};
 }
 
 [[nodiscard]]
-auto parse_csv_tile_data(const nlohmann::json& data_json,
-                         ir::Layer& layer) -> SaveFormatParseResult<void>
+auto parse_csv_tile_data(const nlohmann::json& data_json, ir::Layer& layer)
+    -> std::expected<void, ErrorCode>
 {
   if (!data_json.is_array()) {
-    return std::unexpected {SaveFormatParseError::kBadTileLayerData};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   const auto tile_items = data_json.items();
@@ -100,7 +99,7 @@ auto parse_csv_tile_data(const nlohmann::json& data_json,
         "Bad tile layer tile count, expected {} but got {}",
         expected_tile_count,
         real_tile_count);
-    return std::unexpected {SaveFormatParseError::kBadTileLayerData};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   Index2D::value_type tile_index = 0;
@@ -111,26 +110,26 @@ auto parse_csv_tile_data(const nlohmann::json& data_json,
     ++tile_index;
   }
 
-  return kParseResultOK;
+  return {};
 }
 
 [[nodiscard]]
 auto parse_tile_layer(const IRuntime& runtime,
                       const nlohmann::json& layer_json,
-                      ir::Layer& layer) -> SaveFormatParseResult<void>
+                      ir::Layer& layer) -> std::expected<void, ErrorCode>
 {
   if (const auto width_iter = layer_json.find("width"); width_iter != layer_json.end()) {
     width_iter->get_to(layer.extent.cols);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTileLayerWidth};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto height_iter = layer_json.find("height"); height_iter != layer_json.end()) {
     height_iter->get_to(layer.extent.rows);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTileLayerHeight};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   std::string encoding {"csv"};
@@ -151,13 +150,13 @@ auto parse_tile_layer(const IRuntime& runtime,
     }
     else {
       log(LogLevel::kError, "Invalid tile compression format: {}", compression_name);
-      return std::unexpected {SaveFormatParseError::kNoSuchCompressionFormat};
+      return std::unexpected {ErrorCode::kParseError};
     }
   }
 
   const auto data_iter = layer_json.find("data");
   if (data_iter == layer_json.end()) {
-    return std::unexpected {SaveFormatParseError::kNoTileLayerData};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   layer.tiles = make_tile_matrix(layer.extent);
@@ -177,20 +176,20 @@ auto parse_tile_layer(const IRuntime& runtime,
   }
   else {
     log(LogLevel::kError, "Invalid tile layer encoding: {}", encoding);
-    return std::unexpected {SaveFormatParseError::kBadTileLayerEncoding};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
-  return kParseResultOK;
+  return {};
 }
 
 [[nodiscard]]
 auto parse_group_layer(const IRuntime& runtime,
                        const nlohmann::json& layer_json,
-                       ir::Layer& layer) -> SaveFormatParseResult<void>
+                       ir::Layer& layer) -> std::expected<void, ErrorCode>
 {
   const auto layers_iter = layer_json.find("layers");
   if (layers_iter == layer_json.end()) {
-    return std::unexpected {SaveFormatParseError::kNoGroupLayerData};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   layer.layers.reserve(layers_iter->size());
@@ -204,13 +203,13 @@ auto parse_group_layer(const IRuntime& runtime,
     }
   }
 
-  return kParseResultOK;
+  return {};
 }
 
 }  // namespace tmj_format_layer_parser
 
-auto parse_tiled_tmj_object_layer(const nlohmann::json& layer_json,
-                                  ir::Layer& layer) -> SaveFormatParseResult<void>
+auto parse_tiled_tmj_object_layer(const nlohmann::json& layer_json, ir::Layer& layer)
+    -> std::expected<void, ErrorCode>
 {
   const auto objects_iter = layer_json.find("objects");
 
@@ -227,11 +226,11 @@ auto parse_tiled_tmj_object_layer(const nlohmann::json& layer_json,
     }
   }
 
-  return kParseResultOK;
+  return {};
 }
 
 auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_json)
-    -> SaveFormatParseResult<ir::Layer>
+    -> std::expected<ir::Layer, ErrorCode>
 {
   ir::Layer layer {};
 
@@ -243,28 +242,28 @@ auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_
   }
 
   if (!layer_json.contains("name")) {
-    return std::unexpected {SaveFormatParseError::kNoLayerName};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto id_iter = layer_json.find("id"); id_iter != layer_json.end()) {
     id_iter->get_to(layer.id);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoLayerId};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto opacity_iter = layer_json.find("opacity"); opacity_iter != layer_json.end()) {
     opacity_iter->get_to(layer.opacity);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoLayerOpacity};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto visible_iter = layer_json.find("visible"); visible_iter != layer_json.end()) {
     visible_iter->get_to(layer.visible);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoLayerVisibility};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   const auto layer_type = tmj_format_layer_parser::parse_type(layer_json);

@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <memory>        // unique_ptr
-#include <system_error>  // error_code
+#include <expected>  // expected
+#include <memory>    // unique_ptr
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/document/document.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -36,7 +36,7 @@ class MapDocument final : public IDocument
    * A map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(const MapSpec& spec) -> std::expected<MapDocument, std::error_code>;
+  static auto make(const MapSpec& spec) -> std::expected<MapDocument, ErrorCode>;
 
   /**
    * Creates a map document from an intermediate representation.
@@ -48,14 +48,13 @@ class MapDocument final : public IDocument
    * A map document if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(IRenderer& renderer,
-                   const ir::Map& ir_map) -> std::expected<MapDocument, std::error_code>;
+  static auto make(IRenderer& renderer, const ir::Map& ir_map)
+      -> std::expected<MapDocument, ErrorCode>;
 
   ~MapDocument() noexcept override;
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> override;
+  auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> override;
 
   void update() override;
 

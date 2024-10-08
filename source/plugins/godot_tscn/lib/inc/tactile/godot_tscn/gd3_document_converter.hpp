@@ -27,22 +27,22 @@ class TACTILE_GODOT_API Gd3DocumentConverter final : public IDocumentVisitor
   void set_ellipse_polygon_vertices(std::size_t count);
 
   [[nodiscard]]
-  auto visit(const IComponentView& component) -> std::expected<void, std::error_code> override;
+  auto visit(const IComponentView& component) -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
-  auto visit(const IMapView& map) -> std::expected<void, std::error_code> override;
+  auto visit(const IMapView& map) -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
-  auto visit(const ILayerView& layer) -> std::expected<void, std::error_code> override;
+  auto visit(const ILayerView& layer) -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
-  auto visit(const IObjectView& object) -> std::expected<void, std::error_code> override;
+  auto visit(const IObjectView& object) -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
-  auto visit(const ITilesetView& tileset) -> std::expected<void, std::error_code> override;
+  auto visit(const ITilesetView& tileset) -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
-  auto visit(const ITileView& tile) -> std::expected<void, std::error_code> override;
+  auto visit(const ITileView& tile) -> std::expected<void, ErrorCode> override;
 
   /**
    * Returns the generated Godot 3 map.

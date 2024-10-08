@@ -96,7 +96,7 @@ auto get_hexagon_bounding_box(const Float2& center_pos,
  * The hexagon center point.
  */
 [[nodiscard]]
-auto get_hexagon_center(const Index2D& index,
-                        const HexagonInfo& hexagon_info) noexcept -> Float2;
+auto get_hexagon_center(const Index2D& index, const HexagonInfo& hexagon_info) noexcept
+    -> Float2;
 
 }  // namespace tactile::ui

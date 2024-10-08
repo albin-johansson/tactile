@@ -2,12 +2,11 @@
 
 #include "tactile/vulkan/vulkan_renderer.hpp"
 
-#include <algorithm>     // clamp
-#include <cstdint>       // uint32_t, uint64_t
-#include <limits>        // numeric_limits
-#include <system_error>  // make_error_code, errc
-#include <tuple>         // ignore
-#include <utility>       // move
+#include <algorithm>  // clamp
+#include <cstdint>    // uint32_t, uint64_t
+#include <limits>     // numeric_limits
+#include <tuple>      // ignore
+#include <utility>    // move
 
 #include <SDL_events.h>
 #include <SDL_vulkan.h>
@@ -189,7 +188,7 @@ void VulkanRenderer::end_frame()
 }
 
 auto VulkanRenderer::load_texture(const std::filesystem::path& image_path)
-    -> std::expected<TextureID, std::error_code>
+    -> std::expected<TextureID, ErrorCode>
 {
   auto texture = load_vulkan_texture(m_device.handle,
                                      m_graphics_queue,
@@ -200,7 +199,8 @@ auto VulkanRenderer::load_texture(const std::filesystem::path& image_path)
                                      m_options);
 
   if (!texture.has_value()) {
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    // TODO log error
+    return std::unexpected {ErrorCode::kBadImage};
   }
 
   const auto id = m_next_texture_id;

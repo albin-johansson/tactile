@@ -54,8 +54,8 @@ class TACTILE_RUNTIME_API PluginInstance final
    * A plugin instance if successful; an empty optional otherwise.
    */
   [[nodiscard]]
-  static auto load(IRuntime* runtime,
-                   std::string_view plugin_name) -> std::optional<PluginInstance>;
+  static auto load(IRuntime* runtime, std::string_view plugin_name)
+      -> std::optional<PluginInstance>;
 
  private:
   IRuntime* mRuntime;

@@ -36,8 +36,8 @@ auto get_queue_families(VkPhysicalDevice physical_device)
   return queue_families;
 }
 
-auto get_queue_family_indices(VkPhysicalDevice physical_device,
-                              VkSurfaceKHR surface) -> VulkanQueueFamilyIndices
+auto get_queue_family_indices(VkPhysicalDevice physical_device, VkSurfaceKHR surface)
+    -> VulkanQueueFamilyIndices
 {
   VulkanQueueFamilyIndices indices {};
 
@@ -78,8 +78,8 @@ auto to_unique(const VulkanQueueFamilyIndices& family_indices) -> std::vector<st
   return unique_indices;
 }
 
-auto get_surface_formats(VkPhysicalDevice physical_device,
-                         VkSurfaceKHR surface) -> std::vector<VkSurfaceFormatKHR>
+auto get_surface_formats(VkPhysicalDevice physical_device, VkSurfaceKHR surface)
+    -> std::vector<VkSurfaceFormatKHR>
 {
   std::uint32_t count {0};
   vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface, &count, nullptr);
@@ -92,8 +92,8 @@ auto get_surface_formats(VkPhysicalDevice physical_device,
   return formats;
 }
 
-auto get_present_modes(VkPhysicalDevice physical_device,
-                       VkSurfaceKHR surface) -> std::vector<VkPresentModeKHR>
+auto get_present_modes(VkPhysicalDevice physical_device, VkSurfaceKHR surface)
+    -> std::vector<VkPresentModeKHR>
 {
   std::uint32_t count {0};
   vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device, surface, &count, nullptr);
@@ -109,8 +109,8 @@ auto get_present_modes(VkPhysicalDevice physical_device,
   return present_modes;
 }
 
-auto select_physical_device(VkInstance instance,
-                            VkSurfaceKHR surface) -> std::expected<VkPhysicalDevice, VkResult>
+auto select_physical_device(VkInstance instance, VkSurfaceKHR surface)
+    -> std::expected<VkPhysicalDevice, VkResult>
 {
   auto physical_devices = get_physical_devices(instance);
 

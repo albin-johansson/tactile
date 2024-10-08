@@ -22,7 +22,7 @@ void NullRenderer::end_frame()
 {}
 
 auto NullRenderer::load_texture(const std::filesystem::path& image_path)
-    -> std::expected<TextureID, std::error_code>
+    -> std::expected<TextureID, ErrorCode>
 {
   auto texture = NullTexture::load(image_path);
 

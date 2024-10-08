@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <filesystem>    // path
-#include <system_error>  // error_code
+#include <expected>    // expected
+#include <filesystem>  // path
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer_options.hpp"
@@ -52,7 +52,7 @@ class IRenderer
    */
   [[nodiscard]]
   virtual auto load_texture(const std::filesystem::path& image_path)
-      -> std::expected<TextureID, std::error_code> = 0;
+      -> std::expected<TextureID, ErrorCode> = 0;
 
   /**
    * Unloads a previously loaded texture.

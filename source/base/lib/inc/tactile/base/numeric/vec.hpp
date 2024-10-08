@@ -30,7 +30,7 @@ class Vec final
   /**
    * The number of elements in the vector.
    */
-  static constexpr std::size_t kSize = N;
+  constexpr static std::size_t kSize = N;
 
   /**
    * Creates a zero vector.
@@ -422,27 +422,27 @@ template <typename VecType, ArithmeticType T, std::size_t N>
   }                                                                                          \
   static_assert(true)
 
-#define TACTILE_VEC_IMPL_SCALAR_OP(Op)                                                 \
-  template <ArithmeticType T, std::size_t N>                                           \
-  [[nodiscard]] constexpr auto operator Op(const Vec<T, N>& vec,                       \
-                                           const T scalar) noexcept -> Vec<T, N>       \
-  {                                                                                    \
-    return apply(vec, [=](const T value) -> T { return value Op scalar; });            \
-  }                                                                                    \
-                                                                                       \
-  template <ArithmeticType T, std::size_t N>                                           \
-  [[nodiscard]] constexpr auto operator Op(const T scalar,                             \
-                                           const Vec<T, N>& vec) noexcept -> Vec<T, N> \
-  {                                                                                    \
-    return vec * scalar;                                                               \
-  }                                                                                    \
-                                                                                       \
-  template <ArithmeticType T, std::size_t N>                                           \
-  constexpr auto operator Op##=(Vec<T, N>& vec, const T scalar) noexcept -> Vec<T, N>& \
-  {                                                                                    \
-    vec = vec Op scalar;                                                               \
-    return vec;                                                                        \
-  }                                                                                    \
+#define TACTILE_VEC_IMPL_SCALAR_OP(Op)                                                    \
+  template <ArithmeticType T, std::size_t N>                                              \
+  [[nodiscard]] constexpr auto operator Op(const Vec<T, N>& vec, const T scalar) noexcept \
+      -> Vec<T, N>                                                                        \
+  {                                                                                       \
+    return apply(vec, [=](const T value) -> T { return value Op scalar; });               \
+  }                                                                                       \
+                                                                                          \
+  template <ArithmeticType T, std::size_t N>                                              \
+  [[nodiscard]] constexpr auto operator Op(const T scalar, const Vec<T, N>& vec) noexcept \
+      -> Vec<T, N>                                                                        \
+  {                                                                                       \
+    return vec * scalar;                                                                  \
+  }                                                                                       \
+                                                                                          \
+  template <ArithmeticType T, std::size_t N>                                              \
+  constexpr auto operator Op##=(Vec<T, N>& vec, const T scalar) noexcept -> Vec<T, N>&    \
+  {                                                                                       \
+    vec = vec Op scalar;                                                                  \
+    return vec;                                                                           \
+  }                                                                                       \
   static_assert(true)
 
 TACTILE_VEC_IMPL_ARITHMETIC_OP(+);

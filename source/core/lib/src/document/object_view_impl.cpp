@@ -30,8 +30,7 @@ ObjectViewImpl::ObjectViewImpl(const IDocument* document,
     mMeta {document, object_id}
 {}
 
-auto ObjectViewImpl::accept(IDocumentVisitor& visitor) const
-    -> std::expected<void, std::error_code>
+auto ObjectViewImpl::accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode>
 {
   return visitor.visit(*this);
 }

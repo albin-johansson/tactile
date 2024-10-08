@@ -22,8 +22,7 @@ TilesetViewImpl::TilesetViewImpl(const MapDocument* document, const EntityID til
     mMeta {mDocument, mTilesetId}
 {}
 
-auto TilesetViewImpl::accept(IDocumentVisitor& visitor) const
-    -> std::expected<void, std::error_code>
+auto TilesetViewImpl::accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode>
 {
   if (const auto tileset_result = visitor.visit(*this); !tileset_result.has_value()) {
     return std::unexpected {tileset_result.error()};

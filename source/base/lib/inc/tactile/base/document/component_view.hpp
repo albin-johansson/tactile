@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include <cstddef>       // size_t
-#include <expected>      // expected
-#include <string>        // string
-#include <string_view>   // string_view
-#include <system_error>  // error_code
-#include <utility>       // pair
+#include <cstddef>      // size_t
+#include <expected>     // expected
+#include <string>       // string
+#include <string_view>  // string_view
+#include <utility>      // pair
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -33,8 +33,7 @@ class IComponentView
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> = 0;
 
   /**
    * Returns the name of the component.

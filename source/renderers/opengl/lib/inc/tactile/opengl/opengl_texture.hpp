@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>  // expected
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/texture.hpp"
 #include "tactile/opengl/api.hpp"
@@ -32,7 +32,7 @@ class TACTILE_OPENGL_API OpenGLTexture final : public ITexture
    */
   [[nodiscard]]
   static auto load(const std::filesystem::path& image_path, const RendererOptions& options)
-      -> std::expected<OpenGLTexture, std::error_code>;
+      -> std::expected<OpenGLTexture, ErrorCode>;
 
   OpenGLTexture() = delete;
 

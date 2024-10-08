@@ -2,10 +2,12 @@
 
 #pragma once
 
+#include <expected>  // expected
+
 #include <nlohmann/json.hpp>
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/io/save/ir.hpp"
-#include "tactile/base/io/save/save_format_parse_result.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/tiled_tmj/api.hpp"
 
@@ -27,7 +29,7 @@ class IRuntime;
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_object_layer(const nlohmann::json& layer_json,
                                                          ir::Layer& layer)
-    -> SaveFormatParseResult<void>;
+    -> std::expected<void, ErrorCode>;
 
 /**
  * Attempts to parse a single Tiled TMJ layer.
@@ -43,6 +45,6 @@ TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_object_layer(const nlohmann::json& l
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_layer(const IRuntime& runtime,
                                                   const nlohmann::json& layer_json)
-    -> SaveFormatParseResult<ir::Layer>;
+    -> std::expected<ir::Layer, ErrorCode>;
 
 }  // namespace tactile

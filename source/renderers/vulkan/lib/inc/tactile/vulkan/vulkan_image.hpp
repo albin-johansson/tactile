@@ -58,9 +58,8 @@ class TACTILE_VULKAN_API VulkanImage final
       -> VkResult;
 
   [[nodiscard]]
-  auto generate_mipmaps(VkDevice device,
-                        VkQueue queue,
-                        VkCommandPool command_pool) -> VkResult;
+  auto generate_mipmaps(VkDevice device, VkQueue queue, VkCommandPool command_pool)
+      -> VkResult;
 
  private:
   void _destroy() noexcept;

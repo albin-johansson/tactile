@@ -258,12 +258,12 @@ void Gd3DocumentConverter::set_ellipse_polygon_vertices(const std::size_t count)
   m_ellipse_polygon_vertices = count;
 }
 
-auto Gd3DocumentConverter::visit(const IComponentView&) -> std::expected<void, std::error_code>
+auto Gd3DocumentConverter::visit(const IComponentView&) -> std::expected<void, ErrorCode>
 {
   return {};
 }
 
-auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std::error_code>
+auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, ErrorCode>
 {
   m_map.resources.next_ext_resource_id = 1;
   m_map.resources.next_sub_resource_id = 1;
@@ -277,8 +277,7 @@ auto Gd3DocumentConverter::visit(const IMapView& map) -> std::expected<void, std
   return {};
 }
 
-auto Gd3DocumentConverter::visit(const ILayerView& layer)
-    -> std::expected<void, std::error_code>
+auto Gd3DocumentConverter::visit(const ILayerView& layer) -> std::expected<void, ErrorCode>
 {
   const auto* parent_layer = layer.get_parent_layer();
 
@@ -320,8 +319,7 @@ auto Gd3DocumentConverter::visit(const ILayerView& layer)
   return {};
 }
 
-auto Gd3DocumentConverter::visit(const IObjectView& object)
-    -> std::expected<void, std::error_code>
+auto Gd3DocumentConverter::visit(const IObjectView& object) -> std::expected<void, ErrorCode>
 {
   const auto* parent_layer = object.get_parent_layer();
   if (!parent_layer) {
@@ -332,7 +330,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
   auto* gd_parent_layer =
       _find_layer_at_global_index(m_map.layers, parent_layer->get_global_index());
   if (!gd_parent_layer) {
-    return std::unexpected {std::make_error_code(std::errc::invalid_argument)};
+    return std::unexpected {ErrorCode::kBadState};
   }
 
   auto object_name = std::format("Object {}", object.get_id());
@@ -384,8 +382,7 @@ auto Gd3DocumentConverter::visit(const IObjectView& object)
   return {};
 }
 
-auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
-    -> std::expected<void, std::error_code>
+auto Gd3DocumentConverter::visit(const ITilesetView& tileset) -> std::expected<void, ErrorCode>
 {
   const auto& source_image_path = tileset.get_image_path();
 
@@ -413,7 +410,7 @@ auto Gd3DocumentConverter::visit(const ITilesetView& tileset)
   return {};
 }
 
-auto Gd3DocumentConverter::visit(const ITileView& tile) -> std::expected<void, std::error_code>
+auto Gd3DocumentConverter::visit(const ITileView& tile) -> std::expected<void, ErrorCode>
 {
   if (tile.animation_frame_count() > 0) {
     const auto& tileset = tile.get_parent_tileset();

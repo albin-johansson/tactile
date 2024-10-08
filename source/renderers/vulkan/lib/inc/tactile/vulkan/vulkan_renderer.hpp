@@ -55,7 +55,7 @@ class TACTILE_VULKAN_API VulkanRenderer final : public IRenderer
 
   [[nodiscard]]
   auto load_texture(const std::filesystem::path& image_path)
-      -> std::expected<TextureID, std::error_code> override;
+      -> std::expected<TextureID, ErrorCode> override;
 
   void unload_texture(TextureID id) override;
 

@@ -19,8 +19,7 @@ MapViewImpl::MapViewImpl(const MapDocument* document)
     mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
 {}
 
-auto MapViewImpl::accept(IDocumentVisitor& visitor) const
-    -> std::expected<void, std::error_code>
+auto MapViewImpl::accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode>
 {
   const auto& registry = mDocument->get_registry();
 

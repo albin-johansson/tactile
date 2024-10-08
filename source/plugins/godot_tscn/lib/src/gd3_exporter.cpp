@@ -432,7 +432,8 @@ void _emit_resources(Gd3SceneWriter& writer, const Gd3Resources& resources)
 }
 
 [[nodiscard]]
-auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) -> Result<void>
+auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options)
+    -> std::expected<void, ErrorCode>
 {
   const auto path = options.base_dir / "map.tscn";
   log(LogLevel::kDebug, "Generating map scene '{}'", path.string());
@@ -470,12 +471,12 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options) ->
     _emit_layer(writer, layer, map.tileset.id, map.sprite_frames.id);
   }
 
-  return kOK;
+  return {};
 }
 
 [[nodiscard]]
 auto _save_tileset_images(const Gd3Tileset& tileset, const SaveFormatWriteOptions& options)
-    -> Result<void>
+    -> std::expected<void, ErrorCode>
 {
   for (const auto& tile_atlas : tileset.atlases) {
     const auto dest = options.base_dir / tile_atlas.image_path.filename();  // FIXME
@@ -496,13 +497,13 @@ auto _save_tileset_images(const Gd3Tileset& tileset, const SaveFormatWriteOption
     }
   }
 
-  return kOK;
+  return {};
 }
 
 }  // namespace
 
 auto save_godot3_scene(const Gd3Map& map, const SaveFormatWriteOptions& options)
-    -> Result<void>
+    -> std::expected<void, ErrorCode>
 {
   return _save_tileset_images(map.tileset, options).and_then([&] {
     return _emit_map_file(map, options);

@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "tactile/base/container/result.hpp"
+#include <expected>  // expected
+
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/godot_tscn/api.hpp"
 
@@ -22,6 +24,6 @@ struct Gd3Map;
 [[nodiscard]]
 TACTILE_GODOT_API auto save_godot3_scene(const Gd3Map& map,
                                          const SaveFormatWriteOptions& options)
-    -> Result<void>;
+    -> std::expected<void, ErrorCode>;
 
 }  // namespace tactile::godot_tscn

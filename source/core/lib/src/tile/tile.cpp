@@ -13,9 +13,8 @@ namespace tactile {
 namespace tile {
 
 [[nodiscard]]
-auto convert_animation(Registry& registry,
-                       const EntityID tile_id,
-                       const ir::Tile& ir_tile) -> std::expected<void, std::error_code>
+auto convert_animation(Registry& registry, const EntityID tile_id, const ir::Tile& ir_tile)
+    -> std::expected<void, ErrorCode>
 {
   std::size_t frame_index = 0;
 
@@ -52,8 +51,8 @@ auto make_tile(Registry& registry, const TileIndex index) -> EntityID
   return tile_entity;
 }
 
-auto make_tile(Registry& registry,
-               const ir::Tile& ir_tile) -> std::expected<EntityID, std::error_code>
+auto make_tile(Registry& registry, const ir::Tile& ir_tile)
+    -> std::expected<EntityID, ErrorCode>
 {
   const auto tile_id = make_tile(registry, ir_tile.index);
 

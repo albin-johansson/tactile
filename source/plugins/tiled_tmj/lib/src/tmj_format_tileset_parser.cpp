@@ -5,7 +5,7 @@
 #include <fstream>  // ifstream
 #include <utility>  // move
 
-#include "tactile/base/io/save/save_format_parse_result.hpp"
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/tiled_tmj/tmj_format_attribute_parser.hpp"
 #include "tactile/tiled_tmj/tmj_format_layer_parser.hpp"
@@ -15,7 +15,7 @@ namespace tmj_format_tileset_parser {
 
 [[nodiscard]]
 auto parse_animation_frame(const nlohmann::json& frame_json)
-    -> SaveFormatParseResult<ir::AnimationFrame>
+    -> std::expected<ir::AnimationFrame, ErrorCode>
 {
   ir::AnimationFrame frame {};
 
@@ -24,7 +24,7 @@ auto parse_animation_frame(const nlohmann::json& frame_json)
     frame_tile_iter->get_to(frame.tile_index);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoAnimationFrameTileIndex};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto duration_iter = frame_json.find("duration");
@@ -32,7 +32,7 @@ auto parse_animation_frame(const nlohmann::json& frame_json)
     frame.duration = Milliseconds {duration_iter->get<Milliseconds::rep>()};
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoAnimationFrameTileIndex};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   return frame;
@@ -40,7 +40,7 @@ auto parse_animation_frame(const nlohmann::json& frame_json)
 
 [[nodiscard]]
 auto parse_tile_animation(const nlohmann::json& animation_json)
-    -> SaveFormatParseResult<ir::TileAnimation>
+    -> std::expected<ir::TileAnimation, ErrorCode>
 {
   ir::TileAnimation animation {};
   animation.reserve(animation_json.size());
@@ -58,7 +58,7 @@ auto parse_tile_animation(const nlohmann::json& animation_json)
 }
 
 [[nodiscard]]
-auto parse_tile(const nlohmann::json& tile_json) -> SaveFormatParseResult<ir::Tile>
+auto parse_tile(const nlohmann::json& tile_json) -> std::expected<ir::Tile, ErrorCode>
 {
   ir::Tile tile {};
 
@@ -73,7 +73,7 @@ auto parse_tile(const nlohmann::json& tile_json) -> SaveFormatParseResult<ir::Ti
     index_iter->get_to(tile.index);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTileIndex};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto object_layer_iter = tile_json.find("objectgroup");
@@ -101,10 +101,10 @@ auto parse_tile(const nlohmann::json& tile_json) -> SaveFormatParseResult<ir::Ti
 }
 
 [[nodiscard]]
-auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<ir::Tileset>
+auto parse_tileset(const nlohmann::json& tileset_json) -> std::expected<ir::Tileset, ErrorCode>
 {
   if (!tileset_json.contains("name")) {
-    return std::unexpected {SaveFormatParseError::kNoTilesetName};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   ir::Tileset tileset {};
@@ -118,7 +118,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     tile_width_iter->get_to(tileset.tile_size[0]);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetTileWidth};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto tile_height_iter = tileset_json.find("tileheight");
@@ -126,7 +126,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     tile_height_iter->get_to(tileset.tile_size[1]);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetTileHeight};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto tile_count_iter = tileset_json.find("tilecount");
@@ -134,7 +134,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     tile_count_iter->get_to(tileset.tile_count);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetTileCount};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto columns_iter = tileset_json.find("columns");
@@ -142,7 +142,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     columns_iter->get_to(tileset.column_count);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetColumns};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto image_width_iter = tileset_json.find("imagewidth");
@@ -150,7 +150,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     image_width_iter->get_to(tileset.image_size[0]);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetImageWidth};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto image_height_iter = tileset_json.find("imageheight");
@@ -158,7 +158,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     image_height_iter->get_to(tileset.image_size[1]);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetImageHeight};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   std::string relative_image_path {};
@@ -167,7 +167,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
     image_path_iter->get_to(relative_image_path);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetImage};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   tileset.image_path = std::filesystem::path {relative_image_path};
@@ -192,7 +192,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> SaveFormatParseResult<
 
 auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
                              const SaveFormatReadOptions& options)
-    -> SaveFormatParseResult<ir::TilesetRef>
+    -> std::expected<ir::TilesetRef, ErrorCode>
 {
   ir::TilesetRef tileset_ref {};
 
@@ -201,7 +201,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
     first_gid_iter->get_to(tileset_ref.first_tile_id);
   }
   else {
-    return std::unexpected {SaveFormatParseError::kNoTilesetFirstTileId};
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto source_iter = tileset_json.find("source");

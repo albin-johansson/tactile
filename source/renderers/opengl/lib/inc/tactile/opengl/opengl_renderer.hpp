@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <memory>        // unique_ptr
-#include <system_error>  // error_code
+#include <expected>  // expected
+#include <memory>    // unique_ptr
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/opengl/api.hpp"
@@ -30,8 +30,8 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
    * An OpenGL renderer if successful; an error code otherwise.
    */
   [[nodiscard]]
-  static auto make(const RendererOptions& options,
-                   IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>;
+  static auto make(const RendererOptions& options, IWindow* window)
+      -> std::expected<OpenGLRenderer, ErrorCode>;
 
   OpenGLRenderer(OpenGLRenderer&& other) noexcept;
 
@@ -46,7 +46,7 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer
 
   [[nodiscard]]
   auto load_texture(const std::filesystem::path& image_path)
-      -> std::expected<TextureID, std::error_code> override;
+      -> std::expected<TextureID, ErrorCode> override;
 
   void unload_texture(TextureID id) override;
 

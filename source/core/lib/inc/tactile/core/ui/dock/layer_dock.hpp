@@ -38,7 +38,7 @@ class LayerDock final
  private:
   using NameBuffer = Buffer<char, 128>;
 
-  static constexpr const char* kNewLayerPopupId = "##NewLayerPopup";
+  constexpr static const char* kNewLayerPopupId = "##NewLayerPopup";
 
   void _push_side_button_group(const Registry& registry,
                                const CMap& map,

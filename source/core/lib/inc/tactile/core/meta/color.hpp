@@ -2,13 +2,11 @@
 
 #pragma once
 
-#include <array>         // array
-#include <cstdint>       // uint32_t
-#include <expected>      // expected
-#include <ostream>       // ostream
-#include <span>          // span
-#include <string>        // string
-#include <system_error>  // error_code
+#include <array>     // array
+#include <cstdint>   // uint32_t
+#include <ostream>   // ostream
+#include <span>      // span
+#include <string>    // string
 
 #include "tactile/base/meta/color.hpp"
 #include "tactile/base/prelude.hpp"

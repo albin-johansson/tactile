@@ -44,15 +44,15 @@ struct OpenGLRenderer::Data final  // NOLINT(*-member-init)
   TextureID next_texture_id;
 };
 
-auto OpenGLRenderer::make(const RendererOptions& options,
-                          IWindow* window) -> std::expected<OpenGLRenderer, std::error_code>
+auto OpenGLRenderer::make(const RendererOptions& options, IWindow* window)
+    -> std::expected<OpenGLRenderer, ErrorCode>
 {
   if (SDL_WasInit(SDL_INIT_VIDEO) != SDL_INIT_VIDEO) {
-    return std::unexpected {make_error(OpenGLError::kNotReady)};
+    return std::unexpected {ErrorCode::kBadState};
   }
 
   if (!window) {
-    return std::unexpected {make_error(OpenGLError::kInvalidParam)};
+    return std::unexpected {ErrorCode::kBadParam};
   }
 
   OpenGLRenderer renderer {};
@@ -64,31 +64,31 @@ auto OpenGLRenderer::make(const RendererOptions& options,
 
   data.gl_context.reset(SDL_GL_CreateContext(window->get_handle()));
   if (!data.gl_context) {
-    return std::unexpected {make_error(OpenGLError::kContextError)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
-    return std::unexpected {make_error(OpenGLError::kLoaderError)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   data.imgui_context = ImGui::CreateContext();
 
   if (!data.imgui_context) {
     log(LogLevel::kError, "Could not create ImGui context");
-    return std::unexpected {make_error(OpenGLError::kImGuiError)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   data.imgui_context_deleter =
       ScopeExit {[ctx = data.imgui_context] { ImGui::DestroyContext(ctx); }};
 
   if (!ImGui_ImplSDL2_InitForOpenGL(window->get_handle(), data.imgui_context)) {
-    return std::unexpected {make_error(OpenGLError::kImGuiError)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   data.imgui_backend_impl_deleter = ScopeExit {[] { ImGui_ImplSDL2_Shutdown(); }};
 
   if (!ImGui_ImplOpenGL3_Init("#version 410 core")) {
-    return std::unexpected {make_error(OpenGLError::kImGuiError)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   data.imgui_renderer_impl_deleter = ScopeExit {[] { ImGui_ImplOpenGL3_Shutdown(); }};
@@ -144,7 +144,7 @@ void OpenGLRenderer::end_frame()
 }
 
 auto OpenGLRenderer::load_texture(const std::filesystem::path& image_path)
-    -> std::expected<TextureID, std::error_code>
+    -> std::expected<TextureID, ErrorCode>
 {
   auto texture = OpenGLTexture::load(image_path, mData->options);
   if (!texture.has_value()) {

@@ -174,9 +174,8 @@ void set_layer_tile(Registry& registry,
  * A tile identifier if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-auto get_layer_tile(const Registry& registry,
-                    EntityID layer_id,
-                    const Index2D& index) -> std::optional<TileID>;
+auto get_layer_tile(const Registry& registry, EntityID layer_id, const Index2D& index)
+    -> std::optional<TileID>;
 
 /**
  * Visits each tile in a tile layer within a given region.

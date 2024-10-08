@@ -4,7 +4,6 @@
 
 #include <SDL2/SDL.h>
 
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/log/logger.hpp"
 
@@ -19,7 +18,7 @@ Window::Window(SDL_Window* window)
   : mWindow {require_not_null(window, "null window")}
 {}
 
-auto Window::create(const std::uint32_t extra_flags) -> std::expected<Window, std::error_code>
+auto Window::create(const std::uint32_t extra_flags) -> std::expected<Window, ErrorCode>
 {
   const std::uint32_t basic_flags =
       SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
@@ -33,7 +32,7 @@ auto Window::create(const std::uint32_t extra_flags) -> std::expected<Window, st
 
   if (!handle) {
     TACTILE_LOG_ERROR("Could not create window: {}", SDL_GetError());
-    return std::unexpected {make_error(GenericError::kInvalidState)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   return Window {handle};

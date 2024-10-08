@@ -141,7 +141,7 @@ TEST_F(TmjFormatMapParserTest, MapWithoutOrientation)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kNoMapOrientation);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_map
@@ -163,7 +163,7 @@ TEST_F(TmjFormatMapParserTest, MapWithUnsupportedOrientation)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kBadMapOrientation);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_map
@@ -184,7 +184,7 @@ TEST_F(TmjFormatMapParserTest, MapWithoutWidth)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kNoMapWidth);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_map
@@ -205,7 +205,7 @@ TEST_F(TmjFormatMapParserTest, MapWithoutHeight)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kNoMapHeight);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_map
@@ -226,7 +226,7 @@ TEST_F(TmjFormatMapParserTest, MapWithoutTileWidth)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kNoMapTileWidth);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_map
@@ -247,7 +247,7 @@ TEST_F(TmjFormatMapParserTest, MapWithoutTileHeight)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kNoMapTileHeight);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_map
@@ -268,7 +268,7 @@ TEST_F(TmjFormatMapParserTest, MapWithoutNextLayerId)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kNoMapNextLayerId);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_map
@@ -289,7 +289,7 @@ TEST_F(TmjFormatMapParserTest, MapWithoutNextObjectId)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), SaveFormatParseError::kNoMapNextObjectId);
+  EXPECT_EQ(map.error(), ErrorCode::kParseError);
 }
 
 }  // namespace tactile::test

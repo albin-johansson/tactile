@@ -154,7 +154,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutFirstTileId)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetFirstTileId);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -178,7 +178,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutName)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetName);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -202,7 +202,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutTileWidth)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetTileWidth);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -226,7 +226,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutTileHeight)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetTileHeight);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -250,7 +250,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutTileCount)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetTileCount);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -274,7 +274,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutColumns)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetColumns);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -298,7 +298,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutImageWidth)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetImageWidth);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -322,7 +322,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutImageHeight)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetImageHeight);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_tileset
@@ -346,7 +346,7 @@ TEST_F(TmjFormatTilesetParserTest, TilesetWithoutImage)
   const auto tileset = parse_tiled_tmj_tileset(tileset_json, mOptions);
   ASSERT_FALSE(tileset.has_value());
 
-  EXPECT_EQ(tileset.error(), SaveFormatParseError::kNoTilesetImage);
+  EXPECT_EQ(tileset.error(), ErrorCode::kParseError);
 }
 
 }  // namespace tactile::test

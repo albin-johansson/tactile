@@ -43,7 +43,7 @@ void TactileApp::on_startup()
     mLanguage.emplace(std::move(*language));
   }
   else {
-    TACTILE_LOG_ERROR("Could not parse language file: {}", language.error().message());
+    TACTILE_LOG_ERROR("Could not parse language file: {}", to_string(language.error()));
     throw Exception {"could not parse language file"};
   }
 

@@ -120,7 +120,7 @@ TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutName)
   const auto object = parse_tiled_tmj_object(object_json);
   ASSERT_FALSE(object.has_value());
 
-  EXPECT_EQ(object.error(), SaveFormatParseError::kNoObjectName);
+  EXPECT_EQ(object.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_object
@@ -138,7 +138,7 @@ TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutId)
   const auto object = parse_tiled_tmj_object(object_json);
   ASSERT_FALSE(object.has_value());
 
-  EXPECT_EQ(object.error(), SaveFormatParseError::kNoObjectId);
+  EXPECT_EQ(object.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_object
@@ -156,7 +156,7 @@ TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutX)
   const auto object = parse_tiled_tmj_object(object_json);
   ASSERT_FALSE(object.has_value());
 
-  EXPECT_EQ(object.error(), SaveFormatParseError::kNoObjectX);
+  EXPECT_EQ(object.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_object
@@ -174,7 +174,7 @@ TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutY)
   const auto object = parse_tiled_tmj_object(object_json);
   ASSERT_FALSE(object.has_value());
 
-  EXPECT_EQ(object.error(), SaveFormatParseError::kNoObjectY);
+  EXPECT_EQ(object.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_object
@@ -192,7 +192,7 @@ TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutWidth)
   const auto object = parse_tiled_tmj_object(object_json);
   ASSERT_FALSE(object.has_value());
 
-  EXPECT_EQ(object.error(), SaveFormatParseError::kNoObjectWidth);
+  EXPECT_EQ(object.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_object
@@ -210,7 +210,7 @@ TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutHeight)
   const auto object = parse_tiled_tmj_object(object_json);
   ASSERT_FALSE(object.has_value());
 
-  EXPECT_EQ(object.error(), SaveFormatParseError::kNoObjectHeight);
+  EXPECT_EQ(object.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_object
@@ -228,7 +228,7 @@ TEST_F(TmjFormatObjectParserTest, ParseObjectWithoutVisibility)
   const auto object = parse_tiled_tmj_object(object_json);
   ASSERT_FALSE(object.has_value());
 
-  EXPECT_EQ(object.error(), SaveFormatParseError::kNoObjectVisibility);
+  EXPECT_EQ(object.error(), ErrorCode::kParseError);
 }
 
 }  // namespace tactile::test

@@ -2,11 +2,12 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <filesystem>    // path
-#include <string>        // string
-#include <system_error>  // error_code
+#include <expected>    // expected
+#include <filesystem>  // path
+#include <optional>    // optional
+#include <string>      // string
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
@@ -20,7 +21,7 @@ namespace tactile {
  * Nothing if the function tried to open the directory; an error code otherwise.
  */
 auto open_directory_in_finder(const std::filesystem::path& dir)
-    -> std::expected<void, std::error_code>;
+    -> std::expected<void, ErrorCode>;
 
 /**
  * Returns the file path to the persistent storage directory associated with the
@@ -30,17 +31,16 @@ auto open_directory_in_finder(const std::filesystem::path& dir)
  * A directory path if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto get_persistent_storage_directory()
-    -> std::expected<std::filesystem::path, std::error_code>;
+auto get_persistent_storage_directory() -> std::expected<std::filesystem::path, ErrorCode>;
 
 /**
  * Returns the file path to the user home directory.
  *
  * \return
- * A directory path if successful; an error code otherwise.
+ * A directory path if successful; an empty optional otherwise.
  */
 [[nodiscard]]
-auto get_user_home_directory() -> std::expected<std::string, std::error_code>;
+auto get_user_home_directory() -> std::optional<std::string>;
 
 /**
  * Returns the path to the associated \c imgui.ini file.
@@ -92,6 +92,6 @@ auto has_prefix(const std::filesystem::path& path, std::string_view prefix) -> b
  */
 [[nodiscard]]
 auto strip_home_directory_prefix(const std::filesystem::path& path, std::string_view home_dir)
-    -> std::expected<std::string, std::error_code>;
+    -> std::expected<std::string, ErrorCode>;
 
 }  // namespace tactile

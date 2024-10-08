@@ -8,12 +8,11 @@
   #include <windows.h>
 #endif
 
-#include "tactile/core/debug/generic_error.hpp"
 #include "tactile/core/util/scope_guard.hpp"
 
 namespace tactile {
 
-auto get_env(const char* name) -> std::expected<std::string, std::error_code>
+auto get_env(const char* name) -> std::optional<std::string>
 {
   if (name) {
 #if TACTILE_OS_WINDOWS
@@ -31,7 +30,7 @@ auto get_env(const char* name) -> std::expected<std::string, std::error_code>
 #endif  // TACTILE_OS_WINDOWS
   }
 
-  return std::unexpected {make_error(GenericError::kInvalidParam)};
+  return std::nullopt;
 }
 
 }  // namespace tactile

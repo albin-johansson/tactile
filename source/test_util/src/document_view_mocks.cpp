@@ -38,7 +38,7 @@ ObjectViewMock::ObjectViewMock(ir::Object object,
 
   ON_CALL(*this, accept).WillByDefault([this](IDocumentVisitor& visitor) {
     EXPECT_TRUE(visitor.visit(*this).has_value());
-    return std::expected<void, std::error_code> {};
+    return std::expected<void, ErrorCode> {};
   });
 
   ON_CALL(*this, get_parent_layer).WillByDefault([this] {
@@ -79,7 +79,7 @@ TileViewMock::TileViewMock(const ITilesetView* parent_tileset, ir::Tile tile)
       EXPECT_TRUE(object_view.accept(visitor).has_value());
     }
 
-    return std::expected<void, std::error_code> {};
+    return std::expected<void, ErrorCode> {};
   });
   ON_CALL(*this, get_parent_tileset).WillByDefault(ReturnRef(*mParentTileset));
   ON_CALL(*this, get_index).WillByDefault(Return(mTile.index));
@@ -107,7 +107,7 @@ TilesetViewMock::TilesetViewMock(ir::TilesetRef tileset_ref)
       EXPECT_TRUE(tile_view.accept(visitor).has_value());
     }
 
-    return std::expected<void, std::error_code> {};
+    return std::expected<void, ErrorCode> {};
   });
 
   const auto& tileset = mTilesetRef.tileset;
@@ -148,7 +148,7 @@ LayerViewMock::LayerViewMock(ir::Layer layer,
       EXPECT_TRUE(subobject_view.accept(visitor).has_value());
     }
 
-    return std::expected<void, std::error_code> {};
+    return std::expected<void, ErrorCode> {};
   });
 
   ON_CALL(*this, get_parent_layer).WillByDefault(Return(mParentLayer));
@@ -217,7 +217,7 @@ MapViewMock::MapViewMock(const ir::Map& map)
 
     // TODO components
 
-    return std::expected<void, std::error_code> {};
+    return std::expected<void, ErrorCode> {};
   });
 
   ON_CALL(*this, get_tile_size).WillByDefault(Return(map.tile_size));

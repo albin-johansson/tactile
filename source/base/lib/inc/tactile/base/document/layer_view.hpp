@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <optional>      // optional
-#include <system_error>  // error_code
+#include <expected>  // expected
+#include <optional>  // optional
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/byte_stream.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
@@ -37,8 +37,7 @@ class ILayerView
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> = 0;
 
   virtual void write_tile_bytes(ByteStream& byte_stream) const = 0;
 

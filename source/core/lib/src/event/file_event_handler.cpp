@@ -66,7 +66,7 @@ void FileEventHandler::on_save(const SaveEvent& event)
 
   const auto save_result = save_format->save_map(map_view, options);
   if (!save_result.has_value()) {
-    TACTILE_LOG_ERROR("Could not save map: {}", save_result.error().message());
+    TACTILE_LOG_ERROR("Could not save map: {}", to_string(save_result.error()));
   }
 }
 

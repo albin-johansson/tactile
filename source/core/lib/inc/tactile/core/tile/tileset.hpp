@@ -4,10 +4,10 @@
 
 #include <expected>       // expected
 #include <optional>       // optional
-#include <system_error>   // error_code
 #include <unordered_map>  // unordered_map
 #include <vector>         // vector
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -141,8 +141,7 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID;
 [[nodiscard]]
 auto make_tileset(Registry& registry,
                   IRenderer& renderer,
-                  const ir::TilesetRef& ir_tileset_ref)
-    -> std::expected<EntityID, std::error_code>;
+                  const ir::TilesetRef& ir_tileset_ref) -> std::expected<EntityID, ErrorCode>;
 
 /**
  * Initializes a tileset "instance".
@@ -177,9 +176,8 @@ auto make_tileset(Registry& registry,
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto init_tileset_instance(Registry& registry,
-                           EntityID tileset_entity,
-                           TileID first_tile_id) -> std::expected<void, std::error_code>;
+auto init_tileset_instance(Registry& registry, EntityID tileset_entity, TileID first_tile_id)
+    -> std::expected<void, ErrorCode>;
 
 /**
  * Creates a tileset instance.
@@ -194,9 +192,8 @@ auto init_tileset_instance(Registry& registry,
  * \see \c make_tileset
  * \see \c init_tileset_instance
  */
-auto make_tileset_instance(Registry& registry,
-                           const TilesetSpec& spec,
-                           TileID first_tile_id) -> std::expected<EntityID, std::error_code>;
+auto make_tileset_instance(Registry& registry, const TilesetSpec& spec, TileID first_tile_id)
+    -> std::expected<EntityID, ErrorCode>;
 
 /**
  * Destroys a tileset and all of its associated tiles.

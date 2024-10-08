@@ -38,8 +38,7 @@ class ObjectViewImpl final : public IObjectView
   ObjectViewImpl(const IDocument* document, const ITileView* parent_tile, EntityID object_id);
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> override;
+  auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> override;
 
   [[nodiscard]]
   auto get_parent_layer() const -> const ILayerView* override;

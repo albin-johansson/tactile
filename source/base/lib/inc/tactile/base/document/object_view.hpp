@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <string_view>   // string_view
-#include <system_error>  // error_code
+#include <expected>     // expected
+#include <string_view>  // string_view
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -35,8 +35,7 @@ class IObjectView
    * Nothing if successful; an error code otherwise.
    */
   [[nodiscard]]
-  virtual auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> = 0;
 
   /**
    * Returns a view of the parent object layer, if any.

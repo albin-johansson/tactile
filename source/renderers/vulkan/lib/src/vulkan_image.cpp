@@ -193,9 +193,8 @@ auto VulkanImage::copy_buffer(VkDevice device,
   return record_and_submit_commands(device, queue, command_pool, work);
 }
 
-auto VulkanImage::generate_mipmaps(VkDevice device,
-                                   VkQueue queue,
-                                   VkCommandPool command_pool) -> VkResult
+auto VulkanImage::generate_mipmaps(VkDevice device, VkQueue queue, VkCommandPool command_pool)
+    -> VkResult
 {
   assert(params.mip_levels > 0);
 

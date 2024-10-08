@@ -49,8 +49,7 @@ void destroy_layer(Registry& registry, EntityID layer_id);
  * A layer entity identifier.
  */
 [[nodiscard]]
-auto copy_layer(Registry& registry,
-                EntityID source_layer_id,
-                LayerID& next_layer_id) -> EntityID;
+auto copy_layer(Registry& registry, EntityID source_layer_id, LayerID& next_layer_id)
+    -> EntityID;
 
 }  // namespace tactile

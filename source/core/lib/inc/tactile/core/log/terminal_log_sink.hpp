@@ -15,18 +15,18 @@ namespace tactile {
 class TerminalLogSink final : public ILogSink
 {
  public:
-  static constexpr std::string_view kAnsiColorReset = "\x1B[0m";
-  static constexpr std::string_view kAnsiColorBold = "\x1B[1m";
-  static constexpr std::string_view kAnsiColorFgBlack = "\x1B[30m";
-  static constexpr std::string_view kAnsiColorFgBlackBold = "\x1B[30m\x1B[1m";
-  static constexpr std::string_view kAnsiColorFgRed = "\x1B[31m";
-  static constexpr std::string_view kAnsiColorFgRedBold = "\x1B[31m\x1B[1m";
-  static constexpr std::string_view kAnsiColorFgGreen = "\x1B[32m";
-  static constexpr std::string_view kAnsiColorFgYellow = "\x1B[33m";
-  static constexpr std::string_view kAnsiColorFgBlue = "\x1B[34m";
-  static constexpr std::string_view kAnsiColorFgMagenta = "\x1B[35m";
-  static constexpr std::string_view kAnsiColorFgCyan = "\x1B[36m";
-  static constexpr std::string_view kAnsiColorFgWhite = "\x1B[37m";
+  constexpr static std::string_view kAnsiColorReset = "\x1B[0m";
+  constexpr static std::string_view kAnsiColorBold = "\x1B[1m";
+  constexpr static std::string_view kAnsiColorFgBlack = "\x1B[30m";
+  constexpr static std::string_view kAnsiColorFgBlackBold = "\x1B[30m\x1B[1m";
+  constexpr static std::string_view kAnsiColorFgRed = "\x1B[31m";
+  constexpr static std::string_view kAnsiColorFgRedBold = "\x1B[31m\x1B[1m";
+  constexpr static std::string_view kAnsiColorFgGreen = "\x1B[32m";
+  constexpr static std::string_view kAnsiColorFgYellow = "\x1B[33m";
+  constexpr static std::string_view kAnsiColorFgBlue = "\x1B[34m";
+  constexpr static std::string_view kAnsiColorFgMagenta = "\x1B[35m";
+  constexpr static std::string_view kAnsiColorFgCyan = "\x1B[36m";
+  constexpr static std::string_view kAnsiColorFgWhite = "\x1B[37m";
 
   void log(const LogMessage& msg) override;
 

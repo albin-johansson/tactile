@@ -18,7 +18,7 @@ namespace tactile {
 
 auto OpenGLTexture::load(const std::filesystem::path& image_path,
                          const RendererOptions& options)
-    -> std::expected<OpenGLTexture, std::error_code>
+    -> std::expected<OpenGLTexture, ErrorCode>
 {
   unsigned texture_id {};
 
@@ -34,7 +34,7 @@ auto OpenGLTexture::load(const std::filesystem::path& image_path,
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
   if (const auto err = glGetError(); err != GL_NONE) {
-    return std::unexpected {make_error(map_opengl_error_code(err))};
+    return std::unexpected {map_opengl_error_code(err)};
   }
 
   TextureSize texture_size {};
@@ -44,7 +44,7 @@ auto OpenGLTexture::load(const std::filesystem::path& image_path,
                                nullptr,
                                STBI_rgb_alpha);
   if (!pixel_data) {
-    return std::unexpected {make_error(OpenGLError::kBadImage)};
+    return std::unexpected {ErrorCode::kBadImage};
   }
 
   glTexImage2D(GL_TEXTURE_2D,
@@ -63,7 +63,7 @@ auto OpenGLTexture::load(const std::filesystem::path& image_path,
   }
 
   if (const auto err = glGetError(); err != GL_NONE) {
-    return std::unexpected {make_error(map_opengl_error_code(err))};
+    return std::unexpected {map_opengl_error_code(err)};
   }
 
   return OpenGLTexture {texture_id, texture_size, image_path};

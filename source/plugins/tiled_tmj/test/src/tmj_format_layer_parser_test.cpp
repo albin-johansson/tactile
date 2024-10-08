@@ -421,7 +421,7 @@ TEST_F(TmjFormatLayerParserTest, LayerWithoutId)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoLayerId);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -444,7 +444,7 @@ TEST_F(TmjFormatLayerParserTest, LayerWithoutName)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoLayerName);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -467,7 +467,7 @@ TEST_F(TmjFormatLayerParserTest, LayerWithoutOpacity)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoLayerOpacity);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -490,7 +490,7 @@ TEST_F(TmjFormatLayerParserTest, LayerWithoutVisibility)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoLayerVisibility);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -513,7 +513,7 @@ TEST_F(TmjFormatLayerParserTest, LayerWithoutType)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoLayerType);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -536,7 +536,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithoutWidth)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoTileLayerWidth);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -559,7 +559,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithoutHeight)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoTileLayerHeight);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -584,7 +584,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithBadEncoding)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kBadTileLayerEncoding);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -608,7 +608,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithTooFewTiles)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kBadTileLayerData);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -632,7 +632,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithTooManyTiles)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kBadTileLayerData);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -658,7 +658,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithInvalidCompressionFormat)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoSuchCompressionFormat);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 // tactile::parse_tiled_tmj_layer
@@ -686,7 +686,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithUnregisteredCompressionFormat)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), SaveFormatParseError::kNoSuchCompressionFormat);
+  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
 }
 
 }  // namespace tactile::test

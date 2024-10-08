@@ -27,7 +27,7 @@ using UniqueDStream = std::unique_ptr<ZSTD_DStream, DStreamDeleter>;
 }  // namespace zstd_compressor_impl
 
 auto ZstdCompressor::compress(const ByteSpan input_data) const
-    -> std::expected<ByteStream, std::error_code>
+    -> std::expected<ByteStream, ErrorCode>
 {
   const auto compression_bound = ZSTD_compressBound(input_data.size_bytes());
 
@@ -42,7 +42,7 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const
 
   if (ZSTD_isError(written_byte_count)) {
     log(LogLevel::kError, "Compression failed: {}", ZSTD_getErrorName(written_byte_count));
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    return std::unexpected {ErrorCode::kCouldNotCompress};
   }
 
   compressed_data.resize(written_byte_count);
@@ -52,12 +52,12 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const
 }
 
 auto ZstdCompressor::decompress(const ByteSpan input_data) const
-    -> std::expected<ByteStream, std::error_code>
+    -> std::expected<ByteStream, ErrorCode>
 {
   const zstd_compressor_impl::UniqueDStream stream {ZSTD_createDStream()};
   if (!stream) {
     log(LogLevel::kError, "Could not create stream");
-    return std::unexpected {std::make_error_code(std::errc::not_enough_memory)};
+    return std::unexpected {ErrorCode::kOutOfMemory};
   }
 
   const auto init_stream_result = ZSTD_initDStream(stream.get());
@@ -65,7 +65,7 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
     log(LogLevel::kError,
         "Could not initialize stream: {}",
         ZSTD_getErrorName(init_stream_result));
-    return std::unexpected {std::make_error_code(std::errc::io_error)};
+    return std::unexpected {ErrorCode::kBadInit};
   }
 
   const auto staging_buffer_size = ZSTD_DStreamOutSize();
@@ -101,7 +101,7 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
 
     if (ZSTD_isError(decompress_result)) {
       log(LogLevel::kError, "Decompression failed: {}", ZSTD_getErrorName(decompress_result));
-      return std::unexpected {std::make_error_code(std::errc::io_error)};
+      return std::unexpected {ErrorCode::kCouldNotDecompress};
     }
 
     byte_write_count += output_view.pos;

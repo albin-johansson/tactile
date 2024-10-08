@@ -2,9 +2,8 @@
 
 #include "tactile/tiled_tmj/tmj_format_layer_emitter.hpp"
 
-#include <cstddef>       // size_t
-#include <system_error>  // make_error_code, errc
-#include <utility>       // move
+#include <cstddef>  // size_t
+#include <utility>  // move
 
 #include <cppcodec/base64_default_rfc4648.hpp>
 
@@ -25,7 +24,7 @@ namespace tmj_format_layer_emitter {
 auto emit_tile_layer(const IRuntime& runtime,
                      const ILayerView& layer,
                      nlohmann::json& layer_json,
-                     ByteStream& tile_bytes) -> std::expected<void, std::error_code>
+                     ByteStream& tile_bytes) -> std::expected<void, ErrorCode>
 {
   const auto tile_encoding = layer.get_tile_encoding();
   const auto tile_compression = layer.get_tile_compression();
@@ -54,7 +53,7 @@ auto emit_tile_layer(const IRuntime& runtime,
       const auto* compression_format = runtime.get_compression_format(*tile_compression);
       if (!compression_format) {
         log(LogLevel::kError, "Could not find suitable compression format");
-        return std::unexpected {std::make_error_code(std::errc::not_supported)};
+        return std::unexpected {ErrorCode::kNotSupported};
       }
 
       auto compressed_tile_bytes = compression_format->compress(tile_bytes);
@@ -112,7 +111,7 @@ void emit_group_layer(const ILayerView& layer, nlohmann::json& layer_json)
 auto emit_tiled_tmj_layer(const IRuntime& runtime,
                           const ILayerView& layer,
                           ByteStream& tile_byte_stream)
-    -> std::expected<nlohmann::json, std::error_code>
+    -> std::expected<nlohmann::json, ErrorCode>
 {
   auto layer_json = nlohmann::json::object();
 

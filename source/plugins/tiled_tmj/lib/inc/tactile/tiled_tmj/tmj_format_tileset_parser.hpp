@@ -2,11 +2,13 @@
 
 #pragma once
 
+#include <expected>  // expected
+
 #include <nlohmann/json.hpp>
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/io/save/save_format.hpp"
-#include "tactile/base/io/save/save_format_parse_result.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/tiled_tmj/api.hpp"
 
@@ -26,6 +28,6 @@ namespace tactile {
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
                                                     const SaveFormatReadOptions& options)
-    -> SaveFormatParseResult<ir::TilesetRef>;
+    -> std::expected<ir::TilesetRef, ErrorCode>;
 
 }  // namespace tactile

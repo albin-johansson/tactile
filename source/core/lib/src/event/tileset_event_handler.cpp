@@ -47,7 +47,7 @@ void TilesetEventHandler::on_add_tileset(const AddTilesetEvent& event)
 
   const auto texture_id = mRenderer->load_texture(event.texture_path);
   if (!texture_id.has_value()) {
-    TACTILE_LOG_ERROR("Could not load tileset texture: {}", texture_id.error().message());
+    TACTILE_LOG_ERROR("Could not load tileset texture: {}", to_string(texture_id.error()));
     return;
   }
 

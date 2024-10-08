@@ -31,8 +31,7 @@ class LayerViewImpl final : public ILayerView
                 EntityID layer_id);
 
   [[nodiscard]]
-  auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> override;
+  auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> override;
 
   void write_tile_bytes(ByteStream& byte_stream) const override;
 

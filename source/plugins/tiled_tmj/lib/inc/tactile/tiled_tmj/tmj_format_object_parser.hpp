@@ -2,13 +2,12 @@
 
 #pragma once
 
-#include <expected>      // expected
-#include <system_error>  // error_code
+#include <expected>  // expected
 
 #include <nlohmann/json.hpp>
 
 #include "tactile/base/io/save/ir.hpp"
-#include "tactile/base/io/save/save_format_parse_error.hpp"
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/tiled_tmj/api.hpp"
 
@@ -26,6 +25,6 @@ namespace tactile {
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_tiled_tmj_object(const nlohmann::json& object_json)
-    -> std::expected<ir::Object, SaveFormatParseError>;
+    -> std::expected<ir::Object, ErrorCode>;
 
 }  // namespace tactile

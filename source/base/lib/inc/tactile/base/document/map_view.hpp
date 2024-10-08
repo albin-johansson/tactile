@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include <cstddef>       // size_t
-#include <expected>      // expected
-#include <filesystem>    // path
-#include <optional>      // optional
-#include <system_error>  // error_code
+#include <cstddef>     // size_t
+#include <expected>    // expected
+#include <filesystem>  // path
+#include <optional>    // optional
 
+#include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
@@ -36,8 +36,7 @@ class IMapView
    * \return
    * Nothing if successful; an error code otherwise.
    */
-  virtual auto accept(IDocumentVisitor& visitor) const
-      -> std::expected<void, std::error_code> = 0;
+  virtual auto accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode> = 0;
 
   /**
    * Returns the file path of the associated save file, if any.

@@ -243,9 +243,8 @@ void set_layer_tile(Registry& registry,
   }
 }
 
-auto get_layer_tile(const Registry& registry,
-                    const EntityID layer_id,
-                    const Index2D& index) -> std::optional<TileID>
+auto get_layer_tile(const Registry& registry, const EntityID layer_id, const Index2D& index)
+    -> std::optional<TileID>
 {
   TACTILE_ASSERT(is_tile_layer(registry, layer_id));
 

@@ -29,8 +29,7 @@ LayerViewImpl::LayerViewImpl(const MapDocument* document,
     mMeta {document, mLayerId}
 {}
 
-auto LayerViewImpl::accept(IDocumentVisitor& visitor) const
-    -> std::expected<void, std::error_code>
+auto LayerViewImpl::accept(IDocumentVisitor& visitor) const -> std::expected<void, ErrorCode>
 {
   const auto& registry = mDocument->get_registry();
 

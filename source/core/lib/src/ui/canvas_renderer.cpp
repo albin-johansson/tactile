@@ -22,8 +22,8 @@ using VisibleTileRegion = CanvasRenderer::VisibleTileRegion;
 using RenderBounds = CanvasRenderer::RenderBounds;
 
 [[nodiscard]]
-auto _get_visible_region(const Float2& viewport_pos,
-                         const Float2& window_size) -> VisibleRegion
+auto _get_visible_region(const Float2& viewport_pos, const Float2& window_size)
+    -> VisibleRegion
 {
   VisibleRegion region {};
 
@@ -34,8 +34,8 @@ auto _get_visible_region(const Float2& viewport_pos,
 }
 
 [[nodiscard]]
-auto _get_visible_tiles(const VisibleRegion& visible_region,
-                        const Float2& tile_size) -> VisibleTileRegion
+auto _get_visible_tiles(const VisibleRegion& visible_region, const Float2& tile_size)
+    -> VisibleTileRegion
 {
   VisibleTileRegion visible_tiles {};
 

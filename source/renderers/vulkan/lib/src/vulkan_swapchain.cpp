@@ -17,8 +17,8 @@ namespace tactile {
 namespace {
 
 [[nodiscard]]
-auto _pick_image_format(VkPhysicalDevice physical_device,
-                        VkSurfaceKHR surface) -> std::expected<VkSurfaceFormatKHR, VkResult>
+auto _pick_image_format(VkPhysicalDevice physical_device, VkSurfaceKHR surface)
+    -> std::expected<VkSurfaceFormatKHR, VkResult>
 {
   std::vector<VkSurfaceFormatKHR> surface_formats {};
 
