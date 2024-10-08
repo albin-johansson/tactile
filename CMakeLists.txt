@@ -112,7 +112,7 @@ if (TACTILE_BUILD_ZLIB_COMPRESSION)
 endif ()
 
 if (TACTILE_BUILD_ZSTD_COMPRESSION)
-  add_subdirectory("source/zstd_compression")
+  add_subdirectory("source/plugins/zstd")
 endif ()
 
 add_subdirectory("source/null_renderer")

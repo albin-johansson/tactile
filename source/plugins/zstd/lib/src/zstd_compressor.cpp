@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/zstd_compression/zstd_compressor.hpp"
+#include "tactile/zstd/zstd_compressor.hpp"
 
 #include <algorithm>  // copy_n
 #include <cstddef>    // size_t

@@ -1,4 +1,4 @@
-project(tactile-zstd-compression-test CXX)
+project(tactile-plugins-zstd-test CXX)
 
 add_executable(tactile-zstd-compression-test)
 

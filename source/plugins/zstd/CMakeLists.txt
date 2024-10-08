@@ -1,4 +1,4 @@
-project(tactile-zstd-compression CXX)
+project(tactile-plugins-zstd CXX)
 
 find_package(zstd CONFIG REQUIRED)
 

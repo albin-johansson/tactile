@@ -6,8 +6,8 @@
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/plugin.hpp"
-#include "tactile/zstd_compression/api.hpp"
-#include "tactile/zstd_compression/zstd_compressor.hpp"
+#include "tactile/zstd/api.hpp"
+#include "tactile/zstd/zstd_compressor.hpp"
 
 namespace tactile {
 

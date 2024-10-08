@@ -17,7 +17,7 @@
 #endif  // TACTILE_HAS_ZLIB_COMPRESSION
 
 #ifdef TACTILE_HAS_ZSTD_COMPRESSION
-  #include "tactile/zstd_compression/zstd_compression_plugin.hpp"
+  #include "tactile/zstd/zstd_compression_plugin.hpp"
 #endif  // TACTILE_HAS_ZSTD_COMPRESSION
 
 namespace tactile::test {
