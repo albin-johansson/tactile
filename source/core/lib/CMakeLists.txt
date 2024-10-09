@@ -258,7 +258,6 @@ target_sources(tactile-core
                "inc/tactile/core/ui/theme.hpp"
                "inc/tactile/core/ui/viewport.hpp"
                "inc/tactile/core/ui/widget_manager.hpp"
-               "inc/tactile/core/util/lookup.hpp"
                "inc/tactile/core/util/string_conv.hpp"
                "inc/tactile/core/util/string_ops.hpp"
                "inc/tactile/core/util/uuid.hpp"

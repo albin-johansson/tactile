@@ -4,6 +4,7 @@
 
 #include <utility>  // move
 
+#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/numeric/vec_format.hpp"
@@ -17,7 +18,6 @@
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "tactile/core/ui/viewport.hpp"
-#include "tactile/core/util/lookup.hpp"
 
 namespace tactile::core {
 namespace {

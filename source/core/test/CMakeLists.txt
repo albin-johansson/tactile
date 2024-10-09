@@ -54,7 +54,6 @@ target_sources(tactile-core-test
                "src/tile/tileset_test.cpp"
                "src/ui/imgui_compat_test.cpp"
                "src/ui/viewport_test.cpp"
-               "src/util/lookup_test.cpp"
                "src/util/string_conv_test.cpp"
                "src/util/string_ops_test.cpp"
                "src/util/uuid_test.cpp"

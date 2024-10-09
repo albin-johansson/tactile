@@ -5,6 +5,7 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 
+#include "tactile/base/container/lookup.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/property_events.hpp"
@@ -16,7 +17,6 @@
 #include "tactile/core/ui/common/style.hpp"
 #include "tactile/core/ui/common/widgets.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
-#include "tactile/core/util/lookup.hpp"
 
 namespace tactile::core::ui {
 

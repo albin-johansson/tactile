@@ -2,12 +2,11 @@
 
 #pragma once
 
-#include <optional>  // optional, nullopt
-#include <utility>   // move
+#include <optional>   // optional, nullopt
+#include <stdexcept>  // out_of_range
+#include <utility>    // move
 
-#include "tactile/core/debug/exception.hpp"
-
-namespace tactile::core {
+namespace tactile {
 
 /**
  * Heuristic concept that indicates whether a type is "map-like".
@@ -33,7 +32,7 @@ template <MapLikeType T>
 [[nodiscard]] constexpr auto find_in(T& map, const auto& key) -> typename T::mapped_type*
 {
   const auto iter = map.find(key);
-  return (iter != map.end()) ? &iter->second : nullptr;
+  return iter != map.end() ? &iter->second : nullptr;
 }
 
 /**
@@ -44,7 +43,7 @@ template <MapLikeType T>
     typename T::mapped_type*
 {
   const auto iter = map.find(key);
-  return (iter != map.end()) ? &iter->second : nullptr;
+  return iter != map.end() ? &iter->second : nullptr;
 }
 
 /**
@@ -67,7 +66,7 @@ template <MapLikeType T>
     return *elem;
   }
 
-  throw Exception {"bad key"};
+  throw std::out_of_range {"bad key"};
 }
 
 /**
@@ -81,7 +80,7 @@ template <MapLikeType T>
     return *elem;
   }
 
-  throw Exception {"bad key"};
+  throw std::out_of_range {"bad key"};
 }
 
 /**
@@ -140,4 +139,4 @@ template <MapLikeType T>
   return map.find(key) != map.end();
 }
 
-}  // namespace tactile::core
+}  // namespace tactile

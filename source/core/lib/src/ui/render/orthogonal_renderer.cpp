@@ -4,6 +4,7 @@
 
 #include <algorithm>  // min
 
+#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/meta/color.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -20,7 +21,6 @@
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/render/primitives.hpp"
-#include "tactile/core/util/lookup.hpp"
 
 namespace tactile::core::ui {
 namespace {

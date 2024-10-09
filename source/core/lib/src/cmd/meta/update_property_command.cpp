@@ -4,13 +4,13 @@
 
 #include <utility>  // move, exchange
 
+#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/document/document.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/meta/meta.hpp"
-#include "tactile/core/util/lookup.hpp"
 
 namespace tactile::core {
 

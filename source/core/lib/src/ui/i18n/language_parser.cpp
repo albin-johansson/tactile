@@ -7,11 +7,11 @@
 
 #include <magic_enum.hpp>
 
+#include "tactile/base/container/lookup.hpp"
 #include "tactile/core/debug/performance.hpp"
 #include "tactile/core/io/ini.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
-#include "tactile/core/util/lookup.hpp"
 
 namespace tactile::core::ui {
 inline namespace language_parser {

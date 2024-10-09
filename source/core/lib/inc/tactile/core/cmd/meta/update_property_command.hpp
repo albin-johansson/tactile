@@ -4,11 +4,11 @@
 
 #include <string>  // string
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/base/document/document.hpp"
 
 namespace tactile::core {
 
