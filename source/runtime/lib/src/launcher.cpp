@@ -47,7 +47,7 @@ auto _get_plugin_names(const CommandLineOptions& options) -> std::vector<std::st
   }
 
   if (options.load_godot_tscn_format) {
-    plugin_names.emplace_back("tactile-godot-tscn-format" TACTILE_DLL_EXT);
+    plugin_names.emplace_back("tactile-godot-tscn" TACTILE_DLL_EXT);
   }
 
   switch (options.renderer_backend) {
