@@ -8,7 +8,7 @@
   #include <windows.h>
 #endif
 
-#include "tactile/core/util/scope_guard.hpp"
+#include "tactile/base/util/scope_exit.hpp"
 
 namespace tactile::core {
 
@@ -20,7 +20,7 @@ auto get_env(const char* name) -> std::optional<std::string>
     ::_dupenv_s(&value, nullptr, name);
 
     if (value) {
-      const ScopeGuard value_deleter {[=] { std::free(value); }};
+      const ScopeExit value_deleter {[=] { std::free(value); }};
       return std::string {value};
     }
 #else

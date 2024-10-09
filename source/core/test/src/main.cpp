@@ -6,10 +6,10 @@
 #include <gtest/gtest.h>
 
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/base/util/scope_exit.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/terminal_log_sink.hpp"
 #include "tactile/core/platform/win32.hpp"
-#include "tactile/core/util/scope_guard.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {
@@ -23,8 +23,7 @@ auto main(int argc, char* argv[]) -> int
   logger.set_min_level(tactile::LogLevel::kTrace);
   logger.set_reference_instant(tactile::SteadyClock::now());
 
-  const tactile::core::ScopeGuard logger_guard {
-    [] { tactile::core::set_default_logger(nullptr); }};
+  const tactile::ScopeExit logger_guard {[] { tactile::core::set_default_logger(nullptr); }};
   set_default_logger(&logger);
 
   testing::InitGoogleTest(&argc, argv);
