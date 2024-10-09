@@ -4,9 +4,9 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
-/** \trace tactile::parse_attribute_type */
+/** \trace tactile::core::parse_attribute_type */
 TEST(AttributeType, ParseAttributeType)
 {
   EXPECT_EQ(parse_attribute_type("string"), AttributeType::kStr);
@@ -28,7 +28,7 @@ TEST(AttributeType, ParseAttributeType)
   EXPECT_FALSE(parse_attribute_type("int ").has_value());
 }
 
-/** \trace tactile::serialize [AttributeType] */
+/** \trace tactile::core::serialize [AttributeType] */
 TEST(AttributeType, Serialize)
 {
   EXPECT_EQ(serialize(AttributeType::kStr), "string");
@@ -46,4 +46,4 @@ TEST(AttributeType, Serialize)
   EXPECT_EQ(serialize(AttributeType::kObject), "object");
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

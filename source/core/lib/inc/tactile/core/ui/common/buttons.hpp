@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/common/icons.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Adds a button to the widget stack.
@@ -58,4 +58,4 @@ auto push_horizontally_centered_button(const char* label,
 [[nodiscard]]
 auto push_icon_button(Icon icon, const char* tooltip = nullptr, bool enabled = true) -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

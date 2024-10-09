@@ -19,7 +19,7 @@
 #include "tactile/core/platform/file_dialog.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MapEventHandler::MapEventHandler(Model* model,
                                  ui::WidgetManager* widget_manager,
@@ -171,4 +171,4 @@ auto MapEventHandler::_guess_save_format(const std::filesystem::path& path)
   return std::nullopt;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -2,14 +2,13 @@
 
 #pragma once
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/document/object_view.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/document/meta_view_impl.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * An object view implementation.
@@ -75,4 +74,4 @@ class ObjectViewImpl final : public IObjectView
   MetaViewImpl mMeta;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for opening the map document creation dialog.
@@ -52,4 +52,4 @@ struct ShowRenameLayerDialogEvent final
   EntityID layer_entity;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

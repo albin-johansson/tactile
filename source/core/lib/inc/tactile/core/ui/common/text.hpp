@@ -10,7 +10,7 @@
 #include "tactile/base/util/buffer.hpp"
 #include "tactile/base/util/format.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 template <std::size_t BufferSize, typename... Args>
 void push_formatted_text(const FormatString<Args...> fmt, const Args&... args)
@@ -23,4 +23,4 @@ void push_formatted_text(const FormatString<Args...> fmt, const Args&... args)
   ImGui::TextUnformatted(buffer.data());
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

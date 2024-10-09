@@ -11,7 +11,7 @@
 #include "tactile/core/platform/filesystem.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 DockSpace::DockSpace()
   : mImGuiIniPath {get_imgui_ini_file_path()}
@@ -66,4 +66,4 @@ void DockSpace::reset_layout(const Language& language)
   ImGui::DockBuilderFinish(root_node);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

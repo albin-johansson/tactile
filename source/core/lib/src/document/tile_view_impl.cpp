@@ -10,7 +10,7 @@
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 TileViewImpl::TileViewImpl(const IDocument* document,
                            const ITilesetView* tileset_view,
@@ -88,4 +88,4 @@ auto TileViewImpl::get_meta() const -> const IMetaView&
   return mMeta;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

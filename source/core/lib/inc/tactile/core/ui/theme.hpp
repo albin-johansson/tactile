@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Represents the available editor themes.
@@ -17,4 +17,4 @@ enum class Theme : std::uint8_t
   kDearImGuiDark
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

@@ -22,7 +22,7 @@
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void LayerDock::update(const Language& language,
                        const MapDocument& document,
@@ -195,4 +195,4 @@ void LayerDock::_push_new_layer_popup(const Language& language, EventDispatcher&
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

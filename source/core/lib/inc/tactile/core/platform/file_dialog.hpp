@@ -7,7 +7,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Utility for importing and saving files.
@@ -76,4 +76,4 @@ class FileDialog final
   static auto save_image() -> std::optional<std::filesystem::path>;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

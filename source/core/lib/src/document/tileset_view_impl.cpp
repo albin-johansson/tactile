@@ -14,7 +14,7 @@
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 TilesetViewImpl::TilesetViewImpl(const MapDocument* document, const EntityID tileset_id)
   : mDocument {require_not_null(document, "null document")},
@@ -115,4 +115,4 @@ auto TilesetViewImpl::get_filename() const -> std::string
   return get_image_path().stem().string();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

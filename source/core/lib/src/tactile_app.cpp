@@ -15,7 +15,7 @@
 #include "tactile/core/ui/common/style.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 TactileApp::TactileApp(IRuntime* runtime)
   : mRuntime {require_not_null(runtime, "null runtime")},
@@ -91,4 +91,4 @@ void TactileApp::on_framebuffer_scale_changed(const float framebuffer_scale)
   mEventDispatcher.push<ReloadFontsEvent>(framebuffer_scale);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

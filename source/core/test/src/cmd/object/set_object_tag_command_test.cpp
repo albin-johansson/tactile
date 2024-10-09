@@ -10,13 +10,13 @@
 #include "tactile/core/layer/object.hpp"
 #include "test/object_command_test.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class SetObjectTagCommandTest : public ObjectCommandTest
 {};
 
-// tactile::SetObjectTagCommand::redo
-// tactile::SetObjectTagCommand::undo
+// tactile::core::SetObjectTagCommand::redo
+// tactile::core::SetObjectTagCommand::undo
 TEST_F(SetObjectTagCommandTest, RedoUndo)
 {
   const std::string old_tag {"foo"};
@@ -40,7 +40,7 @@ TEST_F(SetObjectTagCommandTest, RedoUndo)
   EXPECT_EQ(object.tag, new_tag);
 }
 
-// tactile::SetObjectTagCommand::merge_with
+// tactile::core::SetObjectTagCommand::merge_with
 TEST_F(SetObjectTagCommandTest, MergeWith)
 {
   const std::string tag0 {"0"};
@@ -68,4 +68,4 @@ TEST_F(SetObjectTagCommandTest, MergeWith)
   EXPECT_EQ(object.tag, tag0);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

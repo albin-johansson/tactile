@@ -8,13 +8,13 @@
 #include "tactile/core/layer/object.hpp"
 #include "test/object_command_test.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class SetObjectVisibilityCommandTest : public ObjectCommandTest
 {};
 
-// tactile::SetObjectVisibilityCommand::redo
-// tactile::SetObjectVisibilityCommand::undo
+// tactile::core::SetObjectVisibilityCommand::redo
+// tactile::core::SetObjectVisibilityCommand::undo
 TEST_F(SetObjectVisibilityCommandTest, RedoUndo)
 {
   const auto object_id = make_test_object();
@@ -38,4 +38,4 @@ TEST_F(SetObjectVisibilityCommandTest, RedoUndo)
   EXPECT_EQ(object.is_visible, new_visibility);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

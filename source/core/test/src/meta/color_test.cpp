@@ -8,7 +8,7 @@
 
 #include "tactile/base/io/color_parser.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace color_test {
 
 inline constexpr UColor kLimeGreen {0x32, 0xCD, 0x32, 0xFF};
@@ -17,7 +17,7 @@ inline constexpr UColor kHotPink {0xFF, 0x69, 0xB4, 0xFF};
 
 }  // namespace color_test
 
-// tactile::make_color
+// tactile::core::make_color
 TEST(UColor, MakeColor)
 {
   const std::array<float, 4> values {1.0f, 0.0f, 0.2f, 0.4f};
@@ -29,7 +29,7 @@ TEST(UColor, MakeColor)
   EXPECT_EQ(color.alpha, 0x66);
 }
 
-// tactile::to_string_rgb
+// tactile::core::to_string_rgb
 TEST(UColor, ToStringRGB)
 {
   EXPECT_EQ(to_string_rgb(kColorBlack), "#000000");
@@ -42,7 +42,7 @@ TEST(UColor, ToStringRGB)
   EXPECT_EQ(to_string_rgb(UColor {0xAB, 0xCD, 0xEF, 0x42}), "#ABCDEF");
 }
 
-// tactile::to_string_rgba
+// tactile::core::to_string_rgba
 TEST(UColor, ToStringRGBA)
 {
   EXPECT_EQ(to_string_rgba(kColorBlack), "#000000FF");
@@ -55,7 +55,7 @@ TEST(UColor, ToStringRGBA)
   EXPECT_EQ(to_string_rgba(UColor {0xAB, 0xCD, 0xEF, 0x42}), "#ABCDEF42");
 }
 
-// tactile::to_string_argb
+// tactile::core::to_string_argb
 TEST(UColor, ToStringARGB)
 {
   EXPECT_EQ(to_string_argb(kColorBlack), "#FF000000");
@@ -68,7 +68,7 @@ TEST(UColor, ToStringARGB)
   EXPECT_EQ(to_string_argb(UColor {0xAB, 0xCD, 0xEF, 0x42}), "#42ABCDEF");
 }
 
-// tactile::to_uint32_abgr [UColor]
+// tactile::core::to_uint32_abgr [UColor]
 TEST(UColor, ToUInt32ABGR)
 {
   EXPECT_EQ(to_uint32_abgr(kColorBlack), std::uint32_t {0xFF000000});
@@ -78,7 +78,7 @@ TEST(UColor, ToUInt32ABGR)
   EXPECT_EQ(to_uint32_abgr(color_test::kHotPink), std::uint32_t {0xFFB469FF});
 }
 
-// tactile::normalize [UColor]
+// tactile::core::normalize [UColor]
 TEST(UColor, Normalized)
 {
   const UColor color {0xFF, 0x00, 0x33, 0x66};
@@ -90,7 +90,7 @@ TEST(UColor, Normalized)
   EXPECT_FLOAT_EQ(normalized_color.alpha, 0.4f);
 }
 
-// tactile::get_luminance [UColor]
+// tactile::core::get_luminance [UColor]
 TEST(Color, GetLuminance)
 {
   // Based on https://planetcalc.com/7778/
@@ -101,7 +101,7 @@ TEST(Color, GetLuminance)
   EXPECT_FLOAT_EQ(get_luminance(color_test::kHotPink), 0.3465843f);
 }
 
-// tactile::is_dark [UColor]
+// tactile::core::is_dark [UColor]
 TEST(Color, IsDark)
 {
   EXPECT_TRUE(is_dark(kColorBlack));
@@ -112,25 +112,25 @@ TEST(Color, IsDark)
   EXPECT_FALSE(is_dark(color_test::kHotPink));
 }
 
-// tactile::parse_color_rgb
-// tactile::to_string_rgb
+// tactile::core::parse_color_rgb
+// tactile::core::to_string_rgb
 TEST(Color, RoundTripConversionRGB)
 {
   EXPECT_EQ(parse_color_rgb(to_string_rgb(color_test::kHotPink)), color_test::kHotPink);
 }
 
-// tactile::parse_color_rgba
-// tactile::to_string_rgba
+// tactile::core::parse_color_rgba
+// tactile::core::to_string_rgba
 TEST(Color, RoundTripConversionRGBA)
 {
   EXPECT_EQ(parse_color_rgba(to_string_rgba(color_test::kDarkBlue)), color_test::kDarkBlue);
 }
 
-// tactile::parse_color_argb
-// tactile::to_string_argb
+// tactile::core::parse_color_argb
+// tactile::core::to_string_argb
 TEST(Color, RoundTripConversionARGB)
 {
   EXPECT_EQ(parse_color_argb(to_string_argb(color_test::kLimeGreen)), color_test::kLimeGreen);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -38,14 +38,14 @@ void _imgui_free(void* memory, void*)
 }
 
 [[nodiscard]]
-auto _make_logger(const LogLevel log_level) -> Logger
+auto _make_logger(const LogLevel log_level) -> core::Logger
 {
-  win32_enable_virtual_terminal_processing();
+  core::win32_enable_virtual_terminal_processing();
 
-  auto terminal_sink = std::make_unique<TerminalLogSink>();
+  auto terminal_sink = std::make_unique<core::TerminalLogSink>();
   terminal_sink->use_ansi_colors(true);
 
-  Logger logger {};
+  core::Logger logger {};
 
   logger.set_reference_instant(SteadyClock::now());
   logger.set_min_level(log_level);
@@ -77,7 +77,7 @@ struct Runtime::Data final
   RendererOptions renderer_options;
   ProtobufContext protobuf_context;
   SDLContext sdl_context;
-  Logger logger;
+  core::Logger logger;
   std::optional<Window> window {};
   IRenderer* renderer {};
   std::unordered_map<CompressionFormat, ICompressor*> compression_formats {};
@@ -87,7 +87,7 @@ struct Runtime::Data final
     : renderer_options {options.renderer_options},
       logger {_make_logger(options.log_level)}
   {
-    set_default_logger(&logger);
+    core::set_default_logger(&logger);
     _log_command_line_options(options);
     TACTILE_LOG_DEBUG("Tactile " TACTILE_VERSION_STRING);
   }
@@ -95,7 +95,7 @@ struct Runtime::Data final
   ~Data() noexcept
   {
     TACTILE_LOG_TRACE("Destroying runtime data");
-    set_default_logger(nullptr);
+    core::set_default_logger(nullptr);
   }
 
   TACTILE_DELETE_COPY(Data);
@@ -104,10 +104,10 @@ struct Runtime::Data final
 
 Runtime::Runtime(const CommandLineOptions& options)
 {
-  std::set_terminate(&on_terminate);
+  std::set_terminate(&core::on_terminate);
   mData = std::make_unique<Data>(options);
 
-  init_random_number_generator();
+  core::init_random_number_generator();
 }
 
 Runtime::~Runtime() noexcept = default;
@@ -115,7 +115,7 @@ Runtime::~Runtime() noexcept = default;
 void Runtime::init_window(const std::uint32_t flags)
 {
   if (auto window = Window::create(flags)) {
-    win32_use_immersive_dark_mode(window->get_handle());
+    core::win32_use_immersive_dark_mode(window->get_handle());
     mData->window = std::move(*window);
   }
 }

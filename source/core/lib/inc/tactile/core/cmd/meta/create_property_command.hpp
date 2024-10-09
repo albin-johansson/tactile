@@ -5,15 +5,14 @@
 #include <optional>
 #include <string>
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/util/uuid.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A command for creating properties and adding them to meta contexts.
@@ -47,4 +46,4 @@ class CreatePropertyCommand final : public ICommand
   Attribute m_value;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

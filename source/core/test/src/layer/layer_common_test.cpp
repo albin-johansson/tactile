@@ -11,14 +11,14 @@
 #include "tactile/core/test/ir_comparison.hpp"
 #include "tactile/test_util/ir_presets.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
-// tactile::make_layer [Registry&, const ir::Layer&]
+// tactile::core::make_layer [Registry&, const ir::Layer&]
 TEST(LayerCommon, MakeLayerWithTileLayerIR)
 {
   Registry registry {};
 
-  const auto ir_layer = make_complex_ir_tile_layer(LayerID {11});
+  const auto ir_layer = test::make_complex_ir_tile_layer(LayerID {11});
 
   const auto layer_id = make_layer(registry, ir_layer);
   ASSERT_TRUE(is_tile_layer(registry, layer_id));
@@ -26,13 +26,13 @@ TEST(LayerCommon, MakeLayerWithTileLayerIR)
   compare_layer(registry, layer_id, ir_layer);
 }
 
-// tactile::make_layer [Registry&, const ir::Layer&]
+// tactile::core::make_layer [Registry&, const ir::Layer&]
 TEST(LayerCommon, MakeLayerWithObjectLayerIR)
 {
   Registry registry {};
 
   ObjectID next_object_id {3};
-  const auto ir_layer = make_complex_ir_object_layer(LayerID {42}, next_object_id);
+  const auto ir_layer = test::make_complex_ir_object_layer(LayerID {42}, next_object_id);
 
   const auto layer_id = make_layer(registry, ir_layer);
   ASSERT_TRUE(is_object_layer(registry, layer_id));
@@ -40,14 +40,14 @@ TEST(LayerCommon, MakeLayerWithObjectLayerIR)
   compare_layer(registry, layer_id, ir_layer);
 }
 
-// tactile::make_layer [Registry&, const ir::Layer&]
+// tactile::core::make_layer [Registry&, const ir::Layer&]
 TEST(LayerCommon, MakeLayerWithGroupLayerIR)
 {
   Registry registry {};
 
   LayerID next_layer_id {19};
   ObjectID next_object_id {43};
-  const auto ir_layer = make_complex_ir_group_layer(next_layer_id, next_object_id);
+  const auto ir_layer = test::make_complex_ir_group_layer(next_layer_id, next_object_id);
 
   const auto layer_id = make_layer(registry, ir_layer);
   ASSERT_TRUE(is_group_layer(registry, layer_id));
@@ -55,4 +55,4 @@ TEST(LayerCommon, MakeLayerWithGroupLayerIR)
   compare_layer(registry, layer_id, ir_layer);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

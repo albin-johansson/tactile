@@ -4,9 +4,9 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
-/// \trace tactile::is_valid [MapSpec]
+/// \trace tactile::core::is_valid [MapSpec]
 TEST(MapSpec, IsValid)
 {
   const auto orthogonal = TileOrientation::kOrthogonal;
@@ -29,4 +29,4 @@ TEST(MapSpec, IsValid)
   EXPECT_TRUE(is_valid(good_hexagonal));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

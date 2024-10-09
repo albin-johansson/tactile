@@ -13,7 +13,7 @@
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID
 {
@@ -147,4 +147,4 @@ auto copy_layer(Registry& registry, const EntityID source_layer_id, LayerID& nex
   return new_layer_id;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

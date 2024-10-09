@@ -9,12 +9,11 @@
 
 #include "tactile/base/numeric/vec_common.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/meta/color.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/render/primitives.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 namespace {
 
 using VisibleRegion = CanvasRenderer::VisibleRegion;
@@ -216,4 +215,4 @@ auto CanvasRenderer::get_draw_list() noexcept -> ImDrawList&
   return *draw_list;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

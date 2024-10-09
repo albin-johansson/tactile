@@ -8,7 +8,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for opening the dialog for creating a new property.
@@ -88,4 +88,4 @@ struct RenamePropertyEvent final
   std::string new_name;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

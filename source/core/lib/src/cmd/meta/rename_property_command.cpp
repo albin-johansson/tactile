@@ -13,7 +13,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RenamePropertyCommand::RenamePropertyCommand(IDocument* document,
                                              const EntityID context_id,
@@ -68,4 +68,4 @@ void RenamePropertyCommand::_rename_property(const std::string_view from, std::s
   meta.properties.insert_or_assign(std::move(to), std::move(property));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

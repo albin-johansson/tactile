@@ -11,7 +11,7 @@
 #include "tactile/core/ui/i18n/language_id.hpp"
 #include "tactile/core/ui/i18n/string_id.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Represents a set of translated user-facing strings.
@@ -68,4 +68,4 @@ class Language final
   Language(LanguageID id, std::vector<std::string> strings);
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

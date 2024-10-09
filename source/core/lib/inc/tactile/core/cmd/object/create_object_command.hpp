@@ -8,7 +8,7 @@
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -51,4 +51,4 @@ class CreateObjectCommand final : public ICommand
   bool m_object_was_added;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

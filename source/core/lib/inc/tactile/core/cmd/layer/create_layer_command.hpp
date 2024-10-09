@@ -7,7 +7,7 @@
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -39,4 +39,4 @@ class CreateLayerCommand final : public ICommand
   bool m_layer_was_added;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

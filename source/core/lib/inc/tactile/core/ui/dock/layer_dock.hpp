@@ -6,7 +6,7 @@
 #include "tactile/base/util/buffer.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 class EventDispatcher;
@@ -63,4 +63,4 @@ class LayerDock final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

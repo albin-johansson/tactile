@@ -10,7 +10,7 @@
 #include "tactile/core/layer/object_layer.hpp"
 #include "test/object_command_test.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class RemoveObjectCommandTest : public ObjectCommandTest
 {
@@ -25,8 +25,8 @@ class RemoveObjectCommandTest : public ObjectCommandTest
   EntityID m_object_id {kInvalidEntity};
 };
 
-// tactile::RemoveObjectCommand::redo
-// tactile::RemoveObjectCommand::undo
+// tactile::core::RemoveObjectCommand::redo
+// tactile::core::RemoveObjectCommand::undo
 TEST_F(RemoveObjectCommandTest, RedoUndo)
 {
   using testing::Contains;
@@ -55,7 +55,7 @@ TEST_F(RemoveObjectCommandTest, RedoUndo)
   EXPECT_THAT(object_layer.objects, Not(Contains(m_object_id)));
 }
 
-// tactile::RemoveObjectCommand::dispose
+// tactile::core::RemoveObjectCommand::dispose
 TEST_F(RemoveObjectCommandTest, Dispose)
 {
   const auto& registry = m_document->get_registry();
@@ -77,4 +77,4 @@ TEST_F(RemoveObjectCommandTest, Dispose)
   EXPECT_FALSE(is_object(registry, m_object_id));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

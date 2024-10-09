@@ -10,7 +10,7 @@
 #include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Parses an attribute type from a string.
@@ -48,4 +48,4 @@ auto serialize(AttributeType type) -> std::string_view;
  */
 auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -12,7 +12,7 @@
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void DebugMenu::push(const Model& model)
 {
@@ -63,4 +63,4 @@ void DebugMenu::push(const Model& model)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

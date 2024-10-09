@@ -7,7 +7,7 @@
 #include "tactile/core/document/meta_view_impl.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -61,4 +61,4 @@ class TilesetViewImpl final : public ITilesetView
   MetaViewImpl mMeta;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

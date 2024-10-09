@@ -15,7 +15,7 @@
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct MapDocument::Data final
 {
@@ -156,4 +156,4 @@ auto MapDocument::get_uuid() const -> const UUID&
   return mData->uuid;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

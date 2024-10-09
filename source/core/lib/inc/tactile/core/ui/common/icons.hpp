@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Represents the different icons used in the UI.
@@ -95,4 +95,4 @@ auto to_string(Icon icon) noexcept -> const char*;
 [[nodiscard]]
 auto to_prefix_string(Icon icon) noexcept -> const char*;
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

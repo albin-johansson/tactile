@@ -24,7 +24,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 namespace {
 
 void _push_tileset_overlay(const Registry& registry,
@@ -148,4 +148,4 @@ void TilesetDock::push(const Language& language,
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

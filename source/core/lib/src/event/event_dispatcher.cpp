@@ -2,11 +2,11 @@
 
 #include "tactile/core/event/event_dispatcher.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void EventDispatcher::update()
 {
   mDispatcher.update();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

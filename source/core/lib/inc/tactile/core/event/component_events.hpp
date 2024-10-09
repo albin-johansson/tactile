@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for opening the component editor dialog.
@@ -22,4 +22,4 @@ struct CreateComponentEvent final
   std::string name;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

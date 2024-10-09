@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void MenuBar::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -21,4 +21,4 @@ void MenuBar::push(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

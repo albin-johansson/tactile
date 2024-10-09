@@ -4,16 +4,15 @@
 
 #include <vector>  // vector
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/document/tile_view.hpp"
+#include "tactile/base/document/tileset_view.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/document/meta_view_impl.hpp"
 #include "tactile/core/document/object_view_impl.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
-class ITilesetView;
+namespace tactile::core {
 
 /**
  * A tile view implementation.
@@ -59,4 +58,4 @@ class TileViewImpl final : public ITileView
   MetaViewImpl mMeta;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

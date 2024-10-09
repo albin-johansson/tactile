@@ -19,7 +19,7 @@
 #include "tactile/core/ui/viewport.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 [[nodiscard]]
@@ -374,4 +374,4 @@ auto has_tile(const TileRange& tile_range, const TileID tile_id) -> bool
          (tile_id < tile_range.first_id + tile_range.count);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

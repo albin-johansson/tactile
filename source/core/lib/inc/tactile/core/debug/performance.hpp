@@ -15,7 +15,7 @@
   #define TACTILE_DEBUG_PROFILE_SCOPE(Description) static_assert(true)
 #endif  // TACTILE_DEBUG
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * RAII type used to measure the duration of scope.
@@ -60,4 +60,4 @@ class ScopeProfiler final
   SteadyClockInstant mStartInstant;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

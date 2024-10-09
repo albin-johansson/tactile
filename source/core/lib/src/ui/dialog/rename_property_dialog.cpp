@@ -18,7 +18,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 RenamePropertyDialog::RenamePropertyDialog()
 {
@@ -74,4 +74,4 @@ void RenamePropertyDialog::open(const EntityID context_entity, std::string targe
   mShouldOpen = true;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

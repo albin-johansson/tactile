@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -32,4 +32,4 @@ class MapMenu final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

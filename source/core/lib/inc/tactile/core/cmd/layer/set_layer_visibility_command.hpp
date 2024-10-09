@@ -6,7 +6,7 @@
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -38,4 +38,4 @@ class SetLayerVisibilityCommand final : public ICommand
   bool m_old_visibility;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

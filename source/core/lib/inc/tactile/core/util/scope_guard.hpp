@@ -9,7 +9,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * RAII type used to invoke a callback at the end of a scope.
@@ -67,4 +67,4 @@ class ScopeGuard final
   T mCallable;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

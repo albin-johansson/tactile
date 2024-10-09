@@ -14,7 +14,7 @@
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void push_viewport_info_section(const CViewport& viewport)
 {
@@ -73,4 +73,4 @@ void push_viewport_mouse_info_section(const CanvasRenderer& canvas_renderer)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

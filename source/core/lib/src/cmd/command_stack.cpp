@@ -4,7 +4,7 @@
 
 #include "tactile/core/debug/assert.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 CommandStack::CommandStack(const std::size_t capacity)
   : m_capacity {capacity}
@@ -158,4 +158,4 @@ auto CommandStack::_get_next_command_index() const -> std::size_t
   return m_current_index.has_value() ? *m_current_index + 1 : 0;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

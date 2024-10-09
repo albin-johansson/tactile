@@ -8,7 +8,7 @@
 #include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/i18n/language_id.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents editor settings that the user can control.
@@ -40,4 +40,4 @@ struct Settings final
 [[nodiscard]]
 auto get_default_settings() -> Settings;
 
-}  // namespace tactile
+}  // namespace tactile::core

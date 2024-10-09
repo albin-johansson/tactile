@@ -9,7 +9,7 @@
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Wrapper around an ImGui window.
@@ -135,4 +135,4 @@ class Window final
  */
 void center_next_window(ImGuiCond condition);
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

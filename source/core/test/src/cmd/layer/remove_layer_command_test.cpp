@@ -16,7 +16,7 @@
 #include "tactile/core/map/map.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class RemoveLayerCommandTest : public testing::Test
 {
@@ -51,8 +51,8 @@ class RemoveLayerCommandTest : public testing::Test
   EntityID mMapId {kInvalidEntity};
 };
 
-// tactile::RemoveLayerCommand::redo
-// tactile::RemoveLayerCommand::undo
+// tactile::core::RemoveLayerCommand::redo
+// tactile::core::RemoveLayerCommand::undo
 TEST_F(RemoveLayerCommandTest, RedoUndoWithTopLevelLayer)
 {
   auto& registry = mDocument->get_registry();
@@ -83,8 +83,8 @@ TEST_F(RemoveLayerCommandTest, RedoUndoWithTopLevelLayer)
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
 }
 
-// tactile::RemoveLayerCommand::redo
-// tactile::RemoveLayerCommand::undo
+// tactile::core::RemoveLayerCommand::redo
+// tactile::core::RemoveLayerCommand::undo
 TEST_F(RemoveLayerCommandTest, RedoUndoWithNestedLayer)
 {
   auto& registry = mDocument->get_registry();
@@ -121,7 +121,7 @@ TEST_F(RemoveLayerCommandTest, RedoUndoWithNestedLayer)
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
 }
 
-// tactile::RemoveLayerCommand::dispose
+// tactile::core::RemoveLayerCommand::dispose
 TEST_F(RemoveLayerCommandTest, Dispose)
 {
   const auto& registry = mDocument->get_registry();
@@ -144,4 +144,4 @@ TEST_F(RemoveLayerCommandTest, Dispose)
   EXPECT_FALSE(is_layer(registry, layer_id));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

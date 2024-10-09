@@ -6,7 +6,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/io/texture.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents the information needed to construct a tileset.
@@ -20,4 +20,4 @@ struct TilesetSpec final
   CTexture texture;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

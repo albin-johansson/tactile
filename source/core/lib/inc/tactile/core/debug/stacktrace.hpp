@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Captures and returns the current call stack.
@@ -17,4 +17,4 @@ namespace tactile {
 [[nodiscard]]
 TACTILE_NOINLINE auto get_stacktrace() -> std::string;
 
-}  // namespace tactile
+}  // namespace tactile::core

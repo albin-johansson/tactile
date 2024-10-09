@@ -7,11 +7,10 @@
 #include "tactile/core/document/meta_view_impl.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct CTileFormat;
 class MapDocument;
-class ILayerView;
 
 /**
  * A layer view implementation.
@@ -93,4 +92,4 @@ class LayerViewImpl final : public ILayerView
   auto _get_tile_format() const -> const CTileFormat&;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -2,7 +2,7 @@
 
 #pragma once
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Forces initialization of the RNG engine for the current thread.
@@ -63,4 +63,4 @@ auto get_random_float_normalized() -> float;
 [[nodiscard]]
 auto get_random_bool() -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::core

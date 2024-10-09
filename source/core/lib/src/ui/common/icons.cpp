@@ -59,7 +59,7 @@
 #define TACTILE_ICON_GROUP_LAYER  ICON_FA_LAYER_GROUP
 // clang-format on
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 auto to_string(const Icon icon) noexcept -> const char*
 {
@@ -181,4 +181,4 @@ auto to_prefix_string(const Icon icon) noexcept -> const char*
   return "";
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

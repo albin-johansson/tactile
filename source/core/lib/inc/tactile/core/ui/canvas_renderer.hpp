@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tactile/base/meta/color.hpp"
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/index_2d.hpp"
 #include "tactile/base/numeric/offset_2d.hpp"
@@ -11,10 +12,9 @@
 
 struct ImDrawList;
 
-namespace tactile {
+namespace tactile::core {
 
 struct CViewport;
-struct UColor;
 class Registry;
 
 namespace ui {
@@ -248,4 +248,4 @@ class CanvasRenderer final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

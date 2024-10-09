@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides identifiers for the supported languages.
@@ -18,4 +18,4 @@ enum class LanguageID : std::uint8_t
   kSwedish,
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

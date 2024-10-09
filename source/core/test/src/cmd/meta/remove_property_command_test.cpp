@@ -10,10 +10,10 @@
 #include "tactile/core/meta/meta.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
-// tactile::RemovePropertyCommand::redo
-// tactile::RemovePropertyCommand::undo
+// tactile::core::RemovePropertyCommand::redo
+// tactile::core::RemovePropertyCommand::undo
 TEST(RemovePropertyCommand, RedoUndo)
 {
   const std::string name {"xyz"};
@@ -43,4 +43,4 @@ TEST(RemovePropertyCommand, RedoUndo)
   EXPECT_EQ(meta.properties.size(), 1);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

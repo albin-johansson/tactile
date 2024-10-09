@@ -11,7 +11,7 @@
 #include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class MetaViewImplTest : public testing::Test
 {
@@ -26,13 +26,13 @@ class MetaViewImplTest : public testing::Test
   MapDocument mDocument;
 };
 
-// tactile::MetaViewImpl::MetaViewImpl
+// tactile::core::MetaViewImpl::MetaViewImpl
 TEST_F(MetaViewImplTest, Constructor)
 {
   EXPECT_ANY_THROW(MetaViewImpl(nullptr, kInvalidEntity));
 }
 
-// tactile::MetaViewImpl::get_name
+// tactile::core::MetaViewImpl::get_name
 TEST_F(MetaViewImplTest, GetName)
 {
   auto& registry = mDocument.get_registry();
@@ -46,8 +46,8 @@ TEST_F(MetaViewImplTest, GetName)
   EXPECT_EQ(meta_view.property_count(), 0);
 }
 
-// tactile::MetaViewImpl::get_property
-// tactile::MetaViewImpl::property_count
+// tactile::core::MetaViewImpl::get_property
+// tactile::core::MetaViewImpl::property_count
 TEST_F(MetaViewImplTest, GetProperty)
 {
   using testing::AnyOf;
@@ -81,4 +81,4 @@ TEST_F(MetaViewImplTest, GetProperty)
   EXPECT_ANY_THROW((void) meta_view.get_property(3));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

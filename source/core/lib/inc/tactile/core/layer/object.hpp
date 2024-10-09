@@ -5,18 +5,15 @@
 #include <string>  // string
 
 #include "tactile/base/id.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
-
-namespace ir {
-struct Object;
-}  // namespace ir
 
 /**
  * A component for layer objects.
@@ -108,4 +105,4 @@ void destroy_object(Registry& registry, EntityID object_entity);
 [[nodiscard]]
 auto copy_object(Registry& registry, EntityID object_entity) -> EntityID;
 
-}  // namespace tactile
+}  // namespace tactile::core

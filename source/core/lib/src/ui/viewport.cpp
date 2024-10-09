@@ -6,7 +6,7 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 inline constexpr float kZoomPercentage = 0.05f;
@@ -96,4 +96,4 @@ auto to_world_pos(const CViewport& viewport, const Float2& screen_pos) noexcept 
   return viewport.pos + screen_pos;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

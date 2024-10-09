@@ -7,7 +7,7 @@
 #include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 inline constexpr MapSpec kOrthogonalMapSpec {
   .orientation = TileOrientation::kOrthogonal,
@@ -26,4 +26,4 @@ inline const TilesetSpec kDummyTilesetSpec {
       },
 };
 
-}  // namespace tactile::test
+}  // namespace tactile::core

@@ -2,13 +2,12 @@
 
 #pragma once
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/document/meta_view.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A metadata view implementation.
@@ -39,4 +38,4 @@ class MetaViewImpl final : public IMetaView
   EntityID mMetaId;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

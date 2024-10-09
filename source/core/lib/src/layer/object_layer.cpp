@@ -8,7 +8,7 @@
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto is_object_layer(const Registry& registry, const EntityID entity) -> bool
 {
@@ -40,4 +40,4 @@ void destroy_object_layer(Registry& registry, const EntityID object_layer_entity
   registry.destroy(object_layer_entity);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

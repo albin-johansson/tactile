@@ -7,7 +7,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Reads the value of an environment variable.
@@ -20,4 +20,4 @@ namespace tactile {
 [[nodiscard]]
 auto get_env(const char* name) -> std::optional<std::string>;
 
-}  // namespace tactile
+}  // namespace tactile::core

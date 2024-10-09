@@ -9,7 +9,7 @@
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/numeric/vec.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 [[nodiscard]]
 auto serialize(const Int2& vec) -> std::string;
@@ -47,4 +47,4 @@ auto deserialize_float3(std::string_view str) -> std::expected<Float3, ErrorCode
 [[nodiscard]]
 auto deserialize_float4(std::string_view str) -> std::expected<Float4, ErrorCode>;
 
-}  // namespace tactile
+}  // namespace tactile::core

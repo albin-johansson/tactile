@@ -10,10 +10,10 @@
 #include "tactile/core/meta/meta.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
-// tactile::RenamePropertyCommand::redo
-// tactile::RenamePropertyCommand::undo
+// tactile::core::RenamePropertyCommand::redo
+// tactile::core::RenamePropertyCommand::undo
 TEST(RenamePropertyCommand, RedoUndo)
 {
   const std::string old_name {"foo"};
@@ -42,7 +42,7 @@ TEST(RenamePropertyCommand, RedoUndo)
   EXPECT_FALSE(meta.properties.contains(new_name));
 }
 
-// tactile::RenamePropertyCommand::merge_with
+// tactile::core::RenamePropertyCommand::merge_with
 TEST(RenamePropertyCommand, MergeWith)
 {
   const std::string name1 {"A"};
@@ -87,4 +87,4 @@ TEST(RenamePropertyCommand, MergeWith)
   EXPECT_TRUE(meta.properties.contains(name3));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

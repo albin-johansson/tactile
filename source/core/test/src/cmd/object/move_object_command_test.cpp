@@ -8,13 +8,13 @@
 #include "tactile/core/layer/object.hpp"
 #include "test/object_command_test.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class MoveObjectCommandTest : public ObjectCommandTest
 {};
 
-// tactile::MoveObjectCommand::redo
-// tactile::MoveObjectCommand::undo
+// tactile::core::MoveObjectCommand::redo
+// tactile::core::MoveObjectCommand::undo
 TEST_F(MoveObjectCommandTest, RedoUndo)
 {
   auto& registry = m_document->get_registry();
@@ -38,4 +38,4 @@ TEST_F(MoveObjectCommandTest, RedoUndo)
   EXPECT_EQ(object.position, new_position);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

@@ -7,7 +7,7 @@
 
 #include "tactile/core/debug/exception.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Heuristic concept that indicates whether a type is "map-like".
@@ -140,4 +140,4 @@ template <MapLikeType T>
   return map.find(key) != map.end();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

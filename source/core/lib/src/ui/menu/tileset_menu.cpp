@@ -8,7 +8,7 @@
 #include "tactile/core/ui/common/menus.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void TilesetMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -18,4 +18,4 @@ void TilesetMenu::push(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

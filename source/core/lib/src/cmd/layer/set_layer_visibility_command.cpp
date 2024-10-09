@@ -10,7 +10,7 @@
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 SetLayerVisibilityCommand::SetLayerVisibilityCommand(MapDocument* document,
                                                      const EntityID layer_id,
@@ -45,4 +45,4 @@ void SetLayerVisibilityCommand::redo()
   m_old_visibility = std::exchange(layer.visible, m_new_visibility);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

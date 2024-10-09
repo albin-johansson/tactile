@@ -12,7 +12,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/shortcuts.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void FileMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -82,4 +82,4 @@ void FileMenu::_push_recent_files_menu(const Language& language, EventDispatcher
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

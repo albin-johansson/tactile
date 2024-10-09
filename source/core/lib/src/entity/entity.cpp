@@ -4,11 +4,11 @@
 
 #include <format>  // format
 
-namespace tactile {
+namespace tactile::core {
 
 auto entity_to_string(const EntityID entity) -> std::string
 {
   return std::format("<{}v{}>", entt::to_entity(entity), entt::to_version(entity));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

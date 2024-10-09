@@ -7,7 +7,7 @@
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for opening the tileset creation dialog.
@@ -27,4 +27,4 @@ struct AddTilesetEvent final
   Int2 tile_size;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

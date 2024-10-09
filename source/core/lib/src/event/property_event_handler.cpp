@@ -13,7 +13,7 @@
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 PropertyEventHandler::PropertyEventHandler(Model* model, ui::WidgetManager* widget_manager)
   : mModel {require_not_null(model, "null model")},
@@ -85,4 +85,4 @@ void PropertyEventHandler::on_rename_property(const RenamePropertyEvent& event)
                                               event.new_name);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

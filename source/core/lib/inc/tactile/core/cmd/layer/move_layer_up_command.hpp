@@ -6,7 +6,7 @@
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -35,4 +35,4 @@ class MoveLayerUpCommand final : public ICommand
   EntityID m_layer_id;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

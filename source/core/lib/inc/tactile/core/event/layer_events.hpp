@@ -9,7 +9,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for creating a new layer in the active map.
@@ -92,4 +92,4 @@ struct SetLayerVisibleEvent final
   bool visible;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

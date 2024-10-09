@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-class IDocument;
 class EventDispatcher;
 
 namespace ui {
@@ -30,4 +30,4 @@ class PropertyDock final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

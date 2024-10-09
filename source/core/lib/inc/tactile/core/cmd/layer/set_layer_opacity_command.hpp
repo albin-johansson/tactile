@@ -6,7 +6,7 @@
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -41,4 +41,4 @@ class SetLayerOpacityCommand final : public ICommand
   float m_old_opacity;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

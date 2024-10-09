@@ -7,16 +7,13 @@
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
-
-namespace ir {
-struct Tile;
-}  // namespace ir
 
 /**
  * A component that represents a tile definition.
@@ -116,4 +113,4 @@ auto copy_tile(Registry& registry, EntityID tile_entity) -> EntityID;
 [[nodiscard]]
 auto is_tile_plain(const Registry& registry, EntityID tile_id) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::core

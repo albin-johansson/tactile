@@ -11,7 +11,7 @@
 #include "tactile/core/meta/color.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Renders a rectangle.
@@ -170,4 +170,4 @@ inline void draw_circle_shadowed(const Float2& center_pos,
   draw_circle(center_pos, radius, color, thickness);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

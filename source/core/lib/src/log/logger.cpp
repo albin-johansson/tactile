@@ -8,7 +8,7 @@
 
 #include "tactile/base/util/buffer.hpp"
 
-namespace tactile {
+namespace tactile::core {
 inline namespace logger {
 
 constinit Logger* gDefaultLogger = nullptr;  // NOLINT
@@ -134,4 +134,4 @@ auto get_default_logger() noexcept -> Logger*
   return gDefaultLogger;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

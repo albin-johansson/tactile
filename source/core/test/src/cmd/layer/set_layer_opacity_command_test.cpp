@@ -15,7 +15,7 @@
 #include "tactile/core/map/map.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class SetLayerOpacityCommandTest : public testing::Test
 {
@@ -43,8 +43,8 @@ class SetLayerOpacityCommandTest : public testing::Test
   EntityID mLayerId {kInvalidEntity};
 };
 
-// tactile::SetLayerOpacityCommand::redo
-// tactile::SetLayerOpacityCommand::undo
+// tactile::core::SetLayerOpacityCommand::redo
+// tactile::core::SetLayerOpacityCommand::undo
 TEST_F(SetLayerOpacityCommandTest, RedoUndo)
 {
   constexpr float old_opacity = 0.8f;
@@ -67,7 +67,7 @@ TEST_F(SetLayerOpacityCommandTest, RedoUndo)
   EXPECT_EQ(layer.opacity, new_opacity);
 }
 
-// tactile::SetLayerOpacityCommand::merge_with
+// tactile::core::SetLayerOpacityCommand::merge_with
 TEST_F(SetLayerOpacityCommandTest, MergeWith)
 {
   constexpr float opacity1 = 0.1f;
@@ -100,4 +100,4 @@ TEST_F(SetLayerOpacityCommandTest, MergeWith)
   EXPECT_EQ(layer.opacity, opacity1);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

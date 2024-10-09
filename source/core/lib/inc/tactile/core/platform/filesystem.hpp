@@ -10,7 +10,7 @@
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Attempts to open a directory in the operating system file explorer.
@@ -94,4 +94,4 @@ auto has_prefix(const std::filesystem::path& path, std::string_view prefix) -> b
 auto strip_home_directory_prefix(const std::filesystem::path& path, std::string_view home_dir)
     -> std::expected<std::string, ErrorCode>;
 
-}  // namespace tactile
+}  // namespace tactile::core

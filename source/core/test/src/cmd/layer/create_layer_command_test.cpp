@@ -18,7 +18,7 @@
 #include "tactile/core/tile/tileset.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class CreateLayerCommandTest : public testing::Test
 {
@@ -41,8 +41,8 @@ class CreateLayerCommandTest : public testing::Test
   EntityID mMapId {kInvalidEntity};
 };
 
-// tactile::CreateLayerCommand::redo
-// tactile::CreateLayerCommand::undo
+// tactile::core::CreateLayerCommand::redo
+// tactile::core::CreateLayerCommand::undo
 TEST_F(CreateLayerCommandTest, RedoUndoWithNoActiveLayer)
 {
   auto& registry = mDocument->get_registry();
@@ -73,8 +73,8 @@ TEST_F(CreateLayerCommandTest, RedoUndoWithNoActiveLayer)
   EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), map.root_layer);
 }
 
-// tactile::CreateLayerCommand::redo
-// tactile::CreateLayerCommand::undo
+// tactile::core::CreateLayerCommand::redo
+// tactile::core::CreateLayerCommand::undo
 TEST_F(CreateLayerCommandTest, RedoUndoWithActiveGroupLayer)
 {
   auto& registry = mDocument->get_registry();
@@ -117,7 +117,7 @@ TEST_F(CreateLayerCommandTest, RedoUndoWithActiveGroupLayer)
   EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), 1);
 }
 
-// tactile::CreateLayerCommand::dispose
+// tactile::core::CreateLayerCommand::dispose
 TEST_F(CreateLayerCommandTest, Dispose)
 {
   auto& registry = mDocument->get_registry();
@@ -142,4 +142,4 @@ TEST_F(CreateLayerCommandTest, Dispose)
   EXPECT_FALSE(is_layer(registry, layer_id));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

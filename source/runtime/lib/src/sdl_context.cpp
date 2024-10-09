@@ -15,7 +15,7 @@ SDLContext::SDLContext()
 
   if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_EVENTS | SDL_INIT_VIDEO) != 0) {
     TACTILE_LOG_FATAL("Could not initialize SDL: {}", SDL_GetError());
-    throw Exception {"Could not initialize SDL"};
+    throw core::Exception {"Could not initialize SDL"};
   }
 
   SDL_SetHint(SDL_HINT_APP_NAME, "Tactile");

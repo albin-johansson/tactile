@@ -13,7 +13,7 @@
 #include "tactile/core/ui/i18n/language_id.hpp"
 #include "tactile/core/ui/i18n/string_id.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Utility for parsing language INI files.
@@ -65,4 +65,4 @@ class LanguageParser final
 [[nodiscard]]
 auto parse_language_from_disk(LanguageID id) -> std::expected<Language, ErrorCode>;
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

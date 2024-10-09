@@ -7,10 +7,10 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/tile/tile.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
- * \trace tactile::update_animations
+ * \trace tactile::core::update_animations
  */
 TEST(Animation, UpdateAnimations)
 {
@@ -58,7 +58,7 @@ TEST(Animation, UpdateAnimations)
 }
 
 /**
- * \trace tactile::add_animation_frame
+ * \trace tactile::core::add_animation_frame
  */
 TEST(Animation, AddAnimationFrame)
 {
@@ -112,7 +112,7 @@ TEST(Animation, AddAnimationFrame)
 }
 
 /**
- * \trace tactile::remove_animation_frame
+ * \trace tactile::core::remove_animation_frame
  */
 TEST(Animation, RemoveAnimationFrame)
 {
@@ -158,4 +158,4 @@ TEST(Animation, RemoveAnimationFrame)
   EXPECT_FALSE(registry.has<CAnimation>(tile_entity));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

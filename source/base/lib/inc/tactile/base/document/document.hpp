@@ -14,8 +14,12 @@
 namespace tactile {
 
 class IDocumentVisitor;
+
+namespace core {
+// These types are intentionally defined in core.
 class UUID;
-class Registry;  // NB: This type is intentionally defined in core.
+class Registry;
+}  // namespace core
 
 /**
  * Provides the basic document API.
@@ -87,13 +91,13 @@ class IDocument
    * A registry.
    */
   [[nodiscard]]
-  virtual auto get_registry() -> Registry& = 0;
+  virtual auto get_registry() -> core::Registry& = 0;
 
   /**
    * \copydoc get_registry()
    */
   [[nodiscard]]
-  virtual auto get_registry() const -> const Registry& = 0;
+  virtual auto get_registry() const -> const core::Registry& = 0;
 
   /**
    * Returns the graphical size of the associated content.
@@ -129,7 +133,7 @@ class IDocument
    * The associated UUID.
    */
   [[nodiscard]]
-  virtual auto get_uuid() const -> const UUID& = 0;
+  virtual auto get_uuid() const -> const core::UUID& = 0;
 };
 
 }  // namespace tactile

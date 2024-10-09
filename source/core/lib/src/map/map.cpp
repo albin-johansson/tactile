@@ -19,7 +19,7 @@
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto is_map(const Registry& registry, const EntityID entity) -> bool
 {
@@ -271,4 +271,4 @@ auto remove_layer_from_map(Registry& registry, const EntityID map_id, const Enti
   return {};
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -12,7 +12,7 @@
 #include "tactile/core/ui/common/menus.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void HelpMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -39,4 +39,4 @@ void HelpMenu::push(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

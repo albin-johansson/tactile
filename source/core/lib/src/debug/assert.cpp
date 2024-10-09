@@ -6,7 +6,7 @@
 
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void on_assertion_failed(const char* expr, const char* msg, const char* file, const int line)
 {
@@ -14,4 +14,4 @@ void on_assertion_failed(const char* expr, const char* msg, const char* file, co
   std::terminate();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

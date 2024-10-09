@@ -10,24 +10,21 @@
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/layer/tile_orientation.hpp"
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct MapSpec;
 struct TilesetSpec;
 class Registry;
-class IRenderer;
-
-namespace ir {
-struct Map;
-}  // namespace ir
 
 /**
  * A component featured by all maps.
@@ -249,4 +246,4 @@ void append_layer_to_map(Registry& registry, EntityID map_id, EntityID layer_id)
 auto remove_layer_from_map(Registry& registry, EntityID map_id, EntityID layer_id)
     -> std::expected<void, ErrorCode>;
 
-}  // namespace tactile
+}  // namespace tactile::core

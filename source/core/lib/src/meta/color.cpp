@@ -9,7 +9,7 @@
 #include "tactile/base/io/int_parser.hpp"
 #include "tactile/core/util/string_conv.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto make_color(const float r, const float g, const float b, const float a) -> UColor
 {
@@ -98,4 +98,4 @@ auto operator<<(std::ostream& stream, const UColor& color) -> std::ostream&
   return stream << to_string_rgba(color);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

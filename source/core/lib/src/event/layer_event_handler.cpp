@@ -17,7 +17,7 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 LayerEventHandler::LayerEventHandler(Model* model)
   : mModel {require_not_null(model, "null model")}
@@ -84,4 +84,4 @@ void LayerEventHandler::on_set_layer_visible(const SetLayerVisibleEvent& event)
   mModel->push_map_command<SetLayerVisibilityCommand>(event.layer_entity, event.visible);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

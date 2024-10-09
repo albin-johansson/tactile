@@ -16,7 +16,7 @@
 
 #define TACTILE_LOG(Level, FmtString, ...)                                  \
   {                                                                         \
-    auto* tactile_logger = tactile::get_default_logger();                   \
+    auto* tactile_logger = ::tactile::core::get_default_logger();           \
     if (tactile_logger && tactile_logger->would_log((Level))) {             \
       tactile_logger->log((Level), (FmtString) __VA_OPT__(, ) __VA_ARGS__); \
     }                                                                       \
@@ -41,7 +41,7 @@
 #define TACTILE_LOG_FATAL(FmtString, ...) \
   TACTILE_LOG(tactile::LogLevel::kFatal, FmtString, __VA_ARGS__)
 
-namespace tactile {
+namespace tactile::core {
 
 class ILogSink;
 
@@ -190,4 +190,4 @@ void set_default_logger(Logger* logger) noexcept;
 [[nodiscard]]
 auto get_default_logger() noexcept -> Logger*;
 
-}  // namespace tactile
+}  // namespace tactile::core

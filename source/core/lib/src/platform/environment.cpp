@@ -10,7 +10,7 @@
 
 #include "tactile/core/util/scope_guard.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto get_env(const char* name) -> std::optional<std::string>
 {
@@ -33,4 +33,4 @@ auto get_env(const char* name) -> std::optional<std::string>
   return std::nullopt;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -10,7 +10,7 @@
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 Engine::Engine(IEngineApp* app, IRenderer* renderer)
   : mApp {require_not_null(app, "null app")},
@@ -68,4 +68,4 @@ void Engine::_check_framebuffer_scale()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

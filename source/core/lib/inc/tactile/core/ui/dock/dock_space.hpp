@@ -7,7 +7,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 class Language;
 
@@ -42,4 +42,4 @@ class DockSpace final
   bool mDidInit {false};
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

@@ -7,16 +7,13 @@
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/document/document.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct MapSpec;
-class IRenderer;
-
-namespace ir {
-struct Map;
-}  // namespace ir
 
 /**
  * Represents a single map document.
@@ -93,4 +90,4 @@ class MapDocument final : public IDocument
   MapDocument();
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

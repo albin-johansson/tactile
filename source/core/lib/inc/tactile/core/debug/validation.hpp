@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/exception.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Throws an exception if the provided pointer is null, returns it if not.
@@ -40,4 +40,4 @@ template <typename PointerType>
   return ptr;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

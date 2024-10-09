@@ -4,9 +4,9 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
-/** \trace tactile::ScopeGuard::ScopeGuard */
+/** \trace tactile::core::ScopeGuard::ScopeGuard */
 TEST(ScopeGuard, ExampleUsage)
 {
   int i = 0;
@@ -19,4 +19,4 @@ TEST(ScopeGuard, ExampleUsage)
   EXPECT_EQ(i, 10);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

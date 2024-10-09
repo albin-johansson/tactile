@@ -7,7 +7,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto is_object(const Registry& registry, const EntityID entity) -> bool
 {
@@ -65,4 +65,4 @@ auto copy_object(Registry& registry, const EntityID object_entity) -> EntityID
   return copy_entity;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

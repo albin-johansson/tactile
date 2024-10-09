@@ -6,7 +6,7 @@
 
 #include <boost/stacktrace.hpp>
 
-namespace tactile {
+namespace tactile::core {
 
 auto get_stacktrace() -> std::string
 {
@@ -18,4 +18,4 @@ auto get_stacktrace() -> std::string
   return stream.str();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

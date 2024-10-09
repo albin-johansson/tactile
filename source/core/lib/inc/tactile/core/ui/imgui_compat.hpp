@@ -11,7 +11,7 @@
 #include "tactile/base/util/concepts.hpp"
 #include "tactile/core/debug/exception.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Creates a Tactile vector from an ImGui vector.
@@ -159,4 +159,4 @@ template <std::floating_point T>
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

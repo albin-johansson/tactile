@@ -12,7 +12,7 @@
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/map/map.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MapViewImpl::MapViewImpl(const MapDocument* document)
   : mDocument {require_not_null(document, "null document")},
@@ -134,4 +134,4 @@ auto MapViewImpl::_get_tile_format() const -> const CTileFormat&
   return registry.get<CTileFormat>(document_info.root);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

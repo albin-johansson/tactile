@@ -8,7 +8,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -46,4 +46,4 @@ class NewPropertyDialog final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

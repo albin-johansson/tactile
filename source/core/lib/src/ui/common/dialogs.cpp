@@ -7,7 +7,7 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/ui/common/buttons.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 auto push_dialog_control_buttons(const char* close,
                                  const char* accept,
@@ -47,4 +47,4 @@ auto push_dialog_control_buttons(const char* close,
   return status;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

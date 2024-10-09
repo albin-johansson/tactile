@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * RAII helper for the BeginMenu/EndMenu ImGui functions.
@@ -41,4 +41,4 @@ class MenuScope final
   bool mIsOpen {};
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

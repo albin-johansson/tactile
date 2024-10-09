@@ -11,7 +11,7 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/map/map.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType type)
   : m_document {require_not_null(document, "null document")},
@@ -71,4 +71,4 @@ void CreateLayerCommand::dispose()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

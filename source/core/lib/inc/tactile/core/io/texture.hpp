@@ -9,10 +9,9 @@
 #include "tactile/base/id.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 
-namespace tactile {
-
-class IRenderer;
+namespace tactile::core {
 
 /**
  * A component that represents a loaded texture resource.
@@ -45,4 +44,4 @@ struct CTexture final
 auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
     -> std::expected<CTexture, ErrorCode>;
 
-}  // namespace tactile
+}  // namespace tactile::core

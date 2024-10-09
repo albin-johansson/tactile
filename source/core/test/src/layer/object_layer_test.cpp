@@ -9,9 +9,9 @@
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-/// \trace tactile::is_object_layer
+/// \trace tactile::core::is_object_layer
 TEST(ObjectLayer, IsObjectLayer)
 {
   Registry registry {};
@@ -20,7 +20,7 @@ TEST(ObjectLayer, IsObjectLayer)
   EXPECT_TRUE(is_object_layer(registry, make_object_layer(registry)));
 }
 
-/// \trace tactile::make_object_layer
+/// \trace tactile::core::make_object_layer
 TEST(ObjectLayer, MakeObjectLayer)
 {
   Registry registry {};
@@ -47,7 +47,7 @@ TEST(ObjectLayer, MakeObjectLayer)
   EXPECT_EQ(object_layer.objects.size(), 0);
 }
 
-/// \trace tactile::destroy_object_layer
+/// \trace tactile::core::destroy_object_layer
 TEST(ObjectLayer, DestroyObjectLayer)
 {
   Registry registry {};
@@ -82,4 +82,4 @@ TEST(ObjectLayer, DestroyObjectLayer)
   EXPECT_FALSE(registry.is_valid(object2));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

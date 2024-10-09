@@ -9,12 +9,12 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
 /**
- * \trace tactile::UUID::UUID
- * \trace tactile::UUID::is_null
- * \trace tactile::UUID::hash_code
+ * \trace tactile::core::UUID::UUID
+ * \trace tactile::core::UUID::is_null
+ * \trace tactile::core::UUID::hash_code
  */
 TEST(UUID, Defaults)
 {
@@ -30,7 +30,7 @@ TEST(UUID, Defaults)
   EXPECT_TRUE(std::is_move_assignable_v<UUID>);
 }
 
-/** \trace tactile::UUID::generate */
+/** \trace tactile::core::UUID::generate */
 TEST(UUID, Generate)
 {
   const auto a = UUID::generate();
@@ -63,7 +63,7 @@ TEST(UUID, HashCode)
   EXPECT_NE(a.hash_code(), b.hash_code());
 }
 
-/** \trace tactile::to_string(const UUID&) */
+/** \trace tactile::core::to_string(const UUID&) */
 TEST(UUID, ToString)
 {
   auto is_hex_digit = [](const char digit) -> bool {
@@ -90,7 +90,7 @@ TEST(UUID, ToString)
   }
 }
 
-/** \trace tactile::operator<(const UUID&, const UUID&) */
+/** \trace tactile::core::operator<(const UUID&, const UUID&) */
 TEST(UUID, LessThanOperator)
 {
   const auto a = UUID::generate();
@@ -116,4 +116,4 @@ TEST(UUID, LessThanOperator)
   EXPECT_TRUE(map.contains(b));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

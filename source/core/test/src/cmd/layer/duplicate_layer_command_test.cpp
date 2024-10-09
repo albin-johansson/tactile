@@ -16,7 +16,7 @@
 #include "tactile/core/map/map.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class DuplicateLayerCommandTest : public testing::Test
 {
@@ -51,8 +51,8 @@ class DuplicateLayerCommandTest : public testing::Test
   EntityID mMapId {kInvalidEntity};
 };
 
-// tactile::DuplicateLayerCommand::redo
-// tactile::DuplicateLayerCommand::undo
+// tactile::core::DuplicateLayerCommand::redo
+// tactile::core::DuplicateLayerCommand::undo
 TEST_F(DuplicateLayerCommandTest, RedoUndoWithTopLevelLayer)
 {
   auto& registry = mDocument->get_registry();
@@ -91,8 +91,8 @@ TEST_F(DuplicateLayerCommandTest, RedoUndoWithTopLevelLayer)
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), 1);
 }
 
-// tactile::DuplicateLayerCommand::redo
-// tactile::DuplicateLayerCommand::undo
+// tactile::core::DuplicateLayerCommand::redo
+// tactile::core::DuplicateLayerCommand::undo
 TEST_F(DuplicateLayerCommandTest, RedoUndoWithNestedLayer)
 {
   auto& registry = mDocument->get_registry();
@@ -140,7 +140,7 @@ TEST_F(DuplicateLayerCommandTest, RedoUndoWithNestedLayer)
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), 2);
 }
 
-// tactile::DuplicateLayerCommand::dispose
+// tactile::core::DuplicateLayerCommand::dispose
 TEST_F(DuplicateLayerCommandTest, Dispose)
 {
   auto& registry = mDocument->get_registry();
@@ -168,4 +168,4 @@ TEST_F(DuplicateLayerCommandTest, Dispose)
   EXPECT_FALSE(is_layer(registry, layer_id));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

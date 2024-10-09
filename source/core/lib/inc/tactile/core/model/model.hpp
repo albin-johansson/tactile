@@ -9,7 +9,7 @@
 #include "tactile/core/document/document_manager.hpp"
 #include "tactile/core/document/map_document.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct Settings;
 
@@ -136,4 +136,4 @@ class Model final
   DocumentManager mDocuments {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

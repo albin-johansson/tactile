@@ -6,7 +6,7 @@
 
 #include "tactile/core/entity/registry.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class ViewportTest : public testing::Test
 {
@@ -28,7 +28,7 @@ class ViewportTest : public testing::Test
   Registry mRegistry {};
 };
 
-// tactile::is_viewport
+// tactile::core::is_viewport
 TEST_F(ViewportTest, IsViewport)
 {
   const auto entity = mRegistry.make_entity();
@@ -39,7 +39,7 @@ TEST_F(ViewportTest, IsViewport)
   EXPECT_TRUE(is_viewport(mRegistry, entity));
 }
 
-// tactile::translate_viewport
+// tactile::core::translate_viewport
 TEST_F(ViewportTest, TranslateViewport)
 {
   const auto viewport_entity = make_viewport();
@@ -58,8 +58,8 @@ TEST_F(ViewportTest, TranslateViewport)
   EXPECT_EQ(viewport.pos, Float2(16.0f, 9.0f));
 }
 
-// tactile::translate_viewport
-// tactile::set_viewport_limits
+// tactile::core::translate_viewport
+// tactile::core::set_viewport_limits
 TEST_F(ViewportTest, TranslateViewportWithLimits)
 {
   const auto min_x = -8.0f;
@@ -107,7 +107,7 @@ TEST_F(ViewportTest, TranslateViewportWithLimits)
   EXPECT_EQ(viewport.pos, (Float2 {1.0f, 1.0f}));
 }
 
-// tactile::increase_viewport_zoom
+// tactile::core::increase_viewport_zoom
 TEST_F(ViewportTest, IncreaseViewportZoom)
 {
   const Float2 viewport_size {500, 500};
@@ -128,7 +128,7 @@ TEST_F(ViewportTest, IncreaseViewportZoom)
   EXPECT_EQ(viewport.size, viewport_size);
 }
 
-// tactile::decrease_viewport_zoom
+// tactile::core::decrease_viewport_zoom
 TEST_F(ViewportTest, DecreaseViewportZoom)
 {
   const Float2 viewport_size {300, 400};
@@ -149,7 +149,7 @@ TEST_F(ViewportTest, DecreaseViewportZoom)
   EXPECT_EQ(viewport.size, viewport_size);
 }
 
-// tactile::center_viewport_over_content
+// tactile::core::center_viewport_over_content
 TEST_F(ViewportTest, CenterViewportOverContent)
 {
   const Float2 viewport_size {1000, 1000};
@@ -163,7 +163,7 @@ TEST_F(ViewportTest, CenterViewportOverContent)
   EXPECT_EQ(viewport.pos, (Float2 {-250, -250}));
 }
 
-// tactile::to_world_pos
+// tactile::core::to_world_pos
 TEST_F(ViewportTest, ToWorldPos)
 {
   CViewport viewport {};
@@ -176,4 +176,4 @@ TEST_F(ViewportTest, ToWorldPos)
   EXPECT_EQ(to_world_pos(viewport, Float2 {0, 10}), (Float2 {-100, -40}));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -11,7 +11,7 @@
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MoveObjectCommand::MoveObjectCommand(IDocument* document,
                                      const EntityID object_id,
@@ -40,4 +40,4 @@ void MoveObjectCommand::redo()
   m_old_position = std::exchange(object.position, m_new_position);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

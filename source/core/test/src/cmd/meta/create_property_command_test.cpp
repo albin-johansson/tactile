@@ -12,10 +12,10 @@
 #include "tactile/core/meta/meta.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
-// tactile::CreatePropertyCommand::redo
-// tactile::CreatePropertyCommand::undo
+// tactile::core::CreatePropertyCommand::redo
+// tactile::core::CreatePropertyCommand::undo
 TEST(CreatePropertyCommand, RedoUndo)
 {
   auto document = MapDocument::make(kOrthogonalMapSpec).value();
@@ -50,4 +50,4 @@ TEST(CreatePropertyCommand, RedoUndo)
   EXPECT_EQ(meta.components.size(), 0);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

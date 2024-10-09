@@ -10,7 +10,7 @@
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using IniSection = StringMap<std::string>;
 using IniData = StringMap<IniSection>;
@@ -55,4 +55,4 @@ using IniData = StringMap<IniSection>;
 [[nodiscard]]
 auto parse_ini(const std::filesystem::path& path) -> std::expected<IniData, ErrorCode>;
 
-}  // namespace tactile
+}  // namespace tactile::core

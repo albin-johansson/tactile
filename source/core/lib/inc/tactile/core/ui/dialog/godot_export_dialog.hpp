@@ -4,12 +4,12 @@
 
 #include <filesystem>  // path
 
-namespace tactile {
+namespace tactile::core {
 class Model;
 class EventDispatcher;
-}  // namespace tactile
+}  // namespace tactile::core
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * A dialog for exporting maps as Godot engine scenes.
@@ -36,4 +36,4 @@ class GodotExportDialog final
   bool m_should_open {false};
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

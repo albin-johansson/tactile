@@ -9,22 +9,19 @@
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/util/uuid.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct CTexture;
 struct TilesetSpec;
 class Registry;
-class IRenderer;
-
-namespace ir {
-struct TilesetRef;
-}  // namespace ir
 
 /**
  * Represents an sequence of tile identifiers.
@@ -303,4 +300,4 @@ auto is_tile_range_available(const Registry& registry, const TileRange& range) -
 [[nodiscard]]
 auto has_tile(const TileRange& tile_range, TileID tile_id) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::core

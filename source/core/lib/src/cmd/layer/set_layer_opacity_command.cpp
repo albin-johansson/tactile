@@ -10,7 +10,7 @@
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 SetLayerOpacityCommand::SetLayerOpacityCommand(MapDocument* document,
                                                const EntityID layer_id,
@@ -56,4 +56,4 @@ auto SetLayerOpacityCommand::merge_with(const ICommand* cmd) -> bool
   return true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -7,7 +7,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/log/log_sink.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * A log sink that simply forwards messages to the terminal.
@@ -51,4 +51,4 @@ class TerminalLogSink final : public ILogSink
   bool mUseAnsiColors {false};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -4,14 +4,13 @@
 
 #include <string>  // string
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A command for removing properties from meta contexts.
@@ -41,4 +40,4 @@ class RemovePropertyCommand final : public ICommand
   Attribute m_value;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

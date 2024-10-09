@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -88,4 +88,4 @@ class PropertyEventHandler final
   ui::WidgetManager* mWidgetManager;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -6,7 +6,7 @@
 
 #include "tactile/core/debug/assert.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 inline namespace hexagon_info {
 
 inline constexpr float kHalfSqrt3 = std::numbers::sqrt3_v<float> * 0.5f;
@@ -91,4 +91,4 @@ auto get_hexagon_center(const Index2D& index, const HexagonInfo& hexagon_info) n
   return origin + hexagon_size * 0.5f;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

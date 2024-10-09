@@ -15,7 +15,7 @@
 #include "tactile/core/map/map.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class MoveLayerDownCommandTest : public testing::Test
 {
@@ -49,8 +49,8 @@ class MoveLayerDownCommandTest : public testing::Test
   EntityID mLayerId {kInvalidEntity};
 };
 
-// tactile::MoveLayerDownCommand::redo
-// tactile::MoveLayerDownCommand::undo
+// tactile::core::MoveLayerDownCommand::redo
+// tactile::core::MoveLayerDownCommand::undo
 TEST_F(MoveLayerDownCommandTest, RedoUndo)
 {
   auto& registry = mDocument->get_registry();
@@ -71,4 +71,4 @@ TEST_F(MoveLayerDownCommandTest, RedoUndo)
   EXPECT_TRUE(can_move_layer_down(registry, map.root_layer, mLayerId));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

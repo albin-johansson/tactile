@@ -11,7 +11,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 CreatePropertyCommand::CreatePropertyCommand(IDocument* document,
                                              const EntityID context_id,
@@ -47,4 +47,4 @@ void CreatePropertyCommand::redo()
   meta.properties[m_name] = m_value;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

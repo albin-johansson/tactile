@@ -9,9 +9,9 @@
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
-void LogDock::push(const tactile::Model& model, tactile::EventDispatcher& dispatcher)
+void LogDock::push(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
   const Window dock_window {language.get(StringID::kLogDock)};
@@ -19,4 +19,4 @@ void LogDock::push(const tactile::Model& model, tactile::EventDispatcher& dispat
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

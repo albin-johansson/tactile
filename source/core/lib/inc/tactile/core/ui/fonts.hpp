@@ -5,10 +5,10 @@
 #include <cstdint>  // uint8_t
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-class IRenderer;
 struct Settings;
 
 namespace ui {
@@ -36,4 +36,4 @@ enum class FontID : std::uint8_t
 void reload_fonts(IRenderer& renderer, const Settings& settings, float framebuffer_scale);
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

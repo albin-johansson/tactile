@@ -10,7 +10,7 @@
 
 #include "tactile/base/util/hash.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto UUID::generate() -> UUID
 {
@@ -66,4 +66,4 @@ auto operator<<(std::ostream& stream, const UUID& uuid) -> std::ostream&
   return stream << to_string(uuid);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

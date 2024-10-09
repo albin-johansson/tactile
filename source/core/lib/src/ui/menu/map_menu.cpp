@@ -14,7 +14,7 @@
 #include "tactile/core/ui/common/widgets.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void MapMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -94,4 +94,4 @@ void MapMenu::_push_export_as_menu(const Language& language, EventDispatcher& di
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

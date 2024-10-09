@@ -10,7 +10,7 @@
 #include "tactile/core/layer/object_layer.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 void ObjectCommandTest::SetUp()
 {
@@ -42,4 +42,4 @@ auto ObjectCommandTest::make_test_object() -> EntityID
   return object_layer.objects.back();
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

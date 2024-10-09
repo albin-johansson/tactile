@@ -11,21 +11,20 @@
 #include "tactile/core/platform/win32.hpp"
 #include "tactile/core/util/scope_guard.hpp"
 
-using namespace tactile;
-
 auto main(int argc, char* argv[]) -> int
 {
-  win32_enable_virtual_terminal_processing();
+  tactile::core::win32_enable_virtual_terminal_processing();
 
-  auto terminal_sink = std::make_unique<TerminalLogSink>();
+  auto terminal_sink = std::make_unique<tactile::core::TerminalLogSink>();
   terminal_sink->use_ansi_colors(true);
 
-  Logger logger {};
+  tactile::core::Logger logger {};
   logger.add_sink(std::move(terminal_sink));
-  logger.set_min_level(LogLevel::kTrace);
-  logger.set_reference_instant(SteadyClock::now());
+  logger.set_min_level(tactile::LogLevel::kTrace);
+  logger.set_reference_instant(tactile::SteadyClock::now());
 
-  const ScopeGuard logger_guard {[] { set_default_logger(nullptr); }};
+  const tactile::core::ScopeGuard logger_guard {
+    [] { tactile::core::set_default_logger(nullptr); }};
   set_default_logger(&logger);
 
   testing::InitGoogleTest(&argc, argv);

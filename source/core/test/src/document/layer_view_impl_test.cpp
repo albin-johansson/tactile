@@ -15,7 +15,7 @@
 #include "tactile/core/map/map_spec.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class LayerViewImplTest : public testing::Test
 {
@@ -47,19 +47,19 @@ class LayerViewImplTest : public testing::Test
   EntityID mObjectLayerId {kInvalidEntity};
 };
 
-// tactile::LayerViewImpl::LayerViewImpl
+// tactile::core::LayerViewImpl::LayerViewImpl
 TEST_F(LayerViewImplTest, Constructor)
 {
   EXPECT_ANY_THROW(LayerViewImpl(nullptr, nullptr, kInvalidEntity));
 }
 
-// tactile::LayerViewImpl::get_parent_layer
-// tactile::LayerViewImpl::get_type
-// tactile::LayerViewImpl::get_opacity
-// tactile::LayerViewImpl::is_visible
-// tactile::LayerViewImpl::get_global_index
-// tactile::LayerViewImpl::get_tile
-// tactile::LayerViewImpl::get_extent
+// tactile::core::LayerViewImpl::get_parent_layer
+// tactile::core::LayerViewImpl::get_type
+// tactile::core::LayerViewImpl::get_opacity
+// tactile::core::LayerViewImpl::is_visible
+// tactile::core::LayerViewImpl::get_global_index
+// tactile::core::LayerViewImpl::get_tile
+// tactile::core::LayerViewImpl::get_extent
 TEST_F(LayerViewImplTest, Getters)
 {
   auto& registry = mDocument.get_registry();
@@ -85,4 +85,4 @@ TEST_F(LayerViewImplTest, Getters)
   EXPECT_EQ(layer_view.get_tile(Index2D {0, 0}), kEmptyTile);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

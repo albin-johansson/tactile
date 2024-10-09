@@ -10,7 +10,7 @@
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class TileLayerTest : public testing::TestWithParam<bool>
 {
@@ -76,7 +76,7 @@ class TileLayerTest : public testing::TestWithParam<bool>
 
 INSTANTIATE_TEST_SUITE_P(DenseAndSparse, TileLayerTest, testing::Bool());
 
-// tactile::is_tile_layer
+// tactile::core::is_tile_layer
 TEST_P(TileLayerTest, IsTileLayer)
 {
   EXPECT_FALSE(is_tile_layer(mRegistry, kInvalidEntity));
@@ -86,7 +86,7 @@ TEST_P(TileLayerTest, IsTileLayer)
   EXPECT_TRUE(is_tile_layer(mRegistry, layer_id));
 }
 
-// tactile::make_tile_layer
+// tactile::core::make_tile_layer
 TEST_P(TileLayerTest, MakeTileLayer)
 {
   constexpr Extent2D extent {5, 6};
@@ -121,7 +121,7 @@ TEST_P(TileLayerTest, MakeTileLayer)
   });
 }
 
-// tactile::destroy_tile_layer
+// tactile::core::destroy_tile_layer
 TEST_P(TileLayerTest, DestroyTileLayer)
 {
   const auto layer_id = make_test_layer();
@@ -145,8 +145,8 @@ TEST_P(TileLayerTest, DestroyTileLayer)
   EXPECT_EQ(mRegistry.count(), 0);
 }
 
-// tactile::convert_to_dense_tile_layer
-// tactile::convert_to_sparse_tile_layer
+// tactile::core::convert_to_dense_tile_layer
+// tactile::core::convert_to_sparse_tile_layer
 TEST_P(TileLayerTest, DenseSparseConversion)
 {
   const auto layer_id = make_test_layer(Extent2D {6, 4});
@@ -192,7 +192,7 @@ TEST_P(TileLayerTest, DenseSparseConversion)
   }
 }
 
-// tactile::resize_tile_layer
+// tactile::core::resize_tile_layer
 TEST_P(TileLayerTest, ResizeTileLayer)
 {
   constexpr Extent2D extent {5, 5};
@@ -200,7 +200,7 @@ TEST_P(TileLayerTest, ResizeTileLayer)
   test_resize(layer_id, extent);
 }
 
-// tactile::serialize_tile_layer
+// tactile::core::serialize_tile_layer
 TEST_P(TileLayerTest, SerializeTileLayer)
 {
   constexpr Extent2D extent {3, 3};
@@ -237,8 +237,8 @@ TEST_P(TileLayerTest, SerializeTileLayer)
   EXPECT_THAT(dense.tiles, testing::ContainerEq(*deserialized_tiles));
 }
 
-// tactile::set_layer_tile
-// tactile::get_layer_tile
+// tactile::core::set_layer_tile
+// tactile::core::get_layer_tile
 TEST_P(TileLayerTest, SetLayerTile)
 {
   constexpr Extent2D extent {10, 10};
@@ -261,4 +261,4 @@ TEST_P(TileLayerTest, SetLayerTile)
   set_and_verify(Index2D {4, 9}, TileID {865});
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

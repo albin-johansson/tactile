@@ -17,7 +17,7 @@
 #include "tactile/test_util/ir.hpp"
 #include "tactile/test_util/ir_presets.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class MapTest : public testing::Test
 {
@@ -32,7 +32,7 @@ class MapTest : public testing::Test
   null_renderer::NullRenderer mRenderer {nullptr};
 };
 
-// tactile::is_map
+// tactile::core::is_map
 TEST_F(MapTest, IsMap)
 {
   const MapSpec spec {
@@ -48,7 +48,7 @@ TEST_F(MapTest, IsMap)
   EXPECT_TRUE(is_map(mRegistry, map_entity));
 }
 
-// tactile::make_map [Registry&, const MapSpec&]
+// tactile::core::make_map [Registry&, const MapSpec&]
 TEST_F(MapTest, MakeMap)
 {
   constexpr MapSpec spec {
@@ -103,10 +103,10 @@ TEST_F(MapTest, MakeMap)
   EXPECT_EQ(viewport.scale, 1.0f);
 }
 
-// tactile::make_map [Registry&, IRenderer&, const ir::Map&]
+// tactile::core::make_map [Registry&, IRenderer&, const ir::Map&]
 TEST_F(MapTest, MakeMapFromIR)
 {
-  const auto ir_map = make_complex_ir_map(make_ir_tile_format());
+  const auto ir_map = test::make_complex_ir_map(test::make_ir_tile_format());
 
   const auto map_id = make_map(mRegistry, mRenderer, ir_map);
   ASSERT_TRUE(map_id.has_value());
@@ -115,7 +115,7 @@ TEST_F(MapTest, MakeMapFromIR)
   compare_map(mRegistry, *map_id, ir_map);
 }
 
-// tactile::make_map
+// tactile::core::make_map
 TEST_F(MapTest, MakeMapWithInvalidSpec)
 {
   constexpr MapSpec bad_extent {
@@ -134,7 +134,7 @@ TEST_F(MapTest, MakeMapWithInvalidSpec)
   EXPECT_EQ(make_map(mRegistry, bad_tile_size), kInvalidEntity);
 }
 
-// tactile::destroy_map
+// tactile::core::destroy_map
 TEST_F(MapTest, DestroyMap)
 {
   constexpr MapSpec spec {
@@ -168,7 +168,7 @@ TEST_F(MapTest, DestroyMap)
   EXPECT_EQ(mRegistry.count(), 0);
 }
 
-// tactile::add_tileset_to_map
+// tactile::core::add_tileset_to_map
 TEST_F(MapTest, AddTilesetToMap)
 {
   constexpr MapSpec spec {
@@ -212,4 +212,4 @@ TEST_F(MapTest, AddTilesetToMap)
   EXPECT_EQ(mRegistry.count<CTilesetInstance>(), 1);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

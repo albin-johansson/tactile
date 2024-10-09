@@ -6,7 +6,7 @@
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/ui/canvas_renderer.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
 
@@ -19,4 +19,4 @@ void render_orthogonal_map(const CanvasRenderer& canvas_renderer,
                            EntityID map_id);
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

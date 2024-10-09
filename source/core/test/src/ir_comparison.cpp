@@ -19,7 +19,7 @@
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 namespace ir_comparison {
 
 void compare_tile_animation(const Registry& registry,
@@ -286,4 +286,4 @@ void compare_map(const Registry& registry, const EntityID map_id, const ir::Map&
   compare_meta(registry, map_id, ir_map.meta);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

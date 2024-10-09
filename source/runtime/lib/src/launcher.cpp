@@ -120,14 +120,14 @@ auto launch(const int argc, char* argv[]) -> int
     ImGui::SetAllocatorFunctions(imgui_alloc_fn, imgui_free_fn, imgui_user_data);
     ImGui::SetCurrentContext(renderer->get_imgui_context());
 
-    TactileApp app {&runtime};
+    core::TactileApp app {&runtime};
 
-    Engine engine {&app, renderer};
+    core::Engine engine {&app, renderer};
     engine.run();
 
     return EXIT_SUCCESS;
   }
-  catch (const Exception& exception) {
+  catch (const core::Exception& exception) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", exception.what(), exception.trace());
   }
   catch (const std::exception& exception) {

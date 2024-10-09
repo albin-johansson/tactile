@@ -8,7 +8,7 @@
 #include "tactile/base/meta/attribute_type.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 class Language;
 
@@ -205,4 +205,4 @@ auto push_attribute_type_combo(const Language& language,
                                const char* label,
                                AttributeType& type) -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

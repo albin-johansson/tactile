@@ -4,7 +4,7 @@
 
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 SetLogScope::SetLogScope(const std::string_view scope) noexcept
 {
@@ -21,4 +21,4 @@ SetLogScope::~SetLogScope() noexcept
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -12,7 +12,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Manages a history of commands.
@@ -215,4 +215,4 @@ class CommandStack final
   auto _get_next_command_index() const -> std::size_t;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

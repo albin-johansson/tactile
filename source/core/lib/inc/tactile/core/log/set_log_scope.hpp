@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /** RAII type for changing the logger identifier of the current scope. */
 class SetLogScope final
@@ -30,7 +30,7 @@ class SetLogScope final
   std::string_view mPrevScope;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core
 
 #define TACTILE_SET_LOG_SCOPE(Name)              \
   const ::tactile::SetLogScope tactile_log_scope \

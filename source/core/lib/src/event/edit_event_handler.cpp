@@ -8,9 +8,9 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-EditEventHandler::EditEventHandler(tactile::Model* model)
+EditEventHandler::EditEventHandler(Model* model)
   : mModel {require_not_null(model, "null model")}
 {}
 
@@ -46,4 +46,4 @@ void EditEventHandler::on_redo(const RedoEvent& event)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

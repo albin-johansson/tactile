@@ -11,7 +11,7 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/settings.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 namespace {
 
 inline constexpr std::array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
@@ -65,4 +65,4 @@ void reload_fonts(IRenderer& renderer, const Settings& settings, const float fra
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

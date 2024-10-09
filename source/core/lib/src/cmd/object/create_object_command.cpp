@@ -11,7 +11,7 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/map/map.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 CreateObjectCommand::CreateObjectCommand(MapDocument* document,
                                          const EntityID layer_id,
@@ -70,4 +70,4 @@ void CreateObjectCommand::dispose()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

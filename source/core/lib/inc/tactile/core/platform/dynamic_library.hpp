@@ -15,7 +15,7 @@
   #define TACTILE_DLL_EXT ".so"
 #endif
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Interface for dynamically loaded libraries.
@@ -85,4 +85,4 @@ template <typename T>
   return reinterpret_cast<T*>(lib.find_symbol(name));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

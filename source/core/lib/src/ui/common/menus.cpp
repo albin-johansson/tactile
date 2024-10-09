@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 MenuScope::MenuScope(const char* name)
   : mIsOpen {ImGui::BeginMenu(name)}
@@ -22,4 +22,4 @@ auto MenuScope::is_open() const -> bool
   return mIsOpen;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

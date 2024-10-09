@@ -12,7 +12,7 @@
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto DocumentManager::create_and_open_map(const MapSpec& spec)
     -> std::expected<UUID, ErrorCode>
@@ -140,4 +140,4 @@ auto DocumentManager::is_map_active() const -> bool
   return false;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

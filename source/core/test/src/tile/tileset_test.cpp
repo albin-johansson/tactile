@@ -16,7 +16,7 @@
 #include "tactile/null_renderer/null_renderer.hpp"
 #include "tactile/test_util/ir_presets.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class TilesetTest : public testing::Test
 {
@@ -56,7 +56,7 @@ class TilesetTest : public testing::Test
   null_renderer::NullRenderer mRenderer {nullptr};
 };
 
-// tactile::make_tileset [Registry&, const TilesetSpec&]
+// tactile::core::make_tileset [Registry&, const TilesetSpec&]
 TEST_F(TilesetTest, MakeTileset)
 {
   const TilesetSpec spec {.tile_size = Int2 {50, 30},
@@ -98,12 +98,12 @@ TEST_F(TilesetTest, MakeTileset)
   EXPECT_EQ(viewport.pos.y(), 0.0f);
 }
 
-// tactile::make_tileset [Registry&, IRenderer&, const ir::TilesetRef&]
+// tactile::core::make_tileset [Registry&, IRenderer&, const ir::TilesetRef&]
 TEST_F(TilesetTest, MakeTilesetFromIR)
 {
   TileID next_tile_id {1000};
   ObjectID next_object_id {10};
-  const auto ir_tileset_ref = make_complex_ir_tileset(next_tile_id, next_object_id);
+  const auto ir_tileset_ref = test::make_complex_ir_tileset(next_tile_id, next_object_id);
 
   const auto tileset_id = make_tileset(mRegistry, mRenderer, ir_tileset_ref);
   ASSERT_TRUE(tileset_id.has_value());
@@ -111,7 +111,7 @@ TEST_F(TilesetTest, MakeTilesetFromIR)
   compare_tileset(mRegistry, *tileset_id, ir_tileset_ref);
 }
 
-// tactile::init_tileset_instance
+// tactile::core::init_tileset_instance
 TEST_F(TilesetTest, InitTilesetInstance)
 {
   const auto& tile_cache = mRegistry.get<CTileCache>();
@@ -143,7 +143,7 @@ TEST_F(TilesetTest, InitTilesetInstance)
   }
 }
 
-// tactile::init_tileset_instance
+// tactile::core::init_tileset_instance
 TEST_F(TilesetTest, InitTilesetInstanceWithInvalidTileIdentifier)
 {
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
@@ -152,7 +152,7 @@ TEST_F(TilesetTest, InitTilesetInstanceWithInvalidTileIdentifier)
   EXPECT_EQ(mRegistry.count<CTilesetInstance>(), 0);
 }
 
-// tactile::init_tileset_instance
+// tactile::core::init_tileset_instance
 TEST_F(TilesetTest, InitTilesetInstanceMoreThanOnce)
 {
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
@@ -160,7 +160,7 @@ TEST_F(TilesetTest, InitTilesetInstanceMoreThanOnce)
   EXPECT_FALSE(init_tileset_instance(mRegistry, ts_entity, TileID {101}).has_value());
 }
 
-// tactile::init_tileset_instance
+// tactile::core::init_tileset_instance
 TEST_F(TilesetTest, InitTilesetInstanceTileRangeCollisionDetection)
 {
   const auto& tile_cache = mRegistry.get<CTileCache>();
@@ -181,7 +181,7 @@ TEST_F(TilesetTest, InitTilesetInstanceTileRangeCollisionDetection)
   EXPECT_TRUE(init_tileset_instance(mRegistry, ts2_entity, TileID {101}).has_value());
 }
 
-// tactile::destroy_tileset
+// tactile::core::destroy_tileset
 TEST_F(TilesetTest, DestroyTileset)
 {
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
@@ -205,7 +205,7 @@ TEST_F(TilesetTest, DestroyTileset)
   EXPECT_EQ(mRegistry.count(), 0);
 }
 
-// tactile::destroy_tileset
+// tactile::core::destroy_tileset
 TEST_F(TilesetTest, DestroyTilesetInstance)
 {
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
@@ -236,7 +236,7 @@ TEST_F(TilesetTest, DestroyTilesetInstance)
   EXPECT_EQ(tile_cache.tileset_mapping.size(), 0);
 }
 
-// tactile::get_tile_appearance
+// tactile::core::get_tile_appearance
 TEST_F(TilesetTest, GetTileAppearance)
 {
   const auto ts_entity = make_dummy_tileset_with_100_tiles();
@@ -290,7 +290,7 @@ TEST_F(TilesetTest, GetTileAppearance)
   EXPECT_EQ(get_tile_appearance(mRegistry, ts_entity, index12), index12);
 }
 
-// tactile::find_tileset
+// tactile::core::find_tileset
 TEST_F(TilesetTest, FindTileset)
 {
   EXPECT_EQ(find_tileset(mRegistry, kEmptyTile), kInvalidEntity);
@@ -320,7 +320,7 @@ TEST_F(TilesetTest, FindTileset)
   EXPECT_EQ(find_tileset(mRegistry, TileID {301}), kInvalidEntity);
 }
 
-// tactile::get_tile_index
+// tactile::core::get_tile_index
 TEST_F(TilesetTest, GetTileIndex)
 {
   EXPECT_EQ(get_tile_index(mRegistry, kEmptyTile), std::nullopt);
@@ -347,7 +347,7 @@ TEST_F(TilesetTest, GetTileIndex)
   EXPECT_EQ(get_tile_index(mRegistry, TileID {210}), std::nullopt);
 }
 
-// tactile::is_tile_range_available
+// tactile::core::is_tile_range_available
 TEST_F(TilesetTest, IsTileRangeAvailable)
 {
   EXPECT_FALSE(is_tile_range_available(mRegistry, {TileID {-1}, 10}));
@@ -378,7 +378,7 @@ TEST_F(TilesetTest, IsTileRangeAvailable)
   EXPECT_FALSE(is_tile_range_available(mRegistry, {TileID {40}, 100}));
 }
 
-// tactile::has_tile
+// tactile::core::has_tile
 TEST_F(TilesetTest, HasTile)
 {
   // [82, 182)
@@ -392,4 +392,4 @@ TEST_F(TilesetTest, HasTile)
   EXPECT_FALSE(has_tile(range, TileID {182}));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

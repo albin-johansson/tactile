@@ -6,7 +6,7 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
 class EventDispatcherTest : public testing::Test
 {
@@ -28,9 +28,9 @@ class EventDispatcherTest : public testing::Test
 };
 
 /**
- * \trace tactile::EventDispatcher::push
- * \trace tactile::EventDispatcher::update
- * \trace tactile::EventDispatcher::bind
+ * \trace tactile::core::EventDispatcher::push
+ * \trace tactile::core::EventDispatcher::update
+ * \trace tactile::core::EventDispatcher::bind
  */
 TEST_F(EventDispatcherTest, PushAndUpdate)
 {
@@ -64,9 +64,9 @@ TEST_F(EventDispatcherTest, PushAndUpdate)
 }
 
 /**
- * \trace tactile::EventDispatcher::push
- * \trace tactile::EventDispatcher::update
- * \trace tactile::EventDispatcher::bind
+ * \trace tactile::core::EventDispatcher::push
+ * \trace tactile::core::EventDispatcher::update
+ * \trace tactile::core::EventDispatcher::bind
  */
 TEST_F(EventDispatcherTest, PushAndUpdateUnregisteredEvent)
 {
@@ -81,8 +81,8 @@ TEST_F(EventDispatcherTest, PushAndUpdateUnregisteredEvent)
 }
 
 /**
- * \trace tactile::EventDispatcher::trigger
- * \trace tactile::EventDispatcher::bind
+ * \trace tactile::core::EventDispatcher::trigger
+ * \trace tactile::core::EventDispatcher::bind
  */
 TEST_F(EventDispatcherTest, Trigger)
 {
@@ -103,7 +103,7 @@ TEST_F(EventDispatcherTest, Trigger)
 }
 
 /**
- * \trace tactile::EventDispatcher::trigger
+ * \trace tactile::core::EventDispatcher::trigger
  */
 TEST_F(EventDispatcherTest, TriggerUnregisteredEvent)
 {
@@ -116,4 +116,4 @@ TEST_F(EventDispatcherTest, TriggerUnregisteredEvent)
   EXPECT_EQ(mFloats.size(), 0);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

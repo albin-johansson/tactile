@@ -15,7 +15,7 @@
 #include "tactile/core/map/map.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class SetLayerVisibilityCommandTest : public testing::Test
 {
@@ -43,8 +43,8 @@ class SetLayerVisibilityCommandTest : public testing::Test
   EntityID mLayerId {kInvalidEntity};
 };
 
-// tactile::SetLayerVisibilityCommand::redo
-// tactile::SetLayerVisibilityCommand::undo
+// tactile::core::SetLayerVisibilityCommand::redo
+// tactile::core::SetLayerVisibilityCommand::undo
 TEST_F(SetLayerVisibilityCommandTest, RedoUndo)
 {
   const auto& registry = mDocument->get_registry();
@@ -64,4 +64,4 @@ TEST_F(SetLayerVisibilityCommandTest, RedoUndo)
   EXPECT_FALSE(layer.visible);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

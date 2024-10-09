@@ -13,7 +13,7 @@
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
-namespace tactile {
+namespace tactile::core {
 inline namespace ini {
 
 inline constexpr char kCommentToken = ';';
@@ -129,4 +129,4 @@ auto parse_ini(const std::filesystem::path& path) -> std::expected<IniData, Erro
   return ini_data;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

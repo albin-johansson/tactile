@@ -8,10 +8,9 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
+#include "tactile/base/document/document.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A command for updating property values.
@@ -49,4 +48,4 @@ class UpdatePropertyCommand final : public ICommand
   Attribute m_old_property_value;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

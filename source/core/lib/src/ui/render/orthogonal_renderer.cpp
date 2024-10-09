@@ -22,7 +22,7 @@
 #include "tactile/core/ui/render/primitives.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 namespace {
 
 void _render_tile(const CanvasRenderer& canvas_renderer,
@@ -184,4 +184,4 @@ void render_orthogonal_map(const CanvasRenderer& canvas_renderer,
   draw_rect(canvas_renderer.to_screen_pos(Float2 {0, 0}), map_size, border_color, 2.0f);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

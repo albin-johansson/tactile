@@ -9,7 +9,7 @@
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RemoveObjectCommand::RemoveObjectCommand(MapDocument* document,
                                          const EntityID layer_id,
@@ -52,4 +52,4 @@ void RemoveObjectCommand::dispose()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

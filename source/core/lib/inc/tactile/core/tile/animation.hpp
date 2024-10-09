@@ -12,7 +12,7 @@
 #include "tactile/base/util/chrono.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
 
@@ -99,4 +99,4 @@ auto add_animation_frame(Registry& registry,
 auto remove_animation_frame(Registry& registry, EntityID tile_entity, std::size_t frame_index)
     -> std::expected<void, ErrorCode>;
 
-}  // namespace tactile
+}  // namespace tactile::core

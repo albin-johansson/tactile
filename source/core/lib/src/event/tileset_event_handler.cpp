@@ -13,7 +13,7 @@
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 TilesetEventHandler::TilesetEventHandler(Model* model,
                                          IRenderer* renderer,
@@ -71,4 +71,4 @@ void TilesetEventHandler::on_add_tileset(const AddTilesetEvent& event)
   });
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

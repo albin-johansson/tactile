@@ -8,7 +8,7 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 IdScope::IdScope(const void* id)
 {
@@ -178,4 +178,4 @@ void push_centered_label(const char* text)
   ImGui::TextUnformatted(text);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

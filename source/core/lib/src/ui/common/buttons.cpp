@@ -6,7 +6,7 @@
 
 #include "tactile/core/ui/common/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 auto push_button(const char* label,
                  const char* tooltip,
@@ -53,4 +53,4 @@ auto push_icon_button(const Icon icon, const char* tooltip, const bool enabled) 
   return push_button(icon_string, tooltip, enabled, width, height);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

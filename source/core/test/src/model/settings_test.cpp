@@ -4,9 +4,9 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
-/// \trace tactile::get_default_settings
+/// \trace tactile::core::get_default_settings
 TEST(Settings, GetDefaultSettings)
 {
   const auto settings = get_default_settings();
@@ -15,4 +15,4 @@ TEST(Settings, GetDefaultSettings)
   EXPECT_EQ(settings.log_verbose_events, false);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -8,7 +8,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/concepts.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Removes leading and trailing spaces from a given string.
@@ -71,4 +71,4 @@ auto split_string(const std::string_view str, const char separator, const T& cal
   return true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

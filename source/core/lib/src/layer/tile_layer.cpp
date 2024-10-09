@@ -11,7 +11,7 @@
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 void _add_n_rows(TileMatrix& matrix,
@@ -264,4 +264,4 @@ auto get_layer_tile(const Registry& registry, const EntityID layer_id, const Ind
   throw Exception {"invalid tile layer"};
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

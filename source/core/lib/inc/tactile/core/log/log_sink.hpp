@@ -8,7 +8,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/util/chrono.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a single logged message.
@@ -54,4 +54,4 @@ class ILogSink
   virtual void flush() = 0;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

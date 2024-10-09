@@ -6,7 +6,7 @@
 
 struct SDL_Window;
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Makes the window title bar dark.
@@ -33,4 +33,4 @@ void win32_use_immersive_dark_mode(SDL_Window* window);
  */
 void win32_enable_virtual_terminal_processing();
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -11,7 +11,7 @@
 #include "tactile/core/ui/menu/tileset_menu.hpp"
 #include "tactile/core/ui/menu/view_menu.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -43,4 +43,4 @@ class MenuBar final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

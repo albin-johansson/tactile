@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/map/map_spec.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -37,4 +37,4 @@ class NewMapDialog final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

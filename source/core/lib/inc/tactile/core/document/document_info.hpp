@@ -8,7 +8,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * A context component that provides information about the associated document.
@@ -28,4 +28,4 @@ struct CDocumentInfo final
   Int2 tile_size;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

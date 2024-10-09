@@ -10,7 +10,7 @@
 
 #endif  // TACTILE_OS_WINDOWS
 
-namespace tactile {
+namespace tactile::core {
 
 void win32_use_immersive_dark_mode([[maybe_unused]] SDL_Window* window)
 {
@@ -54,4 +54,4 @@ void win32_enable_virtual_terminal_processing()
 #endif
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

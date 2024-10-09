@@ -13,7 +13,7 @@
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents an ECS registry.
@@ -323,4 +323,4 @@ class Registry final
   entt::registry mRegistry {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

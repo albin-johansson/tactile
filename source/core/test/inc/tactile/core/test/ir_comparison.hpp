@@ -6,7 +6,7 @@
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/entity/registry.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 void compare_meta(const Registry& registry, EntityID meta_id, const ir::Metadata& ir_meta);
 
@@ -34,4 +34,4 @@ void compare_tileset(const Registry& registry,
 
 void compare_map(const Registry& registry, EntityID map_id, const ir::Map& ir_map);
 
-}  // namespace tactile::test
+}  // namespace tactile::core

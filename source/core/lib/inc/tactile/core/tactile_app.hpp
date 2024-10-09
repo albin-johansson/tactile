@@ -6,6 +6,9 @@
 
 #include "tactile/base/engine/engine_app.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
+#include "tactile/base/render/window.hpp"
+#include "tactile/base/runtime.hpp"
 #include "tactile/core/event/component_event_handler.hpp"
 #include "tactile/core/event/edit_event_handler.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
@@ -21,11 +24,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
-namespace tactile {
-
-class IRuntime;
-class IWindow;
-class IRenderer;
+namespace tactile::core {
 
 /**
  * Represents the Tactile editor application.
@@ -98,4 +97,4 @@ class TactileApp final : public IEngineApp
   std::optional<ViewportEventHandler> mViewportEventHandler {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

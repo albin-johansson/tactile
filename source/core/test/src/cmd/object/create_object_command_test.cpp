@@ -11,13 +11,13 @@
 #include "tactile/core/map/map.hpp"
 #include "test/object_command_test.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class CreateObjectCommandTest : public ObjectCommandTest
 {};
 
-// tactile::CreateObjectCommand::redo
-// tactile::CreateObjectCommand::undo
+// tactile::core::CreateObjectCommand::redo
+// tactile::core::CreateObjectCommand::undo
 TEST_F(CreateObjectCommandTest, RedoUndo)
 {
   using testing::Contains;
@@ -65,7 +65,7 @@ TEST_F(CreateObjectCommandTest, RedoUndo)
   EXPECT_THAT(object_layer.objects, Contains(object_id));
 }
 
-// tactile::CreateObjectCommand::dispose
+// tactile::core::CreateObjectCommand::dispose
 TEST_F(CreateObjectCommandTest, Dispose)
 {
   auto& registry = m_document->get_registry();
@@ -99,4 +99,4 @@ TEST_F(CreateObjectCommandTest, Dispose)
   EXPECT_FALSE(is_object(registry, object_id));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

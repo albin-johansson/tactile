@@ -10,7 +10,7 @@
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/tile/tileset.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RemoveTilesetCommand::RemoveTilesetCommand(MapDocument* document, const EntityID tileset_id)
   : m_document {require_not_null(document, "null document")},
@@ -57,4 +57,4 @@ void RemoveTilesetCommand::redo()
   m_tileset_was_removed = true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

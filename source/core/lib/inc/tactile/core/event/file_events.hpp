@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for saving the current document to disk.
@@ -47,4 +47,4 @@ struct CloseEvent final
 struct QuitEvent final
 {};
 
-}  // namespace tactile
+}  // namespace tactile::core

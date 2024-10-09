@@ -11,7 +11,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RemovePropertyCommand::RemovePropertyCommand(IDocument* document,
                                              const EntityID context_entity,
@@ -42,4 +42,4 @@ void RemovePropertyCommand::redo()
   m_value = take_from(meta.properties, m_name).value();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

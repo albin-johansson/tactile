@@ -7,7 +7,7 @@
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/tile/tileset_spec.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -41,4 +41,4 @@ class AddTilesetCommand final : public ICommand
   bool m_tileset_was_added;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

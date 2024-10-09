@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct CViewport;
 
@@ -19,4 +19,4 @@ void push_canvas_info_section(const CanvasRenderer& canvas_renderer);
 void push_viewport_mouse_info_section(const CanvasRenderer& canvas_renderer);
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

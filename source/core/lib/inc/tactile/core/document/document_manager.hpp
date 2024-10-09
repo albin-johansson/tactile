@@ -9,19 +9,16 @@
 #include <vector>         // vector
 
 #include "tactile/base/debug/error_code.hpp"
+#include "tactile/base/document/document.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 #include "tactile/core/cmd/command_stack.hpp"
 #include "tactile/core/util/uuid.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct MapSpec;
-class IDocument;
-class IRenderer;
-
-namespace ir {
-struct Map;
-}  // namespace ir
 
 /**
  * Manages a collection of documents.
@@ -151,4 +148,4 @@ class DocumentManager final
   std::size_t mCommandCapacity {100};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

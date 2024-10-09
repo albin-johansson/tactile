@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Represents possible actions related to dialogs.
@@ -53,4 +53,4 @@ auto push_dialog_control_buttons(const char* close,
                                  bool can_accept = true,
                                  bool can_apply = true) -> DialogStatus;
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

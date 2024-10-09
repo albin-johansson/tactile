@@ -3,12 +3,12 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/runtime.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
-class IRuntime;
 
 struct SaveEvent;
 struct SaveAsEvent;
@@ -85,4 +85,4 @@ class FileEventHandler final
   IRuntime* mRuntime;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides a custom terminate handler.
@@ -16,4 +16,4 @@ namespace tactile {
 [[noreturn]]
 void on_terminate() noexcept;
 
-}  // namespace tactile
+}  // namespace tactile::core

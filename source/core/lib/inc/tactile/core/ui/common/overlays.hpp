@@ -8,7 +8,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/common/window.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * RAII utility that represents an overlay window.
@@ -39,4 +39,4 @@ class OverlayScope final
   std::optional<Window> mWindow;
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

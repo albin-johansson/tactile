@@ -7,7 +7,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
 
@@ -59,4 +59,4 @@ auto make_object_layer(Registry& registry) -> EntityID;
  */
 void destroy_object_layer(Registry& registry, EntityID object_layer_entity);
 
-}  // namespace tactile
+}  // namespace tactile::core

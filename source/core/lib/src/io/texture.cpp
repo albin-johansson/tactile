@@ -8,7 +8,7 @@
 #include "tactile/base/render/texture.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
     -> std::expected<CTexture, ErrorCode>
@@ -39,4 +39,4 @@ auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
   };
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

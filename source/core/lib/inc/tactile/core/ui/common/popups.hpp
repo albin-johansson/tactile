@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Tag type used to create modal popups.
@@ -64,4 +64,4 @@ class PopupScope final
   bool mIsOpen {};
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

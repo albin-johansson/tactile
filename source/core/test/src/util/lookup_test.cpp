@@ -12,11 +12,11 @@
 #include "tactile/base/container/string_map.hpp"
 #include "tactile/core/debug/exception.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-/// \trace tactile::exists_in
-/// \trace tactile::find_in
-/// \trace tactile::lookup_in
+/// \trace tactile::core::exists_in
+/// \trace tactile::core::find_in
+/// \trace tactile::core::lookup_in
 TEST(Lookup, EmptyMap)
 {
   const StringMap<int> hash_map {};
@@ -32,7 +32,7 @@ TEST(Lookup, EmptyMap)
   EXPECT_THROW((void) lookup_in(tree_map, "foo"), Exception);
 }
 
-/// \trace tactile::find_in
+/// \trace tactile::core::find_in
 TEST(Lookup, FindIn)
 {
   std::map<int, std::string> map {};
@@ -49,7 +49,7 @@ TEST(Lookup, FindIn)
   EXPECT_EQ(find_in(const_map, 2), nullptr);
 }
 
-/// \trace tactile::lookup_in
+/// \trace tactile::core::lookup_in
 TEST(Lookup, LookupIn)
 {
   StringMap<std::string> map {};
@@ -69,7 +69,7 @@ TEST(Lookup, LookupIn)
   EXPECT_THROW((void) lookup_in(const_map, "a"), Exception);
 }
 
-/// \trace tactile::erase_from
+/// \trace tactile::core::erase_from
 TEST(Lookup, EraseFrom)
 {
   StringMap<int> map {};
@@ -89,7 +89,7 @@ TEST(Lookup, EraseFrom)
   EXPECT_EQ(map.size(), 0);
 }
 
-/// \trace tactile::take_from
+/// \trace tactile::core::take_from
 TEST(Lookup, TakeFrom)
 {
   StringMap<int> map {};
@@ -105,7 +105,7 @@ TEST(Lookup, TakeFrom)
   EXPECT_EQ(map.size(), 0);
 }
 
-/// \trace tactile::exists_in
+/// \trace tactile::core::exists_in
 TEST(Lookup, ExistsIn)
 {
   StringMap<int> map {};
@@ -125,4 +125,4 @@ TEST(Lookup, ExistsIn)
   EXPECT_FALSE(exists_in(map, "c"));
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

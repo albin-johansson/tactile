@@ -6,7 +6,7 @@
 
 #include "tactile/core/map/map_spec.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for creating new map documents.
@@ -83,4 +83,4 @@ struct ExportAsGodotSceneEvent final
   std::filesystem::path project_dir;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

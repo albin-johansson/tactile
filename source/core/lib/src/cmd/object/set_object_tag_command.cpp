@@ -10,7 +10,7 @@
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 SetObjectTagCommand::SetObjectTagCommand(IDocument* document,
                                          const EntityID object_id,
@@ -59,4 +59,4 @@ auto SetObjectTagCommand::merge_with(const ICommand* cmd) -> bool
   return true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

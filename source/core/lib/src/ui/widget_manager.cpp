@@ -6,7 +6,7 @@
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/shortcuts.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void WidgetManager::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -68,4 +68,4 @@ auto WidgetManager::get_rename_property_dialog() -> RenamePropertyDialog&
   return mRenamePropertyDialog;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

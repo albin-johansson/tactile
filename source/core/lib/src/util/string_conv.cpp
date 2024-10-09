@@ -12,7 +12,7 @@
 
 #include <fast_float/fast_float.h>
 
-namespace tactile {
+namespace tactile::core {
 inline namespace string_conv {
 
 #if TACTILE_OS_WINDOWS
@@ -154,4 +154,4 @@ auto parse_float(const std::string_view str) -> std::expected<double, ErrorCode>
   return _parse_number<double>(str);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

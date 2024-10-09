@@ -12,7 +12,7 @@
   #define TACTILE_SHORTCUT "Ctrl"
 #endif
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -130,4 +130,4 @@ inline constexpr ShortcutInfo kPanDownShortcut {
 void push_global_shortcuts(const Model& model, EventDispatcher& dispatcher);
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

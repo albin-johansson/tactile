@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents editor actions that can be repeatedly executed and reverted.
@@ -59,4 +59,4 @@ class ICommand
   }
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

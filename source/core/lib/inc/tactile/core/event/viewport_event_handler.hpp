@@ -6,7 +6,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -126,4 +126,4 @@ class ViewportEventHandler final
   void _pan_viewport(EntityID viewport_entity, const Float2& tile_offset_factor);
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

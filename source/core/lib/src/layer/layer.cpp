@@ -6,7 +6,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto is_layer(const Registry& registry, const EntityID entity) -> bool
 {
@@ -28,4 +28,4 @@ auto make_unspecialized_layer(Registry& registry) -> EntityID
   return layer_entity;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -13,7 +13,7 @@
 #include "tactile/core/log/set_log_scope.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 inline namespace language_parser {
 
 [[nodiscard]]
@@ -294,4 +294,4 @@ auto parse_language_from_disk(const LanguageID id) -> std::expected<Language, Er
   return parser.parse(id, path);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

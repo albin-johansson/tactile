@@ -17,7 +17,7 @@
 #include "tactile/core/ui/dock/tileset_dock.hpp"
 #include "tactile/core/ui/menu/menu_bar.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -103,4 +103,4 @@ class WidgetManager final
 };
 
 }  // namespace ui
-}  // namespace tactile
+}  // namespace tactile::core

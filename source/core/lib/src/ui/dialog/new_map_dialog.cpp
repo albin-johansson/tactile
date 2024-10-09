@@ -16,7 +16,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 inline namespace new_map_dialog {
 
 void _push_map_orientation_combo(const Language& language, TileOrientation& orientation)
@@ -105,4 +105,4 @@ void NewMapDialog::open()
   mShouldOpen = true;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

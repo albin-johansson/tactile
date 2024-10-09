@@ -16,7 +16,7 @@
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class TileViewImplTest : public testing::Test
 {
@@ -31,11 +31,11 @@ class TileViewImplTest : public testing::Test
   MapDocument mDocument;
 };
 
-// tactile::TileViewImpl::get_parent_tileset
-// tactile::TileViewImpl::get_index
-// tactile::TileViewImpl::object_count
-// tactile::TileViewImpl::animation_frame_count
-// tactile::TileViewImpl::get_animation_frame
+// tactile::core::TileViewImpl::get_parent_tileset
+// tactile::core::TileViewImpl::get_index
+// tactile::core::TileViewImpl::object_count
+// tactile::core::TileViewImpl::animation_frame_count
+// tactile::core::TileViewImpl::get_animation_frame
 TEST_F(TileViewImplTest, Getters)
 {
   auto& registry = mDocument.get_registry();
@@ -74,4 +74,4 @@ TEST_F(TileViewImplTest, Getters)
   EXPECT_ANY_THROW((void) tile_view.get_animation_frame(tile_view.animation_frame_count()));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

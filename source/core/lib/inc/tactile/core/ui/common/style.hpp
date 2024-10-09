@@ -9,7 +9,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * RAII helper for the PushStyleVar/PopStyleVar ImGui functions.
@@ -83,4 +83,4 @@ template <typename... Args>
   return spacing + std::max({ImGui::CalcTextSize(strings).x...});
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

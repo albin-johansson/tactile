@@ -6,7 +6,7 @@
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -41,4 +41,4 @@ class RemoveObjectCommand final : public ICommand
   bool m_object_was_removed;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

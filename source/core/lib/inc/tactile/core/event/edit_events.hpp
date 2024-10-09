@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for undoing the most recent command.
@@ -60,4 +60,4 @@ struct EnableEllipseToolEvent final
 struct EnablePointToolEvent final
 {};
 
-}  // namespace tactile
+}  // namespace tactile::core

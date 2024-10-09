@@ -6,7 +6,7 @@
 #include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/theme.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for resetting the dock widget layout.
@@ -112,4 +112,4 @@ struct ToggleGridEvent final
 struct ToggleLayerHighlightEvent final
 {};
 
-}  // namespace tactile
+}  // namespace tactile::core

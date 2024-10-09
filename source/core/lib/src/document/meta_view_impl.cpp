@@ -10,7 +10,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MetaViewImpl::MetaViewImpl(const IDocument* document, const EntityID meta_id)
   : mDocument {require_not_null(document, "null document")},
@@ -47,4 +47,4 @@ auto MetaViewImpl::property_count() const -> std::size_t
   return meta.properties.size();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

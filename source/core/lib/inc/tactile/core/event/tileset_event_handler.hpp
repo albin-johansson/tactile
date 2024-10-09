@@ -3,11 +3,11 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
-class IRenderer;
 class EventDispatcher;
 
 namespace ui {
@@ -59,4 +59,4 @@ class TilesetEventHandler final
   ui::WidgetManager* mWidgetManager;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -4,13 +4,12 @@
 
 #include <string>  // string
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A command for renaming properties attached to meta contexts.
@@ -50,4 +49,4 @@ class RenamePropertyCommand final : public ICommand
   void _rename_property(std::string_view from, std::string to);
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

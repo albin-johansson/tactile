@@ -12,7 +12,7 @@
 #include "tactile/core/model/settings.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 ViewEventHandler::ViewEventHandler(Model* model,
                                    IRenderer* renderer,
@@ -134,4 +134,4 @@ void ViewEventHandler::on_toggle_layer_highlight(const ToggleLayerHighlightEvent
   TACTILE_LOG_TRACE("ToggleLayerHighlightEvent");
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

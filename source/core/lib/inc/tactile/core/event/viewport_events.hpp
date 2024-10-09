@@ -6,7 +6,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Event for moving a viewport in the current document.
@@ -122,4 +122,4 @@ struct PanViewportRightEvent final
   EntityID viewport_entity;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

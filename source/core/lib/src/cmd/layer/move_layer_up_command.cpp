@@ -10,7 +10,7 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/map/map.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MoveLayerUpCommand::MoveLayerUpCommand(MapDocument* document, const EntityID layer_id)
   : m_document {require_not_null(document, "null document")},
@@ -39,4 +39,4 @@ void MoveLayerUpCommand::redo()
   move_layer_up(registry, map.root_layer, m_layer_id);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

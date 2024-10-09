@@ -8,7 +8,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using EntityID = entt::entity;
 
@@ -33,4 +33,4 @@ struct CTag
 [[nodiscard]]
 auto entity_to_string(EntityID entity) -> std::string;
 
-}  // namespace tactile
+}  // namespace tactile::core

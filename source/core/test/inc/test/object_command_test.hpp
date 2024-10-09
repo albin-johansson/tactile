@@ -10,7 +10,7 @@
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class ObjectCommandTest : public testing::Test
 {
@@ -26,4 +26,4 @@ class ObjectCommandTest : public testing::Test
   EntityID m_layer_id {kInvalidEntity};
 };
 
-}  // namespace tactile::test
+}  // namespace tactile::core

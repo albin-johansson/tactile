@@ -6,7 +6,7 @@
 
 #include "tactile/core/debug/stacktrace.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 Exception::Exception(std::string message)
   : mMessage {std::move(message)},
@@ -23,4 +23,4 @@ auto Exception::trace() const -> const std::string&
   return mTrace;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

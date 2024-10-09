@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
-/// \trace tactile::split_string
+/// \trace tactile::core::split_string
 TEST(StringOps, SplitStringEmpty)
 {
   std::vector<std::string> tokens {};
@@ -20,7 +20,7 @@ TEST(StringOps, SplitStringEmpty)
   EXPECT_EQ(tokens.size(), 0);
 }
 
-/// \trace tactile::split_string
+/// \trace tactile::core::split_string
 TEST(StringOps, SplitStringLetters)
 {
   std::vector<std::string> tokens {};
@@ -36,7 +36,7 @@ TEST(StringOps, SplitStringLetters)
   EXPECT_EQ(tokens.at(3), "d");
 }
 
-/// \trace tactile::split_string
+/// \trace tactile::core::split_string
 TEST(StringOps, SplitStringNumbers)
 {
   std::vector<std::string> tokens {};
@@ -52,7 +52,7 @@ TEST(StringOps, SplitStringNumbers)
   EXPECT_EQ(tokens.at(3), "4000");
 }
 
-/// \trace tactile::split_string
+/// \trace tactile::core::split_string
 TEST(StringOps, SplitStringWithLeadingSeparator)
 {
   std::vector<std::string> tokens {};
@@ -66,7 +66,7 @@ TEST(StringOps, SplitStringWithLeadingSeparator)
   EXPECT_EQ(tokens.at(1), "woah");
 }
 
-/// \trace tactile::split_string
+/// \trace tactile::core::split_string
 TEST(StringOps, SplitStringWithTrailingSeparator)
 {
   std::vector<std::string> tokens {};
@@ -79,7 +79,7 @@ TEST(StringOps, SplitStringWithTrailingSeparator)
   EXPECT_EQ(tokens.at(0), "foobar");
 }
 
-/// \trace tactile::split_string
+/// \trace tactile::core::split_string
 TEST(StringOps, SplitStringWithEmptyTokens)
 {
   std::vector<std::string> tokens {};
@@ -97,7 +97,7 @@ TEST(StringOps, SplitStringWithEmptyTokens)
   EXPECT_EQ(tokens.at(5), "c");
 }
 
-/// \trace tactile::trim_string
+/// \trace tactile::core::trim_string
 TEST(StringOps, TrimString)
 {
   EXPECT_EQ(trim_string(" "), " ");
@@ -111,4 +111,4 @@ TEST(StringOps, TrimString)
   EXPECT_EQ(trim_string("   a   b c   d      "), "a   b c   d");
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

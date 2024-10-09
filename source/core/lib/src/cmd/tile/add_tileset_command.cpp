@@ -13,7 +13,7 @@
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/tile/tileset.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 AddTilesetCommand::AddTilesetCommand(MapDocument* document, TilesetSpec spec)
   : m_document {require_not_null(document, "null document")},
@@ -67,4 +67,4 @@ void AddTilesetCommand::redo()
   m_tileset_was_added = true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

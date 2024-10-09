@@ -6,7 +6,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/document/meta_view_impl.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 struct CMap;
 struct CMapIdCache;
@@ -79,4 +79,4 @@ class MapViewImpl final : public IMapView
   auto _get_tile_format() const -> const CTileFormat&;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

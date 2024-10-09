@@ -9,7 +9,7 @@
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * RAII helper for the PushID/PopID ImGui functions.
@@ -302,4 +302,4 @@ auto push_scalar_input_row(const char* label, T& value, const float input_offset
   return ImGui::InputScalar("##Scalar", to_imgui_data_type<T>(), &value);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

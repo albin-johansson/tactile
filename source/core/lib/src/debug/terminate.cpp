@@ -7,7 +7,7 @@
 #include "tactile/core/debug/stacktrace.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void on_terminate() noexcept
 {
@@ -22,4 +22,4 @@ void on_terminate() noexcept
   std::abort();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

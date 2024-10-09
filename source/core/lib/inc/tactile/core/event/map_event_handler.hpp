@@ -7,10 +7,10 @@
 
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/runtime.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-class IRuntime;
 class Model;
 class EventDispatcher;
 
@@ -81,4 +81,4 @@ class MapEventHandler final
       -> std::optional<SaveFormatId>;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

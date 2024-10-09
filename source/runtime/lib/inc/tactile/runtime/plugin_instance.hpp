@@ -13,7 +13,10 @@
 namespace tactile {
 
 class IRuntime;
+
+namespace core {
 class IDynamicLibrary;
+}  // namespace core
 
 /**
  * Represents a loaded plugin instance.
@@ -59,13 +62,13 @@ class TACTILE_RUNTIME_API PluginInstance final
 
  private:
   IRuntime* mRuntime;
-  std::unique_ptr<IDynamicLibrary> mDLL;
+  std::unique_ptr<core::IDynamicLibrary> mDLL;
   PluginDestructor* mPluginDestructor;
   IPlugin* mPlugin;
   bool mPrimed;
 
   PluginInstance(IRuntime* runtime,
-                 std::unique_ptr<IDynamicLibrary> dll,
+                 std::unique_ptr<core::IDynamicLibrary> dll,
                  PluginDestructor* plugin_destructor,
                  IPlugin* plugin);
 };

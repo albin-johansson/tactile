@@ -6,18 +6,15 @@
 #include <unordered_map>  // unordered_map
 
 #include "tactile/base/container/string_map.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/util/uuid.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
-
-namespace ir {
-struct Metadata;
-}  // namespace ir
 
 /**
  * Represents an attribute bundle.
@@ -68,4 +65,4 @@ void convert_ir_metadata(Registry& registry,
                          EntityID meta_id,
                          const ir::Metadata& ir_metadata);
 
-}  // namespace tactile
+}  // namespace tactile::core

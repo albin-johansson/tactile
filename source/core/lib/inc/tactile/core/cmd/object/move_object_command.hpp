@@ -2,14 +2,13 @@
 
 #pragma once
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A command for changing the position of objects.
@@ -39,4 +38,4 @@ class MoveObjectCommand final : public ICommand
   Float2 m_old_position;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

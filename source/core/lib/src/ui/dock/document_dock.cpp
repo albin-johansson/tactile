@@ -22,7 +22,7 @@
 #include "tactile/core/ui/render/orthogonal_renderer.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 namespace {
 
 void _push_map_document_overlay(const Registry& registry,
@@ -177,4 +177,4 @@ void DocumentDock::push(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

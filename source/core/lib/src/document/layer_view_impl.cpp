@@ -18,7 +18,7 @@
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tileset.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 LayerViewImpl::LayerViewImpl(const MapDocument* document,
                              const ILayerView* parent_layer,
@@ -243,4 +243,4 @@ auto LayerViewImpl::_get_tile_format() const -> const CTileFormat&
   return registry.get<CTileFormat>(document_info.root);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

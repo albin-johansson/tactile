@@ -18,7 +18,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 NewPropertyDialog::NewPropertyDialog()
 {
@@ -82,4 +82,4 @@ void NewPropertyDialog::open(const EntityID context_entity)
   mShouldOpen = true;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

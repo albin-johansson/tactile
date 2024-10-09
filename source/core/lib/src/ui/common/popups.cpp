@@ -2,7 +2,7 @@
 
 #include "tactile/core/ui/common/popups.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 PopupScope::PopupScope(const char* id, const ImGuiWindowFlags flags)
   : mIsOpen {ImGui::BeginPopup(id, flags)}
@@ -24,4 +24,4 @@ auto PopupScope::is_open() const -> bool
   return mIsOpen;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

@@ -13,7 +13,7 @@
 #include "tactile/core/map/map_spec.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class MapViewImplTest : public testing::Test
 {
@@ -28,12 +28,12 @@ class MapViewImplTest : public testing::Test
   MapDocument mDocument;
 };
 
-// tactile::MapViewImpl::get_tile_size
-// tactile::MapViewImpl::get_extent
-// tactile::MapViewImpl::get_next_layer_id
-// tactile::MapViewImpl::get_next_object_id
-// tactile::MapViewImpl::layer_count
-// tactile::MapViewImpl::tileset_count
+// tactile::core::MapViewImpl::get_tile_size
+// tactile::core::MapViewImpl::get_extent
+// tactile::core::MapViewImpl::get_next_layer_id
+// tactile::core::MapViewImpl::get_next_object_id
+// tactile::core::MapViewImpl::layer_count
+// tactile::core::MapViewImpl::tileset_count
 TEST_F(MapViewImplTest, Getters)
 {
   auto& registry = mDocument.get_registry();
@@ -62,4 +62,4 @@ TEST_F(MapViewImplTest, Getters)
   // TODO component_count
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

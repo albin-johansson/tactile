@@ -7,9 +7,9 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-/// \trace tactile::is_layer
+/// \trace tactile::core::is_layer
 TEST(Layer, IsLayer)
 {
   Registry registry {};
@@ -18,7 +18,7 @@ TEST(Layer, IsLayer)
   EXPECT_TRUE(is_layer(registry, make_unspecialized_layer(registry)));
 }
 
-/// \trace tactile::make_unspecialized_layer
+/// \trace tactile::core::make_unspecialized_layer
 TEST(Layer, MakeUnspecializedLayer)
 {
   Registry registry {};
@@ -38,4 +38,4 @@ TEST(Layer, MakeUnspecializedLayer)
   EXPECT_TRUE(layer.visible);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

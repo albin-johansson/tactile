@@ -9,7 +9,7 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 inline namespace random {
 
 using RandomEngine = std::mt19937;
@@ -85,4 +85,4 @@ auto get_random_bool() -> bool
   return _get_random(0, 1) == 1;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

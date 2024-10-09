@@ -11,7 +11,7 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 FileEventHandler::FileEventHandler(Model* model, IRuntime* runtime)
   : mModel {require_not_null(model, "null model")},
@@ -104,4 +104,4 @@ void FileEventHandler::on_quit(const QuitEvent& event)
   TACTILE_LOG_TRACE("QuitEvent");
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

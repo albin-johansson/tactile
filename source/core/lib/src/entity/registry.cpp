@@ -2,7 +2,7 @@
 
 #include "tactile/core/entity/registry.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto Registry::make_entity() -> EntityID
 {
@@ -35,4 +35,4 @@ auto Registry::is_valid(const EntityID entity) const -> bool
   return mRegistry.valid(entity);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

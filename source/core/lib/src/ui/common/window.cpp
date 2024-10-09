@@ -8,7 +8,7 @@
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 inline namespace window {
 
 /**
@@ -105,4 +105,4 @@ void center_next_window(const ImGuiCond condition)
   ImGui::SetNextWindowPos(next_pos, condition, next_pivot);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

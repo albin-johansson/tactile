@@ -8,7 +8,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/object.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 ObjectViewImpl::ObjectViewImpl(const IDocument* document,
                                const ILayerView* parent_layer,
@@ -98,4 +98,4 @@ auto ObjectViewImpl::get_meta() const -> const IMetaView&
   return mMeta;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -6,7 +6,7 @@
 #include <cctype>     // isspace
 #include <locale>     // locale
 
-namespace tactile {
+namespace tactile::core {
 
 auto trim_string(const std::string_view str) -> std::string
 {
@@ -31,4 +31,4 @@ auto trim_string(const std::string_view str) -> std::string
   return copy;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

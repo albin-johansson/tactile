@@ -5,7 +5,7 @@
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/model/settings.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 Model::Model(Settings* settings, const ui::Language* language)
   : mSettings {require_not_null(settings, "null settings")},
@@ -49,4 +49,4 @@ auto Model::get_language() const -> const ui::Language&
   return *mLanguage;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

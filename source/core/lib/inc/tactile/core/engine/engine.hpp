@@ -2,12 +2,11 @@
 
 #pragma once
 
+#include "tactile/base/engine/engine_app.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/render/renderer.hpp"
 
-namespace tactile {
-
-class IEngineApp;
-class IRenderer;
+namespace tactile::core {
 
 /**
  * Provides the main event loop implementation.
@@ -39,4 +38,4 @@ class Engine final
   void _check_framebuffer_scale();
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

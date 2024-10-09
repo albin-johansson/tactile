@@ -2,13 +2,12 @@
 
 #pragma once
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A command for changing the visibility of objects.
@@ -38,4 +37,4 @@ class SetObjectVisibilityCommand final : public ICommand
   bool m_old_visibility;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

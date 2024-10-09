@@ -18,7 +18,7 @@
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 namespace {
 
 void _push_godot_version_combo(int& version)
@@ -89,4 +89,4 @@ void GodotExportDialog::open()
   m_should_open = true;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

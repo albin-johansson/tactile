@@ -6,7 +6,7 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto is_meta(const Registry& registry, const EntityID id) -> bool
 {
@@ -31,4 +31,4 @@ void convert_ir_metadata(Registry& registry,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

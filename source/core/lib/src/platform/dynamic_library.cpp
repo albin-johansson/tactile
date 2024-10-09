@@ -12,7 +12,7 @@
 
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 inline namespace dynamic_library {
 
 #if TACTILE_OS_LINUX || TACTILE_OS_APPLE
@@ -118,4 +118,4 @@ auto load_library(const std::filesystem::path& path) -> std::unique_ptr<IDynamic
 #endif  // TACTILE_OS_WINDOWS
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

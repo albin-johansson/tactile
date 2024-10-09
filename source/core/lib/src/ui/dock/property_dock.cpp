@@ -18,7 +18,7 @@
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 inline namespace property_dock {
 
 void _push_property_table_context_menu_content(const Language& language,
@@ -136,4 +136,4 @@ void PropertyDock::push(const Language& language,
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

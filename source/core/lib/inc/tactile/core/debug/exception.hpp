@@ -7,7 +7,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /** The exception type used for all explicitly thrown exceptions in the codebase. */
 class Exception final : public std::exception
@@ -26,4 +26,4 @@ class Exception final : public std::exception
   std::string mTrace;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

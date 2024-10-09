@@ -6,7 +6,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
 
@@ -130,4 +130,4 @@ void center_viewport_over_content(CViewport& viewport,
 [[nodiscard]]
 auto to_world_pos(const CViewport& viewport, const Float2& screen_pos) noexcept -> Float2;
 
-}  // namespace tactile
+}  // namespace tactile::core

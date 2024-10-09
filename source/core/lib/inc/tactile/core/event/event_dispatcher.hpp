@@ -8,7 +8,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides the event handling API.
@@ -75,4 +75,4 @@ class EventDispatcher final
   entt::dispatcher mDispatcher {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

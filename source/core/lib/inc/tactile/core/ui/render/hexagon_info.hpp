@@ -8,7 +8,7 @@
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Provides pre-computed information about hexagons of a specific size.
@@ -99,4 +99,4 @@ auto get_hexagon_bounding_box(const Float2& center_pos,
 auto get_hexagon_center(const Index2D& index, const HexagonInfo& hexagon_info) noexcept
     -> Float2;
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

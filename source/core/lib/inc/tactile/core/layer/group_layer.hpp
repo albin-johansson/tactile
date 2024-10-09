@@ -9,7 +9,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
 
@@ -195,4 +195,4 @@ auto can_move_layer_down(const Registry& registry,
                          EntityID root_layer_id,
                          EntityID target_layer_id) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -6,7 +6,7 @@
 
 #include <tinyfiledialogs.h>
 
-namespace tactile {
+namespace tactile::core {
 inline namespace file_dialog {
 
 inline constexpr const char* kMapPatternDescriptor = "Map files";
@@ -102,4 +102,4 @@ auto FileDialog::save_image() -> std::optional<std::filesystem::path>
   return std::nullopt;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

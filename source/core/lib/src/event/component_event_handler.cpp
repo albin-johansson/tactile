@@ -9,7 +9,7 @@
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 ComponentEventHandler::ComponentEventHandler(Model* model, ui::WidgetManager* widget_manager)
   : mModel {require_not_null(model, "null model")},
@@ -37,4 +37,4 @@ void ComponentEventHandler::on_create_component(const CreateComponentEvent&)
   TACTILE_LOG_TRACE("CreateComponentEvent");
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

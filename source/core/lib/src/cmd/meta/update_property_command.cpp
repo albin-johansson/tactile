@@ -12,7 +12,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/util/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 UpdatePropertyCommand::UpdatePropertyCommand(IDocument* document,
                                              const EntityID context_id,
@@ -65,4 +65,4 @@ auto UpdatePropertyCommand::merge_with(const ICommand* cmd) -> bool
   return true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

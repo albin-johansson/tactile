@@ -10,7 +10,7 @@
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 // Root
 // ├── Layer 1
@@ -138,7 +138,7 @@ class GroupLayerTest : public testing::Test
   Registry mRegistry {};
 };
 
-// tactile::is_group_layer
+// tactile::core::is_group_layer
 TEST_F(GroupLayerTest, IsGroupLayer)
 {
   EXPECT_FALSE(is_group_layer(mRegistry, kInvalidEntity));
@@ -148,7 +148,7 @@ TEST_F(GroupLayerTest, IsGroupLayer)
   EXPECT_TRUE(is_group_layer(mRegistry, group_layer_entity));
 }
 
-// tactile::make_group_layer
+// tactile::core::make_group_layer
 TEST_F(GroupLayerTest, MakeGroupLayer)
 {
   const auto group_layer_entity = make_group_layer(mRegistry);
@@ -173,7 +173,7 @@ TEST_F(GroupLayerTest, MakeGroupLayer)
   EXPECT_EQ(group_layer.layers.size(), 0);
 }
 
-// tactile::destroy_group_layer
+// tactile::core::destroy_group_layer
 TEST_F(GroupLayerTest, DestroyEmptyGroupLayer)
 {
   const auto group_layer_entity = make_group_layer(mRegistry);
@@ -193,7 +193,7 @@ TEST_F(GroupLayerTest, DestroyEmptyGroupLayer)
   EXPECT_EQ(mRegistry.count(), 0);
 }
 
-// tactile::destroy_group_layer
+// tactile::core::destroy_group_layer
 TEST_F(GroupLayerTest, DestroyGroupLayerWithStoredLayers)
 {
   const auto group_layer_entity = make_group_layer(mRegistry);
@@ -233,7 +233,7 @@ TEST_F(GroupLayerTest, DestroyGroupLayerWithStoredLayers)
   EXPECT_EQ(mRegistry.count(), 0);
 }
 
-// tactile::count_layers
+// tactile::core::count_layers
 TEST_F(GroupLayerTest, CountLayers)
 {
   const auto tree = make_test_hierarchy();
@@ -246,7 +246,7 @@ TEST_F(GroupLayerTest, CountLayers)
   EXPECT_EQ(count_layers(mRegistry, tree.group6_id), 3);
 }
 
-// tactile::find_parent_layer
+// tactile::core::find_parent_layer
 TEST_F(GroupLayerTest, FindParentLayer)
 {
   const auto tree = make_test_hierarchy();
@@ -284,7 +284,7 @@ TEST_F(GroupLayerTest, FindParentLayer)
   EXPECT_EQ(find_parent_layer(mRegistry, tree.root_id, tree.layer11_id), tree.group6_id);
 }
 
-// tactile::get_local_layer_index
+// tactile::core::get_local_layer_index
 TEST_F(GroupLayerTest, GetLocalLayerIndex)
 {
   const auto tree = make_test_hierarchy();
@@ -322,7 +322,7 @@ TEST_F(GroupLayerTest, GetLocalLayerIndex)
   EXPECT_EQ(get_local_layer_index(mRegistry, tree.root_id, tree.layer11_id), 2);
 }
 
-// tactile::get_global_layer_index
+// tactile::core::get_global_layer_index
 TEST_F(GroupLayerTest, GetGlobalLayerIndex)
 {
   const auto tree = make_test_hierarchy();
@@ -351,7 +351,7 @@ TEST_F(GroupLayerTest, GetGlobalLayerIndex)
   // clang-format on
 }
 
-// tactile::move_layer_up
+// tactile::core::move_layer_up
 TEST_F(GroupLayerTest, MoveLayerUp)
 {
   const auto tree = make_test_hierarchy();
@@ -387,7 +387,7 @@ TEST_F(GroupLayerTest, MoveLayerUp)
   EXPECT_FALSE(can_move_layer_up(mRegistry, tree.root_id, tree.group2_id));
 }
 
-// tactile::move_layer_down
+// tactile::core::move_layer_down
 TEST_F(GroupLayerTest, MoveLayerDown)
 {
   const auto tree = make_test_hierarchy();
@@ -412,7 +412,7 @@ TEST_F(GroupLayerTest, MoveLayerDown)
   EXPECT_FALSE(can_move_layer_down(mRegistry, tree.root_id, tree.layer8_id));
 }
 
-// tactile::can_move_layer_up
+// tactile::core::can_move_layer_up
 TEST_F(GroupLayerTest, CanMoveLayerUp)
 {
   const auto tree = make_test_hierarchy();
@@ -450,7 +450,7 @@ TEST_F(GroupLayerTest, CanMoveLayerUp)
   EXPECT_TRUE(can_move_layer_up(mRegistry, tree.root_id, tree.layer11_id));
 }
 
-// tactile::can_move_layer_down
+// tactile::core::can_move_layer_down
 TEST_F(GroupLayerTest, CanMoveLayerDown)
 {
   const auto tree = make_test_hierarchy();
@@ -488,4 +488,4 @@ TEST_F(GroupLayerTest, CanMoveLayerDown)
   EXPECT_FALSE(can_move_layer_down(mRegistry, tree.root_id, tree.layer11_id));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

@@ -11,7 +11,7 @@
 #include "tactile/base/meta/color.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Creates a color from floating-point components.
@@ -102,4 +102,4 @@ inline constexpr UColor kColorYellow {0xFF, 0xFF, 0x00, 0xFF};
 
 auto operator<<(std::ostream& stream, const UColor& color) -> std::ostream&;
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -7,7 +7,7 @@
 #include "tactile/core/event/dialog_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void push_global_shortcuts(const Model& model, EventDispatcher& dispatcher)
 {
@@ -28,4 +28,4 @@ void push_global_shortcuts(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

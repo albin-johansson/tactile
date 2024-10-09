@@ -4,7 +4,7 @@
 
 #include "tactile/core/ui/common/icons.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 Language::Language(const LanguageID id, std::vector<std::string> strings)
   : mID {id},
@@ -93,4 +93,4 @@ auto Language::get_id() const -> LanguageID
   return mID;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

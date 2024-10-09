@@ -16,14 +16,14 @@
   #define TACTILE_ASSERT_MSG(Expr, Msg) \
     (static_cast<bool>(Expr)            \
          ? ((void) 0)                   \
-         : tactile::on_assertion_failed(#Expr, (Msg), __FILE__, __LINE__))
+         : ::tactile::core::on_assertion_failed(#Expr, (Msg), __FILE__, __LINE__))
   #define TACTILE_ASSERT(Expr) TACTILE_ASSERT_MSG(Expr, "?")
 #else
   #define TACTILE_ASSERT_MSG(Expr, Msg) (void) 0
   #define TACTILE_ASSERT(Expr) (void) 0
 #endif
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Logs an error message and terminates the program.
@@ -40,4 +40,4 @@ namespace tactile {
 [[noreturn]]
 void on_assertion_failed(const char* expr, const char* msg, const char* file, int line);
 
-}  // namespace tactile
+}  // namespace tactile::core

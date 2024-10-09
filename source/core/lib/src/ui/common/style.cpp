@@ -2,7 +2,7 @@
 
 #include "tactile/core/ui/common/style.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 StyleVarScope::StyleVarScope(const ImGuiStyleVar id, const ImVec2 value)
 {
@@ -109,4 +109,4 @@ void apply_custom_style(ImGuiStyle& style)
   style.DisplaySafeAreaPadding = ImVec2 {0.0f, 0.0f};
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

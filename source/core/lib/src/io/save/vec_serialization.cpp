@@ -8,7 +8,7 @@
 #include "tactile/core/util/string_conv.hpp"
 #include "tactile/core/util/string_ops.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 template <typename VecType>
@@ -22,6 +22,9 @@ template <typename VecType>
     if (index >= vec.size()) {
       return false;
     }
+
+    using tactile::parse;
+    using tactile::core::parse;
 
     const auto parsed_value = parse<typename VecType::value_type>(token);
     if (!parsed_value.has_value()) {
@@ -103,4 +106,4 @@ auto deserialize_float4(const std::string_view str) -> std::expected<Float4, Err
   return _deserialize_vec<Float4>(str);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -3,16 +3,13 @@
 #pragma once
 
 #include "tactile/base/id.hpp"
+#include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Registry;
-
-namespace ir {
-struct Layer;
-}  // namespace ir
 
 /**
  * Creates a layer from an intermediate representation.
@@ -52,4 +49,4 @@ void destroy_layer(Registry& registry, EntityID layer_id);
 auto copy_layer(Registry& registry, EntityID source_layer_id, LayerID& next_layer_id)
     -> EntityID;
 
-}  // namespace tactile
+}  // namespace tactile::core

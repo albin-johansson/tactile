@@ -2,7 +2,7 @@
 
 #include "tactile/core/map/map_spec.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto is_valid(const MapSpec& spec) -> bool
 {
@@ -12,4 +12,4 @@ auto is_valid(const MapSpec& spec) -> bool
          (spec.tile_size.y() > 0);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

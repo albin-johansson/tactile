@@ -6,7 +6,7 @@
 
 #include "tactile/core/ui/imgui_compat.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 inline namespace overlays {
 
 inline constexpr auto kOverlayWindowFlags =
@@ -41,4 +41,4 @@ auto OverlayScope::is_open() const -> bool
   return mWindow->is_open();
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

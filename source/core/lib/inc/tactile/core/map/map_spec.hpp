@@ -7,7 +7,7 @@
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides the information necessary to create a map.
@@ -35,4 +35,4 @@ struct MapSpec final
 [[nodiscard]]
 auto is_valid(const MapSpec& spec) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::core

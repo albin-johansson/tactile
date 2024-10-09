@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile::test {
+namespace tactile::core {
 
 struct C1 final : ICommand
 {
@@ -24,7 +24,7 @@ struct C2 final : ICommand
   {}
 };
 
-// tactile::CommandStack::CommandStack
+// tactile::core::CommandStack::CommandStack
 TEST(CommandStack, Constructor)
 {
   const CommandStack command_stack {64};
@@ -38,9 +38,9 @@ TEST(CommandStack, Constructor)
   EXPECT_FALSE(command_stack.clean_index().has_value());
 }
 
-// tactile::CommandStack::push
-// tactile::CommandStack::undo
-// tactile::CommandStack::redo
+// tactile::core::CommandStack::push
+// tactile::core::CommandStack::undo
+// tactile::core::CommandStack::redo
 TEST(CommandStack, MixedUsage)
 {
   CommandStack stack {64};
@@ -130,8 +130,8 @@ TEST(CommandStack, MixedUsage)
   EXPECT_FALSE(stack.can_redo());
 }
 
-// tactile::CommandStack::mark_as_clean
-// tactile::CommandStack::clean_index
+// tactile::core::CommandStack::mark_as_clean
+// tactile::core::CommandStack::clean_index
 TEST(CommandStack, CleanIndexManagement)
 {
   CommandStack stack {32};
@@ -201,7 +201,7 @@ TEST(CommandStack, CleanIndexManagement)
   EXPECT_FALSE(stack.is_clean());
 }
 
-// tactile::CommandStack::push
+// tactile::core::CommandStack::push
 TEST(CommandStack, CommandOverflowWithDefinedCleanIndex)
 {
   CommandStack stack {4};
@@ -242,7 +242,7 @@ TEST(CommandStack, CommandOverflowWithDefinedCleanIndex)
   EXPECT_FALSE(stack.is_clean());
 }
 
-// tactile::CommandStack::push
+// tactile::core::CommandStack::push
 TEST(CommandStack, SimpleCommandOverflow)
 {
   CommandStack stack {100};
@@ -255,7 +255,7 @@ TEST(CommandStack, SimpleCommandOverflow)
   EXPECT_EQ(stack.index(), stack.capacity() - 1);
 }
 
-// tactile::CommandStack::set_capacity
+// tactile::core::CommandStack::set_capacity
 TEST(CommandStack, DynamicCapacityChange)
 {
   CommandStack stack {50};
@@ -275,4 +275,4 @@ TEST(CommandStack, DynamicCapacityChange)
   EXPECT_EQ(stack.capacity(), 25);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

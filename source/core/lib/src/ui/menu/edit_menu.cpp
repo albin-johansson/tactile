@@ -13,7 +13,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/shortcuts.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void EditMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -86,4 +86,4 @@ void EditMenu::push(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

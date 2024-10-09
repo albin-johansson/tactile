@@ -17,7 +17,7 @@
 #include "tactile/core/ui/common/widgets.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void NewTilesetDialog::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -81,4 +81,4 @@ void NewTilesetDialog::open()
   mShouldOpen = true;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

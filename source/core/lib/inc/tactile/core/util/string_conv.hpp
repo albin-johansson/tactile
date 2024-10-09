@@ -11,7 +11,7 @@
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/platform/native_string.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Creates a string using the native filesystem character type.
@@ -62,4 +62,4 @@ template <std::floating_point T>
   return parse_float(str).transform([](double value) { return static_cast<T>(value); });
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

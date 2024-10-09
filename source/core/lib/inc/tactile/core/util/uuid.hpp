@@ -11,7 +11,7 @@
 #include <ostream>     // ostream
 #include <string>      // string
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a universally unique identifier, or UUID.
@@ -96,19 +96,19 @@ auto to_string(const UUID& uuid) -> std::string;
  */
 auto operator<<(std::ostream& stream, const UUID& uuid) -> std::ostream&;
 
-}  // namespace tactile
+}  // namespace tactile::core
 
 template <>
-struct std::hash<tactile::UUID> final
+struct std::hash<tactile::core::UUID> final
 {
-  [[nodiscard]] auto operator()(const tactile::UUID& uuid) const noexcept -> std::size_t
+  [[nodiscard]] auto operator()(const tactile::core::UUID& uuid) const noexcept -> std::size_t
   {
     return uuid.hash_code();
   }
 };
 
 template <>
-struct std::formatter<tactile::UUID> final
+struct std::formatter<tactile::core::UUID> final
 {
   template <typename FormatParseContext>
   constexpr auto parse(FormatParseContext& ctx)
@@ -117,10 +117,10 @@ struct std::formatter<tactile::UUID> final
   }
 
   template <typename FormatContext>
-  auto format(const tactile::UUID& uuid, FormatContext& ctx) const
+  auto format(const tactile::core::UUID& uuid, FormatContext& ctx) const
   {
-    return std::format_to(ctx.out(), "{}", tactile::to_string(uuid));
+    return std::format_to(ctx.out(), "{}", tactile::core::to_string(uuid));
   }
 };
 
-static_assert(std::formattable<tactile::UUID, char>);
+static_assert(std::formattable<tactile::core::UUID, char>);

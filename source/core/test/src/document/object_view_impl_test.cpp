@@ -17,7 +17,7 @@
 #include "tactile/core/tile/tileset_spec.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class ObjectViewImplTest : public testing::Test
 {
@@ -32,7 +32,7 @@ class ObjectViewImplTest : public testing::Test
   MapDocument mDocument;
 };
 
-// tactile::ObjectViewImpl::ObjectViewImpl
+// tactile::core::ObjectViewImpl::ObjectViewImpl
 TEST_F(ObjectViewImplTest, Constructors)
 {
   const ILayerView* layer_view = nullptr;
@@ -45,14 +45,14 @@ TEST_F(ObjectViewImplTest, Constructors)
   EXPECT_ANY_THROW(ObjectViewImpl(&mDocument, tile_view, kInvalidEntity));
 }
 
-// tactile::ObjectViewImpl::get_parent_layer
-// tactile::ObjectViewImpl::get_parent_tile
-// tactile::ObjectViewImpl::get_type
-// tactile::ObjectViewImpl::get_id
-// tactile::ObjectViewImpl::get_position
-// tactile::ObjectViewImpl::get_size
-// tactile::ObjectViewImpl::get_tag
-// tactile::ObjectViewImpl::is_visible
+// tactile::core::ObjectViewImpl::get_parent_layer
+// tactile::core::ObjectViewImpl::get_parent_tile
+// tactile::core::ObjectViewImpl::get_type
+// tactile::core::ObjectViewImpl::get_id
+// tactile::core::ObjectViewImpl::get_position
+// tactile::core::ObjectViewImpl::get_size
+// tactile::core::ObjectViewImpl::get_tag
+// tactile::core::ObjectViewImpl::is_visible
 TEST_F(ObjectViewImplTest, ObjectInObjectLayer)
 {
   auto& registry = mDocument.get_registry();
@@ -81,14 +81,14 @@ TEST_F(ObjectViewImplTest, ObjectInObjectLayer)
   EXPECT_EQ(object_view.is_visible(), object.is_visible);
 }
 
-// tactile::ObjectViewImpl::get_parent_layer
-// tactile::ObjectViewImpl::get_parent_tile
-// tactile::ObjectViewImpl::get_type
-// tactile::ObjectViewImpl::get_id
-// tactile::ObjectViewImpl::get_position
-// tactile::ObjectViewImpl::get_size
-// tactile::ObjectViewImpl::get_tag
-// tactile::ObjectViewImpl::is_visible
+// tactile::core::ObjectViewImpl::get_parent_layer
+// tactile::core::ObjectViewImpl::get_parent_tile
+// tactile::core::ObjectViewImpl::get_type
+// tactile::core::ObjectViewImpl::get_id
+// tactile::core::ObjectViewImpl::get_position
+// tactile::core::ObjectViewImpl::get_size
+// tactile::core::ObjectViewImpl::get_tag
+// tactile::core::ObjectViewImpl::is_visible
 TEST_F(ObjectViewImplTest, ObjectInTile)
 {
   auto& registry = mDocument.get_registry();
@@ -121,4 +121,4 @@ TEST_F(ObjectViewImplTest, ObjectInTile)
   EXPECT_EQ(object_view.is_visible(), object.is_visible);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

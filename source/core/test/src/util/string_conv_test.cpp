@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
-/// \trace tactile::to_native_string
+/// \trace tactile::core::to_native_string
 TEST(StringConv, ToNativeString)
 {
   EXPECT_EQ(to_native_string(""), TACTILE_NATIVE_STR(""));
@@ -24,7 +24,7 @@ TEST(StringConv, ToNativeString)
   EXPECT_EQ(to_native_string(foo), TACTILE_NATIVE_STR("foo"));
 }
 
-/// \trace tactile::from_native_string
+/// \trace tactile::core::from_native_string
 TEST(StringConv, FromNativeString)
 {
   EXPECT_EQ(from_native_string(TACTILE_NATIVE_STR("")), "");
@@ -40,7 +40,7 @@ TEST(StringConv, FromNativeString)
   EXPECT_EQ(from_native_string(foo), "foo");
 }
 
-/// \trace tactile::parse_float
+/// \trace tactile::core::parse_float
 TEST(StringConv, ParseFloat)
 {
   // Invalid inputs
@@ -64,4 +64,4 @@ TEST(StringConv, ParseFloat)
   EXPECT_EQ(parse_float(std::string_view {"1234"}.substr(2, 2)), 34.0);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

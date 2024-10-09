@@ -4,7 +4,7 @@
 
 #include <iostream>  // cout
 
-namespace tactile {
+namespace tactile::core {
 
 void TerminalLogSink::log(const LogMessage& msg)
 {
@@ -52,4 +52,4 @@ auto TerminalLogSink::get_fg_ansi_color(const LogLevel level) -> std::string_vie
   return kAnsiColorFgWhite;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

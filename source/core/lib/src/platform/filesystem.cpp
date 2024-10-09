@@ -14,7 +14,7 @@
 #include "tactile/core/platform/environment.hpp"
 #include "tactile/core/util/string_conv.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto open_directory_in_finder(const std::filesystem::path& dir)
     -> std::expected<void, ErrorCode>
@@ -106,4 +106,4 @@ auto strip_home_directory_prefix(const std::filesystem::path& path,
   return std::unexpected {ErrorCode::kBadParam};
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

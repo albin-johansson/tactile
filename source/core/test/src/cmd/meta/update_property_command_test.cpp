@@ -10,10 +10,10 @@
 #include "tactile/core/meta/meta.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
-// tactile::UpdatePropertyCommand::redo
-// tactile::UpdatePropertyCommand::undo
+// tactile::core::UpdatePropertyCommand::redo
+// tactile::core::UpdatePropertyCommand::undo
 TEST(UpdatePropertyCommand, RedoUndo)
 {
   const std::string name {"abc"};
@@ -46,7 +46,7 @@ TEST(UpdatePropertyCommand, RedoUndo)
   EXPECT_EQ(meta.properties.size(), 1);
 }
 
-// tactile::UpdatePropertyCommand::merge_with
+// tactile::core::UpdatePropertyCommand::merge_with
 TEST(UpdatePropertyCommand, MergeWith)
 {
   const std::string name {"abc"};
@@ -97,4 +97,4 @@ TEST(UpdatePropertyCommand, MergeWith)
   EXPECT_EQ(meta.properties.size(), 1);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

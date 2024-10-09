@@ -15,7 +15,7 @@
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/meta/meta.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 struct FindLayerResult final
@@ -298,4 +298,4 @@ auto can_move_layer_down(const Registry& registry,
   return _can_move_layer(registry, root_layer_id, target_layer_id, 1);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

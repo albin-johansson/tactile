@@ -14,7 +14,7 @@
 #include "tactile/core/tile/tileset.hpp"
 #include "test/document_testing.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class AddTilesetCommandTest : public testing::Test
 {
@@ -37,8 +37,8 @@ class AddTilesetCommandTest : public testing::Test
   EntityID mMapId {kInvalidEntity};
 };
 
-// tactile::AddTilesetCommand::redo
-// tactile::AddTilesetCommand::undo
+// tactile::core::AddTilesetCommand::redo
+// tactile::core::AddTilesetCommand::undo
 TEST_F(AddTilesetCommandTest, RedoUndo)
 {
   auto& registry = mDocument->get_registry();
@@ -72,7 +72,7 @@ TEST_F(AddTilesetCommandTest, RedoUndo)
   EXPECT_EQ(id_cache.next_tile_id, TileID {25});
 }
 
-// tactile::AddTilesetCommand::~AddTilesetCommand
+// tactile::core::AddTilesetCommand::~AddTilesetCommand
 TEST_F(AddTilesetCommandTest, UnusedTilesetShouldBeDestroyedByDestructor)
 {
   auto& registry = mDocument->get_registry();
@@ -97,4 +97,4 @@ TEST_F(AddTilesetCommandTest, UnusedTilesetShouldBeDestroyedByDestructor)
   EXPECT_FALSE(is_tileset_instance(registry, tileset_id));
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

@@ -17,7 +17,7 @@
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/entity/registry.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using SparseTileMatrix = std::map<Index2D, TileID, std::less<>>;
 
@@ -251,4 +251,4 @@ constexpr void each_layer_tile(const Registry& registry,
   each_layer_tile(registry, layer_id, begin, end, callable);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

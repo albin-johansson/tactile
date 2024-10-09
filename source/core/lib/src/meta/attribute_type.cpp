@@ -4,7 +4,7 @@
 
 #include "tactile/core/debug/exception.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto parse_attribute_type(std::string_view name) -> std::expected<AttributeType, ErrorCode>
 {
@@ -76,4 +76,4 @@ auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&
   return stream << serialize(type);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

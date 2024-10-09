@@ -15,7 +15,7 @@
 #include "tactile/core/ui/imgui_compat.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 ViewportEventHandler::ViewportEventHandler(Model* model)
   : mModel {require_not_null(model, "null model")}
@@ -209,4 +209,4 @@ void ViewportEventHandler::_pan_viewport(const EntityID viewport_entity,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

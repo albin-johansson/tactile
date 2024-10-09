@@ -4,13 +4,12 @@
 
 #include <string>  // string
 
+#include "tactile/base/document/document.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/cmd/command.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile {
-
-class IDocument;
+namespace tactile::core {
 
 /**
  * A command for changing the type tag of objects.
@@ -43,4 +42,4 @@ class SetObjectTagCommand final : public ICommand
   std::string m_old_tag;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

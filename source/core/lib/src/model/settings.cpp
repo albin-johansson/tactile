@@ -2,7 +2,7 @@
 
 #include "tactile/core/model/settings.hpp"
 
-namespace tactile {
+namespace tactile::core {
 inline namespace settings {
 
 inline constexpr auto kLanguageDefault = LanguageID::kAmericanEnglish;
@@ -24,4 +24,4 @@ auto get_default_settings() -> Settings
   };
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

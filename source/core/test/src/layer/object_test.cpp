@@ -9,7 +9,7 @@
 #include "tactile/core/test/ir_comparison.hpp"
 #include "tactile/test_util/ir_presets.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class ObjectTest : public testing::Test
 {
@@ -17,7 +17,7 @@ class ObjectTest : public testing::Test
   Registry mRegistry {};
 };
 
-// tactile::is_object
+// tactile::core::is_object
 TEST_F(ObjectTest, IsObject)
 {
   EXPECT_FALSE(is_object(mRegistry, kInvalidEntity));
@@ -30,7 +30,7 @@ TEST_F(ObjectTest, IsObject)
   EXPECT_TRUE(is_object(mRegistry, entity));
 }
 
-// tactile::make_object [Registry&, ObjectID, ObjectType]
+// tactile::core::make_object [Registry&, ObjectID, ObjectType]
 TEST_F(ObjectTest, MakeObject)
 {
   const ObjectID object_id {42};
@@ -57,10 +57,10 @@ TEST_F(ObjectTest, MakeObject)
   EXPECT_EQ(object.is_visible, true);
 }
 
-// tactile::make_object [Registry&, const ir::Object&]
+// tactile::core::make_object [Registry&, const ir::Object&]
 TEST_F(ObjectTest, MakeObjectFromIR)
 {
-  const auto ir_object = make_complex_ir_object(ObjectID {42}, ObjectType::kEllipse);
+  const auto ir_object = test::make_complex_ir_object(ObjectID {42}, ObjectType::kEllipse);
 
   const auto object_id = make_object(mRegistry, ir_object);
   ASSERT_TRUE(is_object(mRegistry, object_id));
@@ -68,7 +68,7 @@ TEST_F(ObjectTest, MakeObjectFromIR)
   compare_object(mRegistry, object_id, ir_object);
 }
 
-// tactile::copy_object
+// tactile::core::copy_object
 TEST_F(ObjectTest, CopyObject)
 {
   const auto e1 = make_object(mRegistry, ObjectID {1}, ObjectType::kEllipse);
@@ -102,4 +102,4 @@ TEST_F(ObjectTest, CopyObject)
   EXPECT_EQ(object1.is_visible, object2.is_visible);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

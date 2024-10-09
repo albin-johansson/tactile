@@ -11,7 +11,7 @@
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/test_util/ir_presets.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
 class TileTest : public testing::Test
 {
@@ -19,8 +19,8 @@ class TileTest : public testing::Test
   Registry mRegistry {};
 };
 
-// tactile::make_tile [Registry&, TileIndex]
-// tactile::is_tile
+// tactile::core::make_tile [Registry&, TileIndex]
+// tactile::core::is_tile
 TEST_F(TileTest, MakeTile)
 {
   const auto tile_entity = make_tile(mRegistry, TileIndex {42});
@@ -40,11 +40,11 @@ TEST_F(TileTest, MakeTile)
   EXPECT_EQ(tile.objects.size(), 0);
 }
 
-// tactile::make_tile [Registry&, const ir::Tile&]
+// tactile::core::make_tile [Registry&, const ir::Tile&]
 TEST_F(TileTest, MakeTileFromIR)
 {
   ObjectID next_object_id {30};
-  const auto ir_tile = make_complex_ir_tile(TileIndex {74}, next_object_id);
+  const auto ir_tile = test::make_complex_ir_tile(TileIndex {74}, next_object_id);
 
   const auto tile_id = make_tile(mRegistry, ir_tile);
   ASSERT_TRUE(tile_id.has_value());
@@ -53,7 +53,7 @@ TEST_F(TileTest, MakeTileFromIR)
   compare_tile(mRegistry, *tile_id, ir_tile);
 }
 
-// tactile::destroy_tile
+// tactile::core::destroy_tile
 TEST_F(TileTest, DestroyTile)
 {
   const auto tile_entity = make_tile(mRegistry, TileIndex {10});
@@ -82,7 +82,7 @@ TEST_F(TileTest, DestroyTile)
   EXPECT_EQ(mRegistry.count<CObject>(), 0);
 }
 
-// tactile::copy_tile
+// tactile::core::copy_tile
 TEST_F(TileTest, CopyTile)
 {
   const auto e1 = make_tile(mRegistry, TileIndex {35});
@@ -111,7 +111,7 @@ TEST_F(TileTest, CopyTile)
   EXPECT_NE(tile2.objects, tile1.objects);
 }
 
-// tactile::is_tile_plain
+// tactile::core::is_tile_plain
 TEST_F(TileTest, IsTilePlain)
 {
   const auto id1 = make_tile(mRegistry, TileIndex {1});
@@ -147,4 +147,4 @@ TEST_F(TileTest, IsTilePlain)
   EXPECT_FALSE(is_tile_plain(mRegistry, id5));  // Has component
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

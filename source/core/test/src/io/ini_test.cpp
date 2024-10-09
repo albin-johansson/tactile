@@ -4,10 +4,10 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::core {
 
 /**
- * \trace tactile::parse_ini
+ * \trace tactile::core::parse_ini
  */
 TEST(Ini, ParseIni)
 {
@@ -28,4 +28,4 @@ TEST(Ini, ParseIni)
   EXPECT_TRUE(ini->at("s3").empty());
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

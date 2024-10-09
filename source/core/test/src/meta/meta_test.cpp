@@ -9,9 +9,9 @@
 #include "tactile/core/test/ir_comparison.hpp"
 #include "tactile/test_util/ir_presets.hpp"
 
-namespace tactile::test {
+namespace tactile::core {
 
-// tactile::is_meta
+// tactile::core::is_meta
 TEST(Meta, IsMeta)
 {
   Registry registry {};
@@ -24,7 +24,7 @@ TEST(Meta, IsMeta)
   EXPECT_TRUE(is_meta(registry, meta_id));
 }
 
-// tactile::convert_ir_metadata
+// tactile::core::convert_ir_metadata
 TEST(Meta, ConvertIrMetadata)
 {
   Registry registry {};
@@ -32,10 +32,10 @@ TEST(Meta, ConvertIrMetadata)
   const auto meta_id = registry.make_entity();
   registry.add<CMeta>(meta_id);
 
-  const auto ir_metadata = make_complex_ir_metadata("Meta");
+  const auto ir_metadata = test::make_complex_ir_metadata("Meta");
   convert_ir_metadata(registry, meta_id, ir_metadata);
 
   compare_meta(registry, meta_id, ir_metadata);
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core

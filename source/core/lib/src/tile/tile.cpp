@@ -9,7 +9,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/tile/animation.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace tile {
 
 [[nodiscard]]
@@ -121,4 +121,4 @@ auto is_tile_plain(const Registry& registry, const EntityID tile_id) -> bool
          meta.components.empty();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

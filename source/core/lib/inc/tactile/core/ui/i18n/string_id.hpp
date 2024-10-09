@@ -6,7 +6,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 /**
  * Provides identifiers for all user-facing strings.
@@ -162,4 +162,4 @@ enum class StringID : std::size_t
   kMAX
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

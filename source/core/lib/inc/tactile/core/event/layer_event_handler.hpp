@@ -4,7 +4,7 @@
 
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 class EventDispatcher;
@@ -98,4 +98,4 @@ class LayerEventHandler final
   Model* mModel;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

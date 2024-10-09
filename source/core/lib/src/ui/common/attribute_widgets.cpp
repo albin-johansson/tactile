@@ -16,7 +16,7 @@
 #include "tactile/core/ui/common/widgets.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 inline namespace attribute_widgets {
 
 using AttributeTypeNameArray = std::array<const char*, 13>;
@@ -411,4 +411,4 @@ auto push_attribute_type_combo(const Language& language,
   return changed;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui

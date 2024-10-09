@@ -6,7 +6,7 @@
 
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 ScopeProfiler::ScopeProfiler(const char* description) noexcept
   : mDescription {description ? description : "?"},
@@ -25,4 +25,4 @@ ScopeProfiler::~ScopeProfiler() noexcept
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

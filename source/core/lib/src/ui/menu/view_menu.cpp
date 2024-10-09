@@ -14,7 +14,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/core/ui/shortcuts.hpp"
 
-namespace tactile::ui {
+namespace tactile::core::ui {
 
 void ViewMenu::push(const Model& model, EventDispatcher& dispatcher)
 {
@@ -199,4 +199,4 @@ void ViewMenu::_push_theme_menu(const Language& language, EventDispatcher& dispa
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core::ui
