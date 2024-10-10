@@ -8,12 +8,12 @@
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/runtime.hpp"
+#include "tactile/base/runtime/runtime.hpp"
 #include "tactile/runtime/api.hpp"
 
 struct ImGuiContext;
 
-namespace tactile {
+namespace tactile::runtime {
 
 struct CommandLineOptions;
 
@@ -78,4 +78,4 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
   std::unique_ptr<Data> mData;
 };
 
-}  // namespace tactile
+}  // namespace tactile::runtime

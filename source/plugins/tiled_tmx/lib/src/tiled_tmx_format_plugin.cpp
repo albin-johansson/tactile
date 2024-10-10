@@ -10,13 +10,13 @@ namespace tactile {
 
 void TiledTmxFormatPlugin::load(IRuntime* runtime)
 {
-  log(LogLevel::kTrace, "Loading Tiled TMX format plugin");
+  runtime::log(LogLevel::kTrace, "Loading Tiled TMX format plugin");
   mRuntime = runtime;
 }
 
 void TiledTmxFormatPlugin::unload()
 {
-  log(LogLevel::kTrace, "Unloading Tiled TMX format plugin");
+  runtime::log(LogLevel::kTrace, "Unloading Tiled TMX format plugin");
   mRuntime = nullptr;
 }
 

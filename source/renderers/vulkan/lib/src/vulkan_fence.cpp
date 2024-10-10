@@ -53,7 +53,7 @@ auto create_vulkan_fence(VkDevice device, const VkFenceCreateFlags flags)
   const auto result = vkCreateFence(device, &create_info, nullptr, &fence.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan fence: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan fence: {}", to_string(result));
     return std::unexpected {result};
   }
 

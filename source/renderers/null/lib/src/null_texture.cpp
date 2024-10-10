@@ -25,10 +25,10 @@ auto NullTexture::load(std::filesystem::path path) -> std::expected<NullTexture,
       stbi_load(path_string.c_str(), &size.width, &size.height, nullptr, STBI_default);
 
   if (!pixels) {
-    log(LogLevel::kError,
-        "Could not load texture '{}': {}",
-        path_string,
-        stbi_failure_reason());
+    runtime::log(LogLevel::kError,
+                 "Could not load texture '{}': {}",
+                 path_string,
+                 stbi_failure_reason());
     return std::unexpected {ErrorCode::kBadImage};
   }
 

@@ -29,7 +29,9 @@ auto _pick_image_format(VkPhysicalDevice physical_device, VkSurfaceKHR surface)
                                                      nullptr);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not get Vulkan surface format count: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not get Vulkan surface format count: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -40,7 +42,9 @@ auto _pick_image_format(VkPhysicalDevice physical_device, VkSurfaceKHR surface)
                                                 surface_formats.data());
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not get Vulkan surface formats: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not get Vulkan surface formats: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -84,7 +88,9 @@ auto _pick_present_mode(VkPhysicalDevice physical_device,
                                                           nullptr);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not get Vulkan present mode count: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not get Vulkan present mode count: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -95,15 +101,17 @@ auto _pick_present_mode(VkPhysicalDevice physical_device,
                                                      present_modes.data());
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not get Vulkan present modes: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not get Vulkan present modes: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
   const auto preferred_present_mode = _get_preferred_present_mode(options);
 
-  log(LogLevel::kTrace,
-      "Preferred presentation mode is '{}'",
-      magic_enum::enum_name(preferred_present_mode));
+  runtime::log(LogLevel::kTrace,
+               "Preferred presentation mode is '{}'",
+               magic_enum::enum_name(preferred_present_mode));
 
   for (const auto present_mode : present_modes) {
     if (present_mode == preferred_present_mode) {
@@ -124,7 +132,9 @@ auto _get_swapchain_images(VkDevice device, VkSwapchainKHR swapchain)
   auto result = vkGetSwapchainImagesKHR(device, swapchain, &image_count, nullptr);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not get Vulkan swapchain image count: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not get Vulkan swapchain image count: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -132,7 +142,9 @@ auto _get_swapchain_images(VkDevice device, VkSwapchainKHR swapchain)
   result = vkGetSwapchainImagesKHR(device, swapchain, &image_count, images.data());
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not get Vulkan swapchain images: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not get Vulkan swapchain images: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -252,7 +264,7 @@ auto create_vulkan_swapchain(VkSurfaceKHR surface,
       vkCreateSwapchainKHR(device, &swapchain_info, nullptr, &swapchain.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan swapchain: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan swapchain: {}", to_string(result));
     return std::unexpected {result};
   }
 
@@ -317,29 +329,31 @@ auto create_vulkan_swapchain(VkSurfaceKHR surface,
                                       ? VK_SHARING_MODE_CONCURRENT
                                       : VK_SHARING_MODE_EXCLUSIVE;
 
-  log(LogLevel::kDebug,
-      "Using image sharing mode '{}'",
-      magic_enum::enum_name(image_sharing_mode));
+  runtime::log(LogLevel::kDebug,
+               "Using image sharing mode '{}'",
+               magic_enum::enum_name(image_sharing_mode));
 
   const auto surface_format = _pick_image_format(physical_device, surface);
   if (!surface_format.has_value()) {
     return std::unexpected {surface_format.error()};
   }
 
-  log(LogLevel::kDebug,
-      "Using surface format '{}'",
-      magic_enum::enum_name(surface_format->format));
+  runtime::log(LogLevel::kDebug,
+               "Using surface format '{}'",
+               magic_enum::enum_name(surface_format->format));
 
-  log(LogLevel::kDebug,
-      "Using surface color space '{}'",
-      magic_enum::enum_name(surface_format->colorSpace));
+  runtime::log(LogLevel::kDebug,
+               "Using surface color space '{}'",
+               magic_enum::enum_name(surface_format->colorSpace));
 
   const auto present_mode = _pick_present_mode(physical_device, surface, options);
   if (!present_mode.has_value()) {
     return std::unexpected {present_mode.error()};
   }
 
-  log(LogLevel::kDebug, "Using presentation mode '{}'", magic_enum::enum_name(*present_mode));
+  runtime::log(LogLevel::kDebug,
+               "Using presentation mode '{}'",
+               magic_enum::enum_name(*present_mode));
 
   const VulkanSwapchainParams params {
     .image_extent = VkExtent2D {image_width, image_height},

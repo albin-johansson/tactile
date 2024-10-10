@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 /**
  * RAII type that manages the initialization of the SDL library.
@@ -22,4 +22,4 @@ class TACTILE_RUNTIME_API SDLContext final
   ~SDLContext() noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::runtime

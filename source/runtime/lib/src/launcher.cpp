@@ -12,13 +12,13 @@
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/engine/engine.hpp"
 #include "tactile/core/log/logger.hpp"
-#include "tactile/core/platform/dynamic_library.hpp"
 #include "tactile/core/tactile_app.hpp"
 #include "tactile/runtime/command_line_options.hpp"
+#include "tactile/runtime/dynamic_library.hpp"
 #include "tactile/runtime/plugin_instance.hpp"
 #include "tactile/runtime/runtime.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 namespace {
 
 [[nodiscard]]
@@ -140,4 +140,4 @@ auto launch(const int argc, char* argv[]) -> int
   return EXIT_FAILURE;
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

@@ -57,7 +57,9 @@ auto create_vulkan_shader_module(VkDevice device, std::span<const std::uint32_t>
       vkCreateShaderModule(device, &create_info, nullptr, &shader_module.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan shader module: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan shader module: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 

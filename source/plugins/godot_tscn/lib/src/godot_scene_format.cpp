@@ -74,7 +74,7 @@ auto GodotSceneFormat::save_map(const IMapView& map,
     return std::unexpected {ErrorCode::kNotSupported};
   }
   catch (const std::exception& error) {
-    log(LogLevel::kError, "Unexpected Godot export error: {}", error.what());
+    runtime::log(LogLevel::kError, "Unexpected Godot export error: {}", error.what());
   }
 
   return std::unexpected {ErrorCode::kUnknown};

@@ -77,7 +77,9 @@ auto create_vulkan_image_view(VkDevice device,
   const auto result = vkCreateImageView(device, &image_view_info, nullptr, &image_view.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan image view: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan image view: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 

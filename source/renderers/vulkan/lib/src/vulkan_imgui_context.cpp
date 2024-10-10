@@ -45,9 +45,9 @@ auto _create_imgui_descriptor_set_layout(VkDevice device)
       vkCreateDescriptorSetLayout(device, &create_info, nullptr, &layout.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError,
-        "Could not create Vulkan ImGui descriptor set layout: {}",
-        to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan ImGui descriptor set layout: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -80,9 +80,9 @@ auto _create_imgui_pipeline_layout(VkDevice device,
   const auto result = vkCreatePipelineLayout(device, &create_info, nullptr, &layout.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError,
-        "Could not create Vulkan ImGui pipeline layout: {}",
-        to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan ImGui pipeline layout: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -288,7 +288,9 @@ auto _create_imgui_graphics_pipeline(VkDevice device,
       vkCreateGraphicsPipelines(device, nullptr, 1, &create_info, nullptr, &pipeline.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan ImGui pipeline: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan ImGui pipeline: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 
@@ -304,32 +306,33 @@ auto VulkanImGuiContext::init(IWindow& window, ImGui_ImplVulkan_InitInfo& vulkan
 
   context.m_ctx = ImGui::CreateContext();
   if (!context.m_ctx) {
-    log(LogLevel::kError, "Could not create ImGui context");
+    runtime::log(LogLevel::kError, "Could not create ImGui context");
     return std::nullopt;
   }
 
   context.m_context_deleter = ScopeExit {[ctx = context.m_ctx] {
-    log(LogLevel::kTrace, "ImGui::DestroyContext");
+    runtime::log(LogLevel::kTrace, "ImGui::DestroyContext");
     ImGui::DestroyContext(ctx);
   }};
 
   if (!ImGui_ImplSDL2_InitForVulkan(window.get_handle())) {
-    log(LogLevel::kError, "Could not initialize SDL2 ImGui backend implementation");
+    runtime::log(LogLevel::kError, "Could not initialize SDL2 ImGui backend implementation");
     return std::nullopt;
   }
 
   context.m_backend_impl_deleter = ScopeExit {[] {
-    log(LogLevel::kTrace, "ImGui_ImplSDL2_Shutdown");
+    runtime::log(LogLevel::kTrace, "ImGui_ImplSDL2_Shutdown");
     ImGui_ImplSDL2_Shutdown();
   }};
 
   if (!ImGui_ImplVulkan_Init(&vulkan_info)) {
-    log(LogLevel::kError, "Could not initialize Vulkan ImGui renderer implementation");
+    runtime::log(LogLevel::kError,
+                 "Could not initialize Vulkan ImGui renderer implementation");
     return std::nullopt;
   }
 
   context.m_renderer_impl_deleter = ScopeExit {[] {
-    log(LogLevel::kTrace, "ImGui_ImplVulkan_Shutdown");
+    runtime::log(LogLevel::kTrace, "ImGui_ImplVulkan_Shutdown");
     ImGui_ImplVulkan_Shutdown();
   }};
 

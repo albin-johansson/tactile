@@ -23,7 +23,7 @@
 #include "tactile/runtime/sdl_context.hpp"
 #include "tactile/runtime/window.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 namespace {
 
 [[nodiscard]]
@@ -199,4 +199,4 @@ auto Runtime::get_renderer_options() const -> const RendererOptions&
   return mData->renderer_options;
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

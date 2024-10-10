@@ -28,7 +28,7 @@ namespace tactile {
 [[nodiscard]]
 inline auto load_json(const std::filesystem::path& path) -> std::optional<nlohmann::json>
 {
-  log(LogLevel::kDebug, "Parsing JSON: {}", path.string());
+  runtime::log(LogLevel::kDebug, "Parsing JSON: {}", path.string());
 
   try {
     std::ifstream stream {path, std::ios::in};
@@ -39,13 +39,13 @@ inline auto load_json(const std::filesystem::path& path) -> std::optional<nlohma
       return json;
     }
 
-    log(LogLevel::kError, "Could not open JSON file");
+    runtime::log(LogLevel::kError, "Could not open JSON file");
   }
   catch (const std::exception& error) {
-    log(LogLevel::kError, "JSON parse error: {}", error.what());
+    runtime::log(LogLevel::kError, "JSON parse error: {}", error.what());
   }
   catch (...) {
-    log(LogLevel::kError, "JSON parse error");
+    runtime::log(LogLevel::kError, "JSON parse error");
   }
 
   return std::nullopt;
@@ -66,7 +66,7 @@ inline auto save_json(const std::filesystem::path& path,
                       const nlohmann::json& json,
                       const int indentation) -> std::expected<void, ErrorCode>
 {
-  log(LogLevel::kDebug, "Saving JSON: {}", path.string());
+  runtime::log(LogLevel::kDebug, "Saving JSON: {}", path.string());
 
   try {
     std::ofstream stream {path, std::ios::out | std::ios::trunc};
@@ -76,13 +76,13 @@ inline auto save_json(const std::filesystem::path& path,
       return {};
     }
 
-    log(LogLevel::kError, "Could not open JSON stream");
+    runtime::log(LogLevel::kError, "Could not open JSON stream");
   }
   catch (const std::exception& error) {
-    log(LogLevel::kError, "JSON save error: {}", error.what());
+    runtime::log(LogLevel::kError, "JSON save error: {}", error.what());
   }
   catch (...) {
-    log(LogLevel::kError, "JSON save error");
+    runtime::log(LogLevel::kError, "JSON save error");
   }
 
   return std::unexpected {ErrorCode::kBadFileStream};

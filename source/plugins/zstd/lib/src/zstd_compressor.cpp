@@ -41,7 +41,9 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const
                                                 ZSTD_CLEVEL_DEFAULT);
 
   if (ZSTD_isError(written_byte_count)) {
-    log(LogLevel::kError, "Compression failed: {}", ZSTD_getErrorName(written_byte_count));
+    runtime::log(LogLevel::kError,
+                 "Compression failed: {}",
+                 ZSTD_getErrorName(written_byte_count));
     return std::unexpected {ErrorCode::kCouldNotCompress};
   }
 
@@ -56,15 +58,15 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
 {
   const zstd_compressor_impl::UniqueDStream stream {ZSTD_createDStream()};
   if (!stream) {
-    log(LogLevel::kError, "Could not create stream");
+    runtime::log(LogLevel::kError, "Could not create stream");
     return std::unexpected {ErrorCode::kOutOfMemory};
   }
 
   const auto init_stream_result = ZSTD_initDStream(stream.get());
   if (ZSTD_isError(init_stream_result)) {
-    log(LogLevel::kError,
-        "Could not initialize stream: {}",
-        ZSTD_getErrorName(init_stream_result));
+    runtime::log(LogLevel::kError,
+                 "Could not initialize stream: {}",
+                 ZSTD_getErrorName(init_stream_result));
     return std::unexpected {ErrorCode::kBadInit};
   }
 
@@ -100,7 +102,9 @@ auto ZstdCompressor::decompress(const ByteSpan input_data) const
         ZSTD_decompressStream(stream.get(), &output_view, &input_view);
 
     if (ZSTD_isError(decompress_result)) {
-      log(LogLevel::kError, "Decompression failed: {}", ZSTD_getErrorName(decompress_result));
+      runtime::log(LogLevel::kError,
+                   "Decompression failed: {}",
+                   ZSTD_getErrorName(decompress_result));
       return std::unexpected {ErrorCode::kCouldNotDecompress};
     }
 

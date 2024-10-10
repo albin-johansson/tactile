@@ -7,7 +7,7 @@
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 void WindowHandleDeleter::operator()(SDL_Window* window) noexcept
 {
@@ -58,4 +58,4 @@ auto Window::get_handle() -> SDL_Window*
   return mWindow.get();
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

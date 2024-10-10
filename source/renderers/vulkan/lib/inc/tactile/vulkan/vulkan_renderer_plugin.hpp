@@ -5,8 +5,8 @@
 #include <memory>  // unique_ptr
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/runtime/plugin.hpp"
 #include "tactile/base/util/scope_exit.hpp"
-#include "tactile/runtime/plugin.hpp"
 #include "tactile/vulkan/api.hpp"
 #include "tactile/vulkan/vulkan_renderer.hpp"
 

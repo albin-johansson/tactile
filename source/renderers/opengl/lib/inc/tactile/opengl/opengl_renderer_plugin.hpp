@@ -5,9 +5,9 @@
 #include <optional>  // optional
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/runtime/plugin.hpp"
 #include "tactile/opengl/api.hpp"
 #include "tactile/opengl/opengl_renderer.hpp"
-#include "tactile/runtime/plugin.hpp"
 
 namespace tactile {
 

@@ -6,5 +6,5 @@
 
 auto main(const int argc, char* argv[]) -> int
 {
-  return tactile::launch(argc, argv);
+  return tactile::runtime::launch(argc, argv);
 }

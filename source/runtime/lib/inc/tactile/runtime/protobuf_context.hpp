@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 /**
  * RAII type that handles the initialization of the Protobuf library.
@@ -28,4 +28,4 @@ class TACTILE_RUNTIME_API ProtobufContext final
   ~ProtobufContext() noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::runtime

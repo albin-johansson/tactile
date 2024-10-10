@@ -7,7 +7,7 @@
 #include <SDL2/SDL.h>
 #include <imgui.h>
 
-#include "tactile/base/runtime.hpp"
+#include "tactile/base/runtime/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile {
@@ -42,7 +42,7 @@ void OpenGLRendererPlugin::load(IRuntime* runtime)
   auto* window = m_runtime->get_window();
 
   if (!window) {
-    log(LogLevel::kError, "Could not initialize OpenGL window");
+    runtime::log(LogLevel::kError, "Could not initialize OpenGL window");
     return;
   }
 

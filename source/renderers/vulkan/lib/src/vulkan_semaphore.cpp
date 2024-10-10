@@ -53,7 +53,7 @@ auto create_vulkan_semaphore(VkDevice device) -> std::expected<VulkanSemaphore, 
   const auto result = vkCreateSemaphore(device, &create_info, nullptr, &semaphore.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan semaphore: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan semaphore: {}", to_string(result));
     return std::unexpected {result};
   }
 

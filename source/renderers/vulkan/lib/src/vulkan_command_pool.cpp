@@ -57,7 +57,9 @@ auto create_vulkan_command_pool(VkDevice device,
   const auto result = vkCreateCommandPool(device, &pool_info, nullptr, &command_pool.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan command pool: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan command pool: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 

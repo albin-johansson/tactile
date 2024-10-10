@@ -9,7 +9,7 @@
 
 #include <argparse/argparse.hpp>
 
-namespace tactile {
+namespace tactile::runtime {
 namespace {
 
 constexpr const char* kUsageHelpMessage =
@@ -173,4 +173,4 @@ auto parse_command_line_options(const int argc, char* argv[])
   return options;
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

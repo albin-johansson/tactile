@@ -7,7 +7,7 @@
 #include "tactile/core/debug/exception.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 SDLContext::SDLContext()
 {
@@ -28,4 +28,4 @@ SDLContext::~SDLContext() noexcept
   SDL_Quit();
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

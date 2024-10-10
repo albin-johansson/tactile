@@ -51,6 +51,8 @@ target_sources(tactile-base
                "inc/tactile/base/render/renderer_options.hpp"
                "inc/tactile/base/render/texture.hpp"
                "inc/tactile/base/render/window.hpp"
+               "inc/tactile/base/runtime/plugin.hpp"
+               "inc/tactile/base/runtime/runtime.hpp"
                "inc/tactile/base/util/buffer.hpp"
                "inc/tactile/base/util/chrono.hpp"
                "inc/tactile/base/util/concepts.hpp"
@@ -61,5 +63,4 @@ target_sources(tactile-base
                "inc/tactile/base/util/tile_matrix.hpp"
                "inc/tactile/base/id.hpp"
                "inc/tactile/base/prelude.hpp"
-               "inc/tactile/base/runtime.hpp"
                )

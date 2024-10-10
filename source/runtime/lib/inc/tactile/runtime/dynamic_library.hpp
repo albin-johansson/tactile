@@ -6,6 +6,7 @@
 #include <memory>      // unique_ptr
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/runtime/api.hpp"
 
 #if TACTILE_OS_WINDOWS
   #define TACTILE_DLL_EXT ".dll"
@@ -15,7 +16,7 @@
   #define TACTILE_DLL_EXT ".so"
 #endif
 
-namespace tactile::core {
+namespace tactile::runtime {
 
 /**
  * Interface for dynamically loaded libraries.
@@ -64,7 +65,8 @@ class IDynamicLibrary
  * The loaded library if successful; a null pointer otherwise.
  */
 [[nodiscard]]
-auto load_library(const std::filesystem::path& path) -> std::unique_ptr<IDynamicLibrary>;
+TACTILE_RUNTIME_API auto load_library(const std::filesystem::path& path)
+    -> std::unique_ptr<IDynamicLibrary>;
 
 /**
  * Attempts to find a symbol in a dynamic library.
@@ -85,4 +87,4 @@ template <typename T>
   return reinterpret_cast<T*>(lib.find_symbol(name));
 }
 
-}  // namespace tactile::core
+}  // namespace tactile::runtime

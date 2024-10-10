@@ -6,7 +6,7 @@
 
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 ProtobufContext::ProtobufContext()
 {
@@ -24,4 +24,4 @@ ProtobufContext::~ProtobufContext() noexcept
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

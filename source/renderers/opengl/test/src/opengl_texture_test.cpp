@@ -23,7 +23,7 @@ class OpenGLTextureTest : public testing::Test
     mPlugin.unload();
   }
 
-  Runtime mRuntime {get_default_command_line_options()};
+  runtime::Runtime mRuntime {runtime::get_default_command_line_options()};
   OpenGLRendererPlugin mPlugin {};
   RendererOptions m_options {};
 };

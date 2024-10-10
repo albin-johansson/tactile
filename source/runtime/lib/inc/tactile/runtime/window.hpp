@@ -13,7 +13,7 @@
 
 struct SDL_Window;
 
-namespace tactile {
+namespace tactile::runtime {
 
 /**
  * Custom deleter for an SDL window.
@@ -65,4 +65,4 @@ class TACTILE_RUNTIME_API Window final : public IWindow
   explicit Window(SDL_Window* window);
 };
 
-}  // namespace tactile
+}  // namespace tactile::runtime

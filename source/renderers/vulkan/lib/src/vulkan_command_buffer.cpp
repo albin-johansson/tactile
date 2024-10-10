@@ -61,7 +61,9 @@ auto create_vulkan_command_buffer(VkDevice device, VkCommandPool pool)
       vkAllocateCommandBuffers(device, &command_buffer_allocate_info, &command_buffer.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan command buffer: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan command buffer: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 

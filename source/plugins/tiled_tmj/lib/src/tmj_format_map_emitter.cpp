@@ -13,7 +13,7 @@ namespace tactile {
 auto emit_tiled_tmj_map(const IMapView& map) -> nlohmann::json
 {
   if (map.component_count() > 0) {
-    log(LogLevel::kWarn, "Components are ignored in Tiled TMJ save files");
+    runtime::log(LogLevel::kWarn, "Components are ignored in Tiled TMJ save files");
   }
 
   const auto extent = map.get_extent();

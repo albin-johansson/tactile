@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/platform/dynamic_library.hpp"
+#include "tactile/runtime/dynamic_library.hpp"
 
 #if TACTILE_OS_LINUX || TACTILE_OS_APPLE
   #include <dlfcn.h>
@@ -12,8 +12,8 @@
 
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile::core {
-inline namespace dynamic_library {
+namespace tactile::runtime {
+namespace {
 
 #if TACTILE_OS_LINUX || TACTILE_OS_APPLE
 
@@ -105,7 +105,7 @@ class Win32DynamicLibrary final : public IDynamicLibrary
 
 #endif  // TACTILE_OS_WINDOWS
 
-}  // namespace dynamic_library
+}  // namespace
 
 auto load_library(const std::filesystem::path& path) -> std::unique_ptr<IDynamicLibrary>
 {
@@ -118,4 +118,4 @@ auto load_library(const std::filesystem::path& path) -> std::unique_ptr<IDynamic
 #endif  // TACTILE_OS_WINDOWS
 }
 
-}  // namespace tactile::core
+}  // namespace tactile::runtime

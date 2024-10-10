@@ -7,16 +7,13 @@
 #include <string_view>  // string_view
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/runtime/plugin.hpp"
+#include "tactile/base/runtime/runtime.hpp"
 #include "tactile/runtime/api.hpp"
-#include "tactile/runtime/plugin.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
-class IRuntime;
-
-namespace core {
 class IDynamicLibrary;
-}  // namespace core
 
 /**
  * Represents a loaded plugin instance.
@@ -62,15 +59,15 @@ class TACTILE_RUNTIME_API PluginInstance final
 
  private:
   IRuntime* mRuntime;
-  std::unique_ptr<core::IDynamicLibrary> mDLL;
+  std::unique_ptr<IDynamicLibrary> mDLL;
   PluginDestructor* mPluginDestructor;
   IPlugin* mPlugin;
   bool mPrimed;
 
   PluginInstance(IRuntime* runtime,
-                 std::unique_ptr<core::IDynamicLibrary> dll,
+                 std::unique_ptr<IDynamicLibrary> dll,
                  PluginDestructor* plugin_destructor,
                  IPlugin* plugin);
 };
 
-}  // namespace tactile
+}  // namespace tactile::runtime

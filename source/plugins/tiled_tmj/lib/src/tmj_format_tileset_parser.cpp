@@ -209,7 +209,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
     const auto& source = source_iter->get_ref<const std::string&>();
 
     const auto tileset_path = options.base_dir / source;
-    log(LogLevel::kDebug, "Loading external tileset: {}", tileset_path.string());
+    runtime::log(LogLevel::kDebug, "Loading external tileset: {}", tileset_path.string());
 
     std::ifstream stream {tileset_path, std::ios::in};
     nlohmann::json external_tileset_json {};

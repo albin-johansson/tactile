@@ -73,7 +73,7 @@ auto create_vulkan_device(VkPhysicalDevice physical_device,
 
   if (!queue_family_indices.graphics.has_value() ||
       !queue_family_indices.present.has_value()) {
-    log(LogLevel::kError, "Missing Vulkan graphics or presentation queue");
+    runtime::log(LogLevel::kError, "Missing Vulkan graphics or presentation queue");
     return std::unexpected {VK_ERROR_UNKNOWN};
   }
 
@@ -105,7 +105,7 @@ auto create_vulkan_device(VkPhysicalDevice physical_device,
 
   const auto enabled_extensions = _get_device_extensions();
   for (const auto* extension : enabled_extensions) {
-    log(LogLevel::kDebug, "Using Vulkan device extension '{}'", extension);
+    runtime::log(LogLevel::kDebug, "Using Vulkan device extension '{}'", extension);
   }
 
   constexpr VkPhysicalDeviceFeatures enabled_features {};
@@ -135,7 +135,7 @@ auto create_vulkan_device(VkPhysicalDevice physical_device,
 
   const auto result = vkCreateDevice(physical_device, &device_info, nullptr, &device.handle);
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan device: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan device: {}", to_string(result));
     return std::unexpected {result};
   }
 

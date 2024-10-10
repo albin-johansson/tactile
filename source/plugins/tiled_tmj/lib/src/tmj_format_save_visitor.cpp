@@ -88,7 +88,7 @@ auto TmjFormatSaveVisitor::visit(const IObjectView& object) -> std::expected<voi
     tile_json.at("objectgroup").at("objects").push_back(std::move(object_json));
   }
   else {
-    log(LogLevel::kError, "Object {} has no parent layer or tile", object.get_id());
+    runtime::log(LogLevel::kError, "Object {} has no parent layer or tile", object.get_id());
     return std::unexpected {ErrorCode::kBadState};
   }
 

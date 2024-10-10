@@ -66,9 +66,9 @@ auto create_vulkan_imgui_descriptor_pool(VkDevice device)
       vkCreateDescriptorPool(device, &descriptor_pool_info, nullptr, &descriptor_pool.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError,
-        "Could not create Vulkan ImGui descriptor pool: {}",
-        to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not create Vulkan ImGui descriptor pool: {}",
+                 to_string(result));
     return std::unexpected {result};
   }
 

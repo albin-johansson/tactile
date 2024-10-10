@@ -9,7 +9,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 namespace internal {
 
 TACTILE_RUNTIME_API void log(LogLevel level, std::string_view fmt, std::format_args args);
@@ -31,4 +31,4 @@ void log(const LogLevel level, const std::string_view fmt, const Args&... args)
   internal::log(level, fmt, std::make_format_args(args...));
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

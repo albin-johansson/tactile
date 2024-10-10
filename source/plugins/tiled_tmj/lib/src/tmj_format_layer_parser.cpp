@@ -11,7 +11,7 @@
 #include "tactile/base/io/compress/compressor.hpp"
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/index_2d.hpp"
-#include "tactile/base/runtime.hpp"
+#include "tactile/base/runtime/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/tiled_tmj/tmj_format_attribute_parser.hpp"
 #include "tactile/tiled_tmj/tmj_format_object_parser.hpp"
@@ -64,9 +64,9 @@ auto parse_base64_tile_data(const IRuntime& runtime,
 
     auto decompressed_bytes = compression_format->decompress(decoded_bytes);
     if (!decompressed_bytes.has_value()) {
-      log(LogLevel::kError,
-          "Could not decompress tile data: {}",
-          to_string(decompressed_bytes.error()));
+      runtime::log(LogLevel::kError,
+                   "Could not decompress tile data: {}",
+                   to_string(decompressed_bytes.error()));
       return std::unexpected {ErrorCode::kParseError};
     }
 
@@ -95,10 +95,10 @@ auto parse_csv_tile_data(const nlohmann::json& data_json, ir::Layer& layer)
   const auto expected_tile_count = layer.extent.rows * layer.extent.cols;
 
   if (std::cmp_not_equal(real_tile_count, expected_tile_count)) {
-    log(LogLevel::kError,
-        "Bad tile layer tile count, expected {} but got {}",
-        expected_tile_count,
-        real_tile_count);
+    runtime::log(LogLevel::kError,
+                 "Bad tile layer tile count, expected {} but got {}",
+                 expected_tile_count,
+                 real_tile_count);
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -149,7 +149,7 @@ auto parse_tile_layer(const IRuntime& runtime,
       compression = CompressionFormat::kZstd;
     }
     else {
-      log(LogLevel::kError, "Invalid tile compression format: {}", compression_name);
+      runtime::log(LogLevel::kError, "Invalid tile compression format: {}", compression_name);
       return std::unexpected {ErrorCode::kParseError};
     }
   }
@@ -175,7 +175,7 @@ auto parse_tile_layer(const IRuntime& runtime,
     }
   }
   else {
-    log(LogLevel::kError, "Invalid tile layer encoding: {}", encoding);
+    runtime::log(LogLevel::kError, "Invalid tile layer encoding: {}", encoding);
     return std::unexpected {ErrorCode::kParseError};
   }
 

@@ -5,9 +5,9 @@
 #include <memory>  // unique_ptr
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/runtime/plugin.hpp"
 #include "tactile/null_renderer/api.hpp"
 #include "tactile/null_renderer/null_renderer.hpp"
-#include "tactile/runtime/plugin.hpp"
 
 namespace tactile::null_renderer {
 

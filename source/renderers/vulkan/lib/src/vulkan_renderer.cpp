@@ -75,7 +75,7 @@ VulkanRenderer::VulkanRenderer(const RendererOptions& options, IWindow* window)
   vkGetDeviceQueue(m_device.handle, m_device.presentation_queue_family, 0, &m_present_queue);
 
   if (m_graphics_queue == VK_NULL_HANDLE || m_present_queue == VK_NULL_HANDLE) {
-    log(LogLevel::kError, "Could not get Vulkan device queues");
+    runtime::log(LogLevel::kError, "Could not get Vulkan device queues");
     throw std::runtime_error {"Could not get Vulkan device queues"};
   }
 
@@ -283,7 +283,7 @@ auto VulkanRenderer::_reset_and_begin_command_buffer(const VulkanFrame& frame) -
   auto result = vkResetCommandBuffer(frame.command_buffer.handle, 0);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not reset command buffer: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not reset command buffer: {}", to_string(result));
     return result;
   }
 
@@ -296,7 +296,7 @@ auto VulkanRenderer::_reset_and_begin_command_buffer(const VulkanFrame& frame) -
 
   result = vkBeginCommandBuffer(frame.command_buffer.handle, &command_buffer_begin_info);
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not begin command buffer: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not begin command buffer: {}", to_string(result));
   }
 
   return result;
@@ -470,7 +470,9 @@ void VulkanRenderer::_end_command_buffer(const VulkanFrame& frame)
 {
   if (const auto result = vkEndCommandBuffer(frame.command_buffer.handle);
       result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not end Vulkan command buffer: {}", to_string(result));
+    runtime::log(LogLevel::kError,
+                 "Could not end Vulkan command buffer: {}",
+                 to_string(result));
   }
 }
 
@@ -496,9 +498,9 @@ void VulkanRenderer::_submit_commands()
       vkQueueSubmit(m_graphics_queue, 1, &submit_info, frame.in_flight_fence.handle);
 
   if (submit_result != VK_SUCCESS) {
-    log(LogLevel::kError,
-        "Could not submit commands to Vulkan graphics queue: {}",
-        to_string(submit_result));
+    runtime::log(LogLevel::kError,
+                 "Could not submit commands to Vulkan graphics queue: {}",
+                 to_string(submit_result));
   }
 }
 
@@ -524,24 +526,24 @@ void VulkanRenderer::_present_swapchain_image()
   }
 
   if (result == VK_ERROR_OUT_OF_DATE_KHR) {
-    log(LogLevel::kDebug, "Vulkan swapchain is outdated");
+    runtime::log(LogLevel::kDebug, "Vulkan swapchain is outdated");
     result = _recreate_swapchain();
   }
   else if (result == VK_SUBOPTIMAL_KHR) {
-    log(LogLevel::kDebug, "Vulkan swapchain is suboptimal");
+    runtime::log(LogLevel::kDebug, "Vulkan swapchain is suboptimal");
     result = _recreate_swapchain();
   }
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kWarn,
-        "Could not present image from Vulkan swapchain: {}",
-        to_string(result));
+    runtime::log(LogLevel::kWarn,
+                 "Could not present image from Vulkan swapchain: {}",
+                 to_string(result));
   }
 }
 
 auto VulkanRenderer::_recreate_swapchain() -> VkResult
 {
-  log(LogLevel::kDebug, "Recreating Vulkan swapchain");
+  runtime::log(LogLevel::kDebug, "Recreating Vulkan swapchain");
 
   // Avoid touching resources that may still be in use
   if (const auto wait_result = vkDeviceWaitIdle(m_device.handle); wait_result != VK_SUCCESS) {
@@ -561,10 +563,10 @@ auto VulkanRenderer::_recreate_swapchain() -> VkResult
                                               surface_capabilities.minImageExtent.height,
                                               surface_capabilities.maxImageExtent.height);
 
-  log(LogLevel::kDebug,
-      "New swapchain image extent: {{{}, {}}}",
-      new_params.image_extent.width,
-      new_params.image_extent.height);
+  runtime::log(LogLevel::kDebug,
+               "New swapchain image extent: {{{}, {}}}",
+               new_params.image_extent.width,
+               new_params.image_extent.height);
 
   auto new_swapchain = create_vulkan_swapchain(m_surface.handle,
                                                m_device.handle,
@@ -572,9 +574,9 @@ auto VulkanRenderer::_recreate_swapchain() -> VkResult
                                                new_params,
                                                m_swapchain.handle);
   if (!new_swapchain.has_value()) {
-    log(LogLevel::kError,
-        "Could not recreate Vulkan swapchain: {}",
-        to_string(new_swapchain.error()));
+    runtime::log(LogLevel::kError,
+                 "Could not recreate Vulkan swapchain: {}",
+                 to_string(new_swapchain.error()));
     return new_swapchain.error();
   }
 

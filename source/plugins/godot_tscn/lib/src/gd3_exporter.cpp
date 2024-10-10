@@ -436,7 +436,7 @@ auto _emit_map_file(const Gd3Map& map, const SaveFormatWriteOptions& options)
     -> std::expected<void, ErrorCode>
 {
   const auto path = options.base_dir / "map.tscn";
-  log(LogLevel::kDebug, "Generating map scene '{}'", path.string());
+  runtime::log(LogLevel::kDebug, "Generating map scene '{}'", path.string());
 
   std::ofstream stream {path, std::ios::out | std::ios::trunc};
   if (!stream.good()) {
@@ -481,10 +481,10 @@ auto _save_tileset_images(const Gd3Tileset& tileset, const SaveFormatWriteOption
   for (const auto& tile_atlas : tileset.atlases) {
     const auto dest = options.base_dir / tile_atlas.image_path.filename();  // FIXME
 
-    log(LogLevel::kDebug,
-        "Copying texture '{}' to '{}'",
-        tile_atlas.image_path.filename().string(),
-        dest.string());
+    runtime::log(LogLevel::kDebug,
+                 "Copying texture '{}' to '{}'",
+                 tile_atlas.image_path.filename().string(),
+                 dest.string());
 
     std::error_code copy_error {};
     std::filesystem::copy(tile_atlas.image_path,

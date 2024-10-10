@@ -8,7 +8,7 @@
 
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/base/render/window.hpp"
-#include "tactile/base/runtime.hpp"
+#include "tactile/base/runtime/runtime.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/view_events.hpp"
 #include "tactile/core/log/logger.hpp"

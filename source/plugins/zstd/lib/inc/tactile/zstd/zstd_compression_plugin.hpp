@@ -5,7 +5,7 @@
 #include <memory>  // unique_ptr
 
 #include "tactile/base/prelude.hpp"
-#include "tactile/runtime/plugin.hpp"
+#include "tactile/base/runtime/plugin.hpp"
 #include "tactile/zstd/api.hpp"
 #include "tactile/zstd/zstd_compressor.hpp"
 

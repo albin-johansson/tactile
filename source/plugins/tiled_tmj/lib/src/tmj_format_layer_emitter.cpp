@@ -12,7 +12,7 @@
 #include "tactile/base/io/compress/compressor.hpp"
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
-#include "tactile/base/runtime.hpp"
+#include "tactile/base/runtime/runtime.hpp"
 #include "tactile/runtime/logging.hpp"
 #include "tactile/tiled_tmj/tmj_format_meta_emitter.hpp"
 #include "tactile/tiled_tmj/tmj_format_object_emitter.hpp"
@@ -52,7 +52,7 @@ auto emit_tile_layer(const IRuntime& runtime,
     if (tile_compression.has_value()) {
       const auto* compression_format = runtime.get_compression_format(*tile_compression);
       if (!compression_format) {
-        log(LogLevel::kError, "Could not find suitable compression format");
+        runtime::log(LogLevel::kError, "Could not find suitable compression format");
         return std::unexpected {ErrorCode::kNotSupported};
       }
 

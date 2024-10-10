@@ -12,7 +12,7 @@ namespace tactile::test {
 class TmjFormatTilesetParserTest : public testing::Test
 {
  protected:
-  Runtime mRuntime {get_default_command_line_options()};
+  runtime::Runtime mRuntime {runtime::get_default_command_line_options()};
   SaveFormatReadOptions mOptions {};
 };
 

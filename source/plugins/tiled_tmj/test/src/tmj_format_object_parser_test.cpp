@@ -12,7 +12,7 @@ namespace tactile::test {
 class TmjFormatObjectParserTest : public testing::Test
 {
  private:
-  Runtime mRuntime {get_default_command_line_options()};
+  runtime::Runtime mRuntime {runtime::get_default_command_line_options()};
 };
 
 // tactile::parse_tiled_tmj_object

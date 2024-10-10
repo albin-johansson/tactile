@@ -5,12 +5,12 @@
 #include <utility>  // move, exchange
 
 #include "tactile/core/log/logger.hpp"
-#include "tactile/core/platform/dynamic_library.hpp"
+#include "tactile/runtime/dynamic_library.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 PluginInstance::PluginInstance(IRuntime* runtime,
-                               std::unique_ptr<core::IDynamicLibrary> dll,
+                               std::unique_ptr<IDynamicLibrary> dll,
                                PluginDestructor* plugin_destructor,
                                IPlugin* plugin)
   : mRuntime {runtime},
@@ -40,15 +40,15 @@ PluginInstance::PluginInstance(PluginInstance&& other) noexcept
 auto PluginInstance::load(IRuntime* runtime, const std::string_view plugin_name)
     -> std::optional<PluginInstance>
 {
-  auto dll = core::load_library(plugin_name);
+  auto dll = load_library(plugin_name);
 
   if (!dll) {
     TACTILE_LOG_ERROR("Could not load plugin '{}'", plugin_name);
     return std::nullopt;
   }
 
-  auto* plugin_ctor = core::find_symbol<PluginConstructor>(*dll, "tactile_make_plugin");
-  auto* plugin_dtor = core::find_symbol<PluginDestructor>(*dll, "tactile_free_plugin");
+  auto* plugin_ctor = find_symbol<PluginConstructor>(*dll, "tactile_make_plugin");
+  auto* plugin_dtor = find_symbol<PluginDestructor>(*dll, "tactile_free_plugin");
 
   if (!plugin_ctor || !plugin_dtor) {
     TACTILE_LOG_ERROR("Plugin '{}' has incompatible API", plugin_name);
@@ -68,4 +68,4 @@ auto PluginInstance::load(IRuntime* runtime, const std::string_view plugin_name)
   return PluginInstance {runtime, std::move(dll), plugin_dtor, plugin};
 }
 
-}  // namespace tactile
+}  // namespace tactile::runtime

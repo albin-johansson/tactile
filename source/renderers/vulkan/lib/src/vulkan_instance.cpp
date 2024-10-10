@@ -79,18 +79,18 @@ auto create_vulkan_instance(IWindow& window, const RendererOptions& options)
 #endif  // TACTILE_USE_VULKAN_SUBSET
 
   for (const auto* layer : enabled_layers) {
-    log(LogLevel::kDebug, "Using Vulkan layer '{}'", layer);
+    runtime::log(LogLevel::kDebug, "Using Vulkan layer '{}'", layer);
   }
 
   for (const auto* extension : enabled_extensions) {
-    log(LogLevel::kDebug, "Using Vulkan instance extension '{}'", extension);
+    runtime::log(LogLevel::kDebug, "Using Vulkan instance extension '{}'", extension);
   }
 
   VkInstance instance {VK_NULL_HANDLE};
   const auto result = vkCreateInstance(&instance_info, nullptr, &instance);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan instance: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan instance: {}", to_string(result));
     return std::unexpected {result};
   }
 

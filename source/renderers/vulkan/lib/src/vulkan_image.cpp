@@ -326,7 +326,7 @@ auto create_vulkan_image(VmaAllocator allocator, const VulkanImageParams& params
                                      nullptr);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan image: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan image: {}", to_string(result));
     return std::unexpected {result};
   }
 

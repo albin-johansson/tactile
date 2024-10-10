@@ -11,7 +11,7 @@
 #include "tactile/base/render/renderer_options.hpp"
 #include "tactile/runtime/api.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 enum class RendererBackendId : std::uint8_t
 {
@@ -39,10 +39,10 @@ TACTILE_RUNTIME_API auto get_default_command_line_options() -> CommandLineOption
 TACTILE_RUNTIME_API auto parse_command_line_options(int argc, char* argv[])
     -> std::optional<CommandLineOptions>;
 
-}  // namespace tactile
+}  // namespace tactile::runtime
 
 template <>
-struct std::formatter<tactile::RendererBackendId> final
+struct std::formatter<tactile::runtime::RendererBackendId> final
 {
   template <typename FormatParseContext>
   constexpr static auto parse(FormatParseContext& ctx)
@@ -51,12 +51,16 @@ struct std::formatter<tactile::RendererBackendId> final
   }
 
   template <typename FormatContext>
-  auto format(const tactile::RendererBackendId& id, FormatContext& ctx) const
+  auto format(const tactile::runtime::RendererBackendId& id, FormatContext& ctx) const
   {
     switch (id) {
-      case tactile::RendererBackendId::kOpenGL: return std::format_to(ctx.out(), "opengl");
-      case tactile::RendererBackendId::kVulkan: return std::format_to(ctx.out(), "vulkan");
-      default:                                  return std::format_to(ctx.out(), "?");
+      case tactile::runtime::RendererBackendId::kOpenGL:
+        return std::format_to(ctx.out(), "opengl");
+
+      case tactile::runtime::RendererBackendId::kVulkan:
+        return std::format_to(ctx.out(), "vulkan");
+
+      default: return std::format_to(ctx.out(), "?");
     }
   }
 };

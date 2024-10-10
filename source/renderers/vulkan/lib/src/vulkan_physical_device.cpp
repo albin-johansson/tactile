@@ -115,7 +115,7 @@ auto select_physical_device(VkInstance instance, VkSurfaceKHR surface)
   auto physical_devices = get_physical_devices(instance);
 
   if (physical_devices.empty()) {
-    log(LogLevel::kError, "Found no physical devices with Vulkan support");
+    runtime::log(LogLevel::kError, "Found no physical devices with Vulkan support");
     return std::unexpected {VK_ERROR_UNKNOWN};
   }
 
@@ -167,16 +167,16 @@ auto select_physical_device(VkInstance instance, VkSurfaceKHR surface)
       });
 
   if (max_elem_iter == physical_device_scores.end()) {
-    log(LogLevel::kError, "Could not find a suitable physical device for Vulkan");
+    runtime::log(LogLevel::kError, "Could not find a suitable physical device for Vulkan");
     return std::unexpected {VK_ERROR_UNKNOWN};
   }
 
   VkPhysicalDeviceProperties final_properties {};
   vkGetPhysicalDeviceProperties(max_elem_iter->first, &final_properties);
 
-  log(LogLevel::kDebug,
-      "Using VkPhysicalDevice '{}'",
-      static_cast<const char*>(final_properties.deviceName));
+  runtime::log(LogLevel::kDebug,
+               "Using VkPhysicalDevice '{}'",
+               static_cast<const char*>(final_properties.deviceName));
 
   return max_elem_iter->first;
 }

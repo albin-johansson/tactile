@@ -59,7 +59,7 @@ auto create_vulkan_buffer(VmaAllocator allocator,
                                       nullptr);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan buffer: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan buffer: {}", to_string(result));
     return std::unexpected {result};
   }
 

@@ -48,7 +48,7 @@ auto create_vulkan_surface(VkInstance instance, IWindow& window)
   surface.instance = instance;
 
   if (!SDL_Vulkan_CreateSurface(window.get_handle(), instance, &surface.handle)) {
-    log(LogLevel::kError, "Could not create Vulkan surface: {}", SDL_GetError());
+    runtime::log(LogLevel::kError, "Could not create Vulkan surface: {}", SDL_GetError());
     return std::unexpected {VK_ERROR_UNKNOWN};
   }
 

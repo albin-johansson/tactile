@@ -5,7 +5,7 @@
 #include "tactile/base/util/buffer.hpp"
 #include "tactile/core/log/logger.hpp"
 
-namespace tactile::internal {
+namespace tactile::runtime::internal {
 
 void log(const LogLevel level, const std::string_view fmt, const std::format_args args)
 {
@@ -14,4 +14,4 @@ void log(const LogLevel level, const std::string_view fmt, const std::format_arg
   TACTILE_LOG(level, "{}", buffer.view());
 }
 
-}  // namespace tactile::internal
+}  // namespace tactile::runtime::internal

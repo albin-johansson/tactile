@@ -5,9 +5,9 @@
 #include <memory>  // unique_ptr
 
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/runtime/plugin.hpp"
 #include "tactile/godot_tscn/api.hpp"
 #include "tactile/godot_tscn/godot_scene_format.hpp"
-#include "tactile/runtime/plugin.hpp"
 
 namespace tactile::godot_tscn {
 

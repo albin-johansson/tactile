@@ -10,13 +10,13 @@ namespace tactile {
 
 void YamlFormatPlugin::load(IRuntime* runtime)
 {
-  log(LogLevel::kTrace, "Loading Tactile YAML format plugin");
+  runtime::log(LogLevel::kTrace, "Loading Tactile YAML format plugin");
   mRuntime = runtime;
 }
 
 void YamlFormatPlugin::unload()
 {
-  log(LogLevel::kTrace, "Unloading Tactile YAML format plugin");
+  runtime::log(LogLevel::kTrace, "Unloading Tactile YAML format plugin");
   mRuntime = nullptr;
 }
 

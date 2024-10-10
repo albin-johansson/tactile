@@ -65,7 +65,9 @@ auto _init_stream(const ZlibCallbacks& callbacks,
 
   const auto init_stream_result = callbacks.init_stream(&stream);
   if (init_stream_result != Z_OK) {
-    log(LogLevel::kError, "Could not initialize z_stream: {}", zError(init_stream_result));
+    runtime::log(LogLevel::kError,
+                 "Could not initialize z_stream: {}",
+                 zError(init_stream_result));
     return std::unexpected {ErrorCode::kBadInit};
   }
 
@@ -105,7 +107,7 @@ auto _process_stream(const ZlibCallbacks& callbacks,
     }
 
     if (process_result == Z_OK || process_result == Z_BUF_ERROR) {
-      log(LogLevel::kTrace, "Flushing and resetting output buffer");
+      runtime::log(LogLevel::kTrace, "Flushing and resetting output buffer");
 
       // We ran out of space in the staging buffer, so we need to flush and
       // reuse it.
@@ -114,7 +116,9 @@ auto _process_stream(const ZlibCallbacks& callbacks,
       stream.avail_out = saturate_cast<z_uint>(staging_buffer.size());
     }
     else {
-      log(LogLevel::kError, "Could not process Zlib chunk: {}", zError(process_result));
+      runtime::log(LogLevel::kError,
+                   "Could not process Zlib chunk: {}",
+                   zError(process_result));
       return std::unexpected {ErrorCode::kBadState};
     }
   }
@@ -138,7 +142,9 @@ auto _end_stream(const ZlibCallbacks& callbacks, z_stream& stream)
   const auto end_stream_result = callbacks.end_stream(&stream);
 
   if (end_stream_result != Z_OK) {
-    log(LogLevel::kError, "Could not finalize z_stream: {}", zError(end_stream_result));
+    runtime::log(LogLevel::kError,
+                 "Could not finalize z_stream: {}",
+                 zError(end_stream_result));
     return std::unexpected {ErrorCode::kBadState};
   }
 

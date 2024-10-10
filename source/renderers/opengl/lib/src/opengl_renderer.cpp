@@ -74,7 +74,7 @@ auto OpenGLRenderer::make(const RendererOptions& options, IWindow* window)
   data.imgui_context = ImGui::CreateContext();
 
   if (!data.imgui_context) {
-    log(LogLevel::kError, "Could not create ImGui context");
+    runtime::log(LogLevel::kError, "Could not create ImGui context");
     return std::unexpected {ErrorCode::kBadInit};
   }
 
@@ -94,7 +94,9 @@ auto OpenGLRenderer::make(const RendererOptions& options, IWindow* window)
   data.imgui_renderer_impl_deleter = ScopeExit {[] { ImGui_ImplOpenGL3_Shutdown(); }};
 
   const auto preferred_swap_interval = options.use_vsync ? (options.limit_fps ? 1 : -1) : 0;
-  log(LogLevel::kTrace, "Preferred swap interval mode is {}", preferred_swap_interval);
+  runtime::log(LogLevel::kTrace,
+               "Preferred swap interval mode is {}",
+               preferred_swap_interval);
 
   const auto set_swap_interval_result = SDL_GL_SetSwapInterval(preferred_swap_interval);
   if (set_swap_interval_result != 0 && options.use_vsync) {
@@ -102,7 +104,7 @@ auto OpenGLRenderer::make(const RendererOptions& options, IWindow* window)
   }
 
   const auto swap_interval = SDL_GL_GetSwapInterval();
-  log(LogLevel::kDebug, "Swap interval is {}", swap_interval);
+  runtime::log(LogLevel::kDebug, "Swap interval is {}", swap_interval);
 
   return renderer;
 }

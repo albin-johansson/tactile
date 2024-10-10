@@ -18,7 +18,7 @@ auto TmjSaveFormat::load_map(const std::filesystem::path& map_path,
                              const SaveFormatReadOptions& options) const
     -> std::expected<ir::Map, ErrorCode>
 {
-  log(LogLevel::kDebug, "Loading TMJ map from {}", map_path.string());
+  runtime::log(LogLevel::kDebug, "Loading TMJ map from {}", map_path.string());
 
   const auto map_json = load_json(map_path);
   if (!map_json.has_value()) {
@@ -34,11 +34,11 @@ auto TmjSaveFormat::save_map(const IMapView& map, const SaveFormatWriteOptions& 
   const auto* map_path = map.get_path();
 
   if (!map_path) {
-    log(LogLevel::kError, "Map has no associated file path");
+    runtime::log(LogLevel::kError, "Map has no associated file path");
     return std::unexpected {ErrorCode::kBadState};
   }
 
-  log(LogLevel::kDebug, "Saving TMJ map to {}", map_path->string());
+  runtime::log(LogLevel::kDebug, "Saving TMJ map to {}", map_path->string());
 
   TmjFormatSaveVisitor visitor {mRuntime, options};
 
@@ -55,7 +55,7 @@ auto TmjSaveFormat::save_map(const IMapView& map, const SaveFormatWriteOptions& 
                                                      external_tileset.json,
                                                      options.use_indentation ? 2 : 0);
           if (!save_tileset_result.has_value()) {
-            log(LogLevel::kError, "Could not save external tileset");
+            runtime::log(LogLevel::kError, "Could not save external tileset");
             return std::unexpected {save_tileset_result.error()};
           }
         }

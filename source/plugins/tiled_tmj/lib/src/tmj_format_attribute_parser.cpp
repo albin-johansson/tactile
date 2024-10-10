@@ -42,7 +42,7 @@ auto parse_type(const std::string_view type) -> std::expected<AttributeType, Err
     return AttributeType::kObject;
   }
 
-  log(LogLevel::kError, "Invalid TMJ property type: {}", type);
+  runtime::log(LogLevel::kError, "Invalid TMJ property type: {}", type);
   return std::unexpected {ErrorCode::kParseError};
 }
 
@@ -63,7 +63,7 @@ auto parse_value(const nlohmann::json& value_json, const AttributeType type)
 
         const auto length = value->size();
         if (length != 0 && length != 7 && length != 9) {
-          log(LogLevel::kError, "Invalid TMJ property color length: {}", length);
+          runtime::log(LogLevel::kError, "Invalid TMJ property color length: {}", length);
           return std::unexpected {ErrorCode::kParseError};
         }
 
@@ -74,7 +74,7 @@ auto parse_value(const nlohmann::json& value_json, const AttributeType type)
             attribute = Attribute {*color};
           }
           else {
-            log(LogLevel::kError, "Invalid color property value: {}", *value);
+            runtime::log(LogLevel::kError, "Invalid color property value: {}", *value);
             return std::unexpected {ErrorCode::kParseError};
           }
         }

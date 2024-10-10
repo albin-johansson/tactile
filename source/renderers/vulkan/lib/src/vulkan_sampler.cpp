@@ -53,10 +53,12 @@ auto create_vulkan_sampler(VkDevice device, const RendererOptions& options)
                                       ? VK_SAMPLER_MIPMAP_MODE_NEAREST
                                       : VK_SAMPLER_MIPMAP_MODE_LINEAR;
 
-  log(LogLevel::kDebug, "Using sampler filter mode '{}'", magic_enum::enum_name(filter_mode));
-  log(LogLevel::kDebug,
-      "Using sampler mipmap filter mode '{}'",
-      magic_enum::enum_name(mipmap_filter_mode));
+  runtime::log(LogLevel::kDebug,
+               "Using sampler filter mode '{}'",
+               magic_enum::enum_name(filter_mode));
+  runtime::log(LogLevel::kDebug,
+               "Using sampler mipmap filter mode '{}'",
+               magic_enum::enum_name(mipmap_filter_mode));
 
   const VkSamplerCreateInfo create_info {
     .sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
@@ -85,7 +87,7 @@ auto create_vulkan_sampler(VkDevice device, const RendererOptions& options)
   const auto result = vkCreateSampler(device, &create_info, nullptr, &sampler.handle);
 
   if (result != VK_SUCCESS) {
-    log(LogLevel::kError, "Could not create Vulkan sampler: {}", to_string(result));
+    runtime::log(LogLevel::kError, "Could not create Vulkan sampler: {}", to_string(result));
     return std::unexpected {result};
   }
 

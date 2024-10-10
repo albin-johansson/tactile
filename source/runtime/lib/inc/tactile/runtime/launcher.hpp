@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/runtime/api.hpp"
 
-namespace tactile {
+namespace tactile::runtime {
 
 /**
  * Launches the Tactile editor application.
@@ -18,4 +18,4 @@ namespace tactile {
  */
 TACTILE_RUNTIME_API auto launch(int argc, char* argv[]) -> int;
 
-}  // namespace tactile
+}  // namespace tactile::runtime
