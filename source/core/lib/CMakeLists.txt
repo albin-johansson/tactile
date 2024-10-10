@@ -281,8 +281,6 @@ target_compile_definitions(tactile-core
                            "CENTURION_NO_SDL_IMAGE"
                            "CENTURION_NO_SDL_MIXER"
                            "CENTURION_NO_SDL_TTF"
-                           "WIN32_LEAN_AND_MEAN"
-                           "NOMINMAX"
                            )
 
 target_link_libraries(tactile-core

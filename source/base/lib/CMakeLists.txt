@@ -64,3 +64,9 @@ target_sources(tactile-base
                "inc/tactile/base/id.hpp"
                "inc/tactile/base/prelude.hpp"
                )
+
+target_compile_definitions(tactile-base
+                           INTERFACE
+                           "WIN32_LEAN_AND_MEAN"
+                           "NOMINMAX"
+                           )
