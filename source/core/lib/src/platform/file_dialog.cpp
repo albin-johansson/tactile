@@ -7,12 +7,12 @@
 #include <tinyfiledialogs.h>
 
 namespace tactile::core {
-inline namespace file_dialog {
+namespace {
 
 inline constexpr const char* kMapPatternDescriptor = "Map files";
 inline constexpr const char* kImagePatternDescriptor = "Image files";
 
-inline constexpr std::array<const char*, 6> kMapPatterns {
+inline constexpr std::array kMapPatterns {
   "*.yaml",
   "*.yml",
   "*.json",
@@ -21,13 +21,13 @@ inline constexpr std::array<const char*, 6> kMapPatterns {
   "*.xml",
 };
 
-inline constexpr std::array<const char*, 3> kImagePatterns {
+inline constexpr std::array kImagePatterns {
   "*.png",
   "*.jpg",
   "*.jpeg",
 };
 
-}  // namespace file_dialog
+}  // namespace
 
 auto FileDialog::open_folder() -> std::optional<std::filesystem::path>
 {

@@ -7,7 +7,7 @@
 #include "tactile/core/ui/imgui_compat.hpp"
 
 namespace tactile::core::ui {
-inline namespace overlays {
+namespace {
 
 inline constexpr auto kOverlayWindowFlags =
     ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
@@ -27,7 +27,7 @@ void _prepare_overlay_position(const Float2& anchor)
   ImGui::SetNextWindowPos(next_pos, ImGuiCond_Always, next_pivot);
 }
 
-}  // namespace overlays
+}  // namespace
 
 OverlayScope::OverlayScope(const char* id, const Float2& anchor, const float opacity)
 {

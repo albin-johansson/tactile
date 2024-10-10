@@ -17,7 +17,7 @@
 #include "tactile/core/ui/i18n/language.hpp"
 
 namespace tactile::core::ui {
-inline namespace attribute_widgets {
+namespace {
 
 using AttributeTypeNameArray = std::array<const char*, 13>;
 
@@ -39,7 +39,7 @@ auto _push_attribute_type_selectable(const AttributeTypeNameArray& names,
   return pressed;
 }
 
-}  // namespace attribute_widgets
+}  // namespace
 
 auto push_string_input(const char* id, const Attribute::string_type& str)
     -> std::optional<Attribute::string_type>

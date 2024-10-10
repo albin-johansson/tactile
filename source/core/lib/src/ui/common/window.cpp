@@ -9,7 +9,7 @@
 #include "tactile/core/ui/imgui_compat.hpp"
 
 namespace tactile::core::ui {
-inline namespace window {
+namespace {
 
 /**
  * Provides window information that needs to persist between frames.
@@ -26,7 +26,7 @@ struct WindowData final
 // We only allow a single language per editor session, so this is fine.
 inline std::unordered_map<const char*, WindowData> gWindowData {};
 
-}  // namespace window
+}  // namespace
 
 Window::Window(const char* name, const ImGuiWindowFlags flags, bool* is_open)
   : mName {require_not_null(name, "null name")},

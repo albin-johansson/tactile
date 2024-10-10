@@ -14,7 +14,7 @@
 #include "tactile/core/log/set_log_scope.hpp"
 
 namespace tactile::core::ui {
-inline namespace language_parser {
+namespace {
 
 [[nodiscard]]
 auto _get_misc_names() -> std::unordered_map<std::string_view, StringID>
@@ -235,7 +235,7 @@ auto _validate_strings(std::vector<std::string>& strings, const Language* fallba
   return {};
 }
 
-}  // namespace language_parser
+}  // namespace
 
 LanguageParser::LanguageParser()
   : mMiscNames {_get_misc_names()},

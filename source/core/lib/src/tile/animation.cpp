@@ -8,7 +8,7 @@
 #include "tactile/core/tile/tile.hpp"
 
 namespace tactile::core {
-inline namespace animation {
+namespace {
 
 void _reset_animation(CAnimation& animation)
 {
@@ -16,7 +16,7 @@ void _reset_animation(CAnimation& animation)
   animation.frame_index = 0;
 }
 
-}  // namespace animation
+}  // namespace
 
 void update_animations(Registry& registry)
 {

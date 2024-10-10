@@ -13,7 +13,7 @@
 #include <fast_float/fast_float.h>
 
 namespace tactile::core {
-inline namespace string_conv {
+namespace {
 
 #if TACTILE_OS_WINDOWS
 // Windows is the only platform that we support that uses wchar_t paths.
@@ -54,7 +54,7 @@ template <std::floating_point T>
   });
 }
 
-}  // namespace string_conv
+}  // namespace
 
 auto to_native_string(const std::string_view str) -> std::expected<NativeString, ErrorCode>
 {

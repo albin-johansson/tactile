@@ -3,7 +3,7 @@
 #include "tactile/core/model/settings.hpp"
 
 namespace tactile::core {
-inline namespace settings {
+namespace {
 
 inline constexpr auto kLanguageDefault = LanguageID::kAmericanEnglish;
 inline constexpr auto kCommandCapacityDefault = std::size_t {100};
@@ -11,7 +11,7 @@ inline constexpr auto kFontDefault = ui::FontID::kDefault;
 inline constexpr auto kFontSizeDefault = 13.0f;
 inline constexpr auto kLogVerboseEventsDefault = false;
 
-}  // namespace settings
+}  // namespace
 
 auto get_default_settings() -> Settings
 {

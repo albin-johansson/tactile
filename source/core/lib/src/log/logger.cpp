@@ -9,11 +9,11 @@
 #include "tactile/base/util/buffer.hpp"
 
 namespace tactile::core {
-inline namespace logger {
+namespace {
 
 constinit Logger* gDefaultLogger = nullptr;  // NOLINT
 
-}  // namespace logger
+}  // namespace
 
 void Logger::_log(const LogLevel level,
                   const std::string_view fmt_string,
