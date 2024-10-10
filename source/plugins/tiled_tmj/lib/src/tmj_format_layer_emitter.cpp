@@ -9,7 +9,7 @@
 
 #include "tactile/base/document/layer_view.hpp"
 #include "tactile/base/document/map_view.hpp"
-#include "tactile/base/io/compress/compressor.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/runtime/runtime.hpp"
@@ -38,10 +38,10 @@ auto emit_tile_layer(const IRuntime& runtime,
     layer_json["encoding"] = "base64";
   }
 
-  if (tile_compression == CompressionFormat::kZlib) {
+  if (tile_compression == CompressionFormatId::kZlib) {
     layer_json["compression"] = "zlib";
   }
-  else if (tile_compression == CompressionFormat::kZstd) {
+  else if (tile_compression == CompressionFormatId::kZstd) {
     layer_json["compression"] = "zstd";
   }
 

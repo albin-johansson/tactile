@@ -1,20 +1,20 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/zstd/zstd_compressor.hpp"
-
 #include <numeric>  // iota
 #include <string>   // string
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "tactile/zstd/zstd_compression_format.hpp"
+
 namespace tactile::test {
 
-// tactile::ZstdCompressor::compress
-// tactile::ZstdCompressor::decompress
-TEST(ZstdCompressor, CompressAndDecompressBytes)
+// tactile::ZstdCompressionFormat::compress
+// tactile::ZstdCompressionFormat::decompress
+TEST(ZstdCompressionFormat, CompressAndDecompressBytes)
 {
-  const ZstdCompressor compressor {};
+  const ZstdCompressionFormat compressor {};
 
   ByteStream bytes {};
   bytes.resize(64'000);
@@ -28,11 +28,11 @@ TEST(ZstdCompressor, CompressAndDecompressBytes)
   EXPECT_THAT(*decompressed_bytes, testing::ContainerEq(bytes));
 }
 
-// tactile::ZstdCompressor::compress
-// tactile::ZstdCompressor::decompress
-TEST(ZstdCompressor, CompressAndDecompressString)
+// tactile::ZstdCompressionFormat::compress
+// tactile::ZstdCompressionFormat::decompress
+TEST(ZstdCompressionFormat, CompressAndDecompressString)
 {
-  const ZstdCompressor compressor {};
+  const ZstdCompressionFormat compressor {};
 
   const std::string_view original_string =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi bibendum neque egestas congue quisque egestas diam in arcu. Varius duis at consectetur lorem. Ultricies tristique nulla aliquet enim tortor at auctor. Nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque. Venenatis urna cursus eget nunc scelerisque. Mattis molestie a iaculis at erat pellentesque adipiscing commodo elit. Commodo ullamcorper a lacus vestibulum sed arcu non odio euismod. Vivamus arcu felis bibendum ut. Libero enim sed faucibus turpis in eu mi bibendum neque. Blandit volutpat maecenas volutpat blandit aliquam etiam.";

@@ -204,7 +204,7 @@ class LayerViewMock : public ILayerView
 
   MOCK_METHOD(TileEncoding, get_tile_encoding, (), (const, override));
 
-  MOCK_METHOD(std::optional<CompressionFormat>, get_tile_compression, (), (const, override));
+  MOCK_METHOD(std::optional<CompressionFormatId>, get_tile_compression, (), (const, override));
 
   MOCK_METHOD(std::optional<int>, get_compression_level, (), (const, override));
 
@@ -247,7 +247,7 @@ class MapViewMock : public IMapView
 
   MOCK_METHOD(TileEncoding, get_tile_encoding, (), (const, override));
 
-  MOCK_METHOD(std::optional<CompressionFormat>, get_tile_compression, (), (const, override));
+  MOCK_METHOD(std::optional<CompressionFormatId>, get_tile_compression, (), (const, override));
 
   MOCK_METHOD(std::optional<int>, get_compression_level, (), (const, override));
 

@@ -8,7 +8,7 @@
 
 #include <cppcodec/base64_default_rfc4648.hpp>
 
-#include "tactile/base/io/compress/compressor.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/index_2d.hpp"
 #include "tactile/base/runtime/runtime.hpp"
@@ -50,7 +50,7 @@ auto parse_type(const nlohmann::json& layer_json) -> std::expected<LayerType, Er
 [[nodiscard]]
 auto parse_base64_tile_data(const IRuntime& runtime,
                             const nlohmann::json& data_json,
-                            const std::optional<CompressionFormat> compression,
+                            const std::optional<CompressionFormatId> compression,
                             ir::Layer& layer) -> std::expected<void, ErrorCode>
 {
   const auto& encoded_tile_data = data_json.get_ref<const std::string&>();
@@ -138,15 +138,15 @@ auto parse_tile_layer(const IRuntime& runtime,
     encoding_iter->get_to(encoding);
   }
 
-  std::optional<CompressionFormat> compression {};
+  std::optional<CompressionFormatId> compression {};
   if (const auto compression_iter = layer_json.find("compression");
       compression_iter != layer_json.end()) {
     const auto& compression_name = compression_iter->get_ref<const std::string&>();
     if (compression_name == "zlib") {
-      compression = CompressionFormat::kZlib;
+      compression = CompressionFormatId::kZlib;
     }
     else if (compression_name == "zstd") {
-      compression = CompressionFormat::kZstd;
+      compression = CompressionFormatId::kZstd;
     }
     else {
       runtime::log(LogLevel::kError, "Invalid tile compression format: {}", compression_name);

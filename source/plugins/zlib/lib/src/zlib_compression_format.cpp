@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/zlib/zlib_compressor.hpp"
+#include "tactile/zlib/zlib_compression_format.hpp"
 
 #include <array>     // array
 #include <cstddef>   // size_t
@@ -136,8 +136,8 @@ auto _process_stream(const ZlibCallbacks& callbacks,
  * Nothing if successful; an error code otherwise.
  */
 [[nodiscard]]
-auto _end_stream(const ZlibCallbacks& callbacks, z_stream& stream)
-    -> std::expected<void, ErrorCode>
+auto _end_stream(const ZlibCallbacks& callbacks,
+                 z_stream& stream) -> std::expected<void, ErrorCode>
 {
   const auto end_stream_result = callbacks.end_stream(&stream);
 
@@ -153,7 +153,7 @@ auto _end_stream(const ZlibCallbacks& callbacks, z_stream& stream)
 
 }  // namespace
 
-auto ZlibCompressor::compress(const ByteSpan input_data) const
+auto ZlibCompressionFormat::compress(const ByteSpan input_data) const
     -> std::expected<ByteStream, ErrorCode>
 {
   ZlibCallbacks callbacks {};
@@ -179,7 +179,7 @@ auto ZlibCompressor::compress(const ByteSpan input_data) const
       .transform([&] { return std::move(output_buffer); });
 }
 
-auto ZlibCompressor::decompress(const ByteSpan input_data) const
+auto ZlibCompressionFormat::decompress(const ByteSpan input_data) const
     -> std::expected<ByteStream, ErrorCode>
 {
   ZlibCallbacks callbacks {};

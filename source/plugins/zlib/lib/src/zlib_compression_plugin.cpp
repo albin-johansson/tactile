@@ -14,15 +14,15 @@ void ZlibCompressionPlugin::load(IRuntime* runtime)
   runtime::log(LogLevel::kTrace, "Loading Zlib compression plugin");
   mRuntime = runtime;
 
-  mCompressor = std::make_unique<ZlibCompressor>();
-  mRuntime->set_compression_format(CompressionFormat::kZlib, mCompressor.get());
+  mCompressor = std::make_unique<ZlibCompressionFormat>();
+  mRuntime->set_compression_format(CompressionFormatId::kZlib, mCompressor.get());
 }
 
 void ZlibCompressionPlugin::unload()
 {
   runtime::log(LogLevel::kTrace, "Unloading Zlib compression plugin");
 
-  mRuntime->set_compression_format(CompressionFormat::kZlib, nullptr);
+  mRuntime->set_compression_format(CompressionFormatId::kZlib, nullptr);
   mRuntime = nullptr;
 
   mCompressor.reset();

@@ -5,13 +5,13 @@ add_library(tactile::zstd_compression ALIAS tactile-zstd-compression)
 
 target_sources(tactile-zstd-compression
                PRIVATE
+               "src/zstd_compression_format.cpp"
                "src/zstd_compression_plugin.cpp"
-               "src/zstd_compressor.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/zstd/api.hpp"
+               "inc/tactile/zstd/zstd_compression_format.hpp"
                "inc/tactile/zstd/zstd_compression_plugin.hpp"
-               "inc/tactile/zstd/zstd_compressor.hpp"
                )
 
 tactile_prepare_target(tactile-zstd-compression)

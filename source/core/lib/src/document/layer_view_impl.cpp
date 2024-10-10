@@ -209,7 +209,7 @@ auto LayerViewImpl::get_tile_encoding() const -> TileEncoding
   return _get_tile_format().encoding;
 }
 
-auto LayerViewImpl::get_tile_compression() const -> std::optional<CompressionFormat>
+auto LayerViewImpl::get_tile_compression() const -> std::optional<CompressionFormatId>
 {
   return _get_tile_format().compression;
 }

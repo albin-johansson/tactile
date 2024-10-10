@@ -2,19 +2,43 @@
 
 #pragma once
 
-#include <cstdint>  // uint8_t
+#include <expected>  // expected
 
-#include "tactile/base/prelude.hpp"
+#include "tactile/base/debug/error_code.hpp"
+#include "tactile/base/io/byte_stream.hpp"
 
 namespace tactile {
 
 /**
- * Represents known compression formats.
+ * Interface for data compression providers.
  */
-enum class CompressionFormat : std::uint8_t
+class ICompressionFormat
 {
-  kZlib,
-  kZstd
+ public:
+  TACTILE_INTERFACE_CLASS(ICompressionFormat);
+
+  /**
+   * Attempts to compress a byte stream.
+   *
+   * \param input_data The data that will be compressed.
+   *
+   * \return
+   * A compressed byte stream if successful; an error code otherwise.
+   */
+  [[nodiscard]]
+  virtual auto compress(ByteSpan input_data) const -> std::expected<ByteStream, ErrorCode> = 0;
+
+  /**
+   * Attempts to decompress a compressed byte stream.
+   *
+   * \param input_data The data that will be decompressed.
+   *
+   * \return
+   * An uncompressed byte stream if successful; an error code otherwise.
+   */
+  [[nodiscard]]
+  virtual auto decompress(ByteSpan input_data) const
+      -> std::expected<ByteStream, ErrorCode> = 0;
 };
 
 }  // namespace tactile

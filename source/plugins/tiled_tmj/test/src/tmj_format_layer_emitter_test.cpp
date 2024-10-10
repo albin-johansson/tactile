@@ -216,7 +216,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitZlibCompressedTileLayer)
 
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kBase64,
-    .compression = CompressionFormat::kZlib,
+    .compression = CompressionFormatId::kZlib,
     .compression_level = std::nullopt,
   };
 
@@ -282,7 +282,7 @@ TEST_F(TmjFormatLayerEmitterTest, EmitZstdCompressedTileLayer)
 
   const ir::TileFormat ir_tile_format {
     .encoding = TileEncoding::kBase64,
-    .compression = CompressionFormat::kZstd,
+    .compression = CompressionFormatId::kZstd,
     .compression_level = std::nullopt,
   };
 

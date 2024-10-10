@@ -5,7 +5,7 @@
 #include <cstddef>  // size_t
 #include <cstdint>  // uint32_t
 
-#include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/io/compress/compression_format_id.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -13,7 +13,7 @@ namespace tactile {
 
 class IWindow;
 class IRenderer;
-class ICompressor;
+class ICompressionFormat;
 class ISaveFormat;
 struct RendererOptions;
 
@@ -53,7 +53,7 @@ class IRuntime
    * \param format The compression format implementation. The compression format is
    *               unregistered for the given format if the pointer is null.
    */
-  virtual void set_compression_format(CompressionFormat id, ICompressor* format) = 0;
+  virtual void set_compression_format(CompressionFormatId id, ICompressionFormat* format) = 0;
 
   /**
    * Sets the save format implementation for a given format.
@@ -91,7 +91,7 @@ class IRuntime
    * A possibly null pointer to the compression format.
    */
   [[nodiscard]]
-  virtual auto get_compression_format(CompressionFormat id) const -> const ICompressor* = 0;
+  virtual auto get_compression_format(CompressionFormatId id) const -> const ICompressionFormat* = 0;
 
   /**
    * Returns the save format registered with a given format identifier.

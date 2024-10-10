@@ -9,7 +9,7 @@
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
-#include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/io/compress/compression_format_id.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/layer/layer_type.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
@@ -62,7 +62,7 @@ struct CTileFormat final
   TileEncoding encoding;
 
   /** The compression strategy. */
-  std::optional<CompressionFormat> compression;
+  std::optional<CompressionFormatId> compression;
 
   /** The compression level, if any. */
   std::optional<int> comp_level;

@@ -80,7 +80,7 @@ struct Runtime::Data final
   core::Logger logger;
   std::optional<Window> window {};
   IRenderer* renderer {};
-  std::unordered_map<CompressionFormat, ICompressor*> compression_formats {};
+  std::unordered_map<CompressionFormatId, ICompressionFormat*> compression_formats {};
   std::unordered_map<SaveFormatId, ISaveFormat*> save_formats {};
 
   explicit Data(const CommandLineOptions& options)
@@ -125,7 +125,7 @@ void Runtime::set_renderer(IRenderer* renderer)
   mData->renderer = renderer;
 }
 
-void Runtime::set_compression_format(const CompressionFormat id, ICompressor* format)
+void Runtime::set_compression_format(const CompressionFormatId id, ICompressionFormat* format)
 {
   if (format != nullptr) {
     mData->compression_formats.insert_or_assign(id, format);
@@ -155,7 +155,7 @@ auto Runtime::get_renderer() -> IRenderer*
   return mData->renderer;
 }
 
-auto Runtime::get_compression_format(const CompressionFormat id) const -> const ICompressor*
+auto Runtime::get_compression_format(const CompressionFormatId id) const -> const ICompressionFormat*
 {
   const auto iter = mData->compression_formats.find(id);
 

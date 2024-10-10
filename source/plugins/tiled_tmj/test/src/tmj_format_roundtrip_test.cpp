@@ -30,7 +30,7 @@ struct TmjRoundtripConfig final
 {
   std::string_view map_filename;
   TileEncoding encoding;
-  std::optional<CompressionFormat> compression;
+  std::optional<CompressionFormatId> compression;
   bool use_external_tilesets;
 };
 
@@ -41,10 +41,10 @@ inline auto operator<<(std::ostream& stream, const TmjRoundtripConfig& config) -
   stream << " + " << (config.encoding == TileEncoding::kBase64 ? "base64" : "plain text")
          << " encoding";
 
-  if (config.compression == CompressionFormat::kZlib) {
+  if (config.compression == CompressionFormatId::kZlib) {
     stream << " + zlib compression";
   }
-  else if (config.compression == CompressionFormat::kZstd) {
+  else if (config.compression == CompressionFormatId::kZstd) {
     stream << " + zstd compression";
   }
   else {
@@ -123,13 +123,13 @@ INSTANTIATE_TEST_SUITE_P(TMJ,
                              TmjRoundtripConfig {
                                .map_filename = "map_with_base64_zlib_tiles.tmj",
                                .encoding = TileEncoding::kBase64,
-                               .compression = CompressionFormat::kZlib,
+                               .compression = CompressionFormatId::kZlib,
                                .use_external_tilesets = false,
                              },
                              TmjRoundtripConfig {
                                .map_filename = "map_with_base64_zstd_tiles.tmj",
                                .encoding = TileEncoding::kBase64,
-                               .compression = CompressionFormat::kZstd,
+                               .compression = CompressionFormatId::kZstd,
                                .use_external_tilesets = false,
                              }));
 

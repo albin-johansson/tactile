@@ -18,7 +18,7 @@ target_sources(tactile-base
                "inc/tactile/base/document/tileset_view.hpp"
                "inc/tactile/base/engine/engine_app.hpp"
                "inc/tactile/base/io/compress/compression_format.hpp"
-               "inc/tactile/base/io/compress/compressor.hpp"
+               "inc/tactile/base/io/compress/compression_format_id.hpp"
                "inc/tactile/base/io/save/ir.hpp"
                "inc/tactile/base/io/save/save_format.hpp"
                "inc/tactile/base/io/save/save_format_id.hpp"

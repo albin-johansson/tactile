@@ -2,18 +2,18 @@
 
 #pragma once
 
-#include "tactile/base/io/compress/compressor.hpp"
+#include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/zlib/api.hpp"
+#include "tactile/zstd/api.hpp"
 
 namespace tactile {
 
 /**
- * Provides compression using the Zlib library.
+ * Provides compression and decompression using the Zstandard algorithm.
  *
- * \see https://github.com/madler/zlib
+ * \see https://github.com/facebook/zstd
  */
-class TACTILE_ZLIB_API ZlibCompressor final : public ICompressor
+class TACTILE_ZSTD_API ZstdCompressionFormat final : public ICompressionFormat
 {
  public:
   [[nodiscard]]

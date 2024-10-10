@@ -5,7 +5,7 @@
 #include <cstdint>  // uint32_t
 #include <memory>   // unique_ptr
 
-#include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/io/compress/compression_format_id.hpp"
 #include "tactile/base/io/save/save_format_id.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/runtime/runtime.hpp"
@@ -50,7 +50,7 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
 
   void set_renderer(IRenderer* renderer) override;
 
-  void set_compression_format(CompressionFormat id, ICompressor* format) override;
+  void set_compression_format(CompressionFormatId id, ICompressionFormat* format) override;
 
   void set_save_format(SaveFormatId id, ISaveFormat* format) override;
 
@@ -61,7 +61,7 @@ class TACTILE_RUNTIME_API Runtime final : public IRuntime
   auto get_renderer() -> IRenderer* override;
 
   [[nodiscard]]
-  auto get_compression_format(CompressionFormat id) const -> const ICompressor* override;
+  auto get_compression_format(CompressionFormatId id) const -> const ICompressionFormat* override;
 
   [[nodiscard]]
   auto get_save_format(SaveFormatId id) const -> const ISaveFormat* override;

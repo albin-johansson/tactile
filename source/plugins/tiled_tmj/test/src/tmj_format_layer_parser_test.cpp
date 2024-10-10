@@ -664,7 +664,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithInvalidCompressionFormat)
 // tactile::parse_tiled_tmj_layer
 TEST_F(TmjFormatLayerParserTest, TileLayerWithUnregisteredCompressionFormat)
 {
-  mRuntime.set_compression_format(CompressionFormat::kZlib, nullptr);
+  mRuntime.set_compression_format(CompressionFormatId::kZlib, nullptr);
 
   using namespace nlohmann::json_literals;
 

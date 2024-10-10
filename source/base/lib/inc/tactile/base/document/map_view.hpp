@@ -9,7 +9,7 @@
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
-#include "tactile/base/io/compress/compression_format.hpp"
+#include "tactile/base/io/compress/compression_format_id.hpp"
 #include "tactile/base/layer/tile_encoding.hpp"
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
@@ -99,7 +99,7 @@ class IMapView
    * A compression format if compression is used; an empty optional otherwise.
    */
   [[nodiscard]]
-  virtual auto get_tile_compression() const -> std::optional<CompressionFormat> = 0;
+  virtual auto get_tile_compression() const -> std::optional<CompressionFormatId> = 0;
 
   /**
    * Returns the compression level used by the map, if any.

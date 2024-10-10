@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/zstd/zstd_compressor.hpp"
+#include "tactile/zstd/zstd_compression_format.hpp"
 
 #include <algorithm>  // copy_n
 #include <cstddef>    // size_t
@@ -26,7 +26,7 @@ using UniqueDStream = std::unique_ptr<ZSTD_DStream, DStreamDeleter>;
 
 }  // namespace zstd_compressor_impl
 
-auto ZstdCompressor::compress(const ByteSpan input_data) const
+auto ZstdCompressionFormat::compress(const ByteSpan input_data) const
     -> std::expected<ByteStream, ErrorCode>
 {
   const auto compression_bound = ZSTD_compressBound(input_data.size_bytes());
@@ -53,7 +53,7 @@ auto ZstdCompressor::compress(const ByteSpan input_data) const
   return compressed_data;
 }
 
-auto ZstdCompressor::decompress(const ByteSpan input_data) const
+auto ZstdCompressionFormat::decompress(const ByteSpan input_data) const
     -> std::expected<ByteStream, ErrorCode>
 {
   const zstd_compressor_impl::UniqueDStream stream {ZSTD_createDStream()};

@@ -31,10 +31,10 @@ void deduce_tile_format_from_layer(const nlohmann::json& layer_json,
     const auto& compression_name = compression_iter->get_ref<const std::string&>();
 
     if (compression_name == "zlib") {
-      tile_format.compression = CompressionFormat::kZlib;
+      tile_format.compression = CompressionFormatId::kZlib;
     }
     else if (compression_name == "zstd") {
-      tile_format.compression = CompressionFormat::kZstd;
+      tile_format.compression = CompressionFormatId::kZstd;
     }
     else {
       tile_format.compression = std::nullopt;

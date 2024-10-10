@@ -71,7 +71,7 @@ class LayerViewImpl final : public ILayerView
   auto get_tile_encoding() const -> TileEncoding override;
 
   [[nodiscard]]
-  auto get_tile_compression() const -> std::optional<CompressionFormat> override;
+  auto get_tile_compression() const -> std::optional<CompressionFormatId> override;
 
   [[nodiscard]]
   auto get_compression_level() const -> std::optional<int> override;

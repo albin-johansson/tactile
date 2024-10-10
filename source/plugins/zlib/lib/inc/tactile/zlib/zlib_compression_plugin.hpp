@@ -7,7 +7,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/runtime/plugin.hpp"
 #include "tactile/zlib/api.hpp"
-#include "tactile/zlib/zlib_compressor.hpp"
+#include "tactile/zlib/zlib_compression_format.hpp"
 
 namespace tactile {
 
@@ -23,7 +23,7 @@ class TACTILE_ZLIB_API ZlibCompressionPlugin final : public IPlugin
 
  private:
   IRuntime* mRuntime {};
-  std::unique_ptr<ZlibCompressor> mCompressor {};
+  std::unique_ptr<ZlibCompressionFormat> mCompressor {};
 };
 
 extern "C"
