@@ -6,7 +6,7 @@
 #include <exception>  // exception
 #include <iterator>   // back_inserter
 
-#include "tactile/base/util/buffer.hpp"
+#include "tactile/base/container/buffer.hpp"
 
 namespace tactile::core {
 namespace {

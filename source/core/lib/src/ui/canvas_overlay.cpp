@@ -7,7 +7,7 @@
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/numeric/vec_common.hpp"
 #include "tactile/base/numeric/vec_format.hpp"
-#include "tactile/base/util/buffer.hpp"
+#include "tactile/base/container/buffer.hpp"
 #include "tactile/base/util/format.hpp"
 #include "tactile/core/ui/canvas_renderer.hpp"
 #include "tactile/core/ui/common/text.hpp"

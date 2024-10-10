@@ -2,7 +2,7 @@
 
 #include "tactile/runtime/logging.hpp"
 
-#include "tactile/base/util/buffer.hpp"
+#include "tactile/base/container/buffer.hpp"
 #include "tactile/core/log/logger.hpp"
 
 namespace tactile::runtime::internal {

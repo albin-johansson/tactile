@@ -64,7 +64,7 @@ class Buffer final
   }
 
   /**
-   * Adds an value to the buffer.
+   * Adds a value to the buffer.
    *
    * \details
    * This function has no effect if there is no room left in the buffer.

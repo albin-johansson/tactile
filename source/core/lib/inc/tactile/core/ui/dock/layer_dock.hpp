@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/buffer.hpp"
+#include "tactile/base/container/buffer.hpp"
 #include "tactile/core/entity/entity.hpp"
 
 namespace tactile::core {

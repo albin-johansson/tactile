@@ -12,7 +12,7 @@
 #include <version>      // __cpp_lib_format
 
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/buffer.hpp"
+#include "tactile/base/container/buffer.hpp"
 
 // Despite Clang having implemented most of std::format, they don't (yet)
 // provide the associated version macros. Making it difficult to write portable

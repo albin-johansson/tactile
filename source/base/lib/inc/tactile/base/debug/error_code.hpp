@@ -50,7 +50,7 @@ enum class ErrorCode : int
   /** An invalid image was detected. */
   kBadImage,
 
-  /** A file could not be parsed. */
+  /** A parse operation failed. */
   kParseError,
 
   /** A compression operation failed. */

@@ -5,6 +5,7 @@ add_library(tactile::base ALIAS tactile-base)
 
 target_sources(tactile-base
                INTERFACE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/base/container/buffer.hpp"
                "inc/tactile/base/container/string_map.hpp"
                "inc/tactile/base/container/lookup.hpp"
                "inc/tactile/base/document/component_view.hpp"
@@ -53,7 +54,6 @@ target_sources(tactile-base
                "inc/tactile/base/render/window.hpp"
                "inc/tactile/base/runtime/plugin.hpp"
                "inc/tactile/base/runtime/runtime.hpp"
-               "inc/tactile/base/util/buffer.hpp"
                "inc/tactile/base/util/chrono.hpp"
                "inc/tactile/base/util/concepts.hpp"
                "inc/tactile/base/util/format.hpp"

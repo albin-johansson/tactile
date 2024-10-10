@@ -9,6 +9,7 @@ target_sources(tactile-base-test
                "src/io/int_parser_test.cpp"
                "src/io/tile_io_test.cpp"
                "src/meta/attribute_test.cpp"
+               "src/meta/attribute_type_test.cpp"
                "src/numeric/extent_2d_test.cpp"
                "src/numeric/index_2d_test.cpp"
                "src/numeric/offset_2d_test.cpp"

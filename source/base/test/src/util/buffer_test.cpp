@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/base/util/buffer.hpp"
+#include "tactile/base/container/buffer.hpp"
 
 #include <algorithm>  // fill_n
 #include <array>      // array

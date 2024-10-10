@@ -1,12 +1,12 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/meta/attribute_type.hpp"
+#include "tactile/base/meta/attribute_type.hpp"
 
 #include <gtest/gtest.h>
 
-namespace tactile::core {
+namespace tactile {
 
-/** \trace tactile::core::parse_attribute_type */
+// tactile::parse_attribute_type
 TEST(AttributeType, ParseAttributeType)
 {
   EXPECT_EQ(parse_attribute_type("string"), AttributeType::kStr);
@@ -28,22 +28,22 @@ TEST(AttributeType, ParseAttributeType)
   EXPECT_FALSE(parse_attribute_type("int ").has_value());
 }
 
-/** \trace tactile::core::serialize [AttributeType] */
-TEST(AttributeType, Serialize)
+// tactile::to_string [AttributeType]
+TEST(AttributeType, ToString)
 {
-  EXPECT_EQ(serialize(AttributeType::kStr), "string");
-  EXPECT_EQ(serialize(AttributeType::kInt), "int");
-  EXPECT_EQ(serialize(AttributeType::kInt2), "int2");
-  EXPECT_EQ(serialize(AttributeType::kInt3), "int3");
-  EXPECT_EQ(serialize(AttributeType::kInt4), "int4");
-  EXPECT_EQ(serialize(AttributeType::kFloat), "float");
-  EXPECT_EQ(serialize(AttributeType::kFloat2), "float2");
-  EXPECT_EQ(serialize(AttributeType::kFloat3), "float3");
-  EXPECT_EQ(serialize(AttributeType::kFloat4), "float4");
-  EXPECT_EQ(serialize(AttributeType::kBool), "bool");
-  EXPECT_EQ(serialize(AttributeType::kPath), "path");
-  EXPECT_EQ(serialize(AttributeType::kColor), "color");
-  EXPECT_EQ(serialize(AttributeType::kObject), "object");
+  EXPECT_EQ(to_string(AttributeType::kStr), "string");
+  EXPECT_EQ(to_string(AttributeType::kInt), "int");
+  EXPECT_EQ(to_string(AttributeType::kInt2), "int2");
+  EXPECT_EQ(to_string(AttributeType::kInt3), "int3");
+  EXPECT_EQ(to_string(AttributeType::kInt4), "int4");
+  EXPECT_EQ(to_string(AttributeType::kFloat), "float");
+  EXPECT_EQ(to_string(AttributeType::kFloat2), "float2");
+  EXPECT_EQ(to_string(AttributeType::kFloat3), "float3");
+  EXPECT_EQ(to_string(AttributeType::kFloat4), "float4");
+  EXPECT_EQ(to_string(AttributeType::kBool), "bool");
+  EXPECT_EQ(to_string(AttributeType::kPath), "path");
+  EXPECT_EQ(to_string(AttributeType::kColor), "color");
+  EXPECT_EQ(to_string(AttributeType::kObject), "object");
 }
 
-}  // namespace tactile::core
+}  // namespace tactile
