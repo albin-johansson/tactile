@@ -12,7 +12,6 @@
 #include "tactile/core/event/viewport_events.hpp"
 #include "tactile/core/io/texture.hpp"
 #include "tactile/core/map/map.hpp"
-#include "tactile/core/meta/color.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/ui/canvas_overlay.hpp"

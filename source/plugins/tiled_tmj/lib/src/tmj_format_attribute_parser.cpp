@@ -4,7 +4,6 @@
 
 #include <utility>  // move
 
-#include "tactile/base/io/color_parser.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/runtime/logging.hpp"
 

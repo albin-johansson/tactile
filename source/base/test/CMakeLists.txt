@@ -5,11 +5,11 @@ add_executable(tactile-base-test)
 target_sources(tactile-base-test
                PRIVATE
                "src/container/lookup_test.cpp"
-               "src/io/color_parser_test.cpp"
                "src/io/int_parser_test.cpp"
                "src/io/tile_io_test.cpp"
                "src/meta/attribute_test.cpp"
                "src/meta/attribute_type_test.cpp"
+               "src/meta/color_test.cpp"
                "src/numeric/extent_2d_test.cpp"
                "src/numeric/index_2d_test.cpp"
                "src/numeric/offset_2d_test.cpp"

@@ -10,7 +10,6 @@
 
 #include <imgui.h>
 
-#include "tactile/core/meta/color.hpp"
 #include "tactile/core/platform/file_dialog.hpp"
 #include "tactile/core/ui/common/buttons.hpp"
 #include "tactile/core/ui/common/widgets.hpp"
@@ -251,9 +250,9 @@ auto push_color_input(const char* id, const Attribute::color_type& color)
   const auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                      ImGuiColorEditFlags_AlphaBar;
 
-  auto rgba_array = normalize(color);
+  auto rgba_array = to_fcolor(color);
   if (ImGui::ColorEdit4("##Color", &rgba_array.red, flags)) {
-    new_color = make_color(rgba_array);
+    new_color = to_ucolor(rgba_array);
   }
 
   return new_color;

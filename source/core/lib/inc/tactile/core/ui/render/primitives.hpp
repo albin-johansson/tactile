@@ -8,7 +8,6 @@
 
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/core/meta/color.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
 namespace tactile::core::ui {

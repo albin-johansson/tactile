@@ -15,7 +15,6 @@
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/map/map.hpp"
-#include "tactile/core/meta/color.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/ui/canvas_renderer.hpp"
 #include "tactile/core/ui/common/window.hpp"
@@ -99,7 +98,7 @@ void _render_object(const CanvasRenderer& canvas_renderer,
   const auto scaled_size = object.size * canvas_scale;
   const auto screen_pos = canvas_renderer.to_screen_pos(scaled_pos);
 
-  constexpr auto line_color = kColorYellow;
+  constexpr auto line_color = UColor {0xFF, 0xFF, 0x00, 0xFF};
   constexpr auto line_thickness = 2.0f;
 
   switch (object.type) {
