@@ -2,13 +2,13 @@
 
 #pragma once
 
+#include <chrono>    // milliseconds
 #include <expected>  // expected
 #include <utility>   // pair
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/chrono.hpp"
 
 namespace tactile {
 
@@ -81,7 +81,7 @@ class ITileView
    */
   [[nodiscard]]
   virtual auto get_animation_frame(std::size_t index) const
-      -> std::pair<TileIndex, Milliseconds> = 0;
+      -> std::pair<TileIndex, std::chrono::milliseconds> = 0;
 
   /**
    * Returns a view of the associated metadata.

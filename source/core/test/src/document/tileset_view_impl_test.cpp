@@ -51,14 +51,16 @@ TEST_F(TilesetViewImplTest, Getters)
   const auto& tileset_instance = registry.get<CTilesetInstance>(tileset_id);
   const auto& texture = registry.get<CTexture>(tileset_id);
 
-  ASSERT_TRUE(add_animation_frame(registry,
-                                  tileset.tiles.at(0),
-                                  0,
-                                  AnimationFrame {TileIndex {0}, Milliseconds {50}}));
-  ASSERT_TRUE(add_animation_frame(registry,
-                                  tileset.tiles.at(1),
-                                  0,
-                                  AnimationFrame {TileIndex {1}, Milliseconds {50}}));
+  ASSERT_TRUE(
+      add_animation_frame(registry,
+                          tileset.tiles.at(0),
+                          0,
+                          AnimationFrame {TileIndex {0}, std::chrono::milliseconds {50}}));
+  ASSERT_TRUE(
+      add_animation_frame(registry,
+                          tileset.tiles.at(1),
+                          0,
+                          AnimationFrame {TileIndex {1}, std::chrono::milliseconds {50}}));
 
   const TilesetViewImpl tileset_view {&mDocument, tileset_id};
 

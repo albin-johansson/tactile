@@ -2,6 +2,7 @@
 
 #include "tactile/runtime/runtime.hpp"
 
+#include <chrono>         // steady_clock
 #include <cstdlib>        // malloc, free, EXIT_SUCCESS, EXIT_FAILURE
 #include <exception>      // exception, set_terminate
 #include <optional>       // optional
@@ -47,7 +48,7 @@ auto _make_logger(const LogLevel log_level) -> core::Logger
 
   core::Logger logger {};
 
-  logger.set_reference_instant(SteadyClock::now());
+  logger.set_reference_instant(std::chrono::steady_clock::now());
   logger.set_min_level(log_level);
   logger.add_sink(std::move(terminal_sink));
 
@@ -155,7 +156,8 @@ auto Runtime::get_renderer() -> IRenderer*
   return mData->renderer;
 }
 
-auto Runtime::get_compression_format(const CompressionFormatId id) const -> const ICompressionFormat*
+auto Runtime::get_compression_format(const CompressionFormatId id) const
+    -> const ICompressionFormat*
 {
   const auto iter = mData->compression_formats.find(id);
 

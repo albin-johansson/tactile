@@ -121,7 +121,7 @@ TEST_F(TileTest, IsTilePlain)
   const auto id5 = make_tile(mRegistry, TileIndex {5});
 
   {
-    const AnimationFrame frame {TileIndex {10}, Milliseconds {50}};
+    const AnimationFrame frame {TileIndex {10}, std::chrono::milliseconds {50}};
     ASSERT_TRUE(add_animation_frame(mRegistry, id2, 0, frame));
   }
 

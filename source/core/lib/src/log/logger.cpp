@@ -21,7 +21,7 @@ void Logger::_log(const LogLevel level,
 {
   try {
     if (!mSinks.empty() && would_log(level)) {
-      const auto log_instant = SteadyClock::now();
+      const auto log_instant = std::chrono::steady_clock::now();
 
       Buffer<char, 512> text_buffer;  // NOLINT uninitialized
       vformat_to_buffer(text_buffer, fmt_string, args);
@@ -76,7 +76,8 @@ void Logger::add_sink(std::unique_ptr<ILogSink> sink)
   }
 }
 
-void Logger::set_reference_instant(const std::optional<SteadyClockInstant> instant)
+void Logger::set_reference_instant(
+    const std::optional<std::chrono::steady_clock::time_point> instant)
 {
   mReferenceInstant = instant;
 }
@@ -115,13 +116,14 @@ auto Logger::get_acronym(const LogLevel level) noexcept -> std::string_view
   return "";
 }
 
-auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const -> Microseconds
+auto Logger::_to_elapsed_time(const std::chrono::steady_clock::time_point instant) const
+    -> std::chrono::microseconds
 {
   if (mReferenceInstant.has_value()) {
-    return duration_cast<Microseconds>(instant - *mReferenceInstant);
+    return duration_cast<std::chrono::microseconds>(instant - *mReferenceInstant);
   }
 
-  return duration_cast<Microseconds>(instant.time_since_epoch());
+  return duration_cast<std::chrono::microseconds>(instant.time_since_epoch());
 }
 
 void set_default_logger(Logger* logger) noexcept

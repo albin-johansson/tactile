@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <chrono>    // steady_clock, milliseconds
 #include <cstddef>   // size_t
 #include <expected>  // expected
 #include <vector>    // vector
@@ -9,7 +10,6 @@
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/chrono.hpp"
 #include "tactile/core/entity/entity.hpp"
 
 namespace tactile::core {
@@ -25,7 +25,7 @@ struct AnimationFrame final
   TileIndex tile_index;
 
   /** The amount of time the frame is active. */
-  Milliseconds duration;
+  std::chrono::milliseconds duration;
 };
 
 /**
@@ -34,7 +34,7 @@ struct AnimationFrame final
 struct CAnimation final
 {
   /** The time of the last frame update. */
-  SteadyClockInstant last_update;
+  std::chrono::steady_clock::time_point last_update;
 
   /** The index of the currently displayed frame. */
   std::size_t frame_index;

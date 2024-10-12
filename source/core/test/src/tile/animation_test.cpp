@@ -19,7 +19,7 @@ TEST(Animation, UpdateAnimations)
   auto add_frame = [&registry](EntityID tile_entity,
                                const std::size_t frame_index,
                                const TileIndex tile_index) {
-    const AnimationFrame frame {tile_index, Milliseconds::zero()};
+    const AnimationFrame frame {tile_index, std::chrono::milliseconds::zero()};
     return add_animation_frame(registry, tile_entity, frame_index, frame);
   };
 
@@ -65,11 +65,11 @@ TEST(Animation, AddAnimationFrame)
   Registry registry {};
   const auto tile_entity = make_tile(registry, TileIndex {100});
 
-  const AnimationFrame frame1 {TileIndex {110}, Milliseconds {123}};
-  const AnimationFrame frame2 {TileIndex {120}, Milliseconds {321}};
-  const AnimationFrame frame3 {TileIndex {130}, Milliseconds {987}};
-  const AnimationFrame frame4 {TileIndex {140}, Milliseconds {593}};
-  const AnimationFrame frame5 {TileIndex {150}, Milliseconds {739}};
+  constexpr AnimationFrame frame1 {TileIndex {110}, std::chrono::milliseconds {123}};
+  constexpr AnimationFrame frame2 {TileIndex {120}, std::chrono::milliseconds {321}};
+  constexpr AnimationFrame frame3 {TileIndex {130}, std::chrono::milliseconds {987}};
+  constexpr AnimationFrame frame4 {TileIndex {140}, std::chrono::milliseconds {593}};
+  constexpr AnimationFrame frame5 {TileIndex {150}, std::chrono::milliseconds {739}};
 
   ASSERT_FALSE(registry.has<CAnimation>(tile_entity));
 
@@ -119,9 +119,9 @@ TEST(Animation, RemoveAnimationFrame)
   Registry registry {};
   const auto tile_entity = make_tile(registry, TileIndex {10});
 
-  const AnimationFrame frame1 {TileIndex {1}, Milliseconds {10}};
-  const AnimationFrame frame2 {TileIndex {2}, Milliseconds {20}};
-  const AnimationFrame frame3 {TileIndex {3}, Milliseconds {30}};
+  constexpr AnimationFrame frame1 {TileIndex {1}, std::chrono::milliseconds {10}};
+  constexpr AnimationFrame frame2 {TileIndex {2}, std::chrono::milliseconds {20}};
+  constexpr AnimationFrame frame3 {TileIndex {3}, std::chrono::milliseconds {30}};
 
   ASSERT_TRUE(add_animation_frame(registry, tile_entity, 0, frame1).has_value());
   ASSERT_TRUE(add_animation_frame(registry, tile_entity, 1, frame2).has_value());

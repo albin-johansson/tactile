@@ -126,11 +126,11 @@ TEST_F(TmjFormatTilesetParserTest, ValidEmbeddedTileset)
   ASSERT_EQ(tile7.animation.size(), 3);
   EXPECT_EQ(tile7.objects.size(), 0);
   EXPECT_EQ(tile7.animation[0].tile_index, TileIndex {7});
-  EXPECT_EQ(tile7.animation[0].duration, Milliseconds {200});
+  EXPECT_EQ(tile7.animation[0].duration, std::chrono::milliseconds {200});
   EXPECT_EQ(tile7.animation[1].tile_index, TileIndex {8});
-  EXPECT_EQ(tile7.animation[1].duration, Milliseconds {300});
+  EXPECT_EQ(tile7.animation[1].duration, std::chrono::milliseconds {300});
   EXPECT_EQ(tile7.animation[2].tile_index, TileIndex {9});
-  EXPECT_EQ(tile7.animation[2].duration, Milliseconds {400});
+  EXPECT_EQ(tile7.animation[2].duration, std::chrono::milliseconds {400});
 }
 
 // tactile::parse_tiled_tmj_tileset

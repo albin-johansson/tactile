@@ -53,7 +53,6 @@ target_sources(tactile-base
                "inc/tactile/base/render/window.hpp"
                "inc/tactile/base/runtime/plugin.hpp"
                "inc/tactile/base/runtime/runtime.hpp"
-               "inc/tactile/base/util/chrono.hpp"
                "inc/tactile/base/util/concepts.hpp"
                "inc/tactile/base/util/format.hpp"
                "inc/tactile/base/util/hash.hpp"

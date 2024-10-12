@@ -12,7 +12,7 @@ namespace {
 
 void _reset_animation(CAnimation& animation)
 {
-  animation.last_update = SteadyClock::now();
+  animation.last_update = std::chrono::steady_clock::now();
   animation.frame_index = 0;
 }
 
@@ -20,7 +20,7 @@ void _reset_animation(CAnimation& animation)
 
 void update_animations(Registry& registry)
 {
-  const auto now = SteadyClock::now();
+  const auto now = std::chrono::steady_clock::now();
 
   for (auto [entity, animation] : registry.each<CAnimation>()) {
     const auto& current_frame = animation.frames.at(animation.frame_index);

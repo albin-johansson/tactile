@@ -254,17 +254,17 @@ TEST_F(TilesetTest, GetTileAppearance)
   ASSERT_TRUE(add_animation_frame(mRegistry,
                                   tile10_entity,
                                   0,
-                                  AnimationFrame {index10, Milliseconds::zero()})
+                                  AnimationFrame {index10, std::chrono::milliseconds::zero()})
                   .has_value());
   ASSERT_TRUE(add_animation_frame(mRegistry,
                                   tile10_entity,
                                   1,
-                                  AnimationFrame {index11, Milliseconds::zero()})
+                                  AnimationFrame {index11, std::chrono::milliseconds::zero()})
                   .has_value());
   ASSERT_TRUE(add_animation_frame(mRegistry,
                                   tile10_entity,
                                   2,
-                                  AnimationFrame {index12, Milliseconds::zero()})
+                                  AnimationFrame {index12, std::chrono::milliseconds::zero()})
                   .has_value());
 
   EXPECT_EQ(get_tile_appearance(mRegistry, ts_entity, index10), index10);

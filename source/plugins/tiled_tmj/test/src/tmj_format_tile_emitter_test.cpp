@@ -44,9 +44,9 @@ TEST(TmjFormatTileEmitter, EmitAnimatedTile)
     .objects = {},
     .animation =
         {
-          ir::AnimationFrame {TileIndex {68}, Milliseconds {1}},
-          ir::AnimationFrame {TileIndex {69}, Milliseconds {2}},
-          ir::AnimationFrame {TileIndex {70}, Milliseconds {3}},
+          ir::AnimationFrame {TileIndex {68}, std::chrono::milliseconds {1}},
+          ir::AnimationFrame {TileIndex {69}, std::chrono::milliseconds {2}},
+          ir::AnimationFrame {TileIndex {70}, std::chrono::milliseconds {3}},
         },
   };
 

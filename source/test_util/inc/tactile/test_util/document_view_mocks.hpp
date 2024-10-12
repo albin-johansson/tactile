@@ -100,7 +100,7 @@ class TileViewMock : public ITileView
 
   MOCK_METHOD(std::size_t, animation_frame_count, (), (const, override));
 
-  MOCK_METHOD((std::pair<TileIndex, Milliseconds>),
+  MOCK_METHOD((std::pair<TileIndex, std::chrono::milliseconds>),
               get_animation_frame,
               (std::size_t),
               (const, override));

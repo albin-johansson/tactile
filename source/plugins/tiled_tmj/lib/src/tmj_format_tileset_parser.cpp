@@ -29,7 +29,8 @@ auto parse_animation_frame(const nlohmann::json& frame_json)
 
   if (const auto duration_iter = frame_json.find("duration");
       duration_iter != frame_json.end()) {
-    frame.duration = Milliseconds {duration_iter->get<Milliseconds::rep>()};
+    frame.duration =
+        std::chrono::milliseconds {duration_iter->get<std::chrono::milliseconds::rep>()};
   }
   else {
     return std::unexpected {ErrorCode::kParseError};

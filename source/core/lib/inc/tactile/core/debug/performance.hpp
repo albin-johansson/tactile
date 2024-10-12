@@ -2,8 +2,9 @@
 
 #pragma once
 
+#include <chrono>  // steady_clock
+
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/chrono.hpp"
 
 #if TACTILE_DEBUG
   #define TACTILE_DEBUG_PROFILE_SCOPE(Description)      \
@@ -57,7 +58,7 @@ class ScopeProfiler final
 
  private:
   const char* mDescription;
-  SteadyClockInstant mStartInstant;
+  std::chrono::steady_clock::time_point mStartInstant;
 };
 
 }  // namespace tactile::core

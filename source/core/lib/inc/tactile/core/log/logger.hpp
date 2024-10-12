@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <chrono>       // steady_clock, microseconds
 #include <format>       // make_format_args, format_args
 #include <memory>       // unique_ptr
 #include <optional>     // optional
@@ -10,7 +11,6 @@
 
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/chrono.hpp"
 #include "tactile/base/util/format.hpp"
 #include "tactile/core/log/log_sink.hpp"
 
@@ -103,7 +103,7 @@ class Logger final
    *
    * \param instant The new reference instant; or nothing to use the default.
    */
-  void set_reference_instant(std::optional<SteadyClockInstant> instant);
+  void set_reference_instant(std::optional<std::chrono::steady_clock::time_point> instant);
 
   /**
    * Sets a custom scope identifier to use.
@@ -158,13 +158,14 @@ class Logger final
   LogLevel mMinLevel {LogLevel::kInfo};
   LogLevel mFlushLevel {LogLevel::kError};
   std::vector<std::unique_ptr<ILogSink>> mSinks {};
-  std::optional<SteadyClockInstant> mReferenceInstant {};
+  std::optional<std::chrono::steady_clock::time_point> mReferenceInstant {};
   std::string_view mScope {};
 
   void _log(LogLevel level, std::string_view fmt_string, std::format_args args) noexcept;
 
   [[nodiscard]]
-  auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;
+  auto _to_elapsed_time(std::chrono::steady_clock::time_point instant) const
+      -> std::chrono::microseconds;
 };
 
 /**

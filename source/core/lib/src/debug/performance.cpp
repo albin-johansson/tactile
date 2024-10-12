@@ -10,14 +10,14 @@ namespace tactile::core {
 
 ScopeProfiler::ScopeProfiler(const char* description) noexcept
   : mDescription {description ? description : "?"},
-    mStartInstant {SteadyClock::now()}
+    mStartInstant {std::chrono::steady_clock::now()}
 {}
 
 ScopeProfiler::~ScopeProfiler() noexcept
 {
   try {
-    const auto end = SteadyClock::now();
-    const auto duration = duration_cast<Microseconds>(end - mStartInstant);
+    const auto end = std::chrono::steady_clock::now();
+    const auto duration = duration_cast<std::chrono::microseconds>(end - mStartInstant);
     TACTILE_LOG_DEBUG("Scope '{}' took {}", mDescription, duration);
   }
   catch (const std::exception& e) {

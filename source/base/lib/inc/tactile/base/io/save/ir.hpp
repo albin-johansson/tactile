@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <chrono>      // milliseconds
 #include <filesystem>  // path
 #include <optional>    // optional
 #include <string>      // string
@@ -16,7 +17,6 @@
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/chrono.hpp"
 
 namespace tactile::ir {
 
@@ -159,7 +159,7 @@ struct AnimationFrame final
   TileIndex tile_index;
 
   /** The duration that the frame is shown. */
-  Milliseconds duration;
+  std::chrono::milliseconds duration;
 
   [[nodiscard]]
   auto operator==(const AnimationFrame&) const -> bool = default;

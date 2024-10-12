@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include <chrono>       // steady_clock
 #include <string_view>  // string_view
 
 #include "tactile/base/log/log_level.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/chrono.hpp"
 
 namespace tactile::core {
 
@@ -20,11 +20,11 @@ namespace tactile::core {
  */
 struct LogMessage final
 {
-  LogLevel level;              ///< The severity of the message.
-  std::string_view prefix;     ///< A string that encodes the severity and timestamp.
-  std::string_view scope;      ///< Scope identifier, might be empty.
-  std::string_view text;       ///< The formatted log message.
-  SteadyClockInstant instant;  ///< The instant that the message was logged.
+  LogLevel level;           ///< The severity of the message.
+  std::string_view prefix;  ///< A string that encodes the severity and timestamp.
+  std::string_view scope;   ///< Scope identifier, might be empty.
+  std::string_view text;    ///< The formatted log message.
+  std::chrono::steady_clock::time_point instant;  ///< The instant that the message was logged.
 };
 
 /**

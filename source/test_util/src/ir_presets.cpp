@@ -142,10 +142,14 @@ auto make_complex_ir_tile(const TileIndex index, ObjectID& next_object_id) -> ir
   tile.objects.push_back(make_complex_ir_object(next_object_id++, ObjectType::kEllipse));
 
   tile.animation.reserve(4);
-  tile.animation.push_back(ir::AnimationFrame {TileIndex {1}, Milliseconds {100}});
-  tile.animation.push_back(ir::AnimationFrame {TileIndex {2}, Milliseconds {101}});
-  tile.animation.push_back(ir::AnimationFrame {TileIndex {3}, Milliseconds {102}});
-  tile.animation.push_back(ir::AnimationFrame {TileIndex {4}, Milliseconds {103}});
+  tile.animation.push_back(
+      ir::AnimationFrame {TileIndex {1}, std::chrono::milliseconds {100}});
+  tile.animation.push_back(
+      ir::AnimationFrame {TileIndex {2}, std::chrono::milliseconds {101}});
+  tile.animation.push_back(
+      ir::AnimationFrame {TileIndex {3}, std::chrono::milliseconds {102}});
+  tile.animation.push_back(
+      ir::AnimationFrame {TileIndex {4}, std::chrono::milliseconds {103}});
 
   return tile;
 }
