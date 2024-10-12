@@ -50,8 +50,8 @@ TEST(Color, ToStringARGB)
   EXPECT_EQ(to_string(kDarkBlue, ColorFormat::kArgb), "#FF00008B");
   EXPECT_EQ(to_string(kHotPink, ColorFormat::kArgb), "#FFFF69B4");
 
-  EXPECT_EQ(to_string(UColor {0x1A, 0x2B, 0x3C, 0x4D}), "#4D1A2B3C");
-  EXPECT_EQ(to_string(UColor {0xAB, 0xCD, 0xEF, 0x42}), "#42ABCDEF");
+  EXPECT_EQ(to_string(UColor {0x1A, 0x2B, 0x3C, 0x4D}, ColorFormat::kArgb), "#4D1A2B3C");
+  EXPECT_EQ(to_string(UColor {0xAB, 0xCD, 0xEF, 0x42}, ColorFormat::kArgb), "#42ABCDEF");
 }
 
 // tactile::parse_color_rgb
