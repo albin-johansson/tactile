@@ -9,9 +9,9 @@
 #include "tactile/tiled_tmj/tmj_format_meta_emitter.hpp"
 
 namespace tactile {
-namespace tmj_format_tile_emitter {
+namespace {
 
-void save_tile_animation(const ITileView& tile, nlohmann::json& tile_json)
+void _save_tile_animation(const ITileView& tile, nlohmann::json& tile_json)
 {
   const auto frame_count = tile.animation_frame_count();
   if (frame_count == 0) {
@@ -34,7 +34,7 @@ void save_tile_animation(const ITileView& tile, nlohmann::json& tile_json)
   tile_json["animation"] = std::move(animation_json);
 }
 
-}  // namespace tmj_format_tile_emitter
+}  // namespace
 
 auto emit_tiled_tmj_tile(const ITileView& tile) -> nlohmann::json
 {
@@ -42,7 +42,7 @@ auto emit_tiled_tmj_tile(const ITileView& tile) -> nlohmann::json
 
   tile_json["id"] = tile.get_index();
 
-  tmj_format_tile_emitter::save_tile_animation(tile, tile_json);
+  _save_tile_animation(tile, tile_json);
 
   if (tile.object_count() > 0) {
     auto object_array = nlohmann::json::array();

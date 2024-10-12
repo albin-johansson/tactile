@@ -8,10 +8,10 @@
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile {
-namespace tmj_format_attribute_parser {
+namespace {
 
 [[nodiscard]]
-auto parse_type(const std::string_view type) -> std::expected<AttributeType, ErrorCode>
+auto _parse_type(const std::string_view type) -> std::expected<AttributeType, ErrorCode>
 {
   if (type == "string") {
     return AttributeType::kStr;
@@ -46,7 +46,7 @@ auto parse_type(const std::string_view type) -> std::expected<AttributeType, Err
 }
 
 [[nodiscard]]
-auto parse_value(const nlohmann::json& value_json, const AttributeType type)
+auto _parse_value(const nlohmann::json& value_json, const AttributeType type)
     -> std::expected<Attribute, ErrorCode>
 {
   switch (type) {
@@ -92,7 +92,7 @@ auto parse_value(const nlohmann::json& value_json, const AttributeType type)
   return std::unexpected {ErrorCode::kParseError};
 }
 
-}  // namespace tmj_format_attribute_parser
+}  // namespace
 
 auto parse_tiled_tmj_property(const nlohmann::json& property_json)
     -> std::expected<ir::NamedAttribute, ErrorCode>
@@ -116,13 +116,12 @@ auto parse_tiled_tmj_property(const nlohmann::json& property_json)
 
   name_iter->get_to(named_attribute.name);
 
-  const auto property_type =
-      tmj_format_attribute_parser::parse_type(type_iter->get_ref<const std::string&>());
+  const auto property_type = _parse_type(type_iter->get_ref<const std::string&>());
   if (!property_type.has_value()) {
     return std::unexpected {property_type.error()};
   }
 
-  auto property_value = tmj_format_attribute_parser::parse_value(*value_iter, *property_type);
+  auto property_value = _parse_value(*value_iter, *property_type);
   if (!property_value.has_value()) {
     return std::unexpected {property_value.error()};
   }

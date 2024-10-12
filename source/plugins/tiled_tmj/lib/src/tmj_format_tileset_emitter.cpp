@@ -11,11 +11,11 @@
 #include "tactile/tiled_tmj/tmj_format_meta_emitter.hpp"
 
 namespace tactile {
-namespace tmj_format_tileset_emitter {
+namespace {
 
-void save_basic_tileset_attributes(const ITilesetView& tileset,
-                                   nlohmann::json& tileset_json,
-                                   const SaveFormatWriteOptions& options)
+void _save_basic_tileset_attributes(const ITilesetView& tileset,
+                                    nlohmann::json& tileset_json,
+                                    const SaveFormatWriteOptions& options)
 {
   const auto tile_size = tileset.get_tile_size();
   const auto image_size = tileset.get_image_size();
@@ -46,7 +46,7 @@ void save_basic_tileset_attributes(const ITilesetView& tileset,
   emit_tiled_tmj_metadata(tileset.get_meta(), tileset_json);
 }
 
-}  // namespace tmj_format_tileset_emitter
+}  // namespace
 
 auto emit_tiled_tmj_tileset(
     const ITilesetView& tileset,
@@ -62,9 +62,7 @@ auto emit_tiled_tmj_tileset(
     tileset_json["source"] = source_path;
 
     auto external_tileset_json = nlohmann::json::object();
-    tmj_format_tileset_emitter::save_basic_tileset_attributes(tileset,
-                                                              external_tileset_json,
-                                                              options);
+    _save_basic_tileset_attributes(tileset, external_tileset_json, options);
 
     TmjFormatExternalTilesetData external_tileset {};
     external_tileset.path = options.base_dir / source_path;
@@ -73,7 +71,7 @@ auto emit_tiled_tmj_tileset(
     external_tilesets[tileset.get_first_tile_id()] = std::move(external_tileset);
   }
   else {
-    tmj_format_tileset_emitter::save_basic_tileset_attributes(tileset, tileset_json, options);
+    _save_basic_tileset_attributes(tileset, tileset_json, options);
   }
 
   return tileset_json;

@@ -20,11 +20,11 @@
 #include "tactile/core/tile/tileset.hpp"
 
 namespace tactile::core {
-namespace ir_comparison {
+namespace {
 
-void compare_tile_animation(const Registry& registry,
-                            const EntityID tile_id,
-                            const ir::Tile& ir_tile)
+void _compare_tile_animation(const Registry& registry,
+                             const EntityID tile_id,
+                             const ir::Tile& ir_tile)
 {
   const auto* animation = registry.find<CAnimation>(tile_id);
   EXPECT_EQ(animation == nullptr, ir_tile.animation.empty());
@@ -46,7 +46,7 @@ void compare_tile_animation(const Registry& registry,
   }
 }
 
-}  // namespace ir_comparison
+}  // namespace
 
 void compare_meta(const Registry& registry,
                   const EntityID meta_id,
@@ -192,7 +192,7 @@ void compare_tile(const Registry& registry, const EntityID tile_id, const ir::Ti
     compare_object(registry, object_id, ir_object);
   }
 
-  ir_comparison::compare_tile_animation(registry, tile_id, ir_tile);
+  _compare_tile_animation(registry, tile_id, ir_tile);
   compare_meta(registry, tile_id, ir_tile.meta);
 }
 

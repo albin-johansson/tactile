@@ -11,9 +11,9 @@
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile {
-namespace opengl_renderer_plugin {
+namespace {
 
-void set_hints()
+void _set_hints()
 {
   if constexpr (kOnMacos) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
@@ -31,12 +31,12 @@ void set_hints()
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, SDL_TRUE);
 }
 
-}  // namespace opengl_renderer_plugin
+}  // namespace
 
 void OpenGLRendererPlugin::load(IRuntime* runtime)
 {
   m_runtime = runtime;
-  opengl_renderer_plugin::set_hints();
+  _set_hints();
 
   m_runtime->init_window(SDL_WINDOW_OPENGL);
   auto* window = m_runtime->get_window();

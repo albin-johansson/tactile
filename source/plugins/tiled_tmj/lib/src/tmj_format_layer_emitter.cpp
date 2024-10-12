@@ -18,13 +18,13 @@
 #include "tactile/tiled_tmj/tmj_format_object_emitter.hpp"
 
 namespace tactile {
-namespace tmj_format_layer_emitter {
+namespace {
 
 [[nodiscard]]
-auto emit_tile_layer(const IRuntime& runtime,
-                     const ILayerView& layer,
-                     nlohmann::json& layer_json,
-                     ByteStream& tile_bytes) -> std::expected<void, ErrorCode>
+auto _emit_tile_layer(const IRuntime& runtime,
+                      const ILayerView& layer,
+                      nlohmann::json& layer_json,
+                      ByteStream& tile_bytes) -> std::expected<void, ErrorCode>
 {
   const auto tile_encoding = layer.get_tile_encoding();
   const auto tile_compression = layer.get_tile_compression();
@@ -86,7 +86,7 @@ auto emit_tile_layer(const IRuntime& runtime,
   return {};
 }
 
-void emit_object_layer(const ILayerView& layer, nlohmann::json& layer_json)
+void _emit_object_layer(const ILayerView& layer, nlohmann::json& layer_json)
 {
   layer_json["type"] = "objectgroup";
 
@@ -96,7 +96,7 @@ void emit_object_layer(const ILayerView& layer, nlohmann::json& layer_json)
   layer_json["objects"] = std::move(object_array);
 }
 
-void emit_group_layer(const ILayerView& layer, nlohmann::json& layer_json)
+void _emit_group_layer(const ILayerView& layer, nlohmann::json& layer_json)
 {
   layer_json["type"] = "group";
 
@@ -106,7 +106,7 @@ void emit_group_layer(const ILayerView& layer, nlohmann::json& layer_json)
   layer_json["layers"] = std::move(layer_array);
 }
 
-}  // namespace tmj_format_layer_emitter
+}  // namespace
 
 auto emit_tiled_tmj_layer(const IRuntime& runtime,
                           const ILayerView& layer,
@@ -124,10 +124,7 @@ auto emit_tiled_tmj_layer(const IRuntime& runtime,
   switch (layer.get_type()) {
     case LayerType::kTileLayer: {
       const auto emit_tile_layer_result =
-          tmj_format_layer_emitter::emit_tile_layer(runtime,
-                                                    layer,
-                                                    layer_json,
-                                                    tile_byte_stream);
+          _emit_tile_layer(runtime, layer, layer_json, tile_byte_stream);
 
       if (!emit_tile_layer_result) {
         return std::unexpected {emit_tile_layer_result.error()};
@@ -136,11 +133,11 @@ auto emit_tiled_tmj_layer(const IRuntime& runtime,
       break;
     }
     case LayerType::kObjectLayer: {
-      tmj_format_layer_emitter::emit_object_layer(layer, layer_json);
+      _emit_object_layer(layer, layer_json);
       break;
     }
     case LayerType::kGroupLayer: {
-      tmj_format_layer_emitter::emit_group_layer(layer, layer_json);
+      _emit_group_layer(layer, layer_json);
       break;
     }
   }

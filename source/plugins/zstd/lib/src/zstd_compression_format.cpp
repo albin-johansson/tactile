@@ -12,7 +12,7 @@
 #include "tactile/runtime/logging.hpp"
 
 namespace tactile {
-namespace zstd_compressor_impl {
+namespace {
 
 struct DStreamDeleter final
 {
@@ -24,7 +24,7 @@ struct DStreamDeleter final
 
 using UniqueDStream = std::unique_ptr<ZSTD_DStream, DStreamDeleter>;
 
-}  // namespace zstd_compressor_impl
+}  // namespace
 
 auto ZstdCompressionFormat::compress(const ByteSpan input_data) const
     -> std::expected<ByteStream, ErrorCode>
@@ -56,7 +56,7 @@ auto ZstdCompressionFormat::compress(const ByteSpan input_data) const
 auto ZstdCompressionFormat::decompress(const ByteSpan input_data) const
     -> std::expected<ByteStream, ErrorCode>
 {
-  const zstd_compressor_impl::UniqueDStream stream {ZSTD_createDStream()};
+  const UniqueDStream stream {ZSTD_createDStream()};
   if (!stream) {
     runtime::log(LogLevel::kError, "Could not create stream");
     return std::unexpected {ErrorCode::kOutOfMemory};

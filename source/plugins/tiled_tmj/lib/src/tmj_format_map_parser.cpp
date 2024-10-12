@@ -9,10 +9,10 @@
 #include "tactile/tiled_tmj/tmj_format_tileset_parser.hpp"
 
 namespace tactile {
-namespace tmj_format_map_parser {
+namespace {
 
-void deduce_tile_format_from_layer(const nlohmann::json& layer_json,
-                                   ir::TileFormat& tile_format)
+void _deduce_tile_format_from_layer(const nlohmann::json& layer_json,
+                                    ir::TileFormat& tile_format)
 {
   if (const auto encoding_iter = layer_json.find("encoding");
       encoding_iter != layer_json.end()) {
@@ -42,7 +42,7 @@ void deduce_tile_format_from_layer(const nlohmann::json& layer_json,
   }
 }
 
-}  // namespace tmj_format_map_parser
+}  // namespace
 
 auto parse_tiled_tmj_map(const IRuntime& runtime,
                          const nlohmann::json& map_json,
@@ -132,7 +132,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     map.layers.reserve(layers_iter->size());
 
     for (const auto& [_, layer_json] : layers_iter->items()) {
-      tmj_format_map_parser::deduce_tile_format_from_layer(layer_json, map.tile_format);
+      _deduce_tile_format_from_layer(layer_json, map.tile_format);
 
       if (auto layer = parse_tiled_tmj_layer(runtime, layer_json)) {
         map.layers.push_back(std::move(*layer));

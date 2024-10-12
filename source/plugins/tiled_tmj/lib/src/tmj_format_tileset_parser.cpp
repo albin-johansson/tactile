@@ -11,10 +11,10 @@
 #include "tactile/tiled_tmj/tmj_format_layer_parser.hpp"
 
 namespace tactile {
-namespace tmj_format_tileset_parser {
+namespace {
 
 [[nodiscard]]
-auto parse_animation_frame(const nlohmann::json& frame_json)
+auto _parse_animation_frame(const nlohmann::json& frame_json)
     -> std::expected<ir::AnimationFrame, ErrorCode>
 {
   ir::AnimationFrame frame {};
@@ -40,14 +40,14 @@ auto parse_animation_frame(const nlohmann::json& frame_json)
 }
 
 [[nodiscard]]
-auto parse_tile_animation(const nlohmann::json& animation_json)
+auto _parse_tile_animation(const nlohmann::json& animation_json)
     -> std::expected<ir::TileAnimation, ErrorCode>
 {
   ir::TileAnimation animation {};
   animation.reserve(animation_json.size());
 
   for (const auto& [_, frame_json] : animation_json.items()) {
-    if (const auto frame = parse_animation_frame(frame_json)) {
+    if (const auto frame = _parse_animation_frame(frame_json)) {
       animation.push_back(*frame);
     }
     else {
@@ -59,7 +59,7 @@ auto parse_tile_animation(const nlohmann::json& animation_json)
 }
 
 [[nodiscard]]
-auto parse_tile(const nlohmann::json& tile_json) -> std::expected<ir::Tile, ErrorCode>
+auto _parse_tile(const nlohmann::json& tile_json) -> std::expected<ir::Tile, ErrorCode>
 {
   ir::Tile tile {};
 
@@ -90,7 +90,7 @@ auto parse_tile(const nlohmann::json& tile_json) -> std::expected<ir::Tile, Erro
 
   if (const auto animation_iter = tile_json.find("animation");
       animation_iter != tile_json.end()) {
-    if (auto animation = parse_tile_animation(*animation_iter)) {
+    if (auto animation = _parse_tile_animation(*animation_iter)) {
       tile.animation = std::move(*animation);
     }
     else {
@@ -102,7 +102,8 @@ auto parse_tile(const nlohmann::json& tile_json) -> std::expected<ir::Tile, Erro
 }
 
 [[nodiscard]]
-auto parse_tileset(const nlohmann::json& tileset_json) -> std::expected<ir::Tileset, ErrorCode>
+auto _parse_tileset(const nlohmann::json& tileset_json)
+    -> std::expected<ir::Tileset, ErrorCode>
 {
   if (!tileset_json.contains("name")) {
     return std::unexpected {ErrorCode::kParseError};
@@ -177,7 +178,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> std::expected<ir::Tile
     tileset.tiles.reserve(tiles_iter->size());
 
     for (const auto& [_, tile_json] : tiles_iter->items()) {
-      if (auto tile = tmj_format_tileset_parser::parse_tile(tile_json)) {
+      if (auto tile = _parse_tile(tile_json)) {
         tileset.tiles.push_back(std::move(*tile));
       }
       else {
@@ -189,7 +190,7 @@ auto parse_tileset(const nlohmann::json& tileset_json) -> std::expected<ir::Tile
   return tileset;
 }
 
-}  // namespace tmj_format_tileset_parser
+}  // namespace
 
 auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
                              const SaveFormatReadOptions& options)
@@ -216,7 +217,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
     nlohmann::json external_tileset_json {};
     stream >> external_tileset_json;
 
-    if (auto tileset = tmj_format_tileset_parser::parse_tileset(external_tileset_json)) {
+    if (auto tileset = _parse_tileset(external_tileset_json)) {
       tileset_ref.tileset = std::move(*tileset);
       tileset_ref.tileset.is_embedded = false;
     }
@@ -225,7 +226,7 @@ auto parse_tiled_tmj_tileset(const nlohmann::json& tileset_json,
     }
   }
   else {
-    if (auto tileset = tmj_format_tileset_parser::parse_tileset(tileset_json)) {
+    if (auto tileset = _parse_tileset(tileset_json)) {
       tileset_ref.tileset = std::move(*tileset);
       tileset_ref.tileset.is_embedded = true;
     }
