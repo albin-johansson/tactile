@@ -27,10 +27,20 @@ void TilesetEventHandler::install(EventDispatcher& dispatcher)
 {
   using Self = TilesetEventHandler;
 
-  // clang-format off
   dispatcher.bind<ShowNewTilesetDialogEvent, &Self::on_show_new_tileset_dialog>(this);
   dispatcher.bind<AddTilesetEvent, &Self::on_add_tileset>(this);
-  // clang-format on
+
+  // TODO RemoveTilesetEvent
+  // TODO RenameTilesetEvent
+  // TODO SetTilesetSelectionEvent
+  // TODO SetTileAnimationFrameDurationEvent
+  // TODO EnableAnimationFrameSelectionMode
+  // TODO AddTileAnimationFrameEvent
+  // TODO RemoveTileAnimationFrameEvent
+  // TODO MoveAnimationFrameForwardsEvent
+  // TODO MoveAnimationFrameBackwardsEvent
+  // TODO DeleteTileAnimationEvent
+  // TODO RenameTileEvent
 }
 
 void TilesetEventHandler::on_show_new_tileset_dialog(const ShowNewTilesetDialogEvent&)

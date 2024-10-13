@@ -87,21 +87,29 @@ void FileEventHandler::on_save_as(const SaveAsEvent& event)
 void FileEventHandler::on_reopen_last_closed_file(const ReopenLastClosedFileEvent& event)
 {
   TACTILE_LOG_TRACE("ReopenLastClosedFileEvent");
+  // TODO
 }
 
 void FileEventHandler::on_clear_file_history(const ClearFileHistoryEvent& event)
 {
   TACTILE_LOG_TRACE("ClearFileHistoryEvent");
+  // TODO
 }
 
 void FileEventHandler::on_close(const CloseEvent& event)
 {
   TACTILE_LOG_TRACE("CloseEvent");
+  // TODO
 }
 
 void FileEventHandler::on_quit(const QuitEvent& event)
 {
   TACTILE_LOG_TRACE("QuitEvent");
+  // TODO
 }
+
+// TODO OpenDocumentEvent?
+// TODO SelectDocumentEvent
+// TODO CloseDocumentEvent
 
 }  // namespace tactile::core

@@ -38,6 +38,12 @@ void MapEventHandler::install(EventDispatcher& dispatcher)
   dispatcher.bind<ShowGodotExportDialogEvent, &Self::on_show_godot_export_dialog>(this);
   dispatcher.bind<CreateMapEvent, &Self::on_create_map>(this);
   dispatcher.bind<ExportAsGodotSceneEvent, &Self::on_export_as_godot_scene>(this);
+  // TODO ResizeMapEvent
+  // TODO FixTilesInMapEvent
+  // TODO InspectMapEvent? (or InspectContextEvent?)
+  // TODO SetTileEncodingEvent?
+  // TODO SetTileCompressionEvent?
+  // TODO SetCompressionLevelEvent?
 }
 
 void MapEventHandler::on_show_new_map_dialog(const ShowNewMapDialogEvent&)

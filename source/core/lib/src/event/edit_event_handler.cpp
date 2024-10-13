@@ -20,6 +20,15 @@ void EditEventHandler::install(EventDispatcher& dispatcher)
 
   dispatcher.bind<UndoEvent, &EditEventHandler::on_undo>(this);
   dispatcher.bind<RedoEvent, &EditEventHandler::on_redo>(this);
+
+  // TODO SelectToolEvent
+  // TODO StampSequenceEvent
+  // TODO EraserSequenceEvent
+  // TODO FloodEvent
+  // TODO AddRectangleEvent
+  // TODO AddEllipseEvent
+  // TODO AddPointEvent
+  // TODO SetStampRandomizerEvent
 }
 
 void EditEventHandler::on_undo(const UndoEvent& event)
@@ -45,5 +54,7 @@ void EditEventHandler::on_redo(const RedoEvent& event)
     command_stack.redo();
   }
 }
+
+// TODO SetCommandCapacityEvent
 
 }  // namespace tactile::core

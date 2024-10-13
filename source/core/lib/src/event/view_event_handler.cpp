@@ -58,51 +58,61 @@ void ViewEventHandler::on_reset_layout(const ResetLayoutEvent&)
 void ViewEventHandler::on_toggle_property_dock(const TogglePropertyDockEvent&)
 {
   TACTILE_LOG_TRACE("TogglePropertyDockEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_toggle_component_dock(const ToggleComponentDockEvent&)
 {
   TACTILE_LOG_TRACE("ToggleComponentDockEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_toggle_layer_dock(const ToggleLayerDockEvent&)
 {
   TACTILE_LOG_TRACE("ToggleLayerDockEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_toggle_tileset_dock(const ToggleTilesetDockEvent&)
 {
   TACTILE_LOG_TRACE("ToggleTilesetDockEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_toggle_animation_dock(const ToggleAnimationDockEvent&)
 {
   TACTILE_LOG_TRACE("ToggleAnimationDockEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_toggle_log_dock(const ToggleLogDockEvent&)
 {
   TACTILE_LOG_TRACE("ToggleLogDockEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_set_theme(const SetThemeEvent&)
 {
   TACTILE_LOG_TRACE("SetThemeEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_increase_font_size(const IncreaseFontSizeEvent&)
 {
   TACTILE_LOG_TRACE("IncreaseFontSizeEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_decrease_font_size(const DecreaseFontSizeEvent&)
 {
   TACTILE_LOG_TRACE("DecreaseFontSizeEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_reset_font_size(const ResetFontSizeEvent&)
 {
   TACTILE_LOG_TRACE("ResetFontSizeEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_set_font(const SetFontEvent& event)
@@ -127,11 +137,13 @@ void ViewEventHandler::on_reload_fonts(const ReloadFontsEvent& event)
 void ViewEventHandler::on_toggle_grid(const ToggleGridEvent&)
 {
   TACTILE_LOG_TRACE("ToggleGridEvent");
+  // TODO
 }
 
 void ViewEventHandler::on_toggle_layer_highlight(const ToggleLayerHighlightEvent&)
 {
   TACTILE_LOG_TRACE("ToggleLayerHighlightEvent");
+  // TODO
 }
 
 }  // namespace tactile::core

@@ -30,11 +30,26 @@ void ComponentEventHandler::on_show_component_editor_dialog(
     const ShowComponentEditorDialogEvent&)
 {
   TACTILE_LOG_TRACE("ShowComponentEditorDialogEvent");
+  // TODO
 }
 
 void ComponentEventHandler::on_create_component(const CreateComponentEvent&)
 {
   TACTILE_LOG_TRACE("CreateComponentEvent");
+  // TODO
 }
+
+// TODO UndefComponentEvent
+// TODO RenameComponentEvent
+// TODO UpdateComponentEvent
+// TODO AttachComponentEvent
+// TODO DetachComponentEvent
+// TODO UpdateAttachedComponentEvent
+// TODO ResetAttachedComponentEvent
+// TODO AddComponentAttrEvent
+// TODO RemoveComponentAttrEvent
+// TODO RenameComponentAttrEvent
+// TODO DuplicateComponentAttrEvent
+// TODO SetComponentAttrTypeEvent
 
 }  // namespace tactile::core
