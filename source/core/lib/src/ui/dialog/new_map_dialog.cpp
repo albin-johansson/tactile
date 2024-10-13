@@ -5,7 +5,7 @@
 #include <imgui.h>
 
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/map_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/common/buttons.hpp"
 #include "tactile/core/ui/common/dialogs.hpp"

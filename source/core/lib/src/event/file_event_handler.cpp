@@ -7,7 +7,7 @@
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/document/map_view_impl.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/file_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 

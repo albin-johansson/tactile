@@ -5,8 +5,8 @@
 #include <SDL2/SDL.h>
 #include <imgui.h>
 
-#include "tactile/core/event/dialog_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/common/menus.hpp"

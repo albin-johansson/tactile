@@ -4,10 +4,8 @@
 
 #include <imgui.h>
 
-#include "tactile/core/event/component_events.hpp"
-#include "tactile/core/event/dialog_events.hpp"
-#include "tactile/core/event/edit_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/common/menus.hpp"
 #include "tactile/core/ui/i18n/language.hpp"

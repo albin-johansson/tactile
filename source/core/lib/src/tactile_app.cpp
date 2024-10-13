@@ -10,7 +10,7 @@
 #include "tactile/base/render/window.hpp"
 #include "tactile/base/runtime/runtime.hpp"
 #include "tactile/core/debug/validation.hpp"
-#include "tactile/core/event/view_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/ui/common/style.hpp"
 #include "tactile/core/ui/i18n/language_parser.hpp"

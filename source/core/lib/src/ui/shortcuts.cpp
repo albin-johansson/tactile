@@ -4,8 +4,8 @@
 
 #include <imgui_internal.h>
 
-#include "tactile/core/event/dialog_events.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
+#include "tactile/core/event/events.hpp"
 
 namespace tactile::core::ui {
 

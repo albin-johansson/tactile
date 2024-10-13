@@ -7,7 +7,7 @@
 #include <utility>     // move
 
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/tileset_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/platform/file_dialog.hpp"
 #include "tactile/core/ui/common/buttons.hpp"

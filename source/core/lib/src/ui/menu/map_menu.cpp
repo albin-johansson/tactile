@@ -7,7 +7,7 @@
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/map_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/common/menus.hpp"

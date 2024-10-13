@@ -8,7 +8,7 @@
 #include "tactile/core/cmd/tile/add_tileset_command.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/tileset_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/widget_manager.hpp"

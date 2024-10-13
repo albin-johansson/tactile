@@ -13,7 +13,7 @@
 #include "tactile/core/cmd/layer/set_layer_visibility_command.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/layer_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/model/model.hpp"
 

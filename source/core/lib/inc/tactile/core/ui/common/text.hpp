@@ -6,8 +6,8 @@
 
 #include <imgui.h>
 
-#include "tactile/base/prelude.hpp"
 #include "tactile/base/container/buffer.hpp"
+#include "tactile/base/prelude.hpp"
 #include "tactile/base/util/format.hpp"
 
 namespace tactile::core {

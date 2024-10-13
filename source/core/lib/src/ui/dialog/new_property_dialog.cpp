@@ -8,7 +8,7 @@
 #include "tactile/base/container/lookup.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/property_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/common/attribute_widgets.hpp"

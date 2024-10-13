@@ -10,7 +10,7 @@
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/property_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/ui/common/attribute_widgets.hpp"
 #include "tactile/core/ui/common/buttons.hpp"

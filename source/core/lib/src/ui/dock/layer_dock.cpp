@@ -9,7 +9,7 @@
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/event/layer_events.hpp"
+#include "tactile/core/event/events.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/layer/tile_layer.hpp"
