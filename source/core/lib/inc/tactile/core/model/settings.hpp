@@ -3,12 +3,16 @@
 #pragma once
 
 #include <cstddef>  // size_t
+#include <cstdint>  // uint8_t
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/fonts.hpp"
-#include "tactile/core/ui/i18n/language_id.hpp"
 
 namespace tactile::core {
+
+namespace ui {
+enum class LanguageID : std::uint8_t;
+}  // namespace ui
 
 /**
  * Represents editor settings that the user can control.
@@ -16,7 +20,7 @@ namespace tactile::core {
 struct Settings final
 {
   /** The language that will be loaded at startup. */
-  LanguageID language;
+  ui::LanguageID language;
 
   /** The maximum number of changes to track in a document. */
   std::size_t command_capacity;

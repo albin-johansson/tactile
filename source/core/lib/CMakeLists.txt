@@ -214,7 +214,6 @@ target_sources(tactile-core
                "inc/tactile/core/ui/dock/property_dock.hpp"
                "inc/tactile/core/ui/dock/tileset_dock.hpp"
                "inc/tactile/core/ui/i18n/language.hpp"
-               "inc/tactile/core/ui/i18n/language_id.hpp"
                "inc/tactile/core/ui/i18n/language_parser.hpp"
                "inc/tactile/core/ui/i18n/string_id.hpp"
                "inc/tactile/core/ui/render/hexagon_info.hpp"

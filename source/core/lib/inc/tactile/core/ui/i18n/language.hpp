@@ -2,16 +2,26 @@
 
 #pragma once
 
+#include <cstdint>  // uint8_t
 #include <string>   // string
 #include <utility>  // to_underlying
 #include <vector>   // vector
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/ui/i18n/language_id.hpp"
 #include "tactile/core/ui/i18n/string_id.hpp"
 
 namespace tactile::core::ui {
+
+/**
+ * Provides identifiers for the supported languages.
+ */
+enum class LanguageID : std::uint8_t
+{
+  kAmericanEnglish,
+  kBritishEnglish,
+  kSwedish,
+};
 
 /**
  * Represents a set of translated user-facing strings.

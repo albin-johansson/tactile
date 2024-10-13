@@ -2,10 +2,12 @@
 
 #include "tactile/core/model/settings.hpp"
 
+#include "tactile/core/ui/i18n/language.hpp"
+
 namespace tactile::core {
 namespace {
 
-inline constexpr auto kLanguageDefault = LanguageID::kAmericanEnglish;
+inline constexpr auto kLanguageDefault = ui::LanguageID::kAmericanEnglish;
 inline constexpr auto kCommandCapacityDefault = std::size_t {100};
 inline constexpr auto kFontDefault = ui::FontID::kDefault;
 inline constexpr auto kFontSizeDefault = 13.0f;

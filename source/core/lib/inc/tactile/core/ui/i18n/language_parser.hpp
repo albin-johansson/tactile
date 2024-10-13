@@ -10,7 +10,6 @@
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
-#include "tactile/core/ui/i18n/language_id.hpp"
 #include "tactile/core/ui/i18n/string_id.hpp"
 
 namespace tactile::core::ui {
