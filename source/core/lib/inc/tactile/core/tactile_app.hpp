@@ -4,6 +4,7 @@
 
 #include <optional>  // optional
 
+#include "event/object_event_handler.hpp"
 #include "tactile/base/engine/engine_app.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
@@ -50,51 +51,54 @@ class TactileApp final : public IEngineApp
   void on_framebuffer_scale_changed(float framebuffer_scale) override;
 
  private:
-  IRuntime* mRuntime;
-  IWindow* mWindow;
-  IRenderer* mRenderer;
+  IRuntime* m_runtime;
+  IWindow* m_window;
+  IRenderer* m_renderer;
 
   /** The user-controlled editor settings. */
-  Settings mSettings {};
+  Settings m_settings;
 
   /** The language that will be used throughout the session. */
-  std::optional<ui::Language> mLanguage {};
+  std::optional<ui::Language> m_language;
 
   /** The core document model. */
-  std::optional<Model> mModel {};
+  std::optional<Model> m_model;
 
   /** The UI manager. */
-  ui::WidgetManager mWidgetManager {};
+  ui::WidgetManager m_widget_manager;
 
   /** The lone event dispatcher used to track events. */
-  EventDispatcher mEventDispatcher {};
+  EventDispatcher m_event_dispatcher;
 
   /** Delegate for general "file" events. */
-  std::optional<FileEventHandler> mFileEventHandler {};
+  std::optional<FileEventHandler> m_file_event_handler;
 
   /** Delegate for general "edit" events. */
-  std::optional<EditEventHandler> mEditEventHandler {};
+  std::optional<EditEventHandler> m_edit_event_handler;
 
   /** Delegate for general "view" events. */
-  std::optional<ViewEventHandler> mViewEventHandler {};
+  std::optional<ViewEventHandler> m_view_event_handler;
 
   /** Delegate for tileset events. */
-  std::optional<TilesetEventHandler> mTilesetEventHandler {};
+  std::optional<TilesetEventHandler> m_tileset_event_handler;
 
   /** Delegate for map events. */
-  std::optional<MapEventHandler> mMapEventHandler {};
+  std::optional<MapEventHandler> m_map_event_handler;
 
   /** Delegate for layer events. */
-  std::optional<LayerEventHandler> mLayerEventHandler {};
+  std::optional<LayerEventHandler> m_layer_event_handler;
+
+  /** Delegate for object events. */
+  std::optional<ObjectEventHandler> m_object_event_handler;
 
   /** Delegate for component events. */
-  std::optional<ComponentEventHandler> mComponentEventHandler {};
+  std::optional<ComponentEventHandler> m_component_event_handler;
 
   /** Delegate for property events. */
-  std::optional<PropertyEventHandler> mPropertyEventHandler {};
+  std::optional<PropertyEventHandler> m_property_event_handler;
 
   /** Delegate for viewport events. */
-  std::optional<ViewportEventHandler> mViewportEventHandler {};
+  std::optional<ViewportEventHandler> m_viewport_event_handler;
 };
 
 }  // namespace tactile::core

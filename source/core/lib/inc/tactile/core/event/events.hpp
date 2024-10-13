@@ -6,6 +6,7 @@
 #include <string>      // string
 
 #include "tactile/base/layer/layer_type.hpp"
+#include "tactile/base/layer/object_type.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/core/entity/entity.hpp"
@@ -427,6 +428,38 @@ struct SetLayerVisibleEvent final
   EntityID layer_entity;
 
   /** The new visibility. */
+  bool visible;
+};
+
+struct CreateObjectEvent final
+{
+  EntityID layer_id;
+  ObjectType type;
+  Float2 position;
+  Float2 size;
+};
+
+struct RemoveObjectEvent final
+{
+  EntityID layer_id;
+  EntityID object_id;
+};
+
+struct MoveObjectEvent final
+{
+  EntityID object_id;
+  Float2 position;
+};
+
+struct SetObjectTagEvent final
+{
+  EntityID object_id;
+  std::string tag;
+};
+
+struct SetObjectVisibleEvent final
+{
+  EntityID object_id;
   bool visible;
 };
 
