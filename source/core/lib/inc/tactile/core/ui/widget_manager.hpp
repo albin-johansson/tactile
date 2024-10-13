@@ -15,7 +15,7 @@
 #include "tactile/core/ui/dock/log_dock.hpp"
 #include "tactile/core/ui/dock/property_dock.hpp"
 #include "tactile/core/ui/dock/tileset_dock.hpp"
-#include "tactile/core/ui/menu/menu_bar.hpp"
+#include "tactile/core/ui/menu_bar.hpp"
 
 namespace tactile::core {
 
