@@ -35,20 +35,20 @@ void RenamePropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
   const auto& registry = document->get_registry();
   const auto& language = model.get_language();
 
-  const auto* dialog_name = language.get(StringID::kRenameProperty);
+  const auto* dialog_name = language.get(ActionLabel::kRenameProperty);
 
   if (const PopupScope dialog {kModalPopup, dialog_name, ImGuiWindowFlags_AlwaysAutoResize};
       dialog.is_open()) {
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(language.get(StringID::kName));
+    ImGui::TextUnformatted(language.get(NounLabel::kName));
     ImGui::SameLine();
     ImGui::InputText("##Name", &mNewPropName);
 
     const auto& meta = registry.get<CMeta>(mContextEntity);
     const auto can_accept = !mNewPropName.empty() && !exists_in(meta.properties, mNewPropName);
 
-    const auto action = push_dialog_control_buttons(language.get(StringID::kCancel),
-                                                    language.get(StringID::kRename),
+    const auto action = push_dialog_control_buttons(language.get(VerbLabel::kCancel),
+                                                    language.get(VerbLabel::kRename),
                                                     nullptr,
                                                     can_accept);
 

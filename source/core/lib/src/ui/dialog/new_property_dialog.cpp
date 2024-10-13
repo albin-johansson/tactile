@@ -35,12 +35,12 @@ void NewPropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
   const auto& registry = document->get_registry();
   const auto& language = model.get_language();
 
-  const auto* dialog_name = language.get(StringID::kCreateProperty);
+  const auto* dialog_name = language.get(ActionLabel::kCreateProperty);
 
   if (const PopupScope dialog {kModalPopup, dialog_name, ImGuiWindowFlags_AlwaysAutoResize};
       dialog.is_open()) {
-    const auto* name_str = language.get(StringID::kName);
-    const auto* type_str = language.get(StringID::kType);
+    const auto* name_str = language.get(NounLabel::kName);
+    const auto* type_str = language.get(NounLabel::kType);
     const auto label_alignment_offset = get_alignment_offset(name_str, type_str);
 
     ImGui::AlignTextToFramePadding();
@@ -58,8 +58,8 @@ void NewPropertyDialog::push(const Model& model, EventDispatcher& dispatcher)
     const auto& meta = registry.get<CMeta>(mContextEntity);
     const auto can_accept = !mName.empty() && !exists_in(meta.properties, mName);
 
-    const auto action = push_dialog_control_buttons(language.get(StringID::kCancel),
-                                                    language.get(StringID::kCreate),
+    const auto action = push_dialog_control_buttons(language.get(VerbLabel::kCancel),
+                                                    language.get(VerbLabel::kCreate),
                                                     nullptr,
                                                     can_accept);
 

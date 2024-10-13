@@ -22,13 +22,13 @@ namespace tactile::core::ui {
 void NewTilesetDialog::push(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
-  const auto* dialog_name = language.get(StringID::kCreateTileset);
+  const auto* dialog_name = language.get(ActionLabel::kCreateTileset);
 
   if (const PopupScope popup {kModalPopup, dialog_name}; popup.is_open()) {
-    ImGui::TextUnformatted(language.get(StringID::kSelectTilesetImage));
+    ImGui::TextUnformatted(language.get(HintLabel::kSelectTilesetImage));
     ImGui::Spacing();
 
-    if (push_button(language.get(StringID::kSelectImage))) {
+    if (push_button(language.get(ActionLabel::kSelectImage))) {
       if (auto path = FileDialog::open_image()) {
         mTexturePath = std::move(*path);
         mTexturePathPreview = std::filesystem::relative(mTexturePath).string();
@@ -37,8 +37,8 @@ void NewTilesetDialog::push(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::SameLine();
 
-    auto input_offset = get_alignment_offset(language.get(StringID::kTileWidth),
-                                             language.get(StringID::kTileHeight));
+    auto input_offset = get_alignment_offset(language.get(NounLabel::kTileWidth),
+                                             language.get(NounLabel::kTileHeight));
     input_offset = std::max(input_offset, ImGui::GetCursorPosX());
 
     {
@@ -50,16 +50,16 @@ void NewTilesetDialog::push(const Model& model, EventDispatcher& dispatcher)
                        ImGuiInputTextFlags_ReadOnly);
     }
 
-    push_scalar_input_row(language.get(StringID::kTileWidth), mTileSize[0], input_offset);
+    push_scalar_input_row(language.get(NounLabel::kTileWidth), mTileSize[0], input_offset);
 
-    push_scalar_input_row(language.get(StringID::kTileHeight), mTileSize[1], input_offset);
+    push_scalar_input_row(language.get(NounLabel::kTileHeight), mTileSize[1], input_offset);
 
     const auto can_accept = !mTexturePath.empty() &&  //
                             (mTileSize.x() > 0) &&    //
                             (mTileSize.y() > 0);
 
-    const auto status = push_dialog_control_buttons(language.get(StringID::kCancel),
-                                                    language.get(StringID::kCreate),
+    const auto status = push_dialog_control_buttons(language.get(VerbLabel::kCancel),
+                                                    language.get(VerbLabel::kCreate),
                                                     nullptr,
                                                     can_accept);
     if (status == DialogStatus::kAccepted) {

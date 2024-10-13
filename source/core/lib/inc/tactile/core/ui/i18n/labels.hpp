@@ -3,28 +3,32 @@
 #pragma once
 
 #include <cstddef>  // size_t
-
-#include "tactile/base/prelude.hpp"
+#include <utility>  // to_underlying
 
 namespace tactile::core::ui {
 
-/**
- * Provides identifiers for all user-facing strings.
- *
- * \details
- * The enumerators are effectively indices into in an array of translated
- * strings, which allows for very fast string lookups at runtime. For this
- * reason, it's important to keep the underlying range of values as small as
- * possible to minimize memory usage. Basically, don't provide explicit
- * enumerator values.
- */
-enum class StringID : std::size_t
-{
-  // Miscellaneous.
-  kOK,
+/* These enumerators act as indices into in an array of translated strings, which allows for
+   very fast string lookups. For this reason, it's vital the enumerators of the different enums
+   together form a contiguous sequence of indices. This is achieved by adding "kMIN" and
+   "kNEXT" enumerators to each enum, which encode the value of the first enumerator and the
+   next available index, respectively. Each enum sets their "kMIN" enumerator to the value of
+   the "kNEXT" enumerator from the enum directly above itself. The range of an enum E is then
+   [E::kMIN, E::kNEXT). */
 
-  // Generic nouns.
-  kInt,
+enum class MiscLabel : std::size_t
+{
+  kMIN = 0,
+
+  kOK = kMIN,
+
+  kNEXT,
+};
+
+enum class NounLabel : std::size_t
+{
+  kMIN = std::to_underlying(MiscLabel::kNEXT),
+
+  kInt = kMIN,
   kInt2,
   kInt3,
   kInt4,
@@ -54,21 +58,6 @@ enum class StringID : std::size_t
   kVersion,
   kProjectDir,
 
-  // Generic verbs.
-  kCancel,
-  kApply,
-  kClose,
-  kCreate,
-  kRename,
-  kUndo,
-  kRedo,
-  kSave,
-  kQuit,
-
-  // Generic adjectives.
-  kOrthogonal,
-  kHexagonal,
-
   // Window names.
   kDocumentDock,
   kLayerDock,
@@ -93,8 +82,41 @@ enum class StringID : std::size_t
   kThemeMenu,
   kExportAsMenu,
 
-  // "Action" strings. These often have embedded leading icons.
-  kCreateMap,
+  kNEXT,
+};
+
+enum class VerbLabel : std::size_t
+{
+  kMIN = std::to_underlying(NounLabel::kNEXT),
+
+  kCancel = kMIN,
+  kApply,
+  kClose,
+  kCreate,
+  kRename,
+  kUndo,
+  kRedo,
+  kSave,
+  kQuit,
+
+  kNEXT,
+};
+
+enum class AdjectiveLabel : std::size_t
+{
+  kMIN = std::to_underlying(VerbLabel::kNEXT),
+
+  kOrthogonal = kMIN,
+  kHexagonal,
+
+  kNEXT,
+};
+
+enum class ActionLabel : std::size_t
+{
+  kMIN = std::to_underlying(AdjectiveLabel::kNEXT),
+
+  kCreateMap = kMIN,
   kCreateTileset,
   kCreateLayer,
   kOpen,
@@ -151,15 +173,22 @@ enum class StringID : std::size_t
   kObjectLayerItem,
   kGroupLayerItem,
 
-  // Hint strings.
-  kContextHasNoProperties,
+  kNEXT,
+};
+
+enum class HintLabel : std::size_t
+{
+  kMIN = std::to_underlying(ActionLabel::kNEXT),
+
+  kContextHasNoProperties = kMIN,
   kContextHasNoComponents,
   kMapHasNoLayers,
   kMapHasNoTilesets,
   kSelectTilesetImage,
 
-  /** The number of string identifiers, not a string itself. */
-  kMAX
+  kNEXT,
 };
+
+inline constexpr std::size_t kLabelCount = std::to_underlying(HintLabel::kNEXT);
 
 }  // namespace tactile::core::ui

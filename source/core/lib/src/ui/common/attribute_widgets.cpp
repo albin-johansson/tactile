@@ -365,19 +365,19 @@ auto push_attribute_type_combo(const Language& language,
   AttributeTypeNameArray type_names {};
 
   // clang-format off
-  type_names[std::to_underlying(AttributeType::kStr)] = language.get(StringID::kString);
-  type_names[std::to_underlying(AttributeType::kInt)] = language.get(StringID::kInt);
-  type_names[std::to_underlying(AttributeType::kInt2)] = language.get(StringID::kInt2);
-  type_names[std::to_underlying(AttributeType::kInt3)] = language.get(StringID::kInt3);
-  type_names[std::to_underlying(AttributeType::kInt4)] = language.get(StringID::kInt4);
-  type_names[std::to_underlying(AttributeType::kFloat)] = language.get(StringID::kFloat);
-  type_names[std::to_underlying(AttributeType::kFloat2)] = language.get(StringID::kFloat2);
-  type_names[std::to_underlying(AttributeType::kFloat3)] = language.get(StringID::kFloat3);
-  type_names[std::to_underlying(AttributeType::kFloat4)] = language.get(StringID::kFloat4);
-  type_names[std::to_underlying(AttributeType::kBool)] = language.get(StringID::kBool);
-  type_names[std::to_underlying(AttributeType::kColor)] = language.get(StringID::kColor);
-  type_names[std::to_underlying(AttributeType::kObject)] = language.get(StringID::kObject);
-  type_names[std::to_underlying(AttributeType::kPath)] = language.get(StringID::kPath);
+  type_names[std::to_underlying(AttributeType::kStr)] = language.get(NounLabel::kString);
+  type_names[std::to_underlying(AttributeType::kInt)] = language.get(NounLabel::kInt);
+  type_names[std::to_underlying(AttributeType::kInt2)] = language.get(NounLabel::kInt2);
+  type_names[std::to_underlying(AttributeType::kInt3)] = language.get(NounLabel::kInt3);
+  type_names[std::to_underlying(AttributeType::kInt4)] = language.get(NounLabel::kInt4);
+  type_names[std::to_underlying(AttributeType::kFloat)] = language.get(NounLabel::kFloat);
+  type_names[std::to_underlying(AttributeType::kFloat2)] = language.get(NounLabel::kFloat2);
+  type_names[std::to_underlying(AttributeType::kFloat3)] = language.get(NounLabel::kFloat3);
+  type_names[std::to_underlying(AttributeType::kFloat4)] = language.get(NounLabel::kFloat4);
+  type_names[std::to_underlying(AttributeType::kBool)] = language.get(NounLabel::kBool);
+  type_names[std::to_underlying(AttributeType::kColor)] = language.get(NounLabel::kColor);
+  type_names[std::to_underlying(AttributeType::kObject)] = language.get(NounLabel::kObject);
+  type_names[std::to_underlying(AttributeType::kPath)] = language.get(NounLabel::kPath);
   // clang-format on
 
   bool changed {false};

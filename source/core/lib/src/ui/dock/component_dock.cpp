@@ -15,7 +15,7 @@ void ComponentDock::push(const Language& language,
                          const IDocument& document,
                          EventDispatcher& dispatcher)
 {
-  const Window dock_window {language.get(StringID::kComponentDock)};
+  const Window dock_window {language.get(NounLabel::kComponentDock)};
   if (dock_window.is_open()) {
   }
 }

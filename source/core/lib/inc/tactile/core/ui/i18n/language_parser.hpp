@@ -9,8 +9,8 @@
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/ui/i18n/labels.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
-#include "tactile/core/ui/i18n/string_id.hpp"
 
 namespace tactile::core::ui {
 
@@ -30,27 +30,23 @@ class LanguageParser final
   /**
    * Attempts to parse a language file.
    *
-   * \param id       The language identifier.
-   * \param path     The path to the language INI file.
-   * \param fallback The fallback language used whenever a string is missing.
+   * \param id   The language identifier.
+   * \param path The path to the language INI file.
    *
    * \return
    * A language if successful; an error code otherwise.
    */
   [[nodiscard]]
-  auto parse(LanguageID id,
-             const std::filesystem::path& path,
-             const Language* fallback = nullptr) const -> std::expected<Language, ErrorCode>;
+  auto parse(LanguageID id, const std::filesystem::path& path) const
+      -> std::expected<Language, ErrorCode>;
 
  private:
-  std::unordered_map<std::string_view, StringID> mMiscNames {};
-  std::unordered_map<std::string_view, StringID> mVerbNames {};
-  std::unordered_map<std::string_view, StringID> mNounNames {};
-  std::unordered_map<std::string_view, StringID> mAdjectiveNames {};
-  std::unordered_map<std::string_view, StringID> mActionNames {};
-  std::unordered_map<std::string_view, StringID> mHintNames {};
-  std::unordered_map<std::string_view, StringID> mMenuNames {};
-  std::unordered_map<std::string_view, StringID> mWidgetNames {};
+  std::unordered_map<std::string_view, MiscLabel> mMiscNames {};
+  std::unordered_map<std::string_view, VerbLabel> mVerbNames {};
+  std::unordered_map<std::string_view, NounLabel> mNounNames {};
+  std::unordered_map<std::string_view, AdjectiveLabel> mAdjectiveNames {};
+  std::unordered_map<std::string_view, ActionLabel> mActionNames {};
+  std::unordered_map<std::string_view, HintLabel> mHintNames {};
 };
 
 /**

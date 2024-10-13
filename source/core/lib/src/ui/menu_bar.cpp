@@ -24,8 +24,8 @@ namespace {
 
 void _push_recent_files_menu(const Language& language, EventDispatcher& dispatcher)
 {
-  if (const MenuScope menu {language.get(StringID::kRecentFilesMenu)}; menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kReopenLastClosedFile),
+  if (const MenuScope menu {language.get(NounLabel::kRecentFilesMenu)}; menu.is_open()) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kReopenLastClosedFile),
                         nullptr,
                         false,
                         false)) {
@@ -36,7 +36,7 @@ void _push_recent_files_menu(const Language& language, EventDispatcher& dispatch
 
     // TODO iterate recent files
 
-    if (ImGui::MenuItem(language.get(StringID::kClearFileHistory), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kClearFileHistory), nullptr, false, false)) {
       dispatcher.push<ClearFileHistoryEvent>();
     }
   }
@@ -47,14 +47,14 @@ void _push_file_menu(const Model& model, EventDispatcher& dispatcher)
   const auto& language = model.get_language();
   const auto* current_document = model.get_current_document();
 
-  if (const MenuScope menu {language.get(StringID::kFileMenu)}; menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kCreateMap), kCreateMapShortcut.hint)) {
+  if (const MenuScope menu {language.get(NounLabel::kFileMenu)}; menu.is_open()) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kCreateMap), kCreateMapShortcut.hint)) {
       dispatcher.push<ShowNewMapDialogEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpen), kOpenShortcut.hint)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpen), kOpenShortcut.hint)) {
       dispatcher.push<ShowOpenMapDialogEvent>();
     }
 
@@ -62,11 +62,11 @@ void _push_file_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kSave), kSaveShortcut.hint, false, false)) {
+    if (ImGui::MenuItem(language.get(VerbLabel::kSave), kSaveShortcut.hint, false, false)) {
       dispatcher.push<SaveEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kSaveAs),
+    if (ImGui::MenuItem(language.get(ActionLabel::kSaveAs),
                         kSaveAsShortcut.hint,
                         false,
                         current_document != nullptr)) {
@@ -75,7 +75,7 @@ void _push_file_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kClose),
+    if (ImGui::MenuItem(language.get(VerbLabel::kClose),
                         nullptr,
                         false,
                         current_document != nullptr)) {
@@ -84,7 +84,7 @@ void _push_file_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kQuit))) {
+    if (ImGui::MenuItem(language.get(VerbLabel::kQuit))) {
       dispatcher.push<QuitEvent>();
     }
   }
@@ -99,15 +99,15 @@ void _push_edit_menu(const Model& model, EventDispatcher& dispatcher)
   const auto* history =
       (document != nullptr) ? &document_manager.get_history(document->get_uuid()) : nullptr;
 
-  if (const MenuScope menu {language.get(StringID::kEditMenu)}; menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kUndo),
+  if (const MenuScope menu {language.get(NounLabel::kEditMenu)}; menu.is_open()) {
+    if (ImGui::MenuItem(language.get(VerbLabel::kUndo),
                         kUndoShortcut.hint,
                         false,
                         (history != nullptr) && history->can_undo())) {
       dispatcher.push<UndoEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kRedo),
+    if (ImGui::MenuItem(language.get(VerbLabel::kRedo),
                         kRedoShortcut.hint,
                         false,
                         (history != nullptr) && history->can_redo())) {
@@ -116,37 +116,40 @@ void _push_edit_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kStampTool), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kStampTool), nullptr, false, false)) {
       dispatcher.push<EnableStampToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kEraserTool), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kEraserTool), nullptr, false, false)) {
       dispatcher.push<EnableEraserToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kBucketTool), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kBucketTool), nullptr, false, false)) {
       dispatcher.push<EnableBucketToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kObjectSelectorTool), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kObjectSelectorTool),
+                        nullptr,
+                        false,
+                        false)) {
       dispatcher.push<EnableSelectorToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kRectangleTool), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kRectangleTool), nullptr, false, false)) {
       dispatcher.push<EnableRectangleToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kEllipseTool), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kEllipseTool), nullptr, false, false)) {
       dispatcher.push<EnableEllipseToolEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kPointTool), nullptr, false, false)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kPointTool), nullptr, false, false)) {
       dispatcher.push<EnablePointToolEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenComponentEditor),
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpenComponentEditor),
                         kOpenComponentEditorShortcut.hint,
                         false,
                         document != nullptr)) {
@@ -155,7 +158,8 @@ void _push_edit_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenSettings), kOpenSettingsShortcut.hint)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpenSettings),
+                        kOpenSettingsShortcut.hint)) {
       dispatcher.push<ShowSettingsDialogEvent>();
     }
   }
@@ -163,35 +167,35 @@ void _push_edit_menu(const Model& model, EventDispatcher& dispatcher)
 
 void _push_widgets_menu(const Language& language, EventDispatcher& dispatcher)
 {
-  if (const MenuScope widgets_menu {language.get(StringID::kWidgetsMenu)};
+  if (const MenuScope widgets_menu {language.get(NounLabel::kWidgetsMenu)};
       widgets_menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kResetLayout))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kResetLayout))) {
       dispatcher.push<ResetLayoutEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kPropertyDock), nullptr, true)) {
+    if (ImGui::MenuItem(language.get(NounLabel::kPropertyDock), nullptr, true)) {
       dispatcher.push<TogglePropertyDockEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kComponentDock), nullptr, true)) {
+    if (ImGui::MenuItem(language.get(NounLabel::kComponentDock), nullptr, true)) {
       dispatcher.push<ToggleComponentDockEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kLayerDock), nullptr, true)) {
+    if (ImGui::MenuItem(language.get(NounLabel::kLayerDock), nullptr, true)) {
       dispatcher.push<ToggleLayerDockEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kTilesetDock), nullptr, true)) {
+    if (ImGui::MenuItem(language.get(NounLabel::kTilesetDock), nullptr, true)) {
       dispatcher.push<ToggleTilesetDockEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kAnimationDock), nullptr, true)) {
+    if (ImGui::MenuItem(language.get(NounLabel::kAnimationDock), nullptr, true)) {
       dispatcher.push<ToggleAnimationDockEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kLogDock), nullptr, true)) {
+    if (ImGui::MenuItem(language.get(NounLabel::kLogDock), nullptr, true)) {
       dispatcher.push<ToggleLogDockEvent>();
     }
   }
@@ -199,8 +203,8 @@ void _push_widgets_menu(const Language& language, EventDispatcher& dispatcher)
 
 void _push_font_menu(const Language& language, EventDispatcher& dispatcher)
 {
-  if (const MenuScope font_menu {language.get(StringID::kFont)}; font_menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kDefault))) {
+  if (const MenuScope font_menu {language.get(NounLabel::kFont)}; font_menu.is_open()) {
+    if (ImGui::MenuItem(language.get(NounLabel::kDefault))) {
       dispatcher.push<SetFontEvent>(FontID::kDefault);
     }
 
@@ -214,7 +218,7 @@ void _push_font_menu(const Language& language, EventDispatcher& dispatcher)
 
 void _push_theme_menu(const Language& language, EventDispatcher& dispatcher)
 {
-  if (const MenuScope theme_menu {language.get(StringID::kThemeMenu)}; theme_menu.is_open()) {
+  if (const MenuScope theme_menu {language.get(NounLabel::kThemeMenu)}; theme_menu.is_open()) {
     if (ImGui::MenuItem("Dear ImGui##Light")) {
       ImGui::StyleColorsLight(&ImGui::GetStyle());
       dispatcher.push<SetThemeEvent>(Theme::kDearImGuiLight);
@@ -239,10 +243,10 @@ void _push_view_menu(const Model& model, EventDispatcher& dispatcher)
                                : kInvalidEntity;
   const auto content_size = (document != nullptr) ? document->get_content_size() : Float2 {};
 
-  if (const MenuScope menu {language.get(StringID::kViewMenu)}; menu.is_open()) {
+  if (const MenuScope menu {language.get(NounLabel::kViewMenu)}; menu.is_open()) {
     _push_widgets_menu(language, dispatcher);
 
-    if (ImGui::MenuItem(language.get(StringID::kToggleUi))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kToggleUi))) {
       dispatcher.push<ToggleUiEvent>();
     }
 
@@ -252,17 +256,17 @@ void _push_view_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kIncreaseFontSize),
+    if (ImGui::MenuItem(language.get(ActionLabel::kIncreaseFontSize),
                         kIncreaseFontSizeShortcut.hint)) {
       dispatcher.push<IncreaseFontSizeEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kDecreaseFontSize),
+    if (ImGui::MenuItem(language.get(ActionLabel::kDecreaseFontSize),
                         kDecreaseFontSizeShortcut.hint)) {
       dispatcher.push<DecreaseFontSizeEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kResetFontSize))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kResetFontSize))) {
       dispatcher.push<ResetFontSizeEvent>();
     }
 
@@ -270,21 +274,21 @@ void _push_view_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kIncreaseZoom),
+    if (ImGui::MenuItem(language.get(ActionLabel::kIncreaseZoom),
                         kIncreaseZoomShortcut.hint,
                         false,
                         document != nullptr)) {
       dispatcher.push<IncreaseViewportZoomEvent>(root_entity);
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kDecreaseZoom),
+    if (ImGui::MenuItem(language.get(ActionLabel::kDecreaseZoom),
                         kDecreaseZoomShortcut.hint,
                         false,
                         document != nullptr)) {
       dispatcher.push<DecreaseViewportZoomEvent>(root_entity);
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kResetZoom),
+    if (ImGui::MenuItem(language.get(ActionLabel::kResetZoom),
                         nullptr,
                         false,
                         document != nullptr)) {
@@ -293,7 +297,7 @@ void _push_view_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kCenterViewport),
+    if (ImGui::MenuItem(language.get(ActionLabel::kCenterViewport),
                         kCenterViewportShortcut.hint,
                         false,
                         document != nullptr)) {
@@ -302,34 +306,34 @@ void _push_view_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kToggleGrid), kToggleGridShortcut.hint)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kToggleGrid), kToggleGridShortcut.hint)) {
       dispatcher.push<ToggleGridEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kPanUp),
+    if (ImGui::MenuItem(language.get(ActionLabel::kPanUp),
                         kPanUpShortcut.hint,
                         false,
                         document != nullptr)) {
       dispatcher.push<PanViewportUpEvent>(root_entity);
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kPanDown),
+    if (ImGui::MenuItem(language.get(ActionLabel::kPanDown),
                         kPanDownShortcut.hint,
                         false,
                         document != nullptr)) {
       dispatcher.push<PanViewportDownEvent>(root_entity);
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kPanLeft),
+    if (ImGui::MenuItem(language.get(ActionLabel::kPanLeft),
                         kPanLeftShortcut.hint,
                         false,
                         document != nullptr)) {
       dispatcher.push<PanViewportLeftEvent>(root_entity);
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kPanRight),
+    if (ImGui::MenuItem(language.get(ActionLabel::kPanRight),
                         kPanRightShortcut.hint,
                         false,
                         document != nullptr)) {
@@ -338,7 +342,7 @@ void _push_view_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kHighlightActiveLayer))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kHighlightActiveLayer))) {
       dispatcher.push<ToggleLayerHighlightEvent>();
     }
   }
@@ -346,7 +350,7 @@ void _push_view_menu(const Model& model, EventDispatcher& dispatcher)
 
 void _push_export_as_menu(const Language& language, EventDispatcher& dispatcher)
 {
-  if (const MenuScope export_as_menu {language.get(StringID::kExportAsMenu)};
+  if (const MenuScope export_as_menu {language.get(NounLabel::kExportAsMenu)};
       export_as_menu.is_open()) {
     if (ImGui::MenuItem("Tiled JSON (TMJ)")) {
       // TODO
@@ -369,50 +373,50 @@ void _push_map_menu(const Model& model, EventDispatcher& dispatcher)
   const auto* map_document = dynamic_cast<const MapDocument*>(model.get_current_document());
   const DisabledScope disable_menu_if {map_document == nullptr};
 
-  if (const MenuScope menu {language.get(StringID::kMapMenu)}; menu.is_open()) {
+  if (const MenuScope menu {language.get(NounLabel::kMapMenu)}; menu.is_open()) {
     const auto* registry = map_document ? &map_document->get_registry() : nullptr;
     const auto* document_info = registry ? registry->find<CDocumentInfo>() : nullptr;
     const auto* map = registry ? registry->find<CMap>(document_info->root) : nullptr;
 
-    if (ImGui::MenuItem(language.get(StringID::kShowMetadata))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kShowMetadata))) {
       dispatcher.push<InspectMapEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kAddTileset))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kAddTileset))) {
       dispatcher.push<ShowAddTilesetDialogEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kResize))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kResize))) {
       dispatcher.push<ShowResizeMapDialogEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kAddRow))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kAddRow))) {
       dispatcher.push<AddRowToMapEvent>();
     }
 
-    if (ImGui::MenuItem(language.get(StringID::kAddColumn))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kAddColumn))) {
       dispatcher.push<AddColumnToMapEvent>();
     }
 
     if (const DisabledScope disable_if {!map || map->extent.rows <= 1};
-        ImGui::MenuItem(language.get(StringID::kRemoveRow))) {
+        ImGui::MenuItem(language.get(ActionLabel::kRemoveRow))) {
       dispatcher.push<RemoveRowToMapEvent>();
     }
 
     if (const DisabledScope disable_if {!map || map->extent.cols <= 1};
-        ImGui::MenuItem(language.get(StringID::kRemoveColumn))) {
+        ImGui::MenuItem(language.get(ActionLabel::kRemoveColumn))) {
       dispatcher.push<RemoveColumnToMapEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kFixInvalidTiles))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kFixInvalidTiles))) {
       dispatcher.push<FixMapTilesEvent>();
     }
 
@@ -425,7 +429,7 @@ void _push_map_menu(const Model& model, EventDispatcher& dispatcher)
 void _push_tileset_menu(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
-  const MenuScope menu {language.get(StringID::kTilesetMenu)};
+  const MenuScope menu {language.get(NounLabel::kTilesetMenu)};
   if (menu.is_open()) {
     // TODO
   }
@@ -435,14 +439,14 @@ void _push_help_menu(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
 
-  if (const MenuScope menu {language.get(StringID::kHelpMenu)}; menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kAboutTactile))) {
+  if (const MenuScope menu {language.get(NounLabel::kHelpMenu)}; menu.is_open()) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kAboutTactile))) {
       dispatcher.push<ShowAboutDialogEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kReportBug))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kReportBug))) {
       if (SDL_OpenURL("https://github.com/albin-johansson/tactile/issues/new") != 0) {
         TACTILE_LOG_ERROR("Could not open issue URL: {}", SDL_GetError());
       }
@@ -450,7 +454,7 @@ void _push_help_menu(const Model& model, EventDispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenCredits))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpenCredits))) {
       dispatcher.push<ShowCreditsDialogEvent>();
     }
   }
@@ -477,15 +481,15 @@ void MenuBar::_push_debug_menu(const Model& model)
 {
   const auto& language = model.get_language();
 
-  const MenuScope menu {language.get(StringID::kDebugMenu)};
+  const MenuScope menu {language.get(NounLabel::kDebugMenu)};
   if (menu.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kOpenDebugger), nullptr, m_show_debugger)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpenDebugger), nullptr, m_show_debugger)) {
       m_show_debugger = !m_show_debugger;
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenStyleEditor),
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpenStyleEditor),
                         nullptr,
                         m_show_style_editor)) {
       m_show_style_editor = !m_show_style_editor;
@@ -493,13 +497,13 @@ void MenuBar::_push_debug_menu(const Model& model)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenDemoWindow), nullptr, m_show_demo)) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpenDemoWindow), nullptr, m_show_demo)) {
       m_show_demo = !m_show_demo;
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kOpenStorageDir))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kOpenStorageDir))) {
       if (const auto persistent_dir = get_persistent_storage_directory()) {
         std::ignore = open_directory_in_finder(*persistent_dir);
       }
@@ -515,7 +519,7 @@ void MenuBar::_push_debug_menu(const Model& model)
   }
 
   if (m_show_style_editor) {
-    const Window style_editor {language.get(StringID::kStyleEditorWidget),
+    const Window style_editor {language.get(NounLabel::kStyleEditorWidget),
                                ImGuiWindowFlags_None,
                                &m_show_style_editor};
     if (style_editor.is_open()) {

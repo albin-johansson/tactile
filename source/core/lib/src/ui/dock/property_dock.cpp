@@ -27,7 +27,7 @@ void _push_property_table_context_menu_content(const Language& language,
                                                EventDispatcher& dispatcher)
 {
   if (const DisabledScope disable_if {prop_name != nullptr};
-      ImGui::Selectable(language.get(StringID::kCreateProperty))) {
+      ImGui::Selectable(language.get(ActionLabel::kCreateProperty))) {
     dispatcher.push<ShowNewPropertyDialogEvent>(context_entity);
   }
 
@@ -36,14 +36,14 @@ void _push_property_table_context_menu_content(const Language& language,
   {
     const DisabledScope disable_if {prop_name == nullptr};
 
-    if (ImGui::Selectable(language.get(StringID::kRenameProperty))) {
+    if (ImGui::Selectable(language.get(ActionLabel::kRenameProperty))) {
       TACTILE_ASSERT(prop_name != nullptr);
       dispatcher.push<ShowRenamePropertyDialogEvent>(context_entity, *prop_name);
     }
 
     ImGui::Separator();
 
-    if (ImGui::Selectable(language.get(StringID::kRemoveProperty))) {
+    if (ImGui::Selectable(language.get(ActionLabel::kRemoveProperty))) {
       TACTILE_ASSERT(prop_name != nullptr);
       dispatcher.push<RemovePropertyEvent>(context_entity, *prop_name);
     }
@@ -58,8 +58,8 @@ void _push_property_table(const Language& language,
   const auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                            ImGuiTableFlags_ScrollY | ImGuiTableFlags_BordersInner;
   if (const TableScope table {"##Properties", 2, table_flags}; table.is_open()) {
-    ImGui::TableSetupColumn(language.get(StringID::kName));
-    ImGui::TableSetupColumn(language.get(StringID::kValue));
+    ImGui::TableSetupColumn(language.get(NounLabel::kName));
+    ImGui::TableSetupColumn(language.get(NounLabel::kValue));
 
     for (const auto& [prop_name, prop_value] : meta.properties) {
       const IdScope prop_scope {prop_name.c_str()};
@@ -104,9 +104,9 @@ void _push_no_properties_view(const Language& language,
 {
   prepare_for_vertically_centered_widgets(2);
 
-  push_centered_label(language.get(StringID::kContextHasNoProperties));
+  push_centered_label(language.get(HintLabel::kContextHasNoProperties));
 
-  if (push_horizontally_centered_button(language.get(StringID::kCreateProperty))) {
+  if (push_horizontally_centered_button(language.get(ActionLabel::kCreateProperty))) {
     dispatcher.push<ShowNewPropertyDialogEvent>(context_entity);
   }
 }
@@ -117,7 +117,7 @@ void PropertyDock::push(const Language& language,
                         const IDocument& document,
                         EventDispatcher& dispatcher)
 {
-  if (const Window dock_window {language.get(StringID::kPropertyDock)};
+  if (const Window dock_window {language.get(NounLabel::kPropertyDock)};
       dock_window.is_open()) {
     const auto& registry = document.get_registry();
     const auto& document_info = registry.get<CDocumentInfo>();

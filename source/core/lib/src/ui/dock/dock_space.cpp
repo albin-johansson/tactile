@@ -56,12 +56,12 @@ void DockSpace::reset_layout(const Language& language)
   ImGuiID bottom_node {};
   ImGui::DockBuilderSplitNode(viewport_node, ImGuiDir_Down, 0.25f, &bottom_node, nullptr);
 
-  ImGui::DockBuilderDockWindow(language.get(StringID::kDocumentDock), viewport_node);
-  ImGui::DockBuilderDockWindow(language.get(StringID::kTilesetDock), right_top_node);
-  ImGui::DockBuilderDockWindow(language.get(StringID::kPropertyDock), right_top_node);
-  ImGui::DockBuilderDockWindow(language.get(StringID::kComponentDock), right_top_node);
-  ImGui::DockBuilderDockWindow(language.get(StringID::kLayerDock), right_bottom_node);
-  ImGui::DockBuilderDockWindow(language.get(StringID::kLogDock), bottom_node);
+  ImGui::DockBuilderDockWindow(language.get(NounLabel::kDocumentDock), viewport_node);
+  ImGui::DockBuilderDockWindow(language.get(NounLabel::kTilesetDock), right_top_node);
+  ImGui::DockBuilderDockWindow(language.get(NounLabel::kPropertyDock), right_top_node);
+  ImGui::DockBuilderDockWindow(language.get(NounLabel::kComponentDock), right_top_node);
+  ImGui::DockBuilderDockWindow(language.get(NounLabel::kLayerDock), right_bottom_node);
+  ImGui::DockBuilderDockWindow(language.get(NounLabel::kLogDock), bottom_node);
 
   ImGui::DockBuilderFinish(root_node);
 }

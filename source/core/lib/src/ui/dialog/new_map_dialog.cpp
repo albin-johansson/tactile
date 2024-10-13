@@ -21,14 +21,14 @@ namespace {
 
 void _push_map_orientation_combo(const Language& language, TileOrientation& orientation)
 {
-  const auto* orthogonal = language.get(StringID::kOrthogonal);
-  const auto* hexagonal = language.get(StringID::kHexagonal);
+  const auto* orthogonal = language.get(AdjectiveLabel::kOrthogonal);
+  const auto* hexagonal = language.get(AdjectiveLabel::kHexagonal);
 
   const auto* orientation_preview =
       (orientation == TileOrientation::kOrthogonal) ? orthogonal : hexagonal;
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(language.get(StringID::kOrientation));
+  ImGui::TextUnformatted(language.get(NounLabel::kOrientation));
   ImGui::SameLine();
 
   if (ImGui::BeginCombo("##TileOrientation", orientation_preview)) {
@@ -49,7 +49,7 @@ void _push_map_orientation_combo(const Language& language, TileOrientation& orie
 void NewMapDialog::push(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
-  const auto* dialog_name = language.get(StringID::kCreateMap);
+  const auto* dialog_name = language.get(ActionLabel::kCreateMap);
 
   center_next_window(ImGuiCond_Always);
 
@@ -57,30 +57,30 @@ void NewMapDialog::push(const Model& model, EventDispatcher& dispatcher)
                                        dialog_name,
                                        ImGuiWindowFlags_AlwaysAutoResize};
       new_map_dialog.is_open()) {
-    const auto widget_offset = get_alignment_offset(language.get(StringID::kOrientation),
-                                                    language.get(StringID::kRows),
-                                                    language.get(StringID::kColumns),
-                                                    language.get(StringID::kTileWidth),
-                                                    language.get(StringID::kTileHeight));
+    const auto widget_offset = get_alignment_offset(language.get(NounLabel::kOrientation),
+                                                    language.get(NounLabel::kRows),
+                                                    language.get(NounLabel::kColumns),
+                                                    language.get(NounLabel::kTileWidth),
+                                                    language.get(NounLabel::kTileHeight));
 
     _push_map_orientation_combo(language, mSpec.orientation);
 
     ImGui::Spacing();
 
-    push_scalar_input_row(language.get(StringID::kRows), mSpec.extent.rows, widget_offset);
-    push_scalar_input_row(language.get(StringID::kColumns), mSpec.extent.cols, widget_offset);
+    push_scalar_input_row(language.get(NounLabel::kRows), mSpec.extent.rows, widget_offset);
+    push_scalar_input_row(language.get(NounLabel::kColumns), mSpec.extent.cols, widget_offset);
 
     ImGui::Spacing();
 
-    push_scalar_input_row(language.get(StringID::kTileWidth),
+    push_scalar_input_row(language.get(NounLabel::kTileWidth),
                           mSpec.tile_size[0],
                           widget_offset);
-    push_scalar_input_row(language.get(StringID::kTileHeight),
+    push_scalar_input_row(language.get(NounLabel::kTileHeight),
                           mSpec.tile_size[1],
                           widget_offset);
 
-    const auto status = push_dialog_control_buttons(language.get(StringID::kCancel),
-                                                    language.get(StringID::kCreate),
+    const auto status = push_dialog_control_buttons(language.get(VerbLabel::kCancel),
+                                                    language.get(VerbLabel::kCreate),
                                                     nullptr,
                                                     is_valid(mSpec));
     if (status == DialogStatus::kAccepted) {

@@ -9,7 +9,7 @@
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/ui/i18n/string_id.hpp"
+#include "tactile/core/ui/i18n/labels.hpp"
 
 namespace tactile::core::ui {
 
@@ -50,25 +50,40 @@ class Language final
   [[nodiscard]]
   auto get_id() const -> LanguageID;
 
-  /**
-   * Returns the translated string associated with a given identifier.
-   *
-   * \note
-   * This function is called very often, so it's inlined and performs no bounds
-   * checks whatsoever to be as fast as possible.
-   *
-   * \pre The string identifier must refer to a valid string in the language.
-   *
-   * \param id A string identifier.
-   *
-   * \return
-   * A translated string.
-   */
   [[nodiscard]]
-  auto get(const StringID id) const noexcept -> const char*
+  auto get(const MiscLabel id) const noexcept -> const char*
   {
-    TACTILE_ASSERT(std::to_underlying(id) < mStrings.size());
-    return mStrings[std::to_underlying(id)].c_str();
+    return _get(std::to_underlying(id));
+  }
+
+  [[nodiscard]]
+  auto get(const NounLabel id) const noexcept -> const char*
+  {
+    return _get(std::to_underlying(id));
+  }
+
+  [[nodiscard]]
+  auto get(const VerbLabel id) const noexcept -> const char*
+  {
+    return _get(std::to_underlying(id));
+  }
+
+  [[nodiscard]]
+  auto get(const AdjectiveLabel id) const noexcept -> const char*
+  {
+    return _get(std::to_underlying(id));
+  }
+
+  [[nodiscard]]
+  auto get(const ActionLabel id) const noexcept -> const char*
+  {
+    return _get(std::to_underlying(id));
+  }
+
+  [[nodiscard]]
+  auto get(const HintLabel id) const noexcept -> const char*
+  {
+    return _get(std::to_underlying(id));
   }
 
  private:
@@ -76,6 +91,27 @@ class Language final
   std::vector<std::string> mStrings {};
 
   Language(LanguageID id, std::vector<std::string> strings);
+
+  /**
+   * Returns the translated string associated with a given identifier.
+   *
+   * \note
+   * This function is called very often, so it's inlined and performs no bounds
+   * checks whatsoever to be as fast as possible.
+   *
+   * \pre The index must be valid.
+   *
+   * \param index A string index.
+   *
+   * \return
+   * A translated string.
+   */
+  [[nodiscard]]
+  auto _get(const std::size_t index) const noexcept -> const char*
+  {
+    TACTILE_ASSERT(index < mStrings.size());
+    return mStrings[index].c_str();
+  }
 };
 
 }  // namespace tactile::core::ui

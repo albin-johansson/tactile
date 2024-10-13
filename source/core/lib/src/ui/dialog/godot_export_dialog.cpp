@@ -45,14 +45,14 @@ void _push_godot_version_combo(int& version)
 void GodotExportDialog::push(const Model& model, EventDispatcher& dispatcher)
 {
   const auto& language = model.get_language();
-  const auto* dialog_name = language.get(StringID::kGodotExportDialog);
+  const auto* dialog_name = language.get(NounLabel::kGodotExportDialog);
 
   center_next_window(ImGuiCond_Always);
 
   if (const PopupScope dialog {kModalPopup, dialog_name, ImGuiWindowFlags_AlwaysAutoResize};
       dialog.is_open()) {
-    const auto* version_label = language.get(StringID::kVersion);
-    const auto* project_dir_label = language.get(StringID::kProjectDir);
+    const auto* version_label = language.get(NounLabel::kVersion);
+    const auto* project_dir_label = language.get(NounLabel::kProjectDir);
 
     const auto label_offset = get_alignment_offset(version_label, project_dir_label);
 
@@ -68,8 +68,8 @@ void GodotExportDialog::push(const Model& model, EventDispatcher& dispatcher)
       m_project_dir = std::move(*project_dir);
     }
 
-    const auto status = push_dialog_control_buttons(language.get(StringID::kCancel),
-                                                    language.get(StringID::kSave));
+    const auto status = push_dialog_control_buttons(language.get(VerbLabel::kCancel),
+                                                    language.get(VerbLabel::kSave));
     if (status == DialogStatus::kAccepted) {
       dispatcher.push<ExportAsGodotSceneEvent>(m_version, std::move(m_project_dir));
       m_project_dir.clear();

@@ -137,13 +137,13 @@ void _push_empty_view(const Language& language, EventDispatcher& dispatcher)
 {
   prepare_for_vertically_centered_widgets(2);
 
-  if (push_horizontally_centered_button(language.get(StringID::kCreateMap))) {
+  if (push_horizontally_centered_button(language.get(ActionLabel::kCreateMap))) {
     dispatcher.push<ShowNewMapDialogEvent>();
   }
 
   ImGui::Spacing();
 
-  if (push_horizontally_centered_button(language.get(StringID::kOpenMap))) {
+  if (push_horizontally_centered_button(language.get(ActionLabel::kOpenMap))) {
     dispatcher.push<ShowOpenMapDialogEvent>();
   }
 }
@@ -161,7 +161,7 @@ void DocumentDock::push(const Model& model, EventDispatcher& dispatcher)
 
   const auto& language = model.get_language();
 
-  const Window dock_window {language.get(StringID::kDocumentDock),
+  const Window dock_window {language.get(NounLabel::kDocumentDock),
                             ImGuiWindowFlags_NoScrollbar};
   if (dock_window.is_open()) {
     const auto& document_manager = model.get_document_manager();

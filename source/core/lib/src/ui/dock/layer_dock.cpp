@@ -28,7 +28,7 @@ void LayerDock::update(const Language& language,
                        const MapDocument& document,
                        EventDispatcher& dispatcher)
 {
-  if (const Window window {language.get(StringID::kLayerDock)}; window.is_open()) {
+  if (const Window window {language.get(NounLabel::kLayerDock)}; window.is_open()) {
     const auto& registry = document.get_registry();
 
     const auto& document_info = registry.get<CDocumentInfo>();
@@ -85,8 +85,8 @@ void LayerDock::_push_layer_group(const Language& language,
 
   if (root_layer.layers.empty()) {
     prepare_for_vertically_centered_widgets(2);
-    push_centered_label(language.get(StringID::kMapHasNoLayers));
-    if (push_horizontally_centered_button(language.get(StringID::kCreateLayer))) {
+    push_centered_label(language.get(HintLabel::kMapHasNoLayers));
+    if (push_horizontally_centered_button(language.get(ActionLabel::kCreateLayer))) {
       ImGui::OpenPopup(kNewLayerPopupId, ImGuiPopupFlags_NoReopen);
     }
   }
@@ -177,19 +177,19 @@ void LayerDock::_push_object_layer_item(const char* name)
 void LayerDock::_push_new_layer_popup(const Language& language, EventDispatcher& dispatcher)
 {
   if (const PopupScope new_layer_popup {kNewLayerPopupId}; new_layer_popup.is_open()) {
-    if (ImGui::MenuItem(language.get(StringID::kTileLayerItem))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kTileLayerItem))) {
       dispatcher.push<CreateLayerEvent>(LayerType::kTileLayer);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kObjectLayerItem))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kObjectLayerItem))) {
       dispatcher.push<CreateLayerEvent>(LayerType::kObjectLayer);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(language.get(StringID::kGroupLayerItem))) {
+    if (ImGui::MenuItem(language.get(ActionLabel::kGroupLayerItem))) {
       dispatcher.push<CreateLayerEvent>(LayerType::kGroupLayer);
     }
   }

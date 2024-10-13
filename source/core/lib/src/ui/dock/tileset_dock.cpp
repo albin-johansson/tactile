@@ -120,8 +120,8 @@ void _push_tileset_tabs(const Registry& registry,
 void _push_empty_view(const Language& language, EventDispatcher& dispatcher)
 {
   prepare_for_vertically_centered_widgets(2);
-  push_centered_label(language.get(StringID::kMapHasNoTilesets));
-  if (push_horizontally_centered_button(language.get(StringID::kCreateTileset))) {
+  push_centered_label(language.get(HintLabel::kMapHasNoTilesets));
+  if (push_horizontally_centered_button(language.get(ActionLabel::kCreateTileset))) {
     dispatcher.push<ShowNewTilesetDialogEvent>();
   }
 }
@@ -132,7 +132,7 @@ void TilesetDock::push(const Language& language,
                        const MapDocument& document,
                        EventDispatcher& dispatcher)
 {
-  if (const Window dock {language.get(StringID::kTilesetDock)}; dock.is_open()) {
+  if (const Window dock {language.get(NounLabel::kTilesetDock)}; dock.is_open()) {
     const auto& registry = document.get_registry();
     const auto& document_info = registry.get<CDocumentInfo>();
     const auto& map = registry.get<CMap>(document_info.root);
