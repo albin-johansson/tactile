@@ -187,6 +187,7 @@ target_sources(tactile-core
                "inc/tactile/core/platform/filesystem.hpp"
                "inc/tactile/core/platform/win32.hpp"
                "inc/tactile/core/tile/animation.hpp"
+               "inc/tactile/core/tile/animation_types.hpp"
                "inc/tactile/core/tile/tile.hpp"
                "inc/tactile/core/tile/tile_types.hpp"
                "inc/tactile/core/tile/tileset.hpp"

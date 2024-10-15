@@ -15,7 +15,7 @@
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/meta/meta.hpp"
-#include "tactile/core/tile/animation.hpp"
+#include "tactile/core/tile/animation_types.hpp"
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tile_types.hpp"
 #include "tactile/core/tile/tileset.hpp"

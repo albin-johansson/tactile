@@ -11,6 +11,7 @@
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/tile/animation.hpp"
+#include "tactile/core/tile/animation_types.hpp"
 #include "tactile/core/tile/tile_types.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/tile/tileset_types.hpp"

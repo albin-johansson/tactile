@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/entity/registry.hpp"
+#include "tactile/core/tile/animation_types.hpp"
 #include "tactile/core/tile/tile.hpp"
 
 namespace tactile::core {
