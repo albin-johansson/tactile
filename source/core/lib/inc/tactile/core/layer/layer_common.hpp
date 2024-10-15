@@ -18,7 +18,7 @@ class Registry;
  * \param ir_layer The intermediate layer representation.
  *
  * \return
- * A layer entity identifier.
+ * A layer entity.
  */
 [[nodiscard]]
 auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID;
@@ -26,27 +26,27 @@ auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID;
 /**
  * Destroys a layer entity.
  *
- * \pre The layer identifier must be valid.
+ * \param registry     The associated registry.
+ * \param layer_entity The target layer.
  *
- * \param registry The associated registry.
- * \param layer_id The identifier of the layer to destroy.
+ * \pre The specified entity must be a valid layer.
  */
-void destroy_layer(Registry& registry, EntityID layer_id);
+void destroy_layer(Registry& registry, EntityID layer_entity);
 
 /**
  * Creates a deep copy of a layer.
  *
- * \pre The layer identifier must be valid.
- *
- * \param[in]     registry        The associated registry.
- * \param[in]     source_layer_id The source layer identifier.
- * \param[in,out] next_layer_id   The next available persistent layer identifier.
+ * \param[in]     registry            The associated registry.
+ * \param[in]     source_layer_entity The source layer.
+ * \param[in,out] next_layer_id       The next available persistent layer identifier.
  *
  * \return
  * A layer entity identifier.
+ *
+ * \pre The specified entity must be a valid layer.
  */
 [[nodiscard]]
-auto copy_layer(Registry& registry, EntityID source_layer_id, LayerID& next_layer_id)
+auto copy_layer(Registry& registry, EntityID source_layer_entity, LayerID& next_layer_id)
     -> EntityID;
 
 }  // namespace tactile::core

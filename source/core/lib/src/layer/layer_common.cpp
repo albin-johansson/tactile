@@ -70,56 +70,57 @@ auto make_layer(Registry& registry, const ir::Layer& ir_layer) -> EntityID
   return layer_id;
 }
 
-void destroy_layer(Registry& registry, const EntityID layer_id)
+void destroy_layer(Registry& registry, const EntityID layer_entity)
 {
-  TACTILE_ASSERT(is_tile_layer(registry, layer_id) ||    //
-                 is_object_layer(registry, layer_id) ||  //
-                 is_group_layer(registry, layer_id));
+  TACTILE_ASSERT(is_tile_layer(registry, layer_entity) ||    //
+                 is_object_layer(registry, layer_entity) ||  //
+                 is_group_layer(registry, layer_entity));
 
-  if (registry.has<CTileLayer>(layer_id)) {
-    destroy_tile_layer(registry, layer_id);
+  if (registry.has<CTileLayer>(layer_entity)) {
+    destroy_tile_layer(registry, layer_entity);
   }
-  else if (registry.has<CObjectLayer>(layer_id)) {
-    destroy_object_layer(registry, layer_id);
+  else if (registry.has<CObjectLayer>(layer_entity)) {
+    destroy_object_layer(registry, layer_entity);
   }
-  else if (registry.has<CGroupLayer>(layer_id)) {
-    destroy_group_layer(registry, layer_id);
+  else if (registry.has<CGroupLayer>(layer_entity)) {
+    destroy_group_layer(registry, layer_entity);
   }
 }
 
-auto copy_layer(Registry& registry, const EntityID source_layer_id, LayerID& next_layer_id)
+auto copy_layer(Registry& registry, const EntityID source_layer_entity, LayerID& next_layer_id)
     -> EntityID
 {
-  TACTILE_ASSERT(is_layer(registry, source_layer_id));
+  TACTILE_ASSERT(is_layer(registry, source_layer_entity));
 
-  const auto& source_meta = registry.get<CMeta>(source_layer_id);
-  const auto& source_layer = registry.get<CLayer>(source_layer_id);
+  const auto& source_meta = registry.get<CMeta>(source_layer_entity);
+  const auto& source_layer = registry.get<CLayer>(source_layer_entity);
 
-  const auto new_layer_id = make_unspecialized_layer(registry);
+  const auto new_layer_entity = make_unspecialized_layer(registry);
 
-  auto& new_meta = registry.add<CMeta>(new_layer_id, source_meta);
+  auto& new_meta = registry.add<CMeta>(new_layer_entity, source_meta);
   new_meta.name += "*";
 
-  auto& new_layer = registry.add<CLayer>(new_layer_id, source_layer);
+  auto& new_layer = registry.add<CLayer>(new_layer_entity, source_layer);
   new_layer.persistent_id = next_layer_id++;
 
-  if (is_tile_layer(registry, source_layer_id)) {
-    const auto& source_tile_layer = registry.get<CTileLayer>(source_layer_id);
-    registry.add<CTileLayer>(new_layer_id, source_tile_layer);
+  if (is_tile_layer(registry, source_layer_entity)) {
+    const auto& source_tile_layer = registry.get<CTileLayer>(source_layer_entity);
+    registry.add<CTileLayer>(new_layer_entity, source_tile_layer);
 
-    if (registry.has<CDenseTileLayer>(source_layer_id)) {
-      const auto& source_dense_tile_layer = registry.get<CDenseTileLayer>(source_layer_id);
-      registry.add<CDenseTileLayer>(new_layer_id, source_dense_tile_layer);
+    if (registry.has<CDenseTileLayer>(source_layer_entity)) {
+      const auto& source_dense_tile_layer = registry.get<CDenseTileLayer>(source_layer_entity);
+      registry.add<CDenseTileLayer>(new_layer_entity, source_dense_tile_layer);
     }
     else {
-      const auto& source_sparse_tile_layer = registry.get<CSparseTileLayer>(source_layer_id);
-      registry.add<CSparseTileLayer>(new_layer_id, source_sparse_tile_layer);
+      const auto& source_sparse_tile_layer =
+          registry.get<CSparseTileLayer>(source_layer_entity);
+      registry.add<CSparseTileLayer>(new_layer_entity, source_sparse_tile_layer);
     }
   }
-  else if (is_object_layer(registry, source_layer_id)) {
-    const auto& source_object_layer = registry.get<CObjectLayer>(source_layer_id);
+  else if (is_object_layer(registry, source_layer_entity)) {
+    const auto& source_object_layer = registry.get<CObjectLayer>(source_layer_entity);
 
-    auto& new_object_layer = registry.add<CObjectLayer>(new_layer_id);
+    auto& new_object_layer = registry.add<CObjectLayer>(new_layer_entity);
     new_object_layer.objects.reserve(source_object_layer.objects.size());
 
     for (const auto source_object_id : source_object_layer.objects) {
@@ -127,10 +128,10 @@ auto copy_layer(Registry& registry, const EntityID source_layer_id, LayerID& nex
       new_object_layer.objects.push_back(new_object_id);
     }
   }
-  else if (is_group_layer(registry, source_layer_id)) {
-    const auto& source_group_layer = registry.get<CGroupLayer>(source_layer_id);
+  else if (is_group_layer(registry, source_layer_entity)) {
+    const auto& source_group_layer = registry.get<CGroupLayer>(source_layer_entity);
 
-    auto& new_group_layer = registry.add<CGroupLayer>(new_layer_id);
+    auto& new_group_layer = registry.add<CGroupLayer>(new_layer_entity);
     new_group_layer.layers.reserve(source_group_layer.layers.size());
 
     for (const auto source_nested_layer_id : source_group_layer.layers) {
@@ -143,8 +144,8 @@ auto copy_layer(Registry& registry, const EntityID source_layer_id, LayerID& nex
     throw Exception {"invalid layer entity"};
   }
 
-  TACTILE_ASSERT(is_layer(registry, new_layer_id));
-  return new_layer_id;
+  TACTILE_ASSERT(is_layer(registry, new_layer_entity));
+  return new_layer_entity;
 }
 
 }  // namespace tactile::core
