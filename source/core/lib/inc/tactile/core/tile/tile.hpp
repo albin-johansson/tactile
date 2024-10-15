@@ -7,23 +7,27 @@
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
-#include "tactile/base/io/save/ir.hpp"
-#include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
-namespace tactile::core {
+namespace tactile {
+
+namespace ir {
+struct Tile;
+}  // namespace ir
+
+namespace core {
 
 class Registry;
 
 /**
- * A component that represents a tile definition.
+ * A component representing a tile definition.
  */
 struct CTile final
 {
-  /** The local identifier of the tile. */
+  /** The identifier of the tile in the parent tileset (the "local" identifier). */
   TileIndex index;
 
-  /** The embedded objects, if any. */
+  /** The embedded objects. */
   std::vector<EntityID> objects;
 };
 
@@ -31,7 +35,7 @@ struct CTile final
  * Indicates whether an entity is a tile.
  *
  * \details
- * Tile entities feature the following components. \n
+ * Tile entities feature the following components.
  * - \c CMeta \n
  * - \c CTile
  *
@@ -72,24 +76,26 @@ auto make_tile(Registry& registry, const ir::Tile& ir_tile)
 /**
  * Destroys a tile.
  *
- * \note
- * This function will also destroy any objects embedded in the tile.
+ * \details
+ * All objects stored in the tile will be destroyed.
  *
  * \param registry    The associated registry.
  * \param tile_entity The target tile entity.
+ *
+ * \pre The specified entity must be a valid tile.
  */
 void destroy_tile(Registry& registry, EntityID tile_entity);
 
 /**
  * Creates a deep copy of a tile.
  *
- * \pre The specified entity must be a tile.
- *
  * \param registry    The associated registry.
  * \param tile_entity The tile that will be copied.
  *
  * \return
  * A tile entity.
+ *
+ * \pre The specified entity must be a valid tile.
  */
 [[nodiscard]]
 auto copy_tile(Registry& registry, EntityID tile_entity) -> EntityID;
@@ -97,20 +103,21 @@ auto copy_tile(Registry& registry, EntityID tile_entity) -> EntityID;
 /**
  * Indicates whether a tile is "plain".
  *
- * \pre The provided entity identifier must reference a tile.
- *
  * \details
  * A tile is considered plain if it features no animation, nested objects,
- * properties, nor components. This means that plain tiles don't need to be
+ * properties, or components. This means that plain tiles don't need to be
  * included in saved tilesets.
  *
- * \param registry The associated registry.
- * \param tile_id  The identifier of the tile to check.
+ * \param registry    The associated registry.
+ * \param tile_entity The identifier of the tile to check.
  *
  * \return
  * True if the tile is plain; false otherwise.
+ *
+ * \pre The specified entity must be a valid tile.
  */
 [[nodiscard]]
-auto is_tile_plain(const Registry& registry, EntityID tile_id) -> bool;
+auto is_tile_plain(const Registry& registry, EntityID tile_entity) -> bool;
 
-}  // namespace tactile::core
+}  // namespace core
+}  // namespace tactile
