@@ -3,7 +3,6 @@
 #pragma once
 
 #include <expected>  // expected
-#include <vector>    // vector
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
@@ -18,18 +17,6 @@ struct Tile;
 namespace core {
 
 class Registry;
-
-/**
- * A component representing a tile definition.
- */
-struct CTile final
-{
-  /** The identifier of the tile in the parent tileset (the "local" identifier). */
-  TileIndex index;
-
-  /** The embedded objects. */
-  std::vector<EntityID> objects;
-};
 
 /**
  * Indicates whether an entity is a tile.

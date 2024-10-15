@@ -7,8 +7,7 @@
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/tile/animation.hpp"
-#include "tactile/core/tile/tile.hpp"
-#include "tactile/core/tile/tileset.hpp"
+#include "tactile/core/tile/tile_types.hpp"
 
 namespace tactile::core {
 

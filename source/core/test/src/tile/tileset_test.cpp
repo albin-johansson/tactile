@@ -11,6 +11,7 @@
 #include "tactile/core/test/ir_comparison.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
+#include "tactile/core/tile/tile_types.hpp"
 #include "tactile/core/tile/tileset_types.hpp"
 #include "tactile/core/ui/viewport.hpp"
 #include "tactile/null_renderer/null_renderer.hpp"

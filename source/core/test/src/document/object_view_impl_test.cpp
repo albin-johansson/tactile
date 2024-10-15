@@ -12,7 +12,7 @@
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/map/map_spec.hpp"
-#include "tactile/core/tile/tile.hpp"
+#include "tactile/core/tile/tile_types.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/tile/tileset_types.hpp"
 #include "test/document_testing.hpp"

@@ -17,6 +17,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
+#include "tactile/core/tile/tile_types.hpp"
 #include "tactile/core/tile/tileset.hpp"
 #include "tactile/core/tile/tileset_types.hpp"
 
