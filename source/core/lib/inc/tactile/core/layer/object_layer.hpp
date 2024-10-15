@@ -40,10 +40,10 @@ auto make_object_layer(Registry& registry) -> EntityID;
 /**
  * Destroys an object layer and all of its associated objects.
  *
- * \pre The specified entity must be an object layer.
- *
  * \param registry            The associated registry.
  * \param object_layer_entity The object layer to destroy.
+ *
+ * \pre The specified entity must be a valid object layer.
  */
 void destroy_object_layer(Registry& registry, EntityID object_layer_entity);
 
