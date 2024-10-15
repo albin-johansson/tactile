@@ -2,23 +2,11 @@
 
 #pragma once
 
-#include <vector>  // vector
-
-#include "tactile/base/prelude.hpp"
 #include "tactile/core/entity/entity.hpp"
 
 namespace tactile::core {
 
 class Registry;
-
-/**
- * A component that represents a layer of objects.
- */
-struct CObjectLayer final
-{
-  /** The associated objects. */
-  std::vector<EntityID> objects;
-};
 
 /**
  * Indicates whether an entity is an object layer.

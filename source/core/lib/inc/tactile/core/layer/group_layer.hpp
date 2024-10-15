@@ -14,15 +14,6 @@ namespace tactile::core {
 class Registry;
 
 /**
- * A component that represents a layer variant that stores other layers.
- */
-struct CGroupLayer final
-{
-  /** The stored layers. */
-  std::vector<EntityID> layers;
-};
-
-/**
  * Indicates whether an entity is a group layer.
  *
  * \details

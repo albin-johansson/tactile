@@ -7,6 +7,7 @@
 #include "tactile/core/cmd/object/create_object_command.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "test/document_testing.hpp"
 

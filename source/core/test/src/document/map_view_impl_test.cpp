@@ -8,6 +8,7 @@
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/map/map_spec.hpp"

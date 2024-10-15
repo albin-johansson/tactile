@@ -9,6 +9,7 @@
 #include "tactile/core/document/tile_view_impl.hpp"
 #include "tactile/core/document/tileset_view_impl.hpp"
 #include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/layer/object.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/map/map_spec.hpp"

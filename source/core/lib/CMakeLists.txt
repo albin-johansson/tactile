@@ -169,6 +169,7 @@ target_sources(tactile-core
                "inc/tactile/core/layer/group_layer.hpp"
                "inc/tactile/core/layer/layer.hpp"
                "inc/tactile/core/layer/layer_common.hpp"
+               "inc/tactile/core/layer/layer_types.hpp"
                "inc/tactile/core/layer/object.hpp"
                "inc/tactile/core/layer/object_layer.hpp"
                "inc/tactile/core/layer/tile_layer.hpp"

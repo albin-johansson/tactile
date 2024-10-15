@@ -6,7 +6,7 @@
 
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/group_layer.hpp"
-#include "tactile/core/layer/layer.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/map/map_spec.hpp"
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/test/ir_comparison.hpp"

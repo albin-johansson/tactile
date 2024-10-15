@@ -16,36 +16,9 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 
 namespace tactile::core {
-
-using SparseTileMatrix = std::map<Index2D, TileID, std::less<>>;
-
-/**
- * Base component for tile layers.
- */
-struct CTileLayer final
-{
-  Extent2D extent;
-};
-
-/**
- * Component for densely populated tile layers.
- */
-struct CDenseTileLayer final
-{
-  /** The associated tile data. */
-  TileMatrix tiles;
-};
-
-/**
- * Component for sparsely populated tile layers.
- */
-struct CSparseTileLayer final
-{
-  /** The associated tile data. */
-  SparseTileMatrix tiles;
-};
 
 /**
  * Indicates whether an entity is a tile layer.

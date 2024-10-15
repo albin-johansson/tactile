@@ -6,7 +6,7 @@
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
-#include "tactile/core/layer/object.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 
 namespace tactile::core {
 

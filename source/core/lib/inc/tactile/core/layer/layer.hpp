@@ -13,21 +13,6 @@ namespace tactile::core {
 class Registry;
 
 /**
- * A component that provides common layer information.
- */
-struct CLayer final
-{
-  /** The associated identifier used in save files. */
-  std::optional<std::int32_t> persistent_id;
-
-  /** The opacity of the layer when rendered. */
-  float opacity;
-
-  /** Indicates whether the layer is rendered. */
-  bool visible;
-};
-
-/**
  * Indicates whether an entity is a layer.
  *
  * \details

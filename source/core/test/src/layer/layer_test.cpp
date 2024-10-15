@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/entity/registry.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/meta/meta.hpp"
 
 namespace tactile::core {

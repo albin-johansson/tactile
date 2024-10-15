@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/entity/registry.hpp"
-#include "tactile/core/layer/object.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "test/object_command_test.hpp"
 
 namespace tactile::core {

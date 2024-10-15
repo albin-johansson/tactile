@@ -9,6 +9,7 @@
 #include "tactile/base/platform/bits.hpp"
 #include "tactile/base/util/tile_matrix.hpp"
 #include "tactile/core/layer/layer.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/meta/meta.hpp"
 
 namespace tactile::core {

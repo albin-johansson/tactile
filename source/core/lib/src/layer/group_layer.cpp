@@ -11,6 +11,7 @@
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/layer.hpp"
+#include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/meta/meta.hpp"

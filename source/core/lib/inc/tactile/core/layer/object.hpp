@@ -16,30 +16,6 @@ namespace tactile::core {
 class Registry;
 
 /**
- * A component for layer objects.
- */
-struct CObject final
-{
-  /** The associated identifier. */
-  ObjectID id;
-
-  /** The object position. */
-  Float2 position;
-
-  /** The object size. */
-  Float2 size;
-
-  /** The object type. */
-  ObjectType type;
-
-  /** Arbitrary user-provided tag. */
-  std::string tag;
-
-  /** Indicates whether the object is rendered. */
-  bool is_visible;
-};
-
-/**
  * Indicates whether an entity represents an object.
  *
  * \details
