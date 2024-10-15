@@ -13,7 +13,7 @@
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
 #include "tactile/core/tile/tileset.hpp"
-#include "tactile/core/tile/tileset_spec.hpp"
+#include "tactile/core/tile/tileset_types.hpp"
 #include "test/document_testing.hpp"
 
 namespace tactile::core {

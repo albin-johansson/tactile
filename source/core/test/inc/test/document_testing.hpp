@@ -5,7 +5,7 @@
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/map/map_spec.hpp"
-#include "tactile/core/tile/tileset_spec.hpp"
+#include "tactile/core/tile/tileset_types.hpp"
 
 namespace tactile::core {
 

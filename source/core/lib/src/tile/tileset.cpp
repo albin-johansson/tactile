@@ -16,7 +16,7 @@
 #include "tactile/core/meta/meta.hpp"
 #include "tactile/core/tile/animation.hpp"
 #include "tactile/core/tile/tile.hpp"
-#include "tactile/core/tile/tileset_spec.hpp"
+#include "tactile/core/tile/tileset_types.hpp"
 #include "tactile/core/ui/viewport.hpp"
 
 namespace tactile::core {
@@ -370,8 +370,7 @@ auto is_tile_range_available(const Registry& registry, const TileRange& range) -
 
 auto has_tile(const TileRange& tile_range, const TileID tile_id) -> bool
 {
-  return (tile_id >= tile_range.first_id) &&
-         (tile_id < tile_range.first_id + tile_range.count);
+  return tile_id >= tile_range.first_id && tile_id < tile_range.first_id + tile_range.count;
 }
 
 }  // namespace tactile::core

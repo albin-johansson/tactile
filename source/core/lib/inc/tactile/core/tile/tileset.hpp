@@ -2,80 +2,26 @@
 
 #pragma once
 
-#include <expected>       // expected
-#include <optional>       // optional
-#include <unordered_map>  // unordered_map
-#include <vector>         // vector
+#include <expected>  // expected
+#include <optional>  // optional
 
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/id.hpp"
-#include "tactile/base/io/save/ir.hpp"
-#include "tactile/base/numeric/extent_2d.hpp"
-#include "tactile/base/numeric/vec.hpp"
-#include "tactile/base/prelude.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/core/entity/entity.hpp"
-#include "tactile/core/util/uuid.hpp"
 
-namespace tactile::core {
+namespace tactile {
+
+namespace ir {
+struct TilesetRef;
+}  // namespace ir
+
+namespace core {
 
 struct CTexture;
 struct TilesetSpec;
+struct TileRange;
 class Registry;
-
-/**
- * Represents an sequence of tile identifiers.
- */
-struct TileRange final
-{
-  /** The first associated tile identifier. */
-  TileID first_id;
-
-  /** The number of tile identifiers (starting at \c first_id). */
-  std::int32_t count;
-};
-
-/**
- * Context component used to map tile identifiers to tilesets.
- */
-struct CTileCache final
-{
-  /** Maps tile identifiers to the associated tilesets. */
-  std::unordered_map<TileID, EntityID> tileset_mapping;
-};
-
-/**
- * A component that represents a tileset definition.
- */
-struct CTileset final
-{
-  /** The logical size of all tiles. */
-  Int2 tile_size;
-
-  /** The size of all tiles in texture coordinates. */
-  Float2 uv_tile_size;
-
-  /** The size of the tileset. */
-  Extent2D extent;
-
-  /** Tracks the associated tiles. Indexed using \c TileIndex values. */
-  std::vector<EntityID> tiles;
-};
-
-/**
- * A component that provides information about tilesets attached to maps.
- *
- * \note
- * This component shouldn't be used by tilesets in tileset documents.
- */
-struct CTilesetInstance final
-{
-  /** The associated global tile identifiers. */
-  TileRange tile_range;
-
-  /** Indicates whether the tileset is embedded in the map file when saved. */
-  bool is_embedded;
-};
 
 /**
  * Indicates whether an entity is a tileset.
@@ -126,14 +72,14 @@ auto make_tileset(Registry& registry, const TilesetSpec& spec) -> EntityID;
 /**
  * Creates a tileset instance from an intermediate representation.
  *
- * \pre The registry must feature a \c CTileCache context component.
- *
  * \param registry       The associated registry.
  * \param renderer       The renderer to use for loading textures.
  * \param ir_tileset_ref The intermediate tileset representation.
  *
  * \return
  * A tileset entity identifier if successful; an error code otherwise.
+ *
+ * \pre The registry must feature a \c CTileCache context component.
  */
 [[nodiscard]]
 auto make_tileset(Registry& registry,
@@ -162,15 +108,15 @@ auto make_tileset(Registry& registry,
  * \note
  * The designated tile range must be unique to the tileset.
  *
- * \pre The registry must feature a \c CTileCache context component.
- * \pre The specified entity must be a tileset.
- *
  * \param registry       The associated registry.
  * \param tileset_entity The target tileset.
  * \param first_tile_id  The first tile identifier to assign to the tileset.
  *
  * \return
  * Nothing if successful; an error code otherwise.
+ *
+ * \pre The specified entity must be a valid tileset.
+ * \pre The registry must feature a \c CTileCache context component.
  */
 [[nodiscard]]
 auto init_tileset_instance(Registry& registry, EntityID tileset_entity, TileID first_tile_id)
@@ -200,25 +146,25 @@ auto make_tileset_instance(Registry& registry, const TilesetSpec& spec, TileID f
  * associated tiles will be unregistered from the \c CTileCache context
  * component in the provided registry.
  *
- * \pre The specified entity must be a tileset.
- * \pre The registry must feature a \c CTileCache context component if the
- *      entity is a tileset instance.
- *
  * \param registry       The associated registry.
  * \param tileset_entity The tileset to destroy.
+ *
+ * \pre The specified entity must be a valid tileset.
+ * \pre The registry must feature a \c CTileCache context component if the
+ *      entity is a tileset instance.
  */
 void destroy_tileset(Registry& registry, EntityID tileset_entity);
 
 /**
  * Creates a deep copy of a tileset.
  *
- * \pre The specified entity must be a tileset.
- *
  * \param registry       The associated registry.
  * \param tileset_entity The tileset that will be copied.
  *
  * \return
  * A tileset entity.
+ *
+ * \pre The specified entity must be a valid tileset.
  */
 [[nodiscard]]
 auto copy_tileset(Registry& registry, EntityID tileset_entity) -> EntityID;
@@ -230,9 +176,6 @@ auto copy_tileset(Registry& registry, EntityID tileset_entity) -> EntityID;
  * This function should be used to determine how to render tiles correctly.
  * For non-animated tiles, this function simply returns the given tile index.
  *
- * \complexity O(1).
- *
- * \pre The specified entity must be a tileset.
  *
  * \param registry       The associated registry.
  * \param tileset_entity The tileset that contains the tile.
@@ -240,6 +183,10 @@ auto copy_tileset(Registry& registry, EntityID tileset_entity) -> EntityID;
  *
  * \return
  * The index of the tile that should be shown instead of the specified tile.
+ *
+ * \pre The specified entity must be a valid tileset.
+ *
+ * \complexity O(1)
  */
 [[nodiscard]]
 auto get_tile_appearance(const Registry& registry,
@@ -300,4 +247,5 @@ auto is_tile_range_available(const Registry& registry, const TileRange& range) -
 [[nodiscard]]
 auto has_tile(const TileRange& tile_range, TileID tile_id) -> bool;
 
-}  // namespace tactile::core
+}  // namespace core
+}  // namespace tactile

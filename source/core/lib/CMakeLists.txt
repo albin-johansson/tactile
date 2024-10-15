@@ -189,7 +189,7 @@ target_sources(tactile-core
                "inc/tactile/core/tile/animation.hpp"
                "inc/tactile/core/tile/tile.hpp"
                "inc/tactile/core/tile/tileset.hpp"
-               "inc/tactile/core/tile/tileset_spec.hpp"
+               "inc/tactile/core/tile/tileset_types.hpp"
                "inc/tactile/core/ui/common/attribute_widgets.hpp"
                "inc/tactile/core/ui/common/buttons.hpp"
                "inc/tactile/core/ui/common/dialogs.hpp"

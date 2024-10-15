@@ -12,7 +12,7 @@
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/io/texture.hpp"
 #include "tactile/core/tile/tile.hpp"
-#include "tactile/core/tile/tileset.hpp"
+#include "tactile/core/tile/tileset_types.hpp"
 
 namespace tactile::core {
 

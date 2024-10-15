@@ -16,6 +16,7 @@
 #include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/tile/tileset.hpp"
+#include "tactile/core/tile/tileset_types.hpp"
 #include "tactile/core/ui/canvas_renderer.hpp"
 #include "tactile/core/ui/common/window.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"

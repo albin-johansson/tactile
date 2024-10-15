@@ -12,8 +12,9 @@
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/map/map_spec.hpp"
-#include "tactile/core/tile/tileset.hpp"
+#include "tactile/core/tile/tileset_types.hpp"
 #include "tactile/core/ui/viewport.hpp"
+#include "tactile/core/util/uuid.hpp"
 
 namespace tactile::core {
 
