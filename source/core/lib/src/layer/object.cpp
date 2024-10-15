@@ -34,18 +34,18 @@ auto make_object(Registry& registry, const ObjectID id, const ObjectType type) -
 
 auto make_object(Registry& registry, const ir::Object& ir_object) -> EntityID
 {
-  const auto object_id = make_object(registry, ir_object.id, ir_object.type);
+  const auto object_entity = make_object(registry, ir_object.id, ir_object.type);
 
-  auto& object = registry.get<CObject>(object_id);
+  auto& object = registry.get<CObject>(object_entity);
   object.position = ir_object.position;
   object.size = ir_object.size;
   object.tag = ir_object.tag;
   object.is_visible = ir_object.visible;
 
-  convert_ir_metadata(registry, object_id, ir_object.meta);
+  convert_ir_metadata(registry, object_entity, ir_object.meta);
 
-  TACTILE_ASSERT(is_object(registry, object_id));
-  return object_id;
+  TACTILE_ASSERT(is_object(registry, object_entity));
+  return object_entity;
 }
 
 void destroy_object(Registry& registry, const EntityID object_entity)

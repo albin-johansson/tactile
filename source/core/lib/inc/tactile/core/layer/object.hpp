@@ -52,7 +52,7 @@ auto make_object(Registry& registry, ObjectID id, ObjectType type) -> EntityID;
  * \param ir_object The intermediate object representation.
  *
  * \return
- * An object entity identifier.
+ * An object entity.
  */
 [[nodiscard]]
 auto make_object(Registry& registry, const ir::Object& ir_object) -> EntityID;
@@ -60,23 +60,23 @@ auto make_object(Registry& registry, const ir::Object& ir_object) -> EntityID;
 /**
  * Destroys an object entity.
  *
- * \pre The provided entity must represent an object.
- *
  * \param registry      The associated registry.
- * \param object_entity The object entity to destroy.
+ * \param object_entity The target object.
+ *
+ * \pre The specified entity must be a valid object.
  */
 void destroy_object(Registry& registry, EntityID object_entity);
 
 /**
  * Creates a deep copy of an object.
  *
- * \pre The specified entity must be an object.
- *
  * \param registry      The associated registry.
- * \param object_entity The object that will be copied.
+ * \param object_entity The target object.
  *
  * \return
  * An object entity.
+ *
+ * \pre The specified entity must be a valid object.
  */
 [[nodiscard]]
 auto copy_object(Registry& registry, EntityID object_entity) -> EntityID;
