@@ -2,7 +2,6 @@
 
 #include "tactile/core/cmd/layer/remove_layer_command.hpp"
 
-#include "tactile/core/debug/exception.hpp"
 #include "tactile/core/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
@@ -43,10 +42,7 @@ void RemoveLayerCommand::redo()
   const auto map_id = registry.get<CDocumentInfo>().root;
   const auto& map = registry.get<CMap>(map_id);
 
-  m_parent_layer_id = find_parent_layer(registry, map.root_layer, m_layer_id);
-  if (m_parent_layer_id == kInvalidEntity) {
-    throw Exception {"No parent layer found for target layer"};
-  }
+  m_parent_layer_id = find_parent_layer(registry, map.root_layer, m_layer_id).value();
 
   remove_layer_from_map(registry, map_id, m_layer_id).value();
   m_layer_was_removed = true;

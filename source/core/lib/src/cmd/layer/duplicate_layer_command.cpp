@@ -41,7 +41,7 @@ void DuplicateLayerCommand::redo()
   const auto map_id = registry.get<CDocumentInfo>().root;
 
   auto& map = registry.get<CMap>(map_id);
-  map.active_layer = find_parent_layer(registry, map.root_layer, m_layer_id);
+  map.active_layer = find_parent_layer(registry, map.root_layer, m_layer_id).value();
 
   if (m_duplicate_layer_id == kInvalidEntity) {
     auto& id_cache = registry.get<CMapIdCache>(map_id);

@@ -261,7 +261,7 @@ auto remove_layer_from_map(Registry& registry, const EntityID map_id, const Enti
     return std::unexpected {ErrorCode::kBadParam};
   }
 
-  auto& parent_layer = registry.get<CGroupLayer>(parent_layer_id);
+  auto& parent_layer = registry.get<CGroupLayer>(*parent_layer_id);
   std::erase(parent_layer.layers, layer_id);
 
   if (map.active_layer == layer_id) {
