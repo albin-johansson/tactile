@@ -78,7 +78,7 @@ TEST_F(DuplicateLayerCommandTest, RedoUndoWithTopLevelLayer)
 
   EXPECT_TRUE(is_layer(registry, new_layer_id));
   EXPECT_EQ(count_layers(registry, map.root_layer), 1);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, new_layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, new_layer_id), std::nullopt);
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, source_layer_id), 0);
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), std::nullopt);
 
@@ -127,7 +127,7 @@ TEST_F(DuplicateLayerCommandTest, RedoUndoWithNestedLayer)
 
   EXPECT_TRUE(is_layer(registry, new_layer_id));
   EXPECT_EQ(count_layers(registry, map.root_layer), 4);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, new_layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, new_layer_id), std::nullopt);
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, source_layer_id), 1);
   EXPECT_EQ(get_local_layer_index(registry, map.root_layer, new_layer_id), std::nullopt);
 

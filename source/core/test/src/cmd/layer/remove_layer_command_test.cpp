@@ -66,7 +66,7 @@ TEST_F(RemoveLayerCommandTest, RedoUndoWithTopLevelLayer)
   EXPECT_TRUE(is_layer(registry, layer_id));
   EXPECT_EQ(map.active_layer, kInvalidEntity);
   EXPECT_EQ(count_layers(registry, map.root_layer), 0);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), std::nullopt);
 
   remove_layer.undo();
 
@@ -80,7 +80,7 @@ TEST_F(RemoveLayerCommandTest, RedoUndoWithTopLevelLayer)
   EXPECT_TRUE(is_layer(registry, layer_id));
   EXPECT_EQ(map.active_layer, kInvalidEntity);
   EXPECT_EQ(count_layers(registry, map.root_layer), 0);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), std::nullopt);
 }
 
 // tactile::core::RemoveLayerCommand::redo
@@ -104,7 +104,7 @@ TEST_F(RemoveLayerCommandTest, RedoUndoWithNestedLayer)
   EXPECT_TRUE(is_layer(registry, layer_id));
   EXPECT_EQ(map.active_layer, kInvalidEntity);
   EXPECT_EQ(count_layers(registry, map.root_layer), 1);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), std::nullopt);
 
   remove_layer.undo();
 
@@ -118,7 +118,7 @@ TEST_F(RemoveLayerCommandTest, RedoUndoWithNestedLayer)
   EXPECT_TRUE(is_layer(registry, layer_id));
   EXPECT_EQ(map.active_layer, kInvalidEntity);
   EXPECT_EQ(count_layers(registry, map.root_layer), 1);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), std::nullopt);
 }
 
 // tactile::core::RemoveLayerCommand::dispose

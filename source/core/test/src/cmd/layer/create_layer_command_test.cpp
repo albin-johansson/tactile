@@ -64,7 +64,7 @@ TEST_F(CreateLayerCommandTest, RedoUndoWithNoActiveLayer)
 
   EXPECT_EQ(count_layers(registry, map.root_layer), 0);
   EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), std::nullopt);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), std::nullopt);
 
   create_layer.redo();
 
@@ -105,7 +105,7 @@ TEST_F(CreateLayerCommandTest, RedoUndoWithActiveGroupLayer)
   add_object_layer.undo();
 
   EXPECT_EQ(count_layers(registry, map.root_layer), 1);
-  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), kInvalidEntity);
+  EXPECT_EQ(find_parent_layer(registry, map.root_layer, layer_id), std::nullopt);
   EXPECT_EQ(get_global_layer_index(registry, map.root_layer, group_layer_id), 0);
   EXPECT_EQ(get_global_layer_index(registry, map.root_layer, layer_id), std::nullopt);
 
