@@ -35,6 +35,7 @@ target_sources(tactile-base
                "inc/tactile/base/meta/attribute.hpp"
                "inc/tactile/base/meta/attribute_type.hpp"
                "inc/tactile/base/meta/color.hpp"
+               "inc/tactile/base/numeric/conversion.hpp"
                "inc/tactile/base/numeric/extent_2d.hpp"
                "inc/tactile/base/numeric/index_2d.hpp"
                "inc/tactile/base/numeric/literals.hpp"
