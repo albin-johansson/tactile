@@ -8,10 +8,10 @@
 #include <string>     // getline
 #include <utility>    // move
 
+#include "tactile/base/container/string.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/log/logger.hpp"
 #include "tactile/core/log/set_log_scope.hpp"
-#include "tactile/core/util/string_ops.hpp"
 
 namespace tactile::core {
 namespace {

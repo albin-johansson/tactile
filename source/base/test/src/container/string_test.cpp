@@ -1,18 +1,19 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/util/string_ops.hpp"
+#include "tactile/base/container/string.hpp"
 
 #include <vector>  // vector
 
 #include <gtest/gtest.h>
 
-namespace tactile::core {
+namespace tactile {
+namespace {
 
-/// \trace tactile::core::split_string
-TEST(StringOps, SplitStringEmpty)
+// tactile::visit_tokens
+TEST(String, VisitTokensEmpty)
 {
   std::vector<std::string> tokens {};
-  split_string("", '!', [&tokens](const std::string_view token) {
+  visit_tokens("", '!', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -20,11 +21,11 @@ TEST(StringOps, SplitStringEmpty)
   EXPECT_EQ(tokens.size(), 0);
 }
 
-/// \trace tactile::core::split_string
-TEST(StringOps, SplitStringLetters)
+// tactile::visit_tokens
+TEST(String, VisitTokensLetters)
 {
   std::vector<std::string> tokens {};
-  split_string("a:b:c:d", ':', [&tokens](const std::string_view token) {
+  visit_tokens("a:b:c:d", ':', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -36,11 +37,11 @@ TEST(StringOps, SplitStringLetters)
   EXPECT_EQ(tokens.at(3), "d");
 }
 
-/// \trace tactile::core::split_string
-TEST(StringOps, SplitStringNumbers)
+// tactile::visit_tokens
+TEST(String, VisitTokensNumbers)
 {
   std::vector<std::string> tokens {};
-  split_string("1 200 30 4000", ' ', [&tokens](const std::string_view token) {
+  visit_tokens("1 200 30 4000", ' ', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -52,11 +53,11 @@ TEST(StringOps, SplitStringNumbers)
   EXPECT_EQ(tokens.at(3), "4000");
 }
 
-/// \trace tactile::core::split_string
-TEST(StringOps, SplitStringWithLeadingSeparator)
+// tactile::visit_tokens
+TEST(String, VisitTokensWithLeadingSeparator)
 {
   std::vector<std::string> tokens {};
-  split_string(".woah", '.', [&tokens](const std::string_view token) {
+  visit_tokens(".woah", '.', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -66,11 +67,11 @@ TEST(StringOps, SplitStringWithLeadingSeparator)
   EXPECT_EQ(tokens.at(1), "woah");
 }
 
-/// \trace tactile::core::split_string
-TEST(StringOps, SplitStringWithTrailingSeparator)
+// tactile::visit_tokens
+TEST(String, VisitTokensWithTrailingSeparator)
 {
   std::vector<std::string> tokens {};
-  split_string("foobar!", '!', [&tokens](const std::string_view token) {
+  visit_tokens("foobar!", '!', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -79,11 +80,11 @@ TEST(StringOps, SplitStringWithTrailingSeparator)
   EXPECT_EQ(tokens.at(0), "foobar");
 }
 
-/// \trace tactile::core::split_string
-TEST(StringOps, SplitStringWithEmptyTokens)
+// tactile::visit_tokens
+TEST(String, VisitTokensWithEmptyTokens)
 {
   std::vector<std::string> tokens {};
-  split_string("aaa::a:bb::c", ':', [&tokens](const std::string_view token) {
+  visit_tokens("aaa::a:bb::c", ':', [&tokens](const std::string_view token) {
     tokens.emplace_back(token);
     return true;
   });
@@ -97,8 +98,8 @@ TEST(StringOps, SplitStringWithEmptyTokens)
   EXPECT_EQ(tokens.at(5), "c");
 }
 
-/// \trace tactile::core::trim_string
-TEST(StringOps, TrimString)
+// tactile::trim_string
+TEST(String, TrimString)
 {
   EXPECT_EQ(trim_string(" "), " ");
   EXPECT_EQ(trim_string("  "), "  ");
@@ -111,4 +112,5 @@ TEST(StringOps, TrimString)
   EXPECT_EQ(trim_string("   a   b c   d      "), "a   b c   d");
 }
 
-}  // namespace tactile::core
+}  // namespace
+}  // namespace tactile

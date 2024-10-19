@@ -109,7 +109,6 @@ target_sources(tactile-core
                "src/ui/viewport.cpp"
                "src/ui/widget_manager.cpp"
                "src/util/string_conv.cpp"
-               "src/util/string_ops.cpp"
                "src/util/uuid.cpp"
                "src/tactile_app.cpp"
 
@@ -232,7 +231,6 @@ target_sources(tactile-core
                "inc/tactile/core/ui/viewport.hpp"
                "inc/tactile/core/ui/widget_manager.hpp"
                "inc/tactile/core/util/string_conv.hpp"
-               "inc/tactile/core/util/string_ops.hpp"
                "inc/tactile/core/util/uuid.hpp"
                "inc/tactile/core/tactile_app.hpp"
                )

@@ -5,6 +5,7 @@ add_executable(tactile-base-test)
 target_sources(tactile-base-test
                PRIVATE
                "src/container/lookup_test.cpp"
+               "src/container/string_test.cpp"
                "src/io/int_parser_test.cpp"
                "src/io/tile_io_test.cpp"
                "src/meta/attribute_test.cpp"
