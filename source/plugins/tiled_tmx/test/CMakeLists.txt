@@ -1,1 +1,1 @@
-project(tactile-tiled-tmx-format-test CXX)
+project(tactile-tiled-tmx-test CXX)

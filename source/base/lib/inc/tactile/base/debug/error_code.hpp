@@ -53,6 +53,9 @@ enum class ErrorCode : int
   /** A parse operation failed. */
   kParseError,
 
+  /** A write operation failed. */
+  kWriteError,
+
   /** A compression operation failed. */
   kCouldNotCompress,
 
@@ -78,6 +81,7 @@ constexpr auto to_string(const ErrorCode errc) noexcept -> std::string_view
     case ErrorCode::kBadFileCopy:        return "file copy error";
     case ErrorCode::kBadImage:           return "invalid image";
     case ErrorCode::kParseError:         return "parse error";
+    case ErrorCode::kWriteError:         return "write error";
     case ErrorCode::kCouldNotCompress:   return "could not compress";
     case ErrorCode::kCouldNotDecompress: return "could not decompress";
   }

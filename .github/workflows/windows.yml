@@ -99,3 +99,8 @@ jobs:
         working-directory: ./build/debug
         shell: cmd
         run: tactile-tiled-tmj-format-test.exe
+
+      - name: Run runtime tests
+        working-directory: ./build/debug
+        shell: cmd
+        run: tactile-runtime-test.exe

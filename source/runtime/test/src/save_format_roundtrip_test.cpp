@@ -118,7 +118,7 @@ class SaveFormatRoundtripTest : public testing::TestWithParam<SaveFormatRoundtri
   }
 
  protected:
-  Runtime m_runtime {get_default_command_line_options()};
+  Runtime m_runtime {_get_command_line_options()};
 
   null_renderer::NullRendererPlugin m_null_renderer_plugin {};
 
@@ -139,6 +139,14 @@ class SaveFormatRoundtripTest : public testing::TestWithParam<SaveFormatRoundtri
 #endif
 
   IRenderer* m_renderer {};
+
+  [[nodiscard]]
+  static auto _get_command_line_options() noexcept -> CommandLineOptions
+  {
+    auto options = get_default_command_line_options();
+    options.log_level = LogLevel::kTrace;
+    return options;
+  }
 };
 
 #if TACTILE_HAS_TILED_TMJ

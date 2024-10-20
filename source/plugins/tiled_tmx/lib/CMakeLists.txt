@@ -1,29 +1,40 @@
-project(tactile-tiled-tmx-format-lib CXX)
+project(tactile-tiled-tmx-lib CXX)
 
-add_library(tactile-tiled-tmx-format SHARED)
-add_library(tactile::tiled_tmx_format ALIAS tactile-tiled-tmx-format)
+add_library(tactile-tiled-tmx SHARED)
+add_library(tactile::tiled_tmx ALIAS tactile-tiled-tmx)
 
-target_sources(tactile-tiled-tmx-format
+target_sources(tactile-tiled-tmx
                PRIVATE
-               "src/tiled_tmx_format_plugin.cpp"
+               "src/tmx_common.cpp"
+               "src/tmx_format_parser.cpp"
+               "src/tmx_format_plugin.cpp"
+               "src/tmx_format_save_visitor.cpp"
+               "src/tmx_save_format.cpp"
 
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/tiled_tmx/api.hpp"
-               "inc/tactile/tiled_tmx/tiled_tmx_format_plugin.hpp"
+               "inc/tactile/tiled_tmx/tmx_common.hpp"
+               "inc/tactile/tiled_tmx/tmx_format_parser.hpp"
+               "inc/tactile/tiled_tmx/tmx_format_plugin.hpp"
+               "inc/tactile/tiled_tmx/tmx_format_save_visitor.hpp"
+               "inc/tactile/tiled_tmx/tmx_save_format.hpp"
                )
 
-tactile_prepare_target(tactile-tiled-tmx-format)
+tactile_prepare_target(tactile-tiled-tmx)
 
-target_compile_definitions(tactile-tiled-tmx-format
+target_compile_definitions(tactile-tiled-tmx
                            PRIVATE
                            "TACTILE_BUILDING_TILED_TMX_FORMAT"
                            )
 
-target_link_libraries(tactile-tiled-tmx-format
+target_include_directories(tactile-tiled-tmx
+                           PRIVATE
+                           "${CPPCODEC_INCLUDE_DIRS}"
+                           )
+
+target_link_libraries(tactile-tiled-tmx
                       PUBLIC
                       tactile::base
                       tactile::runtime
-
-                      PRIVATE
                       pugixml::pugixml
                       )

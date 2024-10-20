@@ -97,3 +97,7 @@ jobs:
       - name: Run Tiled TMJ format tests
         working-directory: ./build/debug
         run: ./tactile-tiled-tmj-format-test
+
+      - name: Run runtime tests
+        working-directory: ./build/debug
+        run: ./tactile-runtime-test
