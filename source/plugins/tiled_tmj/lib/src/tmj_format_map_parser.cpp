@@ -4,6 +4,7 @@
 
 #include <utility>  // move
 
+#include "tactile/runtime/logging.hpp"
 #include "tactile/tiled_tmj/tmj_format_attribute_parser.hpp"
 #include "tactile/tiled_tmj/tmj_format_layer_parser.hpp"
 #include "tactile/tiled_tmj/tmj_format_tileset_parser.hpp"
@@ -55,10 +56,12 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
       orientation_iter != map_json.end()) {
     const auto& orientation = orientation_iter->get_ref<const std::string&>();
     if (orientation != "orthogonal") {
-      return std::unexpected {ErrorCode::kParseError};
+      runtime::log(LogLevel::kError, "Unsupported map orientation");
+      return std::unexpected {ErrorCode::kNotSupported};
     }
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse map orientation");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -73,6 +76,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     width_iter->get_to(map.extent.cols);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse map width");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -80,6 +84,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     height_iter->get_to(map.extent.rows);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse map height");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -88,6 +93,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     tile_width_iter->get_to(map.tile_size[0]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse map tile width");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -96,6 +102,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     tile_height_iter->get_to(map.tile_size[1]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse map tile height");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -104,6 +111,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     next_layer_id_iter->get_to(map.next_layer_id);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse map next layer identifier");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -112,6 +120,7 @@ auto parse_tiled_tmj_map(const IRuntime& runtime,
     next_object_id_iter->get_to(map.next_object_id);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse map next object identifier");
     return std::unexpected {ErrorCode::kParseError};
   }
 

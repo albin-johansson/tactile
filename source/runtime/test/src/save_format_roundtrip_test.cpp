@@ -288,7 +288,9 @@ TEST_P(SaveFormatRoundtripTest, SaveAndLoadMap)
   const auto parsed_map = save_format->load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value()) << "Error: " << to_string(parsed_map.error());
 
-  test::expect_eq(ir_map, *parsed_map, test::AttributeEqMode::kTiled);
+  test::expect_eq(ir_map,
+                  *parsed_map,
+                  test::kSkipMetadataNameBit | test::kSkipVectorPropertiesBit);
 }
 
 }  // namespace

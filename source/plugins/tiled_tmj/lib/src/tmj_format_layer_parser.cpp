@@ -44,6 +44,7 @@ auto _parse_type(const nlohmann::json& layer_json) -> std::expected<LayerType, E
     return LayerType::kGroupLayer;
   }
 
+  runtime::log(LogLevel::kError, "Unsupported layer type '{}'", *type_name);
   return std::unexpected {ErrorCode::kParseError};
 }
 
@@ -59,7 +60,8 @@ auto _parse_base64_tile_data(const IRuntime& runtime,
   if (compression.has_value()) {
     const auto* compression_format = runtime.get_compression_format(*compression);
     if (!compression_format) {
-      return std::unexpected {ErrorCode::kParseError};
+      runtime::log(LogLevel::kError, "No suitable compression plugin available");
+      return std::unexpected {ErrorCode::kNotSupported};
     }
 
     auto decompressed_bytes = compression_format->decompress(decoded_bytes);
@@ -122,6 +124,7 @@ auto _parse_tile_layer(const IRuntime& runtime,
     width_iter->get_to(layer.extent.cols);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse tile layer width");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -129,6 +132,7 @@ auto _parse_tile_layer(const IRuntime& runtime,
     height_iter->get_to(layer.extent.rows);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse tile layer height");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -189,6 +193,7 @@ auto _parse_group_layer(const IRuntime& runtime,
 {
   const auto layers_iter = layer_json.find("layers");
   if (layers_iter == layer_json.end()) {
+    runtime::log(LogLevel::kError, "Could not parse group layer entries");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -241,7 +246,11 @@ auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_
     return std::unexpected {metadata.error()};
   }
 
-  if (!layer_json.contains("name")) {
+  if (const auto name_iter = layer_json.find("name"); name_iter != layer_json.end()) {
+    name_iter->get_to(layer.meta.name);
+  }
+  else {
+    runtime::log(LogLevel::kError, "Could not parse layer name");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -249,6 +258,7 @@ auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_
     id_iter->get_to(layer.id);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse layer identifier");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -256,6 +266,7 @@ auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_
     opacity_iter->get_to(layer.opacity);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse layer opacity");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -263,6 +274,7 @@ auto parse_tiled_tmj_layer(const IRuntime& runtime, const nlohmann::json& layer_
     visible_iter->get_to(layer.visible);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse layer visibility");
     return std::unexpected {ErrorCode::kParseError};
   }
 

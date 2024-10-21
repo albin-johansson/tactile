@@ -24,6 +24,7 @@ auto _parse_animation_frame(const nlohmann::json& frame_json)
     frame_tile_iter->get_to(frame.tile_index);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse animation frame tile");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -33,6 +34,7 @@ auto _parse_animation_frame(const nlohmann::json& frame_json)
         std::chrono::milliseconds {duration_iter->get<std::chrono::milliseconds::rep>()};
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse animation frame duration");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -74,6 +76,7 @@ auto _parse_tile(const nlohmann::json& tile_json) -> std::expected<ir::Tile, Err
     index_iter->get_to(tile.index);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse tile identifier");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -106,6 +109,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     -> std::expected<ir::Tileset, ErrorCode>
 {
   if (!tileset_json.contains("name")) {
+    runtime::log(LogLevel::kError, "Could not parse tileset name");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -120,6 +124,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     tile_width_iter->get_to(tileset.tile_size[0]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse tile width");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -128,6 +133,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     tile_height_iter->get_to(tileset.tile_size[1]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse tile height");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -136,6 +142,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     tile_count_iter->get_to(tileset.tile_count);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse tile count");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -144,6 +151,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     columns_iter->get_to(tileset.column_count);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse column count");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -152,6 +160,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     image_width_iter->get_to(tileset.image_size[0]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse image width");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -160,6 +169,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     image_height_iter->get_to(tileset.image_size[1]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse image height");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -169,6 +179,7 @@ auto _parse_tileset(const nlohmann::json& tileset_json)
     image_path_iter->get_to(relative_image_path);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse image path");
     return std::unexpected {ErrorCode::kParseError};
   }
 

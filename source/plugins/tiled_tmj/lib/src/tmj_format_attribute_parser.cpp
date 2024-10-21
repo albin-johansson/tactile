@@ -101,16 +101,19 @@ auto parse_tiled_tmj_property(const nlohmann::json& property_json)
 
   const auto name_iter = property_json.find("name");
   if (name_iter == property_json.end()) {
+    runtime::log(LogLevel::kError, "Missing property name");
     return std::unexpected {ErrorCode::kParseError};
   }
 
   const auto type_iter = property_json.find("type");
   if (type_iter == property_json.end()) {
+    runtime::log(LogLevel::kError, "Missing property type");
     return std::unexpected {ErrorCode::kParseError};
   }
 
   const auto value_iter = property_json.find("value");
   if (value_iter == property_json.end()) {
+    runtime::log(LogLevel::kError, "Missing property value");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -135,10 +138,6 @@ auto parse_tiled_tmj_metadata(const nlohmann::json& root_json)
     -> std::expected<ir::Metadata, ErrorCode>
 {
   ir::Metadata metadata {};
-
-  if (const auto name_iter = root_json.find("name"); name_iter != root_json.end()) {
-    name_iter->get_to(metadata.name);
-  }
 
   if (const auto properties_iter = root_json.find("properties");
       properties_iter != root_json.end() && properties_iter->is_array()) {

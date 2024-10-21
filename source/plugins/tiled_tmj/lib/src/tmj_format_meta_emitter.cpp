@@ -117,8 +117,6 @@ auto emit_tiled_tmj_property(const IMetaView& meta, const std::size_t property_i
 
 void emit_tiled_tmj_metadata(const IMetaView& meta, nlohmann::json& meta_json)
 {
-  meta_json["name"] = meta.get_name();
-
   const auto property_count = meta.property_count();
   if (property_count == 0) {
     return;

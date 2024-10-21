@@ -9,6 +9,7 @@
 
 #include "tactile/base/document/layer_view.hpp"
 #include "tactile/base/document/map_view.hpp"
+#include "tactile/base/document/meta_view.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
@@ -115,6 +116,7 @@ auto emit_tiled_tmj_layer(const IRuntime& runtime,
 {
   auto layer_json = nlohmann::json::object();
 
+  layer_json["name"] = layer.get_meta().get_name();
   layer_json["id"] = layer.get_id();
   layer_json["opacity"] = layer.get_opacity();
   layer_json["visible"] = layer.is_visible();

@@ -172,7 +172,7 @@ TEST_P(TmjFormatRoundtripTest, SaveAndLoadMap)
   const auto parsed_map = save_format->load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());
 
-  expect_eq(ir_map, *parsed_map, AttributeEqMode::kTiled);
+  expect_eq(ir_map, *parsed_map, kSkipMetadataNameBit | kSkipVectorPropertiesBit);
 }
 
 }  // namespace tactile::test

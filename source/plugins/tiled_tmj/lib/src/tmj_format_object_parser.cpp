@@ -4,6 +4,7 @@
 
 #include <utility>  // move
 
+#include "tactile/runtime/logging.hpp"
 #include "tactile/tiled_tmj/tmj_format_attribute_parser.hpp"
 
 namespace tactile {
@@ -11,10 +12,6 @@ namespace tactile {
 auto parse_tiled_tmj_object(const nlohmann::json& object_json)
     -> std::expected<ir::Object, ErrorCode>
 {
-  if (!object_json.contains("name")) {
-    return std::unexpected {ErrorCode::kParseError};
-  }
-
   ir::Object object {};
 
   if (auto metadata = parse_tiled_tmj_metadata(object_json)) {
@@ -24,10 +21,19 @@ auto parse_tiled_tmj_object(const nlohmann::json& object_json)
     return std::unexpected {metadata.error()};
   }
 
+  if (const auto name_iter = object_json.find("name"); name_iter != object_json.end()) {
+    name_iter->get_to(object.meta.name);
+  }
+  else {
+    runtime::log(LogLevel::kError, "Could not parse object name");
+    return std::unexpected {ErrorCode::kParseError};
+  }
+
   if (const auto id_iter = object_json.find("id"); id_iter != object_json.end()) {
     id_iter->get_to(object.id);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse object identifier");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -39,6 +45,7 @@ auto parse_tiled_tmj_object(const nlohmann::json& object_json)
     x_iter->get_to(object.position[0]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse object x-coordinate");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -46,6 +53,7 @@ auto parse_tiled_tmj_object(const nlohmann::json& object_json)
     y_iter->get_to(object.position[1]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse object y-coordinate");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -53,6 +61,7 @@ auto parse_tiled_tmj_object(const nlohmann::json& object_json)
     width_iter->get_to(object.size[0]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse object width");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -60,6 +69,7 @@ auto parse_tiled_tmj_object(const nlohmann::json& object_json)
     height_iter->get_to(object.size[1]);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse object height");
     return std::unexpected {ErrorCode::kParseError};
   }
 
@@ -68,6 +78,7 @@ auto parse_tiled_tmj_object(const nlohmann::json& object_json)
     visible_iter->get_to(object.visible);
   }
   else {
+    runtime::log(LogLevel::kError, "Could not parse object visibility");
     return std::unexpected {ErrorCode::kParseError};
   }
 

@@ -6,6 +6,7 @@
 #include <format>      // format
 #include <utility>     // move
 
+#include "tactile/base/document/meta_view.hpp"
 #include "tactile/base/document/tileset_view.hpp"
 #include "tactile/base/platform/filesystem.hpp"
 #include "tactile/tiled_tmj/tmj_format_meta_emitter.hpp"
@@ -23,6 +24,7 @@ void _save_basic_tileset_attributes(const ITilesetView& tileset,
   const auto relative_image_path =
       std::filesystem::relative(tileset.get_image_path(), options.base_dir);
 
+  tileset_json["name"] = tileset.get_meta().get_name();
   tileset_json["columns"] = tileset.column_count();
 
   tileset_json["tilewidth"] = tile_size.x();

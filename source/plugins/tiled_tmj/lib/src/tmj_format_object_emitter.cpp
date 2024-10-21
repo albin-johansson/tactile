@@ -2,6 +2,7 @@
 
 #include "tactile/tiled_tmj/tmj_format_object_emitter.hpp"
 
+#include "tactile/base/document/meta_view.hpp"
 #include "tactile/base/document/object_view.hpp"
 #include "tactile/tiled_tmj/tmj_format_meta_emitter.hpp"
 
@@ -14,6 +15,7 @@ auto emit_tiled_tmj_object(const IObjectView& object) -> nlohmann::json
   const auto object_type = object.get_type();
 
   auto object_json = nlohmann::json::object();
+  object_json["name"] = object.get_meta().get_name();
   object_json["id"] = object.get_id();
   object_json["x"] = object_position.x();
   object_json["y"] = object_position.y();

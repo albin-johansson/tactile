@@ -14,20 +14,21 @@ namespace tactile::test {
 
 void expect_eq(const ir::NamedAttribute& attr1,
                const ir::NamedAttribute& attr2,
-               const AttributeEqMode mode)
+               const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(attr1.name, attr2.name);
 
-  const auto should_skip =
-      mode == AttributeEqMode::kTiled && (attr1.value.is_vector() || attr2.value.is_vector());
-  if (!should_skip) {
-    EXPECT_EQ(attr1.value, attr2.value);
+  if (flags & kSkipVectorPropertiesBit &&
+      (attr1.value.is_vector() || attr2.value.is_vector())) {
+    return;
   }
+
+  EXPECT_EQ(attr1.value, attr2.value);
 }
 
 void expect_eq(const ir::AttachedComponent& component1,
                const ir::AttachedComponent& component2,
-               const AttributeEqMode mode)
+               const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(component1.type, component2.type);
 
@@ -37,13 +38,13 @@ void expect_eq(const ir::AttachedComponent& component1,
         [&](const ir::NamedAttribute& attr2) { return attr2.name == attr1.name; });
 
     ASSERT_NE(attr2_iter, component2.attributes.end());
-    expect_eq(attr1, *attr2_iter, mode);
+    expect_eq(attr1, *attr2_iter, flags);
   }
 }
 
 void expect_eq(const ir::Component& component1,
                const ir::Component& component2,
-               const AttributeEqMode mode)
+               const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(component1.name, component2.name);
 
@@ -53,15 +54,17 @@ void expect_eq(const ir::Component& component1,
         [&](const ir::NamedAttribute& attr2) { return attr2.name == attr1.name; });
 
     ASSERT_NE(attr2_iter, component2.attributes.end());
-    expect_eq(attr1, *attr2_iter, mode);
+    expect_eq(attr1, *attr2_iter, flags);
   }
 }
 
 void expect_eq(const ir::Metadata& meta1,
                const ir::Metadata& meta2,
-               const AttributeEqMode mode)
+               const ExpectEqFlagBits flags)
 {
-  EXPECT_EQ(meta1.name, meta2.name);
+  if (!(flags & kSkipMetadataNameBit)) {
+    EXPECT_EQ(meta1.name, meta2.name);
+  }
   ASSERT_EQ(meta1.properties.size(), meta2.properties.size());
   ASSERT_EQ(meta1.components.size(), meta2.components.size());
 
@@ -71,7 +74,7 @@ void expect_eq(const ir::Metadata& meta1,
         [&](const ir::NamedAttribute& prop2) { return prop2.name == prop1.name; });
 
     ASSERT_NE(prop2_iter, meta2.properties.end());
-    expect_eq(prop1, *prop2_iter, mode);
+    expect_eq(prop1, *prop2_iter, flags);
   }
 
   for (const auto& component1 : meta1.components) {
@@ -81,13 +84,13 @@ void expect_eq(const ir::Metadata& meta1,
         });
 
     ASSERT_NE(component2_iter, meta2.components.end());
-    expect_eq(component1, *component2_iter, mode);
+    expect_eq(component1, *component2_iter, flags);
   }
 }
 
 void expect_eq(const ir::Object& object1,
                const ir::Object& object2,
-               const AttributeEqMode mode)
+               const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(object1.id, object2.id);
   EXPECT_EQ(object1.type, object2.type);
@@ -96,10 +99,10 @@ void expect_eq(const ir::Object& object1,
   EXPECT_EQ(object1.tag, object2.tag);
   EXPECT_EQ(object1.visible, object2.visible);
 
-  expect_eq(object1.meta, object2.meta, mode);
+  expect_eq(object1.meta, object2.meta, flags);
 }
 
-void expect_eq(const ir::Layer& layer1, const ir::Layer& layer2, const AttributeEqMode mode)
+void expect_eq(const ir::Layer& layer1, const ir::Layer& layer2, const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(layer1.id, layer2.id);
   EXPECT_EQ(layer1.type, layer2.type);
@@ -121,7 +124,7 @@ void expect_eq(const ir::Layer& layer1, const ir::Layer& layer2, const Attribute
             [&](const ir::Object& object2) { return object2.id == object1.id; });
 
         ASSERT_NE(object2_iter, layer2.objects.end());
-        expect_eq(object1, *object2_iter, mode);
+        expect_eq(object1, *object2_iter, flags);
       }
 
       break;
@@ -135,17 +138,17 @@ void expect_eq(const ir::Layer& layer1, const ir::Layer& layer2, const Attribute
             [&](const ir::Layer& sublayer2) { return sublayer2.id == sublayer1.id; });
 
         ASSERT_NE(sublayer2_iter, layer2.layers.end());
-        expect_eq(sublayer1, *sublayer2_iter, mode);
+        expect_eq(sublayer1, *sublayer2_iter, flags);
       }
 
       break;
     }
   }
 
-  expect_eq(layer1.meta, layer2.meta, mode);
+  expect_eq(layer1.meta, layer2.meta, flags);
 }
 
-void expect_eq(const ir::Tile& tile1, const ir::Tile& tile2, const AttributeEqMode mode)
+void expect_eq(const ir::Tile& tile1, const ir::Tile& tile2, const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(tile1.index, tile2.index);
   ASSERT_EQ(tile1.objects.size(), tile2.objects.size());
@@ -157,7 +160,7 @@ void expect_eq(const ir::Tile& tile1, const ir::Tile& tile2, const AttributeEqMo
         [&](const ir::Object& object2) { return object2.id == object1.id; });
 
     ASSERT_NE(object2_iter, tile2.objects.end());
-    expect_eq(object1, *object2_iter, mode);
+    expect_eq(object1, *object2_iter, flags);
   }
 
   for (std::size_t index = 0; index < tile1.animation.size(); ++index) {
@@ -168,12 +171,12 @@ void expect_eq(const ir::Tile& tile1, const ir::Tile& tile2, const AttributeEqMo
     EXPECT_EQ(frame1.duration, frame2.duration);
   }
 
-  expect_eq(tile1.meta, tile2.meta, mode);
+  expect_eq(tile1.meta, tile2.meta, flags);
 }
 
 void expect_eq(const ir::Tileset& tileset1,
                const ir::Tileset& tileset2,
-               const AttributeEqMode mode)
+               const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(tileset1.tile_size, tileset2.tile_size);
   EXPECT_EQ(tileset1.tile_count, tileset2.tile_count);
@@ -189,19 +192,19 @@ void expect_eq(const ir::Tileset& tileset1,
     });
 
     ASSERT_NE(tile2_iter, tileset2.tiles.end());
-    expect_eq(tile1, *tile2_iter, mode);
+    expect_eq(tile1, *tile2_iter, flags);
   }
 
-  expect_eq(tileset1.meta, tileset2.meta, mode);
+  expect_eq(tileset1.meta, tileset2.meta, flags);
 }
 
 void expect_eq(const ir::TilesetRef& tileset_ref1,
                const ir::TilesetRef& tileset_ref2,
-               const AttributeEqMode mode)
+               const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(tileset_ref1.first_tile_id, tileset_ref2.first_tile_id);
 
-  expect_eq(tileset_ref1.tileset, tileset_ref2.tileset, mode);
+  expect_eq(tileset_ref1.tileset, tileset_ref2.tileset, flags);
 }
 
 void expect_eq(const ir::TileFormat& format1, const ir::TileFormat& format2)
@@ -211,7 +214,7 @@ void expect_eq(const ir::TileFormat& format1, const ir::TileFormat& format2)
   EXPECT_EQ(format1.compression_level, format2.compression_level);
 }
 
-void expect_eq(const ir::Map& map1, const ir::Map& map2, const AttributeEqMode mode)
+void expect_eq(const ir::Map& map1, const ir::Map& map2, const ExpectEqFlagBits flags)
 {
   EXPECT_EQ(map1.extent, map2.extent);
   EXPECT_EQ(map1.tile_size, map2.tile_size);
@@ -227,7 +230,7 @@ void expect_eq(const ir::Map& map1, const ir::Map& map2, const AttributeEqMode m
         [&](const ir::Component& component2) { return component2.name == component1.name; });
 
     ASSERT_NE(component2_iter, map2.components.end());
-    expect_eq(component1, *component2_iter, mode);
+    expect_eq(component1, *component2_iter, flags);
   }
 
   for (const auto& tileset_ref1 : map1.tilesets) {
@@ -237,18 +240,18 @@ void expect_eq(const ir::Map& map1, const ir::Map& map2, const AttributeEqMode m
         });
 
     ASSERT_NE(tileset_ref2_iter, map2.tilesets.end());
-    expect_eq(tileset_ref1, *tileset_ref2_iter, mode);
+    expect_eq(tileset_ref1, *tileset_ref2_iter, flags);
   }
 
   for (std::size_t index = 0; index < map1.layers.size(); ++index) {
     const auto& layer1 = map1.layers.at(index);
     const auto& layer2 = map2.layers.at(index);
 
-    expect_eq(layer1, layer2, mode);
+    expect_eq(layer1, layer2, flags);
   }
 
   expect_eq(map1.tile_format, map2.tile_format);
-  expect_eq(map1.meta, map2.meta, mode);
+  expect_eq(map1.meta, map2.meta, flags);
 }
 
 }  // namespace tactile::test
