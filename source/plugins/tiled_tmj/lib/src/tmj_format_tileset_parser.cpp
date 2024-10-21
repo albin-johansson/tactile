@@ -108,15 +108,18 @@ auto _parse_tile(const nlohmann::json& tile_json) -> std::expected<ir::Tile, Err
 auto _parse_tileset(const nlohmann::json& tileset_json)
     -> std::expected<ir::Tileset, ErrorCode>
 {
-  if (!tileset_json.contains("name")) {
-    runtime::log(LogLevel::kError, "Could not parse tileset name");
-    return std::unexpected {ErrorCode::kParseError};
-  }
-
   ir::Tileset tileset {};
 
   if (auto metadata = parse_tiled_tmj_metadata(tileset_json)) {
     tileset.meta = std::move(*metadata);
+  }
+
+  if (const auto name_iter = tileset_json.find("name"); name_iter != tileset_json.end()) {
+    name_iter->get_to(tileset.meta.name);
+  }
+  else {
+    runtime::log(LogLevel::kError, "Could not parse tileset name");
+    return std::unexpected {ErrorCode::kParseError};
   }
 
   if (const auto tile_width_iter = tileset_json.find("tilewidth");

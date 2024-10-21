@@ -327,22 +327,4 @@ TEST_F(TmjFormatAttributeParserTest, ParseTiledTmjMetadata)
               Contains(Eq(ir::NamedAttribute {"an_object", Attribute {ObjectRef {123}}})));
 }
 
-// tactile::parse_tiled_tmj_metadata
-TEST_F(TmjFormatAttributeParserTest, ParseTiledTmjMetadataWithName)
-{
-  using namespace nlohmann::json_literals;
-
-  const auto metadata_json = R"({
-    "name": "test",
-    "properties": []
-  })"_json;
-
-  const auto metadata = parse_tiled_tmj_metadata(metadata_json);
-  ASSERT_TRUE(metadata.has_value());
-
-  EXPECT_EQ(metadata->name, "test");
-  EXPECT_EQ(metadata->properties.size(), 0);
-  EXPECT_EQ(metadata->components.size(), 0);
-}
-
 }  // namespace tactile::test

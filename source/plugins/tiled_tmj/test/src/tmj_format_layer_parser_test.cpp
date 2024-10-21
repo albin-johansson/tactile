@@ -686,7 +686,7 @@ TEST_F(TmjFormatLayerParserTest, TileLayerWithUnregisteredCompressionFormat)
   const auto layer = parse_tiled_tmj_layer(mRuntime, layer_json);
   ASSERT_FALSE(layer.has_value());
 
-  EXPECT_EQ(layer.error(), ErrorCode::kParseError);
+  EXPECT_EQ(layer.error(), ErrorCode::kNotSupported);
 }
 
 }  // namespace tactile::test

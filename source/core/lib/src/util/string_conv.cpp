@@ -37,15 +37,6 @@ template <typename T, std::invocable<const char*, const char*, T&> Parser>
   return std::unexpected {ErrorCode::kBadParam};
 }
 
-template <std::integral T>
-[[nodiscard]] auto _parse_number(const std::string_view str, const int base)
-    -> std::expected<T, ErrorCode>
-{
-  return _parse_impl<T>(str, [base](const char* begin, const char* end, T& number) {
-    return std::from_chars(begin, end, number, base);
-  });
-}
-
 template <std::floating_point T>
 [[nodiscard]] auto _parse_number(const std::string_view str) -> std::expected<T, ErrorCode>
 {
@@ -135,18 +126,6 @@ auto from_native_string(const NativeStringView str) -> std::expected<std::string
 #else
   return std::string {str};
 #endif  // TACTILE_OS_WINDOWS
-}
-
-auto parse_int(const std::string_view str, const int base)
-    -> std::expected<std::int64_t, ErrorCode>
-{
-  return _parse_number<std::int64_t>(str, base);
-}
-
-auto parse_uint(const std::string_view str, const int base)
-    -> std::expected<std::uint64_t, ErrorCode>
-{
-  return _parse_number<std::uint64_t>(str, base);
 }
 
 auto parse_float(const std::string_view str) -> std::expected<double, ErrorCode>

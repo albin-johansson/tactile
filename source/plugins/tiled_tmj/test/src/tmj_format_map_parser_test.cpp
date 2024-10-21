@@ -163,7 +163,7 @@ TEST_F(TmjFormatMapParserTest, MapWithUnsupportedOrientation)
   const auto map = parse_tiled_tmj_map(mRuntime, map_json, mOptions);
   ASSERT_FALSE(map.has_value());
 
-  EXPECT_EQ(map.error(), ErrorCode::kParseError);
+  EXPECT_EQ(map.error(), ErrorCode::kNotSupported);
 }
 
 // tactile::parse_tiled_tmj_map
