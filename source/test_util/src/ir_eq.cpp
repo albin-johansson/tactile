@@ -18,12 +18,9 @@ void expect_eq(const ir::NamedAttribute& attr1,
 {
   EXPECT_EQ(attr1.name, attr2.name);
 
-  if (mode == AttributeEqMode::kTiled &&
-      (attr1.value.is_vector() || attr2.value.is_vector())) {
-    std::clog << std::format("[expect_eq] Skipping check for vector attribute '{}'\n",
-                             attr1.name);
-  }
-  else {
+  const auto should_skip =
+      mode == AttributeEqMode::kTiled && (attr1.value.is_vector() || attr2.value.is_vector());
+  if (!should_skip) {
     EXPECT_EQ(attr1.value, attr2.value);
   }
 }

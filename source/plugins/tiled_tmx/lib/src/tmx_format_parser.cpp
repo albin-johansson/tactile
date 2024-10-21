@@ -606,7 +606,7 @@ auto parse_map(const IRuntime& runtime,
 {
   return read_xml_document(map_path).and_then([&](const pugi::xml_document& map_document) {
     const auto map_node = map_document.child("map");
-    return _read_map(map_path.filename(), runtime, map_node, options);
+    return _read_map(map_path.filename().string(), runtime, map_node, options);
   });
 }
 

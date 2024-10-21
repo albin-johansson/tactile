@@ -1,6 +1,6 @@
 #pragma once
 
-#include <algorithm>    // contains
+#include <algorithm>    // find
 #include <concepts>     // signed_integral, unsigned_integral, floating_point, same_as
 #include <expected>     // expected, unexpected
 #include <filesystem>   // path
@@ -62,7 +62,7 @@ template <typename T, std::invocable<const pugi::xml_node&> Parser>
   std::vector<T> values {};
 
   for (const auto& node : parent_node.children()) {
-    if (!std::ranges::contains(node_names, node.name())) {
+    if (std::ranges::find(node_names, node.name()) == node_names.end()) {
       continue;
     }
 
