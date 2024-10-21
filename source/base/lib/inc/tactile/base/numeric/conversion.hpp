@@ -2,11 +2,10 @@
 
 #pragma once
 
-#include <concepts>     // integral
-#include <limits>       // numeric_limits
-#include <stdexcept>    // underflow_error, overflow_error
-#include <type_traits>  // is_signed_v
-#include <utility>      // cmp_less, cmp_greater
+#include <concepts>   // integral, same_as
+#include <limits>     // numeric_limits
+#include <stdexcept>  // underflow_error, overflow_error
+#include <utility>    // cmp_less, cmp_greater
 
 namespace tactile {
 
@@ -27,10 +26,9 @@ namespace tactile {
 template <std::integral To, std::integral From>
 [[nodiscard]] constexpr auto narrow(const From from) -> To
 {
-  static_assert(std::is_signed_v<To> == std::is_signed_v<From>);
   static_assert(sizeof(To) <= sizeof(From));
 
-  if constexpr (sizeof(To) == sizeof(From)) {
+  if constexpr (std::same_as<To, From>) {
     return static_cast<To>(from);
   }
   else {

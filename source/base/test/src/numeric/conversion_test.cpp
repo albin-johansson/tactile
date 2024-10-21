@@ -56,10 +56,18 @@ TEST(Conversion, NarrowUnsignedValues)
 }
 
 // tactile::narrow
+TEST(Conversion, NarrowDifferentSignValues)
+{
+  EXPECT_EQ(narrow<std::uint8_t>(std::int16_t {123}), std::uint8_t {123});
+  EXPECT_EQ(narrow<std::int16_t>(std::uint32_t {8432}), std::int16_t {8432});
+}
+
+// tactile::narrow
 TEST(Conversion, NarrowUnderflow)
 {
   EXPECT_THROW((void) narrow<std::int8_t>(std::int16_t {kMinS8} - 1), std::underflow_error);
   EXPECT_THROW((void) narrow<std::int16_t>(std::int32_t {kMinS16} - 1), std::underflow_error);
+  EXPECT_THROW((void) narrow<std::uint8_t>(std::int8_t {-1}), std::underflow_error);
 }
 
 // tactile::narrow
@@ -67,6 +75,7 @@ TEST(Conversion, NarrowOverflow)
 {
   EXPECT_THROW((void) narrow<std::int8_t>(std::int16_t {kMaxS8} + 1), std::overflow_error);
   EXPECT_THROW((void) narrow<std::int16_t>(std::int32_t {kMaxS16} + 1), std::overflow_error);
+  EXPECT_THROW((void) narrow<std::int8_t>(std::uint8_t {129}), std::overflow_error);
 }
 
 }  // namespace
