@@ -37,6 +37,7 @@ target_sources(tactile-core
                "src/document/tileset_view_impl.cpp"
                "src/engine/engine.cpp"
                "src/entity/entity.cpp"
+               "src/entity/entity_id.cpp"
                "src/entity/registry.cpp"
                "src/event/component_event_handler.cpp"
                "src/event/edit_event_handler.cpp"
