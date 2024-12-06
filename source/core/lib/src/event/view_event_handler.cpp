@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
 #include "tactile/core/logging.hpp"
@@ -17,9 +17,9 @@ namespace tactile::core {
 ViewEventHandler::ViewEventHandler(Model* model,
                                    IRenderer* renderer,
                                    ui::WidgetManager* widget_manager)
-  : mModel {require_not_null(model, "null model")},
-    mRenderer {require_not_null(renderer, "null renderer")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+  : mModel {common::require_not_null(model, "null model")},
+    mRenderer {common::require_not_null(renderer, "null renderer")},
+    mWidgetManager {common::require_not_null(widget_manager, "null widget manager")}
 {}
 
 void ViewEventHandler::install(EventDispatcher& dispatcher)

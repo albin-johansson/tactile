@@ -177,8 +177,8 @@ auto add_tileset_to_map(Registry& registry,
   map.active_tileset = *tileset_id;
 
   TACTILE_CORE_DEBUG("Added tileset {} to map {}",
-                    entity_to_string(*tileset_id),
-                    entity_to_string(map_id));
+                     entity_to_string(*tileset_id),
+                     entity_to_string(map_id));
   return tileset_id;
 }
 
@@ -190,8 +190,8 @@ void remove_tileset_from_map(Registry& registry,
   TACTILE_ASSERT(is_tileset_instance(registry, tileset_id));
 
   TACTILE_CORE_DEBUG("Removing tileset {} from map {}",
-                    entity_to_string(tileset_id),
-                    entity_to_string(map_id));
+                     entity_to_string(tileset_id),
+                     entity_to_string(map_id));
 
   // Note, the tile range used by the tileset is intentionally not returned to keep the logic
   // as simple as possible. It also makes implementing tileset commands easier.

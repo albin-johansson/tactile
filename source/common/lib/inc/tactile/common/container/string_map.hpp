@@ -9,7 +9,7 @@
 #include <type_traits>    // true_type
 #include <unordered_map>  // unordered_map
 
-namespace tactile {
+namespace tactile::common {
 
 /** Custom hash object capable of hashing several string types. */
 struct StringHash final
@@ -37,4 +37,4 @@ struct StringHash final
 template <typename T>
 using StringMap = std::unordered_map<std::string, T, StringHash, std::equal_to<>>;
 
-}  // namespace tactile
+}  // namespace tactile::common

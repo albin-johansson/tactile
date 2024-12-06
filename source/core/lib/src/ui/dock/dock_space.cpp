@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/logging.hpp"
 #include "tactile/core/platform/filesystem.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
@@ -18,7 +18,7 @@ DockSpace::DockSpace()
 
 void DockSpace::update(const Language& language)
 {
-  const auto* viewport = require_not_null(ImGui::GetMainViewport(), "null viewport");
+  const auto* viewport = common::require_not_null(ImGui::GetMainViewport(), "null viewport");
   const auto flags = ImGuiDockNodeFlags_NoDockingOverCentralNode;
 
   mRootId = ImGui::DockSpaceOverViewport(0, viewport, flags);

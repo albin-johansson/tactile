@@ -5,7 +5,7 @@
 #include <exception>  // exception
 #include <utility>    // move
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -16,7 +16,7 @@
 namespace tactile::core {
 
 AddTilesetCommand::AddTilesetCommand(MapDocument* document, TilesetSpec spec)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_spec {std::move(spec)},
     m_tileset_id {kInvalidEntity},
     m_tileset_was_added {false}
@@ -32,7 +32,7 @@ AddTilesetCommand::~AddTilesetCommand() noexcept
   }
   catch (const std::exception& error) {
     TACTILE_CORE_ERROR("Unexpected exception in AddTilesetCommand destructor: {}",
-                      error.what());
+                       error.what());
   }
 }
 

@@ -22,4 +22,5 @@ tactile_prepare_target(tactile-log)
 target_link_libraries(tactile-log
                       PUBLIC
                       tactile::base
+                      tactile::common
                       )

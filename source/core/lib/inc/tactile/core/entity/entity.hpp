@@ -102,7 +102,7 @@ class Entity final
 
   /// Returns the associated identifier.
   [[nodiscard]]
-  auto get_id() const  noexcept -> EntityID;
+  auto get_id() const noexcept -> EntityID;
 
   /// Indicates whether the entity has a value.
   [[nodiscard]]

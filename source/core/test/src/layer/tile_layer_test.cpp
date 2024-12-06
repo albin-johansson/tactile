@@ -5,7 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "tactile/base/io/tile_io.hpp"
+#include "tactile/common/serdes/tiles.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -228,7 +228,9 @@ TEST_P(TileLayerTest, SerializeTileLayer)
 
   const auto serialized_tiles = serialize_tile_layer(mRegistry, layer_id);
   const auto deserialized_tiles =
-      parse_raw_tile_matrix(serialized_tiles, extent, TileIdFormat::kTactile);
+      common::deserialize_tile_matrix(serialized_tiles,
+                                      extent,
+                                      common::TileIdFormat::kTactile);
 
   ASSERT_TRUE(deserialized_tiles.has_value());
 

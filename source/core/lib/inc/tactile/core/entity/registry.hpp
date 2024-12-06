@@ -11,7 +11,7 @@
 
 #include "tactile/base/prelude.hpp"
 #include "tactile/core/debug/assert.hpp"
-#include "tactile/core/entity/entity.hpp"
+#include "tactile/core/entity/entity_id.hpp"
 
 namespace tactile::core {
 

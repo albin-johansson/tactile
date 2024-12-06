@@ -4,9 +4,9 @@
 
 #include <utility>  // move, exchange
 
-#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/document/document.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/container/lookup.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/logging.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -17,7 +17,7 @@ UpdatePropertyCommand::UpdatePropertyCommand(IDocument* document,
                                              const EntityID context_id,
                                              std::string property_name,
                                              Attribute property_value)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_context_id {context_id},
     m_property_name {std::move(property_name)},
     m_new_property_value {std::move(property_value)},

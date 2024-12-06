@@ -2,12 +2,12 @@
 
 #include "tactile/core/event/object_event_handler.hpp"
 
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/cmd/object/create_object_command.hpp"
 #include "tactile/core/cmd/object/move_object_command.hpp"
 #include "tactile/core/cmd/object/remove_object_command.hpp"
 #include "tactile/core/cmd/object/set_object_tag_command.hpp"
 #include "tactile/core/cmd/object/set_object_visibility_command.hpp"
-#include "tactile/base/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
 #include "tactile/core/logging.hpp"
@@ -16,7 +16,7 @@
 namespace tactile::core {
 
 ObjectEventHandler::ObjectEventHandler(Model* model)
-  : m_model {require_not_null(model, "null model")}
+  : m_model {common::require_not_null(model, "null model")}
 {}
 
 void ObjectEventHandler::install(EventDispatcher& dispatcher)

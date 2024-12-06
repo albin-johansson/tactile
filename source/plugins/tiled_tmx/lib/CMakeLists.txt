@@ -37,6 +37,7 @@ target_include_directories(tactile-tiled-tmx
 target_link_libraries(tactile-tiled-tmx
                       PUBLIC
                       tactile::base
+                      tactile::common
                       tactile::log
                       pugixml::pugixml
                       )

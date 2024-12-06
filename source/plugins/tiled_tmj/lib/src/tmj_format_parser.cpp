@@ -12,10 +12,10 @@
 #include <nlohmann/json.hpp>
 
 #include "tactile/base/io/compress/compression_format.hpp"
-#include "tactile/base/io/tile_io.hpp"
-#include "tactile/base/meta/color.hpp"
 #include "tactile/base/numeric/literals.hpp"
 #include "tactile/base/util/tile_matrix.hpp"
+#include "tactile/common/meta/colors.hpp"
+#include "tactile/common/serdes/tiles.hpp"
 #include "tactile/tiled_tmj/logging.hpp"
 #include "tactile/tiled_tmj/tmj_common.hpp"
 
@@ -69,8 +69,8 @@ auto _read_property_value(const JSON& property_json, const AttributeType type)
     }
     case AttributeType::kColor: {
       if (const auto read_value = read_attr<Attribute::string_type>(property_json, "value")) {
-        const auto color = read_value->size() == 9 ? parse_color_argb(*read_value)
-                                                   : parse_color_rgb(*read_value);
+        const auto color = read_value->size() == 9 ? common::parse_color_argb(*read_value)
+                                                   : common::parse_color_rgb(*read_value);
         if (color.has_value()) {
           return Attribute {*color};
         }
@@ -281,7 +281,8 @@ auto _read_base64_tile_data(const IRuntime& runtime,
     decoded_bytes = std::move(*decompressed_bytes);
   }
 
-  auto tile_matrix = parse_raw_tile_matrix(decoded_bytes, extent, TileIdFormat::kTiled);
+  auto tile_matrix =
+      common::deserialize_tile_matrix(decoded_bytes, extent, common::TileIdFormat::kTiled);
 
   if (!tile_matrix.has_value()) {
     TACTILE_TILED_TMJ_ERROR("Could not parse raw tile matrix");

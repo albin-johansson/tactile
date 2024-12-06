@@ -16,7 +16,7 @@
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/prelude.hpp"
 
-namespace tactile {
+namespace tactile::common {
 
 inline constexpr std::size_t kDefaultMemoryBufferCapacity = 512;
 
@@ -276,4 +276,4 @@ class Buffer final
 template class Buffer<char>;
 template class Buffer<std::uint8_t>;
 
-}  // namespace tactile
+}  // namespace tactile::common

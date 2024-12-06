@@ -16,10 +16,11 @@
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <pugixml.hpp>
 
-#include "tactile/base/container/string.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
-#include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/util/tile_matrix.hpp"
+#include "tactile/common/container/string_utils.hpp"
+#include "tactile/common/meta/colors.hpp"
+#include "tactile/common/serdes/tiles.hpp"
 #include "tactile/tiled_tmx/logging.hpp"
 #include "tactile/tiled_tmx/tmx_common.hpp"
 
@@ -70,8 +71,8 @@ auto _read_property(const pugi::xml_node& node, const AttributeType type)
     }
     case AttributeType::kColor: {
       if (const auto read_value = read_attr<std::string>(node, "value")) {
-        const auto color = read_value->size() == 9 ? parse_color_argb(*read_value)
-                                                   : parse_color_rgb(*read_value);
+        const auto color = read_value->size() == 9 ? common::parse_color_argb(*read_value)
+                                                   : common::parse_color_rgb(*read_value);
         if (color.has_value()) {
           return Attribute {*color};
         }
@@ -334,8 +335,8 @@ auto _read_csv_tile_data(const pugi::xml_node& data_node, const Extent2D& extent
   std::size_t tile_index {};
 
   const auto split_ok =
-      visit_tokens(data_node_text.get(), '\n', [&](const std::string_view csv_row) {
-        return visit_tokens(csv_row, ',', [&](const std::string_view token) {
+      common::visit_tokens(data_node_text.get(), '\n', [&](const std::string_view csv_row) {
+        return common::visit_tokens(csv_row, ',', [&](const std::string_view token) {
           TileID tile_id {};
 
           const auto parse_tile_id_result =
@@ -402,7 +403,8 @@ auto _read_base64_tile_data(const IRuntime& runtime,
     raw_tile_matrix = std::move(decoded_tile_data);
   }
 
-  auto tile_matrix = parse_raw_tile_matrix(raw_tile_matrix, extent, TileIdFormat::kTiled);
+  auto tile_matrix =
+      common::deserialize_tile_matrix(raw_tile_matrix, extent, common::TileIdFormat::kTiled);
   if (!tile_matrix) {
     return std::unexpected {ErrorCode::kParseError};
   }

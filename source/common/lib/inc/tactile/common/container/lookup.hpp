@@ -6,7 +6,7 @@
 #include <stdexcept>  // out_of_range
 #include <utility>    // move
 
-namespace tactile {
+namespace tactile::common {
 
 /**
  * Heuristic concept that indicates whether a type is "map-like".
@@ -139,4 +139,4 @@ template <MapLikeType T>
   return map.find(key) != map.end();
 }
 
-}  // namespace tactile
+}  // namespace tactile::common

@@ -5,8 +5,8 @@
 #include <type_traits>  // is_unsigned_v
 #include <utility>      // move
 
-#include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/common/serdes/tiles.hpp"
 
 namespace tactile::test {
 
@@ -161,7 +161,14 @@ LayerViewMock::LayerViewMock(ir::Layer layer,
   ON_CALL(*this, object_count).WillByDefault(Return(mLayer.objects.size()));
 
   ON_CALL(*this, write_tile_bytes).WillByDefault([this](ByteStream& byte_stream) {
-    byte_stream = to_byte_stream(mLayer.tiles);
+    const auto required_space =
+        mLayer.tiles.size() * mLayer.tiles.at(0).size() * sizeof(TileID);
+
+    byte_stream.clear();
+    byte_stream.resize(required_space);
+
+    const auto length = common::serialize_tile_matrix(mLayer.tiles, byte_stream).value();
+    byte_stream.resize(length);
   });
 
   ON_CALL(*this, get_extent).WillByDefault(Return(mLayer.extent));

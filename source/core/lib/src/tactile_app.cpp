@@ -7,10 +7,10 @@
 
 #include <imgui.h>
 
-#include "tactile/base/debug/validation.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/base/runtime/runtime.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/event/events.hpp"
 #include "tactile/core/logging.hpp"
 #include "tactile/core/ui/common/style.hpp"
@@ -19,9 +19,9 @@
 namespace tactile::core {
 
 TactileApp::TactileApp(IRuntime* runtime)
-  : m_runtime {require_not_null(runtime, "null runtime")},
-    m_window {require_not_null(runtime->get_window(), "null window")},
-    m_renderer {require_not_null(runtime->get_renderer(), "null renderer")},
+  : m_runtime {common::require_not_null(runtime, "null runtime")},
+    m_window {common::require_not_null(runtime->get_window(), "null window")},
+    m_renderer {common::require_not_null(runtime->get_renderer(), "null renderer")},
     m_settings {},
     m_language {},
     m_model {},

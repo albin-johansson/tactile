@@ -13,7 +13,6 @@
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_vulkan.h>
 
-#include "tactile/base/io/file_io.hpp"
 #include "tactile/base/render/window.hpp"
 #include "tactile/vulkan/logging.hpp"
 #include "tactile/vulkan/vulkan_buffer.hpp"

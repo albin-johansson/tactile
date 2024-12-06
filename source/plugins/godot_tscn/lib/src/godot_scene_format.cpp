@@ -5,7 +5,6 @@
 #include <exception>  // exception
 
 #include "tactile/base/document/map_view.hpp"
-#include "tactile/base/io/int_parser.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/godot_tscn/gd3_document_converter.hpp"
 #include "tactile/godot_tscn/gd3_exporter.hpp"

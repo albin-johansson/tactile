@@ -5,7 +5,7 @@
 #include <utility>  // move, to_underlying
 #include <vector>   // vector
 
-#include "tactile/base/container/lookup.hpp"
+#include "tactile/common/container/lookup.hpp"
 #include "tactile/core/debug/performance.hpp"
 #include "tactile/core/io/ini.hpp"
 #include "tactile/core/logging.hpp"
@@ -177,15 +177,15 @@ auto _get_hint_names() -> std::unordered_map<std::string_view, HintLabel>
   };
 }
 
-template <MapLikeType T>
-void _parse_section(const StringMap<IniSection>& ini,
+template <common::MapLikeType T>
+void _parse_section(const common::StringMap<IniSection>& ini,
                     const std::string_view section_name,
                     const T& name_mapping,
                     std::vector<std::string>& strings)
 {
-  if (const auto* section = find_in(ini, section_name)) {
+  if (const auto* section = common::find_in(ini, section_name)) {
     for (const auto& [key, value] : *section) {
-      if (const auto* string_id = find_in(name_mapping, key)) {
+      if (const auto* string_id = common::find_in(name_mapping, key)) {
         strings[std::to_underlying(*string_id)] = value;
       }
     }

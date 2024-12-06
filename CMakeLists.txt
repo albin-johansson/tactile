@@ -81,6 +81,7 @@ endif ()
 
 add_subdirectory("source/proto")
 add_subdirectory("source/base")
+add_subdirectory("source/common")
 
 if (TACTILE_BUILD_TESTS)
   add_subdirectory("source/test_util")

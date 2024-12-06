@@ -30,4 +30,4 @@ enum class LogLevel : std::uint8_t
   kError,
 };
 
-}  // namespace tactile
+}  // namespace tactile::log

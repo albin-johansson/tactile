@@ -22,6 +22,7 @@ tactile_prepare_target(tactile-test-util)
 target_link_libraries(tactile-test-util
                       PUBLIC
                       tactile::base
+                      tactile::common
                       GTest::gtest
                       GTest::gmock
                       )

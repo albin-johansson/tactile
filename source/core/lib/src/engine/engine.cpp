@@ -7,14 +7,14 @@
 
 #include "tactile/base/engine/engine_app.hpp"
 #include "tactile/base/render/renderer.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/logging.hpp"
 
 namespace tactile::core {
 
 Engine::Engine(IEngineApp* app, IRenderer* renderer)
-  : mApp {require_not_null(app, "null app")},
-    mRenderer {require_not_null(renderer, "null renderer")}
+  : mApp {common::require_not_null(app, "null app")},
+    mRenderer {common::require_not_null(renderer, "null renderer")}
 {}
 
 void Engine::run()

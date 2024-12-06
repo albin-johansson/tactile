@@ -6,16 +6,16 @@
 
 #include <imgui.h>
 
-#include "tactile/base/container/buffer.hpp"
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/format.hpp"
+#include "tactile/common/container/buffer.hpp"
+#include "tactile/common/io/format.hpp"
 
 namespace tactile::core {
 
 template <std::size_t BufferSize, typename... Args>
-void push_formatted_text(const FormatString<Args...> fmt, const Args&... args)
+void push_formatted_text(const common::FormatString<Args...> fmt, const Args&... args)
 {
-  Buffer<char, BufferSize> buffer;  // NOLINT: uninitialized
+  common::Buffer<char, BufferSize> buffer;  // NOLINT: uninitialized
 
   format_to_buffer(buffer, fmt, args...);
   buffer.set_terminator('\0');

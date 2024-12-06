@@ -1,15 +1,15 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/base/container/string.hpp"
+#include "tactile/common/container/string_utils.hpp"
 
 #include <vector>  // vector
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::common {
 namespace {
 
-// tactile::visit_tokens
+// tactile::common::visit_tokens
 TEST(String, VisitTokensEmpty)
 {
   std::vector<std::string> tokens {};
@@ -21,7 +21,7 @@ TEST(String, VisitTokensEmpty)
   EXPECT_EQ(tokens.size(), 0);
 }
 
-// tactile::visit_tokens
+// tactile::common::visit_tokens
 TEST(String, VisitTokensLetters)
 {
   std::vector<std::string> tokens {};
@@ -37,7 +37,7 @@ TEST(String, VisitTokensLetters)
   EXPECT_EQ(tokens.at(3), "d");
 }
 
-// tactile::visit_tokens
+// tactile::common::visit_tokens
 TEST(String, VisitTokensNumbers)
 {
   std::vector<std::string> tokens {};
@@ -53,7 +53,7 @@ TEST(String, VisitTokensNumbers)
   EXPECT_EQ(tokens.at(3), "4000");
 }
 
-// tactile::visit_tokens
+// tactile::common::visit_tokens
 TEST(String, VisitTokensWithLeadingSeparator)
 {
   std::vector<std::string> tokens {};
@@ -67,7 +67,7 @@ TEST(String, VisitTokensWithLeadingSeparator)
   EXPECT_EQ(tokens.at(1), "woah");
 }
 
-// tactile::visit_tokens
+// tactile::common::visit_tokens
 TEST(String, VisitTokensWithTrailingSeparator)
 {
   std::vector<std::string> tokens {};
@@ -80,7 +80,7 @@ TEST(String, VisitTokensWithTrailingSeparator)
   EXPECT_EQ(tokens.at(0), "foobar");
 }
 
-// tactile::visit_tokens
+// tactile::common::visit_tokens
 TEST(String, VisitTokensWithEmptyTokens)
 {
   std::vector<std::string> tokens {};
@@ -98,7 +98,7 @@ TEST(String, VisitTokensWithEmptyTokens)
   EXPECT_EQ(tokens.at(5), "c");
 }
 
-// tactile::trim_string
+// tactile::common::trim_string
 TEST(String, TrimString)
 {
   EXPECT_EQ(trim_string(" "), " ");
@@ -113,4 +113,4 @@ TEST(String, TrimString)
 }
 
 }  // namespace
-}  // namespace tactile
+}  // namespace tactile::common

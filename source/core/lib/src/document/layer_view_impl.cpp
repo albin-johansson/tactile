@@ -4,8 +4,8 @@
 
 #include <stdexcept>  // invalid_argument
 
-#include "tactile/base/debug/validation.hpp"
 #include "tactile/base/document/document_visitor.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/document/object_view_impl.hpp"
@@ -25,7 +25,7 @@ namespace tactile::core {
 LayerViewImpl::LayerViewImpl(const MapDocument* document,
                              const ILayerView* parent_layer,
                              const EntityID layer_id)
-  : mDocument {require_not_null(document, "null document")},
+  : mDocument {common::require_not_null(document, "null document")},
     mParentLayer {parent_layer},
     mLayerId {layer_id},
     mMeta {document, mLayerId}

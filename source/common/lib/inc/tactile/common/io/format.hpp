@@ -12,7 +12,7 @@
 #include <version>      // __cpp_lib_format
 
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/container/buffer.hpp"
+#include "tactile/common/container/buffer.hpp"
 
 // Despite Clang having implemented most of std::format, they don't (yet)
 // provide the associated version macros. Making it difficult to write portable
@@ -27,7 +27,7 @@
   #endif
 #endif
 
-namespace tactile {
+namespace tactile::common {
 
 #if TACTILE_HAS_STD_FORMAT_STRING
 
@@ -99,4 +99,4 @@ void format_to_buffer(Buffer<char, N>& buffer,
 #endif
 }
 
-}  // namespace tactile
+}  // namespace tactile::common

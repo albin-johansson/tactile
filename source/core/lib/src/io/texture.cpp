@@ -18,8 +18,8 @@ auto load_texture(IRenderer& renderer, const std::filesystem::path& path)
   const auto texture_id = renderer.load_texture(path_string.c_str());
   if (!texture_id.has_value()) {
     TACTILE_CORE_ERROR("Could not load texture '{}': {}",
-                      path_string,
-                      to_string(texture_id.error()));
+                       path_string,
+                       to_string(texture_id.error()));
     return std::unexpected {texture_id.error()};
   }
 

@@ -4,11 +4,11 @@
 
 #include <cstdint>        // int32_t
 #include <unordered_map>  // unordered_map
-#include <vector>  // vector
+#include <vector>         // vector
 
 #include "tactile/base/id.hpp"
-#include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/numeric/extent_2d.hpp"
+#include "tactile/base/numeric/vec.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/io/texture.hpp"
 

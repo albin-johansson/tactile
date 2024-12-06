@@ -96,7 +96,7 @@ void _emit_attribute(std::ostream& stream, const std::string_view name, const At
   }
 }
 
-void _emit_attributes(std::ostream& stream, const StringMap<Attribute>& attributes)
+void _emit_attributes(std::ostream& stream, const common::StringMap<Attribute>& attributes)
 {
   std::size_t index = 0;
   for (const auto& [name, value] : attributes) {
@@ -109,7 +109,8 @@ void _emit_attributes(std::ostream& stream, const StringMap<Attribute>& attribut
   }
 }
 
-void _emit_components(std::ostream& stream, const StringMap<StringMap<Attribute>>& components)
+void _emit_components(std::ostream& stream,
+                      const common::StringMap<common::StringMap<Attribute>>& components)
 {
   std::size_t component_index = 0;
   for (const auto& [comp_name, comp_attributes] : components) {

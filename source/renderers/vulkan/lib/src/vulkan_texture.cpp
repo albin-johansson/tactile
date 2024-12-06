@@ -6,7 +6,6 @@
 #include <imgui_impl_vulkan.h>
 #include <stb_image.h>
 
-#include "tactile/base/io/file_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/render/renderer_options.hpp"
 #include "tactile/base/util/scope_exit.hpp"

@@ -4,7 +4,7 @@
 
 #include <stdexcept>  // invalid_argument
 
-namespace tactile {
+namespace tactile::common {
 
 /**
  * Throws an exception if the provided pointer is null, returns it if not.
@@ -39,4 +39,4 @@ template <typename Pointer>
   return ptr;
 }
 
-}  // namespace tactile
+}  // namespace tactile::common

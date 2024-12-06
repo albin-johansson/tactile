@@ -5,10 +5,10 @@
 #include <limits>   // numeric_limits
 #include <utility>  // move
 
-#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/numeric/vec_format.hpp"
+#include "tactile/common/container/lookup.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/io/texture.hpp"
@@ -327,7 +327,7 @@ auto find_tileset(const Registry& registry, const TileID tile_id) -> EntityID
   TACTILE_ASSERT(registry.has<CTileCache>());
   const auto& tile_cache = registry.get<CTileCache>();
 
-  const auto* tileset_entity = find_in(tile_cache.tileset_mapping, tile_id);
+  const auto* tileset_entity = common::find_in(tile_cache.tileset_mapping, tile_id);
   if (tileset_entity != nullptr) {
     return *tileset_entity;
   }

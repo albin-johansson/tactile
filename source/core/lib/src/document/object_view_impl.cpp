@@ -4,7 +4,7 @@
 
 #include "tactile/base/document/document.hpp"
 #include "tactile/base/document/document_visitor.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/layer_types.hpp"
 
@@ -13,8 +13,8 @@ namespace tactile::core {
 ObjectViewImpl::ObjectViewImpl(const IDocument* document,
                                const ILayerView* parent_layer,
                                const EntityID object_id)
-  : mDocument {require_not_null(document, "null document")},
-    mParentLayer {require_not_null(parent_layer, "null layer view")},
+  : mDocument {common::require_not_null(document, "null document")},
+    mParentLayer {common::require_not_null(parent_layer, "null layer view")},
     mParentTile {nullptr},
     mObjectId {object_id},
     mMeta {document, object_id}
@@ -23,9 +23,9 @@ ObjectViewImpl::ObjectViewImpl(const IDocument* document,
 ObjectViewImpl::ObjectViewImpl(const IDocument* document,
                                const ITileView* parent_tile,
                                const EntityID object_id)
-  : mDocument {require_not_null(document, "null document")},
+  : mDocument {common::require_not_null(document, "null document")},
     mParentLayer {nullptr},
-    mParentTile {require_not_null(parent_tile, "null tile view")},
+    mParentTile {common::require_not_null(parent_tile, "null tile view")},
     mObjectId {object_id},
     mMeta {document, object_id}
 {}

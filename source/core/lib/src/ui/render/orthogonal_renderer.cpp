@@ -4,8 +4,8 @@
 
 #include <algorithm>  // min
 
-#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/meta/color.hpp"
+#include "tactile/common/container/lookup.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/io/texture.hpp"
@@ -61,7 +61,7 @@ void _render_tile_layer(const CanvasRenderer& canvas_renderer,
           return;
         }
 
-        const auto tileset_id = lookup_in(tile_cache.tileset_mapping, tile_id);
+        const auto tileset_id = common::lookup_in(tile_cache.tileset_mapping, tile_id);
 
         const auto& texture = registry.get<CTexture>(tileset_id);
         const auto& tileset = registry.get<CTileset>(tileset_id);

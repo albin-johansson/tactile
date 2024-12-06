@@ -1,15 +1,15 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/base/util/format.hpp"
+#include "tactile/common/io/format.hpp"
 
 #include <cstddef>  // size_t
 
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::common {
 namespace {
 
-// tactile::format_to_buffer
+// tactile::common::format_to_buffer
 TEST(Format, FormatOneCharToBuffer)
 {
   Buffer<char, 1> buffer;  // NOLINT
@@ -19,7 +19,7 @@ TEST(Format, FormatOneCharToBuffer)
   EXPECT_EQ(buffer.view()[0], '!');
 }
 
-// tactile::format_to_buffer
+// tactile::common::format_to_buffer
 TEST(Format, FormatToBuffer)
 {
   Buffer<char, 32> buffer;  // NOLINT
@@ -34,7 +34,7 @@ TEST(Format, FormatToBuffer)
   EXPECT_EQ(buffer.view()[5], 'r');
 }
 
-// tactile::format_to_buffer
+// tactile::common::format_to_buffer
 TEST(Format, FormatToBufferWhenFull)
 {
   Buffer<char, 32> buffer;  // NOLINT
@@ -53,7 +53,7 @@ TEST(Format, FormatToBufferWhenFull)
   EXPECT_EQ(buffer.view()[buffer.size() - 1], '?');
 }
 
-// tactile::format_to_buffer
+// tactile::common::format_to_buffer
 TEST(Format, FormatToBufferWithOverflow)
 {
   Buffer<char, 32> buffer;  // NOLINT
@@ -76,4 +76,4 @@ TEST(Format, FormatToBufferWithOverflow)
 }
 
 }  // namespace
-}  // namespace tactile
+}  // namespace tactile::common

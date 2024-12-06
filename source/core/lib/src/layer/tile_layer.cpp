@@ -5,7 +5,6 @@
 #include <stdexcept>  // runtime_error
 #include <utility>    // move
 
-#include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/platform/bits.hpp"
 #include "tactile/base/util/tile_matrix.hpp"

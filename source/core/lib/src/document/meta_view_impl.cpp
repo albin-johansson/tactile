@@ -5,16 +5,16 @@
 #include <iterator>   // next
 #include <stdexcept>  // out_of_range
 
-#include "tactile/base/debug/validation.hpp"
 #include "tactile/base/document/document.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/meta/meta.hpp"
 
 namespace tactile::core {
 
 MetaViewImpl::MetaViewImpl(const IDocument* document, const EntityID meta_id)
-  : mDocument {require_not_null(document, "null document")},
+  : mDocument {common::require_not_null(document, "null document")},
     mMetaId {meta_id}
 {}
 

@@ -2,7 +2,7 @@
 
 #include "tactile/core/cmd/layer/duplicate_layer_command.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -14,7 +14,7 @@
 namespace tactile::core {
 
 DuplicateLayerCommand::DuplicateLayerCommand(MapDocument* document, const EntityID layer_id)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_layer_id {layer_id},
     m_duplicate_layer_id {kInvalidEntity},
     m_layer_was_added {false}
@@ -23,8 +23,8 @@ DuplicateLayerCommand::DuplicateLayerCommand(MapDocument* document, const Entity
 void DuplicateLayerCommand::undo()
 {
   TACTILE_CORE_TRACE("Removing layer {} (duplicated from {})",
-                    entity_to_string(m_duplicate_layer_id),
-                    entity_to_string(m_layer_id));
+                     entity_to_string(m_duplicate_layer_id),
+                     entity_to_string(m_layer_id));
 
   auto& registry = m_document->get_registry();
   const auto map_id = registry.get<CDocumentInfo>().root;

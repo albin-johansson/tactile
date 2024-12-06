@@ -6,7 +6,7 @@
 
 #include "tactile/base/document/document_visitor.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/document/tile_view_impl.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -17,7 +17,7 @@
 namespace tactile::core {
 
 TilesetViewImpl::TilesetViewImpl(const MapDocument* document, const EntityID tileset_id)
-  : mDocument {require_not_null(document, "null document")},
+  : mDocument {common::require_not_null(document, "null document")},
     mTilesetId {tileset_id},
     mMeta {mDocument, mTilesetId}
 {}

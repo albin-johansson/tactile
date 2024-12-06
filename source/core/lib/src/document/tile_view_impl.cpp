@@ -4,7 +4,7 @@
 
 #include "tactile/base/document/document.hpp"
 #include "tactile/base/document/document_visitor.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/tile/animation_types.hpp"
 #include "tactile/core/tile/tile_types.hpp"
@@ -14,8 +14,8 @@ namespace tactile::core {
 TileViewImpl::TileViewImpl(const IDocument* document,
                            const ITilesetView* tileset_view,
                            const EntityID tile_id)
-  : mDocument {require_not_null(document, "null document")},
-    mTilesetView {require_not_null(tileset_view, "null tileset view")},
+  : mDocument {common::require_not_null(document, "null document")},
+    mTilesetView {common::require_not_null(tileset_view, "null tileset view")},
     mTileId {tile_id},
     mMeta {document, tile_id}
 {}

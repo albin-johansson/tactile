@@ -16,10 +16,10 @@
 #include "tactile/base/document/tile_view.hpp"
 #include "tactile/base/document/tileset_view.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
-#include "tactile/base/io/tile_io.hpp"
 #include "tactile/base/numeric/literals.hpp"
 #include "tactile/base/numeric/saturate_cast.hpp"
 #include "tactile/base/platform/filesystem.hpp"
+#include "tactile/common/serdes/tiles.hpp"
 #include "tactile/tiled_tmj/logging.hpp"
 
 namespace tactile::tiled_tmj {

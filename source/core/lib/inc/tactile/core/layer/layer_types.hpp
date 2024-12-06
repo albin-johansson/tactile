@@ -14,6 +14,7 @@
 #include "tactile/base/numeric/extent_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
 #include "tactile/base/util/tile_matrix.hpp"
+#include "tactile/core/entity/entity_id.hpp"
 
 namespace tactile::core {
 

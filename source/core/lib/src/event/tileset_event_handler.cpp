@@ -5,8 +5,8 @@
 #include "tactile/base/numeric/vec_format.hpp"
 #include "tactile/base/render/renderer.hpp"
 #include "tactile/base/render/texture.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/cmd/tile/add_tileset_command.hpp"
-#include "tactile/base/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
 #include "tactile/core/logging.hpp"
@@ -18,9 +18,9 @@ namespace tactile::core {
 TilesetEventHandler::TilesetEventHandler(Model* model,
                                          IRenderer* renderer,
                                          ui::WidgetManager* widget_manager)
-  : mModel {require_not_null(model, "null model")},
-    mRenderer {require_not_null(renderer, "null renderer")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+  : mModel {common::require_not_null(model, "null model")},
+    mRenderer {common::require_not_null(renderer, "null renderer")},
+    mWidgetManager {common::require_not_null(widget_manager, "null widget manager")}
 {}
 
 void TilesetEventHandler::install(EventDispatcher& dispatcher)
@@ -52,8 +52,8 @@ void TilesetEventHandler::on_show_new_tileset_dialog(const ShowNewTilesetDialogE
 void TilesetEventHandler::on_add_tileset(const AddTilesetEvent& event)
 {
   TACTILE_CORE_TRACE("AddTilesetEvent(path: {}, tile size: {})",
-                    event.texture_path.string(),
-                    event.tile_size);
+                     event.texture_path.string(),
+                     event.tile_size);
 
   const auto texture_id = mRenderer->load_texture(event.texture_path);
   if (!texture_id.has_value()) {

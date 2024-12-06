@@ -4,6 +4,7 @@
 
 #include <magic_enum.hpp>
 
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/cmd/layer/create_layer_command.hpp"
 #include "tactile/core/cmd/layer/duplicate_layer_command.hpp"
 #include "tactile/core/cmd/layer/move_layer_down_command.hpp"
@@ -11,7 +12,6 @@
 #include "tactile/core/cmd/layer/remove_layer_command.hpp"
 #include "tactile/core/cmd/layer/set_layer_opacity_command.hpp"
 #include "tactile/core/cmd/layer/set_layer_visibility_command.hpp"
-#include "tactile/base/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
 #include "tactile/core/logging.hpp"
@@ -20,7 +20,7 @@
 namespace tactile::core {
 
 LayerEventHandler::LayerEventHandler(Model* model)
-  : mModel {require_not_null(model, "null model")}
+  : mModel {common::require_not_null(model, "null model")}
 {}
 
 void LayerEventHandler::install(EventDispatcher& dispatcher)

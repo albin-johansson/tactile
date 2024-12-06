@@ -8,8 +8,8 @@
 #include <utility>    // move
 #include <vector>     // vector
 
-#include "tactile/base/container/buffer.hpp"
-#include "tactile/base/util/format.hpp"
+#include "tactile/common/container/buffer.hpp"
+#include "tactile/common/io/format.hpp"
 #include "tactile/log/log_sink.hpp"
 
 namespace tactile::log {
@@ -36,8 +36,8 @@ struct Logger::Data final
   LogLevel flush_level {LogLevel::kError};
   std::vector<std::unique_ptr<ILogSink>> sinks {};
   std::optional<clock_type::time_point> ref_instant {};
-  Buffer<char, 1024> text_buffer {};
-  Buffer<char, 20> prefix_buffer {};
+  common::Buffer<char, 1024> text_buffer {};
+  common::Buffer<char, 20> prefix_buffer {};
 };
 
 Logger::Logger()

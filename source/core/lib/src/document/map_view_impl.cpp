@@ -3,7 +3,7 @@
 #include "tactile/core/document/map_view_impl.hpp"
 
 #include "tactile/base/document/document_visitor.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/layer_view_impl.hpp"
 #include "tactile/core/document/map_document.hpp"
@@ -16,7 +16,7 @@
 namespace tactile::core {
 
 MapViewImpl::MapViewImpl(const MapDocument* document)
-  : mDocument {require_not_null(document, "null document")},
+  : mDocument {common::require_not_null(document, "null document")},
     mMeta {mDocument, mDocument->get_registry().get<CDocumentInfo>().root}
 {}
 

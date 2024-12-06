@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/base/container/lookup.hpp"
+#include "tactile/common/container/lookup.hpp"
 
 #include <functional>     // less
 #include <map>            // map
@@ -10,14 +10,14 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/base/container/string_map.hpp"
+#include "tactile/common/container/string_map.hpp"
 
-namespace tactile {
+namespace tactile::common {
 namespace {
 
-// tactile::exists_in
-// tactile::find_in
-// tactile::lookup_in
+// tactile::common::exists_in
+// tactile::common::find_in
+// tactile::common::lookup_in
 TEST(Lookup, EmptyMap)
 {
   const StringMap<int> hash_map {};
@@ -33,7 +33,7 @@ TEST(Lookup, EmptyMap)
   EXPECT_THROW((void) lookup_in(tree_map, "foo"), std::out_of_range);
 }
 
-// tactile::find_in
+// tactile::common::find_in
 TEST(Lookup, FindIn)
 {
   std::map<int, std::string> map {};
@@ -50,7 +50,7 @@ TEST(Lookup, FindIn)
   EXPECT_EQ(find_in(const_map, 2), nullptr);
 }
 
-// tactile::lookup_in
+// tactile::common::lookup_in
 TEST(Lookup, LookupIn)
 {
   StringMap<std::string> map {};
@@ -70,7 +70,7 @@ TEST(Lookup, LookupIn)
   EXPECT_THROW((void) lookup_in(const_map, "a"), std::out_of_range);
 }
 
-// tactile::erase_from
+// tactile::common::erase_from
 TEST(Lookup, EraseFrom)
 {
   StringMap<int> map {};
@@ -90,7 +90,7 @@ TEST(Lookup, EraseFrom)
   EXPECT_EQ(map.size(), 0);
 }
 
-// tactile::take_from
+// tactile::common::take_from
 TEST(Lookup, TakeFrom)
 {
   StringMap<int> map {};
@@ -106,7 +106,7 @@ TEST(Lookup, TakeFrom)
   EXPECT_EQ(map.size(), 0);
 }
 
-// tactile::exists_in
+// tactile::common::exists_in
 TEST(Lookup, ExistsIn)
 {
   StringMap<int> map {};
@@ -127,4 +127,4 @@ TEST(Lookup, ExistsIn)
 }
 
 }  // namespace
-}  // namespace tactile
+}  // namespace tactile::common

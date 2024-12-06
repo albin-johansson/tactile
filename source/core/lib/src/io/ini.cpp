@@ -8,7 +8,7 @@
 #include <string>     // getline
 #include <utility>    // move
 
-#include "tactile/base/container/string.hpp"
+#include "tactile/common/container/string_utils.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/logging.hpp"
 
@@ -49,13 +49,13 @@ auto _parse_key_value_pair(const std::string_view current_line,
     return std::unexpected {ErrorCode::kParseError};
   }
 
-  auto key = trim_string(current_line.substr(0, eq_pos));
+  auto key = common::trim_string(current_line.substr(0, eq_pos));
   if (key.empty()) {
     TACTILE_CORE_ERROR("Detected empty key (line {})", line_number);
     return std::unexpected {ErrorCode::kParseError};
   }
 
-  auto value = trim_string(current_line.substr(eq_pos + 1));
+  auto value = common::trim_string(current_line.substr(eq_pos + 1));
 
   const auto value_is_just_whitespace = std::ranges::all_of(value, [](const char ch) {
     return std::isspace(static_cast<unsigned char>(ch));

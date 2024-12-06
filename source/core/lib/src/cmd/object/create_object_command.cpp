@@ -2,7 +2,7 @@
 
 #include "tactile/core/cmd/object/create_object_command.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -18,7 +18,7 @@ CreateObjectCommand::CreateObjectCommand(MapDocument* document,
                                          const ObjectType type,
                                          const Float2& position,
                                          const Float2& size)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_layer_id {layer_id},
     m_type {type},
     m_position {position},

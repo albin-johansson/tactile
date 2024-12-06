@@ -2,7 +2,7 @@
 
 #include "tactile/core/event/edit_event_handler.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
 #include "tactile/core/logging.hpp"
@@ -11,7 +11,7 @@
 namespace tactile::core {
 
 EditEventHandler::EditEventHandler(Model* model)
-  : mModel {require_not_null(model, "null model")}
+  : mModel {common::require_not_null(model, "null model")}
 {}
 
 void EditEventHandler::install(EventDispatcher& dispatcher)

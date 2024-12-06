@@ -10,7 +10,7 @@
 
 #include "tactile/base/util/concepts.hpp"
 
-namespace tactile {
+namespace tactile::common {
 
 /**
  * Removes leading and trailing spaces from a given string.
@@ -94,4 +94,4 @@ constexpr auto visit_tokens(const std::string_view str,
   return true;
 }
 
-}  // namespace tactile
+}  // namespace tactile::common

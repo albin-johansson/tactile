@@ -2,7 +2,7 @@
 
 #include "tactile/core/cmd/object/remove_object_command.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/layer_types.hpp"
@@ -14,7 +14,7 @@ namespace tactile::core {
 RemoveObjectCommand::RemoveObjectCommand(MapDocument* document,
                                          const EntityID layer_id,
                                          const EntityID object_id)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_layer_id {layer_id},
     m_object_id {object_id},
     m_object_was_removed {false}

@@ -18,6 +18,7 @@
 #include "tactile/base/document/tileset_view.hpp"
 #include "tactile/base/io/compress/compression_format.hpp"
 #include "tactile/base/numeric/literals.hpp"
+#include "tactile/common/meta/colors.hpp"
 #include "tactile/tiled_tmx/logging.hpp"
 #include "tactile/tiled_tmx/tmx_common.hpp"
 
@@ -99,7 +100,7 @@ void _append_property_attr(pugi::xml_node node, const Attribute& property)
       break;
     }
     case AttributeType::kColor: {
-      const auto argb_str = to_string(property.as_color(), ColorFormat::kArgb);
+      const auto argb_str = common::to_string(property.as_color(), common::ColorFormat::kArgb);
       value_attribute.set_value(argb_str.c_str());
       break;
     }

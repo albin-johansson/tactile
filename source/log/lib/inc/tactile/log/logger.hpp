@@ -8,7 +8,7 @@
 #include <string_view>  // string_view
 
 #include "tactile/base/prelude.hpp"
-#include "tactile/base/util/format.hpp"
+#include "tactile/common/io/format.hpp"
 #include "tactile/log/log_level.hpp"
 #include "tactile/log/log_sink.hpp"
 
@@ -39,7 +39,9 @@ class Logger final
    * \param args  The format arguments.
    */
   template <typename... Args>
-  void log(const LogLevel level, const FormatString<Args...> fmt, const Args&... args) noexcept
+  void log(const LogLevel level,
+           const common::FormatString<Args...> fmt,
+           const Args&... args) noexcept
   {
 #if TACTILE_HAS_STD_FORMAT_STRING
     _log(level, fmt.get(), std::make_format_args(args...));

@@ -2,7 +2,7 @@
 
 #include "tactile/core/cmd/tile/remove_tileset_command.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -13,7 +13,7 @@
 namespace tactile::core {
 
 RemoveTilesetCommand::RemoveTilesetCommand(MapDocument* document, const EntityID tileset_id)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_tileset_id {tileset_id},
     m_tileset_was_removed {false}
 {}
@@ -28,7 +28,7 @@ RemoveTilesetCommand::~RemoveTilesetCommand() noexcept
   }
   catch (const std::exception& error) {
     TACTILE_CORE_ERROR("Unexpected exception in RemoveTilesetCommand destructor: {}",
-                      error.what());
+                       error.what());
   }
 }
 

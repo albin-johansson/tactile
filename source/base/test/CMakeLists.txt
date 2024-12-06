@@ -4,10 +4,6 @@ add_executable(tactile-base-test)
 
 target_sources(tactile-base-test
                PRIVATE
-               "src/container/lookup_test.cpp"
-               "src/container/string_test.cpp"
-               "src/io/int_parser_test.cpp"
-               "src/io/tile_io_test.cpp"
                "src/meta/attribute_test.cpp"
                "src/meta/attribute_type_test.cpp"
                "src/meta/color_test.cpp"
@@ -22,8 +18,6 @@ target_sources(tactile-base-test
                "src/numeric/vec_test.cpp"
                "src/platform/bits_test.cpp"
                "src/platform/filesystem_test.cpp"
-               "src/util/buffer_test.cpp"
-               "src/util/format_test.cpp"
                "src/util/scope_exit_test.cpp"
                "src/util/tile_matrix_test.cpp"
                "src/main.cpp"

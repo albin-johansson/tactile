@@ -2,7 +2,7 @@
 
 #include "tactile/core/cmd/layer/create_layer_command.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -14,7 +14,7 @@
 namespace tactile::core {
 
 CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType type)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_type {type},
     m_parent_layer_id {kInvalidEntity},
     m_layer_id {kInvalidEntity},

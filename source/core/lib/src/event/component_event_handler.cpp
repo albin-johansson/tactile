@@ -2,7 +2,7 @@
 
 #include "tactile/core/event/component_event_handler.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
 #include "tactile/core/logging.hpp"
@@ -12,8 +12,8 @@
 namespace tactile::core {
 
 ComponentEventHandler::ComponentEventHandler(Model* model, ui::WidgetManager* widget_manager)
-  : mModel {require_not_null(model, "null model")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")}
+  : mModel {common::require_not_null(model, "null model")},
+    mWidgetManager {common::require_not_null(widget_manager, "null widget manager")}
 {}
 
 void ComponentEventHandler::install(EventDispatcher& dispatcher)

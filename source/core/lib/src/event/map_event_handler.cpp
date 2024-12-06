@@ -9,7 +9,7 @@
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/base/numeric/vec_format.hpp"
 #include "tactile/base/runtime/runtime.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/map_view_impl.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
@@ -23,9 +23,9 @@ namespace tactile::core {
 MapEventHandler::MapEventHandler(Model* model,
                                  ui::WidgetManager* widget_manager,
                                  IRuntime* runtime)
-  : mModel {require_not_null(model, "null model")},
-    mWidgetManager {require_not_null(widget_manager, "null widget manager")},
-    mRuntime {require_not_null(runtime, "null runtime")}
+  : mModel {common::require_not_null(model, "null model")},
+    mWidgetManager {common::require_not_null(widget_manager, "null widget manager")},
+    mRuntime {common::require_not_null(runtime, "null runtime")}
 {}
 
 void MapEventHandler::install(EventDispatcher& dispatcher)
@@ -65,7 +65,7 @@ void MapEventHandler::on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
   const auto format_id = _guess_save_format(*map_path);
   if (!format_id.has_value()) {
     TACTILE_CORE_ERROR("Unknown save format for extension '{}'",
-                      map_path->extension().string());
+                       map_path->extension().string());
     return;
   }
 
@@ -109,9 +109,9 @@ void MapEventHandler::on_show_godot_export_dialog(const ShowGodotExportDialogEve
 void MapEventHandler::on_create_map(const CreateMapEvent& event)
 {
   TACTILE_CORE_TRACE("CreateMapEvent(orientation: {}, size: {}, tile_size: {})",
-                    magic_enum::enum_name(event.spec.orientation),
-                    event.spec.extent,
-                    event.spec.tile_size);
+                     magic_enum::enum_name(event.spec.orientation),
+                     event.spec.extent,
+                     event.spec.tile_size);
 
   auto& document_manager = mModel->get_document_manager();
   const auto document_uuid = document_manager.create_and_open_map(event.spec);

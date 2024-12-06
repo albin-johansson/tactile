@@ -5,10 +5,10 @@
 #include <string>         // string
 #include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/io/save/ir.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/common/container/string_map.hpp"
 #include "tactile/core/entity/entity.hpp"
 #include "tactile/core/util/uuid.hpp"
 
@@ -23,7 +23,7 @@ class Registry;
  * Attribute bundles are known as "components" in the UI, we don't use that
  * terminology in code to avoid confusion with ECS components.
  */
-using AttributeBundle = StringMap<Attribute>;
+using AttributeBundle = common::StringMap<Attribute>;
 
 /**
  * A component that provides common metadata.
@@ -34,7 +34,7 @@ struct CMeta final
   std::string name;
 
   /** The attached properties. */
-  StringMap<Attribute> properties;
+  common::StringMap<Attribute> properties;
 
   /** The attached attribute bundles. */
   std::unordered_map<UUID, AttributeBundle> components;

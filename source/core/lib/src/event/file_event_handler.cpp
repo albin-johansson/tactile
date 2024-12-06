@@ -4,7 +4,7 @@
 
 #include "tactile/base/io/save/save_format.hpp"
 #include "tactile/base/runtime/runtime.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/document/map_view_impl.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"
@@ -14,8 +14,8 @@
 namespace tactile::core {
 
 FileEventHandler::FileEventHandler(Model* model, IRuntime* runtime)
-  : mModel {require_not_null(model, "null model")},
-    mRuntime {require_not_null(runtime, "null runtime")}
+  : mModel {common::require_not_null(model, "null model")},
+    mRuntime {common::require_not_null(runtime, "null runtime")}
 {}
 
 void FileEventHandler::install(EventDispatcher& dispatcher)

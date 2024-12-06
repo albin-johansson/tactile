@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 
-#include "tactile/base/container/lookup.hpp"
+#include "tactile/common/container/lookup.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/event/events.hpp"

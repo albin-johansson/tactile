@@ -4,8 +4,8 @@
 
 #include <unordered_map>  // unordered_map
 
-#include "tactile/base/container/lookup.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/container/lookup.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/ui/imgui_compat.hpp"
 
 namespace tactile::core::ui {
@@ -29,7 +29,7 @@ inline std::unordered_map<const char*, WindowData> gWindowData {};
 }  // namespace
 
 Window::Window(const char* name, const ImGuiWindowFlags flags, bool* is_open)
-  : mName {require_not_null(name, "null name")},
+  : mName {common::require_not_null(name, "null name")},
     mIsOpen {ImGui::Begin(name, is_open, flags)},
     mPos {ImGui::GetWindowPos()},
     mSize {ImGui::GetWindowSize()}
@@ -51,13 +51,13 @@ auto Window::has_mouse() const -> bool
 
 auto Window::did_mouse_enter() const -> bool
 {
-  const auto& window_data = lookup_in(gWindowData, mName);
+  const auto& window_data = common::lookup_in(gWindowData, mName);
   return window_data.has_mouse_now && !window_data.had_mouse_then;
 }
 
 auto Window::did_mouse_exit() const -> bool
 {
-  const auto& window_data = lookup_in(gWindowData, mName);
+  const auto& window_data = common::lookup_in(gWindowData, mName);
   return !window_data.has_mouse_now && window_data.had_mouse_then;
 }
 

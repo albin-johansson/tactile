@@ -2,14 +2,14 @@
 
 #include "tactile/core/model/model.hpp"
 
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/model/settings.hpp"
 
 namespace tactile::core {
 
 Model::Model(Settings* settings, const ui::Language* language)
-  : mSettings {require_not_null(settings, "null settings")},
-    mLanguage {require_not_null(language, "null language")}
+  : mSettings {common::require_not_null(settings, "null settings")},
+    mLanguage {common::require_not_null(language, "null language")}
 {
   mDocuments.set_command_capacity(mSettings->command_capacity);
 }

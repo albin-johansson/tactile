@@ -4,8 +4,8 @@
 
 #include <utility>  // move
 
-#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/document/document.hpp"
+#include "tactile/common/container/lookup.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"
@@ -72,12 +72,12 @@ auto DocumentManager::create_and_open_map(IRenderer& renderer, const ir::Map& ir
 
 auto DocumentManager::get_document(const UUID& uuid) -> IDocument&
 {
-  return *lookup_in(mDocuments, uuid);
+  return *common::lookup_in(mDocuments, uuid);
 }
 
 auto DocumentManager::get_document(const UUID& uuid) const -> const IDocument&
 {
-  return *lookup_in(mDocuments, uuid);
+  return *common::lookup_in(mDocuments, uuid);
 }
 
 auto DocumentManager::get_current_document() -> IDocument*
@@ -120,12 +120,12 @@ auto DocumentManager::command_capacity() const -> std::size_t
 
 auto DocumentManager::get_history(const UUID& uuid) -> CommandStack&
 {
-  return lookup_in(mHistories, uuid);
+  return common::lookup_in(mHistories, uuid);
 }
 
 auto DocumentManager::get_history(const UUID& uuid) const -> const CommandStack&
 {
-  return lookup_in(mHistories, uuid);
+  return common::lookup_in(mHistories, uuid);
 }
 
 auto DocumentManager::is_map_active() const -> bool

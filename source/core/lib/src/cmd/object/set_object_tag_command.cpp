@@ -5,7 +5,7 @@
 #include <utility>  // move, exchange
 
 #include "tactile/base/document/document.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/layer/layer_types.hpp"
 #include "tactile/core/logging.hpp"
@@ -15,7 +15,7 @@ namespace tactile::core {
 SetObjectTagCommand::SetObjectTagCommand(IDocument* document,
                                          const EntityID object_id,
                                          std::string tag)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_object_id {object_id},
     m_new_tag {std::move(tag)},
     m_old_tag {}
@@ -24,8 +24,8 @@ SetObjectTagCommand::SetObjectTagCommand(IDocument* document,
 void SetObjectTagCommand::undo()
 {
   TACTILE_CORE_TRACE("Reverting tag of object {} to {}",
-                    entity_to_string(m_object_id),
-                    m_old_tag);
+                     entity_to_string(m_object_id),
+                     m_old_tag);
 
   auto& registry = m_document->get_registry();
   auto& object = registry.get<CObject>(m_object_id);
@@ -37,8 +37,8 @@ void SetObjectTagCommand::undo()
 void SetObjectTagCommand::redo()
 {
   TACTILE_CORE_TRACE("Changing tag of object {} to {}",
-                    entity_to_string(m_object_id),
-                    m_new_tag);
+                     entity_to_string(m_object_id),
+                     m_new_tag);
 
   auto& registry = m_document->get_registry();
   auto& object = registry.get<CObject>(m_object_id);

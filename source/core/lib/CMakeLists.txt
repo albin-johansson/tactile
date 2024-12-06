@@ -250,6 +250,7 @@ target_compile_definitions(tactile-core
 target_link_libraries(tactile-core
                       PUBLIC
                       tactile::base
+                      tactile::common
                       tactile::log
                       EnTT::EnTT
                       imgui::imgui

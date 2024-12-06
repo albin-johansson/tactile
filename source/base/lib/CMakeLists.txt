@@ -5,12 +5,7 @@ add_library(tactile::base ALIAS tactile-base)
 
 target_sources(tactile-base
                INTERFACE FILE_SET "HEADERS" BASE_DIRS "inc" FILES
-               "inc/tactile/base/container/buffer.hpp"
-               "inc/tactile/base/container/lookup.hpp"
-               "inc/tactile/base/container/string.hpp"
-               "inc/tactile/base/container/string_map.hpp"
                "inc/tactile/base/debug/error_code.hpp"
-               "inc/tactile/base/debug/validation.hpp"
                "inc/tactile/base/document/component_view.hpp"
                "inc/tactile/base/document/document.hpp"
                "inc/tactile/base/document/document_visitor.hpp"
@@ -27,8 +22,6 @@ target_sources(tactile-base
                "inc/tactile/base/io/save/save_format.hpp"
                "inc/tactile/base/io/save/save_format_id.hpp"
                "inc/tactile/base/io/byte_stream.hpp"
-               "inc/tactile/base/io/file_io.hpp"
-               "inc/tactile/base/io/int_parser.hpp"
                "inc/tactile/base/io/tile_io.hpp"
                "inc/tactile/base/layer/layer_type.hpp"
                "inc/tactile/base/layer/object_type.hpp"
@@ -57,7 +50,6 @@ target_sources(tactile-base
                "inc/tactile/base/runtime/plugin.hpp"
                "inc/tactile/base/runtime/runtime.hpp"
                "inc/tactile/base/util/concepts.hpp"
-               "inc/tactile/base/util/format.hpp"
                "inc/tactile/base/util/hash.hpp"
                "inc/tactile/base/util/scope_exit.hpp"
                "inc/tactile/base/util/strong_type.hpp"

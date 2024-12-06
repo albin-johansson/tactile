@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "tactile/base/container/buffer.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/common/container/buffer.hpp"
 #include "tactile/core/entity/entity.hpp"
 
 namespace tactile::core {
@@ -36,7 +36,7 @@ class LayerDock final
               EventDispatcher& dispatcher);
 
  private:
-  using NameBuffer = Buffer<char, 128>;
+  using NameBuffer = common::Buffer<char, 128>;
 
   constexpr static const char* kNewLayerPopupId = "##NewLayerPopup";
 

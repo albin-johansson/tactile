@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/base/container/buffer.hpp"
+#include "tactile/common/container/buffer.hpp"
 
 #include <algorithm>  // fill_n
 #include <array>      // array
@@ -10,12 +10,12 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-namespace tactile {
+namespace tactile::common {
 namespace {
 
 using testing::Const;
 
-// tactile::Buffer::Buffer
+// tactile::common::Buffer::Buffer
 TEST(Buffer, DefaultConstructor)
 {
   Buffer buffer;  // NOLINT
@@ -37,7 +37,7 @@ TEST(Buffer, DefaultConstructor)
   EXPECT_EQ(std::distance(Const(buffer).begin(), Const(buffer).end()), 0);
 }
 
-// tactile::Buffer::clear
+// tactile::common::Buffer::clear
 TEST(Buffer, Clear)
 {
   Buffer<char> buffer;  // NOLINT
@@ -54,7 +54,7 @@ TEST(Buffer, Clear)
   EXPECT_EQ(buffer.size(), 0);
 }
 
-// tactile::Buffer::push_back
+// tactile::common::Buffer::push_back
 TEST(Buffer, PushBack)
 {
   Buffer<char> buffer;  // NOLINT
@@ -100,7 +100,7 @@ TEST(Buffer, PushBack)
   EXPECT_EQ(buffer.view()[5], 'r');
 }
 
-// tactile::Buffer::push_back
+// tactile::common::Buffer::push_back
 TEST(Buffer, PushBackWithOverflow)
 {
   Buffer<char> buffer;  // NOLINT
@@ -111,7 +111,7 @@ TEST(Buffer, PushBackWithOverflow)
   EXPECT_TRUE(buffer.full());
 }
 
-// tactile::Buffer::push_back
+// tactile::common::Buffer::push_back
 TEST(Buffer, BackInserterCompatibility)
 {
   Buffer<char> buffer;  // NOLINT
@@ -133,7 +133,7 @@ TEST(Buffer, BackInserterCompatibility)
   EXPECT_EQ(buffer.view().back(), '?');
 }
 
-// tactile::Buffer::append [iterator version]
+// tactile::common::Buffer::append [iterator version]
 TEST(Buffer, AppendIteratorRange)
 {
   const std::array<char, 4> values = {'!', '?', '+', '-'};
@@ -159,7 +159,7 @@ TEST(Buffer, AppendIteratorRange)
   EXPECT_EQ(buffer.view()[6], '+');
 }
 
-// tactile::Buffer::append [container version]
+// tactile::common::Buffer::append [container version]
 TEST(Buffer, AppendContainer)
 {
   const std::vector<std::uint32_t> values = {1, 2, 3, 4, 5};
@@ -192,7 +192,7 @@ TEST(Buffer, AppendContainer)
   EXPECT_EQ(buffer.view()[7], 3);
 }
 
-// tactile::Buffer::set_terminator
+// tactile::common::Buffer::set_terminator
 TEST(Buffer, SetTerminatorWithRemainingCapacity)
 {
   Buffer<char, 4> buffer {};
@@ -211,7 +211,7 @@ TEST(Buffer, SetTerminatorWithRemainingCapacity)
   EXPECT_EQ(buffer.view()[2], '\0');
 }
 
-// tactile::Buffer::set_terminator
+// tactile::common::Buffer::set_terminator
 TEST(Buffer, SetTerminatorWithFullBuffer)
 {
   Buffer<char, 4> buffer {};
@@ -233,7 +233,7 @@ TEST(Buffer, SetTerminatorWithFullBuffer)
   EXPECT_EQ(buffer.view()[3], '!');
 }
 
-// tactile::Buffer::data
+// tactile::common::Buffer::data
 TEST(Buffer, Data)
 {
   Buffer<char, 32> buffer;  // NOLINT
@@ -249,8 +249,8 @@ TEST(Buffer, Data)
   EXPECT_NE(Const(buffer).data(), nullptr);
 }
 
-// tactile::Buffer::begin
-// tactile::Buffer::end
+// tactile::common::Buffer::begin
+// tactile::common::Buffer::end
 TEST(Buffer, Iteration)
 {
   Buffer<std::uint16_t, 6> buffer;  // NOLINT
@@ -266,7 +266,7 @@ TEST(Buffer, Iteration)
   EXPECT_EQ(std::distance(Const(buffer).begin(), Const(buffer).end()), 3);
 }
 
-// tactile::Buffer::view
+// tactile::common::Buffer::view
 TEST(Buffer, ViewWithCharBuffer)
 {
   Buffer<char, 32> buffer;  // NOLINT
@@ -283,7 +283,7 @@ TEST(Buffer, ViewWithCharBuffer)
   EXPECT_EQ(buffer.view(), "foobar");
 }
 
-// tactile::Buffer::view
+// tactile::common::Buffer::view
 TEST(Buffer, ViewWithNonCharBuffer)
 {
   Buffer<std::uint8_t, 16> buffer;  // NOLINT
@@ -300,4 +300,4 @@ TEST(Buffer, ViewWithNonCharBuffer)
 }
 
 }  // namespace
-}  // namespace tactile
+}  // namespace tactile::common

@@ -10,11 +10,11 @@
 #include <variant>     // variant
 #include <vector>      // vector
 
-#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/meta/attribute.hpp"
 #include "tactile/base/numeric/index_2d.hpp"
 #include "tactile/base/numeric/vec.hpp"
+#include "tactile/common/container/string_map.hpp"
 
 namespace tactile::godot_tscn {
 
@@ -26,8 +26,8 @@ using SubResourceId = std::int32_t;
 
 struct Gd3Metadata final
 {
-  StringMap<Attribute> props;
-  StringMap<StringMap<Attribute>> comps;
+  common::StringMap<Attribute> props;
+  common::StringMap<common::StringMap<Attribute>> comps;
 };
 
 struct Gd3ExtResource final

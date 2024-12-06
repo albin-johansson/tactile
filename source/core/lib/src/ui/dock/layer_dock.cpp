@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-#include "tactile/base/util/format.hpp"
+#include "tactile/common/io/format.hpp"
 #include "tactile/core/document/document_info.hpp"
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/entity/registry.hpp"

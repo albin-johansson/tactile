@@ -4,9 +4,9 @@
 
 #include <utility>  // move
 
-#include "tactile/base/container/lookup.hpp"
 #include "tactile/base/document/document.hpp"
-#include "tactile/base/debug/validation.hpp"
+#include "tactile/common/container/lookup.hpp"
+#include "tactile/common/debug/validation.hpp"
 #include "tactile/core/entity/registry.hpp"
 #include "tactile/core/logging.hpp"
 #include "tactile/core/meta/meta.hpp"
@@ -17,7 +17,7 @@ CreatePropertyCommand::CreatePropertyCommand(IDocument* document,
                                              const EntityID context_id,
                                              std::string name,
                                              Attribute value)
-  : m_document {require_not_null(document, "null document")},
+  : m_document {common::require_not_null(document, "null document")},
     m_context_id {context_id},
     m_name {std::move(name)},
     m_value {std::move(value)}
@@ -26,8 +26,8 @@ CreatePropertyCommand::CreatePropertyCommand(IDocument* document,
 void CreatePropertyCommand::undo()
 {
   TACTILE_CORE_TRACE("Removing property '{}' from entity {}",
-                    m_name,
-                    entity_to_string(m_context_id));
+                     m_name,
+                     entity_to_string(m_context_id));
 
   auto& registry = m_document->get_registry();
   auto& meta = registry.get<CMeta>(m_context_id);
@@ -38,8 +38,8 @@ void CreatePropertyCommand::undo()
 void CreatePropertyCommand::redo()
 {
   TACTILE_CORE_TRACE("Adding property '{}' to entity {}",
-                    m_name,
-                    entity_to_string(m_context_id));
+                     m_name,
+                     entity_to_string(m_context_id));
 
   auto& registry = m_document->get_registry();
   auto& meta = registry.get<CMeta>(m_context_id);

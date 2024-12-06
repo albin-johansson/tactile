@@ -6,14 +6,14 @@
 #include <filesystem>  // path
 #include <string>      // string
 
-#include "tactile/base/container/string_map.hpp"
 #include "tactile/base/debug/error_code.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/common/container/string_map.hpp"
 
 namespace tactile::core {
 
-using IniSection = StringMap<std::string>;
-using IniData = StringMap<IniSection>;
+using IniSection = common::StringMap<std::string>;
+using IniData = common::StringMap<IniSection>;
 
 /**
  * Parses an INI file.
