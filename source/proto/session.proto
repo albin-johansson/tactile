@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package tactile.proto;
-
-message Session {
-  repeated string files = 1;
-}
