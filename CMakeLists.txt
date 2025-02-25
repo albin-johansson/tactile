@@ -56,7 +56,7 @@ project(tactile
 # Determine build type, e.g. "debug" or "release".
 string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)
 if (NOT (TACTILE_BUILD_TYPE MATCHES "debug|release|asan"))
-  message(FATAL_ERROR "Unsupported build type")
+  message(FATAL_ERROR "Unsupported build type: ${CMAKE_BUILD_TYPE}")
 else ()
   message(DEBUG "TACTILE_BUILD_TYPE: ${TACTILE_BUILD_TYPE}")
 endif ()
@@ -73,55 +73,8 @@ message(DEBUG "TACTILE_ASSET_DIR: ${TACTILE_ASSET_DIR}")
 
 install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
-include("${TACTILE_ROOT_DIR}/cmake/tactile.cmake")
+include(cmake/tactile.cmake)
 
-if (TACTILE_BUILD_TESTS)
-  find_package(GTest CONFIG REQUIRED)
-endif ()
-
-add_subdirectory("source/proto")
-add_subdirectory("source/base")
-add_subdirectory("source/common")
-
-if (TACTILE_BUILD_TESTS)
-  add_subdirectory("source/test_util")
-endif ()
-
-add_subdirectory("source/log")
-add_subdirectory("source/core")
-add_subdirectory("source/runtime")
-add_subdirectory("source/main")
-
-if (TACTILE_BUILD_YAML_FORMAT)
-  add_subdirectory("source/plugins/tactile_yaml")
-endif ()
-
-if (TACTILE_BUILD_TILED_TMJ_FORMAT)
-  add_subdirectory("source/plugins/tiled_tmj")
-endif ()
-
-if (TACTILE_BUILD_TILED_TMX_FORMAT)
-  add_subdirectory("source/plugins/tiled_tmx")
-endif ()
-
-if (TACTILE_BUILD_GODOT_TSCN_FORMAT)
-  add_subdirectory("source/plugins/godot_tscn")
-endif ()
-
-if (TACTILE_BUILD_ZLIB_COMPRESSION)
-  add_subdirectory("source/plugins/zlib")
-endif ()
-
-if (TACTILE_BUILD_ZSTD_COMPRESSION)
-  add_subdirectory("source/plugins/zstd")
-endif ()
-
-add_subdirectory("source/renderers/null")
-
-if (TACTILE_BUILD_OPENGL_RENDERER)
-  add_subdirectory("source/renderers/opengl")
-endif ()
-
-if (TACTILE_BUILD_VULKAN_RENDERER)
-  add_subdirectory("source/renderers/vulkan")
-endif ()
+add_subdirectory(source/base)
+add_subdirectory(source/core)
+add_subdirectory(source/editor)
