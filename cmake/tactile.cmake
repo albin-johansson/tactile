@@ -2,42 +2,42 @@
 if (MSVC)
   list(APPEND
        TACTILE_COMPILE_OPTIONS
-       /EHsc
-       /MP
-       /W4
-       /bigobj
-       /permissive-
-       /Zc:preprocessor
-       /Zc:__cplusplus
-       /wd4251
-       /wd4275
+       "/EHsc"
+       "/MP"
+       "/W4"
+       "/bigobj"
+       "/permissive-"
+       "/Zc:preprocessor"
+       "/Zc:__cplusplus"
+       "/wd4251"
+       "/wd4275"
        )
 else ()
   list(APPEND
        TACTILE_COMPILE_OPTIONS
-       -fvisibility=hidden
-       -Wall
-       -Wextra
-       -Wpedantic
-       -Wconversion
-       -Wsign-conversion
-       -Wswitch-enum
-       -Wold-style-cast
+       "-fvisibility=hidden"
+       "-Wall"
+       "-Wextra"
+       "-Wpedantic"
+       "-Wconversion"
+       "-Wsign-conversion"
+       "-Wswitch-enum"
+       "-Wold-style-cast"
        )
 
   if (TACTILE_BUILD_TYPE STREQUAL "asan")
     if (NOT MSVC)
       list(APPEND
            TACTILE_COMPILE_OPTIONS
-           -fsanitize=address
-           -fno-sanitize-recover
-           -fno-omit-frame-pointer
+           "-fsanitize=address"
+           "-fno-sanitize-recover"
+           "-fno-omit-frame-pointer"
            )
       list(APPEND
            TACTILE_LINK_OPTIONS
-           -fsanitize=address
-           -fno-sanitize-recover
-           -fno-omit-frame-pointer
+           "-fsanitize=address"
+           "-fno-sanitize-recover"
+           "-fno-omit-frame-pointer"
            )
     endif ()
   endif ()
@@ -45,43 +45,42 @@ endif ()
 
 list(APPEND
      TACTILE_PRECOMPILED_HEADERS
-     <algorithm>
-     <array>
-     <charconv>
-     <chrono>
-     <codecvt>
-     <concepts>
-     <cstddef>
-     <cstdint>
-     <cstring>
-     <cstdlib>
-     <ctime>
-     <cmath>
-     <deque>
-     <exception>
-     <filesystem>
-     <fstream>
-     <functional>
-     <iterator>
-     <limits>
-     <locale>
-     <map>
-     <memory>
-     <numbers>
-     <optional>
-     <ostream>
-     <queue>
-     <random>
-     <span>
-     <sstream>
-     <string>
-     <string_view>
-     <system_error>
-     <type_traits>
-     <unordered_map>
-     <utility>
-     <variant>
-     <vector>
+     "<algorithm>"
+     "<array>"
+     "<charconv>"
+     "<chrono>"
+     "<concepts>"
+     "<cstddef>"
+     "<cstdint>"
+     "<cstring>"
+     "<cstdlib>"
+     "<ctime>"
+     "<cmath>"
+     "<deque>"
+     "<exception>"
+     "<filesystem>"
+     "<fstream>"
+     "<functional>"
+     "<iterator>"
+     "<limits>"
+     "<locale>"
+     "<map>"
+     "<memory>"
+     "<numbers>"
+     "<optional>"
+     "<ostream>"
+     "<queue>"
+     "<random>"
+     "<span>"
+     "<sstream>"
+     "<string>"
+     "<string_view>"
+     "<system_error>"
+     "<type_traits>"
+     "<unordered_map>"
+     "<utility>"
+     "<variant>"
+     "<vector>"
      )
 
 message(DEBUG "TACTILE_COMPILE_OPTIONS: ${TACTILE_COMPILE_OPTIONS}")
@@ -100,7 +99,6 @@ endfunction()
 function(tactile_prepare_target target)
   set_target_properties(${target}
                         PROPERTIES
-                        NAMESPACE tactile
                         CXX_STANDARD 23
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
