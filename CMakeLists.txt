@@ -75,6 +75,5 @@ install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
 include("cmake/tactile.cmake")
 
-add_subdirectory("source/base")
 add_subdirectory("source/core")
 add_subdirectory("source/editor")
