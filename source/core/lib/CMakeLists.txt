@@ -17,6 +17,7 @@ target_sources(tactile_core
                "inc/tactile/core/basic/string.hpp"
                "inc/tactile/core/basic/vector.hpp"
                "inc/tactile/core/entity/entity_id.hpp"
+               "inc/tactile/core/tile/tile_id.hpp"
 
                PRIVATE
                "src/tactile/core/basic/errc.cpp"
