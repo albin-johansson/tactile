@@ -8,6 +8,7 @@ tactile_prepare_target(tactile_core)
 target_sources(tactile_core
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/core/basic/errc.hpp"
+               "inc/tactile/core/basic/macros.hpp"
                "inc/tactile/core/basic/option.hpp"
                "inc/tactile/core/basic/primitives.hpp"
                "inc/tactile/core/basic/result.hpp"
@@ -22,3 +23,8 @@ target_link_libraries(tactile_core
                       PRIVATE
                       tactile_basic_target
                       )
+
+target_compile_definitions(tactile_core
+                           PRIVATE
+                           TACTILE_BUILDING_CORE
+                           )
