@@ -12,6 +12,12 @@ template <typename T>
 using Result = std::expected<T, Errc>;
 
 [[nodiscard]]
+constexpr auto ok() noexcept -> Result<void>
+{
+  return Result<void> {};
+}
+
+[[nodiscard]]
 constexpr auto error(const Errc errc) noexcept -> std::unexpected<Errc>
 {
   return std::unexpected {errc};
