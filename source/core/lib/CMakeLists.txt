@@ -13,6 +13,7 @@ target_sources(tactile_core
                "inc/tactile/core/basic/option.hpp"
                "inc/tactile/core/basic/primitives.hpp"
                "inc/tactile/core/basic/result.hpp"
+               "inc/tactile/core/basic/smart_ptr.hpp"
                "inc/tactile/core/basic/string.hpp"
                "inc/tactile/core/basic/vector.hpp"
                "inc/tactile/core/entity/entity_id.hpp"
