@@ -9,6 +9,7 @@ tactile_prepare_target(tactile_core)
 
 target_sources(tactile_core
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
+               "inc/tactile/core/basic/array.hpp"
                "inc/tactile/core/basic/casts.hpp"
                "inc/tactile/core/basic/clock.hpp"
                "inc/tactile/core/basic/errc.hpp"
