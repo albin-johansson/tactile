@@ -3,13 +3,13 @@
 #pragma once
 
 #include <concepts>  // derived_from
-#include <cstdint>   // size_t
 #include <deque>     // deque
-#include <memory>    // unique_ptr, make_unique
-#include <optional>  // optional
 #include <utility>   // move, forward
 
-#include "tactile/base/prelude.hpp"
+#include "tactile/core/basic/macros.hpp"
+#include "tactile/core/basic/option.hpp"
+#include "tactile/core/basic/primitives.hpp"
+#include "tactile/core/basic/smart_ptr.hpp"
 #include "tactile/editor/cmd/command.hpp"
 
 namespace tactile::editor {
@@ -45,7 +45,7 @@ class CommandStack final
   TACTILE_DEFAULT_MOVE(CommandStack);
 
   /// Creates an empty command stack with the specified capacity.
-  explicit CommandStack(std::size_t capacity);
+  explicit CommandStack(usize capacity);
 
   ~CommandStack() noexcept = default;
 
@@ -118,7 +118,7 @@ class CommandStack final
   /// so that the size doesn't exceed the new capacity.
   ///
   /// \param capacity The maximum amount of stored commands.
-  void set_capacity(std::size_t capacity);
+  void set_capacity(usize capacity);
 
   /// Indicates whether the current command stack state is clean.
   [[nodiscard]]
@@ -134,29 +134,29 @@ class CommandStack final
 
   /// Returns the number of commands on the stack.
   [[nodiscard]]
-  auto size() const -> std::size_t;
+  auto size() const -> usize;
 
   /// Returns the maximum amount of commands that the stack can hold.
   [[nodiscard]]
-  auto capacity() const -> std::size_t;
+  auto capacity() const -> usize;
 
   /**
    * Returns the current command index, if there is one.
    */
   [[nodiscard]]
-  auto index() const -> std::optional<std::size_t>;
+  auto index() const -> Option<usize>;
 
   /**
    * Returns the clean index, if there is one.
    */
   [[nodiscard]]
-  auto clean_index() const -> std::optional<std::size_t>;
+  auto clean_index() const -> Option<usize>;
 
  private:
-  std::deque<std::unique_ptr<ICommand>> m_commands {};
-  std::optional<std::size_t> m_current_index {};
-  std::optional<std::size_t> m_clean_index {};
-  std::size_t m_capacity {};
+  std::deque<Unique<ICommand>> m_commands {};
+  Option<usize> m_current_index {};
+  Option<usize> m_clean_index {};
+  usize m_capacity {};
 
   // Pushes a command onto the stack, but does not execute it.
   void _store(std::unique_ptr<ICommand> cmd);
@@ -176,7 +176,7 @@ class CommandStack final
   void _increase_current_index();
 
   [[nodiscard]]
-  auto _get_next_command_index() const -> std::size_t;
+  auto _get_next_command_index() const -> usize;
 };
 
 }  // namespace tactile::editor
