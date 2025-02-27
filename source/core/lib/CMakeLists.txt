@@ -23,6 +23,7 @@ target_sources(tactile_core
                "inc/tactile/core/entity/entity_id.hpp"
                "inc/tactile/core/math/vec.hpp"
                "inc/tactile/core/misc/bounds.hpp"
+               "inc/tactile/core/misc/name.hpp"
                "inc/tactile/core/tile/tile_id.hpp"
                "inc/tactile/core/tile/tile_index.hpp"
                "inc/tactile/core/api.hpp"
