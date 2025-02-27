@@ -1,5 +1,7 @@
 project(tactile-core-lib CXX)
 
+find_package(EnTT CONFIG REQUIRED)
+
 add_library(tactile_core SHARED)
 add_library(tactile::core ALIAS tactile_core)
 
@@ -24,14 +26,20 @@ target_sources(tactile_core
                "inc/tactile/core/tile/tile_id.hpp"
                "inc/tactile/core/tile/tile_index.hpp"
                "inc/tactile/core/api.hpp"
+               "inc/tactile/core/world.hpp"
+
+               PRIVATE FILE_SET "private_headers" TYPE "HEADERS" BASE_DIRS "src" FILES
+               "src/tactile/core/world_data.hpp"
 
                PRIVATE
                "src/tactile/core/basic/errc.cpp"
+               "src/tactile/core/world.cpp"
                )
 
 target_link_libraries(tactile_core
                       PRIVATE
                       tactile_basic_target
+                      EnTT::EnTT
                       )
 
 target_compile_definitions(tactile_core
