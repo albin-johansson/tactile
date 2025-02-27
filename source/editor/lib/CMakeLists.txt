@@ -4,12 +4,14 @@ add_library(tactile_editor STATIC)
 add_library(tactile::editor ALIAS tactile_editor)
 
 target_sources(tactile_editor
-               PUBLIC FILE_SET HEADERS BASE_DIRS inc FILES
+               PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
                "inc/tactile/editor/cmd/command.hpp"
                "inc/tactile/editor/cmd/command_stack.hpp"
+               "inc/tactile/editor/launcher.hpp"
 
                PRIVATE
                "src/tactile/editor/cmd/command_stack.cpp"
+               "src/tactile/editor/launcher.cpp"
                )
 
 tactile_prepare_target(tactile_editor)
