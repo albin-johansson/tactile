@@ -27,6 +27,7 @@ target_sources(tactile_core
                "inc/tactile/core/log/log_level.hpp"
                "inc/tactile/core/log/log_sink.hpp"
                "inc/tactile/core/log/logger.hpp"
+               "inc/tactile/core/math/hash.hpp"
                "inc/tactile/core/math/vec.hpp"
                "inc/tactile/core/misc/bounds.hpp"
                "inc/tactile/core/misc/name.hpp"
