@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
+option(TACTILE_BUILD_EDITOR "Build editor application" ON)
 option(TACTILE_BUILD_TESTS "Build test suites" OFF)
 option(TACTILE_BUILD_YAML_FORMAT "Build with Tactile YAML save format support" ON)
 option(TACTILE_BUILD_TILED_TMJ_FORMAT "Build with Tiled TMJ save format support" ON)
@@ -35,8 +36,8 @@ if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 endif ()
 
-if (TACTILE_BUILD_TESTS)
-  list(APPEND VCPKG_MANIFEST_FEATURES "tests")
+if (TACTILE_BUILD_EDITOR)
+  list(APPEND VCPKG_MANIFEST_FEATURES "editor")
 endif ()
 
 if (TACTILE_BUILD_OPENGL_RENDERER)
@@ -45,6 +46,10 @@ endif ()
 
 if (TACTILE_BUILD_VULKAN_RENDERER)
   list(APPEND VCPKG_MANIFEST_FEATURES "vulkan")
+endif ()
+
+if (TACTILE_BUILD_TESTS)
+  list(APPEND VCPKG_MANIFEST_FEATURES "tests")
 endif ()
 
 message(DEBUG "CMAKE_SKIP_INSTALL_ALL_DEPENDENCY: ${CMAKE_SKIP_INSTALL_ALL_DEPENDENCY}")
@@ -80,4 +85,7 @@ install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 include("cmake/tactile.cmake")
 
 add_subdirectory("source/core")
-add_subdirectory("source/editor")
+
+if (TACTILE_BUILD_EDITOR)
+  add_subdirectory("source/editor")
+endif ()

@@ -8,27 +8,17 @@
   ],
   "builtin-baseline": "b505fa789fd96eb5496a2e42c651c169e8460d27",
   "dependencies": [
-    "argparse",
+    "boost-container",
     "boost-stacktrace",
-    "boost-uuid",
     "entt",
     "cppcodec",
     "fast-float",
-    {
-      "name": "imgui",
-      "features": [
-        "docking-experimental",
-        "sdl2-binding"
-      ]
-    },
+    "fmt",
     "magic-enum",
     "nlohmann-json",
-    "protobuf",
     "pugixml",
     "sdl2",
-    "sdl2-image",
     "stb",
-    "tinyfiledialogs",
     "yaml-cpp",
     "zlib",
     "zstd"
@@ -38,6 +28,20 @@
       "description": "Add testing support",
       "dependencies": [
         "gtest"
+      ]
+    },
+    "editor": {
+      "description": "Build the Tactile editor",
+      "dependencies": [
+        "argparse",
+        {
+          "name": "imgui",
+          "features": [
+            "docking-experimental",
+            "sdl2-binding"
+          ]
+        },
+        "tinyfiledialogs"
       ]
     },
     "opengl": {

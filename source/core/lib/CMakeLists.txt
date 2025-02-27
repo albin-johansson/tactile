@@ -1,6 +1,8 @@
 project(tactile-core-lib CXX)
 
+find_package(boost_container CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 add_library(tactile_core SHARED)
 add_library(tactile::core ALIAS tactile_core)
@@ -22,6 +24,9 @@ target_sources(tactile_core
                "inc/tactile/core/basic/string.hpp"
                "inc/tactile/core/basic/vector.hpp"
                "inc/tactile/core/entity/entity_id.hpp"
+               "inc/tactile/core/log/log_level.hpp"
+               "inc/tactile/core/log/log_sink.hpp"
+               "inc/tactile/core/log/logger.hpp"
                "inc/tactile/core/math/vec.hpp"
                "inc/tactile/core/misc/bounds.hpp"
                "inc/tactile/core/misc/name.hpp"
@@ -41,7 +46,11 @@ target_sources(tactile_core
 target_link_libraries(tactile_core
                       PRIVATE
                       tactile_basic_target
+                      Boost::container
                       EnTT::EnTT
+
+                      PUBLIC
+                      fmt::fmt
                       )
 
 target_compile_definitions(tactile_core
