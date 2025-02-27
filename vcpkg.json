@@ -14,7 +14,6 @@
     "entt",
     "cppcodec",
     "fast-float",
-    "gtest",
     {
       "name": "imgui",
       "features": [
@@ -35,6 +34,12 @@
     "zstd"
   ],
   "features": {
+    "tests": {
+      "description": "Add testing support",
+      "dependencies": [
+        "gtest"
+      ]
+    },
     "opengl": {
       "description": "Add OpenGL support",
       "dependencies": [
