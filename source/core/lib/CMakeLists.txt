@@ -32,9 +32,11 @@ target_sources(tactile_core
                "inc/tactile/core/misc/bounds.hpp"
                "inc/tactile/core/misc/name.hpp"
                "inc/tactile/core/misc/defer.hpp"
+               "inc/tactile/core/tile/tile_animation.hpp"
                "inc/tactile/core/tile/tile_id.hpp"
                "inc/tactile/core/tile/tile_index.hpp"
                "inc/tactile/core/api.hpp"
+               "inc/tactile/core/fwd.hpp"
                "inc/tactile/core/world.hpp"
 
                PRIVATE FILE_SET "private_headers" TYPE "HEADERS" BASE_DIRS "src" FILES
@@ -42,6 +44,7 @@ target_sources(tactile_core
 
                PRIVATE
                "src/tactile/core/basic/errc.cpp"
+               "src/tactile/core/tile/tile_animation.cpp"
                "src/tactile/core/world.cpp"
                )
 
