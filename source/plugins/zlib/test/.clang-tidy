@@ -1,5 +1,0 @@
-InheritParentConfig: true
-Checks: "-modernize-use-trailing-return-type,
-         -modernize-type-traits,
-         -readability-function-cognitive-complexity,
-         "
