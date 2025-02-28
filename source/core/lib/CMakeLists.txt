@@ -48,6 +48,7 @@ target_sources(tactile_core
                "src/tactile/core/log/console_log_sink.cpp"
                "src/tactile/core/tile/tile_animation.cpp"
                "src/tactile/core/world.cpp"
+               "src/tactile/core/world_data.cpp"
                )
 
 target_link_libraries(tactile_core

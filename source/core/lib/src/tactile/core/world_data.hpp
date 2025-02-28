@@ -2,18 +2,29 @@
 
 #pragma once
 
-#include <type_traits>  // is_same_v
+#include <concepts>  // same_as
 
 #include <entt/entity/registry.hpp>
 
+#include "tactile/core/entity/entity_id.hpp"
 #include "tactile/core/world.hpp"
 
 namespace tactile {
 
-static_assert(std::is_same_v<EntityID, entt::id_type>);
+static_assert(std::same_as<EntityID, entt::id_type>);
 
+/// Provides the internal world data.
 class WorldData final
 {
+ public:
+  /// Returns the associated ECS registry.
+  [[nodiscard]]
+  auto get_registry() -> entt::registry&;
+
+  /// Returns the associated ECS registry.
+  [[nodiscard]]
+  auto get_registry() const -> const entt::registry&;
+
  private:
   entt::registry m_registry {};
 };
