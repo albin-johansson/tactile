@@ -24,6 +24,7 @@ target_sources(tactile_core
                "inc/tactile/core/basic/string.hpp"
                "inc/tactile/core/basic/vector.hpp"
                "inc/tactile/core/entity/entity_id.hpp"
+               "inc/tactile/core/log/console_log_sink.hpp"
                "inc/tactile/core/log/log_level.hpp"
                "inc/tactile/core/log/log_sink.hpp"
                "inc/tactile/core/log/logger.hpp"
@@ -44,6 +45,7 @@ target_sources(tactile_core
 
                PRIVATE
                "src/tactile/core/basic/errc.cpp"
+               "src/tactile/core/log/console_log_sink.cpp"
                "src/tactile/core/tile/tile_animation.cpp"
                "src/tactile/core/world.cpp"
                )
