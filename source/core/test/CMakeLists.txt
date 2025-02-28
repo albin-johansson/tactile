@@ -9,6 +9,7 @@ tactile_prepare_target(tactile_core_test)
 target_sources(tactile_core_test
                PRIVATE
                "src/basic/ut_casts.cpp"
+               "src/misc/ut_defer.cpp"
                "src/main.cpp"
                )
 
