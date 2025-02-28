@@ -6,7 +6,7 @@
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "b505fa789fd96eb5496a2e42c651c169e8460d27",
+  "builtin-baseline": "efb1e7436979a30c4d3e5ab2375fd8e2e461d541",
   "dependencies": [
     "boost-container",
     "boost-stacktrace",
@@ -17,7 +17,7 @@
     "magic-enum",
     "nlohmann-json",
     "pugixml",
-    "sdl2",
+    "sdl3",
     "stb",
     "yaml-cpp",
     "zlib",
@@ -38,7 +38,7 @@
           "name": "imgui",
           "features": [
             "docking-experimental",
-            "sdl2-binding"
+            "sdl3-binding"
           ]
         },
         "tinyfiledialogs"
