@@ -10,17 +10,16 @@ env:
 
 jobs:
   macos-latest-test:
-    runs-on: macos-15
+    runs-on: macos-latest
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@main
 
       - name: Select Xcode version
-        run: sudo xcode-select --switch /Applications/Xcode_16.1.app
+        run: sudo xcode-select --switch /Applications/Xcode_16.2.app
 
       - name: Install system dependencies
         run: |
-          brew update
           brew install ninja
           brew install autoconf
           brew install automake
@@ -58,21 +57,12 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -GNinja \
+          cmake .. --log-level=DEBUG \
+                   -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_BUILD_TESTS=ON \
-                   -DTACTILE_BUILD_YAML_FORMAT=ON \
-                   -DTACTILE_BUILD_TILED_TMJ_FORMAT=ON \
-                   -DTACTILE_BUILD_TILED_TMX_FORMAT=ON \
-                   -DTACTILE_BUILD_GODOT_TSCN_FORMAT=ON \
-                   -DTACTILE_BUILD_ZLIB_COMPRESSION=ON \
-                   -DTACTILE_BUILD_ZSTD_COMPRESSION=ON \
-                   -DTACTILE_BUILD_OPENGL_RENDERER=ON \
-                   -DTACTILE_BUILD_VULKAN_RENDERER=OFF \
-                   -DTACTILE_USE_LTO=OFF \
-                   -DTACTILE_USE_PRECOMPILED_HEADERS=ON \
-                   --log-level=DEBUG
+                   -DTACTILE_BUILD_EDITOR=ON \
+                   -DTACTILE_BUILD_TESTS=ON
 
       - name: Build
         run: ninja -C build
@@ -80,22 +70,6 @@ jobs:
       - name: Install
         run: ninja -C build install
 
-      - name: Run base tests
-        working-directory: ./build/debug
-        run: ./tactile-base-test
-
       - name: Run core tests
         working-directory: ./build/debug
-        run: ./tactile-core-test
-
-      - name: Run Zlib compression tests
-        working-directory: ./build/debug
-        run: ./tactile-zlib-compression-test
-
-      - name: Run Zstd compression tests
-        working-directory: ./build/debug
-        run: ./tactile-zstd-compression-test
-
-      - name: Run runtime tests
-        working-directory: ./build/debug
-        run: ./tactile-runtime-test
+        run: ./tactile_core_test

@@ -53,21 +53,12 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -GNinja `
+          cmake .. --log-level=DEBUG `
+                   -GNinja `
                    -DCMAKE_BUILD_TYPE=Debug `
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
-                   -DTACTILE_BUILD_TESTS=ON `
-                   -DTACTILE_BUILD_YAML_FORMAT=ON `
-                   -DTACTILE_BUILD_TILED_TMJ_FORMAT=ON `
-                   -DTACTILE_BUILD_TILED_TMX_FORMAT=ON `
-                   -DTACTILE_BUILD_GODOT_TSCN_FORMAT=ON `
-                   -DTACTILE_BUILD_ZLIB_COMPRESSION=ON `
-                   -DTACTILE_BUILD_ZSTD_COMPRESSION=ON `
-                   -DTACTILE_BUILD_OPENGL_RENDERER=ON `
-                   -DTACTILE_BUILD_VULKAN_RENDERER=OFF `
-                   -DTACTILE_USE_LTO=OFF `
-                   -DTACTILE_USE_PRECOMPILED_HEADERS=ON `
-                   --log-level=DEBUG
+                   -DTACTILE_BUILD_EDITOR=ON `
+                   -DTACTILE_BUILD_TESTS=ON
 
       - name: Build
         run: ninja -C build
@@ -75,27 +66,7 @@ jobs:
       - name: Install
         run: ninja -C build install
 
-      - name: Run base tests
-        working-directory: ./build/debug
-        shell: cmd
-        run: tactile-base-test.exe
-
       - name: Run core tests
         working-directory: ./build/debug
         shell: cmd
-        run: tactile-core-test.exe
-
-      - name: Run Zlib compression tests
-        working-directory: ./build/debug
-        shell: cmd
-        run: tactile-zlib-compression-test.exe
-
-      - name: Run Zstd compression tests
-        working-directory: ./build/debug
-        shell: cmd
-        run: tactile-zstd-compression-test.exe
-
-      - name: Run runtime tests
-        working-directory: ./build/debug
-        shell: cmd
-        run: tactile-runtime-test.exe
+        run: tactile_core_test.exe
