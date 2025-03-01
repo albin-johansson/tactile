@@ -2,12 +2,13 @@
 
 #pragma once
 
+#include "tactile/core/basic/primitives.hpp"
 #include "tactile/core/basic/string.hpp"
 
 namespace tactile {
 
 /// Provides common error codes.
-enum class Errc : int
+enum class Errc : u8
 {
   /// An unknown error occurred.
   kUnknown,
@@ -38,6 +39,9 @@ enum class Errc : int
 
   /// A file doesn't exist.
   kNoSuchFile,
+
+  /// A file error occurred.
+  kBadFile,
 
   /// A file stream couldn't be created.
   kBadFileStream,
