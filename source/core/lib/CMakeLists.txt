@@ -46,6 +46,7 @@ target_sources(tactile_core
                PRIVATE
                "src/tactile/core/basic/errc.cpp"
                "src/tactile/core/log/console_log_sink.cpp"
+               "src/tactile/core/log/logger.cpp"
                "src/tactile/core/tile/tile_animation.cpp"
                "src/tactile/core/world.cpp"
                "src/tactile/core/world_data.cpp"
