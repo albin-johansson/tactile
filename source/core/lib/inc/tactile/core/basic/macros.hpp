@@ -2,6 +2,8 @@
 
 #pragma once
 
+#define TACTILE_VERSION_STRING "0.5.0"
+
 #if defined(_WIN32)
   #define TACTILE_OS_WINDOWS 1
 #elif defined(__APPLE__) && defined(__MACH__)
