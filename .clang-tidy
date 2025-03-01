@@ -1,68 +1,90 @@
 FormatStyle: google
-Checks: "-*,
 
-         bugprone-*,
-         -bugprone-easily-swappable-parameters,
-         -bugprone-switch-missing-default-case,
-         -bugprone-unchecked-optional-access,
+Checks: >
+  bugprone-*,
+  cppcoreguidelines-*,
+  clang-analyzer-*,
+  modernize-*,
+  misc-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -*-easily-swappable-parameters,
+  -*-switch-missing-default-case,
+  -*-owning-memory,
+  -*-avoid-do-while,
+  -*-pro-type-vararg,
+  -*-avoid-c-arrays,
+  -*-identifier-length,
+  -*-uppercase-literal-suffix,
+  -*-named-parameter,
+  -*-magic-numbers,
+  -*-redundant-member-init,
+  -*-static-accessed-through-instance,
 
-         clang-analyzer-*,
-         -clang-analyzer-optin.core.EnumCastOutOfRange,
-
-         performance-*,
-         -performance-enum-size,
-
-         portability-*,
-
-         readability-*,
-         -readability-identifier-length,
-         -readability-uppercase-literal-suffix,
-         -readability-magic-numbers,
-         -readability-implicit-bool-conversion,
-         -readability-named-parameter,
-         -readability-redundant-member-init,
-         -readability-convert-member-functions-to-static,
-
-         modernize-*,
-         -modernize-avoid-c-arrays,
-
-         misc-*,
-         -misc-no-recursion,
-         -misc-non-private-member-variables-in-classes,
-         -misc-include-cleaner,
-
-         cppcoreguidelines-*,
-         -cppcoreguidelines-avoid-magic-numbers,
-         -cppcoreguidelines-pro-bounds-pointer-arithmetic,
-         -cppcoreguidelines-pro-type-vararg,
-         -cppcoreguidelines-pro-type-union-access,
-         -cppcoreguidelines-pro-type-reinterpret-cast,
-         -cppcoreguidelines-owning-memory,
-         -cppcoreguidelines-avoid-goto,
-         -cppcoreguidelines-narrowing-conversions,
-         -cppcoreguidelines-non-private-member-variables-in-classes,
-         -cppcoreguidelines-avoid-do-while,
-         "
 CheckOptions:
-  - { key: readability-identifier-naming.ClassCase, value: CamelCase }
-  - { key: readability-identifier-naming.StructCase, value: CamelCase }
-  - { key: readability-identifier-naming.EnumCase, value: CamelCase }
-  - { key: readability-identifier-naming.EnumConstantCase, value: CamelCase }
-  - { key: readability-identifier-naming.EnumConstantIgnoredRegexp, value: "(_|.)+" }
-  - { key: readability-identifier-naming.FunctionCase, value: lower_case }
-  - { key: readability-identifier-naming.FunctionIgnoredRegexp, value: "^_.*" }
-  - { key: readability-identifier-naming.MethodCase, value: lower_case }
-  - { key: readability-identifier-naming.PrivateMethodPrefix, value: _ }
-  - { key: readability-identifier-naming.ParameterCase, value: lower_case }
-  - { key: readability-identifier-naming.LocalVariableCase, value: lower_case }
-  - { key: readability-identifier-naming.GlobalVariableCase, value: CamelCase }
-  - { key: readability-identifier-naming.GlobalVariablePrefix, value: g }
-  - { key: readability-identifier-naming.GlobalConstantCase, value: CamelCase }
-  - { key: readability-identifier-naming.GlobalConstantPrefix, value: k }
-  - { key: readability-identifier-naming.ConstexprVariableCase, value: CamelCase }
-  - { key: readability-identifier-naming.ConstexprVariableIgnoredRegexp, value: "([a-z0-9]+|_)+" }
-  - { key: readability-identifier-naming.ConstexprVariablePrefix, value: k }
-  - { key: readability-identifier-naming.StructMemberCase, value: lower_case }
-  - { key: readability-identifier-naming.ClassMemberCase, value: CamelCase }
-  - { key: readability-identifier-naming.ClassMemberPrefix, value: m }
-  - { key: readability-identifier-naming.TypeAliasIgnoredRegexp, value: "^[a-z].*" }
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.EnumConstantCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.EnumConstantIgnoredRegexp
+    value: "(_|.)+"
+
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+
+  - key: readability-identifier-naming.FunctionIgnoredRegexp
+    value: "^_.*"
+
+  - key: readability-identifier-naming.MethodCase
+    value: lower_case
+
+  - key: readability-identifier-naming.PrivateMethodPrefix
+    value: _
+
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+
+  - key: readability-identifier-naming.LocalVariableCase
+    value: lower_case
+
+  - key: readability-identifier-naming.GlobalVariableCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.GlobalVariablePrefix
+    value: g
+
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.GlobalConstantPrefix
+    value: k
+
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.ConstexprVariableIgnoredRegexp
+    value: "([a-z0-9]+|_)+"
+
+  - key: readability-identifier-naming.ConstexprVariablePrefix
+    value: k
+
+  - key: readability-identifier-naming.StructMemberCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ClassMemberCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ClassMemberPrefix
+    value: m_
+
+  - key: readability-identifier-naming.TypeAliasIgnoredRegexp
+    value: "^[a-z].*"
