@@ -33,6 +33,7 @@ target_sources(tactile_core
                "inc/tactile/core/misc/bounds.hpp"
                "inc/tactile/core/misc/name.hpp"
                "inc/tactile/core/misc/defer.hpp"
+               "inc/tactile/core/plugin/plugin.hpp"
                "inc/tactile/core/tile/tile_animation.hpp"
                "inc/tactile/core/tile/tile_id.hpp"
                "inc/tactile/core/tile/tile_index.hpp"

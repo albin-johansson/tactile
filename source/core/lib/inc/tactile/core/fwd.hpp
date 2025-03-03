@@ -4,6 +4,9 @@
 
 namespace tactile {
 
+class IPlugin;
+class IRuntime;
+
 class World;
 
 }  // namespace tactile
