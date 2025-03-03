@@ -15,6 +15,7 @@ target_sources(tactile_core
                "inc/tactile/core/basic/casts.hpp"
                "inc/tactile/core/basic/clock.hpp"
                "inc/tactile/core/basic/errc.hpp"
+               "inc/tactile/core/basic/filesystem.hpp"
                "inc/tactile/core/basic/hash_map.hpp"
                "inc/tactile/core/basic/macros.hpp"
                "inc/tactile/core/basic/option.hpp"
