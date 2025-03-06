@@ -41,7 +41,8 @@ template <typename T,
           typename Container,
           std::invocable<typename Container::const_reference> Action>
 [[nodiscard]] constexpr auto collect_results(const Container& container,
-                                             const Action& action) -> Vector<T>
+                                             const Action& action)
+    -> Result<Vector<T>>
 {
   Vector<T> values {};
   values.reserve(container.size());
