@@ -61,7 +61,7 @@ class TACTILE_CORE_API Logger final
   struct Data;
   Unique<Data> m_data;
 
-  void _log(LogLevel level, StringView fmt, fmt::format_args args) noexcept;
+  void _log(LogLevel level, StringView fmt, const fmt::format_args& args) noexcept;
 };
 
 /// Sets the global core logger.
@@ -77,15 +77,24 @@ TACTILE_CORE_API auto get_logger() noexcept -> Logger*;
   do {                                                                    \
     const ::tactile::LogLevel _tactile_log_macro_level = (Lvl);           \
     auto* const _tactile_log_macro_logger = ::tactile::get_logger();      \
-    if (_tactile_log_macro_logger &&                                      \
+    if (_tactile_log_macro_logger != nullptr &&                           \
         _tactile_log_macro_logger->would_log(_tactile_log_macro_level)) { \
       _tactile_log_macro_logger->log(_tactile_log_macro_level,            \
                                      (Fmt) __VA_OPT__(, ) __VA_ARGS__);   \
     }                                                                     \
   } while (false)
 
-#define TACTILE_LOG_TRC(Fmt, ...) TACTILE_LOG(::tactile::LogLevel::kTrace, Fmt, __VA_ARGS__)
-#define TACTILE_LOG_DBG(Fmt, ...) TACTILE_LOG(::tactile::LogLevel::kDebug, Fmt, __VA_ARGS__)
-#define TACTILE_LOG_INF(Fmt, ...) TACTILE_LOG(::tactile::LogLevel::kInfo, Fmt, __VA_ARGS__)
-#define TACTILE_LOG_WRN(Fmt, ...) TACTILE_LOG(::tactile::LogLevel::kWarn, Fmt, __VA_ARGS__)
-#define TACTILE_LOG_ERR(Fmt, ...) TACTILE_LOG(::tactile::LogLevel::kError, Fmt, __VA_ARGS__)
+#define TACTILE_LOG_TRACE(Fmt, ...) \
+  TACTILE_LOG(::tactile::LogLevel::kTrace, Fmt, __VA_ARGS__)
+
+#define TACTILE_LOG_DEBUG(Fmt, ...) \
+  TACTILE_LOG(::tactile::LogLevel::kDebug, Fmt, __VA_ARGS__)
+
+#define TACTILE_LOG_INFO(Fmt, ...) \
+  TACTILE_LOG(::tactile::LogLevel::kInfo, Fmt, __VA_ARGS__)
+
+#define TACTILE_LOG_WARN(Fmt, ...) \
+  TACTILE_LOG(::tactile::LogLevel::kWarn, Fmt, __VA_ARGS__)
+
+#define TACTILE_LOG_ERROR(Fmt, ...) \
+  TACTILE_LOG(::tactile::LogLevel::kError, Fmt, __VA_ARGS__)
