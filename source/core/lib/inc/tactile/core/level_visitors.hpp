@@ -2,18 +2,17 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/core/basic/macros.hpp"
 
 namespace tactile {
 
-class TACTILE_CORE_API ILevelVisitor
+class ILevelVisitor
 {
  public:
   TACTILE_INTERFACE_CLASS(ILevelVisitor);
 };
 
-class TACTILE_CORE_API ILevelRootLayerVisitor
+class ILevelRootLayerVisitor
 {
  public:
   TACTILE_INTERFACE_CLASS(ILevelRootLayerVisitor);

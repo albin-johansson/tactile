@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/core/basic/macros.hpp"
 #include "tactile/core/basic/result.hpp"
 #include "tactile/core/fwd.hpp"
@@ -10,7 +9,7 @@
 namespace tactile {
 
 /// Interface for runtime plugins.
-class TACTILE_CORE_API IPlugin
+class IPlugin
 {
  public:
   TACTILE_INTERFACE_CLASS(IPlugin);

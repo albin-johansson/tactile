@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/core/basic/macros.hpp"
 #include "tactile/core/basic/string.hpp"
 #include "tactile/core/fwd.hpp"
@@ -16,7 +15,7 @@ namespace tactile {
 /// unregistered through this API in the IPlugin::install and IPlugin::uninstall
 /// functions, respectively. The runtime itself doesn't own any resources, so plugins
 /// need to keep their resources alive as long as they're in use.
-class TACTILE_CORE_API IRuntime
+class IRuntime
 {
  public:
   TACTILE_INTERFACE_CLASS(IRuntime);

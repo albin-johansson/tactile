@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/core/basic/macros.hpp"
 #include "tactile/core/basic/primitives.hpp"
 #include "tactile/core/basic/result.hpp"
@@ -12,7 +11,7 @@
 namespace tactile {
 
 /// Interface implemented by compression plugins.
-class TACTILE_CORE_API ICompressor
+class ICompressor
 {
  public:
   TACTILE_INTERFACE_CLASS(ICompressor);

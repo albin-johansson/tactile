@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/core/basic/macros.hpp"
 #include "tactile/core/basic/result.hpp"
 
@@ -11,7 +10,7 @@ union SDL_Event;
 namespace tactile {
 
 /// Interface implemented by renderer plugins.
-class TACTILE_CORE_API IRenderer
+class IRenderer
 {
  public:
   TACTILE_INTERFACE_CLASS(IRenderer);
