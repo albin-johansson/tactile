@@ -42,18 +42,19 @@ target_sources(tactile_core
                "inc/tactile/core/tile/tile_index.hpp"
                "inc/tactile/core/api.hpp"
                "inc/tactile/core/fwd.hpp"
-               "inc/tactile/core/world.hpp"
+               "inc/tactile/core/level.hpp"
+               "inc/tactile/core/level_visitors.hpp"
 
                PRIVATE FILE_SET "private_headers" TYPE "HEADERS" BASE_DIRS "src" FILES
-               "src/tactile/core/world_data.hpp"
+               "src/tactile/core/level_data.hpp"
 
                PRIVATE
                "src/tactile/core/basic/errc.cpp"
                "src/tactile/core/log/console_log_sink.cpp"
                "src/tactile/core/log/logger.cpp"
                "src/tactile/core/tile/tile_animation.cpp"
-               "src/tactile/core/world.cpp"
-               "src/tactile/core/world_data.cpp"
+               "src/tactile/core/level.cpp"
+               "src/tactile/core/level_data.cpp"
                )
 
 target_link_libraries(tactile_core

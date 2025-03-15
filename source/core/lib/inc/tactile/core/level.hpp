@@ -5,30 +5,33 @@
 #include "tactile/core/api.hpp"
 #include "tactile/core/basic/macros.hpp"
 #include "tactile/core/basic/smart_ptr.hpp"
+#include "tactile/core/fwd.hpp"
 
 namespace tactile {
 
-class WorldData;
-
 /// The central data structure that contains all data for a single level.
-class TACTILE_CORE_API World final
+class TACTILE_CORE_API Level final
 {
  public:
-  TACTILE_DELETE_COPY(World);
-  TACTILE_DEFAULT_MOVE(World);
+  TACTILE_DELETE_COPY(Level);
+  TACTILE_DEFAULT_MOVE(Level);
 
-  World();
+  Level();
 
-  ~World() noexcept;
+  ~Level() noexcept;
+
+  void visit(ILevelVisitor& visitor) const;
+
+  void visit(ILevelRootLayerVisitor& visitor) const;
 
   [[nodiscard]]
-  auto get_data() -> WorldData&;
+  auto get_data() -> LevelData&;
 
   [[nodiscard]]
-  auto get_data() const -> const WorldData&;
+  auto get_data() const -> const LevelData&;
 
  private:
-  Unique<WorldData> m_data;
+  Unique<LevelData> m_data;
 };
 
 }  // namespace tactile

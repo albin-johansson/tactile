@@ -4,12 +4,8 @@
 
 namespace tactile {
 
-class IPlugin;
-class IRuntime;
-class ILevelVisitor;
-class ILevelRootLayerVisitor;
-
-class LevelData;
-class Level;
+/// Provides the internal level data.
+class LevelData final
+{};
 
 }  // namespace tactile
