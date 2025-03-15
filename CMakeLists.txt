@@ -89,3 +89,5 @@ add_subdirectory("source/core")
 if (TACTILE_BUILD_EDITOR)
   add_subdirectory("source/editor")
 endif ()
+
+add_subdirectory("source/plugins/null_renderer")
