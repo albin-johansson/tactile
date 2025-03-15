@@ -1,16 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
-option(TACTILE_BUILD_EDITOR "Build editor application" ON)
-option(TACTILE_BUILD_TESTS "Build test suites" OFF)
-option(TACTILE_BUILD_YAML_FORMAT "Build with Tactile YAML save format support" ON)
-option(TACTILE_BUILD_TILED_TMJ_FORMAT "Build with Tiled TMJ save format support" ON)
-option(TACTILE_BUILD_TILED_TMX_FORMAT "Build with Tiled TMX save format support" ON)
-option(TACTILE_BUILD_GODOT_TSCN_FORMAT "Build with Godot TSCN save format support" ON)
-option(TACTILE_BUILD_ZLIB_COMPRESSION "Build with Zlib compression support" ON)
-option(TACTILE_BUILD_ZSTD_COMPRESSION "Build with Zstd compression support" ON)
-option(TACTILE_BUILD_OPENGL_RENDERER "Build the OpenGL renderer" OFF)
-option(TACTILE_BUILD_VULKAN_RENDERER "Build the Vulkan renderer" OFF)
-option(TACTILE_MACOS_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
+option(TACTILE_BUILD_TESTS "Build the test suites" OFF)
+option(TACTILE_BUILD_EDITOR "Build the editor application" ON)
 option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
 option(TACTILE_USE_PRECOMPILED_HEADERS "Enable precompiled standard headers" ON)
 
@@ -19,15 +10,7 @@ if (CMAKE_SKIP_INSTALL_ALL_DEPENDENCY MATCHES "")
 endif ()
 
 message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
-message(DEBUG "TACTILE_BUILD_YAML_FORMAT: ${TACTILE_BUILD_YAML_FORMAT}")
-message(DEBUG "TACTILE_BUILD_TILED_TMJ_FORMAT: ${TACTILE_BUILD_TILED_TMJ_FORMAT}")
-message(DEBUG "TACTILE_BUILD_TILED_TMX_FORMAT: ${TACTILE_BUILD_TILED_TMX_FORMAT}")
-message(DEBUG "TACTILE_BUILD_GODOT_TSCN_FORMAT: ${TACTILE_BUILD_GODOT_TSCN_FORMAT}")
-message(DEBUG "TACTILE_BUILD_ZLIB_COMPRESSION: ${TACTILE_BUILD_ZLIB_COMPRESSION}")
-message(DEBUG "TACTILE_BUILD_ZSTD_COMPRESSION: ${TACTILE_BUILD_ZSTD_COMPRESSION}")
-message(DEBUG "TACTILE_BUILD_OPENGL_RENDERER: ${TACTILE_BUILD_OPENGL_RENDERER}")
-message(DEBUG "TACTILE_BUILD_VULKAN_RENDERER: ${TACTILE_BUILD_VULKAN_RENDERER}")
-message(DEBUG "TACTILE_MACOS_APP_BUNDLE: ${TACTILE_MACOS_APP_BUNDLE}")
+message(DEBUG "TACTILE_BUILD_EDITOR: ${TACTILE_BUILD_OPENGL_RENDERER}")
 message(DEBUG "TACTILE_USE_LTO: ${TACTILE_USE_LTO}")
 message(DEBUG "TACTILE_USE_PRECOMPILED_HEADERS: ${TACTILE_USE_PRECOMPILED_HEADERS}")
 
@@ -41,11 +24,11 @@ if (TACTILE_BUILD_EDITOR)
 endif ()
 
 if (TACTILE_BUILD_OPENGL_RENDERER)
-  list(APPEND VCPKG_MANIFEST_FEATURES "opengl")
+  list(APPEND VCPKG_MANIFEST_FEATURES "opengl-renderer")
 endif ()
 
 if (TACTILE_BUILD_VULKAN_RENDERER)
-  list(APPEND VCPKG_MANIFEST_FEATURES "vulkan")
+  list(APPEND VCPKG_MANIFEST_FEATURES "vulkan-renderer")
 endif ()
 
 if (TACTILE_BUILD_TESTS)
@@ -60,7 +43,8 @@ message(DEBUG "VCPKG_MANIFEST_FEATURES: ${VCPKG_MANIFEST_FEATURES}")
 project(tactile
         HOMEPAGE_URL "https://github.com/albin-johansson/tactile"
         VERSION 0.5.0
-        LANGUAGES CXX)
+        LANGUAGES CXX
+        )
 
 # Determine build type, e.g. "debug" or "release".
 string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)

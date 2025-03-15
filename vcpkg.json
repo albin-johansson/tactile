@@ -15,23 +15,17 @@
     "fast-float",
     "fmt",
     "magic-enum",
-    "nlohmann-json",
-    "pugixml",
-    "sdl3",
-    "stb",
-    "yaml-cpp",
-    "zlib",
-    "zstd"
+    "stb"
   ],
   "features": {
     "tests": {
-      "description": "Add testing support",
+      "description": "Enable tests",
       "dependencies": [
         "gtest"
       ]
     },
     "editor": {
-      "description": "Build the Tactile editor",
+      "description": "Enable the editor application",
       "dependencies": [
         "argparse",
         {
@@ -41,11 +35,12 @@
             "sdl3-binding"
           ]
         },
+        "sdl3",
         "tinyfiledialogs"
       ]
     },
-    "opengl": {
-      "description": "Add OpenGL support",
+    "opengl-renderer": {
+      "description": "Enable OpenGL renderer",
       "dependencies": [
         {
           "name": "glad",
@@ -61,8 +56,8 @@
         }
       ]
     },
-    "vulkan": {
-      "description": "Add Vulkan support",
+    "vulkan-renderer": {
+      "description": "Enable Vulkan renderer",
       "dependencies": [
         "vulkan",
         "vulkan-memory-allocator",
@@ -78,6 +73,36 @@
             "vulkan-binding"
           ]
         }
+      ]
+    },
+    "zlib-comp": {
+      "description": "Enable Zlib compression support",
+      "dependencies": [
+        "zlib"
+      ]
+    },
+    "zstd-comp": {
+      "description": "Enable Zstd compression support",
+      "dependencies": [
+        "zstd"
+      ]
+    },
+    "yaml-codec": {
+      "description": "Enable Tactile YAML format codec support",
+      "dependencies": [
+        "yaml-cpp"
+      ]
+    },
+    "tmj-codec": {
+      "description": "Enable Tiled TMJ format codec support",
+      "dependencies": [
+        "nlohmann-json"
+      ]
+    },
+    "tmx-codec": {
+      "description": "Enable Tiled TMX format codec support",
+      "dependencies": [
+        "pugixml"
       ]
     }
   }
