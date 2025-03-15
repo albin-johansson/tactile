@@ -21,6 +21,7 @@ Checks: >
   -*-magic-numbers,
   -*-redundant-member-init,
   -*-static-accessed-through-instance,
+  -*-math-missing-parentheses,
 
 CheckOptions:
   - key: readability-identifier-naming.ClassCase
