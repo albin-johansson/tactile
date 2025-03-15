@@ -4,7 +4,9 @@
 
 namespace tactile {
 
+class ICompressor;
 class IPlugin;
+class IRenderer;
 class IRuntime;
 class ILevelVisitor;
 class ILevelRootLayerVisitor;
