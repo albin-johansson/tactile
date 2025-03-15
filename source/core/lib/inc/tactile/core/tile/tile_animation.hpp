@@ -6,7 +6,6 @@
 #include "tactile/core/basic/clock.hpp"
 #include "tactile/core/basic/primitives.hpp"
 #include "tactile/core/basic/vector.hpp"
-#include "tactile/core/fwd.hpp"
 
 namespace tactile {
 
@@ -20,24 +19,22 @@ struct TACTILE_CORE_API TileAnimationFrame final
   Milliseconds duration;
 };
 
-/// A component type describing a tile animation.
-struct TACTILE_CORE_API CTileAnimation final
+/// Represents a tile animation.
+class TACTILE_CORE_API TileAnimation final
 {
+ public:
+  /// Updates the state of the tile animation.
+  void update(SteadyClock::time_point reference_time);
+
+ private:
   /// The time of the last frame transition.
-  SteadyClock::time_point last_update;
+  SteadyClock::time_point mLastUpdate {SteadyClock::now()};
 
   /// The index of the currently shown frame.
-  usize frame_index;
+  usize mFrameIndex {0};
 
   /// The sequence of frames the animation cycles through.
-  Vector<TileAnimationFrame> frames;
+  Vector<TileAnimationFrame> mFrames {};
 };
-
-/// Updates the state of a given tile animation.
-TACTILE_CORE_API void update(CTileAnimation& animation,
-                             SteadyClock::time_point reference_time);
-
-/// Updates all tile animations in a given world.
-TACTILE_CORE_API void update_tile_animations(World& world);
 
 }  // namespace tactile
