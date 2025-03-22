@@ -52,6 +52,7 @@ docs/doxygen/html
 # Build output
 build
 cmake-build-*
+target
 
 # Installer data
 installer/packages/com.albinjohansson.tactile/data/*

@@ -1,0 +1,13 @@
+[workspace]
+resolver = "3"
+members = [
+  "crates/tactile",
+  "crates/tactile_editor",
+  "crates/tactile_app",
+]
+
+[workspace.package]
+repository = "https://github.com/albin-johansson/tactile"
+license = "GPL-3"
+version = "0.5.0"
+edition = "2024"

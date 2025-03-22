@@ -1,0 +1,9 @@
+# See https://rust-lang.github.io/rustfmt
+edition = "2024"
+tab_spaces = 2
+max_width = 85
+fn_params_layout = "Tall"
+use_small_heuristics = "Default"
+use_try_shorthand = true
+match_block_trailing_comma = true
+match_arm_leading_pipes = "Preserve"

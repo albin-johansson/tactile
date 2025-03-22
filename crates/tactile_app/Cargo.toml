@@ -1,0 +1,10 @@
+[package]
+name = "tactile_app"
+repository.workspace = true
+license.workspace = true
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+tactile = { path = "../tactile" }
+tactile_editor = { path = "../tactile_editor" }
