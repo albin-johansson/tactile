@@ -26,25 +26,38 @@ pub const MIN_USER_TILE_ID: TileId = TileId(1);
 pub const MAX_USER_TILE_ID: TileId = TileId(0x00_FF_FF_FF);
 
 impl TileId {
+  /// Indicates whether a value is a valid non-empty tile identifier.
+  ///
+  /// See [`MIN_USER_TILE_ID`] and [`MAX_USER_TILE_ID`].
+  pub const fn is_valid_non_empty_tile(id: i32) -> bool {
+    id >= MIN_USER_TILE_ID.value() && id <= MAX_USER_TILE_ID.value()
+  }
+
   /// Returns the empty tile identifier.
   pub const fn empty() -> Self {
     Self(0)
   }
 
-  /// Creates a tile identifier.
+  /// Creates a non-empty tile identifier.
   pub const fn new(id: i32) -> Option<Self> {
-    if Self::is_valid(id) {
+    if Self::is_valid_non_empty_tile(id) {
       Some(Self(id))
     } else {
       None
     }
   }
 
-  /// Indicates whether a value is a valid non-empty tile identifier.
+  /// Creates a tile identifier from a [Tiled global identifier (GID)][1].
   ///
-  /// See [`MIN_USER_TILE_ID`] and [`MAX_USER_TILE_ID`].
-  pub const fn is_valid(id: i32) -> bool {
-    id >= MIN_USER_TILE_ID.value() && id <= MAX_USER_TILE_ID.value()
+  /// [1]: https://doc.mapeditor.org/en/stable/reference/global-tile-ids
+  pub fn from_tiled(gid: i32) -> Option<Self> {
+    let id = gid & MAX_USER_TILE_ID.value();
+
+    if id == EMPTY_TILE_ID.value() {
+      Some(Self::empty())
+    } else {
+      Self::new(id)
+    }
   }
 
   /// Returns the underlying value of the tile identifier.
@@ -63,4 +76,3 @@ impl Default for TileId {
     EMPTY_TILE_ID
   }
 }
-
