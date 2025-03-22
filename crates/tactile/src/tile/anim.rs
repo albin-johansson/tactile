@@ -50,15 +50,13 @@ impl Animation {
   /// The time of the update, `update_time`, is passed as an explicit parameter to try to minimize
   /// the number of calls to [`Instant::now`] when calling `update` on several [`Animation`]
   /// instances in rapid succession.
-  pub fn update(&mut self, update_time: Instant) -> Option<()> {
-    let frame = self.frames.get(self.current_frame)?;
-
-    if update_time - self.last_update_time >= frame.duration {
-      self.current_frame = (self.current_frame + 1) % self.frames.len();
-      self.last_update_time = update_time;
+  pub fn update(&mut self, update_time: Instant) {
+    if let Some(frame) = self.frames.get(self.current_frame) {
+      if update_time - self.last_update_time >= frame.duration {
+        self.current_frame = (self.current_frame + 1) % self.frames.len();
+        self.last_update_time = update_time;
+      }
     }
-
-    Some(())
   }
 
   /// Inserts a frame into the animation.

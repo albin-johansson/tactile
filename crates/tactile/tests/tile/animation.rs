@@ -37,15 +37,15 @@ fn update() {
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 
   // [ ->FRAME1, FRAME2, FRAME3 ] => [ FRAME1, ->FRAME2, FRAME3 ]
-  assert_that!(animation.update(Instant::now()), some(()));
+  animation.update(Instant::now());
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID2)));
 
   // [ FRAME1, ->FRAME2, FRAME3 ] => [ FRAME1, FRAME2, ->FRAME3 ]
-  assert_that!(animation.update(Instant::now()), some(()));
+  animation.update(Instant::now());
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID3)));
 
   // [ FRAME1, FRAME2, ->FRAME3 ] => [ ->FRAME1, FRAME2, FRAME3 ]
-  assert_that!(animation.update(Instant::now()), some(()));
+  animation.update(Instant::now());
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 }
 
@@ -65,7 +65,7 @@ fn insert_frame() {
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 
   // [ ->FRAME1, FRAME2 ] => [ FRAME1, ->FRAME2 ]
-  assert_that!(animation.update(Instant::now()), some(()));
+  animation.update(Instant::now());
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID2)));
 
   // [ FRAME1, ->FRAME2 ] => [ ->FRAME1, FRAME2, FRAME3 ]
@@ -74,8 +74,8 @@ fn insert_frame() {
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 
   // [ ->FRAME1, FRAME2, FRAME3 ] => [ FRAME1, FRAME2, ->FRAME3 ]
-  assert_that!(animation.update(Instant::now()), some(()));
-  assert_that!(animation.update(Instant::now()), some(()));
+  animation.update(Instant::now());
+  animation.update(Instant::now());
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID3)));
 
   //  [ FRAME1, FRAME2, ->FRAME3 ] => [ ->FRAME1, FRAME4, FRAME2, FRAME3 ]
