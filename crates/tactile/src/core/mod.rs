@@ -69,9 +69,9 @@ impl TilePos {
   }
 }
 
-/// Represents a two-dimensional tile grid extent.
+/// Represents a two-dimensional extent.
 ///
-/// Note that tile grids with negative dimensions are allowed.
+/// Note that extents with negative dimensions are allowed.
 #[derive(
   Copy,
   Clone,
@@ -87,28 +87,28 @@ impl TilePos {
   Sub,
   SubAssign,
 )]
-pub struct TileGrid {
-  /// The column count.
+pub struct Extent {
+  /// The extent width.
   pub width: isize,
 
-  /// The row count.
+  /// The extent height.
   pub height: isize,
 }
 
-impl TileGrid {
-  /// Creates a tile grid extent.
+impl Extent {
+  /// Creates an extent.
   pub const fn new(width: isize, height: isize) -> Self {
     Self { width, height }
   }
 
-  /// Indicates whether the grid has a positive area.
+  /// Indicates whether the extent has a non-negative area.
   pub const fn has_area(&self) -> bool {
     self.width > 0 && self.height > 0
   }
 
-  /// Indicates whether the grid contains a tile position.
-  pub const fn contains(&self, pos: TilePos) -> bool {
-    self.has_area() && pos.is_positive() && pos.x < self.width && pos.y < self.height
+  /// Indicates whether the extent contains a given point.
+  pub const fn contains(&self, x: isize, y: isize) -> bool {
+    self.has_area() && x >= 0 && y >= 0 && x < self.width && y < self.height
   }
 }
 

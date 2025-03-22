@@ -2,5 +2,5 @@
 
 mod attr;
 mod color;
-mod tile_grid;
+mod extent;
 mod tile_pos;
