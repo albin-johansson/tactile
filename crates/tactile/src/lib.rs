@@ -13,3 +13,4 @@
 #![warn(redundant_lifetimes)]
 #![warn(variant_size_differences)]
 
+pub mod tile;
