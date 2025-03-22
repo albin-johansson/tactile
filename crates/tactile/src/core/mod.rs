@@ -112,3 +112,5 @@ impl TileGrid {
   }
 }
 
+mod attr;
+pub use attr::{Attr, AttrKind, Color};

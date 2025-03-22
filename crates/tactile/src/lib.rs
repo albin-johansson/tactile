@@ -14,6 +14,7 @@
 #![warn(variant_size_differences)]
 
 extern crate derive_more;
+extern crate glam;
 
 pub mod core;
 pub mod tile;
