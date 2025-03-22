@@ -15,4 +15,5 @@
 
 extern crate derive_more;
 
+pub mod core;
 pub mod tile;
