@@ -13,4 +13,6 @@
 #![warn(redundant_lifetimes)]
 #![warn(variant_size_differences)]
 
+extern crate derive_more;
+
 pub mod tile;
