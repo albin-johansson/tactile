@@ -76,3 +76,6 @@ impl Default for TileId {
     EMPTY_TILE_ID
   }
 }
+
+mod anim;
+pub use anim::{Animation, AnimationFrame};
