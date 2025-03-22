@@ -6,3 +6,6 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+
+[dev-dependencies]
+googletest = "0.14"
