@@ -1,0 +1,18 @@
+[package]
+name = "tactile_zstd"
+repository.workspace = true
+license.workspace = true
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+tactile = { path = "../tactile" }
+
+[dev-dependencies]
+googletest = "0.14"
+
+[lints]
+workspace = true
