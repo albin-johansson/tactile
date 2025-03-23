@@ -2,6 +2,19 @@
 
 use derive_more::{Add, AddAssign, Sub, SubAssign};
 
+/// Provides Tactile error codes.
+#[repr(u8)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum Errc {
+  Unknown,
+  BadParam,
+  CouldNotCompress,
+  CouldNotDecompress,
+}
+
+/// Alias for a [`Result`] using [`Errc`] as the error type.
+pub type Expected<T> = Result<T, Errc>;
+
 /// Represents a two-dimensional tile position.
 ///
 /// Note that tile positions with negative coordinates are allowed.
