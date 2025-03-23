@@ -10,6 +10,19 @@ crate-type = ["rlib"]
 
 [dependencies]
 tactile = { path = "../tactile" }
+tactile_tmj = { path = "../tactile_tmj", optional = true }
+tactile_tmx = { path = "../tactile_tmx", optional = true }
+tactile_tscn = { path = "../tactile_tscn", optional = true }
+tactile_zlib = { path = "../tactile_zlib", optional = true }
+tactile_zstd = { path = "../tactile_zstd", optional = true }
+
+[features]
+tmj = ["dep:tactile_tmj"]
+tmx = ["dep:tactile_tmx"]
+tscn = ["dep:tactile_tscn"]
+zlib = ["dep:tactile_zlib"]
+zstd = ["dep:tactile_zstd"]
+default = ["tmj", "tmx", "tscn", "zlib", "zstd"]
 
 [lints]
 workspace = true
