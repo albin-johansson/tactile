@@ -11,3 +11,6 @@ glam = "0.30"
 
 [dev-dependencies]
 googletest = "0.14"
+
+[lints]
+workspace = true

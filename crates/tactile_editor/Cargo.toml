@@ -7,3 +7,6 @@ edition.workspace = true
 
 [dependencies]
 tactile = { path = "../tactile" }
+
+[lints]
+workspace = true
