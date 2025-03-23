@@ -10,6 +10,7 @@ crate-type = ["rlib"]
 
 [dependencies]
 tactile = { path = "../tactile" }
+flate2 = "1.1.0"
 
 [dev-dependencies]
 googletest = "0.14"
