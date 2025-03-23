@@ -1,9 +1,7 @@
 [workspace]
 resolver = "3"
 members = [
-  "crates/tactile",
-  "crates/tactile_editor",
-  "crates/tactile_app",
+  "crates/*",
 ]
 
 [workspace.package]
