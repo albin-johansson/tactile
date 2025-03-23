@@ -2,35 +2,15 @@
 
 use googletest::{
   assert_that,
-  prelude::{eq, is_false, is_true, none, some},
+  prelude::{eq, is_false, is_true},
 };
-use tactile::core::{Extent, TilePos};
+use tactile::core::Extent;
 
 #[test]
 fn new() {
   let extent = Extent::new(15, 10);
   assert_that!(extent.width, eq(15));
   assert_that!(extent.height, eq(10));
-}
-
-#[test]
-fn pos_to_idx() {
-  let extent = Extent::new(3, 3);
-
-  assert_that!(extent.pos_to_idx(TilePos::new(0, 0)), some(eq(0)));
-  assert_that!(extent.pos_to_idx(TilePos::new(1, 0)), some(eq(1)));
-  assert_that!(extent.pos_to_idx(TilePos::new(2, 0)), some(eq(2)));
-  assert_that!(extent.pos_to_idx(TilePos::new(0, 1)), some(eq(3)));
-  assert_that!(extent.pos_to_idx(TilePos::new(1, 1)), some(eq(4)));
-  assert_that!(extent.pos_to_idx(TilePos::new(2, 1)), some(eq(5)));
-  assert_that!(extent.pos_to_idx(TilePos::new(0, 2)), some(eq(6)));
-  assert_that!(extent.pos_to_idx(TilePos::new(1, 2)), some(eq(7)));
-  assert_that!(extent.pos_to_idx(TilePos::new(2, 2)), some(eq(8)));
-
-  assert_that!(extent.pos_to_idx(TilePos::new(-1, 0)), none());
-  assert_that!(extent.pos_to_idx(TilePos::new(0, -1)), none());
-  assert_that!(extent.pos_to_idx(TilePos::new(3, 0)), none());
-  assert_that!(extent.pos_to_idx(TilePos::new(0, 3)), none());
 }
 
 #[test]

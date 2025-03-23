@@ -2,9 +2,9 @@
 
 use googletest::{
   assert_that,
-  prelude::{eq, is_false, is_true},
+  prelude::{eq, is_false, is_true, none, some},
 };
-use tactile::core::TilePos;
+use tactile::core::{Extent, TilePos};
 
 #[test]
 fn new() {
@@ -42,6 +42,26 @@ fn from_index() {
 #[should_panic]
 fn from_index_panics_if_width_is_zero() {
   let _ = TilePos::from_index(0, 0);
+}
+
+#[test]
+fn to_index() {
+  let extent = Extent::new(3, 3);
+
+  assert_that!(TilePos::new(0, 0).to_index(extent), some(eq(0)));
+  assert_that!(TilePos::new(1, 0).to_index(extent), some(eq(1)));
+  assert_that!(TilePos::new(2, 0).to_index(extent), some(eq(2)));
+  assert_that!(TilePos::new(0, 1).to_index(extent), some(eq(3)));
+  assert_that!(TilePos::new(1, 1).to_index(extent), some(eq(4)));
+  assert_that!(TilePos::new(2, 1).to_index(extent), some(eq(5)));
+  assert_that!(TilePos::new(0, 2).to_index(extent), some(eq(6)));
+  assert_that!(TilePos::new(1, 2).to_index(extent), some(eq(7)));
+  assert_that!(TilePos::new(2, 2).to_index(extent), some(eq(8)));
+
+  assert_that!(TilePos::new(-1, 0).to_index(extent), none());
+  assert_that!(TilePos::new(0, -1).to_index(extent), none());
+  assert_that!(TilePos::new(3, 0).to_index(extent), none());
+  assert_that!(TilePos::new(0, 3).to_index(extent), none());
 }
 
 #[test]
