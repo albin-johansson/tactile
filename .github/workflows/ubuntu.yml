@@ -4,19 +4,12 @@ on: [ push ]
 
 env:
   DISPLAY: :99.0
-  SDL_VIDEODRIVER: x11
-  VCPKG_ROOT: ${{github.workspace}}/vcpkg
-  VCPKG_TARGET_TRIPLET: x64-linux-tactile
-  VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_CACHE_EDITION: 1
 
 jobs:
   ubuntu-latest-test:
     runs-on: ubuntu-24.04
-    if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@main
-      - uses: lukka/get-cmake@main
       - name: Install system dependencies
         run: |
           sudo apt update
@@ -38,37 +31,7 @@ jobs:
                            autoconf-archive \
                            autopoint \
                            gperf \
-                           python3-jinja2 \
-                           mold
-
-      - name: Use GCC 14
-        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14
-
-      - name: Cache Vcpkg
-        id: restore-vcpkg-and-artifacts
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{env.VCPKG_ROOT}}
-            !${{env.VCPKG_ROOT}}\buildtrees
-            !${{env.VCPKG_ROOT}}\packages
-            !${{env.VCPKG_ROOT}}\downloads
-            !${{env.VCPKG_ROOT}}\installed
-          key: tactile-linux-vcpkg-${{hashFiles('vcpkg.json')}}-${{env.VCPKG_CACHE_EDITION}}
-
-      - name: Install Vcpkg
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        run: |
-          git clone https://github.com/microsoft/vcpkg
-          ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
-          sudo ./vcpkg/vcpkg integrate install
-
-      - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-        run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-
-      - name: Register custom Vcpkg triplet file
-        working-directory: ./scripts
-        run: python add_vcpkg_triplet.py
+                           python3-jinja2
 
       - name: Emulate video device
         run: |
@@ -83,51 +46,9 @@ jobs:
         working-directory: ./scripts
         run: python install_assets.py --skip-fonts
 
-      - name: Generate build files
-        env:
-          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
-        run: |
-          mkdir build && cd build
-          cmake .. -GNinja \
-                   -DCMAKE_BUILD_TYPE=Debug \
-                   -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=mold" \
-                   -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=mold" \
-                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_BUILD_TESTS=ON \
-                   -DTACTILE_BUILD_YAML_FORMAT=ON \
-                   -DTACTILE_BUILD_TILED_TMJ_FORMAT=ON \
-                   -DTACTILE_BUILD_TILED_TMX_FORMAT=ON \
-                   -DTACTILE_BUILD_GODOT_TSCN_FORMAT=ON \
-                   -DTACTILE_BUILD_ZLIB_COMPRESSION=ON \
-                   -DTACTILE_BUILD_ZSTD_COMPRESSION=ON \
-                   -DTACTILE_BUILD_OPENGL_RENDERER=ON \
-                   -DTACTILE_BUILD_VULKAN_RENDERER=OFF \
-                   -DTACTILE_USE_LTO=OFF \
-                   -DTACTILE_USE_PRECOMPILED_HEADERS=ON \
-                   --log-level=DEBUG
-
       - name: Build
-        run: ninja -C build
+        run: cargo build --workspace
 
-      - name: Install
-        run: ninja -C build install
-
-      - name: Run base tests
-        working-directory: ./build/debug
-        run: ./tactile-base-test
-
-      - name: Run core tests
-        working-directory: ./build/debug
-        run: ./tactile-core-test
-
-      - name: Run Zlib compression tests
-        working-directory: ./build/debug
-        run: ./tactile-zlib-compression-test
-
-      - name: Run Zstd compression tests
-        working-directory: ./build/debug
-        run: ./tactile-zstd-compression-test
-
-      - name: Run runtime tests
-        working-directory: ./build/debug
-        run: ./tactile-runtime-test
+      - name: Run tests
+        working-directory: ./target/debug
+        run: cargo test --workspace
