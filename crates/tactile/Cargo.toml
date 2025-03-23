@@ -6,7 +6,7 @@ version.workspace = true
 edition.workspace = true
 
 [lib]
-crate-type = ["dylib", "rlib"]
+crate-type = ["rlib"]
 
 [dependencies]
 derive_more = { version = "2.0", features = ["add", "add_assign"] }
