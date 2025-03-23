@@ -4,4 +4,5 @@ extern crate derive_more;
 extern crate glam;
 
 pub mod core;
+pub mod io;
 pub mod tile;
