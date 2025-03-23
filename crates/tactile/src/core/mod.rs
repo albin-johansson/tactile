@@ -52,7 +52,7 @@ impl Extent {
     self.width * self.height
   }
 
-  /// Indicates whether the extent has a non-negative area.
+  /// Indicates whether the extent has a non-empty positive area.
   pub const fn has_area(&self) -> bool {
     self.width > 0 && self.height > 0
   }
