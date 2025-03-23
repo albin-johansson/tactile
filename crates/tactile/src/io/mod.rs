@@ -2,6 +2,15 @@
 
 use crate::core::Expected;
 
+/// Represents supported compression modes.
+#[repr(u8)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum Compression {
+  None,
+  Zlib,
+  Zstd,
+}
+
 /// Used to compress and/or decompress raw bytes.
 pub trait Compressor {
   /// Compresses an arbitrary stream of bytes.
