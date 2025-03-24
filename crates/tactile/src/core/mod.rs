@@ -154,3 +154,6 @@ impl TilePos {
 
 mod attr;
 pub use attr::{Attr, AttrKind, Color};
+
+mod attr_set;
+pub use attr_set::AttrSet;
