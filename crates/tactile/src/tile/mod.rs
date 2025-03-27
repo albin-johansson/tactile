@@ -1,5 +1,13 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
+/// Represents supported tile encodings.
+#[repr(u8)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum TileEncoding {
+  PlainText,
+  Base64,
+}
+
 /// Strong type for global tile identifiers.
 #[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct TileId(i32);
