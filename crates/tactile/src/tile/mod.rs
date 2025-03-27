@@ -1,5 +1,7 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
+use derive_more::{Add, AddAssign, Sub, SubAssign};
+
 /// Represents supported tile encodings.
 #[repr(u8)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -9,7 +11,20 @@ pub enum TileEncoding {
 }
 
 /// Strong type for global tile identifiers.
-#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(
+  Copy,
+  Clone,
+  Debug,
+  Ord,
+  PartialOrd,
+  Eq,
+  PartialEq,
+  Hash,
+  Add,
+  AddAssign,
+  Sub,
+  SubAssign,
+)]
 pub struct TileId(i32);
 
 /// The smallest valid identifier for user tiles.
