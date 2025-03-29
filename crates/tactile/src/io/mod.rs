@@ -19,3 +19,6 @@ pub trait Compressor {
   /// Decompresses a stream of compressed bytes.
   fn decompress(&self, data: &[u8]) -> Expected<Vec<u8>>;
 }
+
+mod texture;
+pub use texture::TextureId;
