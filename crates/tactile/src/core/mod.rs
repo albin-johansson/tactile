@@ -1,6 +1,11 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
+use std::{cell::RefCell, rc::Rc};
+
 use derive_more::{Add, AddAssign, Sub, SubAssign};
+
+/// Alias for a reference-counted pointer type with dynamically checked borrow rules.
+pub type Shared<T> = Rc<RefCell<T>>;
 
 /// Provides Tactile error codes.
 #[repr(u8)]
