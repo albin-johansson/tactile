@@ -2,6 +2,7 @@
 
 use derive_more::{Add, AddAssign, Sub, SubAssign};
 
+/// Strong type for texture identifiers.
 #[derive(
   Copy,
   Clone,
@@ -18,4 +19,16 @@ use derive_more::{Add, AddAssign, Sub, SubAssign};
   SubAssign,
 )]
 pub struct TextureId(u32);
+
+impl TextureId {
+  /// Creates a texture identifier.
+  pub fn new(id: u32) -> Self {
+    Self(id)
+  }
+
+  /// Returns the underlying value.
+  pub fn value(self) -> u32 {
+    self.0
+  }
+}
 
