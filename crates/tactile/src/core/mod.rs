@@ -27,13 +27,13 @@ pub struct Bounds {
 }
 
 mod attr;
-pub use attr::{Attr, AttrKind, Color};
-
 mod attr_set;
-pub use attr_set::AttrSet;
-
+mod component;
 mod extent;
-pub use extent::Extent;
-
 mod tile_pos;
+
+pub use attr::{Attr, AttrKind, Color};
+pub use attr_set::AttrSet;
+pub use component::{Component, ComponentDef, ComponentId, ComponentSet};
+pub use extent::Extent;
 pub use tile_pos::TilePos;
