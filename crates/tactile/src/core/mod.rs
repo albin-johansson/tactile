@@ -31,6 +31,7 @@ mod attr_set;
 mod component;
 mod extent;
 mod meta;
+mod opacity;
 mod tile_pos;
 
 pub use attr::{Attr, AttrKind, Color};
@@ -38,4 +39,5 @@ pub use attr_set::AttrSet;
 pub use component::{Component, ComponentDef, ComponentId, ComponentSet};
 pub use extent::Extent;
 pub use meta::{MetaCtx, Metadata};
+pub use opacity::Opacity;
 pub use tile_pos::TilePos;

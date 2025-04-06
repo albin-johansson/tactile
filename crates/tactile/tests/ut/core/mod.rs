@@ -2,3 +2,4 @@
 
 mod component;
 mod component_def;
+mod opacity;
