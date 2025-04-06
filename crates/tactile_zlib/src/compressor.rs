@@ -1,14 +1,12 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use flate2::{
-  Compression,
-  write::{ZlibDecoder, ZlibEncoder},
-};
+use flate2::Compression;
+use flate2::write::ZlibDecoder;
+use flate2::write::ZlibEncoder;
 use std::io::Write;
-use tactile::{
-  core::{Errc, Expected},
-  io::Compressor,
-};
+use tactile::core::Errc;
+use tactile::core::Expected;
+use tactile::io::Compressor;
 
 /// A compressor that uses the [zlib][1] format.
 ///

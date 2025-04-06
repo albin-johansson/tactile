@@ -1,6 +1,9 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use googletest::prelude::{anything, assert_that, eq, ok};
+use googletest::prelude::anything;
+use googletest::prelude::assert_that;
+use googletest::prelude::eq;
+use googletest::prelude::ok;
 use tactile::io::Compressor;
 use tactile_zlib::ZlibCompressor;
 
