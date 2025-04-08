@@ -4,8 +4,7 @@ use flate2::Compression;
 use flate2::write::ZlibDecoder;
 use flate2::write::ZlibEncoder;
 use std::io::Write;
-use tactile::common::Error;
-use tactile::common::Expected;
+use tactile::common::Result;
 use tactile::io::Compressor;
 
 /// A compressor that uses the [zlib][1] format.
@@ -22,7 +21,7 @@ impl ZlibCompressor {
 }
 
 impl Compressor for ZlibCompressor {
-  fn compress(&self, data: &[u8]) -> Expected<Vec<u8>> {
+  fn compress(&self, data: &[u8]) -> Result<Vec<u8>> {
     let mut encoder = ZlibEncoder::new(Vec::new(), Compression::default());
 
     encoder.write_all(data)?;
@@ -31,7 +30,7 @@ impl Compressor for ZlibCompressor {
     Ok(compressed_bytes)
   }
 
-  fn decompress(&self, data: &[u8]) -> Expected<Vec<u8>> {
+  fn decompress(&self, data: &[u8]) -> Result<Vec<u8>> {
     let mut decoder = ZlibDecoder::new(Vec::new());
 
     decoder.write_all(data)?;

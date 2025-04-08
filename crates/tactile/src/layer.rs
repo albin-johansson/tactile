@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use crate::common::Expected;
+use crate::common::Result;
 use crate::common::Extent;
 use crate::common::Metadata;
 use crate::common::Opacity;

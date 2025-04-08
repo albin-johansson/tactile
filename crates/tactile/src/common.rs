@@ -4,8 +4,8 @@ use glam::Vec2;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-/// Alias for a [`Result`] using [`Error`] as the error type.
-pub type Expected<T> = Result<T, Error>;
+/// Alias for a [`std::result::Result`] using [`Error`] as the error type.
+pub type Result<T> = std::result::Result<T, Error>;
 
 /// Alias for a reference-counted pointer type with dynamically checked borrow rules.
 pub type Shared<T> = Rc<RefCell<T>>;

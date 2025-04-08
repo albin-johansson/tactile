@@ -1,7 +1,7 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
 use crate::common::Error;
-use crate::common::Expected;
+use crate::common::Result;
 use crate::tile::TileId;
 use std::time::Duration;
 use std::time::Instant;
@@ -70,7 +70,7 @@ impl Animation {
     &mut self,
     index: usize,
     frame: AnimationFrame,
-  ) -> Expected<()> {
+  ) -> Result<()> {
     let frame_count = self.len();
 
     if index > frame_count {
