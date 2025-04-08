@@ -1,6 +1,13 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use derive_more::{Add, AddAssign, Sub, SubAssign};
+use derive_more::Add;
+use derive_more::AddAssign;
+use derive_more::Sub;
+use derive_more::SubAssign;
+
+mod annotation;
+
+pub use annotation::{Annotation, AnnotationKind};
 
 /// Strong type for layer identifiers.
 #[derive(
@@ -31,7 +38,4 @@ impl LayerId {
     self.0
   }
 }
-
-mod annotation;
-pub use annotation::{Annotation, AnnotationKind};
 

@@ -1,6 +1,9 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-use derive_more::{Add, AddAssign, Sub, SubAssign};
+use derive_more::Add;
+use derive_more::AddAssign;
+use derive_more::Sub;
+use derive_more::SubAssign;
 
 /// Represents supported tile encodings.
 #[repr(u8)]
@@ -102,3 +105,4 @@ impl Default for TileId {
 
 mod anim;
 pub use anim::{Animation, AnimationFrame};
+
