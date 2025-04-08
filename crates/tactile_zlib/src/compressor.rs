@@ -24,19 +24,19 @@ impl ZlibCompressor {
 impl Compressor for ZlibCompressor {
   fn compress(&self, data: &[u8]) -> Expected<Vec<u8>> {
     let mut encoder = ZlibEncoder::new(Vec::new(), Compression::default());
-    encoder
-      .write_all(data)
-      .and_then(|_| encoder.finish())
-      .inspect_err(|err| eprintln!("Could not compress data with Zlib: {:?}", err))
-      .map_err(|_| Error::CouldNotCompress)
+
+    encoder.write_all(data)?;
+    let compressed_bytes = encoder.finish()?;
+
+    Ok(compressed_bytes)
   }
 
   fn decompress(&self, data: &[u8]) -> Expected<Vec<u8>> {
     let mut decoder = ZlibDecoder::new(Vec::new());
-    decoder
-      .write_all(data)
-      .and_then(|_| decoder.finish())
-      .inspect_err(|err| eprintln!("Could not decompress data with Zlib: {:?}", err))
-      .map_err(|_| Error::CouldNotDecompress)
+
+    decoder.write_all(data)?;
+    let decompressed_bytes = decoder.finish()?;
+
+    Ok(decompressed_bytes)
   }
 }
