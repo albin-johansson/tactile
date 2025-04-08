@@ -2,7 +2,7 @@
 
 use googletest::{
   assert_that,
-  prelude::{eq, is_true, none, some},
+  prelude::{eq, is_true, none, ok, some},
 };
 use std::time::{Duration, Instant};
 use tactile::tile::{Animation, AnimationFrame, TileId};
@@ -30,9 +30,9 @@ fn new() {
 #[test]
 fn update() {
   let mut animation = Animation::new();
-  assert_that!(animation.insert_frame(0, FRAME1), some(()));
-  assert_that!(animation.insert_frame(1, FRAME2), some(()));
-  assert_that!(animation.insert_frame(2, FRAME3), some(()));
+  animation.append_frame(FRAME1);
+  animation.append_frame(FRAME2);
+  animation.append_frame(FRAME3);
   assert_that!(animation.len(), eq(3));
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 
@@ -55,12 +55,12 @@ fn insert_frame() {
   assert_that!(animation.get_current_tile_id(), none());
 
   // [ ] => [ ->FRAME1 ]
-  assert_that!(animation.insert_frame(0, FRAME1), some(()));
+  assert_that!(animation.insert_frame(0, FRAME1), ok(()));
   assert_that!(animation.len(), eq(1));
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 
   // [ ->FRAME1 ] => [ ->FRAME1, FRAME2 ]
-  assert_that!(animation.insert_frame(1, FRAME2), some(()));
+  assert_that!(animation.insert_frame(1, FRAME2), ok(()));
   assert_that!(animation.len(), eq(2));
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 
@@ -69,7 +69,7 @@ fn insert_frame() {
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID2)));
 
   // [ FRAME1, ->FRAME2 ] => [ ->FRAME1, FRAME2, FRAME3 ]
-  assert_that!(animation.insert_frame(2, FRAME3), some(()));
+  assert_that!(animation.insert_frame(2, FRAME3), ok(()));
   assert_that!(animation.len(), eq(3));
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 
@@ -79,17 +79,26 @@ fn insert_frame() {
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID3)));
 
   //  [ FRAME1, FRAME2, ->FRAME3 ] => [ ->FRAME1, FRAME4, FRAME2, FRAME3 ]
-  assert_that!(animation.insert_frame(1, FRAME4), some(()));
+  assert_that!(animation.insert_frame(1, FRAME4), ok(()));
   assert_that!(animation.len(), eq(4));
+  assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
+}
+
+#[test]
+fn append_frame() {
+  let mut animation = Animation::new();
+  animation.append_frame(FRAME1);
+
+  assert_that!(animation.len(), eq(1));
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 }
 
 #[test]
 fn remove_frame() {
   let mut animation = Animation::new();
-  assert_that!(animation.insert_frame(0, FRAME1), some(()));
-  assert_that!(animation.insert_frame(1, FRAME2), some(()));
-  assert_that!(animation.insert_frame(2, FRAME3), some(()));
+  animation.append_frame(FRAME1);
+  animation.append_frame(FRAME2);
+  animation.append_frame(FRAME3);
   assert_that!(animation.len(), eq(3));
   assert_that!(animation.get_current_tile_id(), some(eq(TILE_ID1)));
 

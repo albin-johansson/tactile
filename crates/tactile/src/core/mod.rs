@@ -9,6 +9,9 @@ use std::{cell::RefCell, rc::Rc};
 pub enum Errc {
   Unknown,
   BadParam,
+  BadState,
+  InvalidOp,
+  OutOfRange,
   CouldNotCompress,
   CouldNotDecompress,
 }

@@ -1,7 +1,10 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
+use crate::core::Errc;
+use crate::core::Expected;
 use crate::tile::TileId;
-use std::time::{Duration, Instant};
+use std::time::Duration;
+use std::time::Instant;
 
 /// Represents a single frame in an [`Animation`].
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -63,11 +66,15 @@ impl Animation {
   ///
   /// It's possible to insert frames at the end of the animation by setting `index` to the length of
   /// the animation. The animation will be reset if the specified frame is successfully inserted.
-  pub fn insert_frame(&mut self, index: usize, frame: AnimationFrame) -> Option<()> {
+  pub fn insert_frame(
+    &mut self,
+    index: usize,
+    frame: AnimationFrame,
+  ) -> Expected<()> {
     let frame_count = self.len();
 
     if index > frame_count {
-      return None;
+      return Err(Errc::BadParam);
     }
 
     if index == frame_count {
@@ -77,7 +84,12 @@ impl Animation {
     }
 
     self.reset();
-    Some(())
+    Ok(())
+  }
+
+  /// Adds a frame to the end of the animation.
+  pub fn append_frame(&mut self, frame: AnimationFrame) {
+    self.insert_frame(self.len(), frame).unwrap();
   }
 
   /// Removes a frame from the animation.
