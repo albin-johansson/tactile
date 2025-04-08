@@ -1,5 +1,9 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
+use crate::common::Expected;
+use crate::common::Extent;
+use crate::common::Metadata;
+use crate::common::Opacity;
 use derive_more::Add;
 use derive_more::AddAssign;
 use derive_more::Sub;

@@ -3,7 +3,7 @@
 use derive_more::{Add, AddAssign, Sub, SubAssign};
 use std::collections::HashMap;
 
-use crate::core::AttrSet;
+use crate::common::AttrSet;
 
 /// Strong type for component identifiers.
 #[derive(

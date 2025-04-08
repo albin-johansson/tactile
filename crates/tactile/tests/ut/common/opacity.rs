@@ -3,7 +3,7 @@
 use googletest::prelude::approx_eq;
 use googletest::prelude::assert_that;
 use googletest::prelude::eq;
-use tactile::core::Opacity;
+use tactile::common::Opacity;
 
 #[test]
 fn constants() {

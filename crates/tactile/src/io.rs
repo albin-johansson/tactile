@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use crate::core::Expected;
+use crate::common::Expected;
 
 /// Represents supported compression modes.
 #[repr(u8)]

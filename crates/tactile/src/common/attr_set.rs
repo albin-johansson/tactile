@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use crate::core::{Attr, AttrKind};
+use crate::common::{Attr, AttrKind};
 use std::collections::HashMap;
 
 /// Represents a set of named [`Attr`] values.

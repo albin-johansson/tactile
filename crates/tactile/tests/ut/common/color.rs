@@ -1,7 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use googletest::{assert_that, prelude::eq};
-use tactile::core::Color;
+use googletest::assert_that;
+use googletest::prelude::eq;
+use tactile::common::Color;
 
 #[test]
 fn new() {

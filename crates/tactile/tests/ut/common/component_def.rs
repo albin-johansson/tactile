@@ -1,10 +1,10 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use googletest::{
-  assert_that,
-  prelude::{eq, is_true},
-};
-use tactile::core::{ComponentDef, ComponentId};
+use googletest::assert_that;
+use googletest::prelude::eq;
+use googletest::prelude::is_true;
+use tactile::common::ComponentDef;
+use tactile::common::ComponentId;
 
 #[test]
 fn new() {

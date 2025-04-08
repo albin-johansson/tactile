@@ -1,7 +1,7 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-use crate::core::Error;
-use crate::core::Expected;
+use crate::common::Error;
+use crate::common::Expected;
 use crate::tile::TileId;
 use std::time::Duration;
 use std::time::Instant;

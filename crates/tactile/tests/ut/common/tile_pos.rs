@@ -1,10 +1,13 @@
-// Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
+// Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use googletest::{
-  assert_that,
-  prelude::{eq, is_false, is_true, none, some},
-};
-use tactile::core::{Extent, TilePos};
+use googletest::assert_that;
+use googletest::prelude::eq;
+use googletest::prelude::is_false;
+use googletest::prelude::is_true;
+use googletest::prelude::none;
+use googletest::prelude::some;
+use tactile::common::Extent;
+use tactile::common::TilePos;
 
 #[test]
 fn new() {

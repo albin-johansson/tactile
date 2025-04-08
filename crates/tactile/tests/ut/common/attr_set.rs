@@ -1,9 +1,15 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use googletest::prelude::{
-  assert_that, contains, eq, is_false, is_true, none, some,
-};
-use tactile::core::{Attr, AttrKind, AttrSet};
+use googletest::prelude::assert_that;
+use googletest::prelude::contains;
+use googletest::prelude::eq;
+use googletest::prelude::is_false;
+use googletest::prelude::is_true;
+use googletest::prelude::none;
+use googletest::prelude::some;
+use tactile::common::Attr;
+use tactile::common::AttrKind;
+use tactile::common::AttrSet;
 
 #[test]
 fn new() {

@@ -1,7 +1,11 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use googletest::prelude::{assert_that, eq};
-use tactile::core::{Attr, Component, ComponentDef, ComponentId};
+use googletest::prelude::assert_that;
+use googletest::prelude::eq;
+use tactile::common::Attr;
+use tactile::common::Component;
+use tactile::common::ComponentDef;
+use tactile::common::ComponentId;
 
 #[test]
 fn from_component_def() {

@@ -4,8 +4,8 @@ use flate2::Compression;
 use flate2::write::ZlibDecoder;
 use flate2::write::ZlibEncoder;
 use std::io::Write;
-use tactile::core::Error;
-use tactile::core::Expected;
+use tactile::common::Error;
+use tactile::common::Expected;
 use tactile::io::Compressor;
 
 /// A compressor that uses the [zlib][1] format.

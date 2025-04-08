@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use crate::core::{AttrSet, ComponentSet};
+use crate::common::{AttrSet, ComponentSet};
 
 /// A collection of metadata.
 #[derive(Clone, Debug, Default)]

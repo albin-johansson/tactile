@@ -1,12 +1,20 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use glam::{IVec2, IVec3, IVec4, Vec2, Vec3, Vec4};
-use googletest::{
-  assert_that,
-  prelude::{eq, is_false, is_true, some},
-};
+use glam::IVec2;
+use glam::IVec3;
+use glam::IVec4;
+use glam::Vec2;
+use glam::Vec3;
+use glam::Vec4;
+use googletest::assert_that;
+use googletest::prelude::eq;
+use googletest::prelude::is_false;
+use googletest::prelude::is_true;
+use googletest::prelude::some;
 use std::path::PathBuf;
-use tactile::core::{Attr, AttrKind, Color};
+use tactile::common::Attr;
+use tactile::common::AttrKind;
+use tactile::common::Color;
 
 #[test]
 fn from_int() {

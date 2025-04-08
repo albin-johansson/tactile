@@ -2,7 +2,7 @@
 
 use derive_more::{Add, AddAssign, Sub, SubAssign};
 
-use crate::core::Extent;
+use crate::common::Extent;
 
 /// Represents a two-dimensional tile position.
 ///
@@ -50,7 +50,7 @@ impl TilePos {
   /// # Examples
   ///
   /// ```
-  /// use tactile::core::{Extent, TilePos};
+  /// use tactile::common::{Extent, TilePos};
   ///
   /// let extent = Extent::new(3, 3);
   ///

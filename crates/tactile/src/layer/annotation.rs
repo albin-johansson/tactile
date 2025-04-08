@@ -1,6 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-use crate::core::{Bounds, MetaCtx, Metadata};
+use crate::common::Bounds;
+use crate::common::MetaCtx;
+use crate::common::Metadata;
 
 /// Represents different kinds of annotation objects.
 #[repr(u8)]
