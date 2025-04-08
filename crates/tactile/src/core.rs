@@ -1,23 +1,11 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
 use glam::Vec2;
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
-/// Provides Tactile error codes.
-#[repr(u8)]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub enum Errc {
-  Unknown,
-  BadParam,
-  BadState,
-  InvalidOp,
-  OutOfRange,
-  CouldNotCompress,
-  CouldNotDecompress,
-}
-
-/// Alias for a [`Result`] using [`Errc`] as the error type.
-pub type Expected<T> = Result<T, Errc>;
+/// Alias for a [`Result`] using [`Error`] as the error type.
+pub type Expected<T> = Result<T, Error>;
 
 /// Alias for a reference-counted pointer type with dynamically checked borrow rules.
 pub type Shared<T> = Rc<RefCell<T>>;
@@ -32,6 +20,7 @@ pub struct Bounds {
 mod attr;
 mod attr_set;
 mod component;
+mod error;
 mod extent;
 mod meta;
 mod opacity;
@@ -40,6 +29,7 @@ mod tile_pos;
 pub use attr::{Attr, AttrKind, Color};
 pub use attr_set::AttrSet;
 pub use component::{Component, ComponentDef, ComponentId, ComponentSet};
+pub use error::Error;
 pub use extent::Extent;
 pub use meta::{MetaCtx, Metadata};
 pub use opacity::Opacity;

@@ -1,6 +1,6 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-use crate::core::Errc;
+use crate::core::Error;
 use crate::core::Expected;
 use crate::tile::TileId;
 use std::time::Duration;
@@ -74,7 +74,7 @@ impl Animation {
     let frame_count = self.len();
 
     if index > frame_count {
-      return Err(Errc::BadParam);
+      return Err(Error::BadParam);
     }
 
     if index == frame_count {
