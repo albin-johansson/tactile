@@ -104,5 +104,7 @@ impl Default for TileId {
 }
 
 mod anim;
-pub use anim::{Animation, AnimationFrame};
+mod tileset;
 
+pub use anim::*;
+pub use tileset::*;
