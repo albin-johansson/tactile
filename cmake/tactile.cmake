@@ -99,7 +99,7 @@ endfunction()
 function(tactile_prepare_target target)
   set_target_properties(${target}
                         PROPERTIES
-                        CXX_STANDARD 23
+                        CXX_STANDARD 26
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
                         POSITION_INDEPENDENT_CODE ON
