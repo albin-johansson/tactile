@@ -19,6 +19,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
+          brew install llvm
           brew install ninja
           brew install autoconf
           brew install automake
@@ -60,8 +61,8 @@ jobs:
           cmake .. --log-level=DEBUG \
                    -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
-                   -DCMAKE_C_COMPILER=clang \
-                   -DCMAKE_CXX_COMPILER=clang++ \
+                   -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang \
+                   -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_BUILD_EDITOR=ON \
                    -DTACTILE_BUILD_TESTS=ON
