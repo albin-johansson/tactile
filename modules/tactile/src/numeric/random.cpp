@@ -6,6 +6,8 @@ module;
 
 module tactile.numeric;
 
+import tactile.core;
+
 namespace tactile {
 namespace {
 
