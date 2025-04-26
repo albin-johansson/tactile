@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.28)
 
 option(TACTILE_BUILD_TESTS "Build the test suites" OFF)
 option(TACTILE_BUILD_EDITOR "Build the editor application" ON)
+option(TACTILE_ENABLE_ZLIB_COMP "Enable Zlib compression support" ON)
+option(TACTILE_ENABLE_ZSTD_COMP "Enable Zstd compression support" ON)
 option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
 option(TACTILE_USE_PRECOMPILED_HEADERS "Enable precompiled standard headers" ON)
 
@@ -21,6 +23,14 @@ endif ()
 
 if (TACTILE_BUILD_EDITOR)
   list(APPEND VCPKG_MANIFEST_FEATURES "editor")
+endif ()
+
+if (TACTILE_ENABLE_ZLIB_COMP)
+  list(APPEND VCPKG_MANIFEST_FEATURES "zlib-comp")
+endif ()
+
+if (TACTILE_ENABLE_ZSTD_COMP)
+  list(APPEND VCPKG_MANIFEST_FEATURES "zstd-comp")
 endif ()
 
 if (TACTILE_BUILD_OPENGL_RENDERER)
