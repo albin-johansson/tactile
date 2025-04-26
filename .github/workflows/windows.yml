@@ -64,3 +64,8 @@ jobs:
 
       - name: Install
         run: ninja -C build install
+
+      - name: Run 'tactile' module tests
+        working-directory: ./build/debug
+        shell: cmd
+        run: tactile_tests.exe
