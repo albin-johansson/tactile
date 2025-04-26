@@ -42,6 +42,9 @@ using Option = std::optional<T>;
 template <typename T, typename E>
 using Expected = std::expected<T, E>;
 
+template <typename T>
+using Unexpected = std::unexpected<T>;
+
 using std::nullopt;
 
 }  // namespace tactile

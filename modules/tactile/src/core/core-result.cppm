@@ -1,5 +1,9 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
+module;
+
+#include <utility>
+
 export module tactile.core:result;
 
 import :containers;
@@ -59,6 +63,24 @@ enum class Error : u8
 
 template <typename T>
 using Result = Expected<T, Error>;
+
+[[nodiscard]]
+constexpr auto ok() noexcept -> Result<void>
+{
+  return Result<void> {};
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto ok(T&& value) noexcept -> Result<T>
+{
+  return Result<T> {std::forward<T>(value)};
+}
+
+[[nodiscard]]
+constexpr auto err(const Error err) noexcept -> Unexpected<Error>
+{
+  return Unexpected {err};
+}
 
 /// Returns a textual representation of a given error code.
 [[nodiscard]]
