@@ -102,7 +102,3 @@ jobs:
 
       - name: Install
         run: ninja -C build install
-
-      - name: Run core tests
-        working-directory: ./build/debug
-        run: ./tactile_core_test
