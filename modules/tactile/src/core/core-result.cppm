@@ -79,7 +79,7 @@ template <typename T>
 [[nodiscard]]
 constexpr auto err(const Error err) noexcept -> Unexpected<Error>
 {
-  return Unexpected {err};
+  return Unexpected<Error> {err};
 }
 
 /// Returns a textual representation of a given error code.
