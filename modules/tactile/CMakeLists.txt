@@ -11,6 +11,8 @@ target_sources(tactile
                "src/core/core-result.cppm"
                "src/core/core-strings.cppm"
                "src/core/core-time.cppm"
+               "src/numeric/numeric.cppm"
+               "src/numeric/numeric-casts.cppm"
                "src/tactile.cppm"
 
                PRIVATE
@@ -30,6 +32,8 @@ if (TACTILE_BUILD_TESTS)
                  PUBLIC FILE_SET "CXX_MODULES" FILES
                  "tests/core/core.cppm"
                  "tests/core/core-error.cppm"
+                 "tests/numeric/numeric.cppm"
+                 "tests/numeric/numeric-casts.cppm"
                  "tests/tactile_tests.cppm"
                  )
 

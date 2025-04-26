@@ -3,3 +3,4 @@
 export module tactile;
 
 export import tactile.core;
+export import tactile.numeric;
