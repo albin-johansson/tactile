@@ -22,6 +22,7 @@ jobs:
           brew install ninja
           brew install autoconf
           brew install automake
+          brew install libtool
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
