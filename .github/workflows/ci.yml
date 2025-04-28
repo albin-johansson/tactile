@@ -99,7 +99,14 @@ jobs:
                            autoconf \
                            automake \
                            libtool \
-                           libltdl-dev
+                           libltdl-dev \
+                           libx11-dev \
+                           libxft-dev \
+                           libxext-dev \
+                           libwayland-dev \
+                           libxkbcommon-dev \
+                           libegl1-mesa-dev \
+                           libibus-1.0-dev
 
       - name: Use GCC 14
         run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14
