@@ -36,7 +36,9 @@ jobs:
           brew install libtool
 
       - name: Install Vcpkg
-        uses: lukka/run-vcpkg@v11
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 
       - name: Create Vcpkg binary cache directory
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
@@ -96,13 +98,16 @@ jobs:
                            mold \
                            autoconf \
                            automake \
-                           libtool
+                           libtool \
+                           libltdl-dev
 
       - name: Use GCC 14
         run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14
 
       - name: Install Vcpkg
-        uses: lukka/run-vcpkg@v11
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 
       - name: Create Vcpkg binary cache directory
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
@@ -155,7 +160,10 @@ jobs:
             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
       - name: Install Vcpkg
-        uses: lukka/run-vcpkg@v11
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
+          .\vcpkg\vcpkg integrate install
 
       - name: Create Vcpkg binary cache directory
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
