@@ -121,6 +121,7 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: x64-windows-tactile
     steps:
       - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
 
       - name: Install Vcpkg
         uses: lukka/run-vcpkg@v11
