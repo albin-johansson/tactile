@@ -47,14 +47,11 @@ if (TACTILE_BUILD_TESTS)
   tactile_prepare_target(tactile_tests)
 
   target_sources(tactile_tests
-                 PUBLIC FILE_SET "CXX_MODULES" FILES
-                 "tests/core/core.cppm"
-                 "tests/core/core-error.cppm"
-                 "tests/io/io.cppm"
-                 "tests/io/io-base64.cppm"
-                 "tests/numeric/numeric.cppm"
-                 "tests/numeric/numeric-casts.cppm"
-                 "tests/tactile_tests.cppm"
+                 PRIVATE
+                 "tests/core/error.cpp"
+                 "tests/io/base64.cpp"
+                 "tests/numeric/casts.cpp"
+                 "tests/main.cpp"
                  )
 
   target_link_libraries(tactile_tests

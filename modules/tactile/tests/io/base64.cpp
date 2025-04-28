@@ -1,11 +1,7 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-export module tactile.tests.io:base64;
 
 import tactile;
 

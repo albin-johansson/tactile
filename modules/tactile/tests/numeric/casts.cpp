@@ -1,13 +1,9 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
 #include <limits>
 #include <stdexcept>
 
 #include <gtest/gtest.h>
-
-export module tactile.tests.numeric:casts;
 
 import tactile;
 
