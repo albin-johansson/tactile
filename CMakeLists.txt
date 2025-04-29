@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.30)
 
 option(TACTILE_BUILD_TESTS "Build the test suites" OFF)
 option(TACTILE_BUILD_EDITOR "Build the editor application" ON)
