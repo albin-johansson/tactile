@@ -1,5 +1,6 @@
 project(tactile_module CXX)
 
+find_package(FastFloat CONFIG REQUIRED)
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
 add_library(tactile STATIC)
@@ -28,11 +29,17 @@ target_sources(tactile
 
                PRIVATE
                "src/core/result.cpp"
+               "src/core/strings.cpp"
                "src/io/base64.cpp"
                "src/numeric/random.cpp"
                )
 
 tactile_prepare_target(tactile)
+
+target_link_libraries(tactile
+                      PRIVATE
+                      FastFloat::fast_float
+                      )
 
 target_include_directories(tactile
                            PRIVATE
@@ -49,6 +56,7 @@ if (TACTILE_BUILD_TESTS)
   target_sources(tactile_tests
                  PRIVATE
                  "tests/core/error.cpp"
+                 "tests/core/strings.cpp"
                  "tests/io/base64.cpp"
                  "tests/numeric/casts.cpp"
                  "tests/main.cpp"
@@ -58,6 +66,5 @@ if (TACTILE_BUILD_TESTS)
                         PRIVATE
                         tactile
                         GTest::gtest
-                        GTest::gmock
                         )
 endif ()

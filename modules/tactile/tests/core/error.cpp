@@ -2,11 +2,11 @@
 
 #include <gtest/gtest.h>
 
-import tactile;
+import tactile.core;
 
 namespace tactile::tests {
 
-TEST(Error, ToString)
+TEST(Core_Error, ToString)
 {
   EXPECT_EQ(to_string(Error::kUnknown), "unknown");
   EXPECT_EQ(to_string(Error::kOutOfMemory), "out_of_memory");
@@ -25,7 +25,7 @@ TEST(Error, ToString)
   EXPECT_EQ(to_string(Error::kCouldNotDecompress), "could_not_decompress");
 }
 
-TEST(Error, Describe)
+TEST(Core_Error, Describe)
 {
   EXPECT_EQ(describe(Error::kUnknown), "an unknown error occurred");
   EXPECT_EQ(describe(Error::kOutOfMemory), "out of memory");

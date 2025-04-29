@@ -3,11 +3,12 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-import tactile;
+import tactile.core;
+import tactile.io;
 
 namespace tactile::tests {
 
-TEST(IO, Base64EncodeDecode)
+TEST(IO_Base64, EncodeDecode)
 {
   // See https://en.m.wikipedia.org/wiki/Base64#Examples
   const Vector<u8> data {
