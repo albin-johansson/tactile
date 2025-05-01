@@ -13,6 +13,7 @@ target_sources(tactile
                PUBLIC FILE_SET "CXX_MODULES" FILES
                "src/core/core.cppm"
                "src/core/core-containers.cppm"
+               "src/core/core-fs.cppm"
                "src/core/core-memory.cppm"
                "src/core/core-primitives.cppm"
                "src/core/core-result.cppm"
