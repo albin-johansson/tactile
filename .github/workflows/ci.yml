@@ -1,7 +1,12 @@
-name: "CI"
+name: CI
 
 on:
   - push
+
+env:
+  VCPKG_ROOT: ${{github.workspace}}/vcpkg
+  VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
+  VCPKG_BINARY_SOURCES: clear;x-gha,readwrite
 
 jobs:
   macos-build-and-test:
@@ -11,6 +16,13 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: arm64-osx-tactile
     steps:
       - uses: actions/checkout@v4
+
+      - name: Export GitHub Actions cache environment variables
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
       - name: Select Xcode version
         run: sudo xcode-select --switch /Applications/Xcode_16.3.app
@@ -23,8 +35,30 @@ jobs:
           brew install automake
           brew install libtool
 
+      - name: Restore cached Vcpkg
+        id: restore-cached-vcpkg
+        uses: actions/cache@v4
+        with:
+          key: tactile-ci-macos-vcpkg-${{hashFiles('vcpkg.json')}}
+          path: |
+            ${{env.VCPKG_ROOT}}
+            !${{env.VCPKG_ROOT}}/buildtrees
+            !${{env.VCPKG_ROOT}}/packages
+            !${{env.VCPKG_ROOT}}/downloads
+            !${{env.VCPKG_ROOT}}/installed
+
       - name: Install Vcpkg
-        uses: lukka/run-vcpkg@v11
+        if: steps.restore-cached-vcpkg.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
+
+      - name: Create Vcpkg binary cache directory
+        run: mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
+
+      - name: Install custom Vcpkg triplet file
+        working-directory: ./scripts
+        run: python3 add_vcpkg_triplet.py
 
       - name: Install assets
         working-directory: ./scripts
@@ -61,6 +95,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Export GitHub Actions cache environment variables
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
       - name: Install system dependencies
         run: |
           sudo apt update
@@ -81,8 +122,26 @@ jobs:
       - name: Use GCC 14
         run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14
 
+      - name: Restore cached Vcpkg
+        id: restore-cached-vcpkg
+        uses: actions/cache@v4
+        with:
+          key: tactile-ci-ubuntu-vcpkg-${{hashFiles('vcpkg.json')}}
+          path: |
+            ${{env.VCPKG_ROOT}}
+            !${{env.VCPKG_ROOT}}/buildtrees
+            !${{env.VCPKG_ROOT}}/packages
+            !${{env.VCPKG_ROOT}}/downloads
+            !${{env.VCPKG_ROOT}}/installed
+
       - name: Install Vcpkg
-        uses: lukka/run-vcpkg@v11
+        if: steps.restore-cached-vcpkg.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
+
+      - name: Create Vcpkg binary cache directory
+        run: mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
 
       - name: Install custom Vcpkg triplet file
         working-directory: ./scripts
@@ -121,10 +180,37 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: x64-windows-tactile
     steps:
       - uses: actions/checkout@v4
+
+      - name: Export GitHub Actions cache environment variables
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
       - uses: ilammy/msvc-dev-cmd@v1
 
+      - name: Restore cached Vcpkg
+        id: restore-cached-vcpkg
+        uses: actions/cache@v4
+        with:
+          key: tactile-ci-windows-vcpkg-${{hashFiles('vcpkg.json')}}
+          path: |
+            ${{env.VCPKG_ROOT}}
+            !${{env.VCPKG_ROOT}}\buildtrees
+            !${{env.VCPKG_ROOT}}\packages
+            !${{env.VCPKG_ROOT}}\downloads
+            !${{env.VCPKG_ROOT}}\installed
+
       - name: Install Vcpkg
-        uses: lukka/run-vcpkg@v11
+        if: steps.restore-cached-vcpkg.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
+          .\vcpkg\vcpkg integrate install
+
+      - name: Create Vcpkg binary cache directory
+        run: mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
 
       - name: Install custom Vcpkg triplet file
         working-directory: ./scripts
