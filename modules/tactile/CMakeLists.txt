@@ -6,10 +6,6 @@ find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 add_library(tactile STATIC)
 
 target_sources(tactile
-               PUBLIC FILE_SET "HEADERS" BASE_DIRS "inc" FILES
-               "inc/tactile/interface_class.hpp"
-               "inc/tactile/special_member_functions.hpp"
-
                PUBLIC FILE_SET "CXX_MODULES" FILES
                "src/core/core.cppm"
                "src/core/core-containers.cppm"

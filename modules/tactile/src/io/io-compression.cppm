@@ -1,9 +1,5 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include "tactile/interface_class.hpp"
-
 export module tactile.io:compression;
 
 import tactile.core;
@@ -21,7 +17,7 @@ enum class CompressionKind
 class ICompressor
 {
  public:
-  TACTILE_INTERFACE_CLASS(ICompressor);
+  virtual ~ICompressor() noexcept = default;
 
   /// Compresses a stream of bytes.
   virtual auto compress(Span<const u8> data) -> Result<Vector<u8>> = 0;
