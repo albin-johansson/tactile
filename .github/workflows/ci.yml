@@ -210,7 +210,7 @@ jobs:
           .\vcpkg\vcpkg integrate install
 
       - name: Create Vcpkg binary cache directory
-        run: mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
+        run: mkdir -p $env:VCPKG_DEFAULT_BINARY_CACHE
 
       - name: Install custom Vcpkg triplet file
         working-directory: ./scripts
