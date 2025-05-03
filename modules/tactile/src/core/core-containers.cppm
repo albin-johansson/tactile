@@ -14,7 +14,7 @@ module;
 
 export module tactile.core:containers;
 
-import :primitives;
+export import :primitives;
 
 export namespace tactile {
 

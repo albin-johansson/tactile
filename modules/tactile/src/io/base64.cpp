@@ -6,8 +6,6 @@ module;
 
 module tactile.io;
 
-import tactile.core;
-
 namespace tactile {
 
 void base64_encode(const Span<const u8> data, String& encoded_data)

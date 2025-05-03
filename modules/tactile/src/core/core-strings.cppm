@@ -7,8 +7,8 @@ module;
 
 export module tactile.core:strings;
 
-import :containers;
-import :primitives;
+export import :containers;
+export import :primitives;
 
 export namespace tactile {
 
