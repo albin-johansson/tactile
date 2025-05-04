@@ -74,6 +74,8 @@ jobs:
           cmake .. --log-level=DEBUG \
                    -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
+                   -DCMAKE_OSX_SYSROOT=macosx \
+                   -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_BUILD_TESTS=ON
 
@@ -229,6 +231,7 @@ jobs:
           cmake .. --log-level=DEBUG `
                    -GNinja `
                    -DCMAKE_BUILD_TYPE=Debug `
+                   -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 `
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
                    -DTACTILE_BUILD_TESTS=ON
 

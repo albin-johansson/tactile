@@ -56,6 +56,8 @@ project(tactile
         LANGUAGES CXX
         )
 
+set(CMAKE_CXX_MODULE_STD ON)
+
 # Determine build type, e.g. "debug" or "release".
 string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)
 if (NOT (TACTILE_BUILD_TYPE MATCHES "debug|release|asan"))
