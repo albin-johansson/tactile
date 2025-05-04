@@ -109,6 +109,7 @@ jobs:
                            mold \
                            autoconf \
                            automake \
+                           clang \
                            libtool \
                            libltdl-dev \
                            libx11-dev \
@@ -152,6 +153,9 @@ jobs:
         run: python3 install_assets.py --skip-fonts
 
       - name: Generate build files
+        env:
+          CC: clang
+          CXX: clang++
         run: |
           mkdir build
           cd build
