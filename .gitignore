@@ -64,4 +64,4 @@ assets/fonts
 assets/images
 
 # Cached script files
-scripts/cache
+tools/cache
