@@ -80,4 +80,8 @@ install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
 include("tools/cmake/tactile.cmake")
 
-add_subdirectory("modules/tactile")
+add_subdirectory("src/tactile")
+
+if (TACTILE_BUILD_TESTS)
+  add_subdirectory("tests/tactile")
+endif ()
