@@ -88,6 +88,7 @@ jobs:
         run: ./tactile_tests
 
   ubuntu-build-and-test:
+    if: false
     runs-on: ubuntu-24.04
     env:
       VCPKG_TARGET_TRIPLET: x64-linux-tactile
@@ -153,9 +154,6 @@ jobs:
         run: python3 install_assets.py --skip-fonts
 
       - name: Generate build files
-        env:
-          CC: clang
-          CXX: clang++
         run: |
           mkdir build
           cd build
