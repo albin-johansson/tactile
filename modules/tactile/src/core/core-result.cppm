@@ -45,6 +45,12 @@ enum class Error : u8
   /// An arithmetic underflow was detected.
   kArithmeticUnderflow,
 
+  /// An arithmetic precision error was detected.
+  kArithmeticPrecision,
+
+  /// An invalid arithmetic value was detected.
+  kArithmeticInvalidValue,
+
   /// A stack overflow was detected.
   kStackOverflow,
 

@@ -1,5 +1,6 @@
 project(tactile_module CXX)
 
+find_package(Boost REQUIRED COMPONENTS safe_numerics)
 find_package(FastFloat CONFIG REQUIRED)
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
@@ -20,6 +21,8 @@ target_sources(tactile
                "src/io/io-compression.cppm"
                "src/numeric/numeric.cppm"
                "src/numeric/numeric-casts.cppm"
+               "src/numeric/numeric-checked.cppm"
+               "src/numeric/numeric-concepts.cppm"
                "src/numeric/numeric-constants.cppm"
                "src/numeric/numeric-hash.cppm"
                "src/numeric/numeric-random.cppm"
@@ -37,6 +40,9 @@ tactile_prepare_target(tactile)
 target_link_libraries(tactile
                       PRIVATE
                       FastFloat::fast_float
+
+                      PUBLIC
+                      Boost::safe_numerics
                       )
 
 target_include_directories(tactile
@@ -57,6 +63,7 @@ if (TACTILE_BUILD_TESTS)
                  "tests/core/strings.cpp"
                  "tests/io/base64.cpp"
                  "tests/numeric/casts.cpp"
+                 "tests/numeric/checked.cpp"
                  "tests/main.cpp"
                  )
 

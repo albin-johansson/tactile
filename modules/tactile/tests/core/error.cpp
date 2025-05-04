@@ -18,6 +18,8 @@ TEST(Core_Error, ToString)
   EXPECT_EQ(to_string(Error::kOutOfRange), "out_of_range");
   EXPECT_EQ(to_string(Error::kArithmeticOverflow), "arithmetic_overflow");
   EXPECT_EQ(to_string(Error::kArithmeticUnderflow), "arithmetic_underflow");
+  EXPECT_EQ(to_string(Error::kArithmeticPrecision), "arithmetic_precision");
+  EXPECT_EQ(to_string(Error::kArithmeticInvalidValue), "arithmetic_invalid_value");
   EXPECT_EQ(to_string(Error::kStackOverflow), "stack_overflow");
   EXPECT_EQ(to_string(Error::kStackUnderflow), "stack_underflow");
   EXPECT_EQ(to_string(Error::kCouldNotParseFile), "could_not_parse_file");
@@ -37,6 +39,10 @@ TEST(Core_Error, Describe)
   EXPECT_EQ(describe(Error::kOutOfRange), "requested an out of range value");
   EXPECT_EQ(describe(Error::kArithmeticOverflow), "detected arithmetic overflow");
   EXPECT_EQ(describe(Error::kArithmeticUnderflow), "detected arithmetic underflow");
+  EXPECT_EQ(describe(Error::kArithmeticPrecision),
+            "detected loss of arithmetic precision");
+  EXPECT_EQ(describe(Error::kArithmeticInvalidValue),
+            "detected invalid arithmetic value");
   EXPECT_EQ(describe(Error::kStackOverflow), "detected stack overflow");
   EXPECT_EQ(describe(Error::kStackUnderflow), "detected stack underflow");
   EXPECT_EQ(describe(Error::kCouldNotParseFile), "could not parse a file");
