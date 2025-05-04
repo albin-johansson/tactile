@@ -78,6 +78,6 @@ message(DEBUG "TACTILE_ASSET_DIR: ${TACTILE_ASSET_DIR}")
 
 install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
-include("cmake/tactile.cmake")
+include("tools/cmake/tactile.cmake")
 
 add_subdirectory("modules/tactile")
