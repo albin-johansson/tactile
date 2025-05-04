@@ -8,7 +8,7 @@ Note, the [Qt installer framework] is not by default included when installing Qt
 
 ## Generate the installer
 
-After a build of the editor has been generated, move the built files to the `installer/packages/com.albinjohansson.tactile/data` directory. This is the content that will be deployed.
+After a build of the editor has been generated, move the built files to the `tools/installer/packages/com.albinjohansson.tactile/data` directory. This is the content that will be deployed.
 
 Also, remember to update the configuration files `config.xml` and `packages.xml`.
 
