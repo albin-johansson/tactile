@@ -25,7 +25,7 @@ auto _parse_int(const StringView str, const int base) noexcept -> Option<T>
     return value;
   }
 
-  return nullopt;
+  return kNone;
 }
 
 }  // namespace
@@ -52,7 +52,7 @@ auto parse_f64(const StringView str) noexcept -> Option<f64>
     return value;
   }
 
-  return nullopt;
+  return kNone;
 }
 
 }  // namespace tactile

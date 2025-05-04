@@ -45,6 +45,6 @@ using Expected = std::expected<T, E>;
 template <typename T>
 using Unexpected = std::unexpected<T>;
 
-using std::nullopt;
+inline constexpr std::nullopt_t kNone {std::nullopt};
 
 }  // namespace tactile
