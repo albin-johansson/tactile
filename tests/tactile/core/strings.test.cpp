@@ -1,9 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-#include <limits>
-
 #include <gtest/gtest.h>
 
+import std;
 import tactile.core;
 
 namespace tactile::tests {

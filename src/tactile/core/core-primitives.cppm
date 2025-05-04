@@ -1,11 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <cstddef>
-#include <cstdint>
-
 export module tactile.core:primitives;
+
+export import std;
 
 export namespace tactile {
 

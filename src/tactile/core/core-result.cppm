@@ -1,11 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <utility>
-
 export module tactile.core:result;
 
+export import std;
 export import :containers;
 export import :primitives;
 export import :strings;

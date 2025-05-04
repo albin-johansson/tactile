@@ -1,14 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <filesystem>
-#include <string>
-#include <utility>
-#include <variant>
-
 export module tactile.meta:attr;
 
+export import std;
 export import tactile.core;
 export import tactile.numeric;
 export import :color;

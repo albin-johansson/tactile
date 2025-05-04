@@ -1,13 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <concepts>
-#include <limits>
-#include <stdexcept>
-#include <utility>
-
 export module tactile.numeric:casts;
+
+export import std;
 
 export namespace tactile {
 

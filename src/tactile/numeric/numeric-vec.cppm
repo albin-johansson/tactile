@@ -3,13 +3,10 @@
 module;
 
 #include <cassert>
-#include <compare>
-#include <concepts>
-#include <stdexcept>
-#include <type_traits>
 
 export module tactile.numeric:vec;
 
+export import std;
 export import tactile.core;
 export import :concepts;
 import :checked;

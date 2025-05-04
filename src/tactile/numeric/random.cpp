@@ -1,11 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <random>
-
 module tactile.numeric;
 
+import std;
 import tactile.core;
 
 namespace tactile {

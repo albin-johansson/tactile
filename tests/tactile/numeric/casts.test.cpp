@@ -1,10 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-#include <limits>
-#include <stdexcept>
-
 #include <gtest/gtest.h>
 
+import std;
 import tactile.core;
 import tactile.numeric;
 

@@ -1,19 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <array>
-#include <deque>
-#include <expected>
-#include <functional>
-#include <map>
-#include <optional>
-#include <span>
-#include <unordered_map>
-#include <vector>
-
 export module tactile.core:containers;
 
+export import std;
 export import :primitives;
 
 export namespace tactile {

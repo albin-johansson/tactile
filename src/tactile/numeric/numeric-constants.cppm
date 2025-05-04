@@ -1,11 +1,8 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <limits>
-
 export module tactile.numeric:constants;
 
+export import std;
 export import tactile.core;
 
 export namespace tactile {

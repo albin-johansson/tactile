@@ -1,12 +1,9 @@
 // Copyright (C) 2025 Albin Johansson (GNU General Public License v3.0)
 
-module;
-
-#include <functional>
-
 export module tactile.numeric:hash;
 
-import tactile.core;
+export import std;
+export import tactile.core;
 
 export namespace tactile {
 
