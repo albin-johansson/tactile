@@ -39,7 +39,7 @@ def main():
         print(f"Error: unsupported platform '{system_name}'")
         return
 
-    triplet_src_path = f"../cmake/{triplet_filename}"
+    triplet_src_path = f"vcpkg/{triplet_filename}"
     triplet_dst_dir = f"{vcpkg_root}/triplets/community"
     triplet_dst_path = f"{triplet_dst_dir}/{triplet_filename}"
 
