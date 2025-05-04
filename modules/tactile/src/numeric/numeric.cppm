@@ -8,3 +8,4 @@ export import :concepts;
 export import :constants;
 export import :hash;
 export import :random;
+export import :vec;

@@ -26,6 +26,7 @@ target_sources(tactile
                "src/numeric/numeric-constants.cppm"
                "src/numeric/numeric-hash.cppm"
                "src/numeric/numeric-random.cppm"
+               "src/numeric/numeric-vec.cppm"
                "src/tactile.cppm"
 
                PRIVATE
@@ -64,6 +65,7 @@ if (TACTILE_BUILD_TESTS)
                  "tests/io/base64.cpp"
                  "tests/numeric/casts.cpp"
                  "tests/numeric/checked.cpp"
+                 "tests/numeric/vec.cpp"
                  "tests/main.cpp"
                  )
 

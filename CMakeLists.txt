@@ -8,7 +8,7 @@ option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
 option(TACTILE_USE_PRECOMPILED_HEADERS "Enable precompiled standard headers" ON)
 
 if (CMAKE_SKIP_INSTALL_ALL_DEPENDENCY MATCHES "")
-  set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY "ON")
+  set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY ON)
 endif ()
 
 message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
