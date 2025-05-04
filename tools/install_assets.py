@@ -5,8 +5,8 @@ import sys
 import urllib.request
 import os.path
 
-FONT_OUTPUT_DIR = "../assets/fonts"
-IMAGE_OUTPUT_DIR = "../assets/images"
+FONT_OUTPUT_DIR = "../data/fonts"
+IMAGE_OUTPUT_DIR = "../data/images"
 CACHE_DIR = "./cache"
 
 FONTAWESOME_VERSION = "6.5.1"

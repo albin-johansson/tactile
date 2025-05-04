@@ -32,7 +32,7 @@ void some_widget()
 The process of adding a new supported language in the code is the easy part.
 The basic procedure consist of the following steps.
 
-* Add a JSON file with the translated strings to `assets/lang/`
+* Add a JSON file with the translated strings to `data/lang/`
   * The filename should at least be the ISO 639-1 code for the language, e.g. `sv.json` for Swedish. Translations for a specific region or country, such as British English, use the format `en_GB.json`.
 * Update the `Lang` enum, and make sure the new language is selectable in the settings dialog
 * Update the `Lang` enum in the settings protobuf file
