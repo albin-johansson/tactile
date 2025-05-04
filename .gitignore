@@ -54,7 +54,7 @@ build
 cmake-build-*
 
 # Installer data
-installer/packages/com.albinjohansson.tactile/data/*
+tools/installer/packages/com.albinjohansson.tactile/data/*
 
 # Miscellaneous
 .cache
