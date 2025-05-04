@@ -19,6 +19,9 @@ target_sources(tactile
                "src/io/io.cppm"
                "src/io/io-base64.cppm"
                "src/io/io-compression.cppm"
+               "src/meta/meta.cppm"
+               "src/meta/meta-attr.cppm"
+               "src/meta/meta-color.cppm"
                "src/numeric/numeric.cppm"
                "src/numeric/numeric-casts.cppm"
                "src/numeric/numeric-checked.cppm"
@@ -32,6 +35,7 @@ target_sources(tactile
                PRIVATE
                "src/core/result.cpp"
                "src/core/strings.cpp"
+               "src/meta/attr.cpp"
                "src/io/base64.cpp"
                "src/numeric/random.cpp"
                )
@@ -63,6 +67,7 @@ if (TACTILE_BUILD_TESTS)
                  "tests/core/error.cpp"
                  "tests/core/strings.cpp"
                  "tests/io/base64.cpp"
+                 "tests/meta/attr.cpp"
                  "tests/numeric/casts.cpp"
                  "tests/numeric/checked.cpp"
                  "tests/numeric/vec.cpp"
