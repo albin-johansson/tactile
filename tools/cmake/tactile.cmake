@@ -100,8 +100,6 @@ function(tactile_prepare_target target)
   target_compile_features(${target} PUBLIC cxx_std_23)
   set_target_properties(${target}
                         PROPERTIES
-                        CXX_EXTENSIONS OFF
-                        CXX_STANDARD_REQUIRED ON
                         POSITION_INDEPENDENT_CODE ON
                         INTERPROCEDURAL_OPTIMIZATION ${TACTILE_USE_LTO}
                         PREFIX ""
@@ -129,4 +127,19 @@ if (WIN32)
                              "WIN32_LEAN_AND_MEAN"
                              "NOMINMAX"
                              )
+endif ()
+
+if (APPLE)
+  message(DEBUG "Applying workaround for CLion 'import std;' issue")
+
+  # See https://youtrack.jetbrains.com/issue/CPP-39632/import-std-CLion-cant-resolve-module-std-in-case-of-clang
+  add_library(tactile_import_std_clion_workaround STATIC)
+
+  target_compile_features(tactile_import_std_clion_workaround PUBLIC cxx_std_23)
+
+  target_sources(tactile_import_std_clion_workaround
+                 PRIVATE FILE_SET "CXX_MODULES" BASE_DIRS "/opt/homebrew/opt/llvm/share/libc++/v1" FILES
+                 "/opt/homebrew/opt/llvm/share/libc++/v1/std.cppm"
+                 "/opt/homebrew/opt/llvm/share/libc++/v1/std.compat.cppm"
+                 )
 endif ()
