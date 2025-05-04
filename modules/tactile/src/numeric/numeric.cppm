@@ -3,5 +3,6 @@
 export module tactile.numeric;
 
 export import :casts;
+export import :constants;
 export import :hash;
 export import :random;

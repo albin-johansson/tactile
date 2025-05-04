@@ -20,6 +20,7 @@ target_sources(tactile
                "src/io/io-compression.cppm"
                "src/numeric/numeric.cppm"
                "src/numeric/numeric-casts.cppm"
+               "src/numeric/numeric-constants.cppm"
                "src/numeric/numeric-hash.cppm"
                "src/numeric/numeric-random.cppm"
                "src/tactile.cppm"

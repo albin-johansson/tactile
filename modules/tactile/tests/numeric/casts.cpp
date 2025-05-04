@@ -9,19 +9,6 @@ import tactile.core;
 import tactile.numeric;
 
 namespace tactile::tests {
-namespace {
-
-inline constexpr i8 kMinI8 {std::numeric_limits<i8>::min()};
-inline constexpr i8 kMaxI8 {std::numeric_limits<i8>::max()};
-inline constexpr i16 kMinI16 {std::numeric_limits<i16>::min()};
-inline constexpr i16 kMaxI16 {std::numeric_limits<i16>::max()};
-
-inline constexpr u8 kMinU8 {std::numeric_limits<u8>::min()};
-inline constexpr u8 kMaxU8 {std::numeric_limits<u8>::max()};
-inline constexpr u16 kMinU16 {std::numeric_limits<u16>::min()};
-inline constexpr u16 kMaxU16 {std::numeric_limits<u16>::max()};
-
-}  // namespace
 
 TEST(Numeric_Casts, CheckedCast_SignedToSigned)
 {
