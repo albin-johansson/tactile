@@ -43,49 +43,8 @@ else ()
   endif ()
 endif ()
 
-list(APPEND
-     TACTILE_PRECOMPILED_HEADERS
-     "<algorithm>"
-     "<array>"
-     "<charconv>"
-     "<chrono>"
-     "<concepts>"
-     "<cstddef>"
-     "<cstdint>"
-     "<cstring>"
-     "<cstdlib>"
-     "<ctime>"
-     "<cmath>"
-     "<deque>"
-     "<exception>"
-     "<filesystem>"
-     "<fstream>"
-     "<functional>"
-     "<iterator>"
-     "<limits>"
-     "<locale>"
-     "<map>"
-     "<memory>"
-     "<numbers>"
-     "<optional>"
-     "<ostream>"
-     "<queue>"
-     "<random>"
-     "<span>"
-     "<sstream>"
-     "<string>"
-     "<string_view>"
-     "<system_error>"
-     "<type_traits>"
-     "<unordered_map>"
-     "<utility>"
-     "<variant>"
-     "<vector>"
-     )
-
 message(DEBUG "TACTILE_COMPILE_OPTIONS: ${TACTILE_COMPILE_OPTIONS}")
 message(DEBUG "TACTILE_LINK_OPTIONS: ${TACTILE_LINK_OPTIONS}")
-message(DEBUG "TACTILE_PRECOMPILED_HEADERS: ${TACTILE_PRECOMPILED_HEADERS}")
 
 function(tactile_set_output_directory target directory)
   set_target_properties("${target}"
@@ -112,10 +71,6 @@ add_library(tactile_basic_target INTERFACE)
 target_compile_options(tactile_basic_target INTERFACE ${TACTILE_COMPILE_OPTIONS})
 
 target_link_options(tactile_basic_target INTERFACE ${TACTILE_LINK_OPTIONS})
-
-if (TACTILE_USE_PRECOMPILED_HEADERS)
-  target_precompile_headers(tactile_basic_target INTERFACE ${TACTILE_PRECOMPILED_HEADERS})
-endif ()
 
 if (TACTILE_BUILD_TYPE STREQUAL "asan" AND NOT MSVC)
   target_link_libraries(tactile_basic_target INTERFACE "-fsanitize=address")
