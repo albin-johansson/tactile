@@ -1,0 +1,4 @@
+13c13
+<       -print-file-name=libc++.modules.json
+---
+>       -print-file-name=c++/libc++.modules.json
