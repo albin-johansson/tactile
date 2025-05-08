@@ -4,5 +4,6 @@ export module tactile;
 
 export import tactile.core;
 export import tactile.io;
+export import tactile.layer;
 export import tactile.meta;
 export import tactile.numeric;
