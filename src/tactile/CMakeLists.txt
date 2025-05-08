@@ -20,6 +20,7 @@ target_sources(tactile
                "io/io-base64.cppm"
                "io/io-compression.cppm"
                "layer/layer.cppm"
+               "layer/layer-interfaces.cppm"
                "layer/layer-layer_info.cppm"
                "meta/meta.cppm"
                "meta/meta-attr.cppm"

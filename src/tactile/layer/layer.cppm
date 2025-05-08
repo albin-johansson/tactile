@@ -2,4 +2,5 @@
 
 export module tactile.layer;
 
+export import :interfaces;
 export import :layer_info;
