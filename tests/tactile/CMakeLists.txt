@@ -11,6 +11,7 @@ target_sources(tactile_tests
                "core/error.test.cpp"
                "core/strings.test.cpp"
                "io/base64.test.cpp"
+               "layer/layer_info.test.cpp"
                "meta/attr.test.cpp"
                "numeric/casts.test.cpp"
                "numeric/checked.test.cpp"

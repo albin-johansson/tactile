@@ -19,6 +19,8 @@ target_sources(tactile
                "io/io.cppm"
                "io/io-base64.cppm"
                "io/io-compression.cppm"
+               "layer/layer.cppm"
+               "layer/layer-layer_info.cppm"
                "meta/meta.cppm"
                "meta/meta-attr.cppm"
                "meta/meta-color.cppm"
@@ -35,8 +37,9 @@ target_sources(tactile
                PRIVATE
                "core/result.cpp"
                "core/strings.cpp"
-               "meta/attr.cpp"
                "io/base64.cpp"
+               "layer/layer_info.cpp"
+               "meta/attr.cpp"
                "numeric/random.cpp"
                )
 
