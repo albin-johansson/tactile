@@ -8,6 +8,8 @@ target_sources(tactile_editor
                PUBLIC FILE_SET "CXX_MODULES" FILES
                "app/app.cppm"
                "cli/cli.cppm"
+               "command/command.cppm"
+               "command/command-interfaces.cppm"
                "tactile_editor.cppm"
 
                PRIVATE
