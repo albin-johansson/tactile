@@ -82,6 +82,7 @@ add_subdirectory("src/tactile")
 
 if (TACTILE_BUILD_EDITOR)
   add_subdirectory("src/tactile_editor")
+  add_subdirectory("src/tactile_app")
 endif ()
 
 if (TACTILE_BUILD_TESTS)
