@@ -36,6 +36,8 @@ target_sources(tactile
                "numeric/numeric-hash.cppm"
                "numeric/numeric-random.cppm"
                "numeric/numeric-vec.cppm"
+               "tile/tile.cppm"
+               "tile/tile-id.cppm"
                "tactile.cppm"
 
                PRIVATE

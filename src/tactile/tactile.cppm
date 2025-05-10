@@ -7,3 +7,4 @@ export import tactile.io;
 export import tactile.layer;
 export import tactile.meta;
 export import tactile.numeric;
+export import tactile.tile;
