@@ -81,7 +81,8 @@ jobs:
                    -DCMAKE_OSX_SYSROOT=macosx \
                    -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_BUILD_TESTS=ON
+                   -DTACTILE_BUILD_TESTS=ON \
+                   -DTACTILE_BUILD_EDITOR=ON
 
       - name: Build
         run: ninja -C build
@@ -92,6 +93,10 @@ jobs:
       - name: Run 'tactile' module tests
         working-directory: ./build/debug
         run: ./tactile_tests
+
+      - name: Run 'tactile_editor' module tests
+        working-directory: ./build/debug
+        run: ./tactile_editor_tests
 
   ubuntu-build-and-test:
     if: false
@@ -169,7 +174,8 @@ jobs:
                    -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=mold" \
                    -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=mold" \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_BUILD_TESTS=ON
+                   -DTACTILE_BUILD_TESTS=ON \
+                   -DTACTILE_BUILD_EDITOR=ON
 
       - name: Build
         run: ninja -C build
@@ -180,6 +186,10 @@ jobs:
       - name: Run 'tactile' module tests
         working-directory: ./build/debug
         run: ./tactile_tests
+
+      - name: Run 'tactile_editor' module tests
+        working-directory: ./build/debug
+        run: ./tactile_editor_tests
 
   windows-build-and-test:
     runs-on: windows-2025
@@ -237,7 +247,8 @@ jobs:
                    -DCMAKE_BUILD_TYPE=Debug `
                    -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 `
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
-                   -DTACTILE_BUILD_TESTS=ON
+                   -DTACTILE_BUILD_TESTS=ON `
+                   -DTACTILE_BUILD_EDITOR=ON
 
       - name: Build
         run: ninja -C build
@@ -249,3 +260,8 @@ jobs:
         working-directory: ./build/debug
         shell: cmd
         run: tactile_tests.exe
+
+      - name: Run 'tactile_editor' module tests
+        working-directory: ./build/debug
+        shell: cmd
+        run: tactile_editor_tests.exe
