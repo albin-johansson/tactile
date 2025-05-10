@@ -20,6 +20,7 @@ target_sources(tactile_tests
                "numeric/casts.test.cpp"
                "numeric/checked.test.cpp"
                "numeric/vec.test.cpp"
+               "util/defer.test.cpp"
                "tactile_tests.main.cpp"
                )
 

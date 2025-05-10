@@ -9,3 +9,4 @@ export import tactile.log;
 export import tactile.meta;
 export import tactile.numeric;
 export import tactile.tile;
+export import tactile.util;
