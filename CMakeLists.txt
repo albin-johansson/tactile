@@ -80,6 +80,10 @@ include("tools/cmake/tactile.cmake")
 
 add_subdirectory("src/tactile")
 
+if (TACTILE_BUILD_EDITOR)
+  add_subdirectory("src/tactile_editor")
+endif ()
+
 if (TACTILE_BUILD_TESTS)
   add_subdirectory("tests/tactile")
 endif ()

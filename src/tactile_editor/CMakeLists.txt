@@ -1,0 +1,24 @@
+project(tactile_editor_module CXX)
+
+find_package(argparse CONFIG REQUIRED)
+
+add_library(tactile_editor STATIC)
+
+target_sources(tactile_editor
+               PUBLIC FILE_SET "CXX_MODULES" FILES
+               "cli/cli.cppm"
+               "tactile_editor.cppm"
+
+               PRIVATE
+               "cli/cli.cpp"
+               )
+
+tactile_prepare_target(tactile_editor)
+
+target_link_libraries(tactile_editor
+                      PUBLIC
+                      tactile
+
+                      PRIVATE
+                      argparse::argparse
+                      )
