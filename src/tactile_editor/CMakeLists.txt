@@ -6,10 +6,12 @@ add_library(tactile_editor STATIC)
 
 target_sources(tactile_editor
                PUBLIC FILE_SET "CXX_MODULES" FILES
+               "app/app.cppm"
                "cli/cli.cppm"
                "tactile_editor.cppm"
 
                PRIVATE
+               "app/launch.cpp"
                "cli/cli.cpp"
                )
 
