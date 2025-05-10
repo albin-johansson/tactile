@@ -3,3 +3,4 @@
 export module tactile_editor.command;
 
 export import :interfaces;
+export import :stack;

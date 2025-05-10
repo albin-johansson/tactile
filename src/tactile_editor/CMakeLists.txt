@@ -10,11 +10,13 @@ target_sources(tactile_editor
                "cli/cli.cppm"
                "command/command.cppm"
                "command/command-interfaces.cppm"
+               "command/command-stack.cppm"
                "tactile_editor.cppm"
 
                PRIVATE
                "app/launch.cpp"
                "cli/cli.cpp"
+               "command/command_stack.cpp"
                )
 
 tactile_prepare_target(tactile_editor)
