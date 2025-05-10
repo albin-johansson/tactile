@@ -7,6 +7,7 @@ import std;
 import tactile.numeric;
 
 namespace tactile::tests {
+namespace {
 
 using testing::Const;
 
@@ -18,7 +19,10 @@ static_assert(Float2::size() == 2);
 static_assert(Float3::size() == 3);
 static_assert(Float4::size() == 4);
 
-TEST(Numeric_Vec, Defaults)
+class VecTest : public testing::Test
+{};
+
+TEST_F(VecTest, Defaults)
 {
   constexpr Int4 vec {};
   EXPECT_EQ(vec.x(), 0);
@@ -29,7 +33,7 @@ TEST(Numeric_Vec, Defaults)
   EXPECT_NE(Const(vec).data(), nullptr);
 }
 
-TEST(Numeric_Vec, Setters)
+TEST_F(VecTest, Setters)
 {
   Int4 vec {};
 
@@ -49,7 +53,7 @@ TEST(Numeric_Vec, Setters)
   EXPECT_EQ(vec[3uz], 40);
 }
 
-TEST(Numeric_Vec, At)
+TEST_F(VecTest, At)
 {
   constexpr Float4 vec {1.0f, 2.0f, 3.0f, 4.0f};
 
@@ -61,7 +65,7 @@ TEST(Numeric_Vec, At)
   EXPECT_THROW((void) vec.at(4uz), std::out_of_range);
 }
 
-TEST(Numeric_Vec, Data)
+TEST_F(VecTest, Data)
 {
   Int3 vec {1, 2, 3};
 
@@ -74,7 +78,7 @@ TEST(Numeric_Vec, Data)
   EXPECT_EQ(Const(vec).data()[2uz], 3);
 }
 
-TEST(Numeric_Vec, Add)
+TEST_F(VecTest, Add)
 {
   constexpr auto vec = Int3 {1, 2, 3} + Int3 {4, 5, 6};
   EXPECT_EQ(vec.x(), 5);
@@ -82,7 +86,7 @@ TEST(Numeric_Vec, Add)
   EXPECT_EQ(vec.z(), 9);
 }
 
-TEST(Numeric_Vec, AddAssign)
+TEST_F(VecTest, AddAssign)
 {
   Int3 vec {1, 2, 3};
 
@@ -93,14 +97,14 @@ TEST(Numeric_Vec, AddAssign)
   EXPECT_EQ(vec.z(), 33);
 }
 
-TEST(Numeric_Vec, Sub)
+TEST_F(VecTest, Sub)
 {
   constexpr auto vec = Int2 {9, 8} - Int2 {1, 2};
   EXPECT_EQ(vec.x(), 8);
   EXPECT_EQ(vec.y(), 6);
 }
 
-TEST(Numeric_Vec, SubAssign)
+TEST_F(VecTest, SubAssign)
 {
   Int3 vec {10, 11, 12};
 
@@ -111,7 +115,7 @@ TEST(Numeric_Vec, SubAssign)
   EXPECT_EQ(vec.z(), 2);
 }
 
-TEST(Numeric_Vec, Mul)
+TEST_F(VecTest, Mul)
 {
   constexpr auto vec = Int4 {1, -2, 3, 4} * Int4 {10, 20, 30, -40};
   EXPECT_EQ(vec.x(), 10);
@@ -120,7 +124,7 @@ TEST(Numeric_Vec, Mul)
   EXPECT_EQ(vec.w(), -160);
 }
 
-TEST(Numeric_Vec, MulAssign)
+TEST_F(VecTest, MulAssign)
 {
   Int4 vec {1, 2, 3, 4};
 
@@ -132,7 +136,7 @@ TEST(Numeric_Vec, MulAssign)
   EXPECT_EQ(vec.w(), 8);
 }
 
-TEST(Numeric_Vec, MulWithScalar)
+TEST_F(VecTest, MulWithScalar)
 {
   constexpr auto vec = Int4 {1, 2, 3, 4} * 2;
   EXPECT_EQ(vec.x(), 2);
@@ -141,7 +145,7 @@ TEST(Numeric_Vec, MulWithScalar)
   EXPECT_EQ(vec.w(), 8);
 }
 
-TEST(Numeric_Vec, MulAssignWithScalar)
+TEST_F(VecTest, MulAssignWithScalar)
 {
   Int4 vec {1, 2, 3, 4};
 
@@ -153,7 +157,7 @@ TEST(Numeric_Vec, MulAssignWithScalar)
   EXPECT_EQ(vec.w(), -8);
 }
 
-TEST(Numeric_Vec, Eq)
+TEST_F(VecTest, Eq)
 {
   constexpr Int3 a {1, 2, 3};
   constexpr Int3 b {1, 2, 4};
@@ -162,7 +166,7 @@ TEST(Numeric_Vec, Eq)
   EXPECT_NE(a, b);
 }
 
-TEST(Numeric_Vec, Ord)
+TEST_F(VecTest, Ord)
 {
   constexpr Int3 a {1, 2, 3};
   constexpr Int3 b {1, 2, 4};
@@ -173,4 +177,5 @@ TEST(Numeric_Vec, Ord)
   EXPECT_GT(b, a);
 }
 
+}  // namespace
 }  // namespace tactile::tests

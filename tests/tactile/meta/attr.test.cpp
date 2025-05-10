@@ -6,17 +6,21 @@
 import tactile.meta;
 
 namespace tactile::tests {
+namespace {
 
 using testing::Const;
 
-TEST(Meta_Attr, Defaults)
+class AttrTest : public testing::Test
+{};
+
+TEST_F(AttrTest, Defaults)
 {
   const Attr attr {};
   EXPECT_EQ(attr.kind(), AttrKind::kInt);
   EXPECT_TRUE(attr.has_default_value());
 }
 
-TEST(Meta_Attr, Int)
+TEST_F(AttrTest, Int)
 {
   Attr attr {AttrKind::kInt};
 
@@ -52,7 +56,7 @@ TEST(Meta_Attr, Int)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Int2)
+TEST_F(AttrTest, Int2)
 {
   Attr attr {AttrKind::kInt2};
 
@@ -88,7 +92,7 @@ TEST(Meta_Attr, Int2)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Int3)
+TEST_F(AttrTest, Int3)
 {
   Attr attr {AttrKind::kInt3};
 
@@ -124,7 +128,7 @@ TEST(Meta_Attr, Int3)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Int4)
+TEST_F(AttrTest, Int4)
 {
   Attr attr {AttrKind::kInt4};
 
@@ -160,7 +164,7 @@ TEST(Meta_Attr, Int4)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Float2)
+TEST_F(AttrTest, Float2)
 {
   Attr attr {AttrKind::kFloat2};
 
@@ -196,7 +200,7 @@ TEST(Meta_Attr, Float2)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Float3)
+TEST_F(AttrTest, Float3)
 {
   Attr attr {AttrKind::kFloat3};
 
@@ -232,7 +236,7 @@ TEST(Meta_Attr, Float3)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Float4)
+TEST_F(AttrTest, Float4)
 {
   Attr attr {AttrKind::kFloat4};
 
@@ -268,7 +272,7 @@ TEST(Meta_Attr, Float4)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Bool)
+TEST_F(AttrTest, Bool)
 {
   Attr attr {AttrKind::kBool};
 
@@ -304,7 +308,7 @@ TEST(Meta_Attr, Bool)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST(Meta_Attr, String)
+TEST_F(AttrTest, String)
 {
   Attr attr {AttrKind::kString};
 
@@ -340,7 +344,7 @@ TEST(Meta_Attr, String)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Path)
+TEST_F(AttrTest, Path)
 {
   Attr attr {AttrKind::kPath};
 
@@ -376,7 +380,7 @@ TEST(Meta_Attr, Path)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Color)
+TEST_F(AttrTest, Color)
 {
   Attr attr {AttrKind::kColor};
 
@@ -412,7 +416,7 @@ TEST(Meta_Attr, Color)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST(Meta_Attr, Reset)
+TEST_F(AttrTest, Reset)
 {
   Attr attr {};
 
@@ -425,7 +429,7 @@ TEST(Meta_Attr, Reset)
   EXPECT_TRUE(attr.has_default_value());
 }
 
-TEST(Meta_Attr, Emplace)
+TEST_F(AttrTest, Emplace)
 {
   Attr attr {};
   ASSERT_EQ(attr.as_string(), nullptr);
@@ -438,7 +442,7 @@ TEST(Meta_Attr, Emplace)
   EXPECT_FALSE(attr.has_default_value());
 }
 
-TEST(Meta_Attr, Eq)
+TEST_F(AttrTest, Eq)
 {
   Attr a {AttrKind::kInt};
   Attr b {AttrKind::kInt};
@@ -448,4 +452,5 @@ TEST(Meta_Attr, Eq)
   EXPECT_NE(a, b);
 }
 
+}  // namespace
 }  // namespace tactile::tests

@@ -7,7 +7,10 @@ import tactile.layer;
 namespace tactile::tests {
 namespace {
 
-TEST(LayerInfo, Defaults)
+class LayerInfoTest : public testing::Test
+{};
+
+TEST_F(LayerInfoTest, Defaults)
 {
   constexpr LayerID id {42};
   const LayerInfo info {id};
@@ -17,7 +20,7 @@ TEST(LayerInfo, Defaults)
   EXPECT_TRUE(info.visible());
 }
 
-TEST(LayerInfo, SetOpacity)
+TEST_F(LayerInfoTest, SetOpacity)
 {
   LayerInfo info {LayerID {42}};
 
@@ -31,7 +34,7 @@ TEST(LayerInfo, SetOpacity)
   EXPECT_EQ(info.opacity(), 0.0f);
 }
 
-TEST(LayerInfo, SetVisible)
+TEST_F(LayerInfoTest, SetVisible)
 {
   LayerInfo info {LayerID {42}};
 

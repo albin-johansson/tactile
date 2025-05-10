@@ -7,8 +7,12 @@ import tactile.core;
 import tactile.io;
 
 namespace tactile::tests {
+namespace {
 
-TEST(IO_Base64, EncodeDecode)
+class Base64Test : public testing::Test
+{};
+
+TEST_F(Base64Test, EncodeDecode)
 {
   // See https://en.m.wikipedia.org/wiki/Base64#Examples
   const Vector<u8> data {
@@ -27,4 +31,5 @@ TEST(IO_Base64, EncodeDecode)
   EXPECT_THAT(decoded_data, testing::ContainerEq(data));
 }
 
+}  // namespace
 }  // namespace tactile::tests

@@ -7,8 +7,12 @@ import tactile.core;
 import tactile.numeric;
 
 namespace tactile::tests {
+namespace {
 
-TEST(Numeric_Casts, CheckedCast_SignedToSigned)
+class NumericCastsTest : public testing::Test
+{};
+
+TEST_F(NumericCastsTest, CheckedCast_SignedToSigned)
 {
   EXPECT_EQ(checked_cast<i8>(i8 {42}), i8 {42});
 
@@ -22,7 +26,7 @@ TEST(Numeric_Casts, CheckedCast_SignedToSigned)
   EXPECT_THROW((void) checked_cast<i16>(i32 {kMaxI16 + 1}), std::overflow_error);
 }
 
-TEST(Numeric_Casts, CheckedCast_UnsignedToUnsigned)
+TEST_F(NumericCastsTest, CheckedCast_UnsignedToUnsigned)
 {
   EXPECT_EQ(checked_cast<u8>(u8 {42}), u8 {42});
 
@@ -35,7 +39,7 @@ TEST(Numeric_Casts, CheckedCast_UnsignedToUnsigned)
   EXPECT_THROW((void) checked_cast<u16>(u32 {kMaxU16 + 1}), std::overflow_error);
 }
 
-TEST(Numeric_Casts, CheckedCast_SignedToUnsigned)
+TEST_F(NumericCastsTest, CheckedCast_SignedToUnsigned)
 {
   EXPECT_EQ(checked_cast<u8>(i8 {42}), u8 {42});
 
@@ -49,7 +53,7 @@ TEST(Numeric_Casts, CheckedCast_SignedToUnsigned)
   EXPECT_THROW((void) checked_cast<u8>(i16 {kMaxU8 + 1}), std::overflow_error);
 }
 
-TEST(Numeric_Casts, CheckedCast_UnsignedToSigned)
+TEST_F(NumericCastsTest, CheckedCast_UnsignedToSigned)
 {
   EXPECT_EQ(checked_cast<i8>(u8 {42}), i8 {42});
 
@@ -62,7 +66,7 @@ TEST(Numeric_Casts, CheckedCast_UnsignedToSigned)
   EXPECT_THROW((void) checked_cast<i8>(u16 {kMaxI8 + 1}), std::overflow_error);
 }
 
-TEST(Numeric_Casts, SaturateCast_SignedToSigned)
+TEST_F(NumericCastsTest, SaturateCast_SignedToSigned)
 {
   EXPECT_EQ(saturate_cast<i8>(i8 {42}), i8 {42});
 
@@ -76,7 +80,7 @@ TEST(Numeric_Casts, SaturateCast_SignedToSigned)
   EXPECT_EQ(saturate_cast<i16>(i32 {kMaxI16 + 1}), kMaxI16);
 }
 
-TEST(Numeric_Casts, SaturateCast_UnsignedToUnsigned)
+TEST_F(NumericCastsTest, SaturateCast_UnsignedToUnsigned)
 {
   EXPECT_EQ(saturate_cast<u8>(u8 {42}), u8 {42});
 
@@ -89,7 +93,7 @@ TEST(Numeric_Casts, SaturateCast_UnsignedToUnsigned)
   EXPECT_EQ(saturate_cast<u16>(u32 {kMaxU16 + 1}), kMaxU16);
 }
 
-TEST(Numeric_Casts, SaturateCast_SignedToUnsigned)
+TEST_F(NumericCastsTest, SaturateCast_SignedToUnsigned)
 {
   EXPECT_EQ(saturate_cast<u8>(i8 {42}), u8 {42});
 
@@ -103,7 +107,7 @@ TEST(Numeric_Casts, SaturateCast_SignedToUnsigned)
   EXPECT_EQ(saturate_cast<u8>(i16 {kMaxU8 + 1}), kMaxU8);
 }
 
-TEST(Numeric_Casts, SaturateCast_UnsignedToSigned)
+TEST_F(NumericCastsTest, SaturateCast_UnsignedToSigned)
 {
   EXPECT_EQ(saturate_cast<i8>(u8 {42}), i8 {42});
 
@@ -116,4 +120,5 @@ TEST(Numeric_Casts, SaturateCast_UnsignedToSigned)
   EXPECT_EQ(saturate_cast<i8>(u16 {kMaxI8 + 1}), kMaxI8);
 }
 
+}  // namespace
 }  // namespace tactile::tests

@@ -6,8 +6,12 @@ import std;
 import tactile.numeric;
 
 namespace tactile::tests {
+namespace {
 
-TEST(Numeric_Checked, CheckedAdd_SignedInt)
+class CheckedNumericsTest : public testing::Test
+{};
+
+TEST_F(CheckedNumericsTest, CheckedAdd_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_add(1'234, 4'321).value(), 5'555);
@@ -26,7 +30,7 @@ TEST(Numeric_Checked, CheckedAdd_SignedInt)
             Error::kArithmeticUnderflow);
 }
 
-TEST(Numeric_Checked, CheckedAdd_UnsignedInt)
+TEST_F(CheckedNumericsTest, CheckedAdd_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_add(1'234u, 4'321u).value(), 5'555u);
@@ -39,7 +43,7 @@ TEST(Numeric_Checked, CheckedAdd_UnsignedInt)
             Error::kArithmeticOverflow);
 }
 
-TEST(Numeric_Checked, CheckedSub_SignedInt)
+TEST_F(CheckedNumericsTest, CheckedSub_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_sub(987, 123).value(), 864);
@@ -56,7 +60,7 @@ TEST(Numeric_Checked, CheckedSub_SignedInt)
             Error::kArithmeticUnderflow);
 }
 
-TEST(Numeric_Checked, CheckedSub_UnsignedInt)
+TEST_F(CheckedNumericsTest, CheckedSub_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_sub(150u, 100u).value(), 50u);
@@ -68,7 +72,7 @@ TEST(Numeric_Checked, CheckedSub_UnsignedInt)
             Error::kArithmeticUnderflow);
 }
 
-TEST(Numeric_Checked, CheckedMul_SignedInt)
+TEST_F(CheckedNumericsTest, CheckedMul_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_mul(25, 4).value(), 100);
@@ -85,7 +89,7 @@ TEST(Numeric_Checked, CheckedMul_SignedInt)
             Error::kArithmeticOverflow);
 }
 
-TEST(Numeric_Checked, CheckedMul_UnsignedInt)
+TEST_F(CheckedNumericsTest, CheckedMul_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_mul(25u, 4u).value(), 100u);
@@ -97,7 +101,7 @@ TEST(Numeric_Checked, CheckedMul_UnsignedInt)
             Error::kArithmeticOverflow);
 }
 
-TEST(Numeric_Checked, CheckedDiv_SignedInt)
+TEST_F(CheckedNumericsTest, CheckedDiv_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_div(100, 4).value(), 25);
@@ -111,7 +115,7 @@ TEST(Numeric_Checked, CheckedDiv_SignedInt)
             Error::kArithmeticInvalidValue);
 }
 
-TEST(Numeric_Checked, CheckedDiv_UnsignedInt)
+TEST_F(CheckedNumericsTest, CheckedDiv_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_div(100u, 4u).value(), 25u);
@@ -123,4 +127,5 @@ TEST(Numeric_Checked, CheckedDiv_UnsignedInt)
             Error::kArithmeticInvalidValue);
 }
 
+}  // namespace
 }  // namespace tactile::tests

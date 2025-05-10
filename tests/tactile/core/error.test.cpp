@@ -5,8 +5,12 @@
 import tactile.core;
 
 namespace tactile::tests {
+namespace {
 
-TEST(Core_Error, ToString)
+class ErrorTest : public testing::Test
+{};
+
+TEST_F(ErrorTest, ToString)
 {
   EXPECT_EQ(to_string(Error::kUnknown), "unknown");
   EXPECT_EQ(to_string(Error::kOutOfMemory), "out_of_memory");
@@ -27,7 +31,7 @@ TEST(Core_Error, ToString)
   EXPECT_EQ(to_string(Error::kCouldNotDecompress), "could_not_decompress");
 }
 
-TEST(Core_Error, Describe)
+TEST_F(ErrorTest, Describe)
 {
   EXPECT_EQ(describe(Error::kUnknown), "an unknown error occurred");
   EXPECT_EQ(describe(Error::kOutOfMemory), "out of memory");
@@ -50,4 +54,5 @@ TEST(Core_Error, Describe)
   EXPECT_EQ(describe(Error::kCouldNotDecompress), "could not decompress data");
 }
 
+}  // namespace
 }  // namespace tactile::tests

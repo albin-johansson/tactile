@@ -6,8 +6,12 @@ import std;
 import tactile.core;
 
 namespace tactile::tests {
+namespace {
 
-TEST(Core_Strings, ParseU64)
+class StringOpsTest : public testing::Test
+{};
+
+TEST_F(StringOpsTest, ParseU64)
 {
   EXPECT_EQ(parse_u64("42"), 42U);
 
@@ -20,7 +24,7 @@ TEST(Core_Strings, ParseU64)
   EXPECT_FALSE(parse_u64("foobar").has_value());
 }
 
-TEST(Core_Strings, ParseI64)
+TEST_F(StringOpsTest, ParseI64)
 {
   EXPECT_EQ(parse_i64("42"), 42);
   EXPECT_EQ(parse_i64("-123"), -123);
@@ -34,7 +38,7 @@ TEST(Core_Strings, ParseI64)
   EXPECT_FALSE(parse_i64("foobar").has_value());
 }
 
-TEST(Core_Strings, ParseF64)
+TEST_F(StringOpsTest, ParseF64)
 {
   EXPECT_EQ(parse_f64("0"), 0.0);
   EXPECT_EQ(parse_f64("4.2"), 4.2);
@@ -43,4 +47,5 @@ TEST(Core_Strings, ParseF64)
   EXPECT_FALSE(parse_f64("foobar").has_value());
 }
 
+}  // namespace
 }  // namespace tactile::tests
