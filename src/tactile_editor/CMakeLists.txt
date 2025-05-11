@@ -19,10 +19,11 @@ target_sources(tactile_editor
                "command/command_stack.cpp"
                )
 
-tactile_prepare_target(tactile_editor)
+tactile_set_target_properties(tactile_editor)
 
 target_link_libraries(tactile_editor
                       PUBLIC
+                      tactile_interface_target
                       tactile
 
                       PRIVATE

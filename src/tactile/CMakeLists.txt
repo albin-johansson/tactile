@@ -64,13 +64,14 @@ target_sources(tactile
                "numeric/random.cpp"
                )
 
-tactile_prepare_target(tactile)
+tactile_set_target_properties(tactile)
 
 target_link_libraries(tactile
                       PRIVATE
                       FastFloat::fast_float
 
                       PUBLIC
+                      tactile_interface_target
                       Boost::safe_numerics
                       )
 

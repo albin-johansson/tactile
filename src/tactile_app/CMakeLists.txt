@@ -7,7 +7,7 @@ target_sources(tactile_app
                "tactile.main.cpp"
                )
 
-tactile_prepare_target(tactile_app)
+tactile_set_target_properties(tactile_app)
 
 set_target_properties(tactile_app
                       PROPERTIES
@@ -16,6 +16,7 @@ set_target_properties(tactile_app
 
 target_link_libraries(tactile_app
                       PRIVATE
+                      tactile_interface_target
                       tactile
                       tactile_editor
                       )

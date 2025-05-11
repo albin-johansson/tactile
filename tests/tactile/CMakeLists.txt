@@ -4,8 +4,6 @@ find_package(GTest CONFIG REQUIRED)
 
 add_executable(tactile_tests)
 
-tactile_prepare_target(tactile_tests)
-
 target_sources(tactile_tests
                PRIVATE
                "core/error.test.cpp"
@@ -24,8 +22,11 @@ target_sources(tactile_tests
                "tactile_tests.main.cpp"
                )
 
+tactile_set_target_properties(tactile_tests)
+
 target_link_libraries(tactile_tests
                       PRIVATE
+                      tactile_interface_target
                       tactile
                       GTest::gtest
                       )
