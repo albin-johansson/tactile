@@ -9,6 +9,25 @@ env:
   VCPKG_BINARY_SOURCES: clear;x-gha,readwrite
 
 jobs:
+  linter:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run clang-tidy and clang-format
+        uses: cpp-linter/cpp-linter-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          extensions: .cpp,.cppm
+          style: file
+          tidy-checks: ""
+          thread-comments: false
+          file-annotations: false
+          tidy-review: false
+          format-review: false
+          step-summary: true
+
   macos-build-and-test:
     runs-on: macos-15
     env:
@@ -90,11 +109,11 @@ jobs:
       - name: Install
         run: ninja -C build install
 
-      - name: Run 'tactile' module tests
+      - name: Run core tests
         working-directory: ./build/debug
         run: ./tactile_tests
 
-      - name: Run 'tactile_editor' module tests
+      - name: Run editor tests
         working-directory: ./build/debug
         run: ./tactile_editor_tests
 
@@ -183,11 +202,11 @@ jobs:
       - name: Install
         run: ninja -C build install
 
-      - name: Run 'tactile' module tests
+      - name: Run core tests
         working-directory: ./build/debug
         run: ./tactile_tests
 
-      - name: Run 'tactile_editor' module tests
+      - name: Run editor tests
         working-directory: ./build/debug
         run: ./tactile_editor_tests
 
@@ -256,12 +275,12 @@ jobs:
       - name: Install
         run: ninja -C build install
 
-      - name: Run 'tactile' module tests
+      - name: Run core tests
         working-directory: ./build/debug
         shell: cmd
         run: tactile_tests.exe
 
-      - name: Run 'tactile_editor' module tests
+      - name: Run editor tests
         working-directory: ./build/debug
         shell: cmd
         run: tactile_editor_tests.exe
