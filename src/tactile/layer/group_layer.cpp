@@ -7,6 +7,7 @@ module;
 module tactile.layer;
 
 import std;
+import tactile.numeric;
 
 namespace tactile {
 
@@ -105,7 +106,7 @@ auto GroupLayer::raise_layer(const LayerID id) -> Result<void>
     return err(Error::kInvalidOp);
   }
 
-  const auto new_pos = old_pos - 1uz;
+  const auto new_pos = old_pos - 1z;
   std::iter_swap(old_pos, new_pos);
 
   return ok();
@@ -124,17 +125,17 @@ auto GroupLayer::lower_layer(const LayerID id) -> Result<void>
   const auto parent_end = result.parent_layer->m_layers.end();
 
   const auto old_pos = parent_begin + result.rel_index;
-  if (old_pos == parent_end - 1uz) {
+  if (old_pos == parent_end - 1z) {
     return err(Error::kInvalidOp);
   }
 
-  const auto new_pos = old_pos + 1uz;
+  const auto new_pos = old_pos + 1z;
   std::iter_swap(old_pos, new_pos);
 
   return ok();
 }
 
-auto GroupLayer::layer_index_rel(const LayerID id) const -> usize
+auto GroupLayer::layer_index_rel(const LayerID id) const -> isize
 {
   const auto result = _find_layer(id);
   if (!result.found) {
@@ -146,7 +147,7 @@ auto GroupLayer::layer_index_rel(const LayerID id) const -> usize
   return result.rel_index;
 }
 
-auto GroupLayer::layer_index_abs(const LayerID id) const -> usize
+auto GroupLayer::layer_index_abs(const LayerID id) const -> isize
 {
   const auto result = _find_layer(id);
   if (!result.found) {
@@ -161,14 +162,18 @@ auto GroupLayer::layer_index_abs(const LayerID id) const -> usize
 auto GroupLayer::find_layer(const LayerID id) -> ILayer*
 {
   const auto result = _find_layer(id);
-  return result.found ? result.parent_layer->m_layers.at(result.rel_index).get()
+  return result.found ? result.parent_layer->m_layers
+                            .at(checked_cast<usize>(result.rel_index))
+                            .get()
                       : nullptr;
 }
 
 auto GroupLayer::find_layer(const LayerID id) const -> const ILayer*
 {
   const auto result = _find_layer(id);
-  return result.found ? result.parent_layer->m_layers.at(result.rel_index).get()
+  return result.found ? result.parent_layer->m_layers
+                            .at(checked_cast<usize>(result.rel_index))
+                            .get()
                       : nullptr;
 }
 
@@ -184,9 +189,9 @@ auto GroupLayer::find_parent_layer(const LayerID id) const -> const GroupLayer*
   return result.parent_layer;
 }
 
-auto GroupLayer::layer_count() const -> usize
+auto GroupLayer::layer_count() const -> isize
 {
-  usize count {0};
+  isize count {0};
 
   for (const auto& layer : m_layers) {
     ++count;
@@ -199,9 +204,9 @@ auto GroupLayer::layer_count() const -> usize
   return count;
 }
 
-auto GroupLayer::_find_layer(const LayerID id, usize abs_index) -> FindLayerResult
+auto GroupLayer::_find_layer(const LayerID id, isize abs_index) -> FindLayerResult
 {
-  usize rel_index {0};
+  isize rel_index {0};
 
   for (const auto& layer : m_layers) {
     if (layer->info().id() == id) {
@@ -230,10 +235,10 @@ auto GroupLayer::_find_layer(const LayerID id, usize abs_index) -> FindLayerResu
                           .found = false};
 }
 
-auto GroupLayer::_find_layer(const LayerID id, usize abs_index) const
+auto GroupLayer::_find_layer(const LayerID id, isize abs_index) const
     -> FindConstLayerResult
 {
-  usize rel_index {0};
+  isize rel_index {0};
 
   for (const auto& layer : m_layers) {
     if (layer->info().id() == id) {

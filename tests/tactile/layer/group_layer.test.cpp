@@ -35,9 +35,9 @@ struct TestHierarchy final
 struct TestVisitor final : ILayerVisitor
 {
   Vector<LayerID> layer_sequence {};
-  usize group_layers {0};
-  usize tile_layers {0};
-  usize annotation_layers {0};
+  isize group_layers {0};
+  isize tile_layers {0};
+  isize annotation_layers {0};
 
   void on_group_layer(GroupLayer& layer) override
   {
@@ -61,9 +61,9 @@ struct TestVisitor final : ILayerVisitor
 struct TestConstVisitor final : IConstLayerVisitor
 {
   Vector<LayerID> layer_sequence {};
-  usize group_layers {0};
-  usize tile_layers {0};
-  usize annotation_layers {0};
+  isize group_layers {0};
+  isize tile_layers {0};
+  isize annotation_layers {0};
 
   void on_group_layer(const GroupLayer& layer) override
   {
@@ -146,9 +146,9 @@ TEST_F(GroupLayerTest, Visit)
     m_root.visit(visitor);
 
     EXPECT_THAT(visitor.layer_sequence, ContainerEq(expected_sequence));
-    EXPECT_EQ(visitor.group_layers, 3uz);
-    EXPECT_EQ(visitor.tile_layers, 1uz);
-    EXPECT_EQ(visitor.annotation_layers, 4uz);
+    EXPECT_EQ(visitor.group_layers, 3z);
+    EXPECT_EQ(visitor.tile_layers, 1z);
+    EXPECT_EQ(visitor.annotation_layers, 4z);
   }
 
   {
@@ -156,22 +156,22 @@ TEST_F(GroupLayerTest, Visit)
     Const(m_root).visit(visitor);
 
     EXPECT_THAT(visitor.layer_sequence, ContainerEq(expected_sequence));
-    EXPECT_EQ(visitor.group_layers, 3uz);
-    EXPECT_EQ(visitor.tile_layers, 1uz);
-    EXPECT_EQ(visitor.annotation_layers, 4uz);
+    EXPECT_EQ(visitor.group_layers, 3z);
+    EXPECT_EQ(visitor.tile_layers, 1z);
+    EXPECT_EQ(visitor.annotation_layers, 4z);
   }
 }
 
 TEST_F(GroupLayerTest, AppendLayer)
 {
   const auto layer_id = m_next_layer_id++;
-  EXPECT_EQ(m_root.layer_count(), 0uz);
+  EXPECT_EQ(m_root.layer_count(), 0z);
   EXPECT_EQ(m_root.find_layer(layer_id), nullptr);
   EXPECT_EQ(m_root.find_parent_layer(layer_id), nullptr);
 
   m_root.append_layer(make_unique<AnnotationLayer>(layer_id));
 
-  EXPECT_EQ(m_root.layer_count(), 1uz);
+  EXPECT_EQ(m_root.layer_count(), 1z);
   EXPECT_NE(m_root.find_layer(layer_id), nullptr);
   EXPECT_EQ(m_root.find_parent_layer(layer_id), &m_root);
 
@@ -198,7 +198,7 @@ TEST_F(GroupLayerTest, AppendLayerTo)
   m_root.append_layer(std::move(nested_group));
   m_root.append_layer_to(nested_group_id, std::move(nested_layer));
 
-  EXPECT_EQ(m_root.layer_count(), 2uz);
+  EXPECT_EQ(m_root.layer_count(), 2z);
   EXPECT_EQ(m_root.find_layer(nested_group_id), nested_group_ptr);
   EXPECT_EQ(m_root.find_layer(nested_layer_id), nested_layer_ptr);
 
@@ -216,17 +216,17 @@ TEST_F(GroupLayerTest, AppendLayerTo)
 TEST_F(GroupLayerTest, RemoveLayer)
 {
   const auto hierarchy = prepare_test_hierarchy();
-  ASSERT_EQ(m_root.layer_count(), 7uz);
+  ASSERT_EQ(m_root.layer_count(), 7z);
 
   const auto removed_layer = m_root.remove_layer(hierarchy.layer3_id);
-  EXPECT_EQ(m_root.layer_count(), 3uz);
+  EXPECT_EQ(m_root.layer_count(), 3z);
   ASSERT_NE(removed_layer, nullptr);
   EXPECT_EQ(removed_layer->info().id(), hierarchy.layer3_id);
 
   const auto* removed_group_layer =
       dynamic_cast<const GroupLayer*>(removed_layer.get());
   ASSERT_NE(removed_group_layer, nullptr);
-  EXPECT_EQ(removed_group_layer->layer_count(), 3uz);
+  EXPECT_EQ(removed_group_layer->layer_count(), 3z);
 
   EXPECT_EQ(m_root.remove_layer(hierarchy.invalid_id), nullptr);
 }
@@ -234,16 +234,16 @@ TEST_F(GroupLayerTest, RemoveLayer)
 TEST_F(GroupLayerTest, RaiseLayer)
 {
   const auto hierarchy = prepare_test_hierarchy();
-  ASSERT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 2uz);
+  ASSERT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 2z);
 
   EXPECT_TRUE(m_root.raise_layer(hierarchy.layer6_id).has_value());
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 1uz);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 1z);
 
   EXPECT_TRUE(m_root.raise_layer(hierarchy.layer6_id).has_value());
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 0uz);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 0z);
 
   EXPECT_FALSE(m_root.raise_layer(hierarchy.layer6_id).has_value());
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 0uz);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 0z);
 
   EXPECT_FALSE(m_root.raise_layer(hierarchy.invalid_id).has_value());
 }
@@ -251,16 +251,16 @@ TEST_F(GroupLayerTest, RaiseLayer)
 TEST_F(GroupLayerTest, LowerLayer)
 {
   const auto hierarchy = prepare_test_hierarchy();
-  ASSERT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 0uz);
+  ASSERT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 0z);
 
   EXPECT_TRUE(m_root.lower_layer(hierarchy.layer4_id).has_value());
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 1uz);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 1z);
 
   EXPECT_TRUE(m_root.lower_layer(hierarchy.layer4_id).has_value());
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 2uz);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 2z);
 
   EXPECT_FALSE(m_root.lower_layer(hierarchy.layer4_id).has_value());
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 2uz);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 2z);
 
   EXPECT_FALSE(m_root.lower_layer(hierarchy.invalid_id).has_value());
 }
@@ -269,26 +269,26 @@ TEST_F(GroupLayerTest, LayerIndexRel)
 {
   const auto hierarchy = prepare_test_hierarchy();
 
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer1_id), 0uz);
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer2_id), 0uz);
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer3_id), 1uz);
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 0uz);
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer5_id), 1uz);
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 2uz);
-  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer7_id), 1uz);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer1_id), 0z);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer2_id), 0z);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer3_id), 1z);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer4_id), 0z);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer5_id), 1z);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer6_id), 2z);
+  EXPECT_EQ(m_root.layer_index_rel(hierarchy.layer7_id), 1z);
 }
 
 TEST_F(GroupLayerTest, LayerIndexAbs)
 {
   const auto hierarchy = prepare_test_hierarchy();
 
-  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer1_id), 0uz);
-  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer2_id), 1uz);
-  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer3_id), 2uz);
-  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer4_id), 3uz);
-  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer5_id), 4uz);
-  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer6_id), 5uz);
-  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer7_id), 6uz);
+  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer1_id), 0z);
+  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer2_id), 1z);
+  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer3_id), 2z);
+  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer4_id), 3z);
+  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer5_id), 4z);
+  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer6_id), 5z);
+  EXPECT_EQ(m_root.layer_index_abs(hierarchy.layer7_id), 6z);
 }
 
 TEST_F(GroupLayerTest, FindLayer)
@@ -337,7 +337,7 @@ TEST_F(GroupLayerTest, FindParentLayer)
 TEST_F(GroupLayerTest, LayerCount)
 {
   (void) prepare_test_hierarchy();
-  EXPECT_EQ(m_root.layer_count(), 7uz);
+  EXPECT_EQ(m_root.layer_count(), 7z);
 }
 
 }  // namespace

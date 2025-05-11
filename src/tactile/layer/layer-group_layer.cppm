@@ -57,13 +57,13 @@ class GroupLayer final : public ILayer
   ///
   /// Complexity: O(N)
   [[nodiscard]]
-  auto layer_index_rel(LayerID id) const -> usize;
+  auto layer_index_rel(LayerID id) const -> isize;
 
   /// Returns the absolute index of a layer.
   ///
   /// Complexity: O(N)
   [[nodiscard]]
-  auto layer_index_abs(LayerID id) const -> usize;
+  auto layer_index_abs(LayerID id) const -> isize;
 
   /// Recursively searches for a layer with a given ID.
   ///
@@ -93,7 +93,7 @@ class GroupLayer final : public ILayer
   ///
   /// Complexity: O(N)
   [[nodiscard]]
-  auto layer_count() const -> usize;
+  auto layer_count() const -> isize;
 
  private:
   LayerInfo m_info;
@@ -102,26 +102,26 @@ class GroupLayer final : public ILayer
   struct FindLayerResult final
   {
     GroupLayer* parent_layer;
-    usize rel_index;
-    usize abs_index;
+    isize rel_index;
+    isize abs_index;
     bool found;
   };
 
   struct FindConstLayerResult final
   {
     const GroupLayer* parent_layer;
-    usize rel_index;
-    usize abs_index;
+    isize rel_index;
+    isize abs_index;
     bool found;
   };
 
   /// Complexity: O(N)
   [[nodiscard]]
-  auto _find_layer(LayerID id, usize abs_index = 0) -> FindLayerResult;
+  auto _find_layer(LayerID id, isize abs_index = 0) -> FindLayerResult;
 
   /// Complexity: O(N)
   [[nodiscard]]
-  auto _find_layer(LayerID id, usize abs_index = 0) const -> FindConstLayerResult;
+  auto _find_layer(LayerID id, isize abs_index = 0) const -> FindConstLayerResult;
 };
 
 }  // namespace tactile
