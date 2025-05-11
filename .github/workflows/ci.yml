@@ -83,6 +83,7 @@ jobs:
                    -DCMAKE_OSX_SYSROOT=macosx \
                    -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 \
                    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_BUILD_TESTS=ON \
                    -DTACTILE_BUILD_EDITOR=ON
@@ -195,6 +196,7 @@ jobs:
                    -DCMAKE_BUILD_TYPE=Debug \
                    -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=mold" \
                    -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=mold" \
+                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_BUILD_TESTS=ON \
                    -DTACTILE_BUILD_EDITOR=ON
@@ -268,6 +270,7 @@ jobs:
                    -GNinja `
                    -DCMAKE_BUILD_TYPE=Debug `
                    -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 `
+                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON `
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
                    -DTACTILE_BUILD_TESTS=ON `
                    -DTACTILE_BUILD_EDITOR=ON
