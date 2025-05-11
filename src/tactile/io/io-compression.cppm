@@ -7,7 +7,7 @@ export import tactile.core;
 export namespace tactile {
 
 /// Represents supported compression kinds.
-enum class CompressionKind
+enum class CompressionKind : u8
 {
   kZlib,
   kZstd,
@@ -16,6 +16,17 @@ enum class CompressionKind
 /// Interface for compression providers.
 class ICompressor
 {
+ protected:
+  ICompressor() = default;
+
+  ICompressor(ICompressor&&) noexcept = default;
+
+  ICompressor(const ICompressor&) = default;
+
+  auto operator=(ICompressor&&) noexcept -> ICompressor& = default;
+
+  auto operator=(const ICompressor&) -> ICompressor& = default;
+
  public:
   virtual ~ICompressor() noexcept = default;
 

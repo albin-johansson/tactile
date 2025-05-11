@@ -28,6 +28,17 @@ struct LogMessage final
 /// file.
 class ILogSink
 {
+ protected:
+  ILogSink() = default;
+
+  ILogSink(ILogSink&&) noexcept = default;
+
+  ILogSink(const ILogSink&) = default;
+
+  auto operator=(ILogSink&&) noexcept -> ILogSink& = default;
+
+  auto operator=(const ILogSink&) -> ILogSink& = default;
+
  public:
   virtual ~ILogSink() noexcept = default;
 

@@ -15,6 +15,17 @@ class AnnotationLayer;
 /// Layers are visited in depth-first order.
 class ILayerVisitor
 {
+ protected:
+  ILayerVisitor() = default;
+
+  ILayerVisitor(ILayerVisitor&&) noexcept = default;
+
+  ILayerVisitor(const ILayerVisitor&) = default;
+
+  auto operator=(ILayerVisitor&&) noexcept -> ILayerVisitor& = default;
+
+  auto operator=(const ILayerVisitor&) -> ILayerVisitor& = default;
+
  public:
   virtual ~ILayerVisitor() noexcept = default;
 
@@ -33,6 +44,17 @@ class ILayerVisitor
 /// Layers are visited in depth-first order.
 class IConstLayerVisitor
 {
+ protected:
+  IConstLayerVisitor() = default;
+
+  IConstLayerVisitor(IConstLayerVisitor&&) noexcept = default;
+
+  IConstLayerVisitor(const IConstLayerVisitor&) = default;
+
+  auto operator=(IConstLayerVisitor&&) noexcept -> IConstLayerVisitor& = default;
+
+  auto operator=(const IConstLayerVisitor&) -> IConstLayerVisitor& = default;
+
  public:
   virtual ~IConstLayerVisitor() noexcept = default;
 
@@ -49,6 +71,17 @@ class IConstLayerVisitor
 /// Interface for layer types.
 class ILayer
 {
+ protected:
+  ILayer() = default;
+
+  ILayer(ILayer&&) noexcept = default;
+
+  ILayer(const ILayer&) = default;
+
+  auto operator=(ILayer&&) noexcept -> ILayer& = default;
+
+  auto operator=(const ILayer&) -> ILayer& = default;
+
  public:
   virtual ~ILayer() noexcept = default;
 
@@ -59,9 +92,11 @@ class ILayer
   virtual void visit(IConstLayerVisitor& visitor) const = 0;
 
   /// Returns the common layer information.
+  [[nodiscard]]
   virtual auto info() -> LayerInfo& = 0;
 
   /// Returns the common layer information.
+  [[nodiscard]]
   virtual auto info() const -> const LayerInfo& = 0;
 };
 
