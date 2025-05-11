@@ -1,6 +1,6 @@
 # Tactile
 
-[![License](https://img.shields.io/badge/license-GPL3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![version](https://img.shields.io/github/v/release/albin-johansson/tactile)](https://github.com/albin-johansson/tactile/releases)
 [![CI](https://github.com/albin-johansson/tactile/actions/workflows/ci.yml/badge.svg)](https://github.com/albin-johansson/tactile/actions/workflows/ci.yml)
 
