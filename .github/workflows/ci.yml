@@ -11,6 +11,8 @@ env:
 jobs:
   linter:
     runs-on: macos-15
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +29,8 @@ jobs:
           tidy-review: false
           format-review: false
           step-summary: true
+          lines-changed-only: false
+          files-changed-only: false
 
   macos-build-and-test:
     runs-on: macos-15
