@@ -40,7 +40,7 @@
         "tinyfiledialogs"
       ]
     },
-    "opengl-renderer": {
+    "opengl": {
       "description": "Enable OpenGL renderer",
       "dependencies": [
         {
@@ -57,7 +57,7 @@
         }
       ]
     },
-    "vulkan-renderer": {
+    "vulkan": {
       "description": "Enable Vulkan renderer",
       "dependencies": [
         "vulkan",
@@ -76,32 +76,32 @@
         }
       ]
     },
-    "zlib-comp": {
+    "zlib": {
       "description": "Enable Zlib compression support",
       "dependencies": [
         "zlib"
       ]
     },
-    "zstd-comp": {
+    "zstd": {
       "description": "Enable Zstd compression support",
       "dependencies": [
         "zstd"
       ]
     },
-    "yaml-codec": {
-      "description": "Enable Tactile YAML format codec support",
+    "yaml": {
+      "description": "Enable Tactile YAML format support",
       "dependencies": [
         "yaml-cpp"
       ]
     },
-    "tmj-codec": {
-      "description": "Enable Tiled TMJ format codec support",
+    "tmj": {
+      "description": "Enable Tiled TMJ format support",
       "dependencies": [
         "nlohmann-json"
       ]
     },
-    "tmx-codec": {
-      "description": "Enable Tiled TMX format codec support",
+    "tmx": {
+      "description": "Enable Tiled TMX format support",
       "dependencies": [
         "pugixml"
       ]
