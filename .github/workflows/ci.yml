@@ -9,31 +9,10 @@ env:
   VCPKG_BINARY_SOURCES: clear;x-gha,readwrite
 
 jobs:
-  linter:
+  macos-build-and-test:
     runs-on: macos-15
     permissions:
       contents: read
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run clang-tidy and clang-format
-        uses: cpp-linter/cpp-linter-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          extensions: .cpp,.cppm
-          style: file
-          tidy-checks: ""
-          thread-comments: false
-          file-annotations: false
-          tidy-review: false
-          format-review: false
-          step-summary: true
-          lines-changed-only: false
-          files-changed-only: false
-
-  macos-build-and-test:
-    runs-on: macos-15
     env:
       VCPKG_TARGET_TRIPLET: arm64-osx-tactile
       VCPKG_DEFAULT_TRIPLET: arm64-osx-tactile
@@ -103,6 +82,7 @@ jobs:
                    -DCMAKE_BUILD_TYPE=Debug \
                    -DCMAKE_OSX_SYSROOT=macosx \
                    -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 \
+                   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_BUILD_TESTS=ON \
                    -DTACTILE_BUILD_EDITOR=ON
@@ -120,6 +100,24 @@ jobs:
       - name: Run editor tests
         working-directory: ./build/debug
         run: ./tactile_editor_tests
+
+      - name: Run clang-tidy and clang-format
+        uses: cpp-linter/cpp-linter-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: 19
+          database: build/debug
+          extensions: .cpp,.cppm
+          style: file
+          tidy-checks: ""
+          thread-comments: false
+          file-annotations: false
+          tidy-review: false
+          format-review: false
+          step-summary: true
+          lines-changed-only: false
+          files-changed-only: false
 
   ubuntu-build-and-test:
     if: false
