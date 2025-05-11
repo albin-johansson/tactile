@@ -53,9 +53,6 @@ docs/doxygen/html
 build
 cmake-build-*
 
-# Installer data
-tools/installer/packages/com.albinjohansson.tactile/data/*
-
 # Miscellaneous
 .cache
 

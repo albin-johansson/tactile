@@ -41,7 +41,6 @@ A tilemap editor that aims to be simple, fast and lightweight.
 * Helpful error messages when things go wrong, e.g. when parsing corrupted maps
 * Language support for American English, British English, and Swedish
 * Various editor themes, both dark and light
-* Easy to install (and uninstall) using the installers bundled along releases
 
 ## Documentation
 
