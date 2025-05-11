@@ -108,6 +108,7 @@ jobs:
         with:
           version: 19
           database: build/debug
+          ignore: build|tools|vcpkg
           extensions: .cpp,.cppm
           style: file
           tidy-checks: ""
