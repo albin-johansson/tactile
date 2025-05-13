@@ -1,5 +1,14 @@
 // Copyright (C) 2025 Albin Johansson
 
+/// Provides the common logging API.
+///
+/// The primary API of this module is the Logger class. While the Logger class isn't
+/// a singleton, there is a global logger instance, accessible via the get_logger
+/// function. Tactile code should use this function to log information.
+///
+/// Note that you need to install one or more "sinks" to the logger to see any output
+/// from the logger. Two sink implementations are provided by this module:
+/// ConsoleLogSink, and FileLogSink.
 export module tactile.log;
 
 export import :console_log_sink;
