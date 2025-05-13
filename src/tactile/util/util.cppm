@@ -4,3 +4,4 @@
 export module tactile.util;
 
 export import :defer;
+export import :validation;

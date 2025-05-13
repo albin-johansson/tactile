@@ -47,6 +47,7 @@ target_sources(tactile
                "tile/tile-id.cppm"
                "util/util.cppm"
                "util/util-defer.cppm"
+               "util/util-validation.cppm"
                "tactile.cppm"
 
                PRIVATE
