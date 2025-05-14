@@ -1,4 +1,4 @@
-project(tactile_editor_module CXX)
+project(tactile_editor_project CXX)
 
 find_package(argparse CONFIG REQUIRED)
 
@@ -24,7 +24,7 @@ tactile_set_target_properties(tactile_editor)
 target_link_libraries(tactile_editor
                       PUBLIC
                       tactile_interface_target
-                      tactile
+                      tactile_core
 
                       PRIVATE
                       argparse::argparse

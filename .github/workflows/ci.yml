@@ -96,7 +96,7 @@ jobs:
 
       - name: Run core tests
         working-directory: ./build/debug
-        run: ./tactile_tests
+        run: ./tactile_core_tests
 
       - name: Run editor tests
         working-directory: ./build/debug
@@ -209,7 +209,7 @@ jobs:
 
       - name: Run core tests
         working-directory: ./build/debug
-        run: ./tactile_tests
+        run: ./tactile_core_tests
 
       - name: Run editor tests
         working-directory: ./build/debug
@@ -284,7 +284,7 @@ jobs:
       - name: Run core tests
         working-directory: ./build/debug
         shell: cmd
-        run: tactile_tests.exe
+        run: tactile_core_tests.exe
 
       - name: Run editor tests
         working-directory: ./build/debug

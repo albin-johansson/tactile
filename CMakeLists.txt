@@ -56,7 +56,7 @@ install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${TACTILE_BUILD_DIR}
 
 include("tools/cmake/tactile.cmake")
 
-add_subdirectory("src/tactile")
+add_subdirectory("src/tactile_core")
 
 if (TACTILE_BUILD_EDITOR)
   add_subdirectory("src/tactile_editor")
@@ -64,7 +64,7 @@ if (TACTILE_BUILD_EDITOR)
 endif ()
 
 if (TACTILE_BUILD_TESTS)
-  add_subdirectory("tests/tactile")
+  add_subdirectory("tests/tactile_core")
 
   if (TACTILE_BUILD_EDITOR)
     add_subdirectory("tests/tactile_editor")

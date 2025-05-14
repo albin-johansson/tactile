@@ -1,4 +1,4 @@
-project(tactile_app CXX)
+project(tactile_app_project CXX)
 
 add_executable(tactile_app)
 
@@ -17,6 +17,6 @@ set_target_properties(tactile_app
 target_link_libraries(tactile_app
                       PRIVATE
                       tactile_interface_target
-                      tactile
+                      tactile_core
                       tactile_editor
                       )
