@@ -6,35 +6,58 @@ export import tactile.core.common;
 
 export namespace tactile {
 
-/// Represents supported compression kinds.
-enum class CompressionKind : u8
+/// Represents supported compression algorithms.
+enum class CompressionAlgorithm : u8
 {
   kZlib,
   kZstd,
 };
 
-/// Interface for compression providers.
-class ICompressor
+/// Interface for compression format implementations.
+class ICompressionFormat
 {
  protected:
-  ICompressor() = default;
+  ICompressionFormat() = default;
 
-  ICompressor(ICompressor&&) noexcept = default;
+  ICompressionFormat(ICompressionFormat&&) noexcept = default;
 
-  ICompressor(const ICompressor&) = default;
+  ICompressionFormat(const ICompressionFormat&) = default;
 
-  auto operator=(ICompressor&&) noexcept -> ICompressor& = default;
+  auto operator=(ICompressionFormat&&) noexcept -> ICompressionFormat& = default;
 
-  auto operator=(const ICompressor&) -> ICompressor& = default;
+  auto operator=(const ICompressionFormat&) -> ICompressionFormat& = default;
 
  public:
-  virtual ~ICompressor() noexcept = default;
+  virtual ~ICompressionFormat() noexcept = default;
 
   /// Compresses a stream of bytes.
-  virtual auto compress(Span<const u8> data) -> Result<Vector<u8>> = 0;
+  [[nodiscard]]
+  virtual auto compress(Span<const u8> data) const -> Result<Vector<u8>> = 0;
 
   /// Decompresses a stream of compressed bytes.
-  virtual auto decompress(Span<const u8> data) -> Result<Vector<u8>> = 0;
+  [[nodiscard]]
+  virtual auto decompress(Span<const u8> data) const -> Result<Vector<u8>> = 0;
+};
+
+/// A thin wrapper over a collection of compression formats.
+class Compressor final
+{
+ public:
+  /// Compresses a stream of bytes using a given algorithm.
+  [[nodiscard]]
+  auto compress_with(CompressionAlgorithm algorithm, Span<const u8> data) const
+      -> Result<Vector<u8>>;
+
+  /// Decompresses a stream of bytes using a given algorithm.
+  [[nodiscard]]
+  auto decompress_with(CompressionAlgorithm algorithm, Span<const u8> data) const
+      -> Result<Vector<u8>>;
+
+  /// Sets the compression format implementation for a given algorithm.
+  void set_format(CompressionAlgorithm algorithm, Unique<ICompressionFormat> format);
+
+ private:
+  HashMap<CompressionAlgorithm, Unique<ICompressionFormat>> m_formats {};
 };
 
 }  // namespace tactile

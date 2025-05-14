@@ -54,6 +54,7 @@ target_sources(tactile_core
                "common/result.cpp"
                "common/strings.cpp"
                "io/base64.cpp"
+               "io/compression.cpp"
                "layer/annotation_layer.cpp"
                "layer/group_layer.cpp"
                "layer/layer_info.cpp"
