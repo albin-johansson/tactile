@@ -4,7 +4,7 @@ function(tactile_set_target_properties target)
                         PROPERTIES
                         PREFIX ""
                         POSITION_INDEPENDENT_CODE "ON"
-                        INTERPROCEDURAL_OPTIMIZATION "${TACTILE_USE_LTO}"
+                        INTERPROCEDURAL_OPTIMIZATION "${TACTILE_ENABLE_LTO}"
                         RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
                         ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
                         LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
@@ -74,7 +74,7 @@ if (WIN32)
                              )
 endif ()
 
-if (TACTILE_USE_CLION_IMPORT_STD_WORKAROUND)
+if (TACTILE_ENABLE_CLION_IMPORT_STD_WORKAROUND)
   message(DEBUG "Applying workaround for CLion 'import std;' issue")
 
   # See https://youtrack.jetbrains.com/issue/CPP-39632/import-std-CLion-cant-resolve-module-std-in-case-of-clang

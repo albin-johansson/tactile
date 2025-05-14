@@ -85,8 +85,8 @@ jobs:
                    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_BUILD_TESTS=ON \
-                   -DTACTILE_BUILD_EDITOR=ON
+                   -DTACTILE_ENABLE_TESTS=ON \
+                   -DTACTILE_ENABLE_EDITOR=ON
 
       - name: Build
         run: ninja -C build
@@ -198,8 +198,8 @@ jobs:
                    -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=mold" \
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_BUILD_TESTS=ON \
-                   -DTACTILE_BUILD_EDITOR=ON
+                   -DTACTILE_ENABLE_TESTS=ON \
+                   -DTACTILE_ENABLE_EDITOR=ON
 
       - name: Build
         run: ninja -C build
@@ -272,8 +272,8 @@ jobs:
                    -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 `
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON `
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
-                   -DTACTILE_BUILD_TESTS=ON `
-                   -DTACTILE_BUILD_EDITOR=ON
+                   -DTACTILE_ENABLE_TESTS=ON `
+                   -DTACTILE_ENABLE_EDITOR=ON
 
       - name: Build
         run: ninja -C build

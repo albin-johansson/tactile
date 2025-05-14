@@ -1,14 +1,38 @@
 cmake_minimum_required(VERSION 3.30)
 
-option(TACTILE_BUILD_TESTS "Build test targets" OFF)
-option(TACTILE_BUILD_EDITOR "Build the editor application" ON)
-option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
-option(TACTILE_USE_CLION_IMPORT_STD_WORKAROUND "Enable CLion 'import std;' workaround" OFF)
+option(TACTILE_ENABLE_TESTS "Enable tests" OFF)
+option(TACTILE_ENABLE_EDITOR "Enable the editor application" ON)
+option(TACTILE_ENABLE_OPENGL_RENDERER "Enable OpenGL renderer" OFF)
+option(TACTILE_ENABLE_VULKAN_RENDERER "Enable Vulkan renderer" OFF)
+option(TACTILE_ENABLE_ZLIB "Enable Zlib compression support" OFF)
+option(TACTILE_ENABLE_ZSTD "Enable Zstd compression support" OFF)
+option(TACTILE_ENABLE_YAML "Enable Tactile YAML format support" OFF)
+option(TACTILE_ENABLE_TMJ "Enable Tiled TMJ format support" OFF)
+option(TACTILE_ENABLE_TMX "Enable Tiled TMJ format support" OFF)
+option(TACTILE_ENABLE_TSCN "Enable Godot TSCN format support" OFF)
+option(TACTILE_ENABLE_LTO "Enable link-time optimizations" OFF)
+option(TACTILE_ENABLE_CLION_IMPORT_STD_WORKAROUND "Enable CLion 'import std;' workaround" OFF)
+set(TACTILE_RENDERER "Null" CACHE STRING "The renderer implementation to use")
 
-message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
-message(DEBUG "TACTILE_BUILD_EDITOR: ${TACTILE_BUILD_EDITOR}")
-message(DEBUG "TACTILE_USE_LTO: ${TACTILE_USE_LTO}")
-message(DEBUG "TACTILE_USE_CLION_IMPORT_STD_WORKAROUND: ${TACTILE_USE_CLION_IMPORT_STD_WORKAROUND}")
+if (NOT TACTILE_RENDERER STREQUAL "Null" AND
+    NOT TACTILE_RENDERER STREQUAL "OpenGL" AND
+    NOT TACTILE_RENDERER STREQUAL "Vulkan")
+  message(FATAL_ERROR "Requested invalid renderer: ${TACTILE_RENDERER}")
+endif ()
+
+message(DEBUG "TACTILE_ENABLE_TESTS: ${TACTILE_ENABLE_TESTS}")
+message(DEBUG "TACTILE_ENABLE_EDITOR: ${TACTILE_ENABLE_EDITOR}")
+message(DEBUG "TACTILE_ENABLE_OPENGL_RENDERER: ${TACTILE_ENABLE_OPENGL_RENDERER}")
+message(DEBUG "TACTILE_ENABLE_OPENGL_RENDERER: ${TACTILE_ENABLE_VULKAN_RENDERER}")
+message(DEBUG "TACTILE_ENABLE_ZLIB: ${TACTILE_ENABLE_ZLIB}")
+message(DEBUG "TACTILE_ENABLE_ZSTD: ${TACTILE_ENABLE_ZSTD}")
+message(DEBUG "TACTILE_ENABLE_YAML: ${TACTILE_ENABLE_YAML}")
+message(DEBUG "TACTILE_ENABLE_TMJ: ${TACTILE_ENABLE_TMJ}")
+message(DEBUG "TACTILE_ENABLE_TMX: ${TACTILE_ENABLE_TMX}")
+message(DEBUG "TACTILE_ENABLE_TSCN: ${TACTILE_ENABLE_TSCN}")
+message(DEBUG "TACTILE_ENABLE_LTO: ${TACTILE_ENABLE_LTO}")
+message(DEBUG "TACTILE_ENABLE_CLION_IMPORT_STD_WORKAROUND: ${TACTILE_ENABLE_CLION_IMPORT_STD_WORKAROUND}")
+message(DEBUG "TACTILE_RENDERER: ${TACTILE_RENDERER}")
 
 if (CMAKE_SKIP_INSTALL_ALL_DEPENDENCY MATCHES "")
   set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY ON)
@@ -23,12 +47,40 @@ endif ()
 
 message(DEBUG "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
 
-if (TACTILE_BUILD_TESTS)
+if (TACTILE_ENABLE_TESTS)
   list(APPEND VCPKG_MANIFEST_FEATURES "tests")
 endif ()
 
-if (TACTILE_BUILD_EDITOR)
+if (TACTILE_ENABLE_EDITOR)
   list(APPEND VCPKG_MANIFEST_FEATURES "editor")
+endif ()
+
+if (TACTILE_ENABLE_OPENGL_RENDERER)
+  list(APPEND VCPKG_MANIFEST_FEATURES "opengl")
+endif ()
+
+if (TACTILE_ENABLE_VULKAN_RENDERER)
+  list(APPEND VCPKG_MANIFEST_FEATURES "vulkan")
+endif ()
+
+if (TACTILE_ENABLE_ZLIB)
+  list(APPEND VCPKG_MANIFEST_FEATURES "zlib")
+endif ()
+
+if (TACTILE_ENABLE_ZSTD)
+  list(APPEND VCPKG_MANIFEST_FEATURES "zstd")
+endif ()
+
+if (TACTILE_ENABLE_YAML)
+  list(APPEND VCPKG_MANIFEST_FEATURES "yaml")
+endif ()
+
+if (TACTILE_ENABLE_TMJ)
+  list(APPEND VCPKG_MANIFEST_FEATURES "tmj")
+endif ()
+
+if (TACTILE_ENABLE_TMX)
+  list(APPEND VCPKG_MANIFEST_FEATURES "tmx")
 endif ()
 
 message(DEBUG "VCPKG_MANIFEST_FEATURES: ${VCPKG_MANIFEST_FEATURES}")
@@ -58,15 +110,15 @@ include("tools/cmake/tactile.cmake")
 
 add_subdirectory("src/tactile_core")
 
-if (TACTILE_BUILD_EDITOR)
+if (TACTILE_ENABLE_EDITOR)
   add_subdirectory("src/tactile_editor")
   add_subdirectory("src/tactile_app")
 endif ()
 
-if (TACTILE_BUILD_TESTS)
+if (TACTILE_ENABLE_TESTS)
   add_subdirectory("tests/tactile_core")
 
-  if (TACTILE_BUILD_EDITOR)
+  if (TACTILE_ENABLE_EDITOR)
     add_subdirectory("tests/tactile_editor")
   endif ()
 endif ()
