@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.log:file_log_sink;
+export module tactile.core.log:file_log_sink;
 
 export import std;
 export import :sink;

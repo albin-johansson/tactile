@@ -4,7 +4,7 @@ module;
 
 #include <cppcodec/base64_default_rfc4648.hpp>
 
-module tactile.io;
+module tactile.core.io;
 
 namespace tactile {
 

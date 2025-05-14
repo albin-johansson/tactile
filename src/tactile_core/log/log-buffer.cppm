@@ -1,8 +1,8 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.log:buffer;
+export module tactile.core.log:buffer;
 
-export import tactile.common;
+export import tactile.core.common;
 
 namespace tactile {
 

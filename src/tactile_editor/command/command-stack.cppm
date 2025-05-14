@@ -3,7 +3,7 @@
 export module tactile.editor.command:stack;
 
 export import std;
-export import tactile;
+export import tactile.core;
 export import :interfaces;
 
 export namespace tactile::editor {

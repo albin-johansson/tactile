@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.common:time;
+export module tactile.core.common:time;
 
 export import std;
 

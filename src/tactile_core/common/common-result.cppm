@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.common:result;
+export module tactile.core.common:result;
 
 export import std;
 export import :containers;

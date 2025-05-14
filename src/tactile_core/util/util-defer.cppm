@@ -1,9 +1,9 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.util:defer;
+export module tactile.core.util:defer;
 
 export import std;
-export import tactile.log;
+export import tactile.core.log;
 
 export namespace tactile {
 

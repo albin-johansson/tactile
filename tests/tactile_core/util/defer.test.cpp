@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-import tactile.util;
+import tactile.core.util;
 
 namespace tactile::tests {
 namespace {

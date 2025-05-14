@@ -1,8 +1,8 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.numeric:random;
+export module tactile.core.numeric:random;
 
-export import tactile.common;
+export import tactile.core.common;
 
 export namespace tactile {
 

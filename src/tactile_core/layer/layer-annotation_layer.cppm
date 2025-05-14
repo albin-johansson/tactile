@@ -1,9 +1,9 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.layer:annotation_layer;
+export module tactile.core.layer:annotation_layer;
 
-export import tactile.common;
-export import tactile.numeric;
+export import tactile.core.common;
+export import tactile.core.numeric;
 export import :interfaces;
 export import :layer_info;
 

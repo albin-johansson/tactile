@@ -4,10 +4,10 @@ module;
 
 #include <cassert>
 
-module tactile.layer;
+module tactile.core.layer;
 
 import std;
-import tactile.numeric;
+import tactile.core.numeric;
 
 namespace tactile {
 

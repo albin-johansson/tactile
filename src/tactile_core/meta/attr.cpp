@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.meta;
+module tactile.core.meta;
 
 namespace tactile {
 

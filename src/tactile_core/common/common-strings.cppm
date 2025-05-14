@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.common:strings;
+export module tactile.core.common:strings;
 
 export import std;
 export import :containers;

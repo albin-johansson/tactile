@@ -1,8 +1,8 @@
 // Copyright (C) 2024 Albin Johansson (GNU General Public License v3.0)
 
-export module tactile.log:sink;
+export module tactile.core.log:sink;
 
-export import tactile.common;
+export import tactile.core.common;
 export import :level;
 
 export namespace tactile {

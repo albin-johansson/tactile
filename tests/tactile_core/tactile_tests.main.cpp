@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 import std;
-import tactile;
+import tactile.core;
 
 namespace tactile::tests {
 namespace {

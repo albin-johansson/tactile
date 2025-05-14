@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.layer;
+module tactile.core.layer;
 
 namespace tactile {
 

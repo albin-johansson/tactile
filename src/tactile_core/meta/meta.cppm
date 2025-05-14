@@ -7,7 +7,7 @@
 /// Attr class is used to represent a single property value. A component is a named
 /// collection of properties that can be directly attached to any object that may
 /// feature properties.
-export module tactile.meta;
+export module tactile.core.meta;
 
 export import :attr;
 export import :color;

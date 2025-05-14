@@ -48,7 +48,7 @@ target_sources(tactile_core
                "util/util.cppm"
                "util/util-defer.cppm"
                "util/util-validation.cppm"
-               "tactile.cppm"
+               "tactile_core.cppm"
 
                PRIVATE
                "common/result.cpp"

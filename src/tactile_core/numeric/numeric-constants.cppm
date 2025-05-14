@@ -1,9 +1,9 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.numeric:constants;
+export module tactile.core.numeric:constants;
 
 export import std;
-export import tactile.common;
+export import tactile.core.common;
 
 export namespace tactile {
 

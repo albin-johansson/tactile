@@ -6,9 +6,9 @@ module;
 
 #include <boost/safe_numerics/checked_integer.hpp>
 
-export module tactile.numeric:checked;
+export module tactile.core.numeric:checked;
 
-export import tactile.common;
+export import tactile.core.common;
 export import :concepts;
 
 // Intentionally not exported

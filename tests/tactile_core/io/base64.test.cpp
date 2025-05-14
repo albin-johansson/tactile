@@ -3,8 +3,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-import tactile.common;
-import tactile.io;
+import tactile.core.common;
+import tactile.core.io;
 
 namespace tactile::tests {
 namespace {

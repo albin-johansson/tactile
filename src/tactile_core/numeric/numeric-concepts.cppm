@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.numeric:concepts;
+export module tactile.core.numeric:concepts;
 
 export import std;
 

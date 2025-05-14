@@ -9,7 +9,7 @@
 /// Note that you need to install one or more "sinks" to the logger to see any output
 /// from the logger. Two sink implementations are provided by this module:
 /// ConsoleLogSink, and FileLogSink.
-export module tactile.log;
+export module tactile.core.log;
 
 export import :console_log_sink;
 export import :file_log_sink;

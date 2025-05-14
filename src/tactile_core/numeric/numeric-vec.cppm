@@ -4,10 +4,10 @@ module;
 
 #include <cassert>
 
-export module tactile.numeric:vec;
+export module tactile.core.numeric:vec;
 
 export import std;
-export import tactile.common;
+export import tactile.core.common;
 export import :concepts;
 import :checked;
 

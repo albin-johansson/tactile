@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.layer:interfaces;
+export module tactile.core.layer:interfaces;
 
 export import :layer_info;
 

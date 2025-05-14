@@ -4,7 +4,7 @@ module;
 
 #include <fast_float/fast_float.h>
 
-module tactile.common;
+module tactile.core.common;
 
 namespace tactile {
 namespace {

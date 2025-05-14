@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.layer:group_layer;
+export module tactile.core.layer:group_layer;
 
 export import :interfaces;
 export import :layer_info;

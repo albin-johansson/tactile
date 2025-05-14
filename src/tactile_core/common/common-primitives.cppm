@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.common:primitives;
+export module tactile.core.common:primitives;
 
 export import std;
 

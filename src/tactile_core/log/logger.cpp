@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.log;
+module tactile.core.log;
 
 import std;
 

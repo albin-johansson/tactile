@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.common:memory;
+export module tactile.core.common:memory;
 
 export import std;
 

@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.numeric:casts;
+export module tactile.core.numeric:casts;
 
 export import std;
 

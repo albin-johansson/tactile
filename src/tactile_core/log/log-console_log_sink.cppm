@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.log:console_log_sink;
+export module tactile.core.log:console_log_sink;
 
 export import :sink;
 

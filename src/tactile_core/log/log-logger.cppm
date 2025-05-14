@@ -1,9 +1,9 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.log:logger;
+export module tactile.core.log:logger;
 
 export import std;
-export import tactile.common;
+export import tactile.core.common;
 export import :level;
 export import :sink;
 import :buffer;

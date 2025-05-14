@@ -1,9 +1,9 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.numeric;
+module tactile.core.numeric;
 
 import std;
-import tactile.common;
+import tactile.core.common;
 
 namespace tactile {
 namespace {

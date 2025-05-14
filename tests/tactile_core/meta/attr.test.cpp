@@ -3,7 +3,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-import tactile.meta;
+import tactile.core.meta;
 
 namespace tactile::tests {
 namespace {

@@ -2,7 +2,7 @@
 
 /// Provides common vocabulary types and functions used throughout the Tactile
 /// codebase. As such, this module cannot depend on other Tactile modules.
-export module tactile.common;
+export module tactile.core.common;
 
 export import :containers;
 export import :fs;

@@ -2,7 +2,7 @@
 
 export module tactile.editor.cli;
 
-export import tactile;
+export import tactile.core;
 
 export namespace tactile::editor {
 

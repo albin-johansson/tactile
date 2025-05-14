@@ -1,8 +1,8 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.tile:id;
+export module tactile.core.tile:id;
 
-export import tactile.common;
+export import tactile.core.common;
 
 export namespace tactile {
 

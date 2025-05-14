@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.common:fs;
+export module tactile.core.common:fs;
 
 export import std;
 

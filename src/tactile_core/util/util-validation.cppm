@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.util:validation;
+export module tactile.core.util:validation;
 
 import std;
 

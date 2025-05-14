@@ -1,10 +1,10 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.meta:attr;
+export module tactile.core.meta:attr;
 
 export import std;
-export import tactile.common;
-export import tactile.numeric;
+export import tactile.core.common;
+export import tactile.core.numeric;
 export import :color;
 
 export namespace tactile {
