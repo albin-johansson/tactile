@@ -40,7 +40,7 @@ void Logger::_log(const LogLevel level,
 
     std::vformat_to(std::back_inserter(m_text_buffer), fmt, args);
     std::format_to(std::back_inserter(m_prefix_buffer),
-                   "[{} {:.>12%Q}]",
+                   "[{}][{:%Q}]:",
                    _to_prefix(level),
                    elapsed_time);
 
