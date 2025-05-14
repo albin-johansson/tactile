@@ -4,9 +4,9 @@ module;
 
 #include <cstdlib>
 
-module tactile_editor.app;
+module tactile.editor.app;
 
-import tactile_editor.cli;
+import tactile.editor.cli;
 
 namespace tactile::editor {
 

@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile_editor.command;
+module tactile.editor.command;
 
 import std;
 

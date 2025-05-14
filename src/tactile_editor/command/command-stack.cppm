@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile_editor.command:stack;
+export module tactile.editor.command:stack;
 
 export import std;
 export import tactile;

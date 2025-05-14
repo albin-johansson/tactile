@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile_editor.cli;
+export module tactile.editor.cli;
 
 export import tactile;
 

@@ -4,7 +4,7 @@ module;
 
 #include <argparse/argparse.hpp>
 
-module tactile_editor.cli;
+module tactile.editor.cli;
 
 import std;
 
