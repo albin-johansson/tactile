@@ -61,4 +61,4 @@ data/fonts
 data/images
 
 # Cached script files
-tools/cache
+tools/scripts/cache

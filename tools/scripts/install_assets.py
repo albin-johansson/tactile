@@ -1,12 +1,12 @@
-#  Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
+#  Copyright (C) 2025 Albin Johansson
 
 import shutil
 import sys
 import urllib.request
 import os.path
 
-FONT_OUTPUT_DIR = "../data/fonts"
-IMAGE_OUTPUT_DIR = "../data/images"
+FONT_OUTPUT_DIR = "../../data/fonts"
+IMAGE_OUTPUT_DIR = "../../data/images"
 CACHE_DIR = "./cache"
 
 FONTAWESOME_VERSION = "6.5.1"
