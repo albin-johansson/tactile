@@ -68,13 +68,14 @@ jobs:
 
       - name: Generate build files
         env:
-          CC: /opt/homebrew/opt/llvm/bin/clang
-          CXX: /opt/homebrew/opt/llvm/bin/clang++
+          CC: clang
+          CXX: clang++
         run: |
           mkdir build
           cd build
           cmake .. --log-level=DEBUG \
                    -GNinja \
+                   -DCMAKE_TOOLCHAIN_FILE=tools/vcpkg/toolchains/vcpkg-clang.cmake \
                    -DCMAKE_BUILD_TYPE=Debug \
                    -DCMAKE_OSX_SYSROOT=macosx \
                    -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 \
