@@ -8,5 +8,6 @@ export import tactile.core.layer;
 export import tactile.core.log;
 export import tactile.core.meta;
 export import tactile.core.numeric;
+export import tactile.core.save;
 export import tactile.core.tile;
 export import tactile.core.util;

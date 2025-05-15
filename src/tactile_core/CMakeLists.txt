@@ -43,6 +43,7 @@ target_sources(tactile_core
                "numeric/numeric-hash.cppm"
                "numeric/numeric-random.cppm"
                "numeric/numeric-vec.cppm"
+               "save/save.cppm"
                "tile/tile.cppm"
                "tile/tile-id.cppm"
                "util/util.cppm"
