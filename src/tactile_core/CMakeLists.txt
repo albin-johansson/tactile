@@ -43,6 +43,7 @@ target_sources(tactile_core
                "numeric/numeric-hash.cppm"
                "numeric/numeric-random.cppm"
                "numeric/numeric-vec.cppm"
+               "runtime/runtime.cppm"
                "save/save.cppm"
                "tile/tile.cppm"
                "tile/tile-id.cppm"
@@ -65,6 +66,7 @@ target_sources(tactile_core
                "log/logger.cpp"
                "meta/attr.cpp"
                "numeric/random.cpp"
+               "runtime/runtime.cpp"
                )
 
 tactile_set_target_properties(tactile_core)
