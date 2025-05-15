@@ -17,10 +17,6 @@ export namespace tactile {
 class Runtime final
 {
  public:
-  /// Returns a pointer to the configured renderer, if any.
-  [[nodiscard]]
-  auto renderer() const noexcept -> const IRenderer*;
-
   /// Adds or removes a save encoder implementation for a given format.
   void set_save_encoder(SaveFormatKind kind, ISaveEncoder* encoder);
 
