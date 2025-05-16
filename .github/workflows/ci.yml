@@ -79,10 +79,12 @@ jobs:
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Build
-        run: ninja -C build
+        working-directory: ./build/debug
+        run: ninja
 
       - name: Install
-        run: ninja -C build install
+        working-directory: ./build/debug
+        run: ninja install
 
       - name: Run core tests
         working-directory: ./build/debug/output
@@ -182,10 +184,12 @@ jobs:
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Build
-        run: ninja -C build
+        working-directory: ./build/debug
+        run: ninja
 
       - name: Install
-        run: ninja -C build install
+        working-directory: ./build/debug
+        run: ninja install
 
       - name: Run core tests
         working-directory: ./build/debug/output
@@ -247,10 +251,12 @@ jobs:
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Build
-        run: ninja -C build
+        working-directory: ./build/debug
+        run: ninja
 
       - name: Install
-        run: ninja -C build install
+        working-directory: ./build/debug
+        run: ninja install
 
       - name: Run core tests
         working-directory: ./build/debug/output
