@@ -1,0 +1,182 @@
+{
+  "version": 10,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 30
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "CMAKE_SKIP_INSTALL_ALL_DEPENDENCY": "ON",
+        "CMAKE_EXPERIMENTAL_CXX_IMPORT_STD": "0e5b6991-d74f-4b3d-a41c-cf096e0b2508",
+        "CMAKE_CXX_MODULE_STD": "ON",
+        "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/tools/vcpkg/triplets",
+        "TACTILE_ENABLE_TESTS": "ON",
+        "TACTILE_ENABLE_EDITOR": "ON",
+        "TACTILE_ENABLE_OPENGL": "OFF",
+        "TACTILE_ENABLE_VULKAN": "OFF",
+        "TACTILE_ENABLE_ZLIB": "ON",
+        "TACTILE_ENABLE_ZSTD": "ON",
+        "TACTILE_ENABLE_YAML": "ON",
+        "TACTILE_ENABLE_TMJ": "ON",
+        "TACTILE_ENABLE_TMX": "ON",
+        "TACTILE_ENABLE_TSCN": "ON",
+        "TACTILE_ENABLE_LTO": "OFF",
+        "TACTILE_ENABLE_CLION_IMPORT_STD_WORKAROUND": "OFF",
+        "TACTILE_RENDERER": "Null"
+      }
+    },
+    {
+      "name": "default-debug",
+      "hidden": true,
+      "inherits": [
+        "default"
+      ],
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "default-release",
+      "hidden": true,
+      "inherits": [
+        "default"
+      ],
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "TACTILE_ENABLE_LTO": "ON"
+      }
+    },
+    {
+      "name": "use-opengl-renderer",
+      "hidden": true,
+      "cacheVariables": {
+        "TACTILE_ENABLE_OPENGL": "ON",
+        "TACTILE_RENDERER": "OpenGL"
+      }
+    },
+    {
+      "name": "use-mold-linker",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_EXE_LINKER_FLAGS": "-fuse-ld=mold",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fuse-ld=mold"
+      }
+    },
+    {
+      "name": "arm64-osx-homebrew-llvm",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/tools/vcpkg/toolchains/arm64-osx-homebrew-llvm.cmake",
+        "VCPKG_TARGET_TRIPLET": "arm64-osx-tactile"
+      }
+    },
+    {
+      "name": "arm64-osx-homebrew-llvm-debug-null",
+      "inherits": [
+        "arm64-osx-homebrew-llvm",
+        "default-debug"
+      ]
+    },
+    {
+      "name": "arm64-osx-homebrew-llvm-release-null",
+      "inherits": [
+        "arm64-osx-homebrew-llvm",
+        "default-release"
+      ]
+    },
+    {
+      "name": "arm64-osx-homebrew-llvm-debug-opengl",
+      "inherits": [
+        "use-opengl-renderer",
+        "arm64-osx-homebrew-llvm-debug-null"
+      ]
+    },
+    {
+      "name": "arm64-osx-homebrew-llvm-release-opengl",
+      "inherits": [
+        "use-opengl-renderer",
+        "arm64-osx-homebrew-llvm-release-null"
+      ]
+    },
+    {
+      "name": "x64-linux",
+      "hidden": true,
+      "inherits": [
+        "use-mold-linker"
+      ],
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-linux-tactile"
+      }
+    },
+    {
+      "name": "x64-linux-debug-null",
+      "inherits": [
+        "x64-linux",
+        "default-debug"
+      ]
+    },
+    {
+      "name": "x64-linux-release-null",
+      "inherits": [
+        "x64-linux",
+        "default-release"
+      ]
+    },
+    {
+      "name": "x64-linux-debug-opengl",
+      "inherits": [
+        "use-opengl-renderer",
+        "x64-linux-debug-null"
+      ]
+    },
+    {
+      "name": "x64-linux-release-opengl",
+      "inherits": [
+        "use-opengl-renderer",
+        "x64-linux-release-null"
+      ]
+    },
+    {
+      "name": "x64-windows",
+      "hidden": true,
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows-tactile"
+      }
+    },
+    {
+      "name": "x64-windows-debug-null",
+      "inherits": [
+        "x64-windows",
+        "default-debug"
+      ]
+    },
+    {
+      "name": "x64-windows-release-null",
+      "inherits": [
+        "x64-windows",
+        "default-release"
+      ]
+    },
+    {
+      "name": "x64-windows-debug-opengl",
+      "inherits": [
+        "use-opengl-renderer",
+        "x64-windows-debug-null"
+      ]
+    },
+    {
+      "name": "x64-windows-release-opengl",
+      "inherits": [
+        "use-opengl-renderer",
+        "x64-windows-release-null"
+      ]
+    }
+  ]
+}

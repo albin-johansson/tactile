@@ -5,9 +5,9 @@ function(tactile_set_target_properties target)
                         PREFIX ""
                         POSITION_INDEPENDENT_CODE "ON"
                         INTERPROCEDURAL_OPTIMIZATION "${TACTILE_ENABLE_LTO}"
-                        RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                        ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
-                        LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
+                        RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BINARY_DIR}"
+                        ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BINARY_DIR}"
+                        LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BINARY_DIR}"
                         )
 endfunction()
 

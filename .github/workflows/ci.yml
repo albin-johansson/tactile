@@ -68,22 +68,15 @@ jobs:
 
       - name: Generate build files
         env:
-          CC: clang
-          CXX: clang++
+          CC: /opt/homebrew/opt/llvm/bin/clang
+          CXX: /opt/homebrew/opt/llvm/bin/clang++
         run: |
           mkdir build
           cd build
-          cmake .. --log-level=DEBUG \
-                   -GNinja \
-                   -DCMAKE_TOOLCHAIN_FILE=tools/vcpkg/toolchains/vcpkg-clang.cmake \
-                   -DCMAKE_BUILD_TYPE=Debug \
-                   -DCMAKE_OSX_SYSROOT=macosx \
-                   -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 \
+          cmake .. --preset=arm64-osx-homebrew-llvm-debug-null \
+                   --log-level=DEBUG \
                    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
-                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_ENABLE_TESTS=ON \
-                   -DTACTILE_ENABLE_EDITOR=ON
+                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Build
         run: ninja -C build
@@ -92,11 +85,11 @@ jobs:
         run: ninja -C build install
 
       - name: Run core tests
-        working-directory: ./build/debug
+        working-directory: ./build/debug/output
         run: ./tactile_core_tests
 
       - name: Run editor tests
-        working-directory: ./build/debug
+        working-directory: ./build/debug/output
         run: ./tactile_editor_tests
 
       - name: Run clang-tidy and clang-format
@@ -184,15 +177,9 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. --log-level=DEBUG \
-                   -GNinja \
-                   -DCMAKE_BUILD_TYPE=Debug \
-                   -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=mold" \
-                   -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=mold" \
-                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
-                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_ENABLE_TESTS=ON \
-                   -DTACTILE_ENABLE_EDITOR=ON
+          cmake .. --preset=x64-linux-debug-null \
+                   --log-level=DEBUG \
+                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Build
         run: ninja -C build
@@ -201,11 +188,11 @@ jobs:
         run: ninja -C build install
 
       - name: Run core tests
-        working-directory: ./build/debug
+        working-directory: ./build/debug/output
         run: ./tactile_core_tests
 
       - name: Run editor tests
-        working-directory: ./build/debug
+        working-directory: ./build/debug/output
         run: ./tactile_editor_tests
 
   windows-build-and-test:
@@ -255,14 +242,9 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. --log-level=DEBUG `
-                   -GNinja `
-                   -DCMAKE_BUILD_TYPE=Debug `
-                   -DCMAKE_EXPERIMENTAL_CXX_IMPORT_STD=0e5b6991-d74f-4b3d-a41c-cf096e0b2508 `
-                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON `
-                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
-                   -DTACTILE_ENABLE_TESTS=ON `
-                   -DTACTILE_ENABLE_EDITOR=ON
+          cmake .. --preset=x64-windows-debug-null `
+                   --log-level=DEBUG `
+                   -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Build
         run: ninja -C build
@@ -271,11 +253,11 @@ jobs:
         run: ninja -C build install
 
       - name: Run core tests
-        working-directory: ./build/debug
+        working-directory: ./build/debug/output
         shell: cmd
         run: tactile_core_tests.exe
 
       - name: Run editor tests
-        working-directory: ./build/debug
+        working-directory: ./build/debug/output
         shell: cmd
         run: tactile_editor_tests.exe

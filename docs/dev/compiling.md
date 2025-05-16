@@ -6,7 +6,6 @@ This document provides a guide for how to build the project.
   - [Install a C++ compiler](#install-a-c-compiler)
   - [Install Vcpkg](#install-vcpkg)
   - [Building the project](#building-the-project)
-  - [Configuring profiles in JetBrains CLion](#configuring-profiles-in-jetbrains-clion)
 
 Tactile uses [Vcpkg](https://github.com/microsoft/vcpkg), an open-source dependency manager for C++ libraries, developed by Microsoft.
 This makes building the Tactile editor really quite straightforward.
@@ -39,27 +38,16 @@ It is recommended to set the environment variable `VCPKG_ROOT` to point to the d
 ## Building the project
 
 Given a successful Vcpkg installation, building the project should be a simple as entering the following commands, starting in the root directory of the repository.
-
-It is advisable to make use of the Ninja generator, since that improves compile times significantly.
-However, you can specify whatever generator you want (and omit the `-G` argument to use the default generator).
+Use the correct preset in the `CMakePresets.json` for your system.
+The following works for ARM-based macOS systems.
 
 ```bash
 > mkdir build
 > cd build
-> cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+> cmake .. --preset arm64-osx-homebrew-llvm-debug-opengl
 > ninja
 ```
 
-It is also worth noting that Vcpkg supports a variety of "triplets", which controls aspects such as whether dependencies are built as static or dynamic libraries.
-It is recommended to use a triplet that results in statically linked dependencies.
-Specify the target triplet with the `-DVCPKG_TARGET_TRIPLET=<triplet>` flag, e.g. `arm64-osx` for M1 macs or `x64-windows-static-md` for x86_64 Windows machines.
-
-More information about Vcpkg triplets can be found [here](https://github.com/microsoft/vcpkg/docs/users/triplets.md).
-
-## Configuring profiles in JetBrains CLion
-
-If you're using an IDE such as JetBrains CLion, it is usually possible to configure CMake profiles to make building and/or running the project as simple as pressing a button.
-
-You can configure CMake profiles in the project settings under `Build, Execution, Deployment` -> `CMake`.
-You can also simply search for `CMake Settings` using the `Shift+Shift` shortcut.
-Here, you'll be able to configure CMake arguments such as `VCPKG_TARGET_TRIPLET`, the preferred generator, and the build type of a profile.
+Depending on the version of CMake you're using, it might be necessary to override the value of
+`CMAKE_EXPERIMENTAL_CXX_IMPORT_STD`, see [this](https://github.com/Kitware/CMake/blob/master/Help/dev/experimental.rst)
+page for the correct value.
