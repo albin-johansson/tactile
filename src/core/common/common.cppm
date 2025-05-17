@@ -7,6 +7,7 @@ export module tactile.core.common;
 export import :containers;
 export import :fs;
 export import :memory;
+export import :platform;
 export import :primitives;
 export import :result;
 export import :strings;

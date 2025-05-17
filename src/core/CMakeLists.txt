@@ -8,6 +8,7 @@ target_sources(tactile_core
                "common/common-containers.cppm"
                "common/common-fs.cppm"
                "common/common-memory.cppm"
+               "common/common-platform.cppm"
                "common/common-primitives.cppm"
                "common/common-result.cppm"
                "common/common-strings.cppm"
