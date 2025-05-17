@@ -9,7 +9,7 @@ target_sources(tactile_editor
                "command/command.cppm"
                "command/command-interfaces.cppm"
                "command/command-stack.cppm"
-               "tactile_editor.cppm"
+               "editor.cppm"
 
                PRIVATE
                "app/launch.cpp"

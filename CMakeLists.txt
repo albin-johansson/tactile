@@ -102,7 +102,7 @@ find_package(Boost REQUIRED COMPONENTS safe_numerics)
 find_package(FastFloat CONFIG REQUIRED)
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
-add_subdirectory("src/tactile_core")
+add_subdirectory("src/core")
 
 if (TACTILE_ENABLE_EDITOR)
   find_package(argparse CONFIG REQUIRED)
@@ -115,20 +115,20 @@ if (TACTILE_ENABLE_EDITOR)
     add_subdirectory("src/zlib")
   endif ()
 
-  add_subdirectory("src/tactile_editor")
-  add_subdirectory("src/tactile_app")
+  add_subdirectory("src/editor")
+  add_subdirectory("src/app")
 endif ()
 
 if (TACTILE_ENABLE_TESTS)
   find_package(GTest CONFIG REQUIRED)
 
-  add_subdirectory("tests/tactile_core")
+  add_subdirectory("tests/core")
 
   if (TACTILE_ENABLE_EDITOR)
     if (TACTILE_ENABLE_ZLIB)
       add_subdirectory("tests/zlib")
     endif ()
 
-    add_subdirectory("tests/tactile_editor")
+    add_subdirectory("tests/editor")
   endif ()
 endif ()

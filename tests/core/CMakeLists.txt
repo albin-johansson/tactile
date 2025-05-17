@@ -18,7 +18,7 @@ target_sources(tactile_core_tests
                "numeric/vec.test.cpp"
                "util/defer.test.cpp"
                "util/validation.test.cpp"
-               "tactile_tests.main.cpp"
+               "tactile_core_tests.main.cpp"
                )
 
 tactile_set_target_properties(tactile_core_tests)
