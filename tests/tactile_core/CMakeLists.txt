@@ -1,7 +1,5 @@
 project(tactile_core_tests_project CXX)
 
-find_package(GTest CONFIG REQUIRED)
-
 add_executable(tactile_core_tests)
 
 target_sources(tactile_core_tests

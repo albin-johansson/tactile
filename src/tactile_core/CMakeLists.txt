@@ -1,9 +1,5 @@
 project(tactile_core_project CXX)
 
-find_package(Boost REQUIRED COMPONENTS safe_numerics)
-find_package(FastFloat CONFIG REQUIRED)
-find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
-
 add_library(tactile_core STATIC)
 
 target_sources(tactile_core

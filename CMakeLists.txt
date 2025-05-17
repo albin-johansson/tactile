@@ -98,14 +98,22 @@ install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${TACTILE_BINARY_DIR
 
 include("tools/cmake/tactile.cmake")
 
+find_package(Boost REQUIRED COMPONENTS safe_numerics)
+find_package(FastFloat CONFIG REQUIRED)
+find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
+
 add_subdirectory("src/tactile_core")
 
 if (TACTILE_ENABLE_EDITOR)
+  find_package(argparse CONFIG REQUIRED)
+  find_package(imgui CONFIG REQUIRED)
   add_subdirectory("src/tactile_editor")
   add_subdirectory("src/tactile_app")
 endif ()
 
 if (TACTILE_ENABLE_TESTS)
+  find_package(GTest CONFIG REQUIRED)
+
   add_subdirectory("tests/tactile_core")
 
   if (TACTILE_ENABLE_EDITOR)

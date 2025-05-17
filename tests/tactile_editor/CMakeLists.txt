@@ -1,7 +1,5 @@
 project(tactile_editor_module_tests CXX)
 
-find_package(GTest CONFIG REQUIRED)
-
 add_executable(tactile_editor_tests)
 
 target_sources(tactile_editor_tests

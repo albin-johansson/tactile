@@ -1,7 +1,5 @@
 project(tactile_editor_project CXX)
 
-find_package(argparse CONFIG REQUIRED)
-
 add_library(tactile_editor STATIC)
 
 target_sources(tactile_editor
