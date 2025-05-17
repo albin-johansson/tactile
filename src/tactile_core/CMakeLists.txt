@@ -44,6 +44,8 @@ target_sources(tactile_core
                "numeric/numeric-random.cppm"
                "numeric/numeric-vec.cppm"
                "runtime/runtime.cppm"
+               "runtime/runtime-interfaces.cppm"
+               "runtime/runtime-null.cppm"
                "save/save.cppm"
                "tile/tile.cppm"
                "tile/tile-id.cppm"
