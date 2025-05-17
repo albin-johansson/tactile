@@ -26,6 +26,7 @@ TEST_F(ErrorTest, ToString)
   EXPECT_EQ(to_string(Error::kArithmeticInvalidValue), "arithmetic_invalid_value");
   EXPECT_EQ(to_string(Error::kStackOverflow), "stack_overflow");
   EXPECT_EQ(to_string(Error::kStackUnderflow), "stack_underflow");
+  EXPECT_EQ(to_string(Error::kCouldNotInitialize), "could_not_initialize");
   EXPECT_EQ(to_string(Error::kCouldNotParseFile), "could_not_parse_file");
   EXPECT_EQ(to_string(Error::kCouldNotCompress), "could_not_compress");
   EXPECT_EQ(to_string(Error::kCouldNotDecompress), "could_not_decompress");
@@ -49,6 +50,8 @@ TEST_F(ErrorTest, Describe)
             "detected invalid arithmetic value");
   EXPECT_EQ(describe(Error::kStackOverflow), "detected stack overflow");
   EXPECT_EQ(describe(Error::kStackUnderflow), "detected stack underflow");
+  EXPECT_EQ(describe(Error::kCouldNotInitialize),
+            "an initialization error occurred");
   EXPECT_EQ(describe(Error::kCouldNotParseFile), "could not parse a file");
   EXPECT_EQ(describe(Error::kCouldNotCompress), "could not compress data");
   EXPECT_EQ(describe(Error::kCouldNotDecompress), "could not decompress data");

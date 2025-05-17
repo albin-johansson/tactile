@@ -21,6 +21,7 @@ auto to_string(const Error error) -> StringView
     case Error::kArithmeticInvalidValue: return "arithmetic_invalid_value";
     case Error::kStackOverflow:          return "stack_overflow";
     case Error::kStackUnderflow:         return "stack_underflow";
+    case Error::kCouldNotInitialize:     return "could_not_initialize";
     case Error::kCouldNotParseFile:      return "could_not_parse_file";
     case Error::kCouldNotCompress:       return "could_not_compress";
     case Error::kCouldNotDecompress:     return "could_not_decompress";
@@ -46,6 +47,7 @@ auto describe(const Error error) -> StringView
     case Error::kArithmeticInvalidValue: return "detected invalid arithmetic value";
     case Error::kStackOverflow:          return "detected stack overflow";
     case Error::kStackUnderflow:         return "detected stack underflow";
+    case Error::kCouldNotInitialize:     return "an initialization error occurred";
     case Error::kCouldNotParseFile:      return "could not parse a file";
     case Error::kCouldNotCompress:       return "could not compress data";
     case Error::kCouldNotDecompress:     return "could not decompress data";

@@ -54,6 +54,9 @@ enum class Error : u8
   /// A stack underflow was detected.
   kStackUnderflow,
 
+  /// An initialization error occurred.
+  kCouldNotInitialize,
+
   /// Could not parse a file.
   kCouldNotParseFile,
 
