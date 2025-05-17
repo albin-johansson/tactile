@@ -107,6 +107,9 @@ add_subdirectory("src/tactile_core")
 if (TACTILE_ENABLE_EDITOR)
   find_package(argparse CONFIG REQUIRED)
   find_package(imgui CONFIG REQUIRED)
+
+  add_subdirectory("src/ui")
+
   add_subdirectory("src/tactile_editor")
   add_subdirectory("src/tactile_app")
 endif ()
