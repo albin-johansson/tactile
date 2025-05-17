@@ -94,6 +94,10 @@ jobs:
         working-directory: ./build/debug/output
         run: ./tactile_editor_tests
 
+      - name: Run Zlib tests
+        working-directory: ./build/debug/output
+        run: ./tactile_zlib_tests
+
       - name: Run clang-tidy and clang-format
         uses: cpp-linter/cpp-linter-action@v2
         env:
@@ -199,6 +203,10 @@ jobs:
         working-directory: ./build/debug/output
         run: ./tactile_editor_tests
 
+      - name: Run Zlib tests
+        working-directory: ./build/debug/output
+        run: ./tactile_zlib_tests
+
   windows-build-and-test:
     runs-on: windows-2025
     env:
@@ -267,3 +275,8 @@ jobs:
         working-directory: ./build/debug/output
         shell: cmd
         run: tactile_editor_tests.exe
+
+      - name: Run Zlib tests
+        working-directory: ./build/debug/output
+        shell: cmd
+        run: tactile_zlib_tests.exe

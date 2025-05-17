@@ -110,6 +110,11 @@ if (TACTILE_ENABLE_EDITOR)
 
   add_subdirectory("src/ui")
 
+  if (TACTILE_ENABLE_ZLIB)
+    find_package(ZLIB REQUIRED)
+    add_subdirectory("src/zlib")
+  endif ()
+
   add_subdirectory("src/tactile_editor")
   add_subdirectory("src/tactile_app")
 endif ()
@@ -120,6 +125,10 @@ if (TACTILE_ENABLE_TESTS)
   add_subdirectory("tests/tactile_core")
 
   if (TACTILE_ENABLE_EDITOR)
+    if (TACTILE_ENABLE_ZLIB)
+      add_subdirectory("tests/zlib")
+    endif ()
+
     add_subdirectory("tests/tactile_editor")
   endif ()
 endif ()
