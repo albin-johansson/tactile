@@ -9,13 +9,6 @@ export namespace tactile {
 /// Type used for texture identifiers.
 using TextureID = i32;
 
-/// Represents exit codes returned by the main function.
-enum class ExitCode : u8
-{
-  kSuccess,
-  kFailure,
-};
-
 /// Interface for a texture loaded by a backend.
 class ITexture
 {
@@ -85,7 +78,8 @@ class IApp
   virtual ~IApp() noexcept = default;
 
   /// Called once per event loop iteration, immediately after polling OS events.
-  virtual void on_update() = 0;
+  [[nodiscard]]
+  virtual auto on_update() -> Result<void> = 0;
 
   /// Renders UI elements.
   ///
@@ -99,10 +93,12 @@ class IApp
   /// Called when the application is starting up, before the first on_update call.
   ///
   /// It's safe for an application to store the passed pointer.
-  virtual void on_startup(ITextureManager* texture_manager) = 0;
+  [[nodiscard]]
+  virtual auto on_startup(ITextureManager* texture_manager) -> Result<void> = 0;
 
   /// Called when the application is shutting down, after the last on_update call.
-  virtual void on_shutdown() = 0;
+  [[nodiscard]]
+  virtual auto on_shutdown() -> Result<void> = 0;
 
   /// Called once per event loop iteration to check if the application wants to stop.
   [[nodiscard]]
@@ -128,7 +124,7 @@ class IBackend
 
   /// Runs the given application.
   [[nodiscard]]
-  virtual auto run(IApp& app) -> ExitCode = 0;
+  virtual auto run(IApp& app) -> Result<void> = 0;
 };
 
 }  // namespace tactile

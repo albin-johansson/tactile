@@ -11,9 +11,9 @@ class NullBackend final : public IBackend
 {
  public:
   [[nodiscard]]
-  auto run(IApp&) -> ExitCode override
+  auto run(IApp&) -> Result<void> override
   {
-    return ExitCode::kSuccess;
+    return ok();
   }
 };
 
