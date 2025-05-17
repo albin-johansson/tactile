@@ -20,8 +20,8 @@ TEST_F(ZlibCompressionFormatTest, CompressAndDecompressBytes)
   const ZlibCompressionFormat zlib {};
 
   Vector<u8> bytes {};
-  bytes.resize(64'000);
-  std::iota(bytes.begin(), bytes.end(), 0);
+  bytes.resize(64'000uz);
+  std::iota(bytes.begin(), bytes.end(), u8 {0});
 
   const auto compressed_bytes = zlib.compress(bytes);
   ASSERT_TRUE(compressed_bytes.has_value());
