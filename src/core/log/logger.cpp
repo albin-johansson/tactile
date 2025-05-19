@@ -11,11 +11,10 @@ namespace {
 auto _to_prefix(const LogLevel level) noexcept -> StringView
 {
   switch (level) {
-    case LogLevel::kTrace: return "TRC";
-    case LogLevel::kDebug: return "DBG";
-    case LogLevel::kInfo:  return "INF";
-    case LogLevel::kWarn:  return "WRN";
-    case LogLevel::kError: return "ERR";
+    case LogLevel::kDebug: return "DEBUG";
+    case LogLevel::kInfo:  return "INFO";
+    case LogLevel::kWarn:  return "WARN";
+    case LogLevel::kError: return "ERROR";
     default:               return "???";
   }
 }
@@ -40,7 +39,7 @@ void Logger::_log(const LogLevel level,
 
     std::vformat_to(std::back_inserter(m_text_buffer), fmt, args);
     std::format_to(std::back_inserter(m_prefix_buffer),
-                   "[{}][{:%Q}]:",
+                   "[{}] ({:%Q}):",
                    _to_prefix(level),
                    elapsed_time);
 
