@@ -10,7 +10,10 @@ using usize = std::size_t;
 using isize = std::ptrdiff_t;
 
 using uchar = unsigned char;
-using ulonglong = unsigned long long;
+using ushort = unsigned short int;
+using uint = unsigned int;
+using ulong = unsigned long int;
+using ulonglong = unsigned long long int;
 
 using u8 = std::uint8_t;
 using u16 = std::uint16_t;
