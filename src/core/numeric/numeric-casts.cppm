@@ -28,6 +28,20 @@ template <std::integral To, std::integral From>
   return static_cast<To>(from);
 }
 
+/// Performs a checked conversion of an unsigned integer to a signed integer.
+template <std::unsigned_integral T>
+[[nodiscard]] constexpr auto to_signed(const T value) -> std::make_signed_t<T>
+{
+  return checked_cast<std::make_signed_t<T>>(value);
+}
+
+/// Performs a checked conversion of a signed integer to an unsigned integer.
+template <std::signed_integral T>
+[[nodiscard]] constexpr auto to_unsigned(const T value) -> std::make_unsigned_t<T>
+{
+  return checked_cast<std::make_unsigned_t<T>>(value);
+}
+
 /// Performs a saturating narrowing conversion of an integral value.
 template <std::integral To, std::integral From>
 [[nodiscard]] constexpr auto saturate_cast(const From from) noexcept -> To
