@@ -45,7 +45,6 @@ target_sources(tactile_core
                "runtime/runtime-null.cppm"
                "save/save.cppm"
                "tile/tile.cppm"
-               "tile/tile-id.cppm"
                "util/util.cppm"
                "util/util-defer.cppm"
                "util/util-validation.cppm"
@@ -66,6 +65,8 @@ target_sources(tactile_core
                "meta/attr.cpp"
                "numeric/random.cpp"
                "runtime/runtime.cpp"
+               "tile/tile.cpp"
+               "tile/tile_animation.cpp"
                )
 
 tactile_set_target_properties(tactile_core)
