@@ -11,7 +11,6 @@ export module tactile.core.numeric:checked;
 export import tactile.core.common;
 export import :concepts;
 
-// Intentionally not exported
 namespace tactile {
 
 [[nodiscard]]
