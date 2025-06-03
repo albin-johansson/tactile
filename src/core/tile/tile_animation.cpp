@@ -2,6 +2,7 @@
 
 module tactile.core.tile;
 
+import std;
 import tactile.core.log;
 
 namespace tactile {
@@ -54,7 +55,7 @@ void TileAnimation::append_frame(const TileAnimationFrame& frame)
 
 auto TileAnimation::erase_frame(const isize index) -> Result<TileAnimationFrame>
 {
-  if (index == 0 || index >= m_frames.size()) {
+  if (index == 0 || std::cmp_greater_equal(index, m_frames.size())) {
     return err(Error::kInvalidArg);
   }
 
