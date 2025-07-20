@@ -28,7 +28,6 @@ export {
   using ::ImVec2;
   using ::ImVec4;
 
-  using ::ImGui_ImplSDL3_InitForVulkan;
   using ::ImGui_ImplSDL3_NewFrame;
   using ::ImGui_ImplSDL3_ProcessEvent;
   using ::ImGui_ImplSDL3_Shutdown;

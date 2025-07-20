@@ -17,7 +17,6 @@
         "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/tools/vcpkg/triplets",
         "TACTILE_ENABLE_TESTS": "ON",
         "TACTILE_ENABLE_EDITOR": "ON",
-        "TACTILE_ENABLE_VULKAN": "OFF",
         "TACTILE_ENABLE_ZLIB": "ON",
         "TACTILE_ENABLE_ZSTD": "ON",
         "TACTILE_ENABLE_YAML": "ON",

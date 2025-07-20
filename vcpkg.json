@@ -36,27 +36,13 @@
             "sdl3-binding"
           ]
         },
-        "sdl3",
-        "tinyfiledialogs"
-      ]
-    },
-    "vulkan": {
-      "description": "Enable Vulkan renderer",
-      "dependencies": [
-        "vulkan",
-        "vulkan-memory-allocator",
         {
           "name": "sdl3",
           "features": [
             "vulkan"
           ]
         },
-        {
-          "name": "imgui",
-          "features": [
-            "vulkan-binding"
-          ]
-        }
+        "tinyfiledialogs"
       ]
     },
     "zlib": {
