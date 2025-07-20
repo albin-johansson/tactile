@@ -40,23 +40,6 @@
         "tinyfiledialogs"
       ]
     },
-    "opengl": {
-      "description": "Enable OpenGL renderer",
-      "dependencies": [
-        {
-          "name": "glad",
-          "features": [
-            "extensions"
-          ]
-        },
-        {
-          "name": "imgui",
-          "features": [
-            "opengl3-binding"
-          ]
-        }
-      ]
-    },
     "vulkan": {
       "description": "Enable Vulkan renderer",
       "dependencies": [

@@ -16,7 +16,3 @@ target_link_libraries(tactile_ui
                       tactile_core
                       imgui::imgui
                       )
-
-if (TACTILE_ENABLE_OPENGL)
-  target_compile_definitions(tactile_ui PRIVATE "TACTILE_ENABLE_OPENGL")
-endif ()

@@ -44,7 +44,7 @@ The following works for ARM-based macOS systems.
 ```bash
 > mkdir build
 > cd build
-> cmake .. --preset arm64-osx-homebrew-llvm-debug-opengl
+> cmake .. --preset arm64-osx-homebrew-llvm-debug
 > ninja
 ```
 
