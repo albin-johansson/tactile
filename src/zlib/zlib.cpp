@@ -20,7 +20,8 @@ using z_ulong = ::uLong;
 /// Type used for staging buffers used to batch data processing.
 using StagingBuffer = Array<z_byte, 2'048uz>;
 
-/// Provides callbacks that controls the behavior of stream processing functions.
+/// Provides callbacks that controls the behavior of stream processing
+/// functions.
 struct ZlibCallbacks final
 {
   using start_fn = int (*)(z_stream*);
@@ -99,7 +100,8 @@ auto zlib_process(z_stream& stream,
 
 /// Finalizes a Zlib stream.
 [[nodiscard]]
-auto zlib_finish(z_stream& stream, const ZlibCallbacks& callbacks) -> Result<void>
+auto zlib_finish(z_stream& stream, const ZlibCallbacks& callbacks)
+    -> Result<void>
 {
   const auto end_stream_result = callbacks.finish(&stream);
 

@@ -121,7 +121,8 @@ class GroupLayer final : public ILayer
 
   /// Complexity: O(N)
   [[nodiscard]]
-  auto _find_layer(LayerID id, isize abs_index = 0) const -> FindConstLayerResult;
+  auto _find_layer(LayerID id, isize abs_index = 0) const
+      -> FindConstLayerResult;
 };
 
 }  // namespace tactile

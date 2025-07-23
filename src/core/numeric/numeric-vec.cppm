@@ -34,7 +34,9 @@ class Vec final
   }
 
   /// Creates a three-dimensional vector.
-  constexpr Vec(const value_type x, const value_type y, const value_type z) noexcept
+  constexpr Vec(const value_type x,
+                const value_type y,
+                const value_type z) noexcept
     requires(N == 3)
   {
     set_x(x);
@@ -245,8 +247,8 @@ template <Numeric T, usize N, std::invocable<T, T> Merger>
 
 /// Performs element-wise addition of two vectors.
 template <Numeric T, usize N>
-[[nodiscard]] constexpr auto operator+(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
-    -> Vec<T, N>
+[[nodiscard]] constexpr auto operator+(const Vec<T, N>& lhs,
+                                       const Vec<T, N>& rhs) -> Vec<T, N>
 {
   return elem_merge(lhs, rhs, [](const T a, const T b) {
     return checked_add(a, b).value();
@@ -255,8 +257,8 @@ template <Numeric T, usize N>
 
 /// Performs element-wise subtraction of two vectors.
 template <Numeric T, usize N>
-[[nodiscard]] constexpr auto operator-(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
-    -> Vec<T, N>
+[[nodiscard]] constexpr auto operator-(const Vec<T, N>& lhs,
+                                       const Vec<T, N>& rhs) -> Vec<T, N>
 {
   return elem_merge(lhs, rhs, [](const T a, const T b) {
     return checked_sub(a, b).value();
@@ -265,8 +267,8 @@ template <Numeric T, usize N>
 
 /// Performs element-wise multiplication of two vectors.
 template <Numeric T, usize N>
-[[nodiscard]] constexpr auto operator*(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
-    -> Vec<T, N>
+[[nodiscard]] constexpr auto operator*(const Vec<T, N>& lhs,
+                                       const Vec<T, N>& rhs) -> Vec<T, N>
 {
   return elem_merge(lhs, rhs, [](const T a, const T b) {
     return checked_mul(a, b).value();

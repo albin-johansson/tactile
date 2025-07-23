@@ -1,8 +1,9 @@
 // Copyright (C) 2025 Albin Johansson
 
-/// This module provides the global runtime context, accessible via the get_runtime
-/// function. The runtime context is used by other Tactile targets to access and
-/// configure common resources, such as save format implementations.
+/// This module provides the global runtime context, accessible via the
+/// get_runtime function. The runtime context is used by other Tactile targets
+/// to access and configure common resources, such as save format
+/// implementations.
 ///
 /// This module is not used by any of the other 'tactile.core' modules.
 export module tactile.core.runtime;

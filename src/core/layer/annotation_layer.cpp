@@ -53,11 +53,14 @@ void AnnotationLayer::add_annotation(Unique<Annotation> annotation)
   m_annotations.push_back(std::move(annotation));
 }
 
-auto AnnotationLayer::remove_annotation(const AnnotationID id) -> Unique<Annotation>
+auto AnnotationLayer::remove_annotation(const AnnotationID id)
+    -> Unique<Annotation>
 {
-  const auto iter = std::ranges::find_if(
-      m_annotations,
-      [id](const Unique<Annotation>& annotation) { return annotation->id == id; });
+  const auto iter =
+      std::ranges::find_if(m_annotations,
+                           [id](const Unique<Annotation>& annotation) {
+                             return annotation->id == id;
+                           });
 
   if (iter == m_annotations.end()) {
     return nullptr;
@@ -74,25 +77,30 @@ auto AnnotationLayer::annotation_at(const usize index) -> Annotation&
   return *m_annotations.at(index);
 }
 
-auto AnnotationLayer::annotation_at(const usize index) const -> const Annotation&
+auto AnnotationLayer::annotation_at(const usize index) const
+    -> const Annotation&
 {
   return *m_annotations.at(index);
 }
 
 auto AnnotationLayer::find_annotation(const AnnotationID id) -> Annotation*
 {
-  const auto iter = std::ranges::find_if(
-      m_annotations,
-      [id](const Unique<Annotation>& annotation) { return annotation->id == id; });
+  const auto iter =
+      std::ranges::find_if(m_annotations,
+                           [id](const Unique<Annotation>& annotation) {
+                             return annotation->id == id;
+                           });
   return iter == m_annotations.end() ? nullptr : iter->get();
 }
 
 auto AnnotationLayer::find_annotation(const AnnotationID id) const
     -> const Annotation*
 {
-  const auto iter = std::ranges::find_if(
-      m_annotations,
-      [id](const Unique<Annotation>& annotation) { return annotation->id == id; });
+  const auto iter =
+      std::ranges::find_if(m_annotations,
+                           [id](const Unique<Annotation>& annotation) {
+                             return annotation->id == id;
+                           });
   return iter == m_annotations.end() ? nullptr : iter->get();
 }
 

@@ -44,7 +44,8 @@ struct Annotation final
 
 /// Creates an annotation object.
 [[nodiscard]]
-auto make_annotation(AnnotationID id, AnnotationKind kind) -> Unique<Annotation>;
+auto make_annotation(AnnotationID id, AnnotationKind kind)
+    -> Unique<Annotation>;
 
 /// A layer variant consisting of zero or more annotations.
 class AnnotationLayer final : public ILayer

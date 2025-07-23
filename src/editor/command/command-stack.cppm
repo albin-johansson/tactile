@@ -34,8 +34,8 @@ class CommandStack final
 
     _remove_commands_after_cursor();
 
-    // We initially allocate the command on the stack because we won't need to store
-    // the command if it gets merged with the most recent command.
+    // We initially allocate the command on the stack because we won't need to
+    // store the command if it gets merged with the most recent command.
     T command {std::forward<Args>(args)...};
     command.redo();
 

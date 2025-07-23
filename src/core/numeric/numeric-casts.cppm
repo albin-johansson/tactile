@@ -16,12 +16,14 @@ template <std::integral To, std::integral From>
   if constexpr (!std::same_as<From, To>) {
     if constexpr (std::signed_integral<From>) {
       if (std::cmp_less(from, std::numeric_limits<To>::min())) [[unlikely]] {
-        throw std::underflow_error {"integral narrowing conversion would be lossy"};
+        throw std::underflow_error {
+          "integral narrowing conversion would be lossy"};
       }
     }
 
     if (std::cmp_greater(from, std::numeric_limits<To>::max())) [[unlikely]] {
-      throw std::overflow_error {"integral narrowing conversion would be lossy"};
+      throw std::overflow_error {
+        "integral narrowing conversion would be lossy"};
     }
   }
 
@@ -37,7 +39,8 @@ template <std::unsigned_integral T>
 
 /// Performs a checked conversion of a signed integer to an unsigned integer.
 template <std::signed_integral T>
-[[nodiscard]] constexpr auto to_unsigned(const T value) -> std::make_unsigned_t<T>
+[[nodiscard]] constexpr auto to_unsigned(const T value)
+    -> std::make_unsigned_t<T>
 {
   return checked_cast<std::make_unsigned_t<T>>(value);
 }

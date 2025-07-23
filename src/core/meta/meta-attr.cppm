@@ -45,7 +45,8 @@ class Attr final
   /// Creates an attribute of a given kind.
   explicit Attr(AttrKind kind = AttrKind::kInt);
 
-  /// Resets the value of the attribute to default value of a given attribute kind.
+  /// Resets the value of the attribute to default value of a given attribute
+  /// kind.
   void reset(AttrKind kind);
 
   /// Constructs a value in the attribute in-place.

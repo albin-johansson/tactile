@@ -60,7 +60,8 @@ class ITextureManager
   virtual auto find_texture(TextureID id) const -> const ITexture* = 0;
 };
 
-/// Interface for applications usable with backend implementations (see IBackend).
+/// Interface for applications usable with backend implementations (see
+/// IBackend).
 class IApp
 {
  protected:
@@ -84,23 +85,26 @@ class IApp
   /// Renders UI elements.
   ///
   /// This is the only function in this interface that is allowed to call into
-  /// Dear ImGui APIs. Backends should aim to follow each call to on_update with a
-  /// call to this function. However, there's no guarantee that this is the case.
-  /// In other words, there may be several calls to on_update for every on_render
-  /// call.
+  /// Dear ImGui APIs. Backends should aim to follow each call to on_update with
+  /// a call to this function. However, there's no guarantee that this is the
+  /// case. In other words, there may be several calls to on_update for every
+  /// on_render call.
   virtual void on_render() const = 0;
 
-  /// Called when the application is starting up, before the first on_update call.
+  /// Called when the application is starting up, before the first on_update
+  /// call.
   ///
   /// It's safe for an application to store the passed pointer.
   [[nodiscard]]
   virtual auto on_startup(ITextureManager* texture_manager) -> Result<void> = 0;
 
-  /// Called when the application is shutting down, after the last on_update call.
+  /// Called when the application is shutting down, after the last on_update
+  /// call.
   [[nodiscard]]
   virtual auto on_shutdown() -> Result<void> = 0;
 
-  /// Called once per event loop iteration to check if the application wants to stop.
+  /// Called once per event loop iteration to check if the application wants to
+  /// stop.
   [[nodiscard]]
   virtual auto should_stop() const -> bool = 0;
 };

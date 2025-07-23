@@ -19,18 +19,30 @@ constexpr auto to_error(
 {
   using enum boost::safe_numerics::safe_numerics_error;
   switch (error) {
-    case positive_overflow_error:  return Error::kArithmeticOverflow;
-    case negative_overflow_error:  [[fallthrough]];
-    case underflow_error:          return Error::kArithmeticUnderflow;
-    case precision_overflow_error: return Error::kArithmeticPrecision;
-    case negative_value_shift:     [[fallthrough]];
-    case negative_shift:           [[fallthrough]];
-    case shift_too_large:          return Error::kInvalidOp;
-    case range_error:              [[fallthrough]];
-    case domain_error:             [[fallthrough]];
-    case uninitialized_value:      return Error::kArithmeticInvalidValue;
-    case success:                  [[fallthrough]];
-    default:                       return Error::kUnknown;
+    case positive_overflow_error:
+      return Error::kArithmeticOverflow;
+    case negative_overflow_error:
+      [[fallthrough]];
+    case underflow_error:
+      return Error::kArithmeticUnderflow;
+    case precision_overflow_error:
+      return Error::kArithmeticPrecision;
+    case negative_value_shift:
+      [[fallthrough]];
+    case negative_shift:
+      [[fallthrough]];
+    case shift_too_large:
+      return Error::kInvalidOp;
+    case range_error:
+      [[fallthrough]];
+    case domain_error:
+      [[fallthrough]];
+    case uninitialized_value:
+      return Error::kArithmeticInvalidValue;
+    case success:
+      [[fallthrough]];
+    default:
+      return Error::kUnknown;
   }
 }
 

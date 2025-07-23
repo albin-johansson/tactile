@@ -46,7 +46,8 @@ class ISaveDecoder
   [[nodiscard]]
   virtual auto decode_map(const Path& path,
                           const Compressor& compressor,
-                          const SaveDecoderOptions& options) -> Result<void> = 0;
+                          const SaveDecoderOptions& options)
+      -> Result<void> = 0;
 };
 
 /// Interface for save format encoder implementations.

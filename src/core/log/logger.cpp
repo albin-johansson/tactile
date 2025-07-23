@@ -11,11 +11,16 @@ namespace {
 auto _to_prefix(const LogLevel level) noexcept -> StringView
 {
   switch (level) {
-    case LogLevel::kDebug: return "DEBUG";
-    case LogLevel::kInfo:  return "INFO";
-    case LogLevel::kWarn:  return "WARN";
-    case LogLevel::kError: return "ERROR";
-    default:               return "???";
+    case LogLevel::kDebug:
+      return "DEBUG";
+    case LogLevel::kInfo:
+      return "INFO";
+    case LogLevel::kWarn:
+      return "WARN";
+    case LogLevel::kError:
+      return "ERROR";
+    default:
+      return "???";
   }
 }
 

@@ -51,7 +51,8 @@ class IConstLayerVisitor
 
   IConstLayerVisitor(const IConstLayerVisitor&) = default;
 
-  auto operator=(IConstLayerVisitor&&) noexcept -> IConstLayerVisitor& = default;
+  auto operator=(IConstLayerVisitor&&) noexcept
+      -> IConstLayerVisitor& = default;
 
   auto operator=(const IConstLayerVisitor&) -> IConstLayerVisitor& = default;
 

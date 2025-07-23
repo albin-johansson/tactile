@@ -23,7 +23,8 @@ void TileAnimation::update(const SteadyClock::time_point update_time)
   }
 }
 
-auto TileAnimation::insert_frame(const isize index, const TileAnimationFrame& frame)
+auto TileAnimation::insert_frame(const isize index,
+                                 const TileAnimationFrame& frame)
     -> Result<void>
 {
   const auto frame_count = m_frames.size();

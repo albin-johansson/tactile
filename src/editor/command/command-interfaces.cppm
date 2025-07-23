@@ -29,12 +29,12 @@ class ICommand
 
   /// Attempts to merge another command into this command.
   ///
-  /// This function can be used to combine consecutive high-frequency commands of
-  /// the same type. For example, the user changing a color property via a color
-  /// picker may trigger many "update property" events in a short amount of time.
-  /// However, most users would consider the color change as a single action, so
-  /// calling undo should revert the color to the initial value, skipping any
-  /// intermediate values.
+  /// This function can be used to combine consecutive high-frequency commands
+  /// of the same type. For example, the user changing a color property via a
+  /// color picker may trigger many "update property" events in a short amount
+  /// of time. However, most users would consider the color change as a single
+  /// action, so calling undo should revert the color to the initial value,
+  /// skipping any intermediate values.
   [[nodiscard]]
   virtual auto merge([[maybe_unused]] const ICommand& other) -> bool
   {

@@ -27,8 +27,8 @@ struct TileAnimationFrame final
 
 /// Represents a sequential tile animation.
 ///
-/// Animations are based on an initial frame that represents the parent tile. It's
-/// not possible to remove this initial frame from an animation.
+/// Animations are based on an initial frame that represents the parent tile.
+/// It's not possible to remove this initial frame from an animation.
 class TileAnimation final
 {
  public:
@@ -39,13 +39,14 @@ class TileAnimation final
 
   /// Inserts a frame at a given position in the animation.
   ///
-  /// This function can also be used to append frames if the specified index is equal
-  /// to the number of frames. However, note that it's not allowed to insert frames
-  /// at index 0.
+  /// This function can also be used to append frames if the specified index is
+  /// equal to the number of frames. However, note that it's not allowed to
+  /// insert frames at index 0.
   ///
   /// If successful, this function always resets the progress of the animation.
   [[nodiscard]]
-  auto insert_frame(isize index, const TileAnimationFrame& frame) -> Result<void>;
+  auto insert_frame(isize index, const TileAnimationFrame& frame)
+      -> Result<void>;
 
   /// Inserts a frame at the end of the animation.
   void append_frame(const TileAnimationFrame& frame);

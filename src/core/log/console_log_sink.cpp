@@ -18,11 +18,16 @@ constexpr StringView kAnsiColorFgWhite = "\x1B[37m";
 auto _get_ansi_color(const LogLevel level) noexcept -> StringView
 {
   switch (level) {
-    case LogLevel::kTrace: return kAnsiColorFgMagenta;
-    case LogLevel::kDebug: return kAnsiColorFgCyan;
-    case LogLevel::kInfo:  return kAnsiColorFgWhite;
-    case LogLevel::kWarn:  return kAnsiColorFgYellow;
-    case LogLevel::kError: return kAnsiColorFgRedBold;
+    case LogLevel::kTrace:
+      return kAnsiColorFgMagenta;
+    case LogLevel::kDebug:
+      return kAnsiColorFgCyan;
+    case LogLevel::kInfo:
+      return kAnsiColorFgWhite;
+    case LogLevel::kWarn:
+      return kAnsiColorFgYellow;
+    case LogLevel::kError:
+      return kAnsiColorFgRedBold;
   }
 
   return kAnsiColorFgWhite;

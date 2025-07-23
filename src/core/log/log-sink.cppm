@@ -22,10 +22,10 @@ struct LogMessage final
 
 /// Interface for logger sinks.
 ///
-/// A logger may feature several associated sinks which are called whenever a message
-/// is logged. This allows the application to control exactly what happens with
-/// logged messages, e.g., whether to print them to a console or store them in a
-/// file.
+/// A logger may feature several associated sinks which are called whenever a
+/// message is logged. This allows the application to control exactly what
+/// happens with logged messages, e.g., whether to print them to a console or
+/// store them in a file.
 class ILogSink
 {
  protected:

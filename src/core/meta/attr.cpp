@@ -12,19 +12,44 @@ Attr::Attr(const AttrKind kind)
 void Attr::reset(const AttrKind kind)
 {
   switch (kind) {
-    case AttrKind::kInt:    emplace<int_type>(); break;
-    case AttrKind::kInt2:   emplace<int2_type>(); break;
-    case AttrKind::kInt3:   emplace<int3_type>(); break;
-    case AttrKind::kInt4:   emplace<int4_type>(); break;
-    case AttrKind::kFloat:  emplace<float_type>(); break;
-    case AttrKind::kFloat2: emplace<float2_type>(); break;
-    case AttrKind::kFloat3: emplace<float3_type>(); break;
-    case AttrKind::kFloat4: emplace<float4_type>(); break;
-    case AttrKind::kBool:   emplace<bool>(); break;
-    case AttrKind::kString: emplace<string_type>(); break;
-    case AttrKind::kPath:   emplace<path_type>(); break;
-    case AttrKind::kColor:  emplace<color_type>(); break;
-    default:                throw std::invalid_argument {"bad attribute kind"};
+    case AttrKind::kInt:
+      emplace<int_type>();
+      break;
+    case AttrKind::kInt2:
+      emplace<int2_type>();
+      break;
+    case AttrKind::kInt3:
+      emplace<int3_type>();
+      break;
+    case AttrKind::kInt4:
+      emplace<int4_type>();
+      break;
+    case AttrKind::kFloat:
+      emplace<float_type>();
+      break;
+    case AttrKind::kFloat2:
+      emplace<float2_type>();
+      break;
+    case AttrKind::kFloat3:
+      emplace<float3_type>();
+      break;
+    case AttrKind::kFloat4:
+      emplace<float4_type>();
+      break;
+    case AttrKind::kBool:
+      emplace<bool>();
+      break;
+    case AttrKind::kString:
+      emplace<string_type>();
+      break;
+    case AttrKind::kPath:
+      emplace<path_type>();
+      break;
+    case AttrKind::kColor:
+      emplace<color_type>();
+      break;
+    default:
+      throw std::invalid_argument {"bad attribute kind"};
   }
 }
 
@@ -151,18 +176,30 @@ auto Attr::as_color() const -> const color_type*
 auto Attr::kind() const -> AttrKind
 {
   switch (m_value.index()) {
-    case kIntTypeIndex:    return AttrKind::kInt;
-    case kInt2TypeIndex:   return AttrKind::kInt2;
-    case kInt3TypeIndex:   return AttrKind::kInt3;
-    case kInt4TypeIndex:   return AttrKind::kInt4;
-    case kFloatTypeIndex:  return AttrKind::kFloat;
-    case kFloat2TypeIndex: return AttrKind::kFloat2;
-    case kFloat3TypeIndex: return AttrKind::kFloat3;
-    case kFloat4TypeIndex: return AttrKind::kFloat4;
-    case kBoolTypeIndex:   return AttrKind::kBool;
-    case kStringTypeIndex: return AttrKind::kString;
-    case kPathTypeIndex:   return AttrKind::kPath;
-    case kColorTypeIndex:  return AttrKind::kColor;
+    case kIntTypeIndex:
+      return AttrKind::kInt;
+    case kInt2TypeIndex:
+      return AttrKind::kInt2;
+    case kInt3TypeIndex:
+      return AttrKind::kInt3;
+    case kInt4TypeIndex:
+      return AttrKind::kInt4;
+    case kFloatTypeIndex:
+      return AttrKind::kFloat;
+    case kFloat2TypeIndex:
+      return AttrKind::kFloat2;
+    case kFloat3TypeIndex:
+      return AttrKind::kFloat3;
+    case kFloat4TypeIndex:
+      return AttrKind::kFloat4;
+    case kBoolTypeIndex:
+      return AttrKind::kBool;
+    case kStringTypeIndex:
+      return AttrKind::kString;
+    case kPathTypeIndex:
+      return AttrKind::kPath;
+    case kColorTypeIndex:
+      return AttrKind::kColor;
   }
 
   throw std::logic_error {"bad attribute value index"};
@@ -175,14 +212,18 @@ auto Attr::is_vector() const -> bool
     case AttrKind::kFloat:
     case AttrKind::kBool:
     case AttrKind::kString:
-    case AttrKind::kPath:   [[fallthrough]];
-    case AttrKind::kColor:  return false;
+    case AttrKind::kPath:
+      [[fallthrough]];
+    case AttrKind::kColor:
+      return false;
     case AttrKind::kInt2:
     case AttrKind::kInt3:
     case AttrKind::kInt4:
     case AttrKind::kFloat2:
-    case AttrKind::kFloat3: [[fallthrough]];
-    case AttrKind::kFloat4: return true;
+    case AttrKind::kFloat3:
+      [[fallthrough]];
+    case AttrKind::kFloat4:
+      return true;
   }
 
   throw std::logic_error {"bad attribute kind"};

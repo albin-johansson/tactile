@@ -50,7 +50,8 @@ void GroupLayer::append_layer(Unique<ILayer> layer)
   }
 
   if (find_layer(layer->info().id()) != nullptr) {
-    throw std::invalid_argument {"tried to append layer to group more than once"};
+    throw std::invalid_argument {
+      "tried to append layer to group more than once"};
   }
 
   m_layers.push_back(std::move(layer));
@@ -63,7 +64,8 @@ void GroupLayer::append_layer_to(const LayerID parent_id, Unique<ILayer> layer)
   }
 
   if (find_layer(layer->info().id()) != nullptr) {
-    throw std::invalid_argument {"tried to append layer to group more than once"};
+    throw std::invalid_argument {
+      "tried to append layer to group more than once"};
   }
 
   auto* parent_layer = dynamic_cast<GroupLayer*>(find_layer(parent_id));
@@ -196,7 +198,8 @@ auto GroupLayer::layer_count() const -> isize
   for (const auto& layer : m_layers) {
     ++count;
 
-    if (const auto* group_layer = dynamic_cast<const GroupLayer*>(layer.get())) {
+    if (const auto* group_layer =
+            dynamic_cast<const GroupLayer*>(layer.get())) {
       count += group_layer->layer_count();
     }
   }
@@ -204,7 +207,8 @@ auto GroupLayer::layer_count() const -> isize
   return count;
 }
 
-auto GroupLayer::_find_layer(const LayerID id, isize abs_index) -> FindLayerResult
+auto GroupLayer::_find_layer(const LayerID id, isize abs_index)
+    -> FindLayerResult
 {
   isize rel_index {0};
 
@@ -251,7 +255,8 @@ auto GroupLayer::_find_layer(const LayerID id, isize abs_index) const
     ++rel_index;
     ++abs_index;
 
-    if (const auto* group_layer = dynamic_cast<const GroupLayer*>(layer.get())) {
+    if (const auto* group_layer =
+            dynamic_cast<const GroupLayer*>(layer.get())) {
       const auto result = group_layer->_find_layer(id, abs_index);
       abs_index = result.abs_index;
 

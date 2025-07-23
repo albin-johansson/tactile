@@ -8,7 +8,8 @@ import tactile.core.log;
 namespace tactile {
 
 auto Compressor::compress_with(const CompressionAlgorithm algorithm,
-                               const Span<const u8> data) const -> Result<Vector<u8>>
+                               const Span<const u8> data) const
+    -> Result<Vector<u8>>
 {
   const auto iter = m_formats.find(algorithm);
 

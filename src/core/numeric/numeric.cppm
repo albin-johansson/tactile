@@ -2,8 +2,8 @@
 
 /// Provides common numeric APIs.
 ///
-/// This module serves as a fundamental building block for other modules, and must
-/// therefore only depend on the "tactile.common" module.
+/// This module serves as a fundamental building block for other modules, and
+/// must therefore only depend on the "tactile.common" module.
 export module tactile.core.numeric;
 
 export import :casts;

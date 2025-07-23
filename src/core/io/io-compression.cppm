@@ -23,7 +23,8 @@ class ICompressionFormat
 
   ICompressionFormat(const ICompressionFormat&) = default;
 
-  auto operator=(ICompressionFormat&&) noexcept -> ICompressionFormat& = default;
+  auto operator=(ICompressionFormat&&) noexcept
+      -> ICompressionFormat& = default;
 
   auto operator=(const ICompressionFormat&) -> ICompressionFormat& = default;
 
@@ -50,11 +51,12 @@ class Compressor final
 
   /// Decompresses a stream of bytes using a given algorithm.
   [[nodiscard]]
-  auto decompress_with(CompressionAlgorithm algorithm, Span<const u8> data) const
-      -> Result<Vector<u8>>;
+  auto decompress_with(CompressionAlgorithm algorithm,
+                       Span<const u8> data) const -> Result<Vector<u8>>;
 
   /// Sets the compression format implementation for a given algorithm.
-  void set_format(CompressionAlgorithm algorithm, Unique<ICompressionFormat> format);
+  void set_format(CompressionAlgorithm algorithm,
+                  Unique<ICompressionFormat> format);
 
  private:
   HashMap<CompressionAlgorithm, Unique<ICompressionFormat>> m_formats {};
