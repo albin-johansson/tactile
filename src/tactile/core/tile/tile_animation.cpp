@@ -60,7 +60,7 @@ auto TileAnimation::erase_frame(const isize index) -> Result<TileAnimationFrame>
     return err(Error::kInvalidArg);
   }
 
-  auto frame = m_frames.at(to_unsigned(index));
+  auto frame = m_frames.at(unsigned_cast(index));
   m_frames.erase(m_frames.begin() + index);
 
   return frame;

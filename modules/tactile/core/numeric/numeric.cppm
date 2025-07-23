@@ -62,18 +62,8 @@ template <std::integral To, std::integral From>
   requires(sizeof(To) <= sizeof(From))
 [[nodiscard]] constexpr auto checked_cast(const From from) -> To
 {
-  if constexpr (!std::same_as<From, To>) {
-    if constexpr (std::signed_integral<From>) {
-      if (std::cmp_less(from, std::numeric_limits<To>::min())) [[unlikely]] {
-        throw std::underflow_error {
-          "integral narrowing conversion would be lossy"};
-      }
-    }
-
-    if (std::cmp_greater(from, std::numeric_limits<To>::max())) [[unlikely]] {
-      throw std::overflow_error {
-        "integral narrowing conversion would be lossy"};
-    }
+  if (!std::in_range<To>(from)) {
+    throw std::range_error {"Narrowing conversion would be lossy"};
   }
 
   return static_cast<To>(from);
@@ -81,14 +71,14 @@ template <std::integral To, std::integral From>
 
 /// Performs a checked conversion of an unsigned integer to a signed integer.
 template <std::unsigned_integral T>
-[[nodiscard]] constexpr auto to_signed(const T value) -> std::make_signed_t<T>
+[[nodiscard]] constexpr auto signed_cast(const T value) -> std::make_signed_t<T>
 {
   return checked_cast<std::make_signed_t<T>>(value);
 }
 
 /// Performs a checked conversion of a signed integer to an unsigned integer.
 template <std::signed_integral T>
-[[nodiscard]] constexpr auto to_unsigned(const T value)
+[[nodiscard]] constexpr auto unsigned_cast(const T value)
     -> std::make_unsigned_t<T>
 {
   return checked_cast<std::make_unsigned_t<T>>(value);

@@ -22,8 +22,8 @@ TEST_F(NumericCastsTest, CheckedCast_SignedToSigned)
   EXPECT_EQ(checked_cast<i16>(i32 {kMinI16}), kMinI16);
   EXPECT_EQ(checked_cast<i16>(i32 {kMaxI16}), kMaxI16);
 
-  EXPECT_THROW((void) checked_cast<i16>(i32 {kMinI16 - 1}), std::underflow_error);
-  EXPECT_THROW((void) checked_cast<i16>(i32 {kMaxI16 + 1}), std::overflow_error);
+  EXPECT_THROW((void) checked_cast<i16>(i32 {kMinI16 - 1}), std::range_error);
+  EXPECT_THROW((void) checked_cast<i16>(i32 {kMaxI16 + 1}), std::range_error);
 }
 
 TEST_F(NumericCastsTest, CheckedCast_UnsignedToUnsigned)
@@ -36,7 +36,7 @@ TEST_F(NumericCastsTest, CheckedCast_UnsignedToUnsigned)
   EXPECT_EQ(checked_cast<u16>(u32 {kMinU16}), kMinU16);
   EXPECT_EQ(checked_cast<u16>(u32 {kMaxU16}), kMaxU16);
 
-  EXPECT_THROW((void) checked_cast<u16>(u32 {kMaxU16 + 1}), std::overflow_error);
+  EXPECT_THROW((void) checked_cast<u16>(u32 {kMaxU16 + 1}), std::range_error);
 }
 
 TEST_F(NumericCastsTest, CheckedCast_SignedToUnsigned)
@@ -49,8 +49,8 @@ TEST_F(NumericCastsTest, CheckedCast_SignedToUnsigned)
   EXPECT_EQ(checked_cast<u16>(i32 {kMinU16}), kMinU16);
   EXPECT_EQ(checked_cast<u16>(i32 {kMaxU16}), kMaxU16);
 
-  EXPECT_THROW((void) checked_cast<u8>(i16 {-1}), std::underflow_error);
-  EXPECT_THROW((void) checked_cast<u8>(i16 {kMaxU8 + 1}), std::overflow_error);
+  EXPECT_THROW((void) checked_cast<u8>(i16 {-1}), std::range_error);
+  EXPECT_THROW((void) checked_cast<u8>(i16 {kMaxU8 + 1}), std::range_error);
 }
 
 TEST_F(NumericCastsTest, CheckedCast_UnsignedToSigned)
@@ -63,42 +63,42 @@ TEST_F(NumericCastsTest, CheckedCast_UnsignedToSigned)
   EXPECT_EQ(checked_cast<i16>(u32 {0}), i16 {0});
   EXPECT_EQ(checked_cast<i16>(u32 {kMaxI16}), kMaxI16);
 
-  EXPECT_THROW((void) checked_cast<i8>(u16 {kMaxI8 + 1}), std::overflow_error);
+  EXPECT_THROW((void) checked_cast<i8>(u16 {kMaxI8 + 1}), std::range_error);
 }
 
-TEST_F(NumericCastsTest, ToSigned)
+TEST_F(NumericCastsTest, SignedCast)
 {
-  static_assert(std::same_as<decltype(to_signed(u8 {})), i8>);
-  static_assert(std::same_as<decltype(to_signed(u16 {})), i16>);
-  static_assert(std::same_as<decltype(to_signed(u32 {})), i32>);
-  static_assert(std::same_as<decltype(to_signed(u64 {})), i64>);
-  static_assert(std::same_as<decltype(to_signed(usize {})), isize>);
+  static_assert(std::same_as<decltype(signed_cast(u8 {})), i8>);
+  static_assert(std::same_as<decltype(signed_cast(u16 {})), i16>);
+  static_assert(std::same_as<decltype(signed_cast(u32 {})), i32>);
+  static_assert(std::same_as<decltype(signed_cast(u64 {})), i64>);
+  static_assert(std::same_as<decltype(signed_cast(usize {})), isize>);
 
-  EXPECT_EQ(to_signed(0u), 0);
-  EXPECT_EQ(to_signed(u8 {100u}), i8 {100});
-  EXPECT_EQ(to_signed(u16 {18u}), i16 {18});
-  EXPECT_EQ(to_signed(u32 {42u}), i32 {42});
-  EXPECT_EQ(to_signed(usize {10'000u}), isize {10'000});
+  EXPECT_EQ(signed_cast(0u), 0);
+  EXPECT_EQ(signed_cast(u8 {100u}), i8 {100});
+  EXPECT_EQ(signed_cast(u16 {18u}), i16 {18});
+  EXPECT_EQ(signed_cast(u32 {42u}), i32 {42});
+  EXPECT_EQ(signed_cast(usize {10'000u}), isize {10'000});
 
-  EXPECT_THROW((void) to_signed(u8 {128u}), std::overflow_error);
-  EXPECT_THROW((void) to_signed(u16 {32'768u}), std::overflow_error);
+  EXPECT_THROW((void) signed_cast(u8 {128u}), std::range_error);
+  EXPECT_THROW((void) signed_cast(u16 {32'768u}), std::range_error);
 }
 
-TEST_F(NumericCastsTest, ToUnsigned)
+TEST_F(NumericCastsTest, UnsignedCast)
 {
-  static_assert(std::same_as<decltype(to_unsigned(i8 {})), u8>);
-  static_assert(std::same_as<decltype(to_unsigned(i16 {})), u16>);
-  static_assert(std::same_as<decltype(to_unsigned(i32 {})), u32>);
-  static_assert(std::same_as<decltype(to_unsigned(i64 {})), u64>);
-  static_assert(std::same_as<decltype(to_unsigned(isize {})), usize>);
+  static_assert(std::same_as<decltype(unsigned_cast(i8 {})), u8>);
+  static_assert(std::same_as<decltype(unsigned_cast(i16 {})), u16>);
+  static_assert(std::same_as<decltype(unsigned_cast(i32 {})), u32>);
+  static_assert(std::same_as<decltype(unsigned_cast(i64 {})), u64>);
+  static_assert(std::same_as<decltype(unsigned_cast(isize {})), usize>);
 
-  EXPECT_EQ(to_unsigned(0), 0u);
-  EXPECT_EQ(to_unsigned(i8 {100}), u8 {100});
-  EXPECT_EQ(to_unsigned(i16 {18}), u16 {18});
-  EXPECT_EQ(to_unsigned(i32 {42}), u32 {42});
-  EXPECT_EQ(to_unsigned(isize {10'000}), usize {10'000});
+  EXPECT_EQ(unsigned_cast(0), 0u);
+  EXPECT_EQ(unsigned_cast(i8 {100}), u8 {100});
+  EXPECT_EQ(unsigned_cast(i16 {18}), u16 {18});
+  EXPECT_EQ(unsigned_cast(i32 {42}), u32 {42});
+  EXPECT_EQ(unsigned_cast(isize {10'000}), usize {10'000});
 
-  EXPECT_THROW((void) to_unsigned(i8 {-1}), std::underflow_error);
+  EXPECT_THROW((void) unsigned_cast(i8 {-1}), std::range_error);
 }
 
 TEST_F(NumericCastsTest, SaturateCast_SignedToSigned)

@@ -194,6 +194,7 @@ using std::dynamic_extent;
 // From <stdexcept>
 using std::runtime_error;
 using std::logic_error;
+using std::range_error;
 using std::invalid_argument;
 using std::underflow_error;
 using std::overflow_error;
@@ -229,6 +230,7 @@ using std::cmp_less;
 using std::cmp_less_equal;
 using std::cmp_greater;
 using std::cmp_greater_equal;
+using std::to_underlying;
 
 // From <variant>
 using std::variant;
