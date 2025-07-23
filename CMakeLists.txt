@@ -65,6 +65,9 @@ project(tactile
         LANGUAGES CXX
         )
 
+set(TACTILE_MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/modules")
+set(TACTILE_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+
 # Determine build type, e.g. "debug" or "release".
 string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)
 if (NOT (TACTILE_BUILD_TYPE MATCHES "debug|release|asan"))
@@ -97,7 +100,7 @@ if (TACTILE_ENABLE_EDITOR)
   endif ()
 
   add_subdirectory("src/editor")
-  add_subdirectory("src/app")
+  include("tools/cmake/targets/tactile.cmake")
 endif ()
 
 if (TACTILE_ENABLE_TESTS)
