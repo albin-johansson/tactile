@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.core.common;
+module tactile.core.error;
 
 namespace tactile {
 

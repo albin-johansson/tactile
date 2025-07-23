@@ -9,7 +9,7 @@ tactile_set_target_properties(tactile_core_tests)
 target_sources(tactile_core_tests
                PRIVATE
                "${TACTILE_TEST_DIR}/tactile/core/base64/base64.test.cpp"
-               "${TACTILE_TEST_DIR}/tactile/core/common/error.test.cpp"
+               "${TACTILE_TEST_DIR}/tactile/core/error/error.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/layer/annotation_layer.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/layer/group_layer.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/layer/layer.test.cpp"

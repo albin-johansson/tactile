@@ -4,6 +4,7 @@ module tactile.core.io;
 
 import tactile.core.ext.std;
 import tactile.core.log;
+import tactile.core.error;
 
 namespace tactile {
 

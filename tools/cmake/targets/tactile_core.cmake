@@ -17,9 +17,9 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/common/common-memory.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/common/common-platform.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/common/common-primitives.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-result.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/common/common-strings.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/common/common-time.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/core/error/error.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/boost/safe_numerics/safe_numerics.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/std/std.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/io/io.cppm"
@@ -57,7 +57,7 @@ target_sources(tactile_core
 
                PRIVATE
                "${TACTILE_SOURCE_DIR}/tactile/core/base64/base64.cpp"
-               "${TACTILE_SOURCE_DIR}/tactile/core/common/result.cpp"
+               "${TACTILE_SOURCE_DIR}/tactile/core/error/error.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/io/compression.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/layer/annotation_layer.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/layer/group_layer.cpp"

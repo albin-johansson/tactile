@@ -3,6 +3,7 @@
 export module tactile.core.runtime:interfaces;
 
 export import tactile.core.common;
+import tactile.core.error;
 
 export namespace tactile {
 

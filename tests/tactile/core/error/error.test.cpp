@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-import tactile.core.common;
+import tactile.core.error;
 
 namespace tactile::tests {
 namespace {
@@ -23,7 +23,8 @@ TEST_F(ErrorTest, ToString)
   EXPECT_EQ(to_string(Error::kArithmeticOverflow), "arithmetic_overflow");
   EXPECT_EQ(to_string(Error::kArithmeticUnderflow), "arithmetic_underflow");
   EXPECT_EQ(to_string(Error::kArithmeticPrecision), "arithmetic_precision");
-  EXPECT_EQ(to_string(Error::kArithmeticInvalidValue), "arithmetic_invalid_value");
+  EXPECT_EQ(to_string(Error::kArithmeticInvalidValue),
+            "arithmetic_invalid_value");
   EXPECT_EQ(to_string(Error::kStackOverflow), "stack_overflow");
   EXPECT_EQ(to_string(Error::kStackUnderflow), "stack_underflow");
   EXPECT_EQ(to_string(Error::kCouldNotInitialize), "could_not_initialize");
@@ -42,8 +43,10 @@ TEST_F(ErrorTest, Describe)
   EXPECT_EQ(describe(Error::kInvalidFile), "detected an invalid file");
   EXPECT_EQ(describe(Error::kNoSuchFile), "an expected file didn't exist");
   EXPECT_EQ(describe(Error::kOutOfRange), "requested an out of range value");
-  EXPECT_EQ(describe(Error::kArithmeticOverflow), "detected arithmetic overflow");
-  EXPECT_EQ(describe(Error::kArithmeticUnderflow), "detected arithmetic underflow");
+  EXPECT_EQ(describe(Error::kArithmeticOverflow),
+            "detected arithmetic overflow");
+  EXPECT_EQ(describe(Error::kArithmeticUnderflow),
+            "detected arithmetic underflow");
   EXPECT_EQ(describe(Error::kArithmeticPrecision),
             "detected loss of arithmetic precision");
   EXPECT_EQ(describe(Error::kArithmeticInvalidValue),

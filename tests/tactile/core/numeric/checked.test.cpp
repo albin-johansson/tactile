@@ -4,6 +4,7 @@
 
 import tactile.core.ext.std;
 import tactile.core.common;
+import tactile.core.error;
 import tactile.core.numeric;
 
 namespace tactile::tests {

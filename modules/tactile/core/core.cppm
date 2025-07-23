@@ -3,6 +3,7 @@
 export module tactile.core;
 
 export import tactile.core.common;
+export import tactile.core.error;
 // export import tactile.core.ext.boost.safe_numerics;
 // export import tactile.core.ext.cppcodec;
 // export import tactile.core.ext.std;

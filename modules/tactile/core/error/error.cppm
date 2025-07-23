@@ -1,11 +1,9 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.core.common:result;
+export module tactile.core.error;
 
-export import tactile.core.ext.std;
-export import :containers;
-export import :primitives;
-export import :strings;
+import tactile.core.ext.std;
+import tactile.core.common;
 
 export namespace tactile {
 
