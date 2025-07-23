@@ -1,3 +1,23 @@
+# Copyright (C) 2025 Albin Johansson
+
+# Determine build type, e.g. "debug" or "release".
+string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)
+if (NOT (TACTILE_BUILD_TYPE MATCHES "debug|release|asan"))
+  message(FATAL_ERROR "Unsupported build type: ${CMAKE_BUILD_TYPE}")
+endif ()
+message(DEBUG "TACTILE_BUILD_TYPE: ${TACTILE_BUILD_TYPE}")
+
+set(TACTILE_MODULE_DIR "${PROJECT_SOURCE_DIR}/modules")
+set(TACTILE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
+set(TACTILE_TEST_DIR "${PROJECT_SOURCE_DIR}/tests")
+set(TACTILE_BINARY_DIR "${PROJECT_SOURCE_DIR}/build/${TACTILE_BUILD_TYPE}/output")
+
+message(DEBUG "TACTILE_MODULE_DIR: ${TACTILE_MODULE_DIR}")
+message(DEBUG "TACTILE_SOURCE_DIR: ${TACTILE_SOURCE_DIR}")
+message(DEBUG "TACTILE_TEST_DIR: ${TACTILE_TEST_DIR}")
+message(DEBUG "TACTILE_BINARY_DIR: ${TACTILE_BINARY_DIR}")
+
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${TACTILE_BINARY_DIR}")
 
 function(tactile_set_target_properties target)
   set_target_properties(${target}
@@ -73,19 +93,4 @@ if (WIN32)
                              "WIN32_LEAN_AND_MEAN"
                              "NOMINMAX"
                              )
-endif ()
-
-if (TACTILE_ENABLE_CLION_IMPORT_STD_WORKAROUND)
-  message(DEBUG "Applying workaround for CLion 'import std;' issue")
-
-  # See https://youtrack.jetbrains.com/issue/CPP-39632/import-std-CLion-cant-resolve-module-std-in-case-of-clang
-  add_library(tactile_import_std_clion_workaround STATIC)
-
-  target_compile_features(tactile_import_std_clion_workaround PUBLIC cxx_std_23)
-
-  target_sources(tactile_import_std_clion_workaround
-                 PRIVATE FILE_SET "CXX_MODULES" BASE_DIRS "/opt/homebrew/opt/llvm/share/libc++/v1" FILES
-                 "/opt/homebrew/opt/llvm/share/libc++/v1/std.cppm"
-                 "/opt/homebrew/opt/llvm/share/libc++/v1/std.compat.cppm"
-                 )
 endif ()

@@ -6,14 +6,12 @@
   },
   "configurePresets": [
     {
-      "name": "default",
+      "name": "_default",
       "hidden": true,
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
         "CMAKE_SKIP_INSTALL_ALL_DEPENDENCY": "ON",
-        "CMAKE_EXPERIMENTAL_CXX_IMPORT_STD": "0e5b6991-d74f-4b3d-a41c-cf096e0b2508",
-        "CMAKE_CXX_MODULE_STD": "ON",
         "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/tools/vcpkg/triplets",
         "TACTILE_ENABLE_TESTS": "ON",
         "TACTILE_ENABLE_EDITOR": "ON",
@@ -23,16 +21,14 @@
         "TACTILE_ENABLE_TMJ": "ON",
         "TACTILE_ENABLE_TMX": "ON",
         "TACTILE_ENABLE_TSCN": "ON",
-        "TACTILE_ENABLE_LTO": "OFF",
-        "TACTILE_ENABLE_CLION_IMPORT_STD_WORKAROUND": "OFF",
-        "TACTILE_RENDERER": "Null"
+        "TACTILE_ENABLE_LTO": "OFF"
       }
     },
     {
-      "name": "default-debug",
+      "name": "_default-debug",
       "hidden": true,
       "inherits": [
-        "default"
+        "_default"
       ],
       "binaryDir": "${sourceDir}/build/debug",
       "cacheVariables": {
@@ -40,10 +36,10 @@
       }
     },
     {
-      "name": "default-release",
+      "name": "_default-release",
       "hidden": true,
       "inherits": [
-        "default"
+        "_default"
       ],
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
@@ -52,7 +48,7 @@
       }
     },
     {
-      "name": "use-mold-linker",
+      "name": "_use-mold-linker",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_EXE_LINKER_FLAGS": "-fuse-ld=mold",
@@ -60,7 +56,7 @@
       }
     },
     {
-      "name": "arm64-osx-homebrew-llvm",
+      "name": "_arm64-osx-homebrew-llvm",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/tools/vcpkg/toolchains/arm64-osx-homebrew-llvm.cmake",
@@ -68,62 +64,62 @@
       }
     },
     {
-      "name": "arm64-osx-homebrew-llvm-debug",
-      "inherits": [
-        "arm64-osx-homebrew-llvm",
-        "default-debug"
-      ]
-    },
-    {
-      "name": "arm64-osx-homebrew-llvm-release",
-      "inherits": [
-        "arm64-osx-homebrew-llvm",
-        "default-release"
-      ]
-    },
-    {
-      "name": "x64-linux",
+      "name": "_x64-linux",
       "hidden": true,
       "inherits": [
-        "use-mold-linker"
+        "_use-mold-linker"
       ],
       "cacheVariables": {
         "VCPKG_TARGET_TRIPLET": "x64-linux-tactile"
       }
     },
     {
-      "name": "x64-linux-debug",
-      "inherits": [
-        "x64-linux",
-        "default-debug"
-      ]
-    },
-    {
-      "name": "x64-linux-release",
-      "inherits": [
-        "x64-linux",
-        "default-release"
-      ]
-    },
-    {
-      "name": "x64-windows",
+      "name": "_x64-windows",
       "hidden": true,
       "cacheVariables": {
         "VCPKG_TARGET_TRIPLET": "x64-windows-tactile"
       }
     },
     {
+      "name": "arm64-osx-homebrew-llvm-debug",
+      "inherits": [
+        "_arm64-osx-homebrew-llvm",
+        "_default-debug"
+      ]
+    },
+    {
+      "name": "arm64-osx-homebrew-llvm-release",
+      "inherits": [
+        "_arm64-osx-homebrew-llvm",
+        "_default-release"
+      ]
+    },
+    {
+      "name": "x64-linux-debug",
+      "inherits": [
+        "_x64-linux",
+        "_default-debug"
+      ]
+    },
+    {
+      "name": "x64-linux-release",
+      "inherits": [
+        "_x64-linux",
+        "_default-release"
+      ]
+    },
+    {
       "name": "x64-windows-debug",
       "inherits": [
-        "x64-windows",
-        "default-debug"
+        "_x64-windows",
+        "_default-debug"
       ]
     },
     {
       "name": "x64-windows-release",
       "inherits": [
-        "x64-windows",
-        "default-release"
+        "_x64-windows",
+        "_default-release"
       ]
     }
   ]
