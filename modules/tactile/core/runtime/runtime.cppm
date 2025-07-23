@@ -8,11 +8,11 @@
 /// This module is not used by any of the other 'tactile.core' modules.
 export module tactile.core.runtime;
 
-export import tactile.core.common;
-export import tactile.core.save;
-export import tactile.core.io;
 export import :interfaces;
 export import :null;
+import tactile.core.common;
+import tactile.core.save;
+import tactile.core.io;
 
 export namespace tactile {
 

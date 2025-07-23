@@ -2,7 +2,7 @@
 
 export module tactile.core.layer:layer_info;
 
-export import tactile.core.common;
+import tactile.core.common;
 
 export namespace tactile {
 

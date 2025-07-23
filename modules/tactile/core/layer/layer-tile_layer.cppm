@@ -2,8 +2,8 @@
 
 export module tactile.core.layer:tile_layer;
 
-export import :interfaces;
-export import :layer_info;
+import :interfaces;
+import :layer_info;
 
 export namespace tactile {
 

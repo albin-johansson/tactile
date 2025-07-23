@@ -2,7 +2,7 @@
 
 export module tactile.core.meta:color;
 
-export import tactile.core.common;
+import tactile.core.common;
 
 export namespace tactile {
 

@@ -2,10 +2,10 @@
 
 export module tactile.core.meta:attr;
 
-export import tactile.core.ext.std;
-export import tactile.core.common;
-export import tactile.core.numeric;
-export import :color;
+import :color;
+import tactile.core.ext.std;
+import tactile.core.common;
+import tactile.core.numeric;
 
 export namespace tactile {
 

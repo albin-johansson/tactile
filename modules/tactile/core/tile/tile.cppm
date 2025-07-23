@@ -3,9 +3,9 @@
 /// Provides APIs related to tiles and tilesets.
 export module tactile.core.tile;
 
-export import tactile.core.common;
-export import tactile.core.io;
-export import tactile.core.numeric;
+import tactile.core.common;
+import tactile.core.io;
+import tactile.core.numeric;
 import tactile.core.error;
 
 export namespace tactile {

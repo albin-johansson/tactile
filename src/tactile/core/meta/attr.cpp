@@ -2,6 +2,8 @@
 
 module tactile.core.meta;
 
+import tactile.core.ext.std;
+
 namespace tactile {
 
 Attr::Attr(const AttrKind kind)

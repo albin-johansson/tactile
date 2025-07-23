@@ -2,10 +2,10 @@
 
 export module tactile.core.layer:annotation_layer;
 
-export import tactile.core.common;
-export import tactile.core.numeric;
-export import :interfaces;
-export import :layer_info;
+import :interfaces;
+import :layer_info;
+import tactile.core.common;
+import tactile.core.numeric;
 
 export namespace tactile {
 

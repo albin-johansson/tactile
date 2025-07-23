@@ -2,7 +2,7 @@
 
 export module tactile.core.log:buffer;
 
-export import tactile.core.common;
+import tactile.core.common;
 
 namespace tactile {
 

@@ -5,6 +5,7 @@
 
 import tactile.core.ext.std;
 import tactile.core.layer;
+import tactile.core.common;
 
 namespace tactile::tests {
 namespace {
@@ -205,9 +206,9 @@ TEST_F(GroupLayerTest, AppendLayerTo)
   EXPECT_THROW(m_root.append_layer_to(nested_group_id, nullptr),
                std::invalid_argument);
 
-  EXPECT_THROW(
-      m_root.append_layer_to(nested_group_id, std::move(layer_with_duplicated_id)),
-      std::invalid_argument);
+  EXPECT_THROW(m_root.append_layer_to(nested_group_id,
+                                      std::move(layer_with_duplicated_id)),
+               std::invalid_argument);
 
   EXPECT_THROW(m_root.append_layer_to(LayerID {999}, std::move(unused_layer)),
                std::invalid_argument);

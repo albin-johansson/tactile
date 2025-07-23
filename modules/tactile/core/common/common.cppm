@@ -1,7 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-/// Provides common vocabulary types and functions used throughout the Tactile
-/// codebase. As such, this module cannot depend on other Tactile modules.
+/// Provides common vocabulary types and functions.
 export module tactile.core.common;
 
 import tactile.core.ext.std;

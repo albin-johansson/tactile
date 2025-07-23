@@ -2,8 +2,9 @@
 
 export module tactile.core.layer:group_layer;
 
-export import :interfaces;
-export import :layer_info;
+import :interfaces;
+import :layer_info;
+import tactile.core.common;
 import tactile.core.error;
 
 export namespace tactile {

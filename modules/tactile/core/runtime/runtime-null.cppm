@@ -2,7 +2,7 @@
 
 export module tactile.core.runtime:null;
 
-export import :interfaces;
+import :interfaces;
 
 export namespace tactile {
 

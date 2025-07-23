@@ -2,7 +2,7 @@
 
 export module tactile.core.layer:interfaces;
 
-export import :layer_info;
+import :layer_info;
 
 export namespace tactile {
 
