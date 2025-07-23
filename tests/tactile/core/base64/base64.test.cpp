@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 import tactile.core.common;
-import tactile.core.io;
+import tactile.core.base64;
 
 namespace tactile::tests {
 namespace {

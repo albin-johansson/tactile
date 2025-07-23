@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.core.io;
+module tactile.core.base64;
 
 import tactile.core.ext.cppcodec;
 

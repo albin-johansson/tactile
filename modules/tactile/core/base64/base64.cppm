@@ -1,8 +1,8 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.core.io:base64;
+export module tactile.core.base64;
 
-export import tactile.core.common;
+import tactile.core.common;
 
 export namespace tactile {
 
