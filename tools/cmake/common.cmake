@@ -33,6 +33,7 @@ else ()
        "-Wsign-conversion"
        "-Wswitch-enum"
        "-Wold-style-cast"
+       "-Wdecls-in-multiple-modules"
        )
 
   if (TACTILE_BUILD_TYPE STREQUAL "asan")
