@@ -63,7 +63,8 @@ TEST_F(AnnotationLayerTest, RemoveAnnotation)
   const auto annotations = prepare_annotations();
   ASSERT_EQ(m_layer.annotation_count(), 3uz);
 
-  const auto removed_annotation = m_layer.remove_annotation(annotations.point_id);
+  const auto removed_annotation =
+      m_layer.remove_annotation(annotations.point_id);
   ASSERT_NE(removed_annotation, nullptr);
   EXPECT_EQ(removed_annotation->id, annotations.point_id);
   EXPECT_EQ(m_layer.annotation_count(), 2uz);
@@ -81,10 +82,14 @@ TEST_F(AnnotationLayerTest, FindAnnotation)
   EXPECT_NE(m_layer.find_annotation(annotations.ellipse_id), nullptr);
   EXPECT_EQ(m_layer.find_annotation(annotations.invalid_id), nullptr);
 
-  EXPECT_NE(std::as_const(m_layer).find_annotation(annotations.point_id), nullptr);
-  EXPECT_NE(std::as_const(m_layer).find_annotation(annotations.rect_id), nullptr);
-  EXPECT_NE(std::as_const(m_layer).find_annotation(annotations.ellipse_id), nullptr);
-  EXPECT_EQ(std::as_const(m_layer).find_annotation(annotations.invalid_id), nullptr);
+  EXPECT_NE(std::as_const(m_layer).find_annotation(annotations.point_id),
+            nullptr);
+  EXPECT_NE(std::as_const(m_layer).find_annotation(annotations.rect_id),
+            nullptr);
+  EXPECT_NE(std::as_const(m_layer).find_annotation(annotations.ellipse_id),
+            nullptr);
+  EXPECT_EQ(std::as_const(m_layer).find_annotation(annotations.invalid_id),
+            nullptr);
 }
 
 TEST_F(AnnotationLayerTest, AnnotationAt)
@@ -97,10 +102,12 @@ TEST_F(AnnotationLayerTest, AnnotationAt)
 
   EXPECT_EQ(std::as_const(m_layer).annotation_at(0uz).id, annotations.point_id);
   EXPECT_EQ(std::as_const(m_layer).annotation_at(1uz).id, annotations.rect_id);
-  EXPECT_EQ(std::as_const(m_layer).annotation_at(2uz).id, annotations.ellipse_id);
+  EXPECT_EQ(std::as_const(m_layer).annotation_at(2uz).id,
+            annotations.ellipse_id);
 
   EXPECT_THROW((void) m_layer.annotation_at(3uz), std::out_of_range);
-  EXPECT_THROW((void) std::as_const(m_layer).annotation_at(3uz), std::out_of_range);
+  EXPECT_THROW((void) std::as_const(m_layer).annotation_at(3uz),
+               std::out_of_range);
 }
 
 TEST_F(AnnotationLayerTest, AnnotationCount)
