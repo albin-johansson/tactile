@@ -85,8 +85,7 @@ include("tools/cmake/targets/tactile_core.cmake")
 
 if (TACTILE_ENABLE_EDITOR)
   if (TACTILE_ENABLE_ZLIB)
-    find_package(ZLIB REQUIRED)
-    add_subdirectory("src/zlib")
+    include("tools/cmake/targets/tactile_zlib.cmake")
   endif ()
 
   include("tools/cmake/targets/tactile_editor.cmake")

@@ -1,13 +1,15 @@
-project(tactile_zlib_project CXX)
+# Copyright (C) 2025 Albin Johansson
+
+find_package(ZLIB REQUIRED)
 
 add_library(tactile_zlib STATIC)
 
 target_sources(tactile_zlib
                PUBLIC FILE_SET "CXX_MODULES" FILES
-               "zlib.cppm"
+               "${TACTILE_SOURCE_DIR}/zlib/zlib.cppm"
 
                PRIVATE
-               "zlib.cpp"
+               "${TACTILE_SOURCE_DIR}/zlib/zlib.cpp"
                )
 
 tactile_set_target_properties(tactile_zlib)
