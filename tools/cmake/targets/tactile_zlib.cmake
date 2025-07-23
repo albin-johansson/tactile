@@ -4,15 +4,15 @@ find_package(ZLIB REQUIRED)
 
 add_library(tactile_zlib STATIC)
 
+tactile_set_target_properties(tactile_zlib)
+
 target_sources(tactile_zlib
-               PUBLIC FILE_SET "CXX_MODULES" FILES
+               PUBLIC FILE_SET CXX_MODULES FILES
                "${TACTILE_SOURCE_DIR}/zlib/zlib.cppm"
 
                PRIVATE
                "${TACTILE_SOURCE_DIR}/zlib/zlib.cpp"
                )
-
-tactile_set_target_properties(tactile_zlib)
 
 target_link_libraries(tactile_zlib
                       PUBLIC

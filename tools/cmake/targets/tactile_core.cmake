@@ -6,6 +6,8 @@ find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
 add_library(tactile_core STATIC)
 
+tactile_set_target_properties(tactile_core)
+
 target_sources(tactile_core
                PUBLIC FILE_SET CXX_MODULES FILES
                "${TACTILE_MODULE_DIR}/tactile/core/common/common.cppm"
@@ -72,8 +74,6 @@ target_sources(tactile_core
                "${TACTILE_SOURCE_DIR}/tactile/core/tile/tile.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/tile/tile_animation.cpp"
                )
-
-tactile_set_target_properties(tactile_core)
 
 target_link_libraries(tactile_core
                       PRIVATE
