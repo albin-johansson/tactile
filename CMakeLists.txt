@@ -77,7 +77,7 @@ message(DEBUG "TACTILE_BINARY_DIR: ${TACTILE_BINARY_DIR}")
 
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${TACTILE_BINARY_DIR}")
 
-include("tools/cmake/tactile.cmake")
+include("tools/cmake/common.cmake")
 
 find_package(Boost REQUIRED COMPONENTS safe_numerics)
 find_package(FastFloat CONFIG REQUIRED)
