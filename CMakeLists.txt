@@ -81,12 +81,7 @@ message(DEBUG "TACTILE_BINARY_DIR: ${TACTILE_BINARY_DIR}")
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${TACTILE_BINARY_DIR}")
 
 include("tools/cmake/common.cmake")
-
-find_package(Boost REQUIRED COMPONENTS safe_numerics)
-find_package(FastFloat CONFIG REQUIRED)
-find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
-
-add_subdirectory("src/core")
+include("tools/cmake/targets/tactile_core.cmake")
 
 if (TACTILE_ENABLE_EDITOR)
   find_package(argparse CONFIG REQUIRED)
