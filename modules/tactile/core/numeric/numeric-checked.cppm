@@ -1,13 +1,8 @@
 // Copyright (C) 2025 Albin Johansson
 
-module;
-
-#include <exception>  // Needed for boost::safe_numerics
-
-#include <boost/safe_numerics/checked_integer.hpp>
-
 export module tactile.core.numeric:checked;
 
+import tactile.core.ext.boost.safe_numerics;
 export import tactile.core.common;
 export import :concepts;
 
