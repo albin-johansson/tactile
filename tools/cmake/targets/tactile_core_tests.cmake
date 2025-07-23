@@ -10,7 +10,6 @@ target_sources(tactile_core_tests
                PRIVATE
                "${TACTILE_TEST_DIR}/tactile/core/base64/base64.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/common/error.test.cpp"
-               "${TACTILE_TEST_DIR}/tactile/core/common/strings.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/layer/annotation_layer.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/layer/group_layer.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/layer/layer.test.cpp"
@@ -20,6 +19,7 @@ target_sources(tactile_core_tests
                "${TACTILE_TEST_DIR}/tactile/core/numeric/casts.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/numeric/checked.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/numeric/vec.test.cpp"
+               "${TACTILE_TEST_DIR}/tactile/core/serdes/serdes.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/util/defer.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/util/validation.test.cpp"
                "${TACTILE_TEST_DIR}/tactile/core/tactile_core_tests.main.cpp"

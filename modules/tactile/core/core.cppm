@@ -13,5 +13,6 @@ export import tactile.core.meta;
 export import tactile.core.numeric;
 export import tactile.core.runtime;
 export import tactile.core.save;
+export import tactile.core.serdes;
 export import tactile.core.tile;
 export import tactile.core.util;

@@ -49,6 +49,7 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/runtime/runtime-interfaces.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/runtime/runtime-null.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/save/save.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/core/serdes/serdes.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/tile/tile.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/util/util.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/util/util-defer.cppm"
@@ -58,7 +59,6 @@ target_sources(tactile_core
                PRIVATE
                "${TACTILE_SOURCE_DIR}/tactile/core/base64/base64.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/common/result.cpp"
-               "${TACTILE_SOURCE_DIR}/tactile/core/common/strings.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/io/compression.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/layer/annotation_layer.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/layer/group_layer.cpp"
@@ -70,6 +70,7 @@ target_sources(tactile_core
                "${TACTILE_SOURCE_DIR}/tactile/core/meta/attr.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/numeric/random.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/runtime/runtime.cpp"
+               "${TACTILE_SOURCE_DIR}/tactile/core/serdes/serdes.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/tile/tile.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/tile/tile_animation.cpp"
                )

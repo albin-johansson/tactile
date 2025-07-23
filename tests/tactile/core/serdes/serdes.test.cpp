@@ -3,15 +3,16 @@
 #include <gtest/gtest.h>
 
 import tactile.core.ext.std;
+import tactile.core.serdes;
 import tactile.core.common;
 
 namespace tactile::tests {
 namespace {
 
-class StringOpsTest : public testing::Test
+class SerdesTest : public testing::Test
 {};
 
-TEST_F(StringOpsTest, ParseU64)
+TEST_F(SerdesTest, ParseU64)
 {
   EXPECT_EQ(parse_u64("42"), 42U);
 
@@ -24,7 +25,7 @@ TEST_F(StringOpsTest, ParseU64)
   EXPECT_FALSE(parse_u64("foobar").has_value());
 }
 
-TEST_F(StringOpsTest, ParseI64)
+TEST_F(SerdesTest, ParseI64)
 {
   EXPECT_EQ(parse_i64("42"), 42);
   EXPECT_EQ(parse_i64("-123"), -123);
@@ -38,7 +39,7 @@ TEST_F(StringOpsTest, ParseI64)
   EXPECT_FALSE(parse_i64("foobar").has_value());
 }
 
-TEST_F(StringOpsTest, ParseF64)
+TEST_F(SerdesTest, ParseF64)
 {
   EXPECT_EQ(parse_f64("0"), 0.0);
   EXPECT_EQ(parse_f64("4.2"), 4.2);

@@ -4,7 +4,9 @@ module;
 
 #include <fast_float/fast_float.h>
 
-module tactile.core.common;
+module tactile.core.serdes;
+
+import tactile.core.ext.std;
 
 namespace tactile {
 namespace {
