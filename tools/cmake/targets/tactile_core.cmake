@@ -12,13 +12,6 @@ target_sources(tactile_core
                PUBLIC FILE_SET CXX_MODULES FILES
                "${TACTILE_MODULE_DIR}/tactile/core/base64/base64.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/common/common.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-containers.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-fs.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-memory.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-platform.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-primitives.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-strings.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common-time.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/error/error.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/boost/safe_numerics/safe_numerics.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/std/std.cppm"
