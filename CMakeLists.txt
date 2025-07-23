@@ -103,6 +103,6 @@ if (TACTILE_ENABLE_TESTS)
       add_subdirectory("tests/zlib")
     endif ()
 
-    add_subdirectory("tests/editor")
+    include("tools/cmake/targets/tactile_editor_tests.cmake")
   endif ()
 endif ()
