@@ -6,7 +6,7 @@ Standard: Latest
 
 # Basic
 UseTab: Never
-ColumnLimit: 85
+ColumnLimit: 80
 IndentWidth: 2
 ContinuationIndentWidth: 4
 MaxEmptyLinesToKeep: 1
@@ -32,7 +32,7 @@ BreakBeforeBraces: Custom
 BraceWrapping:
   IndentBraces: false
   AfterNamespace: false
-  AfterExternBlock: true
+  AfterExternBlock: false
   AfterClass: true
   AfterStruct: true
   AfterEnum: true
@@ -147,12 +147,12 @@ RequiresExpressionIndentation: OuterScope
 AllowShortCompoundRequirementOnASingleLine: true
 
 # Switches
-AllowShortCaseLabelsOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: false
 SpaceBeforeCaseColon: false
 IndentCaseLabels: true
 IndentCaseBlocks: false
 AlignConsecutiveShortCaseStatements:
-  Enabled: true
+  Enabled: false
   AcrossEmptyLines: false
   AcrossComments: false
   AlignCaseColons: false
@@ -174,7 +174,7 @@ AlwaysBreakBeforeMultilineStrings: false
 
 # Comments
 SpacesBeforeTrailingComments: 2
-ReflowComments: true
+ReflowComments: Always
 AlignTrailingComments:
   Kind: Always
   OverEmptyLines: 0
