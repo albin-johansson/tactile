@@ -48,10 +48,6 @@ jobs:
       - name: Create Vcpkg binary cache directory
         run: mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
 
-      - name: Patch libc++.modules.json
-        working-directory: ./tools/scripts
-        run: patch /opt/homebrew/share/cmake/Modules/Compiler/Clang-CXX-CXXImportStd.cmake < homebrew-llvm-fix-libc++-modules-path.diff
-
       - name: Install assets
         working-directory: ./tools/scripts
         run: python3 install_assets.py --skip-fonts
