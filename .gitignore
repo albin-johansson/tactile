@@ -34,20 +34,11 @@
 # macOS folder settings
 .DS_Store
 
-# Visual Studio files
+# IDE files
 .vs
-
-# Visual Studio Code files
 .vscode
-
-# JetBrains files
 .idea
-
-# JetBrains Fleet files
 .fleet
-
-# Generated Doxygen output
-docs/doxygen/html
 
 # Build output
 build
