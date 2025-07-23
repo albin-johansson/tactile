@@ -20,6 +20,7 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/common/common-strings.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/common/common-time.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/boost/safe_numerics/safe_numerics.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/core/ext/cppcodec/cppcodec.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/std/std.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/io/io.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/io/io-base64.cppm"
