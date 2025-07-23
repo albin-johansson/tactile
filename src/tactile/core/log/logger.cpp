@@ -19,6 +19,8 @@ auto _to_prefix(const LogLevel level) noexcept -> StringView
       return "WARN";
     case LogLevel::kError:
       return "ERROR";
+    case LogLevel::kTrace:
+      return "TRACE";
     default:
       return "???";
   }
