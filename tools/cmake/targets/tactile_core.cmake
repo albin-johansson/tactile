@@ -29,8 +29,6 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/log/log-logger.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/log/log-sink.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/meta/meta.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/meta/meta-attr.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/meta/meta-color.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/numeric/numeric.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/numeric/numeric-checked.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/numeric/numeric-concepts.cppm"
