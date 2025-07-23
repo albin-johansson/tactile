@@ -15,7 +15,7 @@ auto run(int argc, char* argv[]) -> int
   logger.set_start_time(Logger::clock_type::now());
   logger.set_min_level(LogLevel::kTrace);
   logger.set_flush_level(LogLevel::kError);
-  logger.add_sink(make_unique<ConsoleLogSink>());
+  logger.add_sink(make_console_log_sink(true));
 
   const Defer reset_logger {[] { get_logger().reset(); }};
 

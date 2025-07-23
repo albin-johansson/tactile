@@ -25,8 +25,6 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/layer/layer-tile_layer.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/log/log.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/log/log-buffer.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/log/log-console_log_sink.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/log/log-file_log_sink.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/log/log-level.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/log/log-logger.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/log/log-sink.cppm"

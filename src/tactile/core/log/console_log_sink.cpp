@@ -3,6 +3,7 @@
 module tactile.core.log;
 
 import tactile.core.ext.std;
+import tactile.core.common;
 
 namespace tactile {
 namespace {
@@ -33,31 +34,42 @@ auto _get_ansi_color(const LogLevel level) noexcept -> StringView
   return kAnsiColorFgWhite;
 }
 
+class ConsoleLogSink final : public ILogSink
+{
+ public:
+  explicit ConsoleLogSink(const bool use_colors)
+    : m_use_colors {use_colors}
+  {}
+
+  void log(const LogMessage& msg) override
+  {
+    if (m_use_colors) {
+      std::clog << _get_ansi_color(msg.level);
+    }
+
+    std::clog << msg.prefix << ' ' << msg.text;
+
+    if (m_use_colors) {
+      std::clog << kAnsiColorReset;
+    }
+
+    std::clog << '\n';
+  }
+
+  void flush() override
+  {
+    std::clog.flush();
+  }
+
+ private:
+  bool m_use_colors;
+};
+
 }  // namespace
 
-void ConsoleLogSink::log(const LogMessage& msg)
+auto make_console_log_sink(const bool use_colors) -> Unique<ILogSink>
 {
-  if (m_use_colors) {
-    std::clog << _get_ansi_color(msg.level);
-  }
-
-  std::clog << msg.prefix << ' ' << msg.text;
-
-  if (m_use_colors) {
-    std::clog << kAnsiColorReset;
-  }
-
-  std::clog << '\n';
-}
-
-void ConsoleLogSink::flush()
-{
-  std::clog.flush();
-}
-
-void ConsoleLogSink::set_use_colors(const bool use_colors)
-{
-  m_use_colors = use_colors;
+  return make_unique<ConsoleLogSink>(use_colors);
 }
 
 }  // namespace tactile

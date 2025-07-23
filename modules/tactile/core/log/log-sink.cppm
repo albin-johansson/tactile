@@ -49,4 +49,12 @@ class ILogSink
   virtual void flush() = 0;
 };
 
+/// Creates a log sink that writes messages to the console.
+[[nodiscard]]
+auto make_console_log_sink(bool use_colors) -> Unique<ILogSink>;
+
+/// Creates a log sink that writes messages to a file.
+[[nodiscard]]
+auto make_file_log_sink(const Path& log_file) -> Unique<ILogSink>;
+
 }  // namespace tactile

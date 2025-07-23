@@ -15,8 +15,6 @@
 /// "tactile.core.common" to make it usable within as many modules as possible.
 export module tactile.core.log;
 
-export import :console_log_sink;
-export import :file_log_sink;
 export import :level;
 export import :logger;
 export import :sink;
