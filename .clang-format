@@ -187,5 +187,5 @@ IndentGotoLabels: false
 IndentExternBlock: Indent
 KeepEmptyLinesAtTheStartOfBlocks: false
 InsertNewlineAtEOF: true
-SortUsingDeclarations: Lexicographic
+SortUsingDeclarations: Never
 RemoveParentheses: Leave
