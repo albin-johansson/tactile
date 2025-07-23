@@ -1,8 +1,10 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.core.base64;
+module;
 
-import tactile.core.ext.cppcodec;
+#include <cppcodec/base64_rfc4648.hpp>
+
+module tactile.core.base64;
 
 namespace tactile {
 
