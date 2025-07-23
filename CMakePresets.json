@@ -60,7 +60,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/tools/vcpkg/toolchains/arm64-osx-homebrew-llvm.cmake",
-        "VCPKG_TARGET_TRIPLET": "arm64-osx-tactile"
+        "VCPKG_TARGET_TRIPLET": "tactile-arm64-osx-homebrew-llvm"
       }
     },
     {
@@ -70,14 +70,14 @@
         "_use-mold-linker"
       ],
       "cacheVariables": {
-        "VCPKG_TARGET_TRIPLET": "x64-linux-tactile"
+        "VCPKG_TARGET_TRIPLET": "tactile-x64-linux"
       }
     },
     {
       "name": "_x64-windows",
       "hidden": true,
       "cacheVariables": {
-        "VCPKG_TARGET_TRIPLET": "x64-windows-tactile"
+        "VCPKG_TARGET_TRIPLET": "tactile-x64-windows"
       }
     },
     {
