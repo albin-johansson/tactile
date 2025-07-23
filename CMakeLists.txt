@@ -67,6 +67,7 @@ project(tactile
 
 set(TACTILE_MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/modules")
 set(TACTILE_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+set(TACTILE_TEST_DIR "${CMAKE_CURRENT_LIST_DIR}/tests")
 
 # Determine build type, e.g. "debug" or "release".
 string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)
@@ -95,7 +96,7 @@ endif ()
 if (TACTILE_ENABLE_TESTS)
   find_package(GTest CONFIG REQUIRED)
 
-  add_subdirectory("tests/core")
+  include("tools/cmake/targets/tactile_core_tests.cmake")
 
   if (TACTILE_ENABLE_EDITOR)
     if (TACTILE_ENABLE_ZLIB)

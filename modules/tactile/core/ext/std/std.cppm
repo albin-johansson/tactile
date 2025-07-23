@@ -24,6 +24,7 @@ module;
 #include <limits>
 #include <map>
 #include <memory>
+#include <numeric>
 #include <optional>
 #include <print>
 #include <random>
@@ -166,6 +167,9 @@ using std::weak_ptr;
 using std::default_delete;
 using std::make_unique;
 using std::make_shared;
+
+// From <numeric>
+using std::iota;
 
 // From <optional>
 using std::optional;
