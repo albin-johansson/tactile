@@ -59,7 +59,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. --preset=arm64-osx-homebrew-llvm-debug-null \
+          cmake .. --preset=arm64-osx-homebrew-llvm-debug \
                    --log-level=DEBUG \
                    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
@@ -162,7 +162,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. --preset=x64-linux-debug-null \
+          cmake .. --preset=x64-linux-debug \
                    --log-level=DEBUG \
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
@@ -226,7 +226,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. --preset=x64-windows-debug-null `
+          cmake .. --preset=x64-windows-debug `
                    --log-level=DEBUG `
                    -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
