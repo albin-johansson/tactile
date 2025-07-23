@@ -65,9 +65,10 @@ project(tactile
         LANGUAGES CXX
         )
 
-set(TACTILE_MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/modules")
-set(TACTILE_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
-set(TACTILE_TEST_DIR "${CMAKE_CURRENT_LIST_DIR}/tests")
+set(TACTILE_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
+set(TACTILE_MODULE_DIR "${TACTILE_ROOT_DIR}/modules")
+set(TACTILE_SOURCE_DIR "${TACTILE_ROOT_DIR}/src")
+set(TACTILE_TEST_DIR "${TACTILE_ROOT_DIR}/tests")
 
 # Determine build type, e.g. "debug" or "release".
 string(TOLOWER "${CMAKE_BUILD_TYPE}" TACTILE_BUILD_TYPE)
@@ -82,27 +83,24 @@ message(DEBUG "TACTILE_BINARY_DIR: ${TACTILE_BINARY_DIR}")
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${TACTILE_BINARY_DIR}")
 
 include("tools/cmake/common.cmake")
+
 include("tools/cmake/targets/tactile_core.cmake")
-
-if (TACTILE_ENABLE_EDITOR)
-  if (TACTILE_ENABLE_ZLIB)
-    include("tools/cmake/targets/tactile_zlib.cmake")
-  endif ()
-
-  include("tools/cmake/targets/tactile_editor.cmake")
-  include("tools/cmake/targets/tactile.cmake")
+if (TACTILE_ENABLE_TESTS)
+  include("tools/cmake/targets/tactile_core_tests.cmake")
 endif ()
 
-if (TACTILE_ENABLE_TESTS)
-  find_package(GTest CONFIG REQUIRED)
+if (TACTILE_ENABLE_ZLIB)
+  include("tools/cmake/targets/tactile_zlib.cmake")
+  if (TACTILE_ENABLE_TESTS)
+    include("tools/cmake/targets/tactile_zlib_tests.cmake")
+  endif ()
+endif ()
 
-  include("tools/cmake/targets/tactile_core_tests.cmake")
+if (TACTILE_ENABLE_EDITOR)
+  include("tools/cmake/targets/tactile_editor.cmake")
+  include("tools/cmake/targets/tactile.cmake")
 
-  if (TACTILE_ENABLE_EDITOR)
-    if (TACTILE_ENABLE_ZLIB)
-      add_subdirectory("tests/zlib")
-    endif ()
-
+  if (TACTILE_ENABLE_TESTS)
     include("tools/cmake/targets/tactile_editor_tests.cmake")
   endif ()
 endif ()
