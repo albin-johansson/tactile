@@ -21,11 +21,14 @@ jobs:
 
       - name: Install system dependencies
         run: |
+          brew update
           brew install llvm
+          brew install cmake
           brew install ninja
           brew install autoconf
           brew install automake
           brew install libtool
+          brew upgrade cmake
 
       - name: Restore cached Vcpkg
         id: restore-cached-vcpkg
