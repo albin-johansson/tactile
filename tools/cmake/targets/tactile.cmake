@@ -6,7 +6,7 @@ tactile_set_target_properties(tactile)
 
 target_sources(tactile
                PRIVATE
-               "${TACTILE_SOURCE_DIR}/main/tactile.main.cpp"
+               "${TACTILE_SOURCE_DIR}/tactile/main/tactile.main.cpp"
                )
 
 target_link_libraries(tactile
