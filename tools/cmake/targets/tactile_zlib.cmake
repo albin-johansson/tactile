@@ -8,10 +8,10 @@ tactile_set_target_properties(tactile_zlib)
 
 target_sources(tactile_zlib
                PUBLIC FILE_SET CXX_MODULES FILES
-               "${TACTILE_SOURCE_DIR}/zlib/zlib.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/zlib/zlib.cppm"
 
                PRIVATE
-               "${TACTILE_SOURCE_DIR}/zlib/zlib.cpp"
+               "${TACTILE_SOURCE_DIR}/tactile/zlib/zlib.cpp"
                )
 
 target_link_libraries(tactile_zlib
