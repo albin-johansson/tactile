@@ -2,9 +2,6 @@
 
 module tactile.core.numeric;
 
-import tactile.core.ext.std;
-import tactile.core.common;
-
 namespace tactile {
 namespace {
 

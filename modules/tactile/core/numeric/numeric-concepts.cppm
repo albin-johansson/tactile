@@ -2,7 +2,7 @@
 
 export module tactile.core.numeric:concepts;
 
-export import tactile.core.ext.std;
+import tactile.core.ext.std;
 
 export namespace tactile {
 

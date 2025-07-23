@@ -6,10 +6,10 @@ module;
 
 export module tactile.core.numeric:vec;
 
-export import tactile.core.ext.std;
-export import tactile.core.common;
-export import :concepts;
+import :concepts;
 import :checked;
+import tactile.core.ext.std;
+import tactile.core.common;
 
 export namespace tactile {
 

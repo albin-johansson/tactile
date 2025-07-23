@@ -3,8 +3,8 @@
 export module tactile.core.numeric:checked;
 
 import tactile.core.ext.boost.safe_numerics;
-export import tactile.core.common;
-export import :concepts;
+import tactile.core.common;
+import :concepts;
 
 namespace tactile {
 

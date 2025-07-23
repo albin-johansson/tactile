@@ -6,10 +6,133 @@
 /// must therefore only depend on the "tactile.common" module.
 export module tactile.core.numeric;
 
-export import :casts;
 export import :checked;
 export import :concepts;
-export import :constants;
-export import :hash;
-export import :random;
 export import :vec;
+
+import tactile.core.ext.std;
+import tactile.core.common;
+
+export namespace tactile {
+
+inline constexpr auto kMinI8 = std::numeric_limits<i8>::min();
+inline constexpr auto kMinI16 = std::numeric_limits<i16>::min();
+inline constexpr auto kMinI32 = std::numeric_limits<i32>::min();
+inline constexpr auto kMinI64 = std::numeric_limits<i64>::min();
+
+inline constexpr auto kMaxI8 = std::numeric_limits<i8>::max();
+inline constexpr auto kMaxI16 = std::numeric_limits<i16>::max();
+inline constexpr auto kMaxI32 = std::numeric_limits<i32>::max();
+inline constexpr auto kMaxI64 = std::numeric_limits<i64>::max();
+
+// Provided for consistency, these are of course all zero.
+inline constexpr auto kMinU8 = std::numeric_limits<u8>::min();
+inline constexpr auto kMinU16 = std::numeric_limits<u16>::min();
+inline constexpr auto kMinU32 = std::numeric_limits<u32>::min();
+inline constexpr auto kMinU64 = std::numeric_limits<u64>::min();
+
+inline constexpr auto kMaxU8 = std::numeric_limits<u8>::max();
+inline constexpr auto kMaxU16 = std::numeric_limits<u16>::max();
+inline constexpr auto kMaxU32 = std::numeric_limits<u32>::max();
+inline constexpr auto kMaxU64 = std::numeric_limits<u64>::max();
+
+/// Forces initialization of the RNG engine for the current thread.
+void random_init();
+
+/// Returns a pseudo-random `i32` within the interval [min, max].
+[[nodiscard]]
+auto random_i32(i32 min, i32 max) -> i32;
+
+/// Returns a pseudo-random `u32` within the interval [min, max].
+[[nodiscard]]
+auto random_u32(u32 min, u32 max) -> u32;
+
+/// Returns a pseudo-random `f32` within the interval [min, max].
+[[nodiscard]]
+auto random_f32(f32 min, f32 max) -> f32;
+
+/// Returns a pseudo-random boolean value.
+[[nodiscard]]
+auto random_bool() -> bool;
+
+/// Performs a checked narrowing conversion of an integral value.
+///
+/// Throws if the original value isn't representable using the destination type.
+template <std::integral To, std::integral From>
+  requires(sizeof(To) <= sizeof(From))
+[[nodiscard]] constexpr auto checked_cast(const From from) -> To
+{
+  if constexpr (!std::same_as<From, To>) {
+    if constexpr (std::signed_integral<From>) {
+      if (std::cmp_less(from, std::numeric_limits<To>::min())) [[unlikely]] {
+        throw std::underflow_error {
+          "integral narrowing conversion would be lossy"};
+      }
+    }
+
+    if (std::cmp_greater(from, std::numeric_limits<To>::max())) [[unlikely]] {
+      throw std::overflow_error {
+        "integral narrowing conversion would be lossy"};
+    }
+  }
+
+  return static_cast<To>(from);
+}
+
+/// Performs a checked conversion of an unsigned integer to a signed integer.
+template <std::unsigned_integral T>
+[[nodiscard]] constexpr auto to_signed(const T value) -> std::make_signed_t<T>
+{
+  return checked_cast<std::make_signed_t<T>>(value);
+}
+
+/// Performs a checked conversion of a signed integer to an unsigned integer.
+template <std::signed_integral T>
+[[nodiscard]] constexpr auto to_unsigned(const T value)
+    -> std::make_unsigned_t<T>
+{
+  return checked_cast<std::make_unsigned_t<T>>(value);
+}
+
+/// Performs a saturating narrowing conversion of an integral value.
+template <std::integral To, std::integral From>
+[[nodiscard]] constexpr auto saturate_cast(const From from) noexcept -> To
+{
+  constexpr auto kToMin = std::numeric_limits<To>::min();
+  constexpr auto kToMax = std::numeric_limits<To>::max();
+
+  if constexpr (!std::same_as<From, To>) {
+    if constexpr (std::signed_integral<From>) {
+      if (std::cmp_less(from, kToMin)) {
+        return kToMin;
+      }
+    }
+
+    if (std::cmp_greater(from, kToMax)) {
+      return kToMax;
+    }
+  }
+
+  return static_cast<To>(from);
+}
+
+/// Hashes a value and combines the result with an existing hash value.
+///
+/// See https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0814r2.pdf
+template <typename T>
+constexpr void hash_combine(usize& seed, const T& value) noexcept
+{
+  const auto value_hash = std::hash<T> {}(value);
+  seed ^= value_hash + 0x9E3779B9uz + (seed << 6uz) + (seed >> 2uz);
+}
+
+/// Hashes a generic collection of values.
+[[nodiscard]]
+constexpr auto hash_combine(const auto&... args) noexcept -> usize
+{
+  auto seed = 0uz;
+  (hash_combine(seed, args), ...);
+  return seed;
+}
+
+}  // namespace tactile
