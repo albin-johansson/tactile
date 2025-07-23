@@ -12,7 +12,7 @@
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
         "CMAKE_SKIP_INSTALL_ALL_DEPENDENCY": "ON",
-        "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/tools/vcpkg/triplets",
+        "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/tools/cmake/vcpkg/triplets",
         "TACTILE_ENABLE_TESTS": "ON",
         "TACTILE_ENABLE_EDITOR": "ON",
         "TACTILE_ENABLE_ZLIB": "ON",
@@ -59,7 +59,7 @@
       "name": "_arm64-osx-homebrew-llvm",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/tools/vcpkg/toolchains/arm64-osx-homebrew-llvm.cmake",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/tools/cmake/vcpkg/toolchains/arm64-osx-homebrew-llvm.cmake",
         "VCPKG_TARGET_TRIPLET": "tactile-arm64-osx-homebrew-llvm"
       }
     },
