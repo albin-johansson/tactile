@@ -84,10 +84,6 @@ include("tools/cmake/common.cmake")
 include("tools/cmake/targets/tactile_core.cmake")
 
 if (TACTILE_ENABLE_EDITOR)
-  find_package(imgui CONFIG REQUIRED)
-
-  add_subdirectory("src/ui")
-
   if (TACTILE_ENABLE_ZLIB)
     find_package(ZLIB REQUIRED)
     add_subdirectory("src/zlib")
