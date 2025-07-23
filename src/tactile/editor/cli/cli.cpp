@@ -6,7 +6,7 @@ module;
 
 module tactile.editor.cli;
 
-import std;
+import tactile.core.ext.std;
 
 namespace tactile::editor {
 namespace {

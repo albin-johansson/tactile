@@ -2,7 +2,7 @@
 
 export module tactile.core.common:primitives;
 
-export import std;
+import tactile.core.ext.std;
 
 export namespace tactile {
 

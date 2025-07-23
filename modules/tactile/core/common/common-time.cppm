@@ -2,7 +2,7 @@
 
 export module tactile.core.common:time;
 
-export import std;
+export import tactile.core.ext.std;
 
 export namespace tactile {
 

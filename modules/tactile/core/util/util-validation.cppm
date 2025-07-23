@@ -2,7 +2,7 @@
 
 export module tactile.core.util:validation;
 
-import std;
+import tactile.core.ext.std;
 
 export namespace tactile {
 

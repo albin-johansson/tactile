@@ -2,7 +2,7 @@
 
 export module tactile.core.common:containers;
 
-export import std;
+import tactile.core.ext.std;
 export import :primitives;
 
 export namespace tactile {

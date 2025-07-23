@@ -2,7 +2,7 @@
 
 module tactile.core.io;
 
-import std;
+import tactile.core.ext.std;
 import tactile.core.log;
 
 namespace tactile {

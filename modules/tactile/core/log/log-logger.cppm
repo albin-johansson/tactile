@@ -2,7 +2,7 @@
 
 export module tactile.core.log:logger;
 
-export import std;
+export import tactile.core.ext.std;
 export import tactile.core.common;
 export import :level;
 export import :sink;

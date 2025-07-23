@@ -2,7 +2,7 @@
 
 export module tactile.core.log:file_log_sink;
 
-export import std;
+export import tactile.core.ext.std;
 export import :sink;
 
 export namespace tactile {

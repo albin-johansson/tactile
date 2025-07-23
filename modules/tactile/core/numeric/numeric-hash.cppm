@@ -2,7 +2,7 @@
 
 export module tactile.core.numeric:hash;
 
-export import std;
+export import tactile.core.ext.std;
 export import tactile.core.common;
 
 export namespace tactile {

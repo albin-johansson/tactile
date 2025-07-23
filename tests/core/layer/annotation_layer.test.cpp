@@ -3,7 +3,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-import std;
+import tactile.core.ext.std;
 import tactile.core.layer;
 
 namespace tactile::tests {

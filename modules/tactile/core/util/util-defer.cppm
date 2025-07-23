@@ -2,7 +2,7 @@
 
 export module tactile.core.util:defer;
 
-export import std;
+export import tactile.core.ext.std;
 export import tactile.core.log;
 
 export namespace tactile {
