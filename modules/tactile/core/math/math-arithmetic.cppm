@@ -1,10 +1,10 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.core.numeric:checked;
+export module tactile.core.math:arithmetic;
 
-import :concepts;
 import tactile.core.ext.boost.safe_numerics;
 import tactile.core.common;
+import tactile.core.numeric;
 import tactile.core.error;
 
 namespace tactile {
@@ -13,30 +13,29 @@ namespace tactile {
 constexpr auto to_error(
     const boost::safe_numerics::safe_numerics_error error) noexcept -> Error
 {
-  using enum boost::safe_numerics::safe_numerics_error;
+  using Err = boost::safe_numerics::safe_numerics_error;
   switch (error) {
-    case positive_overflow_error:
+    case Err::positive_overflow_error:
       return Error::kArithmeticOverflow;
-    case negative_overflow_error:
-      [[fallthrough]];
-    case underflow_error:
+
+    case Err::negative_overflow_error:
+    case Err::underflow_error:
       return Error::kArithmeticUnderflow;
-    case precision_overflow_error:
+
+    case Err::precision_overflow_error:
       return Error::kArithmeticPrecision;
-    case negative_value_shift:
-      [[fallthrough]];
-    case negative_shift:
-      [[fallthrough]];
-    case shift_too_large:
+
+    case Err::negative_value_shift:
+    case Err::negative_shift:
+    case Err::shift_too_large:
       return Error::kInvalidOp;
-    case range_error:
-      [[fallthrough]];
-    case domain_error:
-      [[fallthrough]];
-    case uninitialized_value:
+
+    case Err::range_error:
+    case Err::domain_error:
+    case Err::uninitialized_value:
       return Error::kArithmeticInvalidValue;
-    case success:
-      [[fallthrough]];
+
+    case Err::success:
     default:
       return Error::kUnknown;
   }

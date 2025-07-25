@@ -6,7 +6,6 @@
 /// must therefore only depend on the "tactile.common" module.
 export module tactile.core.numeric;
 
-export import :checked;
 export import :concepts;
 import tactile.core.ext.std;
 import tactile.core.common;
