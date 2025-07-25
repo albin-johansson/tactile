@@ -1,6 +1,8 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.core.numeric;
+module tactile.core.random;
+
+import tactile.core.ext.std;
 
 namespace tactile {
 namespace {

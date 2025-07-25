@@ -35,25 +35,6 @@ inline constexpr auto kMaxU16 = std::numeric_limits<u16>::max();
 inline constexpr auto kMaxU32 = std::numeric_limits<u32>::max();
 inline constexpr auto kMaxU64 = std::numeric_limits<u64>::max();
 
-/// Forces initialization of the RNG engine for the current thread.
-void random_init();
-
-/// Returns a pseudo-random `i32` within the interval [min, max].
-[[nodiscard]]
-auto random_i32(i32 min, i32 max) -> i32;
-
-/// Returns a pseudo-random `u32` within the interval [min, max].
-[[nodiscard]]
-auto random_u32(u32 min, u32 max) -> u32;
-
-/// Returns a pseudo-random `f32` within the interval [min, max].
-[[nodiscard]]
-auto random_f32(f32 min, f32 max) -> f32;
-
-/// Returns a pseudo-random boolean value.
-[[nodiscard]]
-auto random_bool() -> bool;
-
 /// Performs a checked narrowing conversion of an integral value.
 ///
 /// Throws if the original value isn't representable using the destination type.
