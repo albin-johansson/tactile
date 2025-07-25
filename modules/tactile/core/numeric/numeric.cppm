@@ -8,7 +8,6 @@ export module tactile.core.numeric;
 
 export import :checked;
 export import :concepts;
-export import :vec;
 import tactile.core.ext.std;
 import tactile.core.common;
 

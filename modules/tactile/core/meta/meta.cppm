@@ -11,7 +11,7 @@ export module tactile.core.meta;
 
 import tactile.core.ext.std;
 import tactile.core.common;
-import tactile.core.numeric;
+import tactile.core.math;
 
 export namespace tactile {
 

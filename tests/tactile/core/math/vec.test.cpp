@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 import tactile.core.ext.std;
-import tactile.core.numeric;
+import tactile.core.math;
 
 namespace tactile::tests {
 namespace {

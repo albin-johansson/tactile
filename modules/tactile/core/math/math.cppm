@@ -1,15 +1,10 @@
 // Copyright (C) 2025 Albin Johansson
 
-module;
+export module tactile.core.math;
 
-#include <cassert>
-
-export module tactile.core.numeric:vec;
-
-import :concepts;
-import :checked;
 import tactile.core.ext.std;
 import tactile.core.common;
+import tactile.core.numeric;
 
 export namespace tactile {
 
@@ -136,7 +131,6 @@ class Vec final
   [[nodiscard]]
   constexpr auto operator[](const size_type index) const noexcept -> value_type
   {
-    assert(index < N);
     return m_data[index];
   }
 
@@ -155,14 +149,14 @@ class Vec final
   [[nodiscard]]
   auto data() noexcept -> value_type*
   {
-    return m_data;
+    return m_data.data();
   }
 
   /// Returns a pointer to the first element of the internal array of elements.
   [[nodiscard]]
   auto data() const noexcept -> const value_type*
   {
-    return m_data;
+    return m_data.data();
   }
 
   /// Returns the number of elements in the vector.
@@ -180,7 +174,7 @@ class Vec final
       -> std::partial_ordering = default;
 
  private:
-  value_type m_data[N] {};
+  Array<value_type, N> m_data {};
 };
 
 template <Numeric T>
