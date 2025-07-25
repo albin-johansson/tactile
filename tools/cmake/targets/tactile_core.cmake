@@ -42,6 +42,7 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/tile/tile.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/util/util.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/util/util-defer.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/core/util/util-hash.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/util/util-validation.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/core.cppm"
 
