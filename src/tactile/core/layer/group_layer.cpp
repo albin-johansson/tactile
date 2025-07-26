@@ -7,9 +7,9 @@ module;
 module tactile.core.layer;
 
 import tactile.core.ext.std;
-import tactile.core.numeric;
 import tactile.core.error;
 import tactile.core.common;
+import tactile.core.util;
 
 namespace tactile {
 

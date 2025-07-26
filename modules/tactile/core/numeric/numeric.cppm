@@ -6,7 +6,6 @@
 /// must therefore only depend on the "tactile.common" module.
 export module tactile.core.numeric;
 
-export import :concepts;
 import tactile.core.ext.std;
 import tactile.core.common;
 
@@ -32,56 +31,5 @@ inline constexpr auto kMaxU8 = std::numeric_limits<u8>::max();
 inline constexpr auto kMaxU16 = std::numeric_limits<u16>::max();
 inline constexpr auto kMaxU32 = std::numeric_limits<u32>::max();
 inline constexpr auto kMaxU64 = std::numeric_limits<u64>::max();
-
-/// Performs a checked narrowing conversion of an integral value.
-///
-/// Throws if the original value isn't representable using the destination type.
-template <std::integral To, std::integral From>
-  requires(sizeof(To) <= sizeof(From))
-[[nodiscard]] constexpr auto checked_cast(const From from) -> To
-{
-  if (!std::in_range<To>(from)) {
-    throw std::range_error {"Narrowing conversion would be lossy"};
-  }
-
-  return static_cast<To>(from);
-}
-
-/// Performs a checked conversion of an unsigned integer to a signed integer.
-template <std::unsigned_integral T>
-[[nodiscard]] constexpr auto signed_cast(const T value) -> std::make_signed_t<T>
-{
-  return checked_cast<std::make_signed_t<T>>(value);
-}
-
-/// Performs a checked conversion of a signed integer to an unsigned integer.
-template <std::signed_integral T>
-[[nodiscard]] constexpr auto unsigned_cast(const T value)
-    -> std::make_unsigned_t<T>
-{
-  return checked_cast<std::make_unsigned_t<T>>(value);
-}
-
-/// Performs a saturating narrowing conversion of an integral value.
-template <std::integral To, std::integral From>
-[[nodiscard]] constexpr auto saturate_cast(const From from) noexcept -> To
-{
-  constexpr auto kToMin = std::numeric_limits<To>::min();
-  constexpr auto kToMax = std::numeric_limits<To>::max();
-
-  if constexpr (!std::same_as<From, To>) {
-    if constexpr (std::signed_integral<From>) {
-      if (std::cmp_less(from, kToMin)) {
-        return kToMin;
-      }
-    }
-
-    if (std::cmp_greater(from, kToMax)) {
-      return kToMax;
-    }
-  }
-
-  return static_cast<To>(from);
-}
 
 }  // namespace tactile

@@ -43,6 +43,8 @@ export module tactile.core.ext.std;
 
 export namespace std {
 
+// NOLINTBEGIN(*-unused-using-decls)
+
 // From <algorithm>
 using std::clamp;
 using std::iter_swap;
@@ -214,6 +216,10 @@ using std::errc;
 using std::make_signed_t;
 using std::make_unsigned_t;
 using std::invoke_result_t;
+using std::is_const_v;
+using std::is_volatile_v;
+using std::is_signed_v;
+using std::is_unsigned_v;
 
 // From <unordered_map>
 using std::unordered_map;
@@ -252,5 +258,7 @@ using std::operator<;
 using std::operator>;
 using std::operator<<;
 using std::operator>>;
+
+// NOLINTEND(*-unused-using-decls)
 
 }  // namespace std

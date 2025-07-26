@@ -3,6 +3,8 @@
 /// Provides miscellaneous utilities.
 export module tactile.core.util;
 
+export import :casts;
+export import :concepts;
 export import :defer;
-export import :validation;
 export import :hash;
+export import :validation;

@@ -6,6 +6,7 @@ import tactile.core.ext.boost.safe_numerics;
 import tactile.core.common;
 import tactile.core.numeric;
 import tactile.core.error;
+import tactile.core.util;
 
 namespace tactile {
 
