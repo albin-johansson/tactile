@@ -9,6 +9,8 @@ export module tactile.core.ext.boost.safe_numerics;
 
 export namespace boost::safe_numerics {
 
+// NOLINTBEGIN(*-unused-using-decls)
+
 using safe_numerics::safe_numerics_error;
 
 namespace checked {
@@ -17,5 +19,7 @@ using checked::subtract;
 using checked::multiply;
 using checked::divide;
 }  // namespace checked
+
+// NOLINTEND(*-unused-using-decls)
 
 }  // namespace boost::safe_numerics
