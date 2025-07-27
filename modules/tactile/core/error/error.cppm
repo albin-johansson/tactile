@@ -74,12 +74,6 @@ constexpr auto ok() noexcept -> Result<void>
   return Result<void> {};
 }
 
-template <typename T>
-[[nodiscard]] constexpr auto ok(T&& value) noexcept -> Result<T>
-{
-  return Result<T> {std::forward<T>(value)};
-}
-
 [[nodiscard]]
 constexpr auto err(const Error err) noexcept -> Unexpected<Error>
 {
