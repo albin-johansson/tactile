@@ -5,7 +5,6 @@ export module tactile.core.tile;
 
 import tactile.core.common;
 import tactile.core.io;
-import tactile.core.numeric;
 import tactile.core.error;
 
 export namespace tactile {

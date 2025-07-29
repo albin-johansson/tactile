@@ -5,7 +5,6 @@ export module tactile.core.math:vec;
 import :arithmetic;
 import tactile.core.ext.std;
 import tactile.core.common;
-import tactile.core.numeric;
 
 export namespace tactile {
 

@@ -32,7 +32,6 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/math/math-arithmetic.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/math/math-vec.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/meta/meta.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/numeric/numeric.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/random/random.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/runtime/runtime.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/runtime/runtime-interfaces.cppm"

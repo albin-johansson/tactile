@@ -10,7 +10,6 @@ export import tactile.core.layer;
 export import tactile.core.log;
 export import tactile.core.math;
 export import tactile.core.meta;
-export import tactile.core.numeric;
 export import tactile.core.random;
 export import tactile.core.runtime;
 export import tactile.core.save;
