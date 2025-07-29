@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.editor.command:interfaces;
+export module tactile.editor.cmd:interfaces;
 
 export namespace tactile::editor {
 

@@ -4,4 +4,4 @@ export module tactile.editor;
 
 export import tactile.editor.app;
 export import tactile.editor.cli;
-export import tactile.editor.command;
+export import tactile.editor.cmd;

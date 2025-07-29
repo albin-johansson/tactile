@@ -10,15 +10,15 @@ target_sources(tactile_editor
                PUBLIC FILE_SET CXX_MODULES FILES
                "${TACTILE_MODULE_DIR}/tactile/editor/app/app.cppm"
                "${TACTILE_MODULE_DIR}/tactile/editor/cli/cli.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/editor/command/command.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/editor/command/command-interfaces.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/editor/command/command-stack.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/editor/cmd/cmd.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/editor/cmd/cmd-interfaces.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/editor/cmd/cmd-stack.cppm"
                "${TACTILE_MODULE_DIR}/tactile/editor/editor.cppm"
 
                PRIVATE
                "${TACTILE_SOURCE_DIR}/tactile/editor/app/launch.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/editor/cli/cli.cpp"
-               "${TACTILE_SOURCE_DIR}/tactile/editor/command/command_stack.cpp"
+               "${TACTILE_SOURCE_DIR}/tactile/editor/cmd/command_stack.cpp"
                )
 
 target_link_libraries(tactile_editor

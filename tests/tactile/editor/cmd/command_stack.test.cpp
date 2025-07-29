@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-import tactile.editor.command;
+import tactile.editor.cmd;
 import tactile.core.prelude;
 
 namespace tactile::editor::tests {
