@@ -11,7 +11,6 @@ tactile_set_target_properties(tactile_core)
 target_sources(tactile_core
                PUBLIC FILE_SET CXX_MODULES FILES
                "${TACTILE_MODULE_DIR}/tactile/core/base64/base64.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/common/common.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/error/error.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/boost/safe_numerics/safe_numerics.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/std/std.cppm"
@@ -32,6 +31,7 @@ target_sources(tactile_core
                "${TACTILE_MODULE_DIR}/tactile/core/math/math-arithmetic.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/math/math-vec.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/meta/meta.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/core/prelude/prelude.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/random/random.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/runtime/runtime.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/runtime/runtime-interfaces.cppm"

@@ -11,7 +11,7 @@
 /// output from the logger.
 ///
 /// This module cannot depend on any Tactile modules other than
-/// "tactile.core.common" to make it usable within as many modules as possible.
+/// "tactile.core.prelude" to make it usable within as many modules as possible.
 export module tactile.core.log;
 
 // export import :buffer;

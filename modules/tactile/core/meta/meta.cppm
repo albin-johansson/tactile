@@ -10,7 +10,7 @@
 export module tactile.core.meta;
 
 import tactile.core.ext.std;
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.math;
 
 export namespace tactile {

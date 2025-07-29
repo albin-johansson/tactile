@@ -4,7 +4,7 @@ export module tactile.core.layer:annotation_layer;
 
 import :interfaces;
 import :layer_info;
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.math;
 
 export namespace tactile {

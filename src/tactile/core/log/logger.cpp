@@ -3,7 +3,7 @@
 module tactile.core.log;
 
 import tactile.core.ext.std;
-import tactile.core.common;
+import tactile.core.prelude;
 
 namespace tactile {
 namespace {

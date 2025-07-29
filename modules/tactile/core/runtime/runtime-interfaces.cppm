@@ -2,7 +2,7 @@
 
 export module tactile.core.runtime:interfaces;
 
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.error;
 
 export namespace tactile {

@@ -2,7 +2,7 @@
 
 export module tactile.core.io:compression;
 
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.error;
 
 export namespace tactile {

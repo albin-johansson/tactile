@@ -4,7 +4,7 @@ export module tactile.core.layer:group_layer;
 
 import :interfaces;
 import :layer_info;
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.error;
 
 export namespace tactile {

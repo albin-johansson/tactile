@@ -3,7 +3,7 @@
 /// Provides APIs related to tiles and tilesets.
 export module tactile.core.tile;
 
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.io;
 import tactile.core.error;
 

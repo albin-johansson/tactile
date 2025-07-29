@@ -6,7 +6,7 @@ import :level;
 import :sink;
 import :buffer;
 import tactile.core.ext.std;
-import tactile.core.common;
+import tactile.core.prelude;
 
 export namespace tactile {
 

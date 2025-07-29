@@ -3,7 +3,7 @@
 /// Provides the save format API.
 export module tactile.core.save;
 
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.io;
 import tactile.core.error;
 

@@ -10,7 +10,7 @@ export module tactile.core.runtime;
 
 export import :interfaces;
 export import :null;
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.save;
 import tactile.core.io;
 

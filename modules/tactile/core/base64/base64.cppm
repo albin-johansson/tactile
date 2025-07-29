@@ -2,7 +2,7 @@
 
 export module tactile.core.base64;
 
-import tactile.core.common;
+import tactile.core.prelude;
 
 export namespace tactile {
 

@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 import tactile.core.ext.std;
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.error;
 import tactile.core.math;
 

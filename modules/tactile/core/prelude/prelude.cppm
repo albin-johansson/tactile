@@ -1,7 +1,7 @@
 // Copyright (C) 2025 Albin Johansson
 
 /// Provides common vocabulary types and functions.
-export module tactile.core.common;
+export module tactile.core.prelude;
 
 import tactile.core.ext.std;
 

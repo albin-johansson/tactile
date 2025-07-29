@@ -2,7 +2,7 @@
 
 export module tactile.core.log:level;
 
-import tactile.core.common;
+import tactile.core.prelude;
 
 export namespace tactile {
 

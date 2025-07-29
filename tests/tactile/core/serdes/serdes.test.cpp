@@ -4,7 +4,7 @@
 
 import tactile.core.ext.std;
 import tactile.core.serdes;
-import tactile.core.common;
+import tactile.core.prelude;
 
 namespace tactile::tests {
 namespace {

@@ -3,7 +3,7 @@
 export module tactile.core.log:sink;
 
 import :level;
-import tactile.core.common;
+import tactile.core.prelude;
 
 export namespace tactile {
 

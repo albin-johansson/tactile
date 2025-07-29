@@ -3,7 +3,7 @@
 module tactile.editor.command;
 
 import tactile.core.ext.std;
-import tactile.core.common;
+import tactile.core.prelude;
 
 namespace tactile::editor {
 

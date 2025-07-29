@@ -3,7 +3,7 @@
 module tactile.core.layer;
 
 import tactile.core.ext.std;
-import tactile.core.common;
+import tactile.core.prelude;
 import tactile.core.math;
 
 namespace tactile {
