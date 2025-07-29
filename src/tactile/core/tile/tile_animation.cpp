@@ -3,6 +3,8 @@
 module tactile.core.tile;
 
 import tactile.core.ext.std;
+import tactile.core.prelude;
+import tactile.core.error;
 import tactile.core.log;
 import tactile.core.util;
 

@@ -2,6 +2,8 @@
 
 module tactile.core.tile;
 
+import tactile.core.prelude;
+
 namespace tactile {
 
 Tile::Tile(const TileID id)
