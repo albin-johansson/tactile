@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-module tactile.core.io;
+module tactile.core.compression;
 
 import tactile.core.ext.std;
 import tactile.core.log;

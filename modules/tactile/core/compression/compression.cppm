@@ -1,6 +1,6 @@
 // Copyright (C) 2025 Albin Johansson
 
-export module tactile.core.io:compression;
+export module tactile.core.compression;
 
 import tactile.core.prelude;
 import tactile.core.error;

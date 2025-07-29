@@ -11,11 +11,10 @@ tactile_set_target_properties(tactile_core)
 target_sources(tactile_core
                PUBLIC FILE_SET CXX_MODULES FILES
                "${TACTILE_MODULE_DIR}/tactile/core/base64/base64.cppm"
+               "${TACTILE_MODULE_DIR}/tactile/core/compression/compression.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/error/error.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/boost/safe_numerics/safe_numerics.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/ext/std/std.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/io/io.cppm"
-               "${TACTILE_MODULE_DIR}/tactile/core/io/io-compression.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/layer/layer.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/layer/layer-annotation_layer.cppm"
                "${TACTILE_MODULE_DIR}/tactile/core/layer/layer-group_layer.cppm"
@@ -49,8 +48,8 @@ target_sources(tactile_core
 
                PRIVATE
                "${TACTILE_SOURCE_DIR}/tactile/core/base64/base64.cpp"
+               "${TACTILE_SOURCE_DIR}/tactile/core/compression/compression.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/error/error.cpp"
-               "${TACTILE_SOURCE_DIR}/tactile/core/io/compression.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/layer/annotation_layer.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/layer/group_layer.cpp"
                "${TACTILE_SOURCE_DIR}/tactile/core/layer/layer_info.cpp"

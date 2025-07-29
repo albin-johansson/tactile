@@ -3,9 +3,9 @@
 export module tactile.core;
 
 export import tactile.core.base64;
-export import tactile.core.prelude;
+export import tactile.core.compression;
 export import tactile.core.error;
-export import tactile.core.io;
+export import tactile.core.prelude;
 export import tactile.core.layer;
 export import tactile.core.log;
 export import tactile.core.math;

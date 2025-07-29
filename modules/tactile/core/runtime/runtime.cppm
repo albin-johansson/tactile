@@ -12,7 +12,7 @@ export import :interfaces;
 export import :null;
 import tactile.core.prelude;
 import tactile.core.save;
-import tactile.core.io;
+import tactile.core.compression;
 
 export namespace tactile {
 

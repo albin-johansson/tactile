@@ -4,7 +4,7 @@
 export module tactile.core.save;
 
 import tactile.core.prelude;
-import tactile.core.io;
+import tactile.core.compression;
 import tactile.core.error;
 
 export namespace tactile {
