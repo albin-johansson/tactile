@@ -2,9 +2,9 @@
 
 export module tactile.editor.command:stack;
 
-export import tactile.core.ext.std;
-export import tactile.core;
-export import :interfaces;
+import tactile.core.ext.std;
+import tactile.core;
+import :interfaces;
 
 export namespace tactile::editor {
 

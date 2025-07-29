@@ -3,7 +3,7 @@
 /// Provides a compression format implementation using Zlib.
 export module tactile.zlib;
 
-export import tactile.core;
+import tactile.core;
 
 export namespace tactile {
 
