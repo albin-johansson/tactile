@@ -9,10 +9,7 @@ import tactile.core.util;
 namespace tactile::tests {
 namespace {
 
-class CastsTest : public testing::Test
-{};
-
-TEST_F(CastsTest, CheckedCast_SignedToSigned)
+TEST(Casts, CheckedCast_SignedToSigned)
 {
   EXPECT_EQ(checked_cast<i8>(i8 {42}), i8 {42});
 
@@ -26,7 +23,7 @@ TEST_F(CastsTest, CheckedCast_SignedToSigned)
   EXPECT_THROW((void) checked_cast<i16>(i32 {kMaxI16 + 1}), std::range_error);
 }
 
-TEST_F(CastsTest, CheckedCast_UnsignedToUnsigned)
+TEST(Casts, CheckedCast_UnsignedToUnsigned)
 {
   EXPECT_EQ(checked_cast<u8>(u8 {42}), u8 {42});
 
@@ -39,7 +36,7 @@ TEST_F(CastsTest, CheckedCast_UnsignedToUnsigned)
   EXPECT_THROW((void) checked_cast<u16>(u32 {kMaxU16 + 1}), std::range_error);
 }
 
-TEST_F(CastsTest, CheckedCast_SignedToUnsigned)
+TEST(Casts, CheckedCast_SignedToUnsigned)
 {
   EXPECT_EQ(checked_cast<u8>(i8 {42}), u8 {42});
 
@@ -53,7 +50,7 @@ TEST_F(CastsTest, CheckedCast_SignedToUnsigned)
   EXPECT_THROW((void) checked_cast<u8>(i16 {kMaxU8 + 1}), std::range_error);
 }
 
-TEST_F(CastsTest, CheckedCast_UnsignedToSigned)
+TEST(Casts, CheckedCast_UnsignedToSigned)
 {
   EXPECT_EQ(checked_cast<i8>(u8 {42}), i8 {42});
 
@@ -66,7 +63,7 @@ TEST_F(CastsTest, CheckedCast_UnsignedToSigned)
   EXPECT_THROW((void) checked_cast<i8>(u16 {kMaxI8 + 1}), std::range_error);
 }
 
-TEST_F(CastsTest, SignedCast)
+TEST(Casts, SignedCast)
 {
   static_assert(std::same_as<decltype(signed_cast(u8 {})), i8>);
   static_assert(std::same_as<decltype(signed_cast(u16 {})), i16>);
@@ -84,7 +81,7 @@ TEST_F(CastsTest, SignedCast)
   EXPECT_THROW((void) signed_cast(u16 {32'768u}), std::range_error);
 }
 
-TEST_F(CastsTest, UnsignedCast)
+TEST(Casts, UnsignedCast)
 {
   static_assert(std::same_as<decltype(unsigned_cast(i8 {})), u8>);
   static_assert(std::same_as<decltype(unsigned_cast(i16 {})), u16>);
@@ -101,7 +98,7 @@ TEST_F(CastsTest, UnsignedCast)
   EXPECT_THROW((void) unsigned_cast(i8 {-1}), std::range_error);
 }
 
-TEST_F(CastsTest, SaturateCast_SignedToSigned)
+TEST(Casts, SaturateCast_SignedToSigned)
 {
   EXPECT_EQ(saturate_cast<i8>(i8 {42}), i8 {42});
 
@@ -115,7 +112,7 @@ TEST_F(CastsTest, SaturateCast_SignedToSigned)
   EXPECT_EQ(saturate_cast<i16>(i32 {kMaxI16 + 1}), kMaxI16);
 }
 
-TEST_F(CastsTest, SaturateCast_UnsignedToUnsigned)
+TEST(Casts, SaturateCast_UnsignedToUnsigned)
 {
   EXPECT_EQ(saturate_cast<u8>(u8 {42}), u8 {42});
 
@@ -128,7 +125,7 @@ TEST_F(CastsTest, SaturateCast_UnsignedToUnsigned)
   EXPECT_EQ(saturate_cast<u16>(u32 {kMaxU16 + 1}), kMaxU16);
 }
 
-TEST_F(CastsTest, SaturateCast_SignedToUnsigned)
+TEST(Casts, SaturateCast_SignedToUnsigned)
 {
   EXPECT_EQ(saturate_cast<u8>(i8 {42}), u8 {42});
 
@@ -142,7 +139,7 @@ TEST_F(CastsTest, SaturateCast_SignedToUnsigned)
   EXPECT_EQ(saturate_cast<u8>(i16 {kMaxU8 + 1}), kMaxU8);
 }
 
-TEST_F(CastsTest, SaturateCast_UnsignedToSigned)
+TEST(Casts, SaturateCast_UnsignedToSigned)
 {
   EXPECT_EQ(saturate_cast<i8>(u8 {42}), i8 {42});
 

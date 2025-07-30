@@ -7,10 +7,7 @@ import tactile.core.util;
 namespace tactile::tests {
 namespace {
 
-class DeferTest : public testing::Test
-{};
-
-TEST_F(DeferTest, Defer)
+TEST(Defer, Defer)
 {
   int value = 0;
 

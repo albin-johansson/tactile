@@ -10,10 +10,7 @@ import tactile.core.math;
 namespace tactile::tests {
 namespace {
 
-class CheckedNumericsTest : public testing::Test
-{};
-
-TEST_F(CheckedNumericsTest, CheckedAdd_SignedInt)
+TEST(CheckedArithmetic, CheckedAdd_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_add(1'234, 4'321).value(), 5'555);
@@ -32,7 +29,7 @@ TEST_F(CheckedNumericsTest, CheckedAdd_SignedInt)
             Error::kArithmeticUnderflow);
 }
 
-TEST_F(CheckedNumericsTest, CheckedAdd_UnsignedInt)
+TEST(CheckedArithmetic, CheckedAdd_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_add(1'234u, 4'321u).value(), 5'555u);
@@ -45,7 +42,7 @@ TEST_F(CheckedNumericsTest, CheckedAdd_UnsignedInt)
             Error::kArithmeticOverflow);
 }
 
-TEST_F(CheckedNumericsTest, CheckedSub_SignedInt)
+TEST(CheckedArithmetic, CheckedSub_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_sub(987, 123).value(), 864);
@@ -62,7 +59,7 @@ TEST_F(CheckedNumericsTest, CheckedSub_SignedInt)
             Error::kArithmeticUnderflow);
 }
 
-TEST_F(CheckedNumericsTest, CheckedSub_UnsignedInt)
+TEST(CheckedArithmetic, CheckedSub_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_sub(150u, 100u).value(), 50u);
@@ -74,7 +71,7 @@ TEST_F(CheckedNumericsTest, CheckedSub_UnsignedInt)
             Error::kArithmeticUnderflow);
 }
 
-TEST_F(CheckedNumericsTest, CheckedMul_SignedInt)
+TEST(CheckedArithmetic, CheckedMul_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_mul(25, 4).value(), 100);
@@ -91,7 +88,7 @@ TEST_F(CheckedNumericsTest, CheckedMul_SignedInt)
             Error::kArithmeticOverflow);
 }
 
-TEST_F(CheckedNumericsTest, CheckedMul_UnsignedInt)
+TEST(CheckedArithmetic, CheckedMul_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_mul(25u, 4u).value(), 100u);
@@ -103,7 +100,7 @@ TEST_F(CheckedNumericsTest, CheckedMul_UnsignedInt)
             Error::kArithmeticOverflow);
 }
 
-TEST_F(CheckedNumericsTest, CheckedDiv_SignedInt)
+TEST(CheckedArithmetic, CheckedDiv_SignedInt)
 {
   // Valid
   EXPECT_EQ(checked_div(100, 4).value(), 25);
@@ -117,7 +114,7 @@ TEST_F(CheckedNumericsTest, CheckedDiv_SignedInt)
             Error::kArithmeticInvalidValue);
 }
 
-TEST_F(CheckedNumericsTest, CheckedDiv_UnsignedInt)
+TEST(CheckedArithmetic, CheckedDiv_UnsignedInt)
 {
   // Valid
   EXPECT_EQ(checked_div(100u, 4u).value(), 25u);

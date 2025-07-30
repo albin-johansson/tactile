@@ -9,10 +9,7 @@ import tactile.core.base64;
 namespace tactile::tests {
 namespace {
 
-class Base64Test : public testing::Test
-{};
-
-TEST_F(Base64Test, EncodeDecode)
+TEST(Base64, EncodeDecode)
 {
   // See https://en.m.wikipedia.org/wiki/Base64#Examples
   const Vector<u8> data {

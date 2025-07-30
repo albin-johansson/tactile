@@ -12,10 +12,7 @@ namespace {
 
 using testing::ContainerEq;
 
-class ZlibCompressionFormatTest : public testing::Test
-{};
-
-TEST_F(ZlibCompressionFormatTest, CompressAndDecompressBytes)
+TEST(ZlibCompressionFormatTest, CompressAndDecompressBytes)
 {
   const ZlibCompressionFormat zlib {};
 

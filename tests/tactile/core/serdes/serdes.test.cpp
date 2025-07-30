@@ -9,10 +9,7 @@ import tactile.core.prelude;
 namespace tactile::tests {
 namespace {
 
-class SerdesTest : public testing::Test
-{};
-
-TEST_F(SerdesTest, ParseU64)
+TEST(Serdes, ParseU64)
 {
   EXPECT_EQ(parse_u64("42"), 42U);
 
@@ -25,7 +22,7 @@ TEST_F(SerdesTest, ParseU64)
   EXPECT_FALSE(parse_u64("foobar").has_value());
 }
 
-TEST_F(SerdesTest, ParseI64)
+TEST(Serdes, ParseI64)
 {
   EXPECT_EQ(parse_i64("42"), 42);
   EXPECT_EQ(parse_i64("-123"), -123);
@@ -39,7 +36,7 @@ TEST_F(SerdesTest, ParseI64)
   EXPECT_FALSE(parse_i64("foobar").has_value());
 }
 
-TEST_F(SerdesTest, ParseF64)
+TEST(Serdes, ParseF64)
 {
   EXPECT_EQ(parse_f64("0"), 0.0);
   EXPECT_EQ(parse_f64("4.2"), 4.2);

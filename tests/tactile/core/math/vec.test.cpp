@@ -19,10 +19,7 @@ static_assert(Float2::size() == 2);
 static_assert(Float3::size() == 3);
 static_assert(Float4::size() == 4);
 
-class VecTest : public testing::Test
-{};
-
-TEST_F(VecTest, Defaults)
+TEST(Vec, Defaults)
 {
   constexpr Int4 vec {};
   EXPECT_EQ(vec.x(), 0);
@@ -33,7 +30,7 @@ TEST_F(VecTest, Defaults)
   EXPECT_NE(Const(vec).data(), nullptr);
 }
 
-TEST_F(VecTest, Setters)
+TEST(Vec, Setters)
 {
   Int4 vec {};
 
@@ -53,7 +50,7 @@ TEST_F(VecTest, Setters)
   EXPECT_EQ(vec[3uz], 40);
 }
 
-TEST_F(VecTest, At)
+TEST(Vec, At)
 {
   constexpr Float4 vec {1.0f, 2.0f, 3.0f, 4.0f};
 
@@ -65,7 +62,7 @@ TEST_F(VecTest, At)
   EXPECT_THROW((void) vec.at(4uz), std::out_of_range);
 }
 
-TEST_F(VecTest, Data)
+TEST(Vec, Data)
 {
   Int3 vec {1, 2, 3};
 
@@ -78,7 +75,7 @@ TEST_F(VecTest, Data)
   EXPECT_EQ(Const(vec).data()[2uz], 3);
 }
 
-TEST_F(VecTest, Add)
+TEST(Vec, Add)
 {
   constexpr auto vec = Int3 {1, 2, 3} + Int3 {4, 5, 6};
   EXPECT_EQ(vec.x(), 5);
@@ -86,7 +83,7 @@ TEST_F(VecTest, Add)
   EXPECT_EQ(vec.z(), 9);
 }
 
-TEST_F(VecTest, AddAssign)
+TEST(Vec, AddAssign)
 {
   Int3 vec {1, 2, 3};
 
@@ -97,14 +94,14 @@ TEST_F(VecTest, AddAssign)
   EXPECT_EQ(vec.z(), 33);
 }
 
-TEST_F(VecTest, Sub)
+TEST(Vec, Sub)
 {
   constexpr auto vec = Int2 {9, 8} - Int2 {1, 2};
   EXPECT_EQ(vec.x(), 8);
   EXPECT_EQ(vec.y(), 6);
 }
 
-TEST_F(VecTest, SubAssign)
+TEST(Vec, SubAssign)
 {
   Int3 vec {10, 11, 12};
 
@@ -115,7 +112,7 @@ TEST_F(VecTest, SubAssign)
   EXPECT_EQ(vec.z(), 2);
 }
 
-TEST_F(VecTest, Mul)
+TEST(Vec, Mul)
 {
   constexpr auto vec = Int4 {1, -2, 3, 4} * Int4 {10, 20, 30, -40};
   EXPECT_EQ(vec.x(), 10);
@@ -124,7 +121,7 @@ TEST_F(VecTest, Mul)
   EXPECT_EQ(vec.w(), -160);
 }
 
-TEST_F(VecTest, MulAssign)
+TEST(Vec, MulAssign)
 {
   Int4 vec {1, 2, 3, 4};
 
@@ -136,7 +133,7 @@ TEST_F(VecTest, MulAssign)
   EXPECT_EQ(vec.w(), 8);
 }
 
-TEST_F(VecTest, MulWithScalar)
+TEST(Vec, MulWithScalar)
 {
   constexpr auto vec = Int4 {1, 2, 3, 4} * 2;
   EXPECT_EQ(vec.x(), 2);
@@ -145,7 +142,7 @@ TEST_F(VecTest, MulWithScalar)
   EXPECT_EQ(vec.w(), 8);
 }
 
-TEST_F(VecTest, MulAssignWithScalar)
+TEST(Vec, MulAssignWithScalar)
 {
   Int4 vec {1, 2, 3, 4};
 
@@ -157,7 +154,7 @@ TEST_F(VecTest, MulAssignWithScalar)
   EXPECT_EQ(vec.w(), -8);
 }
 
-TEST_F(VecTest, Eq)
+TEST(Vec, Eq)
 {
   constexpr Int3 a {1, 2, 3};
   constexpr Int3 b {1, 2, 4};
@@ -166,7 +163,7 @@ TEST_F(VecTest, Eq)
   EXPECT_NE(a, b);
 }
 
-TEST_F(VecTest, Ord)
+TEST(Vec, Ord)
 {
   constexpr Int3 a {1, 2, 3};
   constexpr Int3 b {1, 2, 4};

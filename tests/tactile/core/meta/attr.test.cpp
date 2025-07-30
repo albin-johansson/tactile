@@ -10,17 +10,14 @@ namespace {
 
 using testing::Const;
 
-class AttrTest : public testing::Test
-{};
-
-TEST_F(AttrTest, Defaults)
+TEST(Attr, Defaults)
 {
   const Attr attr {};
   EXPECT_EQ(attr.kind(), AttrKind::kInt);
   EXPECT_TRUE(attr.has_default_value());
 }
 
-TEST_F(AttrTest, Int)
+TEST(Attr, Int)
 {
   Attr attr {AttrKind::kInt};
 
@@ -56,7 +53,7 @@ TEST_F(AttrTest, Int)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Int2)
+TEST(Attr, Int2)
 {
   Attr attr {AttrKind::kInt2};
 
@@ -92,7 +89,7 @@ TEST_F(AttrTest, Int2)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Int3)
+TEST(Attr, Int3)
 {
   Attr attr {AttrKind::kInt3};
 
@@ -128,7 +125,7 @@ TEST_F(AttrTest, Int3)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Int4)
+TEST(Attr, Int4)
 {
   Attr attr {AttrKind::kInt4};
 
@@ -164,7 +161,7 @@ TEST_F(AttrTest, Int4)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Float2)
+TEST(Attr, Float2)
 {
   Attr attr {AttrKind::kFloat2};
 
@@ -200,7 +197,7 @@ TEST_F(AttrTest, Float2)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Float3)
+TEST(Attr, Float3)
 {
   Attr attr {AttrKind::kFloat3};
 
@@ -236,7 +233,7 @@ TEST_F(AttrTest, Float3)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Float4)
+TEST(Attr, Float4)
 {
   Attr attr {AttrKind::kFloat4};
 
@@ -272,7 +269,7 @@ TEST_F(AttrTest, Float4)
   EXPECT_TRUE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Bool)
+TEST(Attr, Bool)
 {
   Attr attr {AttrKind::kBool};
 
@@ -308,7 +305,7 @@ TEST_F(AttrTest, Bool)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST_F(AttrTest, String)
+TEST(Attr, String)
 {
   Attr attr {AttrKind::kString};
 
@@ -344,7 +341,7 @@ TEST_F(AttrTest, String)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Path)
+TEST(Attr, Path)
 {
   Attr attr {AttrKind::kPath};
 
@@ -380,7 +377,7 @@ TEST_F(AttrTest, Path)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Color)
+TEST(Attr, Color)
 {
   Attr attr {AttrKind::kColor};
 
@@ -416,7 +413,7 @@ TEST_F(AttrTest, Color)
   EXPECT_FALSE(attr.is_vector());
 }
 
-TEST_F(AttrTest, Reset)
+TEST(Attr, Reset)
 {
   Attr attr {};
 
@@ -429,7 +426,7 @@ TEST_F(AttrTest, Reset)
   EXPECT_TRUE(attr.has_default_value());
 }
 
-TEST_F(AttrTest, Emplace)
+TEST(Attr, Emplace)
 {
   Attr attr {};
   ASSERT_EQ(attr.as_string(), nullptr);
@@ -442,7 +439,7 @@ TEST_F(AttrTest, Emplace)
   EXPECT_FALSE(attr.has_default_value());
 }
 
-TEST_F(AttrTest, Eq)
+TEST(Attr, Eq)
 {
   Attr a {AttrKind::kInt};
   Attr b {AttrKind::kInt};
