@@ -180,26 +180,37 @@ auto Attr::kind() const -> AttrKind
   switch (m_value.index()) {
     case kIntTypeIndex:
       return AttrKind::kInt;
+
     case kInt2TypeIndex:
       return AttrKind::kInt2;
+
     case kInt3TypeIndex:
       return AttrKind::kInt3;
+
     case kInt4TypeIndex:
       return AttrKind::kInt4;
+
     case kFloatTypeIndex:
       return AttrKind::kFloat;
+
     case kFloat2TypeIndex:
       return AttrKind::kFloat2;
+
     case kFloat3TypeIndex:
       return AttrKind::kFloat3;
+
     case kFloat4TypeIndex:
       return AttrKind::kFloat4;
+
     case kBoolTypeIndex:
       return AttrKind::kBool;
+
     case kStringTypeIndex:
       return AttrKind::kString;
+
     case kPathTypeIndex:
       return AttrKind::kPath;
+
     case kColorTypeIndex:
       return AttrKind::kColor;
   }

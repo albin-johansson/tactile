@@ -15,7 +15,7 @@ template <std::integral T>
 auto _parse_int(const StringView str, const int base) noexcept -> Option<T>
 {
   const auto* const begin = str.data();
-  const auto* const end = begin + str.size();
+  const auto* const end = begin + str.size();  // NOLINT(*-pointer-arithmetic)
 
   T value {};
   const auto [ptr, err] = std::from_chars(begin, end, value, base);
@@ -42,7 +42,7 @@ auto parse_u64(const StringView str, const int base) noexcept -> Option<u64>
 auto parse_f64(const StringView str) noexcept -> Option<f64>
 {
   const auto* const begin = str.data();
-  const auto* const end = begin + str.size();
+  const auto* const end = begin + str.size();  // NOLINT(*-pointer-arithmetic)
 
   f64 value {};
   const auto [ptr, err] = fast_float::from_chars(begin, end, value);

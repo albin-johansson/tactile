@@ -12,7 +12,7 @@ using isize = std::ptrdiff_t;
 
 using uchar = unsigned char;
 using ushort = unsigned short;
-using uint = unsigned;
+using uint = unsigned int;
 using ulong = unsigned long;
 using ulonglong = unsigned long long;
 
