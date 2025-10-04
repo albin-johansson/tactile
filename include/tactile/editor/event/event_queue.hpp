@@ -67,12 +67,14 @@ class EventPool final : public IEventPool
   }
 
   template <typename... Args>
+    requires std::constructible_from<T, Args...>
   void enqueue(Args&&... args)
   {
     m_events.emplace_back(std::forward<Args>(args)...);
   }
 
   template <typename... Args>
+    requires std::constructible_from<T, Args...>
   void trigger(Args&&... args)
   {
     if (m_callback) {
@@ -120,6 +122,7 @@ class EventQueue final
 
   /// Adds an event to the end of the queue.
   template <EventType T, typename... Args>
+    requires std::constructible_from<T, Args...>
   void enqueue(Args&&... args)
   {
     auto& pool = get_or_create_pool<T>();
@@ -130,6 +133,7 @@ class EventQueue final
 
   /// Immediately publishes an event, bypassing any pending events.
   template <EventType T, typename... Args>
+    requires std::constructible_from<T, Args...>
   void trigger(Args&&... args)
   {
     auto& pool = get_or_create_pool<T>();
