@@ -1,0 +1,4 @@
+InheritParentConfig: true
+
+Checks: >
+  -*-non-private-member-variables-in-classes,
