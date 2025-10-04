@@ -80,3 +80,6 @@ CheckOptions:
 
   - key: "bugprone-unused-return-value.AllowCastToVoid"
     value: true
+
+  - key: "misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic"
+    value: true
