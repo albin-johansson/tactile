@@ -19,12 +19,12 @@ jobs:
                    -DTACTILE_ENABLE_UBSAN=ON
 
       - name: "Build"
-        working-directory: "./build/debug"
+        working-directory: "./build"
         run: |
           ninja
 
       - name: "Test"
-        working-directory: "./build/debug"
+        working-directory: "./build"
         run: |
           ./tactile_tests
 
@@ -43,11 +43,11 @@ jobs:
                    -DTACTILE_ENABLE_UBSAN=ON
 
       - name: "Build"
-        working-directory: "./build/debug"
+        working-directory: "./build"
         run: |
           ninja
 
       - name: "Test"
-        working-directory: "./build/debug"
+        working-directory: "./build"
         run: |
           ./tactile_tests
