@@ -7,6 +7,7 @@ tactile_init_target(tactile_core)
 
 target_sources(tactile_core
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "${PROJECT_SOURCE_DIR}/include" FILES
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/container/deque.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/hash_map.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/option.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/smart_ptr.hpp"
