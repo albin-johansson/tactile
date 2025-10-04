@@ -1,0 +1,22 @@
+// Copyright (C) 2025 Albin Johansson
+// This software is provided under the terms of the MIT License.
+
+#pragma once
+
+#include <memory>
+
+namespace tactile {
+
+template <typename T, typename Deleter = std::default_delete<T>>
+using Unique = std::unique_ptr<T, Deleter>;
+
+template <typename T>
+using Shared = std::shared_ptr<T>;
+
+template <typename T>
+using Weak = std::weak_ptr<T>;
+
+using std::make_unique;
+using std::make_shared;
+
+}  // namespace tactile
