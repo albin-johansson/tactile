@@ -1,7 +1,7 @@
 # Copyright (C) 2025 Albin Johansson
 # This software is provided under the terms of the MIT License.
 
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.31)
 
 option(TACTILE_ENABLE_TESTS "Enable tests" "OFF")
 option(TACTILE_ENABLE_UBSAN "Enable UndefinedBehaviorSanitizer" "OFF")
