@@ -1,91 +1,191 @@
-BasedOnStyle: Google
+BasedOnStyle: "Google"
 
-Language: Cpp
-Standard: c++20
+# Language mode
+Language: "Cpp"
+Standard: "Latest"
 
-AlignTrailingComments: true
-AlignConsecutiveDeclarations: Consecutive
-AlignConsecutiveBitFields: Consecutive
-QualifierAlignment: Left
-
+# Basic
+UseTab: "Never"
 ColumnLimit: 90
 IndentWidth: 2
+ContinuationIndentWidth: 4
+MaxEmptyLinesToKeep: 1
 
+# Pointers and references
 DerivePointerAlignment: false
-PointerAlignment: Left
+PointerAlignment: "Left"
+ReferenceAlignment: "Left"
 
-IndentRequires: true
-IndentCaseLabels: true
+# Qualifiers
+QualifierAlignment: "Custom"
+QualifierOrder: [ "friend", "inline", "constexpr", "static", "const", "volatile", "restrict", "type" ]
+SpaceAroundPointerQualifiers: "Default"
 
-IndentAccessModifiers: false
-AccessModifierOffset: -1
-
-NamespaceIndentation: None
-FixNamespaceComments: true
-
-EmptyLineBeforeAccessModifier: Always
-
-AllowAllArgumentsOnNextLine: false
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowAllConstructorInitializersOnNextLine: false
-
-PackConstructorInitializers: Never
-BinPackParameters: false
-BinPackArguments: false
-
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: Never
-AllowShortBlocksOnASingleLine: Empty
-AllowShortLambdasOnASingleLine: All
-AllowShortEnumsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-
-BreakBeforeBinaryOperators: None
-BreakBeforeTernaryOperators: true
-BreakBeforeConceptDeclarations: true
-
+# Braces
+InsertBraces: false
+BracedInitializerIndentWidth: 2
+Cpp11BracedListStyle: true
 SpaceBeforeCpp11BracedList: true
-
-BreakBeforeBraces: Custom
+AllowShortBlocksOnASingleLine: "Never"
+AlignArrayOfStructures: "None"
+BreakBeforeBraces: "Custom"
 BraceWrapping:
-  AfterCaseLabel: false
+  IndentBraces: false
+  AfterNamespace: false
+  AfterExternBlock: false
   AfterClass: true
   AfterStruct: true
-  AfterControlStatement: Never
   AfterEnum: true
+  AfterUnion: true
   AfterFunction: true
-  AfterNamespace: false
-  AfterObjCDeclaration: false
-  AfterUnion: false
-  AfterExternBlock: false
-  BeforeCatch: true
+  AfterCaseLabel: false
+  AfterControlStatement: "Never"
   BeforeElse: true
-  BeforeLambdaBody: false
+  BeforeCatch: true
   BeforeWhile: false
-  IndentBraces: false
+  BeforeLambdaBody: false
+  SplitEmptyNamespace: false
   SplitEmptyFunction: false
   SplitEmptyRecord: false
-  SplitEmptyNamespace: false
 
-BreakStringLiterals: true
+# Spaces
+SpaceBeforeParens: "ControlStatementsExceptControlMacros"
+SpaceBeforeSquareBrackets: false
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceAfterCStyleCast: true
+SpaceAfterLogicalNot: false
+SpacesInParens: "Never"
+SpacesInAngles: "Never"
+SpacesInSquareBrackets: false
+SpaceInEmptyBlock: false
 
-BreakInheritanceList: BeforeComma
-BreakConstructorInitializers: BeforeComma
-
-SortIncludes: CaseSensitive
-IncludeBlocks: Regroup
+# Preprocessor
+AlignConsecutiveMacros: "None"
+AlignEscapedNewlines: "Left"
+IndentPPDirectives: "BeforeHash"
+PPIndentWidth: 2
+SortIncludes: "CaseSensitive"
+IncludeBlocks: "Regroup"
 IncludeCategories:
   # Standard headers, located in <> with no extension.
-  - Regex: '<([A-Za-z0-9\_\-]+)>'
+  - Regex: '<[A-Za-z0-9\_\-]+>'
     SortPriority: 1
     Priority: 1
 
   # Headers in <> with extension and optional prefix.
-  - Regex: '<([A-Za-z0-9\_\-]+\/)*(\.\.)*([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
+  - Regex: '<.+>'
     SortPriority: 2
     Priority: 2
 
-  # Headers in "" with extension.
-  - Regex: '"([A-Za-z0-9.\Q/-_\E])+"'
+  # Headers in "".
+  - Regex: '".+"'
     SortPriority: 3
     Priority: 3
+
+# Operators
+AlignOperands: "Align"
+AlignConsecutiveDeclarations: "None"
+AlignConsecutiveAssignments: "None"
+SpaceBeforeAssignmentOperators: true
+BreakBeforeTernaryOperators: true
+BreakBeforeBinaryOperators: "None"
+
+# Control statements
+AllowShortIfStatementsOnASingleLine: "Never"
+AllowShortLoopsOnASingleLine: false
+
+# Attributes
+BreakAfterAttributes: "Leave"
+
+# Namespaces
+NamespaceIndentation: "None"
+FixNamespaceComments: true
+
+# Access modifiers
+IndentAccessModifiers: false
+AccessModifierOffset: -1
+EmptyLineBeforeAccessModifier: "Always"
+EmptyLineAfterAccessModifier: "Never"
+
+# Constructors
+PackConstructorInitializers: "Never"
+SpaceBeforeCtorInitializerColon: true
+ConstructorInitializerIndentWidth: 2
+BreakConstructorInitializers: "BeforeColon"
+
+# Inheritance
+BreakInheritanceList: "AfterColon"
+SpaceBeforeInheritanceColon: true
+
+# Enums
+AllowShortEnumsOnASingleLine: false
+
+# Functions
+AlwaysBreakAfterReturnType: "None"
+AllowShortFunctionsOnASingleLine: "None"
+IndentWrappedFunctionNames: false
+RemoveSemicolon: false
+BinPackParameters: false
+BinPackArguments: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowAllArgumentsOnNextLine: false
+AllowBreakBeforeNoexceptSpecifier: "OnlyWithParen"
+
+# Lambdas
+LambdaBodyIndentation: "Signature"
+AllowShortLambdasOnASingleLine: "All"
+
+# Templates
+SpaceAfterTemplateKeyword: true
+AlwaysBreakTemplateDeclarations: Yes
+
+# Concepts
+IndentRequiresClause: true
+BreakBeforeConceptDeclarations: "Always"
+RequiresClausePosition: "OwnLine"
+RequiresExpressionIndentation: "OuterScope"
+AllowShortCompoundRequirementOnASingleLine: true
+
+# Switches
+AllowShortCaseLabelsOnASingleLine: false
+SpaceBeforeCaseColon: false
+IndentCaseLabels: true
+IndentCaseBlocks: false
+AlignConsecutiveShortCaseStatements:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCaseColons: false
+
+# Bit fields
+AlignConsecutiveBitFields: "Consecutive"
+BitFieldColonSpacing: "Both"
+
+# Digit separators
+IntegerLiteralSeparator:
+  Binary: 0
+  Decimal: 0
+  Hex: 0
+
+# Strings
+BreakStringLiterals: false
+BreakAdjacentStringLiterals: false
+AlwaysBreakBeforeMultilineStrings: false
+
+# Comments
+SpacesBeforeTrailingComments: 2
+ReflowComments: "Always"
+AlignTrailingComments:
+  Kind: "Always"
+  OverEmptyLines: 0
+
+# Miscellaneous
+AlignAfterOpenBracket: "Align"
+BreakArrays: false
+SpacesInContainerLiterals: false
+IndentGotoLabels: false
+IndentExternBlock: "Indent"
+KeepEmptyLinesAtTheStartOfBlocks: false
+InsertNewlineAtEOF: true
+SortUsingDeclarations: "Never"
+RemoveParentheses: "Leave"
