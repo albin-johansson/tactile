@@ -14,5 +14,6 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/string.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/variant.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/vector.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/concepts.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/primitives.hpp"
                )
