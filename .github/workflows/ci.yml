@@ -14,7 +14,7 @@ jobs:
           mkdir build
           cd build
           cmake .. --log-level=DEBUG         \
-                   -GNinja=ON                \
+                   -GNinja                   \
                    -DTACTILE_ENABLE_TESTS=ON \
                    -DTACTILE_ENABLE_UBSAN=ON
 
@@ -38,7 +38,7 @@ jobs:
           mkdir build
           cd build
           cmake .. --log-level=DEBUG         \
-                   -GNinja=ON                \
+                   -GNinja                   \
                    -DTACTILE_ENABLE_TESTS=ON \
                    -DTACTILE_ENABLE_UBSAN=ON
 
