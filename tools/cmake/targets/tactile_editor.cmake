@@ -5,6 +5,12 @@ add_library(tactile_editor STATIC)
 
 tactile_init_target(tactile_editor)
 
+target_link_libraries(tactile_editor
+                      PUBLIC
+                      dear_imgui
+                      SDL3::SDL3
+                      )
+
 target_sources(tactile_editor
                PUBLIC FILE_SET "HEADERS" BASE_DIRS "${PROJECT_SOURCE_DIR}/include" FILES
                "${PROJECT_SOURCE_DIR}/include/tactile/editor/app.hpp"

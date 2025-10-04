@@ -14,7 +14,7 @@ project(tactile CXX C)
 include("tools/cmake/common.cmake")
 include("tools/cmake/dependencies.cmake")
 
-#include("tools/cmake/targets/dear_imgui.cmake")
+include("tools/cmake/targets/dear_imgui.cmake")
 include("tools/cmake/targets/tactile_core.cmake")
 include("tools/cmake/targets/tactile_editor.cmake")
 include("tools/cmake/targets/tactile.cmake")
