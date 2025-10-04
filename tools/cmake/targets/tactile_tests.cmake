@@ -6,7 +6,9 @@ add_executable(tactile_tests)
 tactile_init_target(tactile_tests)
 
 target_link_libraries(tactile_tests
-                      PRIVATE
+                      PUBLIC
+                      tactile_core
+                      tactile_editor
                       GTest::gtest
                       )
 
