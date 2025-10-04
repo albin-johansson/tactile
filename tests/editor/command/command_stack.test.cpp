@@ -871,10 +871,5 @@ TEST_F(CommandStackTest, ExecuteUndoRedoAdvanced)
   }
 }
 
-TEST_F(CommandStackTest, CommandMerging)
-{
-  GTEST_SKIP();
-}
-
 }  // namespace
 }  // namespace tactile::editor
