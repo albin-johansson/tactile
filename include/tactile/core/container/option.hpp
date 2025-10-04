@@ -12,4 +12,6 @@ using Option = std::optional<T>;
 
 inline constexpr std::nullopt_t kNone = std::nullopt;
 
+using std::make_optional;
+
 }  // namespace tactile
