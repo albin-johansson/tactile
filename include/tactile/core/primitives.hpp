@@ -27,4 +27,10 @@ using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 
+using float32 = float;
+using float64 = double;
+
+static_assert(sizeof(float32) == 4);
+static_assert(sizeof(float64) == 8);
+
 }  // namespace tactile

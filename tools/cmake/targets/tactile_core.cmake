@@ -11,12 +11,18 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/function.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/hash_map.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/option.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/container/path.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/smart_ptr.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/span.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/string.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/variant.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/vector.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/attribute.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/color.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/concepts.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/macros.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/primitives.hpp"
+
+               PRIVATE
+               "${PROJECT_SOURCE_DIR}/src/tactile/core/meta/attribute.cpp"
                )
