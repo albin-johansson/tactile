@@ -1,0 +1,53 @@
+name: "CI"
+
+on:
+  - "push"
+
+jobs:
+  macos-build-and-test:
+    runs-on: "macos-26"
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - name: "Generate build files"
+        run: |
+          mkdir build
+          cd build
+          cmake .. --log-level=DEBUG         \
+                   -GNinja=ON                \
+                   -DTACTILE_ENABLE_TESTS=ON \
+                   -DTACTILE_ENABLE_UBSAN=ON
+
+      - name: "Build"
+        working-directory: "./build/debug"
+        run: |
+          ninja
+
+      - name: "Test"
+        working-directory: "./build/debug"
+        run: |
+          ./tactile_tests
+
+  ubuntu-build-and-test:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - name: "Generate build files"
+        run: |
+          mkdir build
+          cd build
+          cmake .. --log-level=DEBUG         \
+                   -GNinja=ON                \
+                   -DTACTILE_ENABLE_TESTS=ON \
+                   -DTACTILE_ENABLE_UBSAN=ON
+
+      - name: "Build"
+        working-directory: "./build/debug"
+        run: |
+          ninja
+
+      - name: "Test"
+        working-directory: "./build/debug"
+        run: |
+          ./tactile_tests
