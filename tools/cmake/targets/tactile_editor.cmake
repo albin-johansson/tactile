@@ -1,0 +1,14 @@
+# Copyright (C) 2025 Albin Johansson
+# This software is provided under the terms of the MIT License.
+
+add_library(tactile_editor STATIC)
+
+tactile_init_target(tactile_editor)
+
+target_sources(tactile_editor
+               PUBLIC FILE_SET "HEADERS" BASE_DIRS "${PROJECT_SOURCE_DIR}/include" FILES
+               "${PROJECT_SOURCE_DIR}/include/tactile/editor/app.hpp"
+
+               PRIVATE
+               "${PROJECT_SOURCE_DIR}/src/tactile/editor/app.cpp"
+               )
