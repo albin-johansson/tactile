@@ -24,10 +24,6 @@ template <typename T>
 concept Integer = UnsignedInteger<T> || SignedInteger<T>;
 
 template <typename T>
-concept FloatingPoint =
-    std::same_as<T, float> || std::same_as<T, double> || std::same_as<T, long double>;
-
-template <typename T>
-concept Number = Integer<T> || FloatingPoint<T>;
+concept Number = Integer<T> || std::floating_point<T>;
 
 }  // namespace tactile
