@@ -83,14 +83,12 @@ jobs:
 
       - name: "Generate build files"
         run: |
-          $VcVarsAllBatFile = vswhere -products * -latest -prerelease -find **\VC\Auxiliary\Build\vcvarsall.bat
-          cmd.exe /k $VcVarsAllBatFile x64
+          $VsDevCmdBatFile = vswhere -products * -latest -prerelease -find **\Tools\VsDevCmd.bat
+          cmd.exe /k $VsDevCmdBatFile
           mkdir build
           cd build
           cmake .. --log-level=DEBUG            `
                    -GNinja                      `
-                   -DCMAKE_C_COMPILER=cl.exe    `
-                   -DCMAKE_CXX_COMPILER=cl.exe  `
                    -DTACTILE_ENABLE_TESTS=ON    `
                    -DTACTILE_ENABLE_UBSAN=OFF
 
