@@ -36,13 +36,7 @@ jobs:
       # https://github.com/libsdl-org/SDL/blob/main/docs/README-linux.md
       - name: "Install build dependencies for SDL"
         run: |
-          sudo apt install build-essential       \
-                           git                   \
-                           make                  \
-                           pkg-config            \
-                           cmake                 \
-                           ninja-build           \
-                           gnome-desktop-testing \
+          sudo apt install gnome-desktop-testing \
                            libasound2-dev        \
                            libpulse-dev          \
                            libaudio-dev          \
