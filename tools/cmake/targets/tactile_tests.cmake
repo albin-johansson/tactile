@@ -17,6 +17,7 @@ target_sources(tactile_tests
                PRIVATE
                "${PROJECT_SOURCE_DIR}/tests/core/math/vec.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/meta/attribute.test.cpp"
+               "${PROJECT_SOURCE_DIR}/tests/core/util/defer.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/util/format_buffer.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/editor/command/command_stack.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/editor/event/event_queue.test.cpp"

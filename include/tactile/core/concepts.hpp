@@ -4,6 +4,7 @@
 #pragma once
 
 #include <concepts>
+#include <type_traits>
 
 #include "tactile/core/primitives.hpp"
 
@@ -25,5 +26,8 @@ concept Integer = UnsignedInteger<T> || SignedInteger<T>;
 
 template <typename T>
 concept Number = Integer<T> || std::floating_point<T>;
+
+template <typename T, typename... Args>
+concept NothrowInvocable = std::is_nothrow_invocable_v<T, Args...>;
 
 }  // namespace tactile
