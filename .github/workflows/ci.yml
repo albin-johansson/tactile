@@ -20,13 +20,11 @@ jobs:
 
       - name: "Build"
         working-directory: "./build"
-        run: |
-          ninja
+        run: "ninja"
 
       - name: "Test"
         working-directory: "./build"
-        run: |
-          ./tactile_tests
+        run: "./tactile_tests"
 
   ubuntu-build-and-test:
     runs-on: "ubuntu-latest"
@@ -36,30 +34,30 @@ jobs:
       # https://github.com/libsdl-org/SDL/blob/main/docs/README-linux.md
       - name: "Install build dependencies for SDL"
         run: |
-          sudo apt install gnome-desktop-testing \
-                           libasound2-dev        \
-                           libpulse-dev          \
-                           libaudio-dev          \
-                           libfribidi-dev        \
-                           libjack-dev           \
-                           libsndio-dev          \
-                           libx11-dev            \
-                           libxext-dev           \
-                           libxrandr-dev         \
-                           libxcursor-dev        \
-                           libxfixes-dev         \
-                           libxi-dev             \
-                           libxss-dev            \
-                           libxtst-dev           \
-                           libxkbcommon-dev      \
-                           libdrm-dev            \
-                           libgbm-dev            \
-                           libgl1-mesa-dev       \
-                           libgles2-mesa-dev     \
-                           libegl1-mesa-dev      \
-                           libdbus-1-dev         \ 
-                           libibus-1.0-dev       \
-                           libudev-dev
+          sudo apt install gnome-desktop-testing
+          sudo apt install libasound2-dev       
+          sudo apt install libpulse-dev         
+          sudo apt install libaudio-dev         
+          sudo apt install libfribidi-dev       
+          sudo apt install libjack-dev          
+          sudo apt install libsndio-dev         
+          sudo apt install libx11-dev           
+          sudo apt install libxext-dev          
+          sudo apt install libxrandr-dev        
+          sudo apt install libxcursor-dev       
+          sudo apt install libxfixes-dev        
+          sudo apt install libxi-dev            
+          sudo apt install libxss-dev           
+          sudo apt install libxtst-dev          
+          sudo apt install libxkbcommon-dev     
+          sudo apt install libdrm-dev           
+          sudo apt install libgbm-dev           
+          sudo apt install libgl1-mesa-dev      
+          sudo apt install libgles2-mesa-dev    
+          sudo apt install libegl1-mesa-dev     
+          sudo apt install libdbus-1-dev         
+          sudo apt install libibus-1.0-dev      
+          sudo apt install libudev-dev
 
       - name: "Generate build files"
         run: |
@@ -72,10 +70,30 @@ jobs:
 
       - name: "Build"
         working-directory: "./build"
-        run: |
-          ninja
+        run: "ninja"
 
       - name: "Test"
         working-directory: "./build"
+        run: "./tactile_tests"
+
+  windows-build-and-test:
+    runs-on: "windows-latest"
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - name: "Generate build files"
         run: |
-          ./tactile_tests
+          mkdir build
+          cd build
+          cmake .. --log-level=DEBUG          `
+                   -GNinja                    `
+                   -DTACTILE_ENABLE_TESTS=ON  `
+                   -DTACTILE_ENABLE_UBSAN=OFF
+
+      - name: "Build"
+        working-directory: "./build"
+        run: "ninja"
+
+      - name: "Test"
+        working-directory: "./build"
+        run: "tactile_tests.exe"
