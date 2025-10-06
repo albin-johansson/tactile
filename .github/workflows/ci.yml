@@ -81,16 +81,10 @@ jobs:
     steps:
       - uses: "actions/checkout@v4"
 
-      - name: "Add MSVC variables to environment"
-        run: |
-          $VsDevCmdBatPath = vswhere -products * -latest -prerelease -find **\Tools\VsDevCmd.bat
-          $MsvcDir = vswhere -products * -latest -prerelease -find **\Hostx64\x64\*
-          echo "VS_DEV_CMD_BAT_PATH=$VsDevCmdBatPath" >> $env:GITHUB_ENV
-          echo "$MsvcDir" >> $env:GITHUB_PATH
-
       - name: "Generate build files"
+        shell: cmd
         run: |
-          cmd.exe /k $env:VS_DEV_CMD_BAT_PATH
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           mkdir build
           cd build
           cmake .. --log-level=DEBUG `
