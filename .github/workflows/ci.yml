@@ -35,28 +35,28 @@ jobs:
       - name: "Install build dependencies for SDL"
         run: |
           sudo apt install gnome-desktop-testing
-          sudo apt install libasound2-dev       
-          sudo apt install libpulse-dev         
-          sudo apt install libaudio-dev         
-          sudo apt install libfribidi-dev       
-          sudo apt install libjack-dev          
-          sudo apt install libsndio-dev         
-          sudo apt install libx11-dev           
-          sudo apt install libxext-dev          
-          sudo apt install libxrandr-dev        
-          sudo apt install libxcursor-dev       
-          sudo apt install libxfixes-dev        
-          sudo apt install libxi-dev            
-          sudo apt install libxss-dev           
-          sudo apt install libxtst-dev          
-          sudo apt install libxkbcommon-dev     
-          sudo apt install libdrm-dev           
-          sudo apt install libgbm-dev           
-          sudo apt install libgl1-mesa-dev      
-          sudo apt install libgles2-mesa-dev    
-          sudo apt install libegl1-mesa-dev     
-          sudo apt install libdbus-1-dev         
-          sudo apt install libibus-1.0-dev      
+          sudo apt install libasound2-dev
+          sudo apt install libpulse-dev
+          sudo apt install libaudio-dev
+          sudo apt install libfribidi-dev
+          sudo apt install libjack-dev
+          sudo apt install libsndio-dev
+          sudo apt install libx11-dev
+          sudo apt install libxext-dev
+          sudo apt install libxrandr-dev
+          sudo apt install libxcursor-dev
+          sudo apt install libxfixes-dev
+          sudo apt install libxi-dev
+          sudo apt install libxss-dev
+          sudo apt install libxtst-dev
+          sudo apt install libxkbcommon-dev
+          sudo apt install libdrm-dev
+          sudo apt install libgbm-dev
+          sudo apt install libgl1-mesa-dev
+          sudo apt install libgles2-mesa-dev
+          sudo apt install libegl1-mesa-dev
+          sudo apt install libdbus-1-dev
+          sudo apt install libibus-1.0-dev
           sudo apt install libudev-dev
 
       - name: "Generate build files"
@@ -83,8 +83,8 @@ jobs:
 
       - name: "Generate build files"
         run: |
-          $VsDevCmdBatFile = vswhere -products * -latest -prerelease -find **\Tools\VsDevCmd.bat
-          cmd.exe /k $VsDevCmdBatFile
+          $VcVarsAllBatFile = vswhere -products * -latest -prerelease -find **\VC\Auxiliary\Build\vcvarsall.bat
+          cmd.exe /k $VcVarsAllBatFile
           mkdir build
           cd build
           cmake .. --log-level=DEBUG            `
