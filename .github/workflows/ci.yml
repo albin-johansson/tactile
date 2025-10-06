@@ -13,8 +13,8 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. --log-level=DEBUG         \
-                   -GNinja                   \
+          cmake .. --log-level=DEBUG \
+                   -GNinja \
                    -DTACTILE_ENABLE_TESTS=ON \
                    -DTACTILE_ENABLE_UBSAN=ON
 
@@ -63,8 +63,8 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. --log-level=DEBUG         \
-                   -GNinja                   \
+          cmake .. --log-level=DEBUG \
+                   -GNinja \
                    -DTACTILE_ENABLE_TESTS=ON \
                    -DTACTILE_ENABLE_UBSAN=ON
 
@@ -81,25 +81,22 @@ jobs:
     steps:
       - uses: "actions/checkout@v4"
 
-      - name: "Prepare MSVC variables"
+      - name: "Add MSVC variables to environment"
         run: |
           $VsDevCmdBatPath = vswhere -products * -latest -prerelease -find **\Tools\VsDevCmd.bat
-          $MsvcPath = vswhere -products * -latest -prerelease -find **\Hostx64\x64\cl.exe
-          setx VS_DEV_CMD_BAT_PATH "$VsDevCmdBatPath" /M
-          setx MSVC_PATH "$MsvcPath" /M
+          $MsvcDir = vswhere -products * -latest -prerelease -find **\Hostx64\x64\*
+          echo "VS_DEV_CMD_BAT_PATH=$VsDevCmdBatPath" >> $env:GITHUB_ENV
+          echo "$MsvcDir" >> $env:GITHUB_PATH
 
       - name: "Generate build files"
         run: |
           cmd.exe /k $env:VS_DEV_CMD_BAT_PATH
-          where cl
-          echo "VS_DEV_CMD_BAT_PATH: %VS_DEV_CMD_BAT_PATH%"
-          echo "MSVC_PATH: %MSVC_PATH%"
           mkdir build
           cd build
           cmake .. --log-level=DEBUG `
                    -GNinja `
-                   -DCMAKE_C_COMPILER=%MSVC_PATH% `
-                   -DCMAKE_CXX_COMPILER=%MSVC_PATH% `
+                   -DCMAKE_C_COMPILER=cl.exe `
+                   -DCMAKE_CXX_COMPILER=cl.exe `
                    -DTACTILE_ENABLE_TESTS=ON `
                    -DTACTILE_ENABLE_UBSAN=OFF
 
