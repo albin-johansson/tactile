@@ -18,7 +18,7 @@ enum class EventKind : EventID  // NOLINT(*-enum-size)
   kQuit,
 };
 
-/// Event indicating that editor should be shut down.
+/// Event indicating that the editor should be shut down.
 struct QuitEvent final
 {
   constexpr static EventID kID = std::to_underlying(EventKind::kQuit);
