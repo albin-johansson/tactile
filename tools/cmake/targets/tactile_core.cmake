@@ -19,6 +19,7 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/variant.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/vector.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/log_category.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/log/log_entry.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/math/vec.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/attribute.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/color.hpp"
