@@ -81,7 +81,7 @@ jobs:
     steps:
       - uses: "actions/checkout@v4"
 
-      - name: "Generate build files"
+      - name: "Generate and build"
         shell: cmd
         run: |
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
@@ -91,10 +91,7 @@ jobs:
                    -GNinja ^
                    -DTACTILE_ENABLE_TESTS=ON ^
                    -DTACTILE_ENABLE_UBSAN=OFF
-
-      - name: "Build"
-        working-directory: "./build"
-        run: "ninja"
+          ninja
 
       - name: "Test"
         working-directory: "./build"
