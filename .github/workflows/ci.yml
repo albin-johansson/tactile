@@ -87,9 +87,11 @@ jobs:
           cmd.exe /k $VsDevCmdBatFile
           mkdir build
           cd build
-          cmake .. --log-level=DEBUG          `
-                   -GNinja                    `
-                   -DTACTILE_ENABLE_TESTS=ON  `
+          cmake .. --log-level=DEBUG            `
+                   -GNinja                      `
+                   -DCMAKE_C_COMPILER=cl.exe    `
+                   -DCMAKE_CXX_COMPILER=cl.exe  `
+                   -DTACTILE_ENABLE_TESTS=ON    `
                    -DTACTILE_ENABLE_UBSAN=OFF
 
       - name: "Build"
