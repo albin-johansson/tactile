@@ -95,4 +95,4 @@ jobs:
 
       - name: "Test"
         working-directory: "./build"
-        run: "tactile_tests.exe"
+        run: "./tactile_tests"
