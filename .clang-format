@@ -147,14 +147,14 @@ RequiresExpressionIndentation: "OuterScope"
 AllowShortCompoundRequirementOnASingleLine: true
 
 # Switches
-AllowShortCaseLabelsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: true
 SpaceBeforeCaseColon: false
 IndentCaseLabels: true
 IndentCaseBlocks: false
 AlignConsecutiveShortCaseStatements:
-  Enabled: false
-  AcrossEmptyLines: false
-  AcrossComments: false
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
   AlignCaseColons: false
 
 # Bit fields
