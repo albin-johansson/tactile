@@ -189,3 +189,4 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 InsertNewlineAtEOF: true
 SortUsingDeclarations: "Never"
 RemoveParentheses: "Leave"
+SeparateDefinitionBlocks: "Always"
