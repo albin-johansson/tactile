@@ -21,23 +21,13 @@ constexpr StringView kAnsiColorFgWhite = "\x1B[37m";
 auto to_ansi_color(const LogCategory category) noexcept -> StringView
 {
   switch (category) {
-    case LogCategory::kVerbose:
-      return kAnsiColorFgMagenta;
-
-    case LogCategory::kDebug:
-      return kAnsiColorFgCyan;
-
-    case LogCategory::kInfo:
-      return kAnsiColorFgWhite;
-
-    case LogCategory::kWarn:
-      return kAnsiColorFgYellow;
-
-    case LogCategory::kError:
-      return kAnsiColorFgRedBold;
+    case LogCategory::kVerbose: return kAnsiColorFgMagenta;
+    case LogCategory::kDebug:   return kAnsiColorFgCyan;
+    case LogCategory::kInfo:    return kAnsiColorFgWhite;
+    case LogCategory::kWarn:    return kAnsiColorFgYellow;
+    case LogCategory::kError:   return kAnsiColorFgRedBold;
+    default:                    return kAnsiColorFgWhite;
   }
-
-  return kAnsiColorFgWhite;
 }
 
 }  // namespace

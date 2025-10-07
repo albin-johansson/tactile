@@ -10,32 +10,13 @@ namespace tactile {
 void Attribute::reset(const AttributeKind kind)
 {
   switch (kind) {
-    case AttributeKind::kInt:
-      (void) emplace<int_type>();
-      break;
-
-    case AttributeKind::kFloat:
-      (void) emplace<float_type>();
-      break;
-
-    case AttributeKind::kBool:
-      (void) emplace<bool>();
-      break;
-
-    case AttributeKind::kString:
-      (void) emplace<string_type>();
-      break;
-
-    case AttributeKind::kPath:
-      (void) emplace<path_type>();
-      break;
-
-    case AttributeKind::kColor:
-      (void) emplace<color_type>();
-      break;
-
-    default:
-      throw std::invalid_argument {"[Attribute::reset]: bad attribute kind"};
+    case AttributeKind::kInt:    (void) emplace<int_type>(); break;
+    case AttributeKind::kFloat:  (void) emplace<float_type>(); break;
+    case AttributeKind::kBool:   (void) emplace<bool>(); break;
+    case AttributeKind::kString: (void) emplace<string_type>(); break;
+    case AttributeKind::kPath:   (void) emplace<path_type>(); break;
+    case AttributeKind::kColor:  (void) emplace<color_type>(); break;
+    default:                     throw std::invalid_argument {"[Attribute::reset]: bad attribute kind"};
   }
 }
 
@@ -108,26 +89,14 @@ auto Attribute::has_default_value() const -> bool
 auto Attribute::get_kind() const -> AttributeKind
 {
   switch (m_value.index()) {
-    case kIntValueIndex:
-      return AttributeKind::kInt;
-
-    case kFloatValueIndex:
-      return AttributeKind::kFloat;
-
-    case kBoolValueIndex:
-      return AttributeKind::kBool;
-
-    case kStringValueIndex:
-      return AttributeKind::kString;
-
-    case kPathValueIndex:
-      return AttributeKind::kPath;
-
-    case kColorValueIndex:
-      return AttributeKind::kColor;
+    case kIntValueIndex:    return AttributeKind::kInt;
+    case kFloatValueIndex:  return AttributeKind::kFloat;
+    case kBoolValueIndex:   return AttributeKind::kBool;
+    case kStringValueIndex: return AttributeKind::kString;
+    case kPathValueIndex:   return AttributeKind::kPath;
+    case kColorValueIndex:  return AttributeKind::kColor;
+    default:                throw std::runtime_error {"[Attribute::get_kind]: bad variant"};
   }
-
-  throw std::runtime_error {"[Attribute::get_kind]: bad variant"};
 }
 
 }  // namespace tactile
