@@ -20,6 +20,7 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/variant.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/vector.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/console_log_sink.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/log/file_log_sink.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/log_category.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/log_entry.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/log_sink.hpp"
@@ -36,6 +37,7 @@ target_sources(tactile_core
 
                PRIVATE
                "${PROJECT_SOURCE_DIR}/src/tactile/core/log/console_log_sink.cpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/core/log/file_log_sink.cpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/log/logger.cpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/core/meta/attribute.cpp"
                )
