@@ -18,10 +18,12 @@ target_sources(tactile_editor
                "${PROJECT_SOURCE_DIR}/include/tactile/editor/event/event_id.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/editor/event/event_queue.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/editor/event/events.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/editor/util/logger_context.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/editor/app.hpp"
 
                PRIVATE
                "${PROJECT_SOURCE_DIR}/src/tactile/editor/command/command_stack.cpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/editor/event/event_queue.cpp"
+               "${PROJECT_SOURCE_DIR}/src/tactile/editor/util/logger_context.cpp"
                "${PROJECT_SOURCE_DIR}/src/tactile/editor/app.cpp"
                )
