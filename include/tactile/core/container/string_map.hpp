@@ -18,17 +18,17 @@ class StringHasher final
   using is_transparent [[maybe_unused]] = void;
   using hash_type = std::hash<StringView>;
 
-  constexpr auto operator()(const char* str) const -> usize
+  auto operator()(const char* str) const -> usize
   {
     return hash_type {}(str);
   }
 
-  constexpr auto operator()(const StringView str) const -> usize
+  auto operator()(const StringView str) const -> usize
   {
     return hash_type {}(str);
   }
 
-  constexpr auto operator()(const String& str) const -> usize
+  auto operator()(const String& str) const -> usize
   {
     return hash_type {}(str);
   }
