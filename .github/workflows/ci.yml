@@ -59,6 +59,9 @@ jobs:
           sudo apt install libibus-1.0-dev
           sudo apt install libudev-dev
 
+      - name: "Enable GCC 14"
+        run: "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14"
+
       - name: "Generate build files"
         run: |
           mkdir build
