@@ -15,6 +15,7 @@ target_link_libraries(tactile_tests
 
 target_sources(tactile_tests
                PRIVATE
+               "${PROJECT_SOURCE_DIR}/tests/core/container/string_map.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/math/vec.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/meta/attribute.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/util/casts.test.cpp"
