@@ -15,9 +15,21 @@ class CastsTest : public testing::Test
 
 TEST_F(CastsTest, TrivialCast)
 {
+  // unsigned -> unsigned
   EXPECT_EQ(trivial_cast<uint8>(uint8 {123}), uint8 {123});
   EXPECT_EQ(trivial_cast<uint16>(uint8 {123}), uint16 {123});
+
+  // unsigned -> signed
   EXPECT_EQ(trivial_cast<int16>(uint8 {123}), int16 {123});
+
+  // signed -> float
+  EXPECT_EQ(trivial_cast<float32>(int16 {42}), float32 {42});
+
+  // unsigned -> float
+  EXPECT_EQ(trivial_cast<float32>(uint16 {42}), float32 {42});
+
+  // float -> float
+  EXPECT_EQ(trivial_cast<float64>(float32 {0.5}), float64 {0.5});
 }
 
 TEST_F(CastsTest, CheckedCast)

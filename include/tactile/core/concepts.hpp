@@ -12,6 +12,10 @@
 
 namespace tactile {
 
+/// Indicates whether `T` is without CV-qualifiers.
+template <typename T>
+concept CvUnqualified = !std::is_const_v<T> && !std::is_volatile_v<T>;
+
 /// Indicates whether `T` is an unsigned integer type.
 template <typename T>
 concept UnsignedInteger =
@@ -29,9 +33,13 @@ concept SignedInteger = std::same_as<T, signed char> || std::same_as<T, signed s
 template <typename T>
 concept Integer = UnsignedInteger<T> || SignedInteger<T>;
 
+/// Indicates whether `T` is a floating-point type.
+template <typename T>
+concept FloatingPoint = std::floating_point<T> && CvUnqualified<T>;
+
 /// Indicates whether `T` is a numeric type.
 template <typename T>
-concept Number = Integer<T> || std::floating_point<T>;
+concept Number = Integer<T> || FloatingPoint<T>;
 
 /// Indicates whether `T` is a non-throwing invocable type.
 template <typename T, typename... Args>
@@ -40,7 +48,17 @@ concept NothrowInvocable = std::is_nothrow_invocable_v<T, Args...>;
 /// Indicates whether all `From` values are representable as `To` values.
 template <typename From, typename To>
 concept TriviallyConvertible =
-    Integer<From> && Integer<To> && std::in_range<To>(std::numeric_limits<From>::min()) &&
-    std::in_range<To>(std::numeric_limits<From>::max());
+    Number<From> && Number<To> &&
+    // int -> int
+    ((std::in_range<To>(std::numeric_limits<From>::min()) &&
+      std::in_range<To>(std::numeric_limits<From>::max())) ||
+
+     // float -> float
+     (std::floating_point<From> && std::floating_point<To> &&
+      std::numeric_limits<From>::digits <= std::numeric_limits<To>::digits) ||
+
+     // int -> float
+     (Integer<From> && std::floating_point<To> &&
+      std::numeric_limits<From>::digits <= std::numeric_limits<To>::digits));
 
 }  // namespace tactile
