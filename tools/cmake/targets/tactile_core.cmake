@@ -11,6 +11,7 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/deque.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/function.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/hash_map.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/container/lookup.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/option.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/path.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/smart_ptr.hpp"
