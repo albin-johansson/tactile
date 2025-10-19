@@ -68,8 +68,7 @@ void Logger::log_impl(const LogCategory category,
     }
 
     const auto now = clock_type::now();
-    const auto elapsed_time =
-        std::chrono::duration_cast<std::chrono::microseconds>(now - m_ref_instant);
+    const auto elapsed_time = duration_cast<Microseconds>(now - m_ref_instant);
 
     const auto category_label = to_prefix_label(category);
 

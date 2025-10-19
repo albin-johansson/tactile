@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <chrono>
 #include <format>
 
 #include "tactile/core/container/smart_ptr.hpp"
@@ -12,6 +11,7 @@
 #include "tactile/core/log/log_category.hpp"
 #include "tactile/core/log/log_sink.hpp"
 #include "tactile/core/util/format_buffer.hpp"
+#include "tactile/core/util/time.hpp"
 
 namespace tactile {
 
@@ -19,7 +19,7 @@ namespace tactile {
 class Logger final
 {
  public:
-  using clock_type = std::chrono::steady_clock;
+  using clock_type = SteadyClock;
 
   /// Adds a sink to logger.
   void add_sink(Unique<ILogSink> sink);

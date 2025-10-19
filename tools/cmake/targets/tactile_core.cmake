@@ -32,6 +32,7 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/opacity.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/tile/tile_id.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/util/defer.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/util/time.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/util/format_buffer.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/casts.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/concepts.hpp"
