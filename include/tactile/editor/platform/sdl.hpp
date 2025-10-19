@@ -36,10 +36,37 @@ struct SDLWindowDeleter final
   static void operator()(SDL_Window* window) noexcept;
 };
 
+/// Deleter type for SDL_GPUDevice.
+struct SDLGPUDeviceDeleter final
+{
+  /// Deletes the device via SDL_DestroyGPUDevice.
+  static void operator()(SDL_GPUDevice* device) noexcept;
+};
+
 /// Alias for a unique SDL window.
 using UniqueSDLWindow = Unique<SDL_Window, SDLWindowDeleter>;
 
+/// Alias for a unique SDL GPU device.
+using UniqueSDLGPUDevice = Unique<SDL_GPUDevice, SDLGPUDeviceDeleter>;
+
+/// Provides information about an SDL GPU device.
+struct SDLGPUDeviceInfo final
+{
+  /// The GPU device handle.
+  UniqueSDLGPUDevice device;
+
+  /// The selected present mode.
+  SDL_GPUPresentMode present_mode;
+
+  /// The selected swapchain composition.
+  SDL_GPUSwapchainComposition swapchain_composition;
+};
+
 /// Creates the SDL window used by the editor.
 auto make_editor_window() -> UniqueSDLWindow;
+
+/// Creates the SDL GPU device used by the editor.
+auto make_editor_gpu_device(SDL_Window& window, bool debug, const char* driver_name)
+    -> SDLGPUDeviceInfo;
 
 }  // namespace tactile::editor
