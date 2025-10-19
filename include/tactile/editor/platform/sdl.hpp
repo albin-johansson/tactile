@@ -3,7 +3,10 @@
 
 #pragma once
 
+#include <SDL3/SDL.h>
+
 #include "tactile/core/container/option.hpp"
+#include "tactile/core/container/smart_ptr.hpp"
 #include "tactile/core/macros.hpp"
 #include "tactile/core/util/defer.hpp"
 
@@ -25,5 +28,18 @@ class SDLContext final
  private:
   Option<Defer<void (*)() noexcept>> m_quitter {};
 };
+
+/// Deleter type for SDL_Window.
+struct SDLWindowDeleter final
+{
+  /// Deletes the window via SDL_DestroyWindow.
+  static void operator()(SDL_Window* window) noexcept;
+};
+
+/// Alias for a unique SDL window.
+using UniqueSDLWindow = Unique<SDL_Window, SDLWindowDeleter>;
+
+/// Creates the SDL window used by the editor.
+auto make_editor_window() -> UniqueSDLWindow;
 
 }  // namespace tactile::editor
