@@ -19,6 +19,7 @@ target_sources(tactile_tests
                "${PROJECT_SOURCE_DIR}/tests/core/container/lookup.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/math/vec.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/meta/attribute.test.cpp"
+               "${PROJECT_SOURCE_DIR}/tests/core/meta/attribute_set.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/util/defer.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/util/format_buffer.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/casts.test.cpp"

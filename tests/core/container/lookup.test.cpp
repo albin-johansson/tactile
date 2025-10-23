@@ -10,7 +10,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/container/string_map.hpp"
+#include "tactile/core/container/hash_map.hpp"
 
 namespace tactile {
 namespace {
@@ -29,7 +29,7 @@ class LookupTest : public testing::Test
   }
 
  protected:
-  StringMap<int> m_map {};
+  StringHashMap<int> m_map {};
 };
 
 TEST_F(LookupTest, TryGetFrom)
