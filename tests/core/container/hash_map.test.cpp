@@ -1,7 +1,7 @@
 // Copyright (C) 2025 Albin Johansson
 // This software is provided under the terms of the MIT License.
 
-#include "tactile/core/container/string_map.hpp"
+#include "tactile/core/container/hash_map.hpp"
 
 #include <string>
 #include <string_view>
@@ -14,12 +14,12 @@ namespace {
 using std::string_literals::operator""s;
 using std::string_view_literals::operator""sv;
 
-class StringMapTest : public testing::Test
+class HashMapTest : public testing::Test
 {};
 
-TEST_F(StringMapTest, HeterogeneousLookups)
+TEST_F(HashMapTest, HeterogeneousStringHashMapLookups)
 {
-  StringMap<int> map {};
+  StringHashMap<int> map {};
   map["A"] = 12;
   map["B"] = 34;
 
