@@ -49,16 +49,9 @@ concept NothrowInvocable = std::is_nothrow_invocable_v<T, Args...>;
 template <typename From, typename To>
 concept TriviallyConvertible =
     Number<From> && Number<To> &&
-    // int -> int
-    ((std::in_range<To>(std::numeric_limits<From>::min()) &&
-      std::in_range<To>(std::numeric_limits<From>::max())) ||
-
-     // float -> float
-     (std::floating_point<From> && std::floating_point<To> &&
-      std::numeric_limits<From>::digits <= std::numeric_limits<To>::digits) ||
-
-     // int -> float
-     (Integer<From> && std::floating_point<To> &&
-      std::numeric_limits<From>::digits <= std::numeric_limits<To>::digits));
+    std::numeric_limits<From>::digits <= std::numeric_limits<To>::digits &&
+    ((Integer<From> && Integer<To> && SignedInteger<From> == SignedInteger<To>) ||
+     (Integer<From> && FloatingPoint<To>) || (UnsignedInteger<From> && Integer<To>) ||
+     (FloatingPoint<From> && FloatingPoint<To>));
 
 }  // namespace tactile
