@@ -1,0 +1,74 @@
+{
+  "version": 10,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 31
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "hidden": false,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/default",
+      "cacheVariables": {
+        "CMAKE_MACOSX_RPATH": "ON",
+        "CMAKE_SKIP_RPATH": "OFF",
+        "CMAKE_SKIP_BUILD_RPATH": "OFF",
+        "CMAKE_SKIP_INSTALL_RPATH": "OFF",
+        "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+        "CMAKE_INSTALL_REMOVE_ENVIRONMENT_RPATH": "ON",
+        "CMAKE_INSTALL_RPATH_USE_LINK_PATH": "ON",
+        "FETCHCONTENT_BASE_DIR": "external",
+        "FETCHCONTENT_UPDATES_DISCONNECTED": "OFF",
+        "TACTILE_ENABLE_TESTS": "ON",
+        "TACTILE_ENABLE_UBSAN": "OFF"
+      }
+    },
+    {
+      "name": "dev",
+      "hidden": true,
+      "inherits": [
+        "default"
+      ],
+      "cacheVariables": {
+        "FETCHCONTENT_UPDATES_DISCONNECTED": "ON"
+      }
+    },
+    {
+      "name": "dev-debug",
+      "hidden": false,
+      "binaryDir": "${sourceDir}/build/debug",
+      "inherits": [
+        "dev"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_RPATH": "${sourceDir}/build/debug"
+      }
+    },
+    {
+      "name": "dev-release",
+      "hidden": false,
+      "binaryDir": "${sourceDir}/build/release",
+      "inherits": [
+        "dev"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_RPATH": "${sourceDir}/build/release"
+      }
+    },
+    {
+      "name": "dev-debug-ubsan",
+      "hidden": false,
+      "binaryDir": "${sourceDir}/build/debug-ubsan",
+      "inherits": [
+        "dev-debug"
+      ],
+      "cacheVariables": {
+        "TACTILE_ENABLE_UBSAN": "ON",
+        "CMAKE_INSTALL_RPATH": "${sourceDir}/build/debug-ubsan"
+      }
+    }
+  ]
+}
