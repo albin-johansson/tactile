@@ -22,3 +22,6 @@ include("tools/cmake/targets/tactile.cmake")
 if (TACTILE_ENABLE_TESTS)
   include("tools/cmake/targets/tactile_tests.cmake")
 endif ()
+
+# Place runtime artifacts, such as DLLs, next to the executables.
+install(IMPORTED_RUNTIME_ARTIFACTS SDL3-shared DESTINATION "${PROJECT_BINARY_DIR}")

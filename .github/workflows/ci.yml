@@ -20,7 +20,9 @@ jobs:
 
       - name: "Build"
         working-directory: "./build"
-        run: "ninja"
+        run: |
+          ninja
+          ninja install
 
       - name: "Test"
         working-directory: "./build"
@@ -73,7 +75,9 @@ jobs:
 
       - name: "Build"
         working-directory: "./build"
-        run: "ninja"
+        run: |
+          ninja
+          ninja install
 
       - name: "Test"
         working-directory: "./build"
@@ -95,6 +99,7 @@ jobs:
                    -DTACTILE_ENABLE_TESTS=ON ^
                    -DTACTILE_ENABLE_UBSAN=OFF
           ninja
+          ninja install
 
       - name: "Test"
         working-directory: "./build"
