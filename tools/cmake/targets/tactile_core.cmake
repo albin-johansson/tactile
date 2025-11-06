@@ -20,6 +20,7 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/tree_map.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/variant.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/container/vector.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/layer/layer_id.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/console_log_sink.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/file_log_sink.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/log/log_category.hpp"
