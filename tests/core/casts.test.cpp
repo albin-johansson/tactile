@@ -3,6 +3,8 @@
 
 #include "tactile/core/casts.hpp"
 
+#include <stdexcept>
+
 #include <gtest/gtest.h>
 
 #include "tactile/core/primitives.hpp"
@@ -44,6 +46,20 @@ TEST_F(CastsTest, TryConvertTo)
 
   EXPECT_EQ(try_convert_to<int32>(int32 {42}), int32 {42});
   EXPECT_EQ(try_convert_to<int8>(uint64 {42}), int8 {42});
+}
+
+TEST_F(CastsTest, ConvertTo)
+{
+  EXPECT_THROW(convert_to<uint8>(int8 {-1}), std::range_error);
+  EXPECT_EQ(convert_to<uint8>(int8 {0}), uint8 {0});
+  EXPECT_EQ(convert_to<uint8>(int8 {127}), uint8 {127});
+
+  EXPECT_EQ(convert_to<int8>(uint8 {0}), int8 {0});
+  EXPECT_EQ(convert_to<int8>(uint8 {127}), int8 {127});
+  EXPECT_THROW(convert_to<int8>(uint8 {128}), std::range_error);
+
+  EXPECT_EQ(convert_to<int32>(int32 {42}), int32 {42});
+  EXPECT_EQ(convert_to<int8>(uint64 {42}), int8 {42});
 }
 
 }  // namespace

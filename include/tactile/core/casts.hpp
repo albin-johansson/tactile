@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <stdexcept>
 #include <utility>
 
 #include "tactile/core/concepts.hpp"
@@ -35,6 +36,28 @@ constexpr auto try_convert_to(const From from) noexcept -> Option<To>
   }
 
   return static_cast<To>(from);
+}
+
+/// Performs a lossless type conversion, throwing if the conversion would be lossy.
+///
+/// \param[in] from: The value to convert.
+/// \return    The converted value.
+template <Integer To, Integer From>
+constexpr auto convert_to(const From from) -> To
+{
+  if constexpr (TriviallyConvertible<From, To>) {
+    return static_cast<To>(from);
+  }
+  else {
+    // We don't use .value() here to make the error message less cryptic.
+    const auto to = try_convert_to<To>(from);
+
+    if (!to.has_value()) [[unlikely]] {
+      throw std::range_error {"Unexpected lossy conversion"};
+    }
+
+    return *to;
+  }
 }
 
 }  // namespace tactile
