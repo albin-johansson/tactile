@@ -22,6 +22,7 @@ Checks: >
   -*-redundant-member-init,
   -*-include-cleaner,
   -*-use-nodiscard,
+  -*-no-recursion,
 
 CheckOptions:
   - key: "readability-identifier-naming.ClassCase"
