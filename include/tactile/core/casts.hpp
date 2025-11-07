@@ -11,18 +11,27 @@
 namespace tactile {
 
 /// Performs a type conversion guaranteed to be lossless at compile-time.
+///
+/// \param[in] from: The value to convert.
+/// \return    The converted value.
 template <typename To, TriviallyConvertible<To> From>
 constexpr auto trivial_cast(const From from) noexcept -> To
 {
   return static_cast<To>(from);
 }
 
-/// Performs a checked type conversion.
+/// Performs a non-throwing lossless type conversion.
+///
+/// \param[in] from: The value to convert.
+/// \return    The converted value. An empty optional is returned if the conversion would
+///            be lossy.
 template <Integer To, Integer From>
-constexpr auto checked_cast(const From from) noexcept -> Option<To>
+constexpr auto try_convert_to(const From from) noexcept -> Option<To>
 {
-  if (!std::in_range<To>(from)) [[unlikely]] {
-    return kNone;
+  if constexpr (!TriviallyConvertible<From, To>) {
+    if (!std::in_range<To>(from)) [[unlikely]] {
+      return kNone;
+    }
   }
 
   return static_cast<To>(from);

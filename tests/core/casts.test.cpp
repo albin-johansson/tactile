@@ -32,18 +32,18 @@ TEST_F(CastsTest, TrivialCast)
   EXPECT_EQ(trivial_cast<float64>(float32 {0.5}), float64 {0.5});
 }
 
-TEST_F(CastsTest, CheckedCast)
+TEST_F(CastsTest, TryConvertTo)
 {
-  EXPECT_EQ(checked_cast<uint8>(int8 {-1}), kNone);
-  EXPECT_EQ(checked_cast<uint8>(int8 {0}), uint8 {0});
-  EXPECT_EQ(checked_cast<uint8>(int8 {127}), uint8 {127});
+  EXPECT_EQ(try_convert_to<uint8>(int8 {-1}), kNone);
+  EXPECT_EQ(try_convert_to<uint8>(int8 {0}), uint8 {0});
+  EXPECT_EQ(try_convert_to<uint8>(int8 {127}), uint8 {127});
 
-  EXPECT_EQ(checked_cast<int8>(uint8 {0}), int8 {0});
-  EXPECT_EQ(checked_cast<int8>(uint8 {127}), int8 {127});
-  EXPECT_EQ(checked_cast<int8>(uint8 {128}), kNone);
+  EXPECT_EQ(try_convert_to<int8>(uint8 {0}), int8 {0});
+  EXPECT_EQ(try_convert_to<int8>(uint8 {127}), int8 {127});
+  EXPECT_EQ(try_convert_to<int8>(uint8 {128}), kNone);
 
-  EXPECT_EQ(checked_cast<int32>(int32 {42}), int32 {42});
-  EXPECT_EQ(checked_cast<int8>(uint64 {42}), int8 {42});
+  EXPECT_EQ(try_convert_to<int32>(int32 {42}), int32 {42});
+  EXPECT_EQ(try_convert_to<int8>(uint64 {42}), int8 {42});
 }
 
 }  // namespace
