@@ -13,8 +13,9 @@ namespace tactile {
 
 /// Performs a type conversion guaranteed to be lossless at compile-time.
 ///
-/// \param[in] from: The value to convert.
-/// \return    The converted value.
+/// \param[in] from
+///            The value to convert.
+/// \returns   The converted value.
 template <typename To, TriviallyConvertible<To> From>
 constexpr auto trivial_cast(const From from) noexcept -> To
 {
@@ -23,8 +24,9 @@ constexpr auto trivial_cast(const From from) noexcept -> To
 
 /// Performs a non-throwing lossless type conversion.
 ///
-/// \param[in] from: The value to convert.
-/// \return    The converted value. An empty optional is returned if the conversion would
+/// \param[in] from
+///            The value to convert.
+/// \returns   The converted value. An empty optional is returned if the conversion would
 ///            be lossy.
 template <Integer To, Integer From>
 constexpr auto try_convert_to(const From from) noexcept -> Option<To>
@@ -38,10 +40,14 @@ constexpr auto try_convert_to(const From from) noexcept -> Option<To>
   return static_cast<To>(from);
 }
 
-/// Performs a lossless type conversion, throwing if the conversion would be lossy.
+/// Performs a checked lossless type conversion.
 ///
-/// \param[in] from: The value to convert.
-/// \return    The converted value.
+/// \param[in] from
+///            The value to convert.
+/// \returns   The converted value.
+///
+/// \throws    std::range_error
+///            If the conversion is lossy.
 template <Integer To, Integer From>
 constexpr auto convert_to(const From from) -> To
 {
