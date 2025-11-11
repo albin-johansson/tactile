@@ -9,6 +9,7 @@ struct Color;
 
 class Attribute;
 class AttributeSet;
+class Layer;
 class Metadata;
 
 }  // namespace tactile

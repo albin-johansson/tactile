@@ -17,6 +17,7 @@ target_sources(tactile_tests
                PRIVATE
                "${PROJECT_SOURCE_DIR}/tests/core/container/hash_map.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/container/lookup.test.cpp"
+               "${PROJECT_SOURCE_DIR}/tests/core/layer/layer.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/math/vec.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/meta/attribute.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/meta/attribute_set.test.cpp"
