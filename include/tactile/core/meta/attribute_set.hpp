@@ -18,24 +18,55 @@ class AttributeSet final
 {
  public:
   /// Adds or resets an attribute in the set.
-  auto create_or_replace(String name, AttributeKind kind = AttributeKind::kInt)
-      -> Attribute&;
+  ///
+  /// \param[in] name
+  ///            The name of the attribute.
+  /// \param[in] kind
+  ///            The kind of attribute to create.
+  /// \returns   The new attribute.
+  auto create_or_replace(String name, AttributeKind kind = AttributeKind::kInt) -> Attribute&;
 
   /// Removes an attribute from the set.
+  ///
+  /// \param[in] name
+  ///            The name of the attribute to remove.
+  /// \returns   The removed attribute if successful; an empty optional otherwise.
   auto remove(StringView name) -> Option<Attribute>;
 
-  /// Returns a pointer to the attribute with a given name, or null if there is none.
+  /// Returns a pointer to the attribute with a given name.
+  ///
+  /// \param[in] name
+  ///            The name of the target attribute.
+  /// \returns   A pointer to the attribute if found; a null pointer otherwise.
   auto try_get(StringView name) -> Attribute*;
+
+  /// \copydoc try_get
   auto try_get(StringView name) const -> const Attribute*;
 
   /// Returns the attribute with a given name.
+  ///
+  /// \param[in] name
+  ///            The name of the target attribute.
+  /// \returns   The found attribute.
+  ///
+  /// \throws    std::invalid_argument
+  ///            If there's no attribute associated with the name.
   auto get(StringView name) -> Attribute&;
+
+  /// \copydoc get
   auto get(StringView name) const -> const Attribute&;
 
   /// Returns the number of attributes in the set.
+  ///
+  /// \returns The attribute count.
   auto size() const -> usize;
 
   /// Visits each attribute in the set.
+  ///
+  /// \tparam    T
+  ///            The visitor type.
+  /// \param[in] visitor
+  ///            The visitor to invoke for each attribute.
   template <std::invocable<const String&, const Attribute&> T>
   void each(const T& visitor) const
   {
