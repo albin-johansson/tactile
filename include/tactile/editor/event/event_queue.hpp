@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <cassert>
 #include <concepts>
 #include <utility>
 
@@ -32,7 +33,9 @@ class IEventPool
   /// Removes all pending events from the pool.
   virtual void clear_events() = 0;
 
-  /// Publishes (and removes) all pending events.
+  /// Publishes (and removes) the next pending event.
+  ///
+  /// \pre There must be a pending event.
   virtual void publish_next_event() = 0;
 };
 
@@ -43,28 +46,20 @@ class EventPool final : public IEventPool
  public:
   using callback_type = Function<void(const T&)>;
 
-  void clear_events() override
-  {
-    m_events.clear();
-  }
+  void clear_events() override { m_events.clear(); }
 
   void publish_next_event() override
   {
+    assert(!m_events.empty());
     if (m_callback) {
       m_callback(m_events.front());
     }
     m_events.pop_front();
   }
 
-  void connect(callback_type&& callback)
-  {
-    m_callback = std::move(callback);
-  }
+  void connect(callback_type&& callback) { m_callback = std::move(callback); }
 
-  void disconnect()
-  {
-    m_callback = callback_type {};
-  }
+  void disconnect() { m_callback = callback_type {}; }
 
   template <typename... Args>
     requires std::constructible_from<T, Args...>
