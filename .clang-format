@@ -6,7 +6,7 @@ Standard: "Latest"
 
 # Basic
 UseTab: "Never"
-ColumnLimit: 90
+ColumnLimit: 95
 IndentWidth: 2
 ContinuationIndentWidth: 4
 MaxEmptyLinesToKeep: 1
@@ -137,7 +137,7 @@ AllowShortLambdasOnASingleLine: "All"
 
 # Templates
 SpaceAfterTemplateKeyword: true
-AlwaysBreakTemplateDeclarations: Yes
+BreakTemplateDeclarations: "Yes"
 
 # Concepts
 IndentRequiresClause: true
