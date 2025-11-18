@@ -5,6 +5,7 @@
 
 #include "tactile/core/concepts.hpp"
 #include "tactile/core/primitives.hpp"
+#include "tactile/core/util/hash.hpp"
 
 namespace tactile {
 
@@ -92,3 +93,6 @@ using Vec2F = Vec2<float32>;
 using Vec2D = Vec2<float64>;
 
 }  // namespace tactile
+
+TACTILE_IMPL_HASH(::tactile::Vec2F, value.x, value.y);
+TACTILE_IMPL_HASH(::tactile::Vec2D, value.x, value.y);
