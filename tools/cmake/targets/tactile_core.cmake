@@ -37,6 +37,7 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/util/defer.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/util/time.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/util/format_buffer.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/util/hash.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/casts.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/concepts.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/fwd.hpp"

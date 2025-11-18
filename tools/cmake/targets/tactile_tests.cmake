@@ -23,6 +23,7 @@ target_sources(tactile_tests
                "${PROJECT_SOURCE_DIR}/tests/core/meta/attribute_set.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/util/defer.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/util/format_buffer.test.cpp"
+               "${PROJECT_SOURCE_DIR}/tests/core/util/hash.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/casts.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/core/concepts.test.cpp"
                "${PROJECT_SOURCE_DIR}/tests/editor/command/command_stack.test.cpp"
