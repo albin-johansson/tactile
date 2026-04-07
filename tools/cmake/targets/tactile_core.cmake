@@ -32,6 +32,7 @@ target_sources(tactile_core
                "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/attribute.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/attribute_set.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/color.hpp"
+               "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/metadata.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/meta/opacity.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/tile/tile_id.hpp"
                "${PROJECT_SOURCE_DIR}/include/tactile/core/util/defer.hpp"
